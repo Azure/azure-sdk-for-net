@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class VirtualWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}";
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of WorkspacePrivateEndpointConnectionResources and their operations over a WorkspacePrivateEndpointConnectionResource. </returns>
         public virtual WorkspacePrivateEndpointConnectionCollection GetWorkspacePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new WorkspacePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new WorkspacePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkspacePrivateEndpointConnectionResource>> GetWorkspacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkspacePrivateEndpointConnectionResource> GetWorkspacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.Sql
     public partial class WorkloadClassifierResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkloadClassifierResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="workloadGroupName"> The workloadGroupName. </param>
+        /// <param name="workloadClassifierName"> The workloadClassifierName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/workloadGroups/{workloadGroupName}/workloadClassifiers/{workloadClassifierName}";

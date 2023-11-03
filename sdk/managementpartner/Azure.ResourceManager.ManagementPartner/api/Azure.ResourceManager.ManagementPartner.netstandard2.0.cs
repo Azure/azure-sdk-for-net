@@ -49,6 +49,23 @@ namespace Azure.ResourceManager.ManagementPartner
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource>> UpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagementPartner.Mocking
+{
+    public partial class MockableManagementPartnerArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagementPartnerArmClient() { }
+        public virtual Azure.ResourceManager.ManagementPartner.PartnerResponseResource GetPartnerResponseResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableManagementPartnerTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagementPartnerTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagementPartner.Models.OperationResponse> GetOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagementPartner.Models.OperationResponse> GetOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource> GetPartnerResponse(string partnerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource>> GetPartnerResponseAsync(string partnerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagementPartner.PartnerResponseCollection GetPartnerResponses() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
     public static partial class ArmManagementPartnerModelFactory

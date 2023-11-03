@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class HostPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HostPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostPoolName"> The hostPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}";
@@ -112,7 +115,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of HostPoolPrivateEndpointConnectionResources and their operations over a HostPoolPrivateEndpointConnectionResource. </returns>
         public virtual HostPoolPrivateEndpointConnectionCollection GetHostPoolPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HostPoolPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HostPoolPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -130,8 +133,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HostPoolPrivateEndpointConnectionResource>> GetHostPoolPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -153,8 +156,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HostPoolPrivateEndpointConnectionResource> GetHostPoolPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of SessionHostResources and their operations over a SessionHostResource. </returns>
         public virtual SessionHostCollection GetSessionHosts()
         {
-            return GetCachedClient(Client => new SessionHostCollection(Client, Id));
+            return GetCachedClient(client => new SessionHostCollection(client, Id));
         }
 
         /// <summary>
@@ -183,8 +186,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SessionHostResource>> GetSessionHostAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
@@ -206,8 +209,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SessionHostResource> GetSessionHost(string sessionHostName, CancellationToken cancellationToken = default)
         {
@@ -218,7 +221,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of MsixPackageResources and their operations over a MsixPackageResource. </returns>
         public virtual MsixPackageCollection GetMsixPackages()
         {
-            return GetCachedClient(Client => new MsixPackageCollection(Client, Id));
+            return GetCachedClient(client => new MsixPackageCollection(client, Id));
         }
 
         /// <summary>
@@ -236,8 +239,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MsixPackageResource>> GetMsixPackageAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
@@ -259,8 +262,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MsixPackageResource> GetMsixPackage(string msixPackageFullName, CancellationToken cancellationToken = default)
         {

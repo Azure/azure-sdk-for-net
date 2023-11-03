@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityDevOps
     public partial class AzureDevOpsConnectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AzureDevOpsConnectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureDevOpsConnectorName"> The azureDevOpsConnectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}";
@@ -103,7 +106,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of AzureDevOpsOrgResources and their operations over a AzureDevOpsOrgResource. </returns>
         public virtual AzureDevOpsOrgCollection GetAzureDevOpsOrgs()
         {
-            return GetCachedClient(Client => new AzureDevOpsOrgCollection(Client, Id));
+            return GetCachedClient(client => new AzureDevOpsOrgCollection(client, Id));
         }
 
         /// <summary>
@@ -121,8 +124,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="azureDevOpsOrgName"> Name of the AzureDevOps Org. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureDevOpsOrgResource>> GetAzureDevOpsOrgAsync(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
@@ -144,8 +147,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="azureDevOpsOrgName"> Name of the AzureDevOps Org. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AzureDevOpsOrgResource> GetAzureDevOpsOrg(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The partition mechanism that will be used for SAP table read in parallel. </summary>
-    public readonly partial struct SapTablePartitionOption : IEquatable<SapTablePartitionOption>
+    internal readonly partial struct SapTablePartitionOption : IEquatable<SapTablePartitionOption>
     {
         private readonly string _value;
 

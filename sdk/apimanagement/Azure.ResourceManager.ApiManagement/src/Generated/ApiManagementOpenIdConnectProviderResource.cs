@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementOpenIdConnectProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementOpenIdConnectProviderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="openId"> The openId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string openId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{openId}";

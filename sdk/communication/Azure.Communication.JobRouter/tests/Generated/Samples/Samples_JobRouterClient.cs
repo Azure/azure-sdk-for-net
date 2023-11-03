@@ -22,12 +22,12 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.GetJob("<id>", null);
+            Response response = client.GetJob("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
         }
 
@@ -35,12 +35,12 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.GetJobAsync("<id>", null);
+            Response response = await client.GetJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
         }
 
@@ -48,32 +48,30 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJob> response = client.GetJob("<id>");
+            Response<RouterJob> response = client.GetJob("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJob> response = await client.GetJobAsync("<id>");
+            Response<RouterJob> response = await client.GetJobAsync("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.GetJob("<id>", null);
+            Response response = client.GetJob("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("channelReference").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -104,7 +102,8 @@ namespace Azure.Communication.JobRouter.Samples
             Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
             Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
             Console.WriteLine(result.GetProperty("scheduledAt").ToString());
             Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
         }
@@ -113,12 +112,12 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.GetJobAsync("<id>", null);
+            Response response = await client.GetJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("channelReference").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -149,7 +148,8 @@ namespace Azure.Communication.JobRouter.Samples
             Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
             Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("notes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
             Console.WriteLine(result.GetProperty("scheduledAt").ToString());
             Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
         }
@@ -158,30 +158,27 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJob> response = client.GetJob("<id>");
+            Response<RouterJob> response = client.GetJob("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJob> response = await client.GetJobAsync("<id>");
+            Response<RouterJob> response = await client.GetJobAsync("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.DeleteJob("<id>");
+            Response response = client.DeleteJob("<jobId>");
 
             Console.WriteLine(response.Status);
         }
@@ -190,10 +187,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.DeleteJobAsync("<id>");
+            Response response = await client.DeleteJobAsync("<jobId>");
 
             Console.WriteLine(response.Status);
         }
@@ -202,10 +198,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.DeleteJob("<id>");
+            Response response = client.DeleteJob("<jobId>");
 
             Console.WriteLine(response.Status);
         }
@@ -214,10 +209,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.DeleteJobAsync("<id>");
+            Response response = await client.DeleteJobAsync("<jobId>");
 
             Console.WriteLine(response.Status);
         }
@@ -226,11 +220,10 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
-            Response response = client.CancelJob("<id>", content);
+            Response response = client.CancelJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -239,11 +232,10 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
-            Response response = await client.CancelJobAsync("<id>", content);
+            Response response = await client.CancelJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -252,35 +244,32 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.CancelJob("<id>");
+            Response response = client.CancelJob("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.CancelJobAsync("<id>");
+            Response response = await client.CancelJobAsync("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 note = "<note>",
                 dispositionCode = "<dispositionCode>",
             });
-            Response response = client.CancelJob("<id>", content);
+            Response response = client.CancelJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -289,15 +278,14 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 note = "<note>",
                 dispositionCode = "<dispositionCode>",
             });
-            Response response = await client.CancelJobAsync("<id>", content);
+            Response response = await client.CancelJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -306,44 +294,41 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CancelJobRequest cancelJobRequest = new CancelJobRequest
+            CancelJobOptions options = new CancelJobOptions
             {
                 Note = "<note>",
                 DispositionCode = "<dispositionCode>",
             };
-            Response response = client.CancelJob("<id>", cancelJobRequest: cancelJobRequest);
+            Response response = client.CancelJob("<jobId>", options: options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CancelJobRequest cancelJobRequest = new CancelJobRequest
+            CancelJobOptions options = new CancelJobOptions
             {
                 Note = "<note>",
                 DispositionCode = "<dispositionCode>",
             };
-            Response response = await client.CancelJobAsync("<id>", cancelJobRequest: cancelJobRequest);
+            Response response = await client.CancelJobAsync("<jobId>", options: options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 assignmentId = "<assignmentId>",
             });
-            Response response = client.CompleteJob("<id>", content);
+            Response response = client.CompleteJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -352,14 +337,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 assignmentId = "<assignmentId>",
             });
-            Response response = await client.CompleteJobAsync("<id>", content);
+            Response response = await client.CompleteJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -368,37 +352,34 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CompleteJobRequest completeJobRequest = new CompleteJobRequest("<assignmentId>");
-            Response response = client.CompleteJob("<id>", completeJobRequest);
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
+            Response response = client.CompleteJob("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CompleteJobRequest completeJobRequest = new CompleteJobRequest("<assignmentId>");
-            Response response = await client.CompleteJobAsync("<id>", completeJobRequest);
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
+            Response response = await client.CompleteJobAsync("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 assignmentId = "<assignmentId>",
                 note = "<note>",
             });
-            Response response = client.CompleteJob("<id>", content);
+            Response response = client.CompleteJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -407,15 +388,14 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 assignmentId = "<assignmentId>",
                 note = "<note>",
             });
-            Response response = await client.CompleteJobAsync("<id>", content);
+            Response response = await client.CompleteJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -424,42 +404,39 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CompleteJobRequest completeJobRequest = new CompleteJobRequest("<assignmentId>")
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
             {
                 Note = "<note>",
             };
-            Response response = client.CompleteJob("<id>", completeJobRequest);
+            Response response = client.CompleteJob("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CompleteJobRequest completeJobRequest = new CompleteJobRequest("<assignmentId>")
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
             {
                 Note = "<note>",
             };
-            Response response = await client.CompleteJobAsync("<id>", completeJobRequest);
+            Response response = await client.CompleteJobAsync("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 assignmentId = "<assignmentId>",
             });
-            Response response = client.CloseJob("<id>", content);
+            Response response = client.CloseJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -468,14 +445,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 assignmentId = "<assignmentId>",
             });
-            Response response = await client.CloseJobAsync("<id>", content);
+            Response response = await client.CloseJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -484,30 +460,27 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CloseJobRequest closeJobRequest = new CloseJobRequest("<assignmentId>");
-            Response response = client.CloseJob("<id>", closeJobRequest);
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>");
+            Response response = client.CloseJob("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CloseJobRequest closeJobRequest = new CloseJobRequest("<assignmentId>");
-            Response response = await client.CloseJobAsync("<id>", closeJobRequest);
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>");
+            Response response = await client.CloseJobAsync("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -516,7 +489,7 @@ namespace Azure.Communication.JobRouter.Samples
                 closeAt = "2022-05-10T14:57:31.2311892-04:00",
                 note = "<note>",
             });
-            Response response = client.CloseJob("<id>", content);
+            Response response = client.CloseJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -525,8 +498,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -535,7 +507,7 @@ namespace Azure.Communication.JobRouter.Samples
                 closeAt = "2022-05-10T14:57:31.2311892-04:00",
                 note = "<note>",
             });
-            Response response = await client.CloseJobAsync("<id>", content);
+            Response response = await client.CloseJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
         }
@@ -544,42 +516,39 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CloseJobRequest closeJobRequest = new CloseJobRequest("<assignmentId>")
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>")
             {
                 DispositionCode = "<dispositionCode>",
                 CloseAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 Note = "<note>",
             };
-            Response response = client.CloseJob("<id>", closeJobRequest);
+            Response response = client.CloseJob("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            CloseJobRequest closeJobRequest = new CloseJobRequest("<assignmentId>")
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>")
             {
                 DispositionCode = "<dispositionCode>",
                 CloseAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 Note = "<note>",
             };
-            Response response = await client.CloseJobAsync("<id>", closeJobRequest);
+            Response response = await client.CloseJobAsync("<jobId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.GetQueuePosition("<id>", null);
+            Response response = client.GetQueuePosition("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -593,10 +562,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.GetQueuePositionAsync("<id>", null);
+            Response response = await client.GetQueuePositionAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -610,30 +578,27 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJobPositionDetails> response = client.GetQueuePosition("<id>");
+            Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<id>");
+            Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.GetQueuePosition("<id>", null);
+            Response response = client.GetQueuePosition("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -647,10 +612,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.GetQueuePositionAsync("<id>", null);
+            Response response = await client.GetQueuePositionAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -664,31 +628,28 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJobPositionDetails> response = client.GetQueuePosition("<id>");
+            Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<id>");
+            Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
-            Response response = client.UnassignJob("<id>", "<assignmentId>", content);
+            Response response = client.UnassignJob("<jobId>", "<assignmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -699,11 +660,10 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
-            Response response = await client.UnassignJobAsync("<id>", "<assignmentId>", content);
+            Response response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -714,34 +674,31 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<UnassignJobResult> response = client.UnassignJob("<id>", "<assignmentId>");
+            Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<UnassignJobResult> response = await client.UnassignJobAsync("<id>", "<assignmentId>");
+            Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 suspendMatching = true,
             });
-            Response response = client.UnassignJob("<id>", "<assignmentId>", content);
+            Response response = client.UnassignJob("<jobId>", "<assignmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -752,14 +709,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
                 suspendMatching = true,
             });
-            Response response = await client.UnassignJobAsync("<id>", "<assignmentId>", content);
+            Response response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -770,36 +726,33 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            UnassignJobRequest unassignJobRequest = new UnassignJobRequest
+            UnassignJobOptions options = new UnassignJobOptions
             {
                 SuspendMatching = true,
             };
-            Response<UnassignJobResult> response = client.UnassignJob("<id>", "<assignmentId>", unassignJobRequest: unassignJobRequest);
+            Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>", options: options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            UnassignJobRequest unassignJobRequest = new UnassignJobRequest
+            UnassignJobOptions options = new UnassignJobOptions
             {
                 SuspendMatching = true,
             };
-            Response<UnassignJobResult> response = await client.UnassignJobAsync("<id>", "<assignmentId>", unassignJobRequest: unassignJobRequest);
+            Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", options: options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
 
@@ -813,8 +766,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
 
@@ -828,8 +780,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
         }
@@ -838,8 +789,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
         }
@@ -848,8 +798,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
 
@@ -863,8 +812,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
 
@@ -878,8 +826,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
         }
@@ -888,8 +835,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
         }
@@ -898,8 +844,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = client.DeclineJobOffer("<workerId>", "<offerId>", content);
@@ -911,8 +856,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", content);
@@ -924,8 +868,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeclineJobOffer("<workerId>", "<offerId>");
         }
@@ -934,8 +877,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>");
         }
@@ -944,8 +886,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -960,8 +901,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -976,38 +916,35 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            DeclineJobOfferRequest declineJobOfferRequest = new DeclineJobOfferRequest
+            DeclineJobOfferOptions options = new DeclineJobOfferOptions
             {
                 RetryOfferAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
             };
-            Response response = client.DeclineJobOffer("<workerId>", "<offerId>", declineJobOfferRequest: declineJobOfferRequest);
+            Response response = client.DeclineJobOffer("<workerId>", "<offerId>", options: options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            DeclineJobOfferRequest declineJobOfferRequest = new DeclineJobOfferRequest
+            DeclineJobOfferOptions options = new DeclineJobOfferOptions
             {
                 RetryOfferAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
             };
-            Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", declineJobOfferRequest: declineJobOfferRequest);
+            Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", options: options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.GetQueueStatistics("<id>", null);
+            Response response = client.GetQueueStatistics("<queueId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("queueId").ToString());
@@ -1018,10 +955,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.GetQueueStatisticsAsync("<id>", null);
+            Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("queueId").ToString());
@@ -1032,30 +968,27 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterQueueStatistics> response = client.GetQueueStatistics("<id>");
+            Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<id>");
+            Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = client.GetQueueStatistics("<id>", null);
+            Response response = client.GetQueueStatistics("<queueId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("queueId").ToString());
@@ -1068,10 +1001,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response response = await client.GetQueueStatisticsAsync("<id>", null);
+            Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("queueId").ToString());
@@ -1084,32 +1016,30 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterQueueStatistics> response = client.GetQueueStatistics("<id>");
+            Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<id>");
+            Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetWorker("<workerId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
         }
 
@@ -1117,12 +1047,12 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetWorkerAsync("<workerId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
         }
 
@@ -1130,8 +1060,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = client.GetWorker("<workerId>");
         }
@@ -1140,8 +1069,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
         }
@@ -1150,20 +1078,21 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetWorker("<workerId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("queueAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("totalCapacity").ToString());
+            Console.WriteLine(result.GetProperty("queues")[0].ToString());
+            Console.WriteLine(result.GetProperty("capacity").ToString());
             Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("capacityCostPerJob").ToString());
-            Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("maxNumberOfJobs").ToString());
+            Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+            Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+            Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
             Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
             Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
@@ -1181,20 +1110,21 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetWorkerAsync("<workerId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("etag").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("queueAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("totalCapacity").ToString());
+            Console.WriteLine(result.GetProperty("queues")[0].ToString());
+            Console.WriteLine(result.GetProperty("capacity").ToString());
             Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("capacityCostPerJob").ToString());
-            Console.WriteLine(result.GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("maxNumberOfJobs").ToString());
+            Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+            Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+            Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
             Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
             Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
@@ -1212,8 +1142,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = client.GetWorker("<workerId>");
         }
@@ -1222,8 +1151,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
         }
@@ -1232,8 +1160,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteWorker_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeleteWorker("<workerId>");
 
@@ -1244,8 +1171,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteWorker_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeleteWorkerAsync("<workerId>");
 
@@ -1256,8 +1182,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteWorker_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeleteWorker("<workerId>");
 
@@ -1268,8 +1193,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteWorker_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeleteWorkerAsync("<workerId>");
 
@@ -1280,14 +1204,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetJobs(null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("job").GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -1295,14 +1218,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetJobsAsync(null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("job").GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -1310,10 +1232,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            foreach (RouterJobItem item in client.GetJobs())
+            foreach (RouterJob item in client.GetJobs())
             {
             }
         }
@@ -1322,10 +1243,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            await foreach (RouterJobItem item in client.GetJobsAsync())
+            await foreach (RouterJob item in client.GetJobsAsync())
             {
             }
         }
@@ -1334,46 +1254,46 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetJobs(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("job").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("channelReference").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("enqueuedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("channelId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("classificationPolicyId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("queueId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("priority").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("dispositionCode").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("labels").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("tags").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("notes").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("scheduledAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("channelReference").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+                Console.WriteLine(result.GetProperty("channelId").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+                Console.WriteLine(result.GetProperty("queueId").ToString());
+                Console.WriteLine(result.GetProperty("priority").ToString());
+                Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+                Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
+                Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+                Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
             }
         }
 
@@ -1381,46 +1301,46 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetJobsAsync(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("job").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("channelReference").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("enqueuedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("channelId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("classificationPolicyId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("queueId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("priority").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("dispositionCode").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("labels").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("tags").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("notes").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("scheduledAt").ToString());
-                Console.WriteLine(result.GetProperty("job").GetProperty("matchingMode").GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("channelReference").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+                Console.WriteLine(result.GetProperty("channelId").ToString());
+                Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+                Console.WriteLine(result.GetProperty("queueId").ToString());
+                Console.WriteLine(result.GetProperty("priority").ToString());
+                Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+                Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
+                Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
+                Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+                Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
             }
         }
 
@@ -1428,10 +1348,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            foreach (RouterJobItem item in client.GetJobs(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
+            foreach (RouterJob item in client.GetJobs(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
             {
             }
         }
@@ -1440,10 +1359,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            await foreach (RouterJobItem item in client.GetJobsAsync(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
+            await foreach (RouterJob item in client.GetJobsAsync(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
             {
             }
         }
@@ -1452,14 +1370,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetWorkers(null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("worker").GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -1467,14 +1384,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetWorkersAsync(null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("worker").GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -1482,10 +1398,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            foreach (RouterWorkerItem item in client.GetWorkers())
+            foreach (RouterWorker item in client.GetWorkers())
             {
             }
         }
@@ -1494,10 +1409,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            await foreach (RouterWorkerItem item in client.GetWorkersAsync())
+            await foreach (RouterWorker item in client.GetWorkersAsync())
             {
             }
         }
@@ -1506,32 +1420,32 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetWorkers(1234, "active", "<channelId>", "<queueId>", true, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("worker").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("queueAssignments").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("totalCapacity").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("labels").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("tags").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("capacityCostPerJob").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("maxNumberOfJobs").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offerId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("capacityCost").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offeredAt").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("expiresAt").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("loadRatio").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("availableForOffers").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("state").ToString());
+                Console.WriteLine(result.GetProperty("queues")[0].ToString());
+                Console.WriteLine(result.GetProperty("capacity").ToString());
+                Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+                Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+                Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+                Console.WriteLine(result.GetProperty("loadRatio").ToString());
+                Console.WriteLine(result.GetProperty("availableForOffers").ToString());
             }
         }
 
@@ -1539,32 +1453,32 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetWorkersAsync(1234, "active", "<channelId>", "<queueId>", true, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("worker").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("queueAssignments").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("totalCapacity").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("labels").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("tags").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("capacityCostPerJob").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("channelConfigurations").GetProperty("<key>").GetProperty("maxNumberOfJobs").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offerId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("capacityCost").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("offeredAt").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("offers")[0].GetProperty("expiresAt").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("loadRatio").ToString());
-                Console.WriteLine(result.GetProperty("worker").GetProperty("availableForOffers").ToString());
                 Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("state").ToString());
+                Console.WriteLine(result.GetProperty("queues")[0].ToString());
+                Console.WriteLine(result.GetProperty("capacity").ToString());
+                Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+                Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+                Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+                Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+                Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+                Console.WriteLine(result.GetProperty("loadRatio").ToString());
+                Console.WriteLine(result.GetProperty("availableForOffers").ToString());
             }
         }
 
@@ -1572,10 +1486,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            foreach (RouterWorkerItem item in client.GetWorkers(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
+            foreach (RouterWorker item in client.GetWorkers(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
             {
             }
         }
@@ -1584,10 +1497,9 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
-            await foreach (RouterWorkerItem item in client.GetWorkersAsync(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
+            await foreach (RouterWorker item in client.GetWorkersAsync(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
             {
             }
         }

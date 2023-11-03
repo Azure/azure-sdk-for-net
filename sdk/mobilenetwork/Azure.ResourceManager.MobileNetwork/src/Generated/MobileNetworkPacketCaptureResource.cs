@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.MobileNetwork
     public partial class MobileNetworkPacketCaptureResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkPacketCaptureResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="packetCoreControlPlaneName"> The packetCoreControlPlaneName. </param>
+        /// <param name="packetCaptureName"> The packetCaptureName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}";

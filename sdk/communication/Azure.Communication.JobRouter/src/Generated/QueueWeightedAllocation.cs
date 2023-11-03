@@ -24,21 +24,6 @@ namespace Azure.Communication.JobRouter
         /// A collection of queue selectors that will be applied if this allocation is
         /// selected.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueSelectors"/> is null. </exception>
-        internal QueueWeightedAllocation(double weight, IEnumerable<RouterQueueSelector> queueSelectors)
-        {
-            Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
-
-            Weight = weight;
-            QueueSelectors = queueSelectors.ToList();
-        }
-
-        /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
-        /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="queueSelectors">
-        /// A collection of queue selectors that will be applied if this allocation is
-        /// selected.
-        /// </param>
         internal QueueWeightedAllocation(double weight, IReadOnlyList<RouterQueueSelector> queueSelectors)
         {
             Weight = weight;

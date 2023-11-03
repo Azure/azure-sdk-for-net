@@ -33,11 +33,9 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
         /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
-        public static EmbeddingItem EmbeddingItem(IEnumerable<float> embedding = null, int index = default)
+        public static EmbeddingItem EmbeddingItem(ReadOnlyMemory<float> embedding = default, int index = default)
         {
-            embedding ??= new List<float>();
-
-            return new EmbeddingItem(embedding?.ToList(), index);
+            return new EmbeddingItem(embedding, index);
         }
 
         /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql
     public partial class SubscriptionUsageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionUsageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="usageName"> The usageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string usageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}";
