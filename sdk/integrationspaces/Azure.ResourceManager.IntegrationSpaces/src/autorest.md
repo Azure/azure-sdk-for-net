@@ -8,7 +8,7 @@ csharp: true
 library-name: IntegrationSpaces
 namespace: Azure.ResourceManager.IntegrationSpaces
 require: https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/azureintegrationspaces/resource-manager/readme.md
-tag: package-2023-11-14-preview
+#tag: package-2023-11-14-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,7 +21,14 @@ modelerfour:
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+rename-mapping:
+  Application: IntegrationSpaceApplication
+  ApplicationResource: IntegrationSpaceResource
+  TrackingProfileDefinition: TrackingProfile
+  TrackingEventDefinition: TrackingEvent
+  FlowTrackingDefinition: WorkflowTracking
+  ListBusinessProcessDevelopmentArtifactsResponse: BusinessProcessDevelopmentArtifactListResult
+  SaveOrGetBusinessProcessDevelopmentArtifactResponse: BusinessProcessDevelopmentArtifactResult
 
 format-by-name-rules:
   'tenantId': 'uuid'
