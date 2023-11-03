@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> An object representing collection of TrafficManagerEndpointResources and their operations over a TrafficManagerEndpointResource. </returns>
         public virtual TrafficManagerEndpointCollection GetTrafficManagerEndpoints()
         {
-            return GetCachedClient(Client => new TrafficManagerEndpointCollection(Client, Id));
+            return GetCachedClient(client => new TrafficManagerEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> An object representing collection of TrafficManagerHeatMapResources and their operations over a TrafficManagerHeatMapResource. </returns>
         public virtual TrafficManagerHeatMapCollection GetTrafficManagerHeatMaps()
         {
-            return GetCachedClient(Client => new TrafficManagerHeatMapCollection(Client, Id));
+            return GetCachedClient(client => new TrafficManagerHeatMapCollection(client, Id));
         }
 
         /// <summary>

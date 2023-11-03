@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of OfferResources and their operations over a OfferResource. </returns>
         public virtual OfferCollection GetOffers()
         {
-            return GetCachedClient(Client => new OfferCollection(Client, Id));
+            return GetCachedClient(client => new OfferCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OfferResource>> GetOfferAsync(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OfferResource> GetOffer(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {

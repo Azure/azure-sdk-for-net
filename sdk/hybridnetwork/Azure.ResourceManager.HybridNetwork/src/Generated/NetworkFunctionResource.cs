@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class NetworkFunctionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFunctionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFunctionName"> The networkFunctionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFunctionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}";
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of ComponentResources and their operations over a ComponentResource. </returns>
         public virtual ComponentCollection GetComponents()
         {
-            return GetCachedClient(Client => new ComponentCollection(Client, Id));
+            return GetCachedClient(client => new ComponentCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="componentName"> The name of the component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ComponentResource>> GetComponentAsync(string componentName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="componentName"> The name of the component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ComponentResource> GetComponent(string componentName, CancellationToken cancellationToken = default)
         {

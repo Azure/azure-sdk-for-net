@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementUserSubscriptionResources and their operations over a ApiManagementUserSubscriptionResource. </returns>
         public virtual ApiManagementUserSubscriptionCollection GetApiManagementUserSubscriptions()
         {
-            return GetCachedClient(Client => new ApiManagementUserSubscriptionCollection(Client, Id));
+            return GetCachedClient(client => new ApiManagementUserSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetApiManagementUserSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
         {
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiManagementUserSubscriptionResource> GetApiManagementUserSubscription(string sid, CancellationToken cancellationToken = default)
         {

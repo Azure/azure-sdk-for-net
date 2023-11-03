@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of ShareDataSetResources and their operations over a ShareDataSetResource. </returns>
         public virtual ShareDataSetCollection GetShareDataSets()
         {
-            return GetCachedClient(Client => new ShareDataSetCollection(Client, Id));
+            return GetCachedClient(client => new ShareDataSetCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ShareDataSetResource>> GetShareDataSetAsync(string dataSetName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ShareDataSetResource> GetShareDataSet(string dataSetName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareInvitationResources and their operations over a DataShareInvitationResource. </returns>
         public virtual DataShareInvitationCollection GetDataShareInvitations()
         {
-            return GetCachedClient(Client => new DataShareInvitationCollection(Client, Id));
+            return GetCachedClient(client => new DataShareInvitationCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="invitationName"> The name of the invitation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataShareInvitationResource>> GetDataShareInvitationAsync(string invitationName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="invitationName"> The name of the invitation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataShareInvitationResource> GetDataShareInvitation(string invitationName, CancellationToken cancellationToken = default)
         {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of ProviderShareSubscriptionResources and their operations over a ProviderShareSubscriptionResource. </returns>
         public virtual ProviderShareSubscriptionCollection GetProviderShareSubscriptions()
         {
-            return GetCachedClient(Client => new ProviderShareSubscriptionCollection(Client, Id));
+            return GetCachedClient(client => new ProviderShareSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProviderShareSubscriptionResource>> GetProviderShareSubscriptionAsync(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProviderShareSubscriptionResource> GetProviderShareSubscription(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareSynchronizationSettingResources and their operations over a DataShareSynchronizationSettingResource. </returns>
         public virtual DataShareSynchronizationSettingCollection GetDataShareSynchronizationSettings()
         {
-            return GetCachedClient(Client => new DataShareSynchronizationSettingCollection(Client, Id));
+            return GetCachedClient(client => new DataShareSynchronizationSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataShareSynchronizationSettingResource>> GetDataShareSynchronizationSettingAsync(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataShareSynchronizationSettingResource> GetDataShareSynchronizationSetting(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {

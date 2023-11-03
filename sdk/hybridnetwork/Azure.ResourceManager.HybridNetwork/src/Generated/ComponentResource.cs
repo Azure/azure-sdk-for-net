@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class ComponentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ComponentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFunctionName"> The networkFunctionName. </param>
+        /// <param name="componentName"> The componentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFunctionName, string componentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}/components/{componentName}";

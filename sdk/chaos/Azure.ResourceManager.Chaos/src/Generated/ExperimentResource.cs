@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of ExperimentStatusResources and their operations over a ExperimentStatusResource. </returns>
         public virtual ExperimentStatusCollection GetExperimentStatuses()
         {
-            return GetCachedClient(Client => new ExperimentStatusCollection(Client, Id));
+            return GetCachedClient(client => new ExperimentStatusCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="statusId"> GUID that represents a Experiment status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="statusId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExperimentStatusResource>> GetExperimentStatusAsync(string statusId, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="statusId"> GUID that represents a Experiment status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="statusId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExperimentStatusResource> GetExperimentStatus(string statusId, CancellationToken cancellationToken = default)
         {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of ExperimentExecutionDetailResources and their operations over a ExperimentExecutionDetailResource. </returns>
         public virtual ExperimentExecutionDetailCollection GetExperimentExecutionDetails()
         {
-            return GetCachedClient(Client => new ExperimentExecutionDetailCollection(Client, Id));
+            return GetCachedClient(client => new ExperimentExecutionDetailCollection(client, Id));
         }
 
         /// <summary>
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionDetailsId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExperimentExecutionDetailResource>> GetExperimentExecutionDetailAsync(string executionDetailsId, CancellationToken cancellationToken = default)
         {
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="executionDetailsId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExperimentExecutionDetailResource> GetExperimentExecutionDetail(string executionDetailsId, CancellationToken cancellationToken = default)
         {

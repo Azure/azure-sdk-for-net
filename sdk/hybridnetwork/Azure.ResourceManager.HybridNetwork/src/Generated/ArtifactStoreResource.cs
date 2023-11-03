@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class ArtifactStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArtifactStoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="artifactStoreName"> The artifactStoreName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}";
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of ArtifactManifestResources and their operations over a ArtifactManifestResource. </returns>
         public virtual ArtifactManifestCollection GetArtifactManifests()
         {
-            return GetCachedClient(Client => new ArtifactManifestCollection(Client, Id));
+            return GetCachedClient(client => new ArtifactManifestCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +119,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArtifactManifestResource>> GetArtifactManifestAsync(string artifactManifestName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +142,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArtifactManifestResource> GetArtifactManifest(string artifactManifestName, CancellationToken cancellationToken = default)
         {

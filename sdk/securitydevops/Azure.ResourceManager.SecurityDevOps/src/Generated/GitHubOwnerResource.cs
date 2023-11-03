@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of GitHubRepoResources and their operations over a GitHubRepoResource. </returns>
         public virtual GitHubRepoCollection GetGitHubRepos()
         {
-            return GetCachedClient(Client => new GitHubRepoCollection(Client, Id));
+            return GetCachedClient(client => new GitHubRepoCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GitHubRepoResource>> GetGitHubRepoAsync(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GitHubRepoResource> GetGitHubRepo(string gitHubRepoName, CancellationToken cancellationToken = default)
         {

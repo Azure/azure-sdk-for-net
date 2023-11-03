@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> An object representing collection of EasmLabelResources and their operations over a EasmLabelResource. </returns>
         public virtual EasmLabelCollection GetEasmLabels()
         {
-            return GetCachedClient(Client => new EasmLabelCollection(Client, Id));
+            return GetCachedClient(client => new EasmLabelCollection(client, Id));
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </summary>
         /// <param name="labelName"> The name of the Label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EasmLabelResource>> GetEasmLabelAsync(string labelName, CancellationToken cancellationToken = default)
         {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </summary>
         /// <param name="labelName"> The name of the Label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EasmLabelResource> GetEasmLabel(string labelName, CancellationToken cancellationToken = default)
         {

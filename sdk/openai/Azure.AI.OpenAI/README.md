@@ -209,17 +209,48 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     }
 };
 
-Response<StreamingChatCompletions> response
-    = await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions);
-using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(chatCompletionsOptions))
 {
-    await foreach (ChatMessage message in choice.GetMessageStreaming())
+    if (chatUpdate.Role.HasValue)
     {
-        Console.Write(message.Content);
+        Console.Write($"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ");
     }
-    Console.WriteLine();
+    if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+    {
+        Console.Write(chatUpdate.ContentUpdate);
+    }
+}
+```
+
+When explicitly requesting more than one `Choice` while streaming, use the `ChoiceIndex` property on
+`StreamingChatCompletionsUpdate` to determine which `Choice` each update corresponds to.
+
+```C# Snippet:StreamChatMessagesWithMultipleChoices
+// A ChoiceCount > 1 will feature multiple, parallel, independent text generations arriving on the
+// same response. This may be useful when choosing between multiple candidates for a single request.
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+    ChoiceCount = 4
+};
+
+await foreach (StreamingChatCompletionsUpdate chatUpdate
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
+    // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.
+    if (chatUpdate.ChoiceIndex.HasValue)
+    {
+        int choiceIndex = chatUpdate.ChoiceIndex.Value;
+        if (chatUpdate.Role.HasValue)
+        {
+            textBoxes[choiceIndex].Text += $"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ";
+        }
+        if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+        {
+            textBoxes[choiceIndex].Text += chatUpdate.ContentUpdate;
+        }
+    }
 }
 ```
 
@@ -337,6 +368,47 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
     }
 }
 ```
+
+When using streaming, capture streaming response components as they arrive and accumulate streaming function arguments
+in the same manner used for streaming content. Then, in the place of using the `ChatMessage` from the non-streaming
+response, instead add a new `ChatMessage` instance for history, created from the streamed information.
+
+```C# Snippet::ChatFunctions::StreamingFunctions
+string functionName = null;
+StringBuilder contentBuilder = new();
+StringBuilder functionArgumentsBuilder = new();
+ChatRole streamedRole = default;
+CompletionsFinishReason finishReason = default;
+
+await foreach (StreamingChatCompletionsUpdate update
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    contentBuilder.Append(update.ContentUpdate);
+    functionName ??= update.FunctionName;
+    functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
+    streamedRole = update.Role ?? default;
+    finishReason = update.FinishReason ?? default;
+}
+
+if (finishReason == CompletionsFinishReason.FunctionCall)
+{
+    string lastContent = contentBuilder.ToString();
+    string unvalidatedArguments = functionArgumentsBuilder.ToString();
+    ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+    {
+        FunctionCall = new(functionName, unvalidatedArguments),
+    };
+    conversationMessages.Add(chatMessageForHistory);
+
+    // Handle from here just like the non-streaming case
+}
+```
+
+Please note: while streamed function information (name, arguments) may be evaluated as it arrives, it should not be
+considered complete or confirmed until the `FinishReason` of `FunctionCall` is received. It may be appropriate to make
+best-effort attempts at "warm-up" or other speculative preparation based on a function name or particular key/value
+appearing in the accumulated, partial JSON arguments, but no strong assumptions about validity, ordering, or other
+details should be evaluated until the arguments are fully available and confirmed via `FinishReason`.
 
 ### Use your own data with Azure OpenAI
 

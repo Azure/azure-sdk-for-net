@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of IotSecurityAggregatedAlertResources and their operations over a IotSecurityAggregatedAlertResource. </returns>
         public virtual IotSecurityAggregatedAlertCollection GetIotSecurityAggregatedAlerts()
         {
-            return GetCachedClient(Client => new IotSecurityAggregatedAlertCollection(Client, Id));
+            return GetCachedClient(client => new IotSecurityAggregatedAlertCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotSecurityAggregatedAlertResource>> GetIotSecurityAggregatedAlertAsync(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotSecurityAggregatedAlertResource> GetIotSecurityAggregatedAlert(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of IotSecurityAggregatedRecommendationResources and their operations over a IotSecurityAggregatedRecommendationResource. </returns>
         public virtual IotSecurityAggregatedRecommendationCollection GetIotSecurityAggregatedRecommendations()
         {
-            return GetCachedClient(Client => new IotSecurityAggregatedRecommendationCollection(Client, Id));
+            return GetCachedClient(client => new IotSecurityAggregatedRecommendationCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="aggregatedRecommendationName"> Name of the recommendation aggregated for this query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotSecurityAggregatedRecommendationResource>> GetIotSecurityAggregatedRecommendationAsync(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="aggregatedRecommendationName"> Name of the recommendation aggregated for this query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotSecurityAggregatedRecommendationResource> GetIotSecurityAggregatedRecommendation(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
