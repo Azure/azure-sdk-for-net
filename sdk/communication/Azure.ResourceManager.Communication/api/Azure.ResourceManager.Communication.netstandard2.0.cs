@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.Communication
     public partial class SuppressionListResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public SuppressionListResourceData() { }
-        public string CreatedTimeStamp { get { throw null; } }
+        public System.DateTimeOffset? CreatedTimeStamp { get { throw null; } }
         public string DataLocation { get { throw null; } }
-        public string LastUpdatedTimeStamp { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedTimeStamp { get { throw null; } }
         public string ListName { get { throw null; } set { } }
     }
 }
@@ -315,6 +315,8 @@ namespace Azure.ResourceManager.Communication.Mocking
         public virtual Azure.ResourceManager.Communication.CommunicationServiceResource GetCommunicationServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Communication.EmailServiceResource GetEmailServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Communication.SenderUsernameResource GetSenderUsernameResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.SuppressionListAddressResource GetSuppressionListAddressResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.SuppressionListResource GetSuppressionListResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableCommunicationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -355,7 +357,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.Models.LinkedNotificationHub LinkedNotificationHub(Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.Communication.SenderUsernameResourceData SenderUsernameResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.CommunicationServiceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Communication.SuppressionListAddressResourceData SuppressionListAddressResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string email = null, string firstName = null, string lastName = null, string notes = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), string dataLocation = null) { throw null; }
-        public static Azure.ResourceManager.Communication.SuppressionListResourceData SuppressionListResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string listName = null, string lastUpdatedTimeStamp = null, string createdTimeStamp = null, string dataLocation = null) { throw null; }
+        public static Azure.ResourceManager.Communication.SuppressionListResourceData SuppressionListResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string listName = null, System.DateTimeOffset? lastUpdatedTimeStamp = default(System.DateTimeOffset?), System.DateTimeOffset? createdTimeStamp = default(System.DateTimeOffset?), string dataLocation = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.VerificationDnsRecord VerificationDnsRecord(string dnsRecordType = null, string name = null, string value = null, int? timeToLiveInSeconds = default(int?)) { throw null; }
     }
     public partial class CommunicationAcceptTags
