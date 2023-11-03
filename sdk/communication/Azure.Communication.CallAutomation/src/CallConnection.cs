@@ -379,8 +379,8 @@ namespace Azure.Communication.CallAutomation
             AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
                 CustomCallingContext = new CustomCallingContextInternal(
-                    options.ParticipantToAdd.CustomContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    options.ParticipantToAdd.CustomContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()
+                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                    options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()
                     ),
                 SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
                     ? null
