@@ -469,7 +469,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant()
         {
             var callInvite = new CallInvite(new CommunicationUserIdentifier("userId"));
-            callInvite.CustomContext.AddVoip("key1", "value1");
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
             return new[]
             {
                 new object?[]
