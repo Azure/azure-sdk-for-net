@@ -7,8 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("WebhookRouterRule")]
-    [CodeGenSuppress("WebhookRouterRule")]
     public partial class WebhookRouterRule : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of WebhookRouterRule. </summary>

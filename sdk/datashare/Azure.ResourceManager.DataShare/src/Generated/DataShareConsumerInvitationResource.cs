@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.DataShare
     public partial class DataShareConsumerInvitationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareConsumerInvitationResource"/> instance. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="invitationId"> The invitationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(AzureLocation location, Guid invitationId)
         {
             var resourceId = $"/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}";

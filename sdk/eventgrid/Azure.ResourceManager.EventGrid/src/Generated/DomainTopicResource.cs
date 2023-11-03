@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EventGrid
     public partial class DomainTopicResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DomainTopicResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="domainName"> The domainName. </param>
+        /// <param name="domainTopicName"> The domainTopicName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}";
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of DomainTopicEventSubscriptionResources and their operations over a DomainTopicEventSubscriptionResource. </returns>
         public virtual DomainTopicEventSubscriptionCollection GetDomainTopicEventSubscriptions()
         {
-            return GetCachedClient(Client => new DomainTopicEventSubscriptionCollection(Client, Id));
+            return GetCachedClient(client => new DomainTopicEventSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DomainTopicEventSubscriptionResource>> GetDomainTopicEventSubscriptionAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DomainTopicEventSubscriptionResource> GetDomainTopicEventSubscription(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {

@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CosmosDBSqlClientEncryptionKeyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBSqlClientEncryptionKeyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="clientEncryptionKeyName"> The clientEncryptionKeyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}";

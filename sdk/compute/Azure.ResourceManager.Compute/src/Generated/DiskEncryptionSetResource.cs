@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskEncryptionSetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskEncryptionSetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="diskEncryptionSetName"> The diskEncryptionSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskEncryptionSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}";

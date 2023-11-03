@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class LocalNetworkGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LocalNetworkGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="localNetworkGatewayName"> The localNetworkGatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string localNetworkGatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}";

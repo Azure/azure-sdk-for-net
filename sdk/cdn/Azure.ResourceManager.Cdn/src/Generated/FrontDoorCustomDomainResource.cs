@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Cdn
     public partial class FrontDoorCustomDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorCustomDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="customDomainName"> The customDomainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string customDomainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}";

@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricAccessControlListResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricAccessControlListResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accessControlListName"> The accessControlListName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accessControlListName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}";

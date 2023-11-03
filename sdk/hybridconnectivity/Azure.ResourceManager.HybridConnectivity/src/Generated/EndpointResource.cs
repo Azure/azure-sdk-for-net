@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.HybridConnectivity
     public partial class EndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EndpointResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string endpointName)
         {
             var resourceId = $"{scope}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}";

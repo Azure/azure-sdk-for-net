@@ -10,6 +10,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSuppress("JobRouterAdministrationClient", typeof(Uri))]
+    [CodeGenSuppress("JobRouterAdministrationClient", typeof(Uri), typeof(JobRouterClientOptions))]
     [CodeGenSuppress("CreateGetExceptionPoliciesNextPageRequest", typeof(string), typeof(int?), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetClassificationPoliciesNextPageRequest", typeof(string), typeof(int?), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetQueuesNextPageRequest", typeof(string), typeof(int?), typeof(RequestContext))]
@@ -62,6 +64,32 @@ namespace Azure.Communication.JobRouter
         }
 
         #endregion public constructors
+
+        #region internal constructors
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal JobRouterAdministrationClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal JobRouterAdministrationClient(Uri endpoint, JobRouterClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new JobRouterClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        #endregion
 
         #region private constructors
 

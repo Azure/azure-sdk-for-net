@@ -26,14 +26,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="exceptionRules"> (Optional) A collection of exception rules on the exception policy. </param>
         internal ExceptionPolicy(string etag, string id, string name, IList<ExceptionRule> exceptionRules)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             Name = name;
             ExceptionRules = exceptionRules;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
         /// <summary> The Id of the exception policy. </summary>
         public string Id { get; }
     }

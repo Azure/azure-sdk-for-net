@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.BillingBenefits
     public partial class BillingBenefitsSavingsPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingBenefitsSavingsPlanResource"/> instance. </summary>
+        /// <param name="savingsPlanOrderId"> The savingsPlanOrderId. </param>
+        /// <param name="savingsPlanId"> The savingsPlanId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string savingsPlanOrderId, string savingsPlanId)
         {
             var resourceId = $"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}";

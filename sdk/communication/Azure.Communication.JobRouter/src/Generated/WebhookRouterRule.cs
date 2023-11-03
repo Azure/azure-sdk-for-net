@@ -13,6 +13,12 @@ namespace Azure.Communication.JobRouter
     public partial class WebhookRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
+        internal WebhookRouterRule()
+        {
+            Kind = "webhook-rule";
+        }
+
+        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential">

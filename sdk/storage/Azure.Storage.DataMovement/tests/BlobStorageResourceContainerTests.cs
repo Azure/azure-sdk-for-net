@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
@@ -113,6 +114,28 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceProperties properties = await resource.GetPropertiesAsync();
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.ETag);
+        }
+
+        [Test]
+        public void GetChildStorageResourceContainer()
+        {
+            // Arrange
+            Uri uri = new Uri("https://storageaccount.blob.core.windows.net/container");
+            Mock<BlobContainerClient> mock = new(uri, new BlobClientOptions());
+            mock.Setup(b => b.Uri).Returns(uri);
+
+            string prefix = "foo";
+            StorageResourceContainer containerResource =
+                new BlobStorageResourceContainer(mock.Object, new() { BlobDirectoryPrefix = prefix });
+
+            // Act
+            string childPath = "bar";
+            StorageResourceContainer childContainer = containerResource.GetChildStorageResourceContainer(childPath);
+
+            // Assert
+            UriBuilder builder = new UriBuilder(containerResource.Uri);
+            builder.Path = string.Join("/", builder.Path, childPath);
+            Assert.AreEqual(builder.Uri, childContainer.Uri);
         }
     }
 }

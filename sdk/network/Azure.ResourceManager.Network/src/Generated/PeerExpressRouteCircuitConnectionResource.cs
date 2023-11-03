@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Network
     public partial class PeerExpressRouteCircuitConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PeerExpressRouteCircuitConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="circuitName"> The circuitName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
+        /// <param name="connectionName"> The connectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string circuitName, string peeringName, string connectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections/{connectionName}";
