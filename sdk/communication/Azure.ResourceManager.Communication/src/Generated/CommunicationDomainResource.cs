@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of SuppressionListResources and their operations over a SuppressionListResource. </returns>
         public virtual SuppressionListResourceCollection GetSuppressionListResources()
         {
-            return GetCachedClient(Client => new SuppressionListResourceCollection(Client, Id));
+            return GetCachedClient(client => new SuppressionListResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="suppressionListName"> The name of the suppression list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SuppressionListResource>> GetSuppressionListResourceAsync(string suppressionListName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="suppressionListName"> The name of the suppression list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SuppressionListResource> GetSuppressionListResource(string suppressionListName, CancellationToken cancellationToken = default)
         {

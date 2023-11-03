@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.Communication
     public partial class SuppressionListAddressResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SuppressionListAddressResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="emailServiceName"> The emailServiceName. </param>
+        /// <param name="domainName"> The domainName. </param>
+        /// <param name="suppressionListName"> The suppressionListName. </param>
+        /// <param name="addressId"> The addressId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName, string addressId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}/suppressionListAddresses/{addressId}";

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Communication
     public partial class SuppressionListResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SuppressionListResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="emailServiceName"> The emailServiceName. </param>
+        /// <param name="domainName"> The domainName. </param>
+        /// <param name="suppressionListName"> The suppressionListName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}";
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An object representing collection of SuppressionListAddressResources and their operations over a SuppressionListAddressResource. </returns>
         public virtual SuppressionListAddressResourceCollection GetSuppressionListAddressResources()
         {
-            return GetCachedClient(Client => new SuppressionListAddressResourceCollection(Client, Id));
+            return GetCachedClient(client => new SuppressionListAddressResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +113,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="addressId"> The id of the address in a suppression list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addressId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addressId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SuppressionListAddressResource>> GetSuppressionListAddressResourceAsync(string addressId, CancellationToken cancellationToken = default)
         {
@@ -131,8 +136,8 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="addressId"> The id of the address in a suppression list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addressId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addressId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SuppressionListAddressResource> GetSuppressionListAddressResource(string addressId, CancellationToken cancellationToken = default)
         {

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _dataLocation;
 
         public SuppressionListTests(bool isAsync)
-            : base(isAsync) //, Core.TestFramework.RecordedTestMode.Record)
+            : base(isAsync, Core.TestFramework.RecordedTestMode.Record)
         {
         }
 
@@ -67,23 +67,7 @@ namespace Azure.ResourceManager.Communication.Tests
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            // await foreach (var suppressionList in _domainResource.GetSuppressionListResources().GetAllAsync())
-            // {
-            //    if (suppressionList.Data.Name.Equals("paginated-list", StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        continue;
-            //    }
-
-            //    await foreach (var suppressionListAddress in suppressionList.GetSuppressionListAddressResources().GetAllAsync())
-            //    {
-            //        await suppressionListAddress.DeleteAsync(WaitUntil.Completed);
-            //    }
-
-            //    await suppressionList.DeleteAsync(WaitUntil.Completed);
-            // }
-        }
+        public void TearDown() { }
 
         [Test]
         public async Task CreateGetAndDeleteSuppressionList()
