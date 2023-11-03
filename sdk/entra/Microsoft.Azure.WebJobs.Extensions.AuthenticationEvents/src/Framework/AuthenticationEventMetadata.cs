@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 }
                 catch (ValidationException exception)
                 {
-                    throw new RequestValidationException(exception.Message, exception.InnerException);
+                    throw new AuthenticationEventTriggerRequestValidationException(exception.Message, exception.InnerException);
                 }
             }
 

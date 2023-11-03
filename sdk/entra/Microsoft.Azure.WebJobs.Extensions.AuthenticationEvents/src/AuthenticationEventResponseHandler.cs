@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 if (result == null)
                 {
-                    throw new ResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
+                    throw new AuthenticationEventTriggerResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
                 }
 
                 if (result is AuthenticationEventResponse action)
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     AuthenticationEventResponse response = Request.GetResponseObject();
                     if (response == null)
                     {
-                        throw new RequestValidationException(AuthenticationEventResource.Ex_Missing_Request_Response);
+                        throw new AuthenticationEventTriggerRequestValidationException(AuthenticationEventResource.Ex_Missing_Request_Response);
                     }
 
                     Response = GetActionResult(result, response);
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (JsonException ex)
             {
-                throw new ResponseValidationException($"{AuthenticationEventResource.Ex_Invalid_Return}: {ex.Message}", ex.InnerException);
+                throw new AuthenticationEventTriggerResponseValidationException($"{AuthenticationEventResource.Ex_Invalid_Return}: {ex.Message}", ex.InnerException);
             }
 
             return new AuthenticationEventJsonElement(result);

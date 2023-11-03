@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             string payload = testObject.ToString();
             if (success == false)
             {
-                var ex = Assert.Throws<RequestValidationException>(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
+                var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
                 Assert.AreEqual(exceptionMessage, ex.Message);
             }
             else
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             if (success == false)
             {
-                var ex = Assert.Throws<RequestValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
+                var ex = Assert.Throws<AuthenticationEventTriggerRequestValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
                 Assert.AreEqual(exceptionMessage, ex.Message);
             }
             else
