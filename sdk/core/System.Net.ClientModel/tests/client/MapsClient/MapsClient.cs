@@ -28,6 +28,7 @@ public class MapsClient
         _credential = credential;
         _apiVersion = options.Version;
 
+        // TODO: Can this be simplified?
         if (options.PerCallPolicies is null)
         {
             options.PerCallPolicies = new PipelinePolicy[1];
@@ -35,10 +36,10 @@ public class MapsClient
         else
         {
             var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
-            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan());
+            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan().Slice(1));
         }
 
-        options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
+        options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
         _pipeline = MessagePipeline.Create(options);
     }
@@ -64,7 +65,6 @@ public class MapsClient
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
         options ??= new RequestOptions();
-        options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
         using ClientMessage message = CreateGetLocationRequest(ipAddress, options);
 
@@ -83,6 +83,9 @@ public class MapsClient
     private ClientMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         ClientMessage message = _pipeline.CreateMessage();
+
+        // TODO: this overrides anything the caller passed, so we need to fix it.
+        options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
         options.Apply(message);
 
         MessageRequest request = message.Request;

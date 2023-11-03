@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using Maps;
-using System.Net.ClientModel.Core;
+using NUnit.Framework;
 
 namespace System.Net.ClientModel.Tests;
 

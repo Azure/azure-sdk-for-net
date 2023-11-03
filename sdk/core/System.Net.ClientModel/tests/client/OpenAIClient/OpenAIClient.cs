@@ -32,10 +32,10 @@ public class OpenAIClient
         else
         {
             var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
-            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan());
+            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan().Slice(1));
         }
 
-        options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
+        options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
 
         _pipeline = MessagePipeline.Create(options);
     }
