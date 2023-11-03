@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
     public class AuthConfigDataTests : AppContainersManagementTestBase
     {
         public AuthConfigDataTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

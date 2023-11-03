@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
     public class ManagedEnviromentTests : AppContainersManagementTestBase
     {
         public ManagedEnviromentTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
