@@ -79,13 +79,13 @@ namespace Azure.Storage.DataMovement
                   length: length)
         {
             // If transfer sizes null at the job level (from options bag) then
-            // override the default with checkpointed values.
+            // override the default with the provided values if present.
             // Else, they were set correctly by the base constructor.
-            if (!job._maximumTransferChunkSize.HasValue)
+            if (!job._maximumTransferChunkSize.HasValue && transferChunkSize.HasValue)
             {
                 _transferChunkSize = transferChunkSize.Value;
             }
-            if (!job._initialTransferSize.HasValue)
+            if (!job._initialTransferSize.HasValue && initialTransferSize.HasValue)
             {
                 _initialTransferSize = initialTransferSize.Value;
             }
