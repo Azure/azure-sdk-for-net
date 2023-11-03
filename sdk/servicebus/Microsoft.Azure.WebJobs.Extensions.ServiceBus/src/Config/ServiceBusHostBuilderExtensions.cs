@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure.WebJobs;
-#if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER && Grpc
 using Microsoft.Azure.WebJobs.Extensions.Rpc;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc;
 #endif
@@ -107,7 +107,7 @@ namespace Microsoft.Extensions.Hosting
 
                     configure(options);
                 })
-#if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER && Grpc
                 .MapWorkerGrpcService<SettlementService>()
 #endif
                 ;
@@ -116,7 +116,7 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.TryAddSingleton<MessagingProvider>();
             builder.Services.AddSingleton<CleanupService>();
             builder.Services.AddSingleton<ServiceBusClientFactory>();
-            #if NET6_0_OR_GREATER
+            #if NET6_0_OR_GREATER && Grpc
             builder.Services.AddSingleton<SettlementService>();
             #endif
             return builder;

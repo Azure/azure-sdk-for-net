@@ -39,3 +39,5 @@ extends:
       safeName: AzureMessagingServiceBus
     - name: Microsoft.Azure.WebJobs.Extensions.ServiceBus
       safeName: MicrosoftAzureWebJobsExtensionsServiceBus
+    - name: Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
+      safeName: MicrosoftAzureWebJobsExtensionsServiceBusGrpc
