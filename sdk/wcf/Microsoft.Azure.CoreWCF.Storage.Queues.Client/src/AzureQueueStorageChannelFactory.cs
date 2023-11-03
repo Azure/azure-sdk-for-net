@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -36,26 +35,26 @@ namespace Azure.Storage.WCF.Channels
         {
             _azureQueueStorageTransportBindingElement = bindingElement;
             var messageEncoderBindingElement = context.BindingParameters.Find<MessageEncodingBindingElement>();
-            this.MessageEncoderFactory = messageEncoderBindingElement == null
+            MessageEncoderFactory = messageEncoderBindingElement == null
                 ? AzureQueueStorageConstants.DefaultMessageEncoderFactory
                 : messageEncoderBindingElement.CreateMessageEncoderFactory();
 
-            this.BufferManager = BufferManager.CreateBufferManager(bindingElement.MaxBufferPoolSize, int.MaxValue);
-            this.ConnectionString = bindingElement.ConnectionString;
-            //this.QueueName = AzureQueueStorageChannelHelpers.ExtractQueueNameFromConnectionString(bindingElement.ConnectionString);
+            BufferManager = BufferManager.CreateBufferManager(bindingElement.MaxBufferPoolSize, int.MaxValue);
+            ConnectionString = bindingElement.ConnectionString;
 
             var securityCredentialsManager = context.BindingParameters.Find<SecurityCredentialsManager>() ?? new ClientCredentials();
 
             var securityTokenManager = securityCredentialsManager.CreateSecurityTokenManager();
-            InitiatorServiceModelSecurityTokenRequirement serverCertRequirement = new InitiatorServiceModelSecurityTokenRequirement();
-            serverCertRequirement.TokenType = X509CertificateTokenType;
-            serverCertRequirement.RequireCryptographicToken = true;
-            serverCertRequirement.KeyUsage = SecurityKeyUsage.Exchange;
-            serverCertRequirement.TransportScheme = "net.aqs";
+            InitiatorServiceModelSecurityTokenRequirement serverCertRequirement = new InitiatorServiceModelSecurityTokenRequirement
+            {
+                TokenType = X509CertificateTokenType,
+                RequireCryptographicToken = true,
+                KeyUsage = SecurityKeyUsage.Exchange,
+                TransportScheme = "net.aqs"
+            };
             serverCertRequirement.Properties[PreferSslCertificateAuthenticatorProperty] = true;
 
-            SecurityTokenResolver dummy;
-            SecurityTokenAuthenticator = securityTokenManager.CreateSecurityTokenAuthenticator(serverCertRequirement, out dummy);
+            SecurityTokenAuthenticator = securityTokenManager.CreateSecurityTokenAuthenticator(serverCertRequirement, out SecurityTokenResolver dummy);
 
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             httpClientHandler.ServerCertificateCustomValidationCallback = RemoteCertificateValidationCallback;

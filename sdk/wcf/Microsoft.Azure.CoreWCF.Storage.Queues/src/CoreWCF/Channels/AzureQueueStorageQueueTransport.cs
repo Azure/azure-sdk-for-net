@@ -7,6 +7,7 @@ using System.IO.Pipelines;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -21,11 +22,13 @@ namespace Azure.Storage.CoreWCF.Channels
 {
     internal class AzureQueueStorageQueueTransport : IQueueTransport
     {
-        private MessageQueue _queueClient;
-        private DeadLetterQueue _deadLetterQueueClient;
-        private ILogger<AzureQueueStorageQueueTransport> _logger;
-        private Uri _baseAddress;
+        private readonly MessageQueue _queueClient;
+        private readonly DeadLetterQueue _deadLetterQueueClient;
+        private readonly ILogger<AzureQueueStorageQueueTransport> _logger;
+        private readonly Uri _baseAddress;
         private TimeSpan _receiveMessageVisibilityTimeout;
+        private TimeSpan _pollingInterval;
+        private readonly ILogger<AzureQueueReceiveContext> _azureQueueReceiveContextLogger;
 
         public AzureQueueStorageQueueTransport(
             IServiceDispatcher serviceDispatcher,
@@ -38,11 +41,15 @@ namespace Azure.Storage.CoreWCF.Channels
                 throw new ArgumentException("Connection string and Uri Endpoint both cannot be empty.");
             }
 
+            _pollingInterval = azureQueueStorageTransportBindingElement.PollingInterval;
+            _azureQueueReceiveContextLogger = serviceProvider.GetRequiredService<ILogger<AzureQueueReceiveContext>>();
+
             string extractedQueueName = AzureQueueStorageChannelHelpers.ExtractAndValidateQueueName(
                 serviceDispatcher.BaseAddress,
                 azureQueueStorageTransportBindingElement);
 
             QueueClientOptions queueClientOptions = new QueueClientOptions();
+            queueClientOptions.RetryPolicy = new RetryPolicy(5, DelayStrategy.CreateExponentialDelayStrategy(azureQueueStorageTransportBindingElement.PollingInterval));
             var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
             if (httpClientFactory != null)
             {
@@ -56,19 +63,29 @@ namespace Azure.Storage.CoreWCF.Channels
                 _queueClient = new MessageQueue(
                     azureQueueStorageTransportBindingElement.ConnectionString,
                     extractedQueueName,
-                    queueClientOptions);
+                    queueClientOptions,
+                    _pollingInterval,
+                    serviceProvider.GetService<ILogger<MessageQueue>>());
 
                 _deadLetterQueueClient = new DeadLetterQueue(
                     azureQueueStorageTransportBindingElement.ConnectionString,
-                    azureQueueStorageTransportBindingElement.DeadLetterQueueName);
+                    azureQueueStorageTransportBindingElement.DeadLetterQueueName,
+                    queueClientOptions,
+                    serviceProvider.GetService<ILogger<DeadLetterQueue>>());
             }
             else
             {
-                _queueClient = new MessageQueue(serviceDispatcher.BaseAddress);
+                _queueClient = new MessageQueue(
+                    serviceDispatcher.BaseAddress,
+                    queueClientOptions,
+                    _pollingInterval,
+                    serviceProvider.GetService<ILogger<MessageQueue>>());
                 _deadLetterQueueClient = new DeadLetterQueue(
                     AzureQueueStorageChannelHelpers.CreateEndpointUriForQueue(
                         serviceDispatcher.BaseAddress,
-                        azureQueueStorageTransportBindingElement.DeadLetterQueueName));
+                        azureQueueStorageTransportBindingElement.DeadLetterQueueName),
+                    queueClientOptions,
+                    serviceProvider.GetService<ILogger<DeadLetterQueue>>());
             }
 
             _queueClient.CreateIfNotExistsAsync();
@@ -83,13 +100,15 @@ namespace Azure.Storage.CoreWCF.Channels
         public async ValueTask<QueueMessageContext> ReceiveQueueMessageContextAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            _logger.LogInformation("Receiving message from Azure queue storage");
+            _logger.LogDebug("ReceiveQueueMessageContextAsync: ReceiveQueueMessageContextAsync called");
 
             QueueMessage queueMessage = await _queueClient.ReceiveMessageAsync(_receiveMessageVisibilityTimeout, cancellationToken).ConfigureAwait(false);
             if (queueMessage == null)
             {
+                _logger.LogDebug("ReceiveQueueMessageContextAsync: ReceiveMessageAsync returned null");
                 return null;
             }
+            _logger.LogDebug("ReceiveQueueMessageContextAsync: ReceiveMessageAsync returned message with id: " + queueMessage.MessageId);
             var reader = PipeReader.Create(new ReadOnlySequence<byte>(queueMessage.Body.ToMemory()));
             return GetContext(reader, new EndpointAddress(_baseAddress), queueMessage);
         }
@@ -102,7 +121,12 @@ namespace Azure.Storage.CoreWCF.Channels
                 LocalAddress = endpointAddress
             };
 
-            var receiveContext = new AzureQueueReceiveContext(_queueClient, _deadLetterQueueClient, queueMessage);
+            var receiveContext = new AzureQueueReceiveContext(
+                _queueClient,
+                _deadLetterQueueClient,
+                queueMessage,
+                _pollingInterval,
+                _azureQueueReceiveContextLogger);
             context.ReceiveContext = receiveContext;
 
             return context;

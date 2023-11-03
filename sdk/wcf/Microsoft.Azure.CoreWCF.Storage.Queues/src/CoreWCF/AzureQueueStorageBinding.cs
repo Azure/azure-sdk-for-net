@@ -20,8 +20,12 @@ namespace Azure.Storage.CoreWCF
         private string _deadLetterQueueName;
 
         /// <summary>
-        /// Initializes a new instance of the AzureQueueStorageBinding class with the specified parameters.
+        /// Initializes a new instance of the AzureQueueStorageBinding class with the provided Azure Storage Queue
+        /// connection string and optional dead letter queue name.
         /// </summary>
+        /// <param name="connectionString">A string representing the connection string to the Azure Storage Queue.</param>
+        /// <param name="deadLetterQueueName">A string representing the name of the dead letter queue. If not specified,
+        /// the default name is "DefaultDeadLetterQueue".</param>
         public AzureQueueStorageBinding(string connectionString, string deadLetterQueueName = "DefaultDeadLetterQueue")
         {
             _connectionString = connectionString;

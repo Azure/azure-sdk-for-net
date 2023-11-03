@@ -34,10 +34,18 @@
     </PackageReference>
   </ItemGroup>
   
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <PackageReference Include="System.ServiceModel.Primitives" VersionOverride="6.1.0"/>
+  </ItemGroup>
+    
   <ItemGroup>
     <ProjectReference Include="..\..\..\storage\Azure.Storage.Common\tests\Azure.Storage.Common.Tests.csproj" />
     <ProjectReference Include="..\..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="..\src\Azure.CoreWCF.AzureQueueStorage.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <ProjectReference Include="..\..\Microsoft.Azure.CoreWCF.Storage.Queues.Client\src\Azure.WCF.AzureQueueStorage.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,8 +17,10 @@ namespace Azure.Storage.WCF.Channels
                 if (IPAddress.IsLoopback(ipaddress))
                 {
                     // this means that Azurite is being used for tests.
-                    UriBuilder uriBuilder = new(uri);
-                    uriBuilder.Scheme = "https";
+                    UriBuilder uriBuilder = new(uri)
+                    {
+                        Scheme = "https"
+                    };
                     return uriBuilder.Uri;
                 }
             }

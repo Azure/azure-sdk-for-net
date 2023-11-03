@@ -6,13 +6,16 @@ using CoreWCF.Channels;
 using CoreWCF.Configuration;
 using CoreWCF.Queue.Common;
 using CoreWCF.Queue.Common.Configuration;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Storage.CoreWCF.Channels
 {
     /// <summary>
     /// Class that represents Azure Queue Storage transport binding element.
     /// </summary>
-    public class AzureQueueStorageTransportBindingElement : QueueBaseTransportBindingElement
+    public class AzureQueueStorageTransportBindingElement : QueueBaseTransportBindingElement, ITransportServiceBuilder
     {
         private long _maxReceivedMessageSize;
         private TimeSpan _receiveMessagevisibilityTimeout = TransportDefaults.ReceiveMessagevisibilityTimeout;
@@ -50,6 +53,11 @@ namespace Azure.Storage.CoreWCF.Channels
                 throw new ArgumentNullException(nameof(context));
             }
 
+            if (typeof(T) == typeof(ITransportServiceBuilder))
+            {
+                return (T)(object) this;
+            }
+
             return base.GetProperty<T>(context);
         }
 
@@ -65,9 +73,18 @@ namespace Azure.Storage.CoreWCF.Channels
         private IQueueTransport CreateMyQueueTransport(BindingContext context)
         {
             var serviceDispatcher = context.BindingParameters.Find<IServiceDispatcher>();
-            // serviceDispatcher.BaseAddress = AzureQueueStorageChannelHelpers.CreateEndpointUriFromConnectionString(ConnectionString);
             var serviceProvider = context.BindingParameters.Find<IServiceProvider>();
             return new AzureQueueStorageQueueTransport(serviceDispatcher, serviceProvider, this);
+        }
+
+        void ITransportServiceBuilder.Configure(IApplicationBuilder app)
+        {
+            var serviceBuilder = app.ApplicationServices.GetRequiredService<IServiceBuilder>();
+            Uri baseAddress = AzureQueueStorageChannelHelpers.CreateEndpointUriFromConnectionString(ConnectionString);
+            if (!serviceBuilder.BaseAddresses.Contains(baseAddress))
+            {
+                serviceBuilder.BaseAddresses.Add(baseAddress);
+            }
         }
 
         /// <summary>
@@ -117,5 +134,11 @@ namespace Azure.Storage.CoreWCF.Channels
         /// Gets or sets name of Azure queue Storage dead letter queue.
         /// </summary>
         public string DeadLetterQueueName { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of Azure queue Storage dead letter queue.
+        /// https://learn.microsoft.com/en-us/azure/storage/queues/storage-performance-checklist#queue-polling-interval
+        /// </summary>
+        public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(1);
     }
 }

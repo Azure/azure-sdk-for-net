@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Threading;
 using Azure.Storage.WCF;
-using System.IdentityModel.Selectors;
 using System.ServiceModel.Security;
-using NuGet.Frameworks;
+using Azure.Storage.Queues.Models;
 
 namespace WCF.AzureQueueStorage.Tests
 {
@@ -24,8 +23,10 @@ namespace WCF.AzureQueueStorage.Tests
             var azuriteFixture = AzuriteNUnitFixture.Instance;
             var transport = azuriteFixture.GetTransport();
             var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
-            var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName);
-            endpointUriBuilder.Scheme = "net.aqs";
+            var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName)
+            {
+                Scheme = "net.aqs"
+            };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
             var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport });
             queueClient.CreateIfNotExists();
@@ -37,18 +38,19 @@ namespace WCF.AzureQueueStorage.Tests
             AzureQueueStorageBinding azureQueueStorageBinding = new AzureQueueStorageBinding(connectionString, AzureQueueStorageMessageEncoding.Text);
             var channelFactory = new ChannelFactory<ITestContract>(azureQueueStorageBinding, new EndpointAddress(endpointUrlString));
 
-            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication();
-            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication.CertificateValidationMode = X509CertificateValidationMode.None;
+            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication
+            {
+                CertificateValidationMode = X509CertificateValidationMode.None
+            };
 
             var channel = channelFactory.CreateChannel();
             ((System.ServiceModel.Channels.IChannel)channel).Open();
             channel.Create("TestService");
 
-            string inputMessage = "<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\"><s:Header><a:Action s:mustUnderstand=\"1\">http://tempuri.org/ITestContract/Create</a:Action></s:Header><s:Body><Create xmlns=\"http://tempuri.org/\"><name>test</name></Create></s:Body></s:Envelope>";
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(20));
-            var message = await queueClient.ReceiveMessageAsync(null, cancellationTokenSource.Token);
-            Assert.Equals(message.ToString(), inputMessage);
+            string inputMessage = $"<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\"><s:Header><a:Action s:mustUnderstand=\"1\">http://tempuri.org/ITestContract/Create</a:Action><a:To s:mustUnderstand=\"1\">{endpointUrlString}</a:To></s:Header><s:Body><Create xmlns=\"http://tempuri.org/\"><name>TestService</name></Create></s:Body></s:Envelope>";
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            QueueMessage message = await queueClient.ReceiveMessageAsync(null, cancellationTokenSource.Token);
+            Assert.AreEqual(inputMessage, message.MessageText.ToString());
         }
     }
 }

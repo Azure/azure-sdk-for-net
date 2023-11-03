@@ -12,7 +12,8 @@ namespace Azure.Storage.WCF.Channels
     {
         internal const string EventLogSourceName = "Microsoft.ServiceModel.AQS";
         internal const string Scheme = "net.aqs";
-        private static MessageEncoderFactory s_messageEncoderFactory;
+        private static readonly MessageEncoderFactory s_messageEncoderFactory;
+
         static AzureQueueStorageConstants()
         {
             s_messageEncoderFactory = new TextMessageEncodingBindingElement().CreateMessageEncoderFactory();

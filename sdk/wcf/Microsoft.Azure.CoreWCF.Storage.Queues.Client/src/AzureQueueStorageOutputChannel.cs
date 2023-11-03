@@ -2,23 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IdentityModel.Policy;
-using System.IdentityModel.Selectors;
-using System.IdentityModel.Tokens;
-using System.Net.Http;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.ServiceModel.Security.Tokens;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Identity;
 using Azure.Storage.Queues;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Storage.WCF.Channels
 {
@@ -28,11 +17,11 @@ namespace Azure.Storage.WCF.Channels
     internal class AzureQueueStorageOutputChannel : ChannelBase, IOutputChannel
     {
         #region member_variables
-        private EndpointAddress _remoteAddress;
-        private Uri _via;
-        private MessageEncoder _encoder;
-        private AzureQueueStorageChannelFactory _parent;
-        private QueueClient _queueClient;
+        private readonly EndpointAddress _remoteAddress;
+        private readonly Uri _via;
+        private readonly MessageEncoder _encoder;
+        private readonly AzureQueueStorageChannelFactory _parent;
+        private readonly QueueClient _queueClient;
         private ArraySegment<byte> _messageBuffer;
         #endregion
 
@@ -44,9 +33,9 @@ namespace Azure.Storage.WCF.Channels
             AzureQueueStorageTransportBindingElement azureQueueStorageTransportBindingElement)
             : base(factory)
         {
-            this._remoteAddress = remoteAddress;
-            this._via = via;
-            this._encoder = encoder;
+            _remoteAddress = remoteAddress;
+            _via = via;
+            _encoder = encoder;
             _parent = factory;
 
             string queueNameFromVia = AzureQueueStorageChannelHelpers.ExtractQueueNameFromUri(via);
@@ -58,18 +47,11 @@ namespace Azure.Storage.WCF.Channels
                 _parent.QueueName = queueNameFromVia;
             }
 
-            Uri queueUri = AzureQueueStorageQueueNameConverter.ConvertToHttpEndpointUrl(via);
-            var credential = new DefaultAzureCredential();
-
             QueueClientOptions queueClientOptions = new QueueClientOptions();
             HttpClientTransport httpClientTransport = new HttpClientTransport(_parent.HttpClient);
             queueClientOptions.Transport = httpClientTransport;
 
-            //string tempCon = "DefaultEndpointsProtocol=http;AccountName=1df63b42-29a7-4e94-af55-4e11a3e28d27;AccountKey=OGU3ODMzODQtMWY1NC00MzA5LWJmNzEtODk0M2E0NzVmMDY3;BlobEndpoint=https://127.0.0.1:37666/1df63b42-29a7-4e94-af55-4e11a3e28d27;QueueEndpoint=https://127.0.0.1:37667/1df63b42-29a7-4e94-af55-4e11a3e28d27;";
-            //_queueClient = new QueueClient(tempCon, _parent.QueueName, queueClientOptions);
-            //_queueClient = new QueueClient(azureQueueStorageTransportBindingElement.ConnectionString, _parent.QueueName, queueClientOptions);
-            _queueClient = new QueueClient(queueUri, queueClientOptions);
-            _queueClient.SendMessage("yes");
+            _queueClient = new QueueClient(azureQueueStorageTransportBindingElement.ConnectionString, _parent.QueueName, queueClientOptions);
         }
 
         #region IOutputChannel_Properties
@@ -153,7 +135,7 @@ namespace Azure.Storage.WCF.Channels
         #region Send_Synchronous
         public void Send(Message message)
         {
-            this.Send(message, default);
+            Send(message, default);
         }
 
         public void Send(Message message, TimeSpan timeout)

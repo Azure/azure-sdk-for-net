@@ -22,31 +22,6 @@ namespace Azure.Storage.CoreWCF.Channels
                 e);
         }
 
-        internal static void ThrowIfDisposedOrNotOpen(object state)
-        {
-            switch (state)
-            {
-                case CommunicationState.Created:
-                case CommunicationState.Opening:
-                case CommunicationState.Closing:
-                case CommunicationState.Closed:
-                case CommunicationState.Faulted:
-                    throw new CommunicationException("ThrowIfDisposedOrNotOpen: Communicate object not in open state. Current state: " + state.ToString());
-                default:
-                    throw new CommunicationException("ThrowIfDisposedOrNotOpen: Unknown CommunicationObject.state");
-                case CommunicationState.Opened:
-                    break;
-            }
-        }
-
-        internal static void ValidateTimeout(TimeSpan timeout)
-        {
-            if (timeout < TimeSpan.Zero)
-            {
-                throw new ArgumentOutOfRangeException(nameof(timeout), timeout, "Timeout must be greater than or equal to TimeSpan.Zero. To disable timeout, specify TimeSpan.MaxValue.");
-            }
-        }
-
         internal static string ExtractQueueNameFromConnectionString(string connectionString)
         {
             string[] parts = connectionString.Split(';');
@@ -139,16 +114,44 @@ namespace Azure.Storage.CoreWCF.Channels
 
         internal static Uri CreateEndpointUriFromConnectionString(string connectionString)
         {
+            string endpoint = ExtractEndpointFromConnectionString(connectionString);
+
+            if (!string.IsNullOrEmpty(endpoint))
+            {
+                // Handle URL transformations if needed
+                endpoint = TransformEndpointUrl(endpoint);
+                return new Uri(endpoint);
+            }
+
+            return null;
+        }
+
+        internal static string GetEndpointStringFromConnectionString(string connectionString)
+        {
+            string endpoint = ExtractEndpointFromConnectionString(connectionString);
+            return endpoint;
+        }
+
+        private static string ExtractEndpointFromConnectionString(string connectionString)
+        {
             string[] segments = connectionString.Split(new char[] { ';' });
 
             foreach (string segment in segments)
             {
-                if (segment.Contains("QueueEndpoint="))
+                var trimmedSegment = segment.Trim();
+                if (trimmedSegment.StartsWith("QueueEndpoint="))
                 {
-                    return new UriBuilder(segment.Replace("QueueEndpoint=", "")).Uri;
+                    return trimmedSegment.Replace("QueueEndpoint=", "");
                 }
             }
+
             return null;
+        }
+
+        private static string TransformEndpointUrl(string endpoint)
+        {
+            // Apply URL transformations here if needed
+            return endpoint.Replace("https", "net.aqs");
         }
     }
 }

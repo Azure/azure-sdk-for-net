@@ -13,10 +13,10 @@ namespace Azure.Storage.CoreWCF.Channels
     {
         public QueueClient queueClient { get; set; }
 
-        public Task<Azure.Response> CreateIfNotExistsAsync(IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default);
+        public Task<Response> CreateIfNotExistsAsync(IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default);
 
-        public Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage>> ReceiveMessageAsync(TimeSpan? visibilityTimeout = default, System.Threading.CancellationToken cancellationToken = default);
+        public Task<Queues.Models.QueueMessage> ReceiveMessageAsync(TimeSpan? visibilityTimeout = default, CancellationToken cancellationToken = default);
 
-        public Task<Azure.Response> DeleteMessageAsync(string messageId, string popReceipt, System.Threading.CancellationToken cancellationToken = default);
+        public Task<Response> DeleteMessageAsync(string messageId, string popReceipt, CancellationToken cancellationToken = default);
     }
 }

@@ -25,6 +25,8 @@ namespace Azure.Storage.WCF.Channels
         protected AzureQueueStorageTransportBindingElement(AzureQueueStorageTransportBindingElement other)
             : base(other)
         {
+            ConnectionString = other.ConnectionString;
+            QueueMessageEncoding = other.QueueMessageEncoding;
         }
 
         /// <summary>

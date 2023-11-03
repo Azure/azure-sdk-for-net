@@ -24,9 +24,9 @@ namespace Azure.Storage.WCF
         /// </summary>
         public AzureQueueStorageBinding(string connectionString, AzureQueueStorageMessageEncoding azureQueueStorageMessageEncoding)
         {
-            this._connectionString = connectionString;
+            _connectionString = connectionString;
 
-            this.MessageEncoding = azureQueueStorageMessageEncoding;
+            MessageEncoding = azureQueueStorageMessageEncoding;
             Initialize();
         }
 
