@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        protected override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.

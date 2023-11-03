@@ -6,6 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 #if AZURE_MONITOR_EXPORTER
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+#elif LIVE_METRICS_EXPORTER
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 #endif
 
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
@@ -50,6 +52,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
             {
 #if AZURE_MONITOR_EXPORTER
                 AzureMonitorExporterEventSource.Log.FailedToParseConnectionString(ex);
+#elif LIVE_METRICS_EXPORTER
+                LiveMetricsExporterEventSource.Log.FailedToParseConnectionString(ex);
 #endif
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
