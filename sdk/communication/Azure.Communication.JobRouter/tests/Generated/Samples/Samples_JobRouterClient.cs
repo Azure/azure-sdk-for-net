@@ -22,8 +22,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetJob("<jobId>", null);
 
@@ -36,8 +35,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetJobAsync("<jobId>", null);
 
@@ -50,8 +48,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJob> response = client.GetJob("<jobId>");
         }
@@ -60,8 +57,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJob> response = await client.GetJobAsync("<jobId>");
         }
@@ -70,8 +66,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetJob("<jobId>", null);
 
@@ -117,8 +112,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetJobAsync("<jobId>", null);
 
@@ -164,8 +158,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJob> response = client.GetJob("<jobId>");
         }
@@ -174,8 +167,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJob> response = await client.GetJobAsync("<jobId>");
         }
@@ -184,8 +176,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeleteJob("<jobId>");
 
@@ -196,8 +187,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeleteJobAsync("<jobId>");
 
@@ -208,8 +198,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeleteJob("<jobId>");
 
@@ -220,8 +209,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeleteJobAsync("<jobId>");
 
@@ -232,8 +220,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = client.CancelJob("<jobId>", content);
@@ -245,8 +232,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = await client.CancelJobAsync("<jobId>", content);
@@ -258,8 +244,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.CancelJob("<jobId>");
         }
@@ -268,8 +253,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.CancelJobAsync("<jobId>");
         }
@@ -278,8 +262,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -295,8 +278,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -312,8 +294,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CancelJobOptions options = new CancelJobOptions
             {
@@ -327,8 +308,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CancelJobOptions options = new CancelJobOptions
             {
@@ -342,8 +322,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -358,8 +337,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -374,8 +352,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
             Response response = client.CompleteJob("<jobId>", options);
@@ -385,8 +362,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
             Response response = await client.CompleteJobAsync("<jobId>", options);
@@ -396,8 +372,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -413,8 +388,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -430,8 +404,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CompleteJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
             {
@@ -444,8 +417,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CompleteJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
             {
@@ -458,8 +430,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -474,8 +445,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -490,8 +460,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CloseJobOptions options = new CloseJobOptions("<assignmentId>");
             Response response = client.CloseJob("<jobId>", options);
@@ -501,8 +470,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CloseJobOptions options = new CloseJobOptions("<assignmentId>");
             Response response = await client.CloseJobAsync("<jobId>", options);
@@ -512,8 +480,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -531,8 +498,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -550,8 +516,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CloseJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CloseJobOptions options = new CloseJobOptions("<assignmentId>")
             {
@@ -566,8 +531,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CloseJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             CloseJobOptions options = new CloseJobOptions("<assignmentId>")
             {
@@ -582,8 +546,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetQueuePosition("<jobId>", null);
 
@@ -599,8 +562,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetQueuePositionAsync("<jobId>", null);
 
@@ -616,8 +578,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
         }
@@ -626,8 +587,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
         }
@@ -636,8 +596,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetQueuePosition("<jobId>", null);
 
@@ -653,8 +612,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetQueuePositionAsync("<jobId>", null);
 
@@ -670,8 +628,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueuePosition_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
         }
@@ -680,8 +637,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueuePosition_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
         }
@@ -690,8 +646,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = client.UnassignJob("<jobId>", "<assignmentId>", content);
@@ -705,8 +660,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", content);
@@ -720,8 +674,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>");
         }
@@ -730,8 +683,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>");
         }
@@ -740,8 +692,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -758,8 +709,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -776,8 +726,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UnassignJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             UnassignJobOptions options = new UnassignJobOptions
             {
@@ -790,8 +739,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UnassignJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             UnassignJobOptions options = new UnassignJobOptions
             {
@@ -804,8 +752,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
 
@@ -819,8 +766,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
 
@@ -834,8 +780,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
         }
@@ -844,8 +789,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
         }
@@ -854,8 +798,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
 
@@ -869,8 +812,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
 
@@ -884,8 +826,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AcceptJobOffer_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
         }
@@ -894,8 +835,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AcceptJobOffer_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
         }
@@ -904,8 +844,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = client.DeclineJobOffer("<workerId>", "<offerId>", content);
@@ -917,8 +856,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = null;
             Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", content);
@@ -930,8 +868,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeclineJobOffer("<workerId>", "<offerId>");
         }
@@ -940,8 +877,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>");
         }
@@ -950,8 +886,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -966,8 +901,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -982,8 +916,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeclineJobOffer_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             DeclineJobOfferOptions options = new DeclineJobOfferOptions
             {
@@ -996,8 +929,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeclineJobOffer_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             DeclineJobOfferOptions options = new DeclineJobOfferOptions
             {
@@ -1010,8 +942,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetQueueStatistics("<queueId>", null);
 
@@ -1024,8 +955,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
 
@@ -1038,8 +968,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
         }
@@ -1048,8 +977,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
         }
@@ -1058,8 +986,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetQueueStatistics("<queueId>", null);
 
@@ -1074,8 +1001,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
 
@@ -1090,8 +1016,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueueStatistics_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
         }
@@ -1100,8 +1025,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueueStatistics_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
         }
@@ -1110,8 +1034,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetWorker("<workerId>", null);
 
@@ -1124,8 +1047,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetWorkerAsync("<workerId>", null);
 
@@ -1138,8 +1060,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = client.GetWorker("<workerId>");
         }
@@ -1148,8 +1069,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
         }
@@ -1158,8 +1078,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.GetWorker("<workerId>", null);
 
@@ -1191,8 +1110,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.GetWorkerAsync("<workerId>", null);
 
@@ -1224,8 +1142,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorker_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = client.GetWorker("<workerId>");
         }
@@ -1234,8 +1151,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorker_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
         }
@@ -1244,8 +1160,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteWorker_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeleteWorker("<workerId>");
 
@@ -1256,8 +1171,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteWorker_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeleteWorkerAsync("<workerId>");
 
@@ -1268,8 +1182,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteWorker_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = client.DeleteWorker("<workerId>");
 
@@ -1280,8 +1193,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteWorker_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             Response response = await client.DeleteWorkerAsync("<workerId>");
 
@@ -1292,8 +1204,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetJobs(null, null, null, null, null, null, null, null))
             {
@@ -1307,8 +1218,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetJobsAsync(null, null, null, null, null, null, null, null))
             {
@@ -1322,8 +1232,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (RouterJob item in client.GetJobs())
             {
@@ -1334,8 +1243,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (RouterJob item in client.GetJobsAsync())
             {
@@ -1346,8 +1254,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetJobs(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
             {
@@ -1394,8 +1301,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetJobsAsync(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
             {
@@ -1442,8 +1348,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobs_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (RouterJob item in client.GetJobs(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
             {
@@ -1454,8 +1359,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobs_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (RouterJob item in client.GetJobsAsync(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
             {
@@ -1466,8 +1370,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetWorkers(null, null, null, null, null, null))
             {
@@ -1481,8 +1384,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetWorkersAsync(null, null, null, null, null, null))
             {
@@ -1496,8 +1398,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (RouterWorker item in client.GetWorkers())
             {
@@ -1508,8 +1409,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (RouterWorker item in client.GetWorkersAsync())
             {
@@ -1520,8 +1420,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (BinaryData item in client.GetWorkers(1234, "active", "<channelId>", "<queueId>", true, null))
             {
@@ -1554,8 +1453,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (BinaryData item in client.GetWorkersAsync(1234, "active", "<channelId>", "<queueId>", true, null))
             {
@@ -1588,8 +1486,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWorkers_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             foreach (RouterWorker item in client.GetWorkers(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
             {
@@ -1600,8 +1497,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWorkers_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            JobRouterClient client = new JobRouterClient(endpoint);
+            JobRouterClient client = new JobRouterClient((string)null);
 
             await foreach (RouterWorker item in client.GetWorkersAsync(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
             {

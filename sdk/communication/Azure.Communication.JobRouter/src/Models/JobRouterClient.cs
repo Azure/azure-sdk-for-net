@@ -11,8 +11,8 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
-    // [CodeGenSuppress("JobRouterClient", typeof(Uri))]
-    // [CodeGenSuppress("JobRouterClient", typeof(Uri), typeof(JobRouterClientOptions))]
+    [CodeGenSuppress("JobRouterClient", typeof(Uri))]
+    [CodeGenSuppress("JobRouterClient", typeof(Uri), typeof(JobRouterClientOptions))]
     [CodeGenSuppress("CreateGetJobsNextPageRequest", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetWorkersNextPageRequest", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(bool), typeof(RequestContext))]
     public partial class JobRouterClient
@@ -64,27 +64,31 @@ namespace Azure.Communication.JobRouter
 
         #endregion
 
-        // /// <summary> Initializes a new instance of JobRouterClient. </summary>
-        // /// <param name="endpoint"> The Uri to use. </param>
-        // /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        // internal JobRouterClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
-        // {
-        // }
-        //
-        // /// <summary> Initializes a new instance of JobRouterClient. </summary>
-        // /// <param name="endpoint"> The Uri to use. </param>
-        // /// <param name="options"> The options for configuring the client. </param>
-        // /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        // internal JobRouterClient(Uri endpoint, JobRouterClientOptions options)
-        // {
-        //     Argument.AssertNotNull(endpoint, nameof(endpoint));
-        //     options ??= new JobRouterClientOptions();
-        //
-        //     ClientDiagnostics = new ClientDiagnostics(options, true);
-        //     _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-        //     _endpoint = endpoint;
-        //     _apiVersion = options.Version;
-        // }
+        #region internal constructors
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal JobRouterClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal JobRouterClient(Uri endpoint, JobRouterClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new JobRouterClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        #endregion
 
         #region private constructors
 

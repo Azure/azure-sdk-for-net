@@ -107,5 +107,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             MySqlFlexibleServerResource.ValidateResourceId(id);
             return new MySqlFlexibleServerResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MySqlFlexibleServersCapabilityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServersCapabilityResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersCapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MySqlFlexibleServersCapabilityResource" /> object. </returns>
+        public virtual MySqlFlexibleServersCapabilityResource GetMySqlFlexibleServersCapabilityResource(ResourceIdentifier id)
+        {
+            MySqlFlexibleServersCapabilityResource.ValidateResourceId(id);
+            return new MySqlFlexibleServersCapabilityResource(Client, id);
+        }
     }
 }
