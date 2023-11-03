@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.Extensions;
+using Azure.Core;
 using Azure.Storage;
 using Azure.Storage.Files.Shares;
 
@@ -38,6 +39,15 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>(options => new ShareServiceClient(serviceUri, sharedKeyCredential, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>(options => new ShareServiceClient(serviceUri, tokenCredential, options));
         }
 
         /// <summary>
