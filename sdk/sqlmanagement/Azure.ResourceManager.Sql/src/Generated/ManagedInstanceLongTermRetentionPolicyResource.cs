@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceLongTermRetentionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceLongTermRetentionPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="policyName"> The policyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedInstanceLongTermRetentionPolicyName policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}";

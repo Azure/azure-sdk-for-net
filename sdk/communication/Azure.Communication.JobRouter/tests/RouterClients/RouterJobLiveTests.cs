@@ -205,7 +205,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             // Setup Classification Policies
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-{nameof(CreateJobWithClassificationPolicy_w_StaticPriority)}-CP_StaticPriority");
             var classificationPolicyName = $"StaticPriority-ClassificationPolicy";
-            var priorityRule = new StaticRouterRule(new LabelValue(10));
+            var priorityRule = new StaticRouterRule(new RouterValue(10));
             var createClassificationPolicyResponse = await routerAdministrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
@@ -268,7 +268,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
                     Name = classificationPolicyName,
-                    QueueSelectorAttachments = { new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, value: new LabelValue(createQueue2.Id))) }
+                    QueueSelectorAttachments = { new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, value: new RouterValue(createQueue2.Id))) }
                 });
             AddForCleanup(new Task(async () => await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
             var createClassificationPolicy = createClassificationPolicyResponse.Value;
@@ -511,17 +511,17 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             // Create 1 job
             var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(UpdateJobTest)}1");
-            var labels = new Dictionary<string, LabelValue?>
+            var labels = new Dictionary<string, RouterValue?>
             {
-                ["Label_1"] = new LabelValue("Value_1"),
-                ["Label_2"] = new LabelValue(2),
-                ["Label_3"] = new LabelValue(true)
+                ["Label_1"] = new RouterValue("Value_1"),
+                ["Label_2"] = new RouterValue(2),
+                ["Label_3"] = new RouterValue(true)
             };
-            var tags = new Dictionary<string, LabelValue?>
+            var tags = new Dictionary<string, RouterValue?>
             {
-                ["Tag_1"] = new LabelValue("Value_1"),
-                ["Tag_2"] = new LabelValue(2),
-                ["Tag_3"] = new LabelValue(true)
+                ["Tag_1"] = new RouterValue("Value_1"),
+                ["Tag_2"] = new RouterValue(2),
+                ["Tag_3"] = new RouterValue(true)
             };
 
             var createJobOptions = new CreateJobOptions(jobId1, channelId, createQueue.Id);
@@ -530,19 +530,19 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var createJobResponse = await routerClient.CreateJobAsync(createJobOptions);
 
-            var updatedLabels = new Dictionary<string, LabelValue?>
+            var updatedLabels = new Dictionary<string, RouterValue?>
             {
                 ["Label_1"] = null,
-                ["Label_2"] = new LabelValue(null),
-                ["Label_3"] = new LabelValue("Value_Updated_3"),
-                ["Label_4"] = new LabelValue("Value_4")
+                ["Label_2"] = new RouterValue(null),
+                ["Label_3"] = new RouterValue("Value_Updated_3"),
+                ["Label_4"] = new RouterValue("Value_4")
             };
-            var updatedTags = new Dictionary<string, LabelValue?>
+            var updatedTags = new Dictionary<string, RouterValue?>
             {
                 ["Tag_1"] = null,
-                ["Tag_2"] = new LabelValue(null),
-                ["Tag_3"] = new LabelValue("Value_Updated_3"),
-                ["Tag_4"] = new LabelValue("Value_4")
+                ["Tag_2"] = new RouterValue(null),
+                ["Tag_3"] = new RouterValue("Value_Updated_3"),
+                ["Tag_4"] = new RouterValue("Value_4")
             };
 
             var updateOptions = new RouterJob(jobId1);
@@ -551,15 +551,15 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var updateJobResponse = await routerClient.UpdateJobAsync(updateOptions);
 
-            Assert.AreEqual(updateJobResponse.Value.Labels, new Dictionary<string, LabelValue?>
+            Assert.AreEqual(updateJobResponse.Value.Labels, new Dictionary<string, RouterValue?>
             {
-                ["Label_3"] = new LabelValue("Value_Updated_3"),
-                ["Label_4"] = new LabelValue("Value_4")
+                ["Label_3"] = new RouterValue("Value_Updated_3"),
+                ["Label_4"] = new RouterValue("Value_4")
             });
-            Assert.AreEqual(updateJobResponse.Value.Tags, new Dictionary<string, LabelValue?>
+            Assert.AreEqual(updateJobResponse.Value.Tags, new Dictionary<string, RouterValue?>
             {
-                ["Tag_3"] = new LabelValue("Value_Updated_3"),
-                ["Tag_4"] = new LabelValue("Value_4")
+                ["Tag_3"] = new RouterValue("Value_Updated_3"),
+                ["Tag_4"] = new RouterValue("Value_4")
             });
 
             // in-test cleanup
@@ -585,7 +585,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var classificationPolicy = await routerAdminClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}{nameof(ReclassifyJob)}-policy"))
                 {
-                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
+                    PrioritizationRule = new StaticRouterRule(new RouterValue(1))
                 });
             AddForCleanup(new Task(async () => await routerAdminClient.DeleteClassificationPolicyAsync(classificationPolicy.Value.Id)));
 

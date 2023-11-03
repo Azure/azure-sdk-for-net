@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Batch
     public partial class BatchAccountDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BatchAccountDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="detectorId"> The detectorId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string detectorId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}";

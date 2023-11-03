@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Blueprint
     public partial class AssignmentOperationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AssignmentOperationResource"/> instance. </summary>
+        /// <param name="resourceScope"> The resourceScope. </param>
+        /// <param name="assignmentName"> The assignmentName. </param>
+        /// <param name="assignmentOperationName"> The assignmentOperationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceScope, string assignmentName, string assignmentOperationName)
         {
             var resourceId = $"{resourceScope}/providers/Microsoft.Blueprint/blueprintAssignments/{assignmentName}/assignmentOperations/{assignmentOperationName}";

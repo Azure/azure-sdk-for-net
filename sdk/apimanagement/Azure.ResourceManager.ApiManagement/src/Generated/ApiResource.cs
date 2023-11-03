@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="apiId"> The apiId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}";
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiReleaseResources and their operations over a ApiReleaseResource. </returns>
         public virtual ApiReleaseCollection GetApiReleases()
         {
-            return GetCachedClient(Client => new ApiReleaseCollection(Client, Id));
+            return GetCachedClient(client => new ApiReleaseCollection(client, Id));
         }
 
         /// <summary>
@@ -122,8 +126,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiReleaseResource>> GetApiReleaseAsync(string releaseId, CancellationToken cancellationToken = default)
         {
@@ -145,8 +149,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiReleaseResource> GetApiRelease(string releaseId, CancellationToken cancellationToken = default)
         {
@@ -157,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiOperationResources and their operations over a ApiOperationResource. </returns>
         public virtual ApiOperationCollection GetApiOperations()
         {
-            return GetCachedClient(Client => new ApiOperationCollection(Client, Id));
+            return GetCachedClient(client => new ApiOperationCollection(client, Id));
         }
 
         /// <summary>
@@ -175,8 +179,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiOperationResource>> GetApiOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
@@ -198,8 +202,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiOperationResource> GetApiOperation(string operationId, CancellationToken cancellationToken = default)
         {
@@ -210,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiPolicyResources and their operations over a ApiPolicyResource. </returns>
         public virtual ApiPolicyCollection GetApiPolicies()
         {
-            return GetCachedClient(Client => new ApiPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ApiPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -261,7 +265,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiTagResources and their operations over a ApiTagResource. </returns>
         public virtual ApiTagCollection GetApiTags()
         {
-            return GetCachedClient(Client => new ApiTagCollection(Client, Id));
+            return GetCachedClient(client => new ApiTagCollection(client, Id));
         }
 
         /// <summary>
@@ -279,8 +283,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiTagResource>> GetApiTagAsync(string tagId, CancellationToken cancellationToken = default)
         {
@@ -302,8 +306,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiTagResource> GetApiTag(string tagId, CancellationToken cancellationToken = default)
         {
@@ -314,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiSchemaResources and their operations over a ApiSchemaResource. </returns>
         public virtual ApiSchemaCollection GetApiSchemas()
         {
-            return GetCachedClient(Client => new ApiSchemaCollection(Client, Id));
+            return GetCachedClient(client => new ApiSchemaCollection(client, Id));
         }
 
         /// <summary>
@@ -332,8 +336,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiSchemaResource>> GetApiSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
         {
@@ -355,8 +359,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiSchemaResource> GetApiSchema(string schemaId, CancellationToken cancellationToken = default)
         {
@@ -367,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiDiagnosticResources and their operations over a ApiDiagnosticResource. </returns>
         public virtual ApiDiagnosticCollection GetApiDiagnostics()
         {
-            return GetCachedClient(Client => new ApiDiagnosticCollection(Client, Id));
+            return GetCachedClient(client => new ApiDiagnosticCollection(client, Id));
         }
 
         /// <summary>
@@ -385,8 +389,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiDiagnosticResource>> GetApiDiagnosticAsync(string diagnosticId, CancellationToken cancellationToken = default)
         {
@@ -408,8 +412,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiDiagnosticResource> GetApiDiagnostic(string diagnosticId, CancellationToken cancellationToken = default)
         {
@@ -420,7 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiIssueResources and their operations over a ApiIssueResource. </returns>
         public virtual ApiIssueCollection GetApiIssues()
         {
-            return GetCachedClient(Client => new ApiIssueCollection(Client, Id));
+            return GetCachedClient(client => new ApiIssueCollection(client, Id));
         }
 
         /// <summary>
@@ -439,8 +443,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiIssueResource>> GetApiIssueAsync(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
@@ -463,8 +467,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiIssueResource> GetApiIssue(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
@@ -475,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiTagDescriptionResources and their operations over a ApiTagDescriptionResource. </returns>
         public virtual ApiTagDescriptionCollection GetApiTagDescriptions()
         {
-            return GetCachedClient(Client => new ApiTagDescriptionCollection(Client, Id));
+            return GetCachedClient(client => new ApiTagDescriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -493,8 +497,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagDescriptionId"> Tag description identifier. Used when creating tagDescription for API/Tag association. Based on API and Tag names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiTagDescriptionResource>> GetApiTagDescriptionAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
@@ -516,8 +520,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagDescriptionId"> Tag description identifier. Used when creating tagDescription for API/Tag association. Based on API and Tag names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiTagDescriptionResource> GetApiTagDescription(string tagDescriptionId, CancellationToken cancellationToken = default)
         {

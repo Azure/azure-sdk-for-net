@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     public partial class MigrationRecoveryPointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MigrationRecoveryPointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="protectionContainerName"> The protectionContainerName. </param>
+        /// <param name="migrationItemName"> The migrationItemName. </param>
+        /// <param name="migrationRecoveryPointName"> The migrationRecoveryPointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, string migrationRecoveryPointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrationRecoveryPoints/{migrationRecoveryPointName}";

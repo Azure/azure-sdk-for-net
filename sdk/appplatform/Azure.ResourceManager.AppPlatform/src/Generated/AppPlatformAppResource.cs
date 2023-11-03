@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppPlatform
     public partial class AppPlatformAppResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformAppResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="appName"> The appName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string appName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}";
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBindingResources and their operations over a AppPlatformBindingResource. </returns>
         public virtual AppPlatformBindingCollection GetAppPlatformBindings()
         {
-            return GetCachedClient(Client => new AppPlatformBindingCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBindingCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +113,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="bindingName"> The name of the Binding resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBindingResource>> GetAppPlatformBindingAsync(string bindingName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +136,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="bindingName"> The name of the Binding resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBindingResource> GetAppPlatformBinding(string bindingName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformCustomDomainResources and their operations over a AppPlatformCustomDomainResource. </returns>
         public virtual AppPlatformCustomDomainCollection GetAppPlatformCustomDomains()
         {
-            return GetCachedClient(Client => new AppPlatformCustomDomainCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -162,8 +166,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformCustomDomainResource>> GetAppPlatformCustomDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +189,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformCustomDomainResource> GetAppPlatformCustomDomain(string domainName, CancellationToken cancellationToken = default)
         {
@@ -197,7 +201,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformDeploymentResources and their operations over a AppPlatformDeploymentResource. </returns>
         public virtual AppPlatformDeploymentCollection GetAppPlatformDeployments()
         {
-            return GetCachedClient(Client => new AppPlatformDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -215,8 +219,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformDeploymentResource>> GetAppPlatformDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -238,8 +242,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformDeploymentResource> GetAppPlatformDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {

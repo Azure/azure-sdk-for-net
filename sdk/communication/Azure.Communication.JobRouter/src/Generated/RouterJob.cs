@@ -71,7 +71,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         internal RouterJob(string etag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             ChannelReference = channelReference;
             Status = status;
@@ -90,9 +90,6 @@ namespace Azure.Communication.JobRouter
             ScheduledAt = scheduledAt;
             MatchingMode = matchingMode;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
         /// <summary> The id of the job. </summary>
         public string Id { get; }
         /// <summary> The status of the Job. </summary>

@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.EdgeOrder
     public partial class EdgeOrderAddressResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EdgeOrderAddressResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="addressName"> The addressName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string addressName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}";

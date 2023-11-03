@@ -451,20 +451,17 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Serializes the respective job part and adds it to the checkpointer.
         /// </summary>
-        /// <param name="chunksTotal">Number of chunks in the job part.</param>
-        /// <returns></returns>
-        public async virtual Task AddJobPartToCheckpointerAsync(int chunksTotal)
+        public async virtual Task AddJobPartToCheckpointerAsync()
         {
-            JobPartPlanHeader header = this.ToJobPartPlanHeader(jobStatus: JobPartStatus);
+            JobPartPlanHeader header = this.ToJobPartPlanHeader();
             using (Stream stream = new MemoryStream())
             {
                 header.Serialize(stream);
                 await _checkpointer.AddNewJobPartAsync(
-                        transferId: _dataTransfer.Id,
-                        partNumber: PartNumber,
-                        chunksTotal: chunksTotal,
-                        headerStream: stream,
-                        cancellationToken: _cancellationToken).ConfigureAwait(false);
+                    transferId: _dataTransfer.Id,
+                    partNumber: PartNumber,
+                    headerStream: stream,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
             }
         }
 

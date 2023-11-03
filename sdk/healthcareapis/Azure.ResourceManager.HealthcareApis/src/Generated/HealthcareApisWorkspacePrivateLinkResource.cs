@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HealthcareApis
     public partial class HealthcareApisWorkspacePrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthcareApisWorkspacePrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}";

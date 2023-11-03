@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor
     public partial class DataCollectionEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataCollectionEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="dataCollectionEndpointName"> The dataCollectionEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}";

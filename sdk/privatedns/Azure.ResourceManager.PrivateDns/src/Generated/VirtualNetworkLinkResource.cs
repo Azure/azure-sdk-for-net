@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.PrivateDns
     public partial class VirtualNetworkLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateZoneName"> The privateZoneName. </param>
+        /// <param name="virtualNetworkLinkName"> The virtualNetworkLinkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string virtualNetworkLinkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/virtualNetworkLinks/{virtualNetworkLinkName}";

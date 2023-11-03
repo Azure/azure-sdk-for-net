@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteSlotHostNameBindingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotHostNameBindingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="hostName"> The hostName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string hostName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}";

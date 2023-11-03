@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.AppService
     public partial class DeletedSiteResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedSiteResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="deletedSiteId"> The deletedSiteId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string deletedSiteId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}";

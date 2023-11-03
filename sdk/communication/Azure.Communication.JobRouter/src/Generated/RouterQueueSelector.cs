@@ -22,6 +22,21 @@ namespace Azure.Communication.JobRouter
         /// Describes how the value of the label is compared to the value defined on the
         /// label selector
         /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        internal RouterQueueSelector(string key, LabelOperator labelOperator)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            Key = key;
+            LabelOperator = labelOperator;
+        }
+
+        /// <summary> Initializes a new instance of RouterQueueSelector. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator">
+        /// Describes how the value of the label is compared to the value defined on the
+        /// label selector
+        /// </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
         internal RouterQueueSelector(string key, LabelOperator labelOperator, BinaryData value)
         {

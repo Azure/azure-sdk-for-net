@@ -91,16 +91,17 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateExceptionPolicyTest_WaitTime));
             var createQueueResponse = await routerClient.CreateQueueAsync(new CreateQueueOptions(queueId,
                     createDistributionPolicyResponse.Value.Id));
+            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(queueId)));
 
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyTest_WaitTime)}");
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
-                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
+                    PrioritizationRule = new StaticRouterRule(new RouterValue(1))
                 });
             var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyTest_WaitTime)}");
 
-            var labelsToUpsert = new Dictionary<string, LabelValue>() { ["Label_1"] = new LabelValue("Value_1") };
+            var labelsToUpsert = new Dictionary<string, RouterValue>() { ["Label_1"] = new RouterValue("Value_1") };
             // exception rules
             var exceptionRuleId = GenerateUniqueId($"{IdPrefix}-ExceptionRule");
             var rules = new List<ExceptionRule>()
@@ -111,13 +112,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                         new ReclassifyExceptionAction
                         {
                             ClassificationPolicyId = classificationPolicyId,
-                            LabelsToUpsert = { ["Label_1"] = new LabelValue("Value_1") }
+                            LabelsToUpsert = { ["Label_1"] = new RouterValue("Value_1") }
                         },
                         new ManualReclassifyExceptionAction
                         {
                             QueueId = createQueueResponse.Value.Id,
                             Priority = 1,
-                            WorkerSelectors = { new RouterWorkerSelector("abc", LabelOperator.Equal, new LabelValue(1)) }
+                            WorkerSelectors = { new RouterWorkerSelector("abc", LabelOperator.Equal, new RouterValue(1)) }
                         }
                     }
                 )

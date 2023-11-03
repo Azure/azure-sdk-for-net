@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryApplicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryApplicationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
+        /// <param name="galleryApplicationName"> The galleryApplicationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}";
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryApplicationVersionResources and their operations over a GalleryApplicationVersionResource. </returns>
         public virtual GalleryApplicationVersionCollection GetGalleryApplicationVersions()
         {
-            return GetCachedClient(Client => new GalleryApplicationVersionCollection(Client, Id));
+            return GetCachedClient(client => new GalleryApplicationVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +115,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GalleryApplicationVersionResource>> GetGalleryApplicationVersionAsync(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +139,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GalleryApplicationVersionResource> GetGalleryApplicationVersion(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
