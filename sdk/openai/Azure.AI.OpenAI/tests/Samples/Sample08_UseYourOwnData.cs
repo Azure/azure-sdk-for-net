@@ -22,13 +22,13 @@ namespace Azure.AI.OpenAI.Tests.Samples
 
             #region Snippet:ChatUsingYourOwnData
 
-            AzureCognitiveSearchChatExtensionConfiguration config = new()
+            AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
             {
                 SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
                 IndexName = "contoso-products-index",
             };
 
-            config.SetSearchKey("<your Cognitive Search resource API key>");
+            contosoExtensionConfig.SetSearchKey("<your Cognitive Search resource API key>");
 
             ChatCompletionsOptions chatCompletionsOptions = new()
             {
@@ -46,7 +46,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 // with information from an Azure Cognitive Search resource with documents that have been indexed.
                 AzureExtensionsOptions = new AzureChatExtensionsOptions()
                 {
-                    Extensions = { config }
+                    Extensions = { contosoExtensionConfig }
                 }
             };
 
