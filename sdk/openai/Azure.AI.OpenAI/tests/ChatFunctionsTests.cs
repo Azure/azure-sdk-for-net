@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -106,31 +104,27 @@ public class ChatFunctionsTests : OpenAITestBase
             MaxTokens = 512,
         };
 
-        Response<StreamingChatCompletions> response
+        StreamingResponse<StreamingChatCompletionsUpdate> response
             = await client.GetChatCompletionsStreamingAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
 
-        using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-        ChatRole streamedRole = default;
-        string functionName = default;
+        ChatRole? streamedRole = default;
+        string functionName = null;
         StringBuilder argumentsBuilder = new();
 
-        await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+        await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
         {
-            await foreach (ChatMessage message in choice.GetMessageStreaming())
+            if (chatUpdate.Role.HasValue)
             {
-                if (message.Role != default)
-                {
-                    streamedRole = message.Role;
-                }
-                if (message.FunctionCall?.Name != null)
-                {
-                    Assert.That(functionName, Is.Null.Or.Empty);
-                    functionName = message.FunctionCall.Name;
-                }
-                argumentsBuilder.Append(message.FunctionCall?.Arguments ?? string.Empty);
+                Assert.That(streamedRole, Is.Null, "role should only appear once");
+                streamedRole = chatUpdate.Role.Value;
             }
+            if (!string.IsNullOrEmpty(chatUpdate.FunctionName))
+            {
+                Assert.That(functionName, Is.Null, "function_name should only appear once");
+                functionName = chatUpdate.FunctionName;
+            }
+            argumentsBuilder.Append(chatUpdate.FunctionArgumentsUpdate);
         }
 
         Assert.That(streamedRole, Is.EqualTo(ChatRole.Assistant));
@@ -158,6 +152,25 @@ public class ChatFunctionsTests : OpenAITestBase
                     Type = "string",
                     Description = "the day, month, and year for which to retrieve weather information"
                 }
+            }
+        },
+            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+    };
+
+    private static readonly FunctionDefinition s_wordOfTheDayFunction = new()
+    {
+        Name = "get_word_of_the_day",
+        Description = "requests a featured word for a given day of the week",
+        Parameters = BinaryData.FromObjectAsJson(new
+        {
+            Type = "object",
+            Properties = new
+            {
+                DayOfWeek = new
+                {
+                    Type = "string",
+                    Description = "the name of a day of the week, like Wednesday",
+                },
             }
         },
             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
