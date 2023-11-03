@@ -200,7 +200,14 @@ namespace Azure.Communication.CallAutomation
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
-            request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint?.AbsoluteUri;
+            string cognitiveServicesEndpoint = options.CallIntelligence?.CognitiveServicesEndpoint?.AbsoluteUri;
+            if (cognitiveServicesEndpoint != null)
+            {
+                request.CallIntelligenceOptions = new()
+                {
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
+                };
+            }
 
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
@@ -562,7 +569,14 @@ namespace Azure.Communication.CallAutomation
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
-            request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint?.AbsoluteUri;
+            string cognitiveServicesEndpoint = options.CallIntelligence?.CognitiveServicesEndpoint?.AbsoluteUri;
+            if (cognitiveServicesEndpoint != null)
+            {
+                request.CallIntelligenceOptions = new()
+                {
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
+                };
+            }
 
             request.OperationContext = options.OperationContext;
             return request;
@@ -582,7 +596,14 @@ namespace Azure.Communication.CallAutomation
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
-            request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint?.AbsoluteUri;
+            string cognitiveServicesEndpoint = options.CallIntelligence?.CognitiveServicesEndpoint?.AbsoluteUri;
+            if (cognitiveServicesEndpoint != null)
+            {
+                request.CallIntelligenceOptions = new()
+                {
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
+                };
+            }
 
             request.OperationContext = options.OperationContext;
             return request;

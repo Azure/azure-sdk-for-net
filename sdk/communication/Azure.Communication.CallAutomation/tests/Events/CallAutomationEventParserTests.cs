@@ -755,7 +755,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         public void ContinuousDtmfRecognitionToneReceivedEventParsed_Test()
         {
             ContinuousDtmfRecognitionToneReceived @event = CallAutomationModelFactory.ContinuousDtmfRecognitionToneReceived(
-                toneInfo: new ToneInfo(sequenceId: 1, DtmfTone.A),
+                sequenceId:1,
+                tone: DtmfTone.A,
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -766,8 +767,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.ContinuousDtmfRecognitionToneReceived");
             if (parsedEvent is ContinuousDtmfRecognitionToneReceived continuousDtmfRecognitionToneReceived)
             {
-                Assert.AreEqual(DtmfTone.A, continuousDtmfRecognitionToneReceived.ToneInfo.Tone);
-                Assert.AreEqual(1, continuousDtmfRecognitionToneReceived.ToneInfo.SequenceId);
+                Assert.AreEqual(DtmfTone.A, continuousDtmfRecognitionToneReceived.Tone);
+                Assert.AreEqual(1, continuousDtmfRecognitionToneReceived.SequenceId);
                 Assert.AreEqual("callConnectionId", continuousDtmfRecognitionToneReceived.CallConnectionId);
                 Assert.AreEqual("correlationId", continuousDtmfRecognitionToneReceived.CorrelationId);
                 Assert.AreEqual("serverCallId", continuousDtmfRecognitionToneReceived.ServerCallId);
