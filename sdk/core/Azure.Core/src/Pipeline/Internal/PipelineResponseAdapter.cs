@@ -27,7 +27,7 @@ namespace Azure.Core
         public override Stream? ContentStream
         {
             get => _response.ContentStream;
-            set => _response.ContentStream = value;
+            protected set => _response.ContentStream = value;
         }
 
         public override void Dispose()

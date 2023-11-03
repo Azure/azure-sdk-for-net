@@ -67,7 +67,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
     public override Stream? ContentStream
     {
         get => _contentStream;
-        set
+        protected internal set
         {
             // Make sure we don't dispose the content if the stream was replaced
             _httpResponse.Content = null;
