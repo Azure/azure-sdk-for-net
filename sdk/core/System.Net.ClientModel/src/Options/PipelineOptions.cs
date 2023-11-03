@@ -9,15 +9,17 @@ namespace System.Net.ClientModel.Core;
 /// </summary>
 public class PipelineOptions
 {
-    #region Pipeline creation: Customer-specified policies
+    // Note that all properties on PipelineOptions are nullable.
+    // This gives us the ability to understand whether a caller passed them
+    // as input or whether anything we add/set on PipelineOptions was set
+    // internally.  If a property on PipelineOptions has a null value initially,
+    // we will set a default value for it when options is frozen.
+
+    public string? ServiceVersion { get; set; }
 
     public PipelinePolicy[]? PerTryPolicies { get; set; }
 
     public PipelinePolicy[]? PerCallPolicies { get; set; }
-
-    #endregion
-
-    #region Pipeline creation: Required policy overrides
 
     public PipelinePolicy? RetryPolicy { get; set; }
 
@@ -25,14 +27,7 @@ public class PipelineOptions
 
     public PipelineTransport? Transport { get; set; }
 
-    #endregion
-
-    #region Pipeline creation: Policy-specific settings
-
-    // TODO: when do we want these to be nullable and when do we want to set defaults?  Why?
     public TimeSpan? NetworkTimeout { get; set; }
 
     public virtual MessageClassifier? MessageClassifier { get; set; }
-
-    #endregion
 }

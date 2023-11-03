@@ -4,9 +4,7 @@
 using System;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal;
 using System.Text;
-using System.Threading;
 
 namespace OpenAI;
 
@@ -16,11 +14,12 @@ public class OpenAIClient
     private readonly KeyCredential _credential;
     private readonly MessagePipeline _pipeline;
 
-    public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
+    public OpenAIClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
     {
-        ClientUtilities.AssertNotNull(endpoint, nameof(endpoint));
-        ClientUtilities.AssertNotNull(credential, nameof(credential));
-        options ??= new OpenAIClientOptions();
+        if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
+        if (credential is null) throw new ArgumentNullException(nameof(credential));
+
+        options ??= new PipelineOptions();
 
         _endpoint = endpoint;
         _credential = credential;
@@ -40,13 +39,13 @@ public class OpenAIClient
         _pipeline = MessagePipeline.Create(options);
     }
 
-    public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+    public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
     {
-        ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-        ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
+        if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
+        if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
+        if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
-        RequestOptions context = FromCancellationToken(cancellationToken);
-        Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+        Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent());
         MessageResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
         return Result.FromValue(completions, response);
@@ -54,22 +53,32 @@ public class OpenAIClient
 
     public virtual Result GetCompletions(string deploymentId, RequestBody content, RequestOptions options = null)
     {
-        ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-        ClientUtilities.AssertNotNull(content, nameof(content));
+        if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
+        if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
+        if (content is null) throw new ArgumentNullException(nameof(content));
+
+        options ??= new RequestOptions();
 
         using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
-        // TODO: per precedence rules, we should not override a customer-specified message classifier.
-        options.MessageClassifier = MessageClassifier200;
+        _pipeline.Send(message);
 
-        MessageResponse response = _pipeline.ProcessMessage(message, options);
-        Result result = Result.FromResponse(response);
-        return result;
+        MessageResponse response = message.Response;
+
+        if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
+        {
+            throw new UnsuccessfulRequestException(response);
+        }
+
+        return Result.FromResponse(response);
     }
 
     internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBody content, RequestOptions options)
     {
         ClientMessage message = _pipeline.CreateMessage();
+
+        // TODO: per precedence rules, we should not override a customer-specified message classifier.
+        options.MessageClassifier = MessageClassifier200;
         options.Apply(message);
 
         MessageRequest request = message.Request;
@@ -88,17 +97,6 @@ public class OpenAIClient
         request.Body = content;
 
         return message;
-    }
-
-    private static RequestOptions DefaultRequestContext = new RequestOptions();
-    internal static RequestOptions FromCancellationToken(CancellationToken cancellationToken = default)
-    {
-        if (!cancellationToken.CanBeCanceled)
-        {
-            return DefaultRequestContext;
-        }
-
-        return new RequestOptions() { CancellationToken = cancellationToken };
     }
 
     private static MessageClassifier _messageClassifier200;

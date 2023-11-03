@@ -196,6 +196,7 @@ namespace System.Net.ClientModel.Core
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
+        public string? ServiceVersion { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelineTransport? Transport { get { throw null; } set { } }
     }
     public abstract partial class PipelinePolicy

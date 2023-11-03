@@ -6,27 +6,28 @@ using System.Net;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text;
-using System.Threading;
 
 namespace Maps;
 
 public class MapsClient
 {
+    private const string LatestServiceVersion = "1.0";
+
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
     private readonly MessagePipeline _pipeline;
-    private readonly string _apiVersion;
+    private readonly string _serviceVersion;
 
-    public MapsClient(Uri endpoint, KeyCredential credential, MapsClientOptions options = default)
+    public MapsClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
 
-        options ??= new MapsClientOptions();
+        options ??= new PipelineOptions();
 
         _endpoint = endpoint;
         _credential = credential;
-        _apiVersion = options.Version;
+        _serviceVersion = options.ServiceVersion ?? LatestServiceVersion;
 
         // TODO: Can this be simplified?
         if (options.PerCallPolicies is null)
@@ -44,15 +45,11 @@ public class MapsClient
         _pipeline = MessagePipeline.Create(options);
     }
 
-    public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
+    public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        RequestOptions options = cancellationToken.CanBeCanceled ?
-            new RequestOptions() { CancellationToken = cancellationToken } :
-            new RequestOptions();
-
-        Result result = GetCountryCode(ipAddress.ToString(), options);
+        Result result = GetCountryCode(ipAddress.ToString());
 
         MessageResponse response = result.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
@@ -100,7 +97,7 @@ public class MapsClient
 
         StringBuilder query = new();
         query.Append("api-version=");
-        query.Append(Uri.EscapeDataString(_apiVersion));
+        query.Append(Uri.EscapeDataString(_serviceVersion));
         query.Append("&ip=");
         query.Append(Uri.EscapeDataString(ipAddress));
         uriBuilder.Query = query.ToString();
