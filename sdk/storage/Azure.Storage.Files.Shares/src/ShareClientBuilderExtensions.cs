@@ -26,9 +26,9 @@ namespace Microsoft.Extensions.Azure
         /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="serviceUri"/>
         /// </summary>
         public static IAzureClientBuilder<ShareServiceClient, ShareClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri)
-            where TBuilder : IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>(options => new ShareServiceClient(serviceUri, options));
+            return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>((options, cred) => new ShareServiceClient(serviceUri, cred, options));
         }
 
         /// <summary>
