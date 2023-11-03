@@ -8,6 +8,8 @@ using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Security.Cryptography;
 
 namespace Azure.Communication.JobRouter
 {
@@ -519,10 +521,10 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await ReclassifyJobAsync(jobId: jobId,
-                        options: new Dictionary<string, string>(),
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                return (await ReclassifyJobAsync(jobId: jobId,
+                    options: new Dictionary<string, string>(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false)).GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -544,9 +546,267 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return ReclassifyJob(
+                return (ReclassifyJob(
                     jobId: jobId,
                     options: new Dictionary<string, string>(),
+                    cancellationToken: cancellationToken)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Closes a completed job. </summary>
+        /// <param name="options"> Options for closing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> CloseJobAsync(CloseJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+
+            try
+            {
+                return (await CloseJobAsync(
+                    jobId: options.JobId,
+                    assignmentId: options.AssignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Closes a completed job. </summary>
+        /// <param name="options"> Options for closing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response CloseJob(CloseJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+
+            try
+            {
+                return CloseJob(
+                    jobId: options.JobId,
+                    assignmentId: options.AssignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="options"> Options for cancelling job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> CancelJobAsync(CancelJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+
+            try
+            {
+                return (await CancelJobAsync(
+                    jobId: options.JobId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="options"> Options for cancelling job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response CancelJob(CancelJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
+            scope.Start();
+
+            try
+            {
+                return CancelJob(
+                    jobId: options.JobId,
+                    options: options,
+                    cancellationToken: cancellationToken).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Completes an assigned job. </summary>
+        /// <param name="options"> Options for completing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> CompleteJobAsync(CompleteJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
+            scope.Start();
+
+            try
+            {
+                return (await CompleteJobAsync(
+                    jobId: options.JobId,
+                    assignmentId: options.AssignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Completes an assigned job. </summary>
+        /// <param name="options"> Options for completing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response CompleteJob(CompleteJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+
+            try
+            {
+                return CompleteJob(
+                    jobId: options.JobId,
+                    assignmentId: options.AssignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Declines an offer to work on a job. </summary>
+        /// <param name="options"> Options for declining offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> DeclineJobOfferAsync(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
+            scope.Start();
+
+            try
+            {
+                return (await DeclineJobOfferAsync(
+                    workerId: options.WorkerId,
+                    offerId: options.OfferId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Declines an offer to work on a job. </summary>
+        /// <param name="options"> Options for declining offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response DeclineJobOffer(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
+            scope.Start();
+
+            try
+            {
+                return DeclineJobOffer(
+                    workerId: options.WorkerId,
+                    offerId: options.OfferId,
+                    options: options,
+                    cancellationToken: cancellationToken).GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Un-assign a job. </summary>
+        /// <param name="options"> Options for un-assigning a job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UnassignJob)}");
+            scope.Start();
+
+            try
+            {
+                return (await UnassignJobAsync(
+                    jobId: options.JobId,
+                    assignmentId: options.AssignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false));
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Un-assign a job. </summary>
+        /// <param name="options"> Options for un-assigning a job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<UnassignJobResult> UnassignJob(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UnassignJob)}");
+            scope.Start();
+
+            try
+            {
+                return UnassignJob(
+                    jobId: options.JobId,
+                    assignmentId: options.AssignmentId,
+                    options: options,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)

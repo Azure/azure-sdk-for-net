@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -293,35 +294,65 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Reclassify a job. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="options"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response> ReclassifyJobAsync(string jobId, IDictionary<string, string> options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> ReclassifyJobAsync(string jobId, IDictionary<string, string> options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(options);
             Response response = await ReclassifyJobAsync(jobId, content, context).ConfigureAwait(false);
-            return response;
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary> Reclassify a job. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="options"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response ReclassifyJob(string jobId, IDictionary<string, string> options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> ReclassifyJob(string jobId, IDictionary<string, string> options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(options);
             Response response = ReclassifyJob(jobId, content, context);
-            return response;
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary>
@@ -339,7 +370,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -379,7 +410,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -404,49 +435,70 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary>
-        /// Submits request to cancel an existing job by Id while supplying free-form
-        /// cancellation reason.
-        /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="options"> Request model for cancelling job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CancelJobAsync(string,CancelJobOptions,CancellationToken)']/*" />
-        public virtual async Task<Response> CancelJobAsync(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> CancelJobAsync(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = await CancelJobAsync(jobId, content, context).ConfigureAwait(false);
-            return response;
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
-        /// <summary>
-        /// Submits request to cancel an existing job by Id while supplying free-form
-        /// cancellation reason.
-        /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="options"> Request model for cancelling job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CancelJob(string,CancelJobOptions,CancellationToken)']/*" />
-        public virtual Response CancelJob(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> CancelJob(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = CancelJob(jobId, content, context);
-            return response;
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary>
-        /// [Protocol Method] Submits request to cancel an existing job by Id while supplying free-form
-        /// cancellation reason.
+        /// [Protocol Method] Submits request to cancel an existing job by Id while supplying free-form cancellation reason.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -460,15 +512,14 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CancelJobAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CancelJobAsync(string jobId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CancelJobAsync(string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -487,8 +538,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// [Protocol Method] Submits request to cancel an existing job by Id while supplying free-form
-        /// cancellation reason.
+        /// [Protocol Method] Submits request to cancel an existing job by Id while supplying free-form cancellation reason.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -502,15 +552,14 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CancelJob(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CancelJob(string jobId, RequestContent content, RequestContext context = null)
+        internal virtual Response CancelJob(string jobId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -529,39 +578,69 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Completes an assigned job. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="options"> Request model for completing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CompleteJobAsync(string,CompleteJobOptions,CancellationToken)']/*" />
-        public virtual async Task<Response> CompleteJobAsync(string jobId, CompleteJobOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> CompleteJobAsync(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = options.ToRequestContent();
-            Response response = await CompleteJobAsync(jobId, content, context).ConfigureAwait(false);
-            return response;
+            using RequestContent content = options?.ToRequestContent();
+            Response response = await CompleteJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary> Completes an assigned job. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="options"> Request model for completing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CompleteJob(string,CompleteJobOptions,CancellationToken)']/*" />
-        public virtual Response CompleteJob(string jobId, CompleteJobOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> CompleteJob(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = options.ToRequestContent();
-            Response response = CompleteJob(jobId, content, context);
-            return response;
+            using RequestContent content = options?.ToRequestContent();
+            Response response = CompleteJob(jobId, assignmentId, content, context);
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary>
@@ -574,29 +653,29 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CompleteJobAsync(string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CompleteJobAsync(string,string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CompleteJobAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CompleteJobAsync(string jobId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CompleteJobAsync(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.CompleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompleteJobRequest(jobId, content, context);
+                using HttpMessage message = CreateCompleteJobRequest(jobId, assignmentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -616,29 +695,29 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CompleteJob(string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CompleteJob(string,string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CompleteJob(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CompleteJob(string jobId, RequestContent content, RequestContext context = null)
+        internal virtual Response CompleteJob(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.CompleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompleteJobRequest(jobId, content, context);
+                using HttpMessage message = CreateCompleteJobRequest(jobId, assignmentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -649,39 +728,69 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Closes a completed job. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="options"> Request model for closing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CloseJobAsync(string,CloseJobOptions,CancellationToken)']/*" />
-        public virtual async Task<Response> CloseJobAsync(string jobId, CloseJobOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> CloseJobAsync(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = options.ToRequestContent();
-            Response response = await CloseJobAsync(jobId, content, context).ConfigureAwait(false);
-            return response;
+            using RequestContent content = options?.ToRequestContent();
+            Response response = await CloseJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary> Closes a completed job. </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="options"> Request model for closing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CloseJob(string,CloseJobOptions,CancellationToken)']/*" />
-        public virtual Response CloseJob(string jobId, CloseJobOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> CloseJob(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = options.ToRequestContent();
-            Response response = CloseJob(jobId, content, context);
-            return response;
+            using RequestContent content = options?.ToRequestContent();
+            Response response = CloseJob(jobId, assignmentId, content, context);
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary>
@@ -694,29 +803,29 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CloseJobAsync(string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CloseJobAsync(string,string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CloseJobAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CloseJobAsync(string jobId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CloseJobAsync(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.CloseJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCloseJobRequest(jobId, content, context);
+                using HttpMessage message = CreateCloseJobRequest(jobId, assignmentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -736,29 +845,29 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CloseJob(string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CloseJob(string,string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='CloseJob(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CloseJob(string jobId, RequestContent content, RequestContext context = null)
+        internal virtual Response CloseJob(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.CloseJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCloseJobRequest(jobId, content, context);
+                using HttpMessage message = CreateCloseJobRequest(jobId, assignmentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -879,14 +988,13 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Un-assign a job. </summary>
-        /// <param name="jobId"> Id of the job to un-assign. </param>
-        /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="options"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJobAsync(string,string,UnassignJobOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(string jobId, string assignmentId, UnassignJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(string jobId, string assignmentId, UnassignJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -898,14 +1006,13 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Un-assign a job. </summary>
-        /// <param name="jobId"> Id of the job to un-assign. </param>
-        /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="options"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJob(string,string,UnassignJobOptions,CancellationToken)']/*" />
-        public virtual Response<UnassignJobResult> UnassignJob(string jobId, string assignmentId, UnassignJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<UnassignJobResult> UnassignJob(string jobId, string assignmentId, UnassignJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -931,16 +1038,15 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job to un-assign. </param>
-        /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJobAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UnassignJobAsync(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> UnassignJobAsync(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -974,16 +1080,15 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> Id of the job to un-assign. </param>
-        /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJob(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response UnassignJob(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
+        internal virtual Response UnassignJob(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -1002,12 +1107,9 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary>
-        /// Accepts an offer to work on a job and returns a 409/Conflict if another agent
-        /// accepted the job already.
-        /// </summary>
+        /// <summary> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1022,12 +1124,9 @@ namespace Azure.Communication.JobRouter
             return Response.FromValue(AcceptJobOfferResult.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// Accepts an offer to work on a job and returns a 409/Conflict if another agent
-        /// accepted the job already.
-        /// </summary>
+        /// <summary> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1043,8 +1142,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// [Protocol Method] Accepts an offer to work on a job and returns a 409/Conflict if another agent
-        /// accepted the job already.
+        /// [Protocol Method] Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1059,7 +1157,7 @@ namespace Azure.Communication.JobRouter
         /// </list>
         /// </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1086,8 +1184,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// [Protocol Method] Accepts an offer to work on a job and returns a 409/Conflict if another agent
-        /// accepted the job already.
+        /// [Protocol Method] Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1102,7 +1199,7 @@ namespace Azure.Communication.JobRouter
         /// </list>
         /// </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1130,13 +1227,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="options"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='DeclineJobOfferAsync(string,string,DeclineJobOfferOptions,CancellationToken)']/*" />
-        public virtual async Task<Response> DeclineJobOfferAsync(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> DeclineJobOfferAsync(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
@@ -1144,18 +1240,32 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = await DeclineJobOfferAsync(workerId, offerId, content, context).ConfigureAwait(false);
-            return response;
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="options"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='DeclineJobOffer(string,string,DeclineJobOfferOptions,CancellationToken)']/*" />
-        public virtual Response DeclineJobOffer(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> DeclineJobOffer(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
@@ -1163,7 +1273,22 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = DeclineJobOffer(workerId, offerId, content, context);
-            return response;
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in document.RootElement.EnumerateObject())
+            {
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            value = dictionary;
+            return Response.FromValue(value, response);
         }
 
         /// <summary>
@@ -1182,15 +1307,14 @@ namespace Azure.Communication.JobRouter
         /// </list>
         /// </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='DeclineJobOfferAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> DeclineJobOfferAsync(string workerId, string offerId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> DeclineJobOfferAsync(string workerId, string offerId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
@@ -1225,15 +1349,14 @@ namespace Azure.Communication.JobRouter
         /// </list>
         /// </summary>
         /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> Id of the offer. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='DeclineJobOffer(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response DeclineJobOffer(string workerId, string offerId, RequestContent content, RequestContext context = null)
+        internal virtual Response DeclineJobOffer(string workerId, string offerId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
@@ -1630,14 +1753,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore">
-        /// If specified, filter on jobs that was scheduled before or at given timestamp.
-        /// Range: (-Inf, scheduledBefore].
-        /// </param>
-        /// <param name="scheduledAfter">
-        /// If specified, filter on jobs that was scheduled at or after given value. Range:
-        /// [scheduledAfter, +Inf).
-        /// </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='GetJobsAsync(int?,RouterJobStatusSelector?,string,string,string,DateTimeOffset?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual AsyncPageable<RouterJob> GetJobsAsync(int? maxpagesize = null, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
@@ -1654,14 +1771,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore">
-        /// If specified, filter on jobs that was scheduled before or at given timestamp.
-        /// Range: (-Inf, scheduledBefore].
-        /// </param>
-        /// <param name="scheduledAfter">
-        /// If specified, filter on jobs that was scheduled at or after given value. Range:
-        /// [scheduledAfter, +Inf).
-        /// </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='GetJobs(int?,RouterJobStatusSelector?,string,string,string,DateTimeOffset?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Pageable<RouterJob> GetJobs(int? maxpagesize = null, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
@@ -1692,14 +1803,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore">
-        /// If specified, filter on jobs that was scheduled before or at given timestamp.
-        /// Range: (-Inf, scheduledBefore].
-        /// </param>
-        /// <param name="scheduledAfter">
-        /// If specified, filter on jobs that was scheduled at or after given value. Range:
-        /// [scheduledAfter, +Inf).
-        /// </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1731,14 +1836,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
         /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
-        /// <param name="scheduledBefore">
-        /// If specified, filter on jobs that was scheduled before or at given timestamp.
-        /// Range: (-Inf, scheduledBefore].
-        /// </param>
-        /// <param name="scheduledAfter">
-        /// If specified, filter on jobs that was scheduled at or after given value. Range:
-        /// [scheduledAfter, +Inf).
-        /// </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1755,12 +1854,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
-        /// <param name="hasCapacity">
-        /// If set to true, select only workers who have capacity for the channel specified
-        /// by `channelId` or for any channel if `channelId` not specified. If set to
-        /// false, then will return all workers including workers without any capacity for
-        /// jobs. Defaults to false.
-        /// </param>
+        /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='GetWorkersAsync(int?,RouterWorkerStateSelector?,string,string,bool?,CancellationToken)']/*" />
         public virtual AsyncPageable<RouterWorker> GetWorkersAsync(int? maxpagesize = null, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
@@ -1776,12 +1870,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
-        /// <param name="hasCapacity">
-        /// If set to true, select only workers who have capacity for the channel specified
-        /// by `channelId` or for any channel if `channelId` not specified. If set to
-        /// false, then will return all workers including workers without any capacity for
-        /// jobs. Defaults to false.
-        /// </param>
+        /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/JobRouterClient.xml" path="doc/members/member[@name='GetWorkers(int?,RouterWorkerStateSelector?,string,string,bool?,CancellationToken)']/*" />
         public virtual Pageable<RouterWorker> GetWorkers(int? maxpagesize = null, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
@@ -1811,12 +1900,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="state"> If specified, select workers by worker state. Allowed values: "active" | "draining" | "inactive" | "all". </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
-        /// <param name="hasCapacity">
-        /// If set to true, select only workers who have capacity for the channel specified
-        /// by `channelId` or for any channel if `channelId` not specified. If set to
-        /// false, then will return all workers including workers without any capacity for
-        /// jobs. Defaults to false.
-        /// </param>
+        /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1847,12 +1931,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="state"> If specified, select workers by worker state. Allowed values: "active" | "draining" | "inactive" | "all". </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
-        /// <param name="hasCapacity">
-        /// If set to true, select only workers who have capacity for the channel specified
-        /// by `channelId` or for any channel if `channelId` not specified. If set to
-        /// false, then will return all workers including workers without any capacity for
-        /// jobs. Defaults to false.
-        /// </param>
+        /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1924,7 +2003,7 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendPath(":reclassify", false);
+            uri.AppendPath(":reclassifyJob", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1942,7 +2021,7 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendPath(":cancel", false);
+            uri.AppendPath(":cancelJob", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1951,7 +2030,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateCompleteJobRequest(string jobId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCompleteJobRequest(string jobId, string assignmentId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1960,7 +2039,9 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendPath(":complete", false);
+            uri.AppendPath("/assignments/", false);
+            uri.AppendPath(assignmentId, true);
+            uri.AppendPath(":completeJob", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1969,16 +2050,18 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateCloseJobRequest(string jobId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCloseJobRequest(string jobId, string assignmentId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendPath(":close", false);
+            uri.AppendPath("/assignments/", false);
+            uri.AppendPath(assignmentId, true);
+            uri.AppendPath(":closeJob", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2056,7 +2139,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(jobId, true);
             uri.AppendPath("/assignments/", false);
             uri.AppendPath(assignmentId, true);
-            uri.AppendPath(":unassign", false);
+            uri.AppendPath(":unassignJob", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2076,7 +2159,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(workerId, true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
-            uri.AppendPath(":accept", false);
+            uri.AppendPath(":acceptJobOffer", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2094,7 +2177,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(workerId, true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
-            uri.AppendPath(":decline", false);
+            uri.AppendPath(":declineJobOffer", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2221,7 +2304,5 @@ namespace Azure.Communication.JobRouter
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier200202;
-        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
     }
 }

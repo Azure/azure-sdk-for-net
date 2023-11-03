@@ -40,9 +40,6 @@ namespace Azure.Communication.JobRouter
         /// <summary> The value to compare against the actual label value with the given operator. </summary>
         public RouterValue Value { get; set; }
 
-        /// <summary> The time at which this worker selector expires in UTC. </summary>
-        public DateTimeOffset? ExpiresAt { get; set; }
-
         /// <summary> Pushes the job to the front of the queue as long as this selector is active. </summary>
         public bool? Expedite { get; set; }
 
