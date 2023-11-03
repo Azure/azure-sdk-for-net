@@ -84,7 +84,7 @@ namespace Azure.AI.OpenAI
         /// Sets the API key to use with the provided embeddings endpoint when using embeddings.
         /// </summary>
         /// <param name="embeddingKey"> The API key. </param>
-        public void SetEmbeddinghKey(string embeddingKey)
+        public void SetEmbeddingKey(string embeddingKey)
         {
             EmbeddingKey = embeddingKey;
         }

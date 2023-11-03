@@ -154,7 +154,7 @@ namespace Azure.AI.OpenAI
         public string SemanticConfiguration { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public override Azure.AI.OpenAI.AzureChatExtensionType Type { get { throw null; } set { } }
-        public void SetEmbeddinghKey(string embeddingKey) { }
+        public void SetEmbeddingKey(string embeddingKey) { }
         public void SetSearchKey(string searchKey) { }
     }
     public partial class AzureCognitiveSearchIndexFieldMappingOptions
