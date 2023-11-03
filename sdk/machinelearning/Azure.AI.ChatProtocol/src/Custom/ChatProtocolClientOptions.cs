@@ -12,14 +12,17 @@ namespace Azure.AI.ChatProtocol;
 [CodeGenSuppress("ChatProtocolClientOptions", typeof(ChatProtocolClientOptions.ServiceVersion))]
 public partial class ChatProtocolClientOptions : ClientOptions
 {
-    /// <summary> The route where the chat API can be found in the endpoint. </summary>
+    /// <summary> The route where the chat API can be found in the endpoint, if not set the default 'chat' is used. </summary>
     public string ChatRoute { get; set; }
 
-    /// <summary> Scopes to use for an OAuth2 flow. </summary>
+    /// <summary> If set this will override the  OAuth2 scopes. </summary>
     public string[]? AuthorizationScopes { get; set;}
 
+    /// <summary> If set this will override the header used in an API key flow. If not set 'api-key' is used. </summary>
+    public string? APIKeyHeader { get; set;}
+
     /// <summary> Initializes new instance of ChatProtocolClientOptions. </summary>
-    public ChatProtocolClientOptions(ServiceVersion version = LatestVersion, string chatRoute = "chat", string[]? authorizationScopes = null)
+    public ChatProtocolClientOptions(ServiceVersion version = LatestVersion, string chatRoute = "chat", string[]? authorizationScopes = null, string? apiKeyHeader = null)
     {
         Version = version switch
         {
@@ -28,5 +31,6 @@ public partial class ChatProtocolClientOptions : ClientOptions
         };
         ChatRoute = chatRoute;
         AuthorizationScopes = authorizationScopes;
+        APIKeyHeader = apiKeyHeader;
     }
 }

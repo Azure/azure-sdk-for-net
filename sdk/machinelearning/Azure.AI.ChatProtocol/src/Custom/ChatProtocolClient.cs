@@ -52,7 +52,7 @@ public partial class ChatProtocolClient
 
         ClientDiagnostics = new ClientDiagnostics(options, true);
         _keyCredential = credential;
-        _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+        _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, options.APIKeyHeader ?? AuthorizationHeader) }, new ResponseClassifier());
         _endpoint = endpoint;
         _apiVersion = options.Version;
         _chatRoute = options.ChatRoute;
