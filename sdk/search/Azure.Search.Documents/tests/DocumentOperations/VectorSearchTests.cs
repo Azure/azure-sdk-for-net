@@ -121,7 +121,9 @@ namespace Azure.Search.Documents.Tests
                         {
                             SemanticConfigurationName = "my-semantic-config",
                             QueryCaption = new(QueryCaptionType.Extractive),
-                            QueryAnswer = new(QueryAnswerType.Extractive)
+                            QueryAnswer = new(QueryAnswerType.Extractive),
+                            MaxWait = TimeSpan.FromMilliseconds(1000),
+                            ErrorMode = SemanticErrorMode.Partial
                         },
                         QueryType = SearchQueryType.Semantic,
                         Select = { "hotelId", "hotelName", "description", "category" },
@@ -148,6 +150,33 @@ namespace Azure.Search.Documents.Tests
                 response,
                 h => h.Document.HotelId,
                 "9", "3", "2", "5", "10", "1", "4");
+        }
+
+        [Test]
+        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
+        public async Task SemanticMaxWaitOutOfRangeThrows()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+
+            RequestFailedException ex = await CatchAsync<RequestFailedException>(
+                async () => await resources.GetSearchClient().SearchAsync<Hotel>(
+                    "Is there any luxury hotel in New York?",
+                    new SearchOptions
+                    {
+                        SemanticSearch = new()
+                        {
+                            SemanticConfigurationName = "my-semantic-config",
+                            QueryCaption = new(QueryCaptionType.Extractive),
+                            QueryAnswer = new(QueryAnswerType.Extractive),
+                            MaxWait = TimeSpan.FromMilliseconds(700),
+                        },
+                        QueryType = SearchQueryType.Semantic,
+                    }));
+
+            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+            StringAssert.StartsWith(
+                "The 'semanticMaxWaitInMilliseconds' parameter needs to be larger than 750.",
+                ex.Message);
         }
 
         [Test]

@@ -223,10 +223,10 @@ namespace Azure.Search.Documents
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
         private int? SemanticMaxWaitInMilliseconds
         {
-            get { return SemanticSearch?.MaxWait?.Milliseconds; }
+            get { return (int)SemanticSearch?.MaxWait?.TotalMilliseconds; }
             set
             {
-                if (SemanticSearch?.MaxWait?.Milliseconds != null)
+                if (SemanticSearch?.MaxWait?.TotalMilliseconds != null)
                 {
                     SemanticSearch.MaxWait = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null;
                 }
