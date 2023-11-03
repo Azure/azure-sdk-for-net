@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
     public class ContainerAppJobTests : AppContainersManagementTestBase
     {
         public ContainerAppJobTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
         public async Task CreateOrUpdate()
         {
             string envName = Recording.GenerateAssetName("env");
-            string name = Recording.GenerateAssetName("appcontainer");
-            string name2 = Recording.GenerateAssetName("appcontainer");
-            string name3 = Recording.GenerateAssetName("appcontainer");
+            string name = Recording.GenerateAssetName("appcontainerjob-");
+            string name2 = Recording.GenerateAssetName("appcontainerjob-");
+            string name3 = Recording.GenerateAssetName("appcontainerjob-");
             ResourceGroupResource rg = await CreateResourceGroupAsync();
             var envdata = ResourceDataHelpers.GetManagedEnvironmentData();
 

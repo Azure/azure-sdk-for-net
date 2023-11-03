@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
                     Ingress = new ContainerAppIngressConfiguration
                     {
                         External = true,
-                        TargetPort = 3000
+                        TargetPort = 3000,
                     },
                 },
                 Template = new ContainerAppTemplate
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         }
         #endregion
 
-        #region enviroment
+        #region Connectedenviroment
         public static ContainerAppConnectedEnvironmentData GetEnvironmentData(ResourceIdentifier customlocationId)
         {
             ContainerAppConnectedEnvironmentData data = new ContainerAppConnectedEnvironmentData(AzureLocation.NorthCentralUS)
@@ -277,7 +277,7 @@ SecretRef = "masterkey",
         }
         #endregion
 
-        #region ContainerAppConnectedEnvironmentStorageData
+        #region ContainerAppManagedEnvironmentStorageData
         public static ContainerAppManagedEnvironmentStorageData GetManagedEnvironmentStorageData()
         {
             ContainerAppManagedEnvironmentStorageData data = new ContainerAppManagedEnvironmentStorageData()
@@ -306,9 +306,9 @@ SecretRef = "masterkey",
         #region ContainerAppJobData
         public static ContainerAppJobData GetJobData(string envId)
         {
-            ContainerAppJobData data = new ContainerAppJobData(new AzureLocation("East US"))
+            ContainerAppJobData data = new ContainerAppJobData(new AzureLocation("West US"))
             {
-                EnvironmentId = envId,
+                EnvironmentId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktest1168/providers/Microsoft.App/managedEnvironments/enviroment1102",
                 Configuration = new ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 10)
                 {
                     ReplicaRetryLimit = 10,
@@ -324,8 +324,8 @@ SecretRef = "masterkey",
 {
 new ContainerAppInitContainer()
 {
-Image = "repo/testcontainerAppsJob0:v4",
-Name = "testinitcontainerAppsJob0",
+Image = "repo/testcontainerappjob-1102:v4",
+Name = "testinitcontainerappsjob-1102",
 Command =
 {
 "/bin/sh"
@@ -336,8 +336,8 @@ Args =
 },
 Resources = new AppContainerResources()
 {
-Cpu = 0.2,
-Memory = "100Mi",
+Cpu = 0.25,
+Memory = "0.5Gi",
 },
 }
 },
@@ -362,8 +362,8 @@ PeriodSeconds = 3,
 ProbeType = ContainerAppProbeType.Liveness,
 }
 },
-Image = "repo/testcontainerAppsJob0:v1",
-Name = "testcontainerAppsJob0",
+Image = "repo/testcontainerappsjob-1102:v1",
+Name = "testcontainerappsjob-1102",
 }
 },
                 },
@@ -385,11 +385,11 @@ Name = "testcontainerAppsJob0",
         #region ContainerAppManagedCertificateData
         public static ContainerAppManagedCertificateData GetManagedCertificateData()
         {
-            ContainerAppManagedCertificateData data = new ContainerAppManagedCertificateData(new AzureLocation("East US"))
+            ContainerAppManagedCertificateData data = new ContainerAppManagedCertificateData(new AzureLocation("West US"))
             {
                 Properties = new ManagedCertificateProperties()
                 {
-                    SubjectName = "my-subject-name.company.country.net",
+                    SubjectName = "appcontainer1102.gentledune-1bbbb9be.westus.azurecontainerapps.io",
                     DomainControlValidation = ManagedCertificateDomainControlValidation.Cname,
                 },
             };

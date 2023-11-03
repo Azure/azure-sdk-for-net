@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Custom Domian peermisssion missing")]
         public async Task CreateOrUpdate()
         {
             string envName = Recording.GenerateAssetName("env");

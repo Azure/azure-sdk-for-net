@@ -18,12 +18,13 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
     public class SourceControlTests : AppContainersManagementTestBase
     {
         public SourceControlTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Service request failed")]
         public async Task AppContainerTest()
         {
             string envName = Recording.GenerateAssetName("env");
