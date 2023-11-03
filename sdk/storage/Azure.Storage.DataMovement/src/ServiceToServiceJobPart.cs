@@ -283,12 +283,7 @@ namespace Azure.Storage.DataMovement
         {
             return new CommitChunkHandler.Behaviors
             {
-                QueuePutBlockTask = async (long offset, long blockSize, long expectedLength) => await jobPart.QueueChunkToChannelAsync(
-                    async () =>
-                    await jobPart.PutBlockFromUri(
-                        offset,
-                        blockSize,
-                        expectedLength).ConfigureAwait(false)).ConfigureAwait(false),
+                QueuePutBlockTask = async (long offset, long blockSize, long expectedLength) => await jobPart.PutBlockFromUri(offset, blockSize, expectedLength).ConfigureAwait(false),
                 QueueCommitBlockTask = async () => await jobPart.CompleteTransferAsync().ConfigureAwait(false),
                 ReportProgressInBytes = (long bytesWritten) => jobPart.ReportBytesWritten(bytesWritten),
                 InvokeFailedHandler = async (ex) => await jobPart.InvokeFailedArg(ex).ConfigureAwait(false),
