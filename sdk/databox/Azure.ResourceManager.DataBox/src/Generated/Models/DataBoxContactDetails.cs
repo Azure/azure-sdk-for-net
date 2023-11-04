@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Contact Details. </summary>
     public partial class DataBoxContactDetails
     {
-        /// <summary> Initializes a new instance of DataBoxContactDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
@@ -32,14 +35,15 @@ namespace Azure.ResourceManager.DataBox.Models
             NotificationPreference = new ChangeTrackingList<NotificationPreference>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
         /// <param name="mobile"> Mobile number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
         /// <param name="notificationPreference"> Notification preference for a job stage. </param>
-        internal DataBoxContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList, IList<NotificationPreference> notificationPreference)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxContactDetails(string contactName, string phone, string phoneExtension, string mobile, IList<string> emailList, IList<NotificationPreference> notificationPreference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactName = contactName;
             Phone = phone;
@@ -47,6 +51,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Mobile = mobile;
             EmailList = emailList;
             NotificationPreference = notificationPreference;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/> for deserialization. </summary>
+        internal DataBoxContactDetails()
+        {
         }
 
         /// <summary> Contact name of the person. </summary>

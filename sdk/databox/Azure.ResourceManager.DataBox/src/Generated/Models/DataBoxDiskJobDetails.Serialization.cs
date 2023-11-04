@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxDiskJobDetails : IUtf8JsonSerializable
+    public partial class DataBoxDiskJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxDiskJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskJobDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataBoxDiskJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PreferredDisks))
@@ -27,10 +32,76 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(CopyProgress))
+                {
+                    writer.WritePropertyName("copyProgress"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in CopyProgress)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(GranularCopyProgress))
+                {
+                    writer.WritePropertyName("granularCopyProgress"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in GranularCopyProgress)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(GranularCopyLogDetails))
+                {
+                    writer.WritePropertyName("granularCopyLogDetails"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in GranularCopyLogDetails)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(DisksAndSizeDetails))
+                {
+                    writer.WritePropertyName("disksAndSizeDetails"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in DisksAndSizeDetails)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteNumberValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
             if (Optional.IsDefined(Passkey))
             {
                 writer.WritePropertyName("passkey"u8);
                 writer.WriteStringValue(Passkey);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(JobStages))
+                {
+                    writer.WritePropertyName("jobStages"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in JobStages)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
@@ -38,6 +109,22 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DeliveryPackage))
+                {
+                    writer.WritePropertyName("deliveryPackage"u8);
+                    writer.WriteObjectValue(DeliveryPackage);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ReturnPackage))
+                {
+                    writer.WritePropertyName("returnPackage"u8);
+                    writer.WriteObjectValue(ReturnPackage);
+                }
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
@@ -71,6 +158,43 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(CopyLogDetails))
+                {
+                    writer.WritePropertyName("copyLogDetails"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in CopyLogDetails)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ReverseShipmentLabelSasKey))
+                {
+                    writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
+                    writer.WriteStringValue(ReverseShipmentLabelSasKey);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ChainOfCustodySasKey))
+                {
+                    writer.WritePropertyName("chainOfCustodySasKey"u8);
+                    writer.WriteStringValue(ChainOfCustodySasKey);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DeviceErasureDetails))
+                {
+                    writer.WritePropertyName("deviceErasureDetails"u8);
+                    writer.WriteObjectValue(DeviceErasureDetails);
+                }
+            }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
@@ -81,11 +205,77 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Actions))
+                {
+                    writer.WritePropertyName("actions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Actions)
+                    {
+                        writer.WriteStringValue(item.ToSerialString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastMitigationActionOnJob))
+                {
+                    writer.WritePropertyName("lastMitigationActionOnJob"u8);
+                    writer.WriteObjectValue(LastMitigationActionOnJob);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DataCenterAddress))
+                {
+                    writer.WritePropertyName("datacenterAddress"u8);
+                    writer.WriteObjectValue(DataCenterAddress);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DataCenterCode))
+                {
+                    writer.WritePropertyName("dataCenterCode"u8);
+                    writer.WriteStringValue(DataCenterCode.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxDiskJobDetails DeserializeDataBoxDiskJobDetails(JsonElement element)
+        DataBoxDiskJobDetails IJsonModel<DataBoxDiskJobDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxDiskJobDetails(document.RootElement, options);
+        }
+
+        internal static DataBoxDiskJobDetails DeserializeDataBoxDiskJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +306,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
             Optional<DataCenterAddressResult> dataCenterAddress = default;
             Optional<DataCenterCode> dataCenterCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preferredDisks"u8))
@@ -382,8 +574,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataCenterCode = new DataCenterCode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxDiskJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), Optional.ToDictionary(preferredDisks), Optional.ToList(copyProgress), Optional.ToList(granularCopyProgress), Optional.ToList(granularCopyLogDetails), Optional.ToDictionary(disksAndSizeDetails), passkey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxDiskJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, Optional.ToDictionary(preferredDisks), Optional.ToList(copyProgress), Optional.ToList(granularCopyProgress), Optional.ToList(granularCopyLogDetails), Optional.ToDictionary(disksAndSizeDetails), passkey.Value);
         }
+
+        BinaryData IModel<DataBoxDiskJobDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxDiskJobDetails IModel<DataBoxDiskJobDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxDiskJobDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataBoxDiskJobDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

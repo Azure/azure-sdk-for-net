@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Preferences related to the order. </summary>
     public partial class DataBoxOrderPreferences
     {
-        /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxOrderPreferences"/>. </summary>
         public DataBoxOrderPreferences()
         {
             PreferredDataCenterRegion = new ChangeTrackingList<string>();
             StorageAccountAccessTierPreferences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxOrderPreferences"/>. </summary>
         /// <param name="preferredDataCenterRegion"> Preferred data center region. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         /// <param name="reverseTransportPreferences"> Optional Preferences related to the reverse shipment logistics of the sku. </param>
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
         /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
-        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, TransportPreferences reverseTransportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, TransportPreferences reverseTransportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
             TransportPreferences = transportPreferences;
             ReverseTransportPreferences = reverseTransportPreferences;
             EncryptionPreferences = encryptionPreferences;
             StorageAccountAccessTierPreferences = storageAccountAccessTierPreferences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Preferred data center region. </summary>

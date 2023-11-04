@@ -6,15 +6,102 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxJobStage
+    public partial class DataBoxJobStage : IUtf8JsonSerializable, IJsonModel<DataBoxJobStage>
     {
-        internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobStage>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataBoxJobStage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StageName))
+                {
+                    writer.WritePropertyName("stageName"u8);
+                    writer.WriteStringValue(StageName.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StageStatus))
+                {
+                    writer.WritePropertyName("stageStatus"u8);
+                    writer.WriteStringValue(StageStatus.Value.ToSerialString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StageTime))
+                {
+                    writer.WritePropertyName("stageTime"u8);
+                    writer.WriteStringValue(StageTime.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(JobStageDetails))
+                {
+                    writer.WritePropertyName("jobStageDetails"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(JobStageDetails);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(JobStageDetails))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxJobStage IJsonModel<DataBoxJobStage>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxJobStage(document.RootElement, options);
+        }
+
+        internal static DataBoxJobStage DeserializeDataBoxJobStage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +111,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataBoxStageStatus> stageStatus = default;
             Optional<DateTimeOffset> stageTime = default;
             Optional<BinaryData> jobStageDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stageName"u8))
@@ -67,8 +156,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     jobStageDetails = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxJobStage(Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(stageStatus), Optional.ToNullable(stageTime), jobStageDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxJobStage(Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(stageStatus), Optional.ToNullable(stageTime), jobStageDetails.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataBoxJobStage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxJobStage IModel<DataBoxJobStage>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxJobStage(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataBoxJobStage>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

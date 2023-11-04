@@ -5,14 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataCenterAddressResult
+    [ModelReaderProxy(typeof(UnknownDataCenterAddressResponse))]
+    public partial class DataCenterAddressResult : IUtf8JsonSerializable, IJsonModel<DataCenterAddressResult>
     {
-        internal static DataCenterAddressResult DeserializeDataCenterAddressResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataCenterAddressResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("datacenterAddressType"u8);
+            writer.WriteStringValue(DataCenterAddressType.ToSerialString());
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
+                {
+                    writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SupportedCarriersForReturnShipment)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DataCenterAzureLocation))
+                {
+                    writer.WritePropertyName("dataCenterAzureLocation"u8);
+                    writer.WriteStringValue(DataCenterAzureLocation.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataCenterAddressResult IJsonModel<DataCenterAddressResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCenterAddressResult(document.RootElement, options);
+        }
+
+        internal static DataCenterAddressResult DeserializeDataCenterAddressResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,5 +92,30 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element);
         }
+
+        BinaryData IModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataCenterAddressResult IModel<DataCenterAddressResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataCenterAddressResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataCenterAddressResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

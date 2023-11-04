@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,24 +14,34 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Encryption key containing details about key to encrypt different keys. </summary>
     public partial class DataBoxKeyEncryptionKey
     {
-        /// <summary> Initializes a new instance of DataBoxKeyEncryptionKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/>. </summary>
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         public DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType)
         {
             KekType = kekType;
         }
 
-        /// <summary> Initializes a new instance of DataBoxKeyEncryptionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/>. </summary>
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         /// <param name="managedIdentity"> Managed identity properties used for key encryption. </param>
         /// <param name="kekUri"> Key encryption key. It is required in case of Customer managed KekType. </param>
         /// <param name="kekVaultResourceId"> Kek vault resource id. It is required in case of Customer managed KekType. </param>
-        internal DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType, DataBoxManagedIdentity managedIdentity, Uri kekUri, ResourceIdentifier kekVaultResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType, DataBoxManagedIdentity managedIdentity, Uri kekUri, ResourceIdentifier kekVaultResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KekType = kekType;
             ManagedIdentity = managedIdentity;
             KekUri = kekUri;
             KekVaultResourceId = kekVaultResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/> for deserialization. </summary>
+        internal DataBoxKeyEncryptionKey()
+        {
         }
 
         /// <summary> Type of encryption key used for key encryption. </summary>

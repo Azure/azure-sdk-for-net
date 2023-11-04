@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Capacity of the sku. </summary>
     public partial class DataBoxSkuCapacity
     {
-        /// <summary> Initializes a new instance of DataBoxSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
         internal DataBoxSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
-        internal DataBoxSkuCapacity(string usable, string maximum)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxSkuCapacity(string usable, string maximum, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Usable = usable;
             Maximum = maximum;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Usable capacity in TB. </summary>
