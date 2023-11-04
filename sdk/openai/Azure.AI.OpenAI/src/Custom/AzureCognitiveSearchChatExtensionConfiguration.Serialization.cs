@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
 
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(SearchEndpoint.AbsoluteUri);
-            writer.WriteString("key"u8, SearchKey.Key);
+            writer.WriteString("key"u8, SearchKey);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             if (Optional.IsDefined(FieldMappingOptions))
@@ -57,7 +57,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(EmbeddingKey))
             {
-                writer.WriteString("embeddingKey"u8, EmbeddingKey.Key);
+                writer.WriteString("embeddingKey"u8, EmbeddingKey);
             }
             // CUSTOM CODE NOTE: end of induced 'parameters' first, then the parent object
             writer.WriteEndObject();

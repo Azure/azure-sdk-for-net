@@ -38,28 +38,35 @@ public class AzureChatExtensionsTests : OpenAITestBase
             OpenAIClientScenario.ChatCompletions);
 
         AzureChatExtensionsOptions extensionsOptions = new();
-        extensionsOptions.Extensions.Add(extensionStrategy switch
+        switch (extensionStrategy)
         {
-            ExtensionObjectStrategy.WithGenericParentType => new AzureChatExtensionConfiguration()
-            {
-                Type = "AzureCognitiveSearch",
-                Parameters = BinaryData.FromObjectAsJson(new
+            case ExtensionObjectStrategy.WithGenericParentType:
+                AzureChatExtensionConfiguration genericConfig = new()
                 {
-                    Endpoint = "https://openaisdktestsearch.search.windows.net",
-                    IndexName = "openai-test-index-carbon-wiki",
-                    GetCognitiveSearchApiKey().Key,
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
-            },
-            ExtensionObjectStrategy.WithScenarioSpecificHelperType
-                => new AzureCognitiveSearchChatExtensionConfiguration()
+                    Type = "AzureCognitiveSearch",
+                    Parameters = BinaryData.FromObjectAsJson(new
+                    {
+                        Endpoint = "https://openaisdktestsearch.search.windows.net",
+                        IndexName = "openai-test-index-carbon-wiki",
+                        GetCognitiveSearchApiKey().Key,
+                    },
+                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+                };
+                extensionsOptions.Extensions.Add(genericConfig);
+                break;
+            case ExtensionObjectStrategy.WithScenarioSpecificHelperType:
+                AzureCognitiveSearchChatExtensionConfiguration helperTypeConfig = new()
                 {
+                    Type = "AzureCognitiveSearch",
                     SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
-                    IndexName = "openai-test-index-carbon-wiki",
-                    SearchKey = GetCognitiveSearchApiKey(),
-                },
-            _ => throw new NotImplementedException("Don't know how to add the extension config!"),
-        });
+                    IndexName = "openai-test-index-carbon-wiki"
+                };
+                helperTypeConfig.SetSearchKey(GetCognitiveSearchApiKey().Key);
+                extensionsOptions.Extensions.Add(helperTypeConfig);
+                break;
+            default:
+                throw new NotImplementedException("Don't know how to add the extension config!");
+        }
 
         var requestOptions = new ChatCompletionsOptions()
         {
