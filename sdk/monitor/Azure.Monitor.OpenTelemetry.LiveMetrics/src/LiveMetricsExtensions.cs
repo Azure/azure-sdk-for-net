@@ -51,11 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
                 if (name == null)
                 {
-                    // If we are NOT using named options we create a new
-                    // instance always. The reason for this is
-                    // OtlpExporterOptions is shared by all signals. Without a
-                    // name, delegates for all signals will mix together. See:
-                    // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
                     exporterOptions = sp.GetRequiredService<IOptionsFactory<LiveMetricsExporterOptions>>().Create(finalOptionsName);
 
                     // Configuration delegate is executed inline on the fresh instance.
