@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Base information about the community gallery resource in pir. </summary>
     public partial class PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of PirCommunityGalleryResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>
         internal PirCommunityGalleryResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PirCommunityGalleryResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
             ResourceType = resourceType;
             UniqueId = uniqueId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource name. </summary>

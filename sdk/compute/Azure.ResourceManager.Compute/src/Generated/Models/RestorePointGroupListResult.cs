@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List restore point collection operation response. </summary>
     internal partial class RestorePointGroupListResult
     {
-        /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
         internal RestorePointGroupListResult()
         {
             Value = new ChangeTrackingList<RestorePointGroupData>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
         /// <param name="value"> Gets the list of restore point collections. </param>
         /// <param name="nextLink"> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </param>
-        internal RestorePointGroupListResult(IReadOnlyList<RestorePointGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointGroupListResult(IReadOnlyList<RestorePointGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of restore point collections. </summary>

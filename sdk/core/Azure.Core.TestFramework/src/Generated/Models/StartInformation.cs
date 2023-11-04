@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
@@ -13,7 +14,10 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Start object to be specified when starting playback or record. </summary>
     public partial class StartInformation
     {
-        /// <summary> Initializes a new instance of StartInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
         public StartInformation(string xRecordingFile)
@@ -21,6 +25,22 @@ namespace Azure.Core.TestFramework.Models
             Argument.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
 
             XRecordingFile = xRecordingFile;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartInformation"/>. </summary>
+        /// <param name="xRecordingFile"></param>
+        /// <param name="xRecordingAssetsFile"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartInformation(string xRecordingFile, string xRecordingAssetsFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            XRecordingFile = xRecordingFile;
+            XRecordingAssetsFile = xRecordingAssetsFile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartInformation"/> for deserialization. </summary>
+        internal StartInformation()
+        {
         }
 
         /// <summary> Gets the x recording file. </summary>

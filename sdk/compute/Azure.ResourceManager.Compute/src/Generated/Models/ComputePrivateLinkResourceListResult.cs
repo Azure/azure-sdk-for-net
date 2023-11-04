@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class ComputePrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceListResult"/>. </summary>
         internal ComputePrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<ComputePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal ComputePrivateLinkResourceListResult(IReadOnlyList<ComputePrivateLinkResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputePrivateLinkResourceListResult(IReadOnlyList<ComputePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

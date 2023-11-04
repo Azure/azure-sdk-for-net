@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class CustomDefaultMatcher : IUtf8JsonSerializable
+    public partial class CustomDefaultMatcher : IUtf8JsonSerializable, IJsonModel<CustomDefaultMatcher>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDefaultMatcher>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CustomDefaultMatcher>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ExcludedHeaders))
@@ -35,7 +41,108 @@ namespace Azure.Core.TestFramework.Models
                 writer.WritePropertyName("ignoredQueryParameters"u8);
                 writer.WriteStringValue(IgnoredQueryParameters);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CustomDefaultMatcher IJsonModel<CustomDefaultMatcher>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomDefaultMatcher(document.RootElement, options);
+        }
+
+        internal static CustomDefaultMatcher DeserializeCustomDefaultMatcher(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> excludedHeaders = default;
+            Optional<bool> compareBodies = default;
+            Optional<string> ignoredHeaders = default;
+            Optional<string> ignoredQueryParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("excludedHeaders"u8))
+                {
+                    excludedHeaders = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("compareBodies"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    compareBodies = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("ignoredHeaders"u8))
+                {
+                    ignoredHeaders = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("ignoredQueryParameters"u8))
+                {
+                    ignoredQueryParameters = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomDefaultMatcher(excludedHeaders.Value, Optional.ToNullable(compareBodies), ignoredHeaders.Value, ignoredQueryParameters.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<CustomDefaultMatcher>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomDefaultMatcher IModel<CustomDefaultMatcher>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomDefaultMatcher(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CustomDefaultMatcher>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

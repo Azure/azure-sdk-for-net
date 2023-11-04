@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains the list of gallery applications that should be made available to the VM/VMSS. </summary>
     internal partial class ApplicationProfile
     {
-        /// <summary> Initializes a new instance of ApplicationProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         public ApplicationProfile()
         {
             GalleryApplications = new ChangeTrackingList<VirtualMachineGalleryApplication>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        internal ApplicationProfile(IList<VirtualMachineGalleryApplication> galleryApplications)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationProfile(IList<VirtualMachineGalleryApplication> galleryApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GalleryApplications = galleryApplications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>

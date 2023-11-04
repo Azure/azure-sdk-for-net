@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineScaleSetRollingUpgradeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetRollingUpgradeData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineScaleSetRollingUpgradeData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetRollingUpgradeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +39,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
         /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
         /// <param name="error"> Error details for this upgrade, if there are any. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Policy = policy;
             RunningStatus = runningStatus;
             Progress = progress;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetRollingUpgradeData"/> for deserialization. </summary>
+        internal VirtualMachineScaleSetRollingUpgradeData()
+        {
         }
 
         /// <summary> The rolling upgrade policies applied for this upgrade. </summary>

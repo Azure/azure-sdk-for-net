@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
@@ -13,7 +14,10 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Sanitizer for a request body. </summary>
     public partial class BodyKeySanitizer
     {
-        /// <summary> Initializes a new instance of BodyKeySanitizer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BodyKeySanitizer(string value)
@@ -21,6 +25,26 @@ namespace Azure.Core.TestFramework.Models
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BodyKeySanitizer(string jsonPath, string value, string regex, string groupForReplace, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            JsonPath = jsonPath;
+            Value = value;
+            Regex = regex;
+            GroupForReplace = groupForReplace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/> for deserialization. </summary>
+        internal BodyKeySanitizer()
+        {
         }
 
         /// <summary> Gets or sets the json path. </summary>

@@ -19,6 +19,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+csharpgen:
+  attach: true
 # mgmt-debug:
 #   show-serialized-names: true
 

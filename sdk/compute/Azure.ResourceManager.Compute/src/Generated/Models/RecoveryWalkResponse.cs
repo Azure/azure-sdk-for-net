@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Response after calling a manual recovery walk. </summary>
     public partial class RecoveryWalkResponse
     {
-        /// <summary> Initializes a new instance of RecoveryWalkResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryWalkResponse"/>. </summary>
         internal RecoveryWalkResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryWalkResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryWalkResponse"/>. </summary>
         /// <param name="walkPerformed"> Whether the recovery walk was performed. </param>
         /// <param name="nextPlatformUpdateDomain"> The next update domain that needs to be walked. Null means walk spanning all update domains has been completed. </param>
-        internal RecoveryWalkResponse(bool? walkPerformed, int? nextPlatformUpdateDomain)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryWalkResponse(bool? walkPerformed, int? nextPlatformUpdateDomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WalkPerformed = walkPerformed;
             NextPlatformUpdateDomain = nextPlatformUpdateDomain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether the recovery walk was performed. </summary>

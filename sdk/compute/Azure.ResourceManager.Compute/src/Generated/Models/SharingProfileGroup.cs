@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Group of the gallery sharing profile. </summary>
     public partial class SharingProfileGroup
     {
-        /// <summary> Initializes a new instance of SharingProfileGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharingProfileGroup"/>. </summary>
         public SharingProfileGroup()
         {
             Ids = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SharingProfileGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingProfileGroup"/>. </summary>
         /// <param name="groupType"> This property allows you to specify the type of sharing group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt; **AADTenants**. </param>
         /// <param name="ids"> A list of subscription/tenant ids the gallery is aimed to be shared to. </param>
-        internal SharingProfileGroup(SharingProfileGroupType? groupType, IList<string> ids)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharingProfileGroup(SharingProfileGroupType? groupType, IList<string> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupType = groupType;
             Ids = ids;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property allows you to specify the type of sharing group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt; **AADTenants**. </summary>

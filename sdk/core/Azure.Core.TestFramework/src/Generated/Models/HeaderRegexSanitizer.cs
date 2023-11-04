@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
@@ -13,7 +14,10 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Sanitizer for a request header. </summary>
     public partial class HeaderRegexSanitizer
     {
-        /// <summary> Initializes a new instance of HeaderRegexSanitizer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,26 @@ namespace Azure.Core.TestFramework.Models
 
             Key = key;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/>. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HeaderRegexSanitizer(string key, string value, string regex, string groupForReplace, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Key = key;
+            Value = value;
+            Regex = regex;
+            GroupForReplace = groupForReplace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/> for deserialization. </summary>
+        internal HeaderRegexSanitizer()
+        {
         }
 
         /// <summary> Gets the key. </summary>

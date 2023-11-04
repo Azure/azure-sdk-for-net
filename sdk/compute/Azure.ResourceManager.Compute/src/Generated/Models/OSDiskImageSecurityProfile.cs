@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains security profile for an OS disk image. </summary>
     public partial class OSDiskImageSecurityProfile
     {
-        /// <summary> Initializes a new instance of OSDiskImageSecurityProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSDiskImageSecurityProfile"/>. </summary>
         public OSDiskImageSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSDiskImageSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDiskImageSecurityProfile"/>. </summary>
         /// <param name="confidentialVmEncryptionType"> confidential VM encryption types. </param>
         /// <param name="secureVmDiskEncryptionSetId"> secure VM disk encryption set id. </param>
-        internal OSDiskImageSecurityProfile(ConfidentialVmEncryptionType? confidentialVmEncryptionType, string secureVmDiskEncryptionSetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSDiskImageSecurityProfile(ConfidentialVmEncryptionType? confidentialVmEncryptionType, string secureVmDiskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfidentialVmEncryptionType = confidentialVmEncryptionType;
             SecureVmDiskEncryptionSetId = secureVmDiskEncryptionSetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> confidential VM encryption types. </summary>

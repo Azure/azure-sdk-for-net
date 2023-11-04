@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a run command parameter. </summary>
     public partial class RunCommandInputParameter
     {
-        /// <summary> Initializes a new instance of RunCommandInputParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandInputParameter"/>. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="value"> The run command parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Compute.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandInputParameter"/>. </summary>
+        /// <param name="name"> The run command parameter name. </param>
+        /// <param name="value"> The run command parameter value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunCommandInputParameter(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandInputParameter"/> for deserialization. </summary>
+        internal RunCommandInputParameter()
+        {
         }
 
         /// <summary> The run command parameter name. </summary>

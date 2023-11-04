@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Image operation response. </summary>
     internal partial class ImageListResult
     {
-        /// <summary> Initializes a new instance of ImageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/>. </summary>
         /// <param name="value"> The list of Images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ImageListResult(IEnumerable<DiskImageData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ImageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/>. </summary>
         /// <param name="value"> The list of Images. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Images. Call ListNext() with this to fetch the next page of Images. </param>
-        internal ImageListResult(IReadOnlyList<DiskImageData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageListResult(IReadOnlyList<DiskImageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/> for deserialization. </summary>
+        internal ImageListResult()
+        {
         }
 
         /// <summary> The list of Images. </summary>

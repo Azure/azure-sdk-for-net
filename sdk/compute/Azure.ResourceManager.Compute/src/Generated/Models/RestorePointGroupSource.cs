@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
     public partial class RestorePointGroupSource
     {
-        /// <summary> Initializes a new instance of RestorePointGroupSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupSource"/>. </summary>
         public RestorePointGroupSource()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointGroupSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupSource"/>. </summary>
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
-        internal RestorePointGroupSource(AzureLocation? location, ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointGroupSource(AzureLocation? location, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the source resource used to create this restore point collection. </summary>

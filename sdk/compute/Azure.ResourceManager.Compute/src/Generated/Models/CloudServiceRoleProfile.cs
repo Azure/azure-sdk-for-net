@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the role profile for the cloud service. </summary>
     internal partial class CloudServiceRoleProfile
     {
-        /// <summary> Initializes a new instance of CloudServiceRoleProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfile"/>. </summary>
         public CloudServiceRoleProfile()
         {
             Roles = new ChangeTrackingList<CloudServiceRoleProfileProperties>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfile"/>. </summary>
         /// <param name="roles"> List of roles for the cloud service. </param>
-        internal CloudServiceRoleProfile(IList<CloudServiceRoleProfileProperties> roles)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceRoleProfile(IList<CloudServiceRoleProfileProperties> roles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Roles = roles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of roles for the cloud service. </summary>

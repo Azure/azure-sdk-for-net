@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Key Vault Secret Url and vault id of the encryption key. </summary>
     public partial class KeyVaultAndSecretReference
     {
-        /// <summary> Initializes a new instance of KeyVaultAndSecretReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAndSecretReference"/>. </summary>
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
         /// <param name="secretUri"> Url pointing to a key or secret in KeyVault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="secretUri"/> is null. </exception>
@@ -25,6 +29,22 @@ namespace Azure.ResourceManager.Compute.Models
 
             SourceVault = sourceVault;
             SecretUri = secretUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAndSecretReference"/>. </summary>
+        /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
+        /// <param name="secretUri"> Url pointing to a key or secret in KeyVault. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultAndSecretReference(WritableSubResource sourceVault, Uri secretUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceVault = sourceVault;
+            SecretUri = secretUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAndSecretReference"/> for deserialization. </summary>
+        internal KeyVaultAndSecretReference()
+        {
         }
 
         /// <summary> Resource id of the KeyVault containing the key or secret. </summary>

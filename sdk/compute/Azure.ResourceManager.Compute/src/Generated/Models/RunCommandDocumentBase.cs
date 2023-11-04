@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a Run Command metadata. </summary>
     public partial class RunCommandDocumentBase
     {
-        /// <summary> Initializes a new instance of RunCommandDocumentBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocumentBase"/>. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
         /// <param name="osType"> The Operating System type. </param>
@@ -32,6 +36,28 @@ namespace Azure.ResourceManager.Compute.Models
             OSType = osType;
             Label = label;
             Description = description;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocumentBase"/>. </summary>
+        /// <param name="schema"> The VM run command schema. </param>
+        /// <param name="id"> The VM run command id. </param>
+        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="label"> The VM run command label. </param>
+        /// <param name="description"> The VM run command description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunCommandDocumentBase(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Schema = schema;
+            Id = id;
+            OSType = osType;
+            Label = label;
+            Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocumentBase"/> for deserialization. </summary>
+        internal RunCommandDocumentBase()
+        {
         }
 
         /// <summary> The VM run command schema. </summary>
