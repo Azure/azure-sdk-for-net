@@ -19,7 +19,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
-    public abstract class RequestContent : RequestBody
+    public abstract class RequestContent : RequestBodyContent
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
@@ -90,7 +90,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IModel{T}"/>.</returns>
         public static new RequestContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
-            => new MessageBodyContent(RequestBody.Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+            => new AzureRequestBodyContent(RequestBodyContent.Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -150,10 +150,11 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
 
-        private sealed class MessageBodyContent : RequestContent
+        private sealed class AzureRequestBodyContent : RequestContent
         {
-            private readonly RequestBody _content;
-            public MessageBodyContent(RequestBody content)
+            private readonly RequestBodyContent _content;
+
+            public AzureRequestBodyContent(RequestBodyContent content)
             {
                 _content = content;
             }
