@@ -55,16 +55,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         Successful = 2,
         ValidationError = 3,
     }
-    public partial class RequestValidationException : System.Exception
-    {
-        public RequestValidationException(string message) { }
-        public RequestValidationException(string message, System.Exception innerException) { }
-    }
-    public partial class ResponseValidationException : System.Exception
-    {
-        public ResponseValidationException(string message) { }
-        public ResponseValidationException(string message, System.Exception innerException) { }
-    }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
