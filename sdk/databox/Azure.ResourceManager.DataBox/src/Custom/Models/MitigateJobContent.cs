@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class MitigateJobContent
     {
-        // This is used to represent default null for breaking change of CustomerResolutionCode changed from requried to optional
+        // This is used to represent default null for breaking change of CustomerResolutionCode changed from required to optional
         private CustomerResolutionCode? _customerResolutionCode;
 
         /// <summary> Initializes a new instance of MitigateJobContent. </summary>
@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Resolution code for the job. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteCustomerResolutionCode))]
         public CustomerResolutionCode CustomerResolutionCode
         {
             get
@@ -37,12 +36,6 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 _customerResolutionCode = value;
             }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteCustomerResolutionCode(Utf8JsonWriter writer)
-        {
-            writer.WriteStringValue(_customerResolutionCode.Value.ToSerialString());
         }
     }
 }

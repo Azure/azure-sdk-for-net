@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class MitigateJobContent : IUtf8JsonSerializable, IJsonModel<MitigateJobContent>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MitigateJobContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
         void IJsonModel<MitigateJobContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
