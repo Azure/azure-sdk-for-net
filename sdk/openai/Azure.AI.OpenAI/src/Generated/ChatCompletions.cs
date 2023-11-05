@@ -19,7 +19,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletions
     {
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -43,9 +46,10 @@ namespace Azure.AI.OpenAI
             Choices = choices.ToList();
             PromptFilterResults = new ChangeTrackingList<PromptFilterResult>();
             Usage = usage;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -61,13 +65,20 @@ namespace Azure.AI.OpenAI
         /// results for different prompts may arrive at different times or in different orders.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        internal ChatCompletions(string id, DateTimeOffset created, IReadOnlyList<ChatChoice> choices, IReadOnlyList<PromptFilterResult> promptFilterResults, CompletionsUsage usage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletions(string id, DateTimeOffset created, IReadOnlyList<ChatChoice> choices, IReadOnlyList<PromptFilterResult> promptFilterResults, CompletionsUsage usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Created = created;
             Choices = choices;
             PromptFilterResults = promptFilterResults;
             Usage = usage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/> for deserialization. </summary>
+        internal ChatCompletions()
+        {
         }
 
         /// <summary> A unique identifier associated with this chat completions response. </summary>

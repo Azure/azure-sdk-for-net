@@ -19,7 +19,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsOptions
     {
-        /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
         /// Typical usage begins with a chat message for the System role that provides instructions for
@@ -89,7 +92,8 @@ namespace Azure.AI.OpenAI
         ///   The configuration entries for Azure OpenAI chat extensions that use them.
         ///   This additional specification is only compatible with Azure OpenAI.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
             Functions = functions;
@@ -106,6 +110,7 @@ namespace Azure.AI.OpenAI
             InternalShouldStreamResponse = internalShouldStreamResponse;
             DeploymentName = deploymentName;
             InternalAzureExtensionsDataSources = internalAzureExtensionsDataSources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

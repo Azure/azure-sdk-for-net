@@ -5,18 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Measurement of the amount of tokens used in this request and response. </summary>
     public partial class EmbeddingsUsage
     {
-        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsUsage"/>. </summary>
         /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
         /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
         internal EmbeddingsUsage(int promptTokens, int totalTokens)
         {
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsUsage"/>. </summary>
+        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
+        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmbeddingsUsage(int promptTokens, int totalTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PromptTokens = promptTokens;
+            TotalTokens = totalTokens;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsUsage"/> for deserialization. </summary>
+        internal EmbeddingsUsage()
+        {
         }
 
         /// <summary> Number of tokens sent in the original request. </summary>
