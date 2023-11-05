@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -17,6 +18,27 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ResourceProviderData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderData"/>. </summary>
+        /// <param name="id"> The provider ID. </param>
+        /// <param name="namespace"> The namespace of the resource provider. </param>
+        /// <param name="registrationState"> The registration state of the resource provider. </param>
+        /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
+        /// <param name="resourceTypes"> The collection of provider resource types. </param>
+        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderData(ResourceIdentifier id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Namespace = @namespace;
+            RegistrationState = registrationState;
+            RegistrationPolicy = registrationPolicy;
+            ResourceTypes = resourceTypes;
+            ProviderAuthorizationConsentState = providerAuthorizationConsentState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
         /// <summary> The namespace of the resource provider. </summary>
         public string Namespace { get; }
         /// <summary> The registration state of the resource provider. </summary>

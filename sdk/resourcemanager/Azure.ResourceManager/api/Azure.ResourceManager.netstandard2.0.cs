@@ -143,13 +143,18 @@ namespace Azure.ResourceManager.ManagementGroups
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.ManagementGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagementGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagementGroupData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.ManagementGroupData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.ManagementGroupData>
     {
         internal ManagementGroupData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> Children { get { throw null; } }
         public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo Details { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.ManagementGroupData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.ManagementGroupData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.ManagementGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.ManagementGroupData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.ManagementGroupData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.ManagementGroupData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.ManagementGroupData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagementGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -176,21 +181,31 @@ namespace Azure.ResourceManager.ManagementGroups
 }
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class CreateManagementGroupDetails
+    public partial class CreateManagementGroupDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails>
     {
         public CreateManagementGroupDetails() { }
         public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions Parent { get { throw null; } set { } }
         public string UpdatedBy { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public int? Version { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DescendantData : Azure.ResourceManager.Models.ResourceData
+    public partial class DescendantData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.DescendantData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.DescendantData>
     {
         internal DescendantData() { }
         public string DisplayName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ParentId { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.DescendantData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.DescendantData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.DescendantData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.DescendantData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.DescendantData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.DescendantData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.DescendantData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementGroupChildInfo
+    public partial class ManagementGroupChildInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo>
     {
         internal ManagementGroupChildInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> Children { get { throw null; } }
@@ -198,8 +213,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementGroupChildOptions
+    public partial class ManagementGroupChildOptions : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions>
     {
         internal ManagementGroupChildOptions() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions> Children { get { throw null; } }
@@ -207,6 +227,11 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagementGroupChildType : System.IEquatable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType>
@@ -226,7 +251,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public static bool operator !=(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType left, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagementGroupCreateOrUpdateContent
+    public partial class ManagementGroupCreateOrUpdateContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent>
     {
         public ManagementGroupCreateOrUpdateContent() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions> Children { get { throw null; } }
@@ -236,6 +261,11 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagementGroupExpandType : System.IEquatable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType>
@@ -256,7 +286,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public static bool operator !=(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType left, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagementGroupInfo
+    public partial class ManagementGroupInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo>
     {
         internal ManagementGroupInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement> ManagementGroupAncestorChain { get { throw null; } }
@@ -266,55 +296,90 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public string UpdatedBy { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public int? Version { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementGroupNameAvailabilityContent
+    public partial class ManagementGroupNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent>
     {
         public ManagementGroupNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementGroupNameAvailabilityResult
+    public partial class ManagementGroupNameAvailabilityResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>
     {
         internal ManagementGroupNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ManagementGroupNameUnavailableReason
     {
         Invalid = 0,
         AlreadyExists = 1,
     }
-    public partial class ManagementGroupParentCreateOptions
+    public partial class ManagementGroupParentCreateOptions : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions>
     {
         public ManagementGroupParentCreateOptions() { }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementGroupPatch
+    public partial class ManagementGroupPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch>
     {
         public ManagementGroupPatch() { }
         public string DisplayName { get { throw null; } set { } }
         public string ParentGroupId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementGroupPathElement
+    public partial class ManagementGroupPathElement : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement>
     {
         internal ManagementGroupPathElement() { }
         public string DisplayName { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ParentManagementGroupInfo
+    public partial class ParentManagementGroupInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo>
     {
         internal ParentManagementGroupInfo() { }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Models
 {
-    public sealed partial class ArmPlan : System.IEquatable<Azure.ResourceManager.Models.ArmPlan>
+    public sealed partial class ArmPlan : System.IEquatable<Azure.ResourceManager.Models.ArmPlan>, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.ArmPlan>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmPlan>
     {
         public ArmPlan(string name, string publisher, string product) { }
         public string Name { get { throw null; } set { } }
@@ -329,8 +394,13 @@ namespace Azure.ResourceManager.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Models.ArmPlan left, Azure.ResourceManager.Models.ArmPlan right) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Models.ArmPlan left, Azure.ResourceManager.Models.ArmPlan right) { throw null; }
+        Azure.ResourceManager.Models.ArmPlan System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.ArmPlan>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.ArmPlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmPlan>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.ArmPlan System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmPlan>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmPlan>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public sealed partial class ArmSku : System.IEquatable<Azure.ResourceManager.Models.ArmSku>
+    public sealed partial class ArmSku : System.IEquatable<Azure.ResourceManager.Models.ArmSku>, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.ArmSku>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmSku>
     {
         public ArmSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -345,6 +415,11 @@ namespace Azure.ResourceManager.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Models.ArmSku left, Azure.ResourceManager.Models.ArmSku right) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Models.ArmSku left, Azure.ResourceManager.Models.ArmSku right) { throw null; }
+        Azure.ResourceManager.Models.ArmSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.ArmSku>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.ArmSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.ArmSku System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmSku>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.ArmSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ArmSkuTier
     {
@@ -375,11 +450,16 @@ namespace Azure.ResourceManager.Models
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
-    public partial class EncryptionProperties
+    public partial class EncryptionProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.EncryptionProperties>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.EncryptionProperties>
     {
         public EncryptionProperties() { }
         public Azure.ResourceManager.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Models.EncryptionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.Models.EncryptionProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.EncryptionProperties>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.EncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.EncryptionProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.EncryptionProperties System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.EncryptionProperties>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.EncryptionProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
@@ -403,11 +483,16 @@ namespace Azure.ResourceManager.Models
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
-    public partial class KeyVaultProperties
+    public partial class KeyVaultProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.KeyVaultProperties>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.KeyVaultProperties>
     {
         public KeyVaultProperties() { }
         public string Identity { get { throw null; } set { } }
         public string KeyIdentifier { get { throw null; } set { } }
+        Azure.ResourceManager.Models.KeyVaultProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.KeyVaultProperties>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.KeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.KeyVaultProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.KeyVaultProperties System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.KeyVaultProperties>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.KeyVaultProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedServiceIdentity
     {
@@ -437,7 +522,7 @@ namespace Azure.ResourceManager.Models
         public static bool operator !=(Azure.ResourceManager.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OperationStatusResult
+    public partial class OperationStatusResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.OperationStatusResult>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.OperationStatusResult>
     {
         protected OperationStatusResult(Azure.Core.ResourceIdentifier id, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.OperationStatusResult> operations, Azure.ResponseError error) { }
         public OperationStatusResult(string status) { }
@@ -449,6 +534,11 @@ namespace Azure.ResourceManager.Models
         public float? PercentComplete { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Models.OperationStatusResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.OperationStatusResult>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.OperationStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.OperationStatusResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.OperationStatusResult System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.OperationStatusResult>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.OperationStatusResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class ResourceData
     {
@@ -464,20 +554,24 @@ namespace Azure.ResourceManager.Models
         public static Azure.ResourceManager.Resources.Models.ApiProfile ApiProfile(string profileVersion = null, string apiVersion = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings AvailabilityZoneMappings(string logicalZone = null, string physicalZone = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.AzureRoleDefinition AzureRoleDefinition(string id = null, string name = null, bool? isServiceRole = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Permission> permissions = null, System.Collections.Generic.IEnumerable<string> scopes = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails CreateManagementGroupDetails(int? version = default(int?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string updatedBy = null, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions parent = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition DataManifestCustomResourceFunctionDefinition(string name = null, Azure.Core.ResourceType? fullyQualifiedResourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IEnumerable<string> defaultProperties = null, bool? allowCustomProperties = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Resources.DataPolicyManifestData DataPolicyManifestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> namespaces = null, string policyMode = null, bool? isBuiltInOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAliases> resourceTypeAliases = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect> effects = null, System.Collections.Generic.IEnumerable<string> fieldValues = null, System.Collections.Generic.IEnumerable<string> standard = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition> customDefinitions = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect DataPolicyManifestEffect(string name = null, System.BinaryData detailsSchema = null) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.Models.DescendantData DescendantData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.Core.ResourceIdentifier parentId = null) { throw null; }
         public static Azure.ResourceManager.Resources.FeatureData FeatureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string featureState = null) { throw null; }
-        public static Azure.ResourceManager.Resources.GenericResourceData GenericResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ArmPlan plan = null, System.BinaryData properties = null, string kind = null, string managedBy = null, Azure.ResourceManager.Resources.Models.ResourcesSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.Resources.GenericResourceData GenericResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null, Azure.ResourceManager.Models.ArmPlan plan = null, System.BinaryData properties = null, string kind = null, string managedBy = null, Azure.ResourceManager.Resources.Models.ResourcesSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.LocationExpanded LocationExpanded(string id, string subscriptionId, string name, Azure.ResourceManager.Resources.Models.LocationType? locationType, string displayName, string regionalDisplayName, Azure.ResourceManager.Resources.Models.LocationMetadata metadata) { throw null; }
         public static Azure.ResourceManager.Resources.Models.LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, Azure.ResourceManager.Resources.Models.LocationType? locationType = default(Azure.ResourceManager.Resources.Models.LocationType?), string displayName = null, string regionalDisplayName = null, Azure.ResourceManager.Resources.Models.LocationMetadata metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings> availabilityZoneMappings = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.LocationMetadata LocationMetadata(Azure.ResourceManager.Resources.Models.RegionType? regionType = default(Azure.ResourceManager.Resources.Models.RegionType?), Azure.ResourceManager.Resources.Models.RegionCategory? regionCategory = default(Azure.ResourceManager.Resources.Models.RegionCategory?), string geography = null, string geographyGroup = null, double? longitude = default(double?), double? latitude = default(double?), string physicalLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.PairedRegion> pairedRegions = null, string homeLocation = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ManagedByTenant ManagedByTenant(System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo ManagementGroupChildInfo(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? childType = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType?), string id = null, string name = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> children = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions ManagementGroupChildOptions(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? childType = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType?), string id = null, string name = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions> children = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCreateOrUpdateContent ManagementGroupCreateOrUpdateContent(string id = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string name = null, System.Guid? tenantId = default(System.Guid?), string displayName = null, Azure.ResourceManager.ManagementGroups.Models.CreateManagementGroupDetails details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildOptions> children = null) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.ManagementGroupData ManagementGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), string displayName = null, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> children = null) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo ManagementGroupInfo(int? version = default(int?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string updatedBy = null, Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo parent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement> path = null, System.Collections.Generic.IEnumerable<string> managementGroupAncestors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement> managementGroupAncestorChain = null) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult ManagementGroupNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameUnavailableReason? reason = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupParentCreateOptions ManagementGroupParentCreateOptions(string id = null, string name = null, string displayName = null) { throw null; }
         public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement ManagementGroupPathElement(string name = null, string displayName = null) { throw null; }
         public static Azure.ResourceManager.Resources.ManagementLockData ManagementLockData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ManagementLockLevel level = default(Azure.ResourceManager.Resources.Models.ManagementLockLevel), string notes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ManagementLockOwner> owners = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.PairedRegion PairedRegion(string name = null, string id = null, string subscriptionId = null) { throw null; }
@@ -512,12 +606,17 @@ namespace Azure.ResourceManager.Models
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
-    public partial class SystemAssignedServiceIdentity
+    public partial class SystemAssignedServiceIdentity : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.SystemAssignedServiceIdentity>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemAssignedServiceIdentity>
     {
         public SystemAssignedServiceIdentity(Azure.ResourceManager.Models.SystemAssignedServiceIdentityType systemAssignedServiceIdentityType) { }
         public System.Guid? PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentityType SystemAssignedServiceIdentityType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.Models.SystemAssignedServiceIdentity System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.SystemAssignedServiceIdentity>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.SystemAssignedServiceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemAssignedServiceIdentity>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.SystemAssignedServiceIdentity System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemAssignedServiceIdentity>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemAssignedServiceIdentity>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
@@ -539,7 +638,7 @@ namespace Azure.ResourceManager.Models
         public static bool operator !=(Azure.ResourceManager.Models.SystemAssignedServiceIdentityType left, Azure.ResourceManager.Models.SystemAssignedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SystemData
+    public partial class SystemData : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.SystemData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemData>
     {
         public SystemData() { }
         public string CreatedBy { get { throw null; } }
@@ -548,6 +647,11 @@ namespace Azure.ResourceManager.Models
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Models.CreatedByType? LastModifiedByType { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        Azure.ResourceManager.Models.SystemData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.SystemData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.SystemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.SystemData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.SystemData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
@@ -557,11 +661,16 @@ namespace Azure.ResourceManager.Models
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class UserAssignedIdentity
+    public partial class UserAssignedIdentity : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.UserAssignedIdentity>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.UserAssignedIdentity>
     {
         public UserAssignedIdentity() { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
+        Azure.ResourceManager.Models.UserAssignedIdentity System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.UserAssignedIdentity>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Models.UserAssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.UserAssignedIdentity>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Models.UserAssignedIdentity System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.UserAssignedIdentity>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Models.UserAssignedIdentity>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Resources
@@ -590,7 +699,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.DataPolicyManifestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DataPolicyManifestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataPolicyManifestData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataPolicyManifestData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.DataPolicyManifestData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.DataPolicyManifestData>
     {
         internal DataPolicyManifestData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition> CustomDefinitions { get { throw null; } }
@@ -601,6 +710,11 @@ namespace Azure.ResourceManager.Resources
         public string PolicyMode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAliases> ResourceTypeAliases { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Standard { get { throw null; } }
+        Azure.ResourceManager.Resources.DataPolicyManifestData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.DataPolicyManifestData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.DataPolicyManifestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.DataPolicyManifestData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.DataPolicyManifestData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.DataPolicyManifestData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.DataPolicyManifestData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataPolicyManifestResource : Azure.ResourceManager.ArmResource
     {
@@ -627,10 +741,15 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.FeatureResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.FeatureResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FeatureData : Azure.ResourceManager.Models.ResourceData
+    public partial class FeatureData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.FeatureData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.FeatureData>
     {
         internal FeatureData() { }
         public string FeatureState { get { throw null; } }
+        Azure.ResourceManager.Resources.FeatureData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.FeatureData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.FeatureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.FeatureData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.FeatureData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.FeatureData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.FeatureData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FeatureResource : Azure.ResourceManager.ArmResource
     {
@@ -674,7 +793,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.GenericResource> Get(Azure.Core.ResourceIdentifier resourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.GenericResource>> GetAsync(Azure.Core.ResourceIdentifier resourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class GenericResourceData : Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData
+    public partial class GenericResourceData : Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.GenericResourceData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.GenericResourceData>
     {
         public GenericResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
@@ -686,6 +805,11 @@ namespace Azure.ResourceManager.Resources
         public System.BinaryData Properties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourcesSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.GenericResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.GenericResourceData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.GenericResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.GenericResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.GenericResourceData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.GenericResourceData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.GenericResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagementGroupPolicyDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource>, System.Collections.IEnumerable
     {
@@ -766,12 +890,17 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ManagementLockResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementLockResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagementLockData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagementLockData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ManagementLockData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ManagementLockData>
     {
         public ManagementLockData(Azure.ResourceManager.Resources.Models.ManagementLockLevel level) { }
         public Azure.ResourceManager.Resources.Models.ManagementLockLevel Level { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ManagementLockOwner> Owners { get { throw null; } }
+        Azure.ResourceManager.Resources.ManagementLockData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ManagementLockData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ManagementLockData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ManagementLockData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.ManagementLockData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ManagementLockData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ManagementLockData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagementLockResource : Azure.ResourceManager.ArmResource
     {
@@ -804,7 +933,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.PolicyAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.PolicyAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PolicyAssignmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class PolicyAssignmentData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicyAssignmentData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyAssignmentData>
     {
         public PolicyAssignmentData() { }
         public string Description { get { throw null; } set { } }
@@ -823,6 +952,11 @@ namespace Azure.ResourceManager.Resources
         public string PolicyDefinitionId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelector> ResourceSelectors { get { throw null; } }
         public string Scope { get { throw null; } }
+        Azure.ResourceManager.Resources.PolicyAssignmentData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicyAssignmentData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicyAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyAssignmentData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.PolicyAssignmentData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyAssignmentData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyAssignmentData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PolicyAssignmentResource : Azure.ResourceManager.ArmResource
     {
@@ -840,7 +974,7 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.PolicyAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.PolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PolicyDefinitionData : Azure.ResourceManager.Models.ResourceData
+    public partial class PolicyDefinitionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicyDefinitionData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyDefinitionData>
     {
         public PolicyDefinitionData() { }
         public string Description { get { throw null; } set { } }
@@ -850,8 +984,13 @@ namespace Azure.ResourceManager.Resources
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameter> Parameters { get { throw null; } }
         public System.BinaryData PolicyRule { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.PolicyDefinitionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicyDefinitionData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicyDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyDefinitionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.PolicyDefinitionData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyDefinitionData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicyDefinitionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicySetDefinitionData : Azure.ResourceManager.Models.ResourceData
+    public partial class PolicySetDefinitionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicySetDefinitionData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicySetDefinitionData>
     {
         public PolicySetDefinitionData() { }
         public string Description { get { throw null; } set { } }
@@ -861,6 +1000,11 @@ namespace Azure.ResourceManager.Resources
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup> PolicyDefinitionGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference> PolicyDefinitions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.PolicySetDefinitionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicySetDefinitionData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.PolicySetDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicySetDefinitionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.PolicySetDefinitionData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicySetDefinitionData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.PolicySetDefinitionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ResourceGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceGroupResource>, System.Collections.IEnumerable
     {
@@ -879,11 +1023,16 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ResourceGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ResourceGroupData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceGroupData>
     {
         public ResourceGroupData(Azure.Core.AzureLocation location) { }
         public string ManagedBy { get { throw null; } set { } }
         public string ResourceGroupProvisioningState { get { throw null; } }
+        Azure.ResourceManager.Resources.ResourceGroupData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ResourceGroupData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ResourceGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceGroupData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.ResourceGroupData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceGroupData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceGroupData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -934,7 +1083,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ResourceProviderResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceProviderResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ResourceProviderData
+    public partial class ResourceProviderData : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ResourceProviderData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceProviderData>
     {
         public ResourceProviderData() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -943,6 +1092,11 @@ namespace Azure.ResourceManager.Resources
         public string RegistrationPolicy { get { throw null; } }
         public string RegistrationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderResourceType> ResourceTypes { get { throw null; } }
+        Azure.ResourceManager.Resources.ResourceProviderData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ResourceProviderData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.ResourceProviderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceProviderData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.ResourceProviderData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceProviderData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.ResourceProviderData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceProviderResource : Azure.ResourceManager.ArmResource
     {
@@ -980,7 +1134,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.SubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SubscriptionData
+    public partial class SubscriptionData : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.SubscriptionData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.SubscriptionData>
     {
         internal SubscriptionData() { }
         public string AuthorizationSource { get { throw null; } }
@@ -992,6 +1146,11 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.SubscriptionPolicies SubscriptionPolicies { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.Resources.SubscriptionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.SubscriptionData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.SubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.SubscriptionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.SubscriptionData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.SubscriptionData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.SubscriptionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SubscriptionPolicyDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>, System.Collections.IEnumerable
     {
@@ -1116,10 +1275,15 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TagResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.TagResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.TagResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.TagResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TagResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class TagResourceData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.TagResourceData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TagResourceData>
     {
         public TagResourceData(Azure.ResourceManager.Resources.Models.Tag properties) { }
         public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
+        Azure.ResourceManager.Resources.TagResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.TagResourceData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.TagResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TagResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.TagResourceData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TagResourceData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TagResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TenantCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TenantResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TenantResource>, System.Collections.IEnumerable
     {
@@ -1130,7 +1294,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TenantResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TenantResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TenantData
+    public partial class TenantData : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.TenantData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TenantData>
     {
         internal TenantData() { }
         public string Country { get { throw null; } }
@@ -1143,6 +1307,11 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.TenantCategory? TenantCategory { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public string TenantType { get { throw null; } }
+        Azure.ResourceManager.Resources.TenantData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.TenantData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.TenantData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TenantData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.TenantData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TenantData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.TenantData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TenantPolicyDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>, System.Collections.IEnumerable
     {
@@ -1232,19 +1401,29 @@ namespace Azure.ResourceManager.Resources
 }
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApiProfile
+    public partial class ApiProfile : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ApiProfile>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ApiProfile>
     {
         internal ApiProfile() { }
         public string ApiVersion { get { throw null; } }
         public string ProfileVersion { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ApiProfile System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ApiProfile>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ApiProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ApiProfile>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ApiProfile System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ApiProfile>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ApiProfile>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmPolicyParameter
+    public partial class ArmPolicyParameter : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameter>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameter>
     {
         public ArmPolicyParameter() { }
         public System.Collections.Generic.IList<System.BinaryData> AllowedValues { get { throw null; } }
         public System.BinaryData DefaultValue { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmPolicyParameterType? ParameterType { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmPolicyParameter System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameter>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameter>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ArmPolicyParameter System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameter>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameter>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArmPolicyParameterType : System.IEquatable<Azure.ResourceManager.Resources.Models.ArmPolicyParameterType>
@@ -1269,10 +1448,15 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ArmPolicyParameterType left, Azure.ResourceManager.Resources.Models.ArmPolicyParameterType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ArmPolicyParameterValue
+    public partial class ArmPolicyParameterValue : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>
     {
         public ArmPolicyParameterValue() { }
         public System.BinaryData Value { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ArmRestApi
     {
@@ -1284,13 +1468,18 @@ namespace Azure.ResourceManager.Resources.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
-    public partial class AvailabilityZoneMappings
+    public partial class AvailabilityZoneMappings : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>
     {
         internal AvailabilityZoneMappings() { }
         public string LogicalZone { get { throw null; } }
         public string PhysicalZone { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureRoleDefinition
+    public partial class AzureRoleDefinition : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.AzureRoleDefinition>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AzureRoleDefinition>
     {
         internal AzureRoleDefinition() { }
         public string Id { get { throw null; } }
@@ -1298,20 +1487,35 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Permission> Permissions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Scopes { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.AzureRoleDefinition System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.AzureRoleDefinition>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.AzureRoleDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AzureRoleDefinition>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.AzureRoleDefinition System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AzureRoleDefinition>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.AzureRoleDefinition>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataManifestCustomResourceFunctionDefinition
+    public partial class DataManifestCustomResourceFunctionDefinition : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition>
     {
         internal DataManifestCustomResourceFunctionDefinition() { }
         public bool? AllowCustomProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DefaultProperties { get { throw null; } }
         public Azure.Core.ResourceType? FullyQualifiedResourceType { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataPolicyManifestEffect
+    public partial class DataPolicyManifestEffect : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect>
     {
         internal DataPolicyManifestEffect() { }
         public System.BinaryData DetailsSchema { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EnforcementMode : System.IEquatable<Azure.ResourceManager.Resources.Models.EnforcementMode>
@@ -1331,17 +1535,27 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.EnforcementMode left, Azure.ResourceManager.Resources.Models.EnforcementMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExportTemplate
+    public partial class ExportTemplate : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ExportTemplate>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExportTemplate>
     {
         public ExportTemplate() { }
         public string Options { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Resources { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ExportTemplate System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ExportTemplate>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ExportTemplate>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExportTemplate>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ExportTemplate System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExportTemplate>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExportTemplate>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExtendedLocation
+    public partial class ExtendedLocation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>
     {
         public ExtendedLocation() { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ExtendedLocation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ExtendedLocation System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.Resources.Models.ExtendedLocationType>
@@ -1360,7 +1574,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ExtendedLocationType left, Azure.ResourceManager.Resources.Models.ExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LocationExpanded
+    public partial class LocationExpanded : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.LocationExpanded>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationExpanded>
     {
         internal LocationExpanded() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings> AvailabilityZoneMappings { get { throw null; } }
@@ -1372,8 +1586,13 @@ namespace Azure.ResourceManager.Resources.Models
         public string RegionalDisplayName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public static implicit operator Azure.Core.AzureLocation (Azure.ResourceManager.Resources.Models.LocationExpanded location) { throw null; }
+        Azure.ResourceManager.Resources.Models.LocationExpanded System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.LocationExpanded>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.LocationExpanded>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationExpanded>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.LocationExpanded System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationExpanded>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationExpanded>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LocationMetadata
+    public partial class LocationMetadata : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.LocationMetadata>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationMetadata>
     {
         internal LocationMetadata() { }
         public string Geography { get { throw null; } }
@@ -1385,16 +1604,26 @@ namespace Azure.ResourceManager.Resources.Models
         public string PhysicalLocation { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.RegionCategory? RegionCategory { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.RegionType? RegionType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.LocationMetadata System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.LocationMetadata>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.LocationMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationMetadata>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.LocationMetadata System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationMetadata>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.LocationMetadata>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LocationType
     {
         Region = 0,
         EdgeZone = 1,
     }
-    public partial class ManagedByTenant
+    public partial class ManagedByTenant : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ManagedByTenant>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagedByTenant>
     {
         internal ManagedByTenant() { }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ManagedByTenant System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ManagedByTenant>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ManagedByTenant>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagedByTenant>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ManagedByTenant System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagedByTenant>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagedByTenant>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagementLockLevel : System.IEquatable<Azure.ResourceManager.Resources.Models.ManagementLockLevel>
@@ -1415,25 +1644,40 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ManagementLockLevel left, Azure.ResourceManager.Resources.Models.ManagementLockLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagementLockOwner
+    public partial class ManagementLockOwner : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ManagementLockOwner>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagementLockOwner>
     {
         public ManagementLockOwner() { }
         public string ApplicationId { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ManagementLockOwner System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ManagementLockOwner>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ManagementLockOwner>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagementLockOwner>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ManagementLockOwner System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagementLockOwner>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ManagementLockOwner>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NonComplianceMessage
+    public partial class NonComplianceMessage : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.NonComplianceMessage>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.NonComplianceMessage>
     {
         public NonComplianceMessage(string message) { }
         public string Message { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.NonComplianceMessage System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.NonComplianceMessage>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.NonComplianceMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.NonComplianceMessage>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.NonComplianceMessage System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.NonComplianceMessage>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.NonComplianceMessage>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PairedRegion
+    public partial class PairedRegion : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PairedRegion>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PairedRegion>
     {
         internal PairedRegion() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.PairedRegion System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PairedRegion>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PairedRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PairedRegion>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PairedRegion System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PairedRegion>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PairedRegion>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ParameterDefinitionsValueMetadata
+    public partial class ParameterDefinitionsValueMetadata : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata>
     {
         public ParameterDefinitionsValueMetadata() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -1441,24 +1685,39 @@ namespace Azure.ResourceManager.Resources.Models
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string StrongType { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Permission
+    public partial class Permission : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.Permission>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Permission>
     {
         internal Permission() { }
         public System.Collections.Generic.IReadOnlyList<string> AllowedActions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AllowedDataActions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DeniedActions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DeniedDataActions { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.Permission System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.Permission>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.Permission>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Permission>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.Permission System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Permission>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Permission>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyAssignmentPatch
+    public partial class PolicyAssignmentPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch>
     {
         public PolicyAssignmentPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyOverride> Overrides { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelector> ResourceSelectors { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyDefinitionGroup
+    public partial class PolicyDefinitionGroup : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup>
     {
         public PolicyDefinitionGroup(string name) { }
         public string AdditionalMetadataId { get { throw null; } set { } }
@@ -1466,21 +1725,36 @@ namespace Azure.ResourceManager.Resources.Models
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyDefinitionReference
+    public partial class PolicyDefinitionReference : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference>
     {
         public PolicyDefinitionReference(string policyDefinitionId) { }
         public System.Collections.Generic.IList<string> GroupNames { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.PolicyDefinitionReference System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PolicyDefinitionReference System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyOverride
+    public partial class PolicyOverride : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyOverride>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyOverride>
     {
         public PolicyOverride() { }
         public Azure.ResourceManager.Resources.Models.PolicyOverrideKind? Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression> Selectors { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.PolicyOverride System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyOverride>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PolicyOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyOverride>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PolicyOverride System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyOverride>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PolicyOverride>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyOverrideKind : System.IEquatable<Azure.ResourceManager.Resources.Models.PolicyOverrideKind>
@@ -1519,26 +1793,41 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.PolicyType left, Azure.ResourceManager.Resources.Models.PolicyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PredefinedTag
+    public partial class PredefinedTag : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTag>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTag>
     {
         internal PredefinedTag() { }
         public Azure.ResourceManager.Resources.Models.PredefinedTagCount Count { get { throw null; } }
         public string Id { get { throw null; } }
         public string TagName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.PredefinedTagValue> Values { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.PredefinedTag System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTag>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTag>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PredefinedTag System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTag>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTag>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PredefinedTagCount
+    public partial class PredefinedTagCount : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTagCount>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagCount>
     {
         internal PredefinedTagCount() { }
         public string PredefinedTagCountType { get { throw null; } }
         public int? Value { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.PredefinedTagCount System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTagCount>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTagCount>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagCount>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PredefinedTagCount System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagCount>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagCount>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PredefinedTagValue
+    public partial class PredefinedTagValue : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTagValue>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagValue>
     {
         internal PredefinedTagValue() { }
         public Azure.ResourceManager.Resources.Models.PredefinedTagCount Count { get { throw null; } }
         public string Id { get { throw null; } }
         public string TagValue { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.PredefinedTagValue System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTagValue>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.PredefinedTagValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagValue>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.PredefinedTagValue System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagValue>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.PredefinedTagValue>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProviderAuthorizationConsentState : System.IEquatable<Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState>
@@ -1560,27 +1849,42 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState left, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProviderExtendedLocation
+    public partial class ProviderExtendedLocation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation>
     {
         internal ProviderExtendedLocation() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string ProviderExtendedLocationType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ProviderExtendedLocation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ProviderExtendedLocation System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderPermission
+    public partial class ProviderPermission : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderPermission>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderPermission>
     {
         internal ProviderPermission() { }
         public string ApplicationId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AzureRoleDefinition ManagedByRoleDefinition { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AzureRoleDefinition RoleDefinition { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ProviderPermission System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderPermission>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderPermission>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderPermission>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ProviderPermission System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderPermission>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderPermission>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderRegistrationContent
+    public partial class ProviderRegistrationContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderRegistrationContent>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderRegistrationContent>
     {
         public ProviderRegistrationContent() { }
         public bool? ConsentToAuthorization { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ProviderRegistrationContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderRegistrationContent>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderRegistrationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderRegistrationContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ProviderRegistrationContent System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderRegistrationContent>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderRegistrationContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderResourceType
+    public partial class ProviderResourceType : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderResourceType>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderResourceType>
     {
         internal ProviderResourceType() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> Aliases { get { throw null; } }
@@ -1593,6 +1897,11 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ZoneMapping> ZoneMappings { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ProviderResourceType System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderResourceType>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ProviderResourceType>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderResourceType>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ProviderResourceType System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderResourceType>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ProviderResourceType>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RegionCategory : System.IEquatable<Azure.ResourceManager.Resources.Models.RegionCategory>
@@ -1631,32 +1940,52 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.RegionType left, Azure.ResourceManager.Resources.Models.RegionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceGroupExportResult
+    public partial class ResourceGroupExportResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>
     {
         internal ResourceGroupExportResult() { }
         public Azure.ResponseError Error { get { throw null; } }
         public System.BinaryData Template { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceGroupExportResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceGroupExportResult System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceGroupPatch
+    public partial class ResourceGroupPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>
     {
         public ResourceGroupPatch() { }
         public string ManagedBy { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string ResourceGroupProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceGroupPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceGroupPatch System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceSelector
+    public partial class ResourceSelector : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceSelector>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelector>
     {
         public ResourceSelector() { }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression> Selectors { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceSelector System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceSelector>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceSelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelector>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceSelector System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelector>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelector>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceSelectorExpression
+    public partial class ResourceSelectorExpression : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression>
     {
         public ResourceSelectorExpression() { }
         public System.Collections.Generic.IList<string> In { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceSelectorKind? Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NotIn { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceSelectorExpression System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceSelectorExpression System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceSelectorKind : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceSelectorKind>
@@ -1678,15 +2007,20 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceSelectorKind left, Azure.ResourceManager.Resources.Models.ResourceSelectorKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourcesMoveContent
+    public partial class ResourcesMoveContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourcesMoveContent>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesMoveContent>
     {
         public ResourcesMoveContent() { }
         public System.Collections.Generic.IList<string> Resources { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string TargetResourceGroup { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceGroupId { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ResourcesMoveContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourcesMoveContent>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourcesMoveContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesMoveContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourcesMoveContent System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesMoveContent>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesMoveContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourcesSku
+    public partial class ResourcesSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourcesSku>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesSku>
     {
         public ResourcesSku() { }
         public int? Capacity { get { throw null; } set { } }
@@ -1695,8 +2029,13 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ResourcesSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourcesSku>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourcesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourcesSku System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesSku>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourcesSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceTypeAlias
+    public partial class ResourceTypeAlias : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAlias>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAlias>
     {
         internal ResourceTypeAlias() { }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasType? AliasType { get { throw null; } }
@@ -1705,20 +2044,35 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern DefaultPattern { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath> Paths { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAlias System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAlias>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAlias>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAlias>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAlias System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAlias>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAlias>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceTypeAliases
+    public partial class ResourceTypeAliases : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliases>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliases>
     {
         internal ResourceTypeAliases() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> Aliases { get { throw null; } }
         public string ResourceType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliases System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliases>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliases>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliases>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliases System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliases>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliases>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceTypeAliasPath
+    public partial class ResourceTypeAliasPath : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath>
     {
         internal ResourceTypeAliasPath() { }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata Metadata { get { throw null; } }
         public string Path { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern Pattern { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceTypeAliasPathAttributes : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes>
@@ -1738,11 +2092,16 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes left, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceTypeAliasPathMetadata
+    public partial class ResourceTypeAliasPathMetadata : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata>
     {
         internal ResourceTypeAliasPathMetadata() { }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes? Attributes { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType? TokenType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceTypeAliasPathTokenType : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType>
@@ -1768,12 +2127,17 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType left, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceTypeAliasPattern
+    public partial class ResourceTypeAliasPattern : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern>
     {
         internal ResourceTypeAliasPattern() { }
         public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPatternType? PatternType { get { throw null; } }
         public string Phrase { get { throw null; } }
         public string Variable { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ResourceTypeAliasPatternType
     {
@@ -1798,12 +2162,17 @@ namespace Azure.ResourceManager.Resources.Models
         protected internal SubResource(Azure.Core.ResourceIdentifier id) { }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
-    public partial class SubscriptionPolicies
+    public partial class SubscriptionPolicies : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>
     {
         internal SubscriptionPolicies() { }
         public string LocationPlacementId { get { throw null; } }
         public string QuotaId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.SpendingLimit? SpendingLimit { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.SubscriptionPolicies System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.SubscriptionPolicies System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SubscriptionState
     {
@@ -1813,10 +2182,15 @@ namespace Azure.ResourceManager.Resources.Models
         Disabled = 3,
         Deleted = 4,
     }
-    public partial class Tag
+    public partial class Tag : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.Tag>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Tag>
     {
         public Tag() { }
         public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.Tag System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.Tag>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.Tag>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Tag>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.Tag System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Tag>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.Tag>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TagPatchMode : System.IEquatable<Azure.ResourceManager.Resources.Models.TagPatchMode>
@@ -1837,11 +2211,16 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.TagPatchMode left, Azure.ResourceManager.Resources.Models.TagPatchMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TagResourcePatch
+    public partial class TagResourcePatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TagResourcePatch>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TagResourcePatch>
     {
         public TagResourcePatch() { }
         public Azure.ResourceManager.Resources.Models.TagPatchMode? PatchMode { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.TagResourcePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TagResourcePatch>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TagResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TagResourcePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.TagResourcePatch System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TagResourcePatch>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TagResourcePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum TenantCategory
     {
@@ -1849,16 +2228,27 @@ namespace Azure.ResourceManager.Resources.Models
         ProjectedBy = 1,
         ManagedBy = 2,
     }
-    public partial class TenantResourceProvider
+    public partial class TenantResourceProvider : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TenantResourceProvider>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TenantResourceProvider>
     {
         internal TenantResourceProvider() { }
         public string Namespace { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderResourceType> ResourceTypes { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.TenantResourceProvider System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TenantResourceProvider>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TenantResourceProvider>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TenantResourceProvider>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.TenantResourceProvider System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TenantResourceProvider>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TenantResourceProvider>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrackedResourceExtendedData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class TrackedResourceExtendedData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public TrackedResourceExtendedData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WritableSubResource
     {
@@ -1866,11 +2256,16 @@ namespace Azure.ResourceManager.Resources.Models
         protected internal WritableSubResource(Azure.Core.ResourceIdentifier id) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
     }
-    public partial class ZoneMapping
+    public partial class ZoneMapping : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ZoneMapping>, System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ZoneMapping>
     {
         internal ZoneMapping() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ZoneMapping System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ZoneMapping>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Resources.Models.ZoneMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        System.Net.ClientModel.ModelReaderWriterFormat System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ZoneMapping>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ZoneMapping System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ZoneMapping>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IModel<Azure.ResourceManager.Resources.Models.ZoneMapping>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

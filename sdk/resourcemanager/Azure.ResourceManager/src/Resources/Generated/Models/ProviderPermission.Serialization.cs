@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderPermission
+    public partial class ProviderPermission : IUtf8JsonSerializable, IJsonModel<ProviderPermission>
     {
-        internal static ProviderPermission DeserializeProviderPermission(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderPermission>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ProviderPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (Optional.IsDefined(RoleDefinition))
+            {
+                writer.WritePropertyName("roleDefinition"u8);
+                writer.WriteObjectValue(RoleDefinition);
+            }
+            if (Optional.IsDefined(ManagedByRoleDefinition))
+            {
+                writer.WritePropertyName("managedByRoleDefinition"u8);
+                writer.WriteObjectValue(ManagedByRoleDefinition);
+            }
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
+            {
+                writer.WritePropertyName("providerAuthorizationConsentState"u8);
+                writer.WriteStringValue(ProviderAuthorizationConsentState.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProviderPermission IJsonModel<ProviderPermission>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderPermission(document.RootElement, options);
+        }
+
+        internal static ProviderPermission DeserializeProviderPermission(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +83,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<AzureRoleDefinition> roleDefinition = default;
             Optional<AzureRoleDefinition> managedByRoleDefinition = default;
             Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -56,8 +119,38 @@ namespace Azure.ResourceManager.Resources.Models
                     providerAuthorizationConsentState = new ProviderAuthorizationConsentState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderPermission(applicationId.Value, roleDefinition.Value, managedByRoleDefinition.Value, Optional.ToNullable(providerAuthorizationConsentState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProviderPermission(applicationId.Value, roleDefinition.Value, managedByRoleDefinition.Value, Optional.ToNullable(providerAuthorizationConsentState), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ProviderPermission>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProviderPermission IModel<ProviderPermission>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProviderPermission(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ProviderPermission>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

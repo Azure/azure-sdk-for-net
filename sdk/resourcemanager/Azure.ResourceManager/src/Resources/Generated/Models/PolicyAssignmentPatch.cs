@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,11 +15,29 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy assignment for Patch request. </summary>
     public partial class PolicyAssignmentPatch
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentPatch"/>. </summary>
         public PolicyAssignmentPatch()
         {
             ResourceSelectors = new ChangeTrackingList<ResourceSelector>();
             Overrides = new ChangeTrackingList<PolicyOverride>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentPatch"/>. </summary>
+        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
+        /// <param name="identity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
+        /// <param name="overrides"> The policy property value override. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyAssignmentPatch(AzureLocation? location, ManagedServiceIdentity identity, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Location = location;
+            Identity = identity;
+            ResourceSelectors = resourceSelectors;
+            Overrides = overrides;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>

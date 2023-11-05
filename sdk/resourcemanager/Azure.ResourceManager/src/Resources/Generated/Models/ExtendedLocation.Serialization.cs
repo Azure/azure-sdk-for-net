@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,9 +15,11 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     [JsonConverter(typeof(ExtendedLocationConverter))]
-    public partial class ExtendedLocation : IUtf8JsonSerializable
+    public partial class ExtendedLocation : IUtf8JsonSerializable, IJsonModel<ExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedLocation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocationType))
@@ -31,8 +35,22 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element)
+        ExtendedLocation IJsonModel<ExtendedLocation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedLocation(document.RootElement, options);
+        }
+
+        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +76,31 @@ namespace Azure.ResourceManager.Resources.Models
             }
             return new ExtendedLocation(Optional.ToNullable(type), name.Value);
         }
+
+        BinaryData IModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExtendedLocation IModel<ExtendedLocation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExtendedLocation(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class ExtendedLocationConverter : JsonConverter<ExtendedLocation>
         {

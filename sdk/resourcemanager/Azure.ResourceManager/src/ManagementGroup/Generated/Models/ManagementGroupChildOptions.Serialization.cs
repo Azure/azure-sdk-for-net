@@ -12,49 +12,59 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class AzureRoleDefinition : IUtf8JsonSerializable, IJsonModel<AzureRoleDefinition>
+    public partial class ManagementGroupChildOptions : IUtf8JsonSerializable, IJsonModel<ManagementGroupChildOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureRoleDefinition>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupChildOptions>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
-        void IJsonModel<AzureRoleDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagementGroupChildOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (options.Format == ModelReaderWriterFormat.Json)
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(IsServiceRole))
-            {
-                writer.WritePropertyName("isServiceRole"u8);
-                writer.WriteBooleanValue(IsServiceRole.Value);
-            }
-            if (Optional.IsCollectionDefined(Permissions))
-            {
-                writer.WritePropertyName("permissions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Permissions)
+                if (Optional.IsDefined(ChildType))
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ChildType.Value.ToString());
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (options.Format == ModelReaderWriterFormat.Json)
             {
-                writer.WritePropertyName("scopes"u8);
-                writer.WriteStartArray();
-                foreach (var item in Scopes)
+                if (Optional.IsDefined(Id))
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
                 }
-                writer.WriteEndArray();
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Children))
+                {
+                    writer.WritePropertyName("children"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Children)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
             {
@@ -74,7 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        AzureRoleDefinition IJsonModel<AzureRoleDefinition>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagementGroupChildOptions IJsonModel<ManagementGroupChildOptions>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
             if (!isValid)
@@ -83,10 +93,10 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureRoleDefinition(document.RootElement, options);
+            return DeserializeManagementGroupChildOptions(document.RootElement, options);
         }
 
-        internal static AzureRoleDefinition DeserializeAzureRoleDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagementGroupChildOptions DeserializeManagementGroupChildOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelReaderWriterOptions.DefaultWireOptions;
 
@@ -94,15 +104,24 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
+            Optional<ManagementGroupChildType> type = default;
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<bool> isServiceRole = default;
-            Optional<IReadOnlyList<Permission>> permissions = default;
-            Optional<IReadOnlyList<string>> scopes = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<ManagementGroupChildOptions>> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ManagementGroupChildType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -113,41 +132,23 @@ namespace Azure.ResourceManager.Resources.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isServiceRole"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isServiceRole = property.Value.GetBoolean();
+                    displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("permissions"u8))
+                if (property.NameEquals("children"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<Permission> array = new List<Permission>();
+                    List<ManagementGroupChildOptions> array = new List<ManagementGroupChildOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item));
+                        array.Add(DeserializeManagementGroupChildOptions(item));
                     }
-                    permissions = array;
-                    continue;
-                }
-                if (property.NameEquals("scopes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    scopes = array;
+                    children = array;
                     continue;
                 }
                 if (options.Format == ModelReaderWriterFormat.Json)
@@ -156,10 +157,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureRoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), Optional.ToList(permissions), Optional.ToList(scopes), serializedAdditionalRawData);
+            return new ManagementGroupChildOptions(Optional.ToNullable(type), id.Value, name.Value, displayName.Value, Optional.ToList(children), serializedAdditionalRawData);
         }
 
-        BinaryData IModel<AzureRoleDefinition>.Write(ModelReaderWriterOptions options)
+        BinaryData IModel<ManagementGroupChildOptions>.Write(ModelReaderWriterOptions options)
         {
             bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
             if (!isValid)
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Resources.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        AzureRoleDefinition IModel<AzureRoleDefinition>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ManagementGroupChildOptions IModel<ManagementGroupChildOptions>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
             bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
             if (!isValid)
@@ -179,9 +180,9 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             using JsonDocument document = JsonDocument.Parse(data);
-            return DeserializeAzureRoleDefinition(document.RootElement, options);
+            return DeserializeManagementGroupChildOptions(document.RootElement, options);
         }
 
-        ModelReaderWriterFormat IModel<AzureRoleDefinition>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        ModelReaderWriterFormat IModel<ManagementGroupChildOptions>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }
