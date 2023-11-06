@@ -35,13 +35,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Tags = tags;
             Properties = properties;
         }
-
-        /// <summary> id of the resource for which the event is being emitted. </summary>
-        public string Id { get; }
-        /// <summary> name of the resource for which the event is being emitted. </summary>
-        public string Name { get; }
-        /// <summary> the location of the resource for which the event is being emitted. </summary>
-        public string Location { get; }
         /// <summary> the tags on the resource for which the event is being emitted. </summary>
         public string Tags { get; }
         /// <summary> properties in the payload of the resource for which the event is being emitted. </summary>
