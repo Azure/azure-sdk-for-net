@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the chat thread participant. </summary>
@@ -13,20 +16,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
         internal AcsChatThreadParticipantProperties()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
         /// <param name="displayName"> The name of the user. </param>
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
-        internal AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier)
+        /// <param name="metadata"> The metadata of the user. </param>
+        internal AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata)
         {
             DisplayName = displayName;
             ParticipantCommunicationIdentifier = participantCommunicationIdentifier;
+            Metadata = metadata;
         }
 
         /// <summary> The name of the user. </summary>
         public string DisplayName { get; }
         /// <summary> The communication identifier of the user. </summary>
         public CommunicationIdentifierModel ParticipantCommunicationIdentifier { get; }
+        /// <summary> The metadata of the user. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

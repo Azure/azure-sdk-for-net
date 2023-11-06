@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -10,6 +11,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> the type of the resource for which the event is being emitted. </summary>
         [CodeGenMember("Type")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string ResourceType { get; }
+
+        /// <summary> Resource for which the event is being emitted. </summary>
+        public ResourceIdentifier Resource
+        {
+            get
+            {
+                if (_resource == null)
+                {
+                    _resource = new ResourceIdentifier(Id);
+                }
+
+                return _resource;
+            }
+        }
+
+        private ResourceIdentifier _resource;
+
+        /// <summary> id of the resource for which the event is being emitted. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Id { get; }
+
+        /// <summary> name of the resource for which the event is being emitted. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Name { get; }
+
+        /// <summary> the location of the resource for which the event is being emitted. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Location { get; }
     }
 }
