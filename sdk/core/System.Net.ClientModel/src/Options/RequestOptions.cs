@@ -12,9 +12,14 @@ namespace System.Net.ClientModel;
 /// this may change some behaviors in various pipeline policies and the transport.
 /// </summary>
 // TODO: Make options freezable
-// Note: I was calling this RequestOptions, but I'm changing it back to RequestOptions.
 public class RequestOptions : PipelineOptions
 {
+    public RequestOptions()
+    {
+        ErrorBehavior = ErrorBehavior.Default;
+        CancellationToken = CancellationToken.None;
+    }
+
     public virtual void Apply(ClientMessage message)
     {
         // Wire up options on message
@@ -30,30 +35,7 @@ public class RequestOptions : PipelineOptions
         }
     }
 
-    public virtual ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
+    public virtual ErrorBehavior ErrorBehavior { get; set; }
 
-    // TODO: handle duplication across message and options
-
-    public virtual CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
-
-    #region Transport options - TODO: move to a subtype type?
-
-    // TODO: Can we throw if someone gives us Transport options and transport isn't
-    // in the pipeline?
-
-    // TODO: do these (buffer response and network timeout) make more sense in
-    // Invocation or Pipeline?
-    // Note: right now invocation is about things that have broader scope than
-    // just the pipeline.Send operation, but pipeline.Send is part of the invocation.
-
-    // TODO: note that these pre-suppose that the response buffering policy is
-    // present in the pipeline, and if they are not, they don't make sense to have.
-    // We could feasibly add validation in the new libraries to tell people they've
-    // set options the pipeline might not use, or back in required policies in the
-    // pipeline, or somehow engineer it such that construction and invocation options
-    // work together to make it so people can't do the wrong thing.
-
-    #endregion
-
-    public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
+    public virtual CancellationToken CancellationToken { get; set; }
 }

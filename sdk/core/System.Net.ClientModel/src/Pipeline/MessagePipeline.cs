@@ -11,8 +11,7 @@ public class MessagePipeline
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    public MessagePipeline(
-        PipelineTransport transport,
+    protected MessagePipeline(PipelineTransport transport,
         ReadOnlyMemory<PipelinePolicy> policies)
     {
         _transport = transport;
@@ -116,7 +115,7 @@ public class MessagePipeline
 
         public MessagePipelineExecutor(
             ClientMessage message,
-            ReadOnlyMemory<PipelinePolicy> policies )
+            ReadOnlyMemory<PipelinePolicy> policies)
         {
             _message = message;
             _policies = policies;

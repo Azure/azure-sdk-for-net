@@ -54,7 +54,6 @@ namespace System.Net.ClientModel
     {
         public RequestOptions() { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public virtual void Apply(System.Net.ClientModel.Core.ClientMessage message) { }
     }
@@ -138,7 +137,7 @@ namespace System.Net.ClientModel.Core
     }
     public partial class MessagePipeline
     {
-        public MessagePipeline(System.Net.ClientModel.Core.PipelineTransport transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
+        protected MessagePipeline(System.Net.ClientModel.Core.PipelineTransport transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
         public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options) { throw null; }
         public System.Net.ClientModel.Core.ClientMessage CreateMessage() { throw null; }
         public void Send(System.Net.ClientModel.Core.ClientMessage message) { }
