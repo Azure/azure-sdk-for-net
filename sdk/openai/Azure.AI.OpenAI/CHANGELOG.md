@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.9 (2023-11-06)
 
 ### Breaking Changes
 
@@ -92,10 +90,6 @@ Replaced the `SearchKey` and `EmbeddingKey` properties of the `AzureCognitiveSea
 new `SetSearchKey` and `SetEmbeddingKey` methods respectively. These methods simplify the configuration of the Azure Cognitive
 Search chat extension by receiving a plain string instead of an `AzureKeyCredential`, promote more sensible key and secret
 management, and align with the Azure SDK guidelines.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.8 (2023-09-21)
 
