@@ -181,6 +181,7 @@
 /sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
 
 # PRLabel: %Cognitive - Form Recognizer
+/sdk/documentintelligence/                                         @kinelski @pallavit @joseharriaga
 /sdk/formrecognizer/                                               @kinelski @pallavit @joseharriaga
 
 # ServiceLabel: %Cognitive - Form Recognizer %Service Attention
