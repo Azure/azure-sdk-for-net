@@ -47,6 +47,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
+            if (Optional.IsDefined(TargetResourceGroupName))
+            {
+                writer.WritePropertyName("targetResourceGroupName"u8);
+                writer.WriteStringValue(TargetResourceGroupName);
+            }
+            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
+            {
+                writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
+                writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
+            }
+            if (Optional.IsDefined(SnapshotRestoreParameters))
+            {
+                writer.WritePropertyName("snapshotRestoreParameters"u8);
+                writer.WriteObjectValue(SnapshotRestoreParameters);
+            }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
                 writer.WritePropertyName("targetVirtualMachineId"u8);
@@ -83,6 +98,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<TargetRestoreInfo> targetInfo = default;
             Optional<RecoveryMode> recoveryMode = default;
+            Optional<string> targetResourceGroupName = default;
+            Optional<UserAssignedManagedIdentityDetails> userAssignedManagedIdentityDetails = default;
+            Optional<SnapshotRestoreContent> snapshotRestoreParameters = default;
             Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = "AzureWorkloadRestoreRequest";
             foreach (var property in element.EnumerateObject())
@@ -137,6 +155,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryMode = new RecoveryMode(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userAssignedManagedIdentityDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("snapshotRestoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("targetVirtualMachineId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -152,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value);
+            return new WorkloadRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetResourceGroupName.Value, userAssignedManagedIdentityDetails.Value, snapshotRestoreParameters.Value, targetVirtualMachineId.Value);
         }
     }
 }

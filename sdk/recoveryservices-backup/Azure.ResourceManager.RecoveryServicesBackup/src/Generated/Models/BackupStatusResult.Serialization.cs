@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> errorMessage = default;
             Optional<string> policyName = default;
             Optional<string> registrationStatus = default;
+            Optional<int> protectedItemsCount = default;
+            Optional<AcquireStorageAccountLock> acquireStorageAccountLock = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionStatus"u8))
@@ -86,8 +88,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     registrationStatus = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("protectedItemsCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectedItemsCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("acquireStorageAccountLock"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    acquireStorageAccountLock = new AcquireStorageAccountLock(property.Value.GetString());
+                    continue;
+                }
             }
-            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value);
+            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value, Optional.ToNullable(protectedItemsCount), Optional.ToNullable(acquireStorageAccountLock));
         }
     }
 }

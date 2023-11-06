@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="errorMessage"> ErrorMessage in case of intent failed. </param>
         /// <param name="policyName"> Specifies the policy name which is used for protection. </param>
         /// <param name="registrationStatus"> Container registration status. </param>
-        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
+        /// <param name="protectedItemsCount"> Number of protected items. </param>
+        /// <param name="acquireStorageAccountLock"> Specifies whether the storage account lock has been acquired or not. </param>
+        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus, int? protectedItemsCount, AcquireStorageAccountLock? acquireStorageAccountLock)
         {
             ProtectionStatus = protectionStatus;
             VaultId = vaultId;
@@ -38,6 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ErrorMessage = errorMessage;
             PolicyName = policyName;
             RegistrationStatus = registrationStatus;
+            ProtectedItemsCount = protectedItemsCount;
+            AcquireStorageAccountLock = acquireStorageAccountLock;
         }
 
         /// <summary> Specifies whether the container is registered or not. </summary>
@@ -58,5 +62,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string PolicyName { get; }
         /// <summary> Container registration status. </summary>
         public string RegistrationStatus { get; }
+        /// <summary> Number of protected items. </summary>
+        public int? ProtectedItemsCount { get; }
+        /// <summary> Specifies whether the storage account lock has been acquired or not. </summary>
+        public AcquireStorageAccountLock? AcquireStorageAccountLock { get; }
     }
 }
