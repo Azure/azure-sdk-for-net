@@ -50,7 +50,7 @@ namespace Azure.Storage.WCF.Channels
             QueueClientOptions queueClientOptions = new QueueClientOptions();
             HttpClientTransport httpClientTransport = new HttpClientTransport(_parent.HttpClient);
             queueClientOptions.Transport = httpClientTransport;
-
+            queueClientOptions.MessageEncoding = azureQueueStorageTransportBindingElement.QueueMessageEncoding;
             _queueClient = new QueueClient(azureQueueStorageTransportBindingElement.ConnectionString, _parent.QueueName, queueClientOptions);
         }
 

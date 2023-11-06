@@ -48,13 +48,16 @@ namespace Azure.Storage.CoreWCF.Channels
                 serviceDispatcher.BaseAddress,
                 azureQueueStorageTransportBindingElement);
 
-            QueueClientOptions queueClientOptions = new QueueClientOptions();
-            queueClientOptions.RetryPolicy = new RetryPolicy(5, DelayStrategy.CreateExponentialDelayStrategy(azureQueueStorageTransportBindingElement.PollingInterval));
+            QueueClientOptions queueClientOptions = new()
+            {
+                RetryPolicy = new RetryPolicy(5, DelayStrategy.CreateExponentialDelayStrategy(azureQueueStorageTransportBindingElement.PollingInterval)),
+                MessageEncoding = azureQueueStorageTransportBindingElement.QueueMessageEncoding
+            };
             var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
             if (httpClientFactory != null)
             {
                 var httpClient = httpClientFactory.CreateClient(serviceDispatcher.Host.Description.ServiceType.FullName);
-                HttpClientTransport httpClientTransport = new HttpClientTransport(httpClient);
+                HttpClientTransport httpClientTransport = new(httpClient);
                 queueClientOptions.Transport = httpClientTransport;
             }
 

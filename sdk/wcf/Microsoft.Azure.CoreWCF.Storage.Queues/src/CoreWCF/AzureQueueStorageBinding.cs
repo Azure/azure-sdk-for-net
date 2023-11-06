@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.CoreWCF.Channels;
+using Azure.Storage.Queues;
 using CoreWCF.Channels;
 
 namespace Azure.Storage.CoreWCF
@@ -42,18 +43,21 @@ namespace Azure.Storage.CoreWCF
             _transport.ConnectionString = _connectionString;
             _transport.DeadLetterQueueName = _deadLetterQueueName;
 
-            BindingElementCollection elements = new BindingElementCollection();
+            BindingElementCollection elements = new();
 
             switch (MessageEncoding)
             {
                 case AzureQueueStorageMessageEncoding.Binary:
                     elements.Add(_binaryMessageEncodingBindingElement);
+                    _transport.QueueMessageEncoding = QueueMessageEncoding.Base64;
                     break;
                 case AzureQueueStorageMessageEncoding.Text:
                     elements.Add(_textMessageEncodingBindingElement);
+                    _transport.QueueMessageEncoding = QueueMessageEncoding.None;
                     break;
                 default:
                     elements.Add(_textMessageEncodingBindingElement);
+                    _transport.QueueMessageEncoding = QueueMessageEncoding.None;
                     break;
             }
 

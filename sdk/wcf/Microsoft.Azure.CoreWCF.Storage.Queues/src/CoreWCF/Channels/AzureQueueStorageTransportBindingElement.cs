@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Queues;
 using CoreWCF.Channels;
 using CoreWCF.Configuration;
 using CoreWCF.Queue.Common;
@@ -33,6 +34,11 @@ namespace Azure.Storage.CoreWCF.Channels
         protected AzureQueueStorageTransportBindingElement(AzureQueueStorageTransportBindingElement other) : base(other)
         {
             MaxReceivedMessageSize = other.MaxReceivedMessageSize;
+            ConnectionString = other.ConnectionString;
+            QueueUri = other.QueueUri;
+            DeadLetterQueueName = other.DeadLetterQueueName;
+            PollingInterval = other.PollingInterval;
+            QueueMessageEncoding = other.QueueMessageEncoding;
         }
 
         /// <summary>
@@ -140,5 +146,10 @@ namespace Azure.Storage.CoreWCF.Channels
         /// https://learn.microsoft.com/en-us/azure/storage/queues/storage-performance-checklist#queue-polling-interval
         /// </summary>
         public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(1);
+
+        /// <summary>
+        /// Gets the QueueMessageEncoding for the transport.
+        /// </summary>
+        public QueueMessageEncoding QueueMessageEncoding { get; set; }
     }
 }

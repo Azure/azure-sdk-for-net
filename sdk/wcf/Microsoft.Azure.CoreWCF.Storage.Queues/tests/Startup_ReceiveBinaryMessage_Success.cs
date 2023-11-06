@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CoreWCF.AzureQueueStorage.Tests
 {
-    public class Startup_ReceiveMessage_Success
+    public class Startup_ReceiveBinaryMessage_Success
     {
         private readonly string queueName = "queue-name";
         private readonly string deadLetterQueueName = "deadletter-queue-name";
@@ -20,7 +20,7 @@ namespace CoreWCF.AzureQueueStorage.Tests
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<TestService>();
-            TestHelper.ConfigureService(services, typeof(TestService).FullName, queueName, out connectionString, out endpointUrlString);
+            TestHelper.ConfigureService(services, typeof(TestService).FullName, queueName, out connectionString, out endpointUrlString, "", false, QueueMessageEncoding.Base64);
         }
 
         public void Configure(IApplicationBuilder app)
@@ -30,7 +30,10 @@ namespace CoreWCF.AzureQueueStorage.Tests
             app.UseServiceModel(services =>
             {
                 services.AddService<TestService>();
-                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
+                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName)
+                {
+                    MessageEncoding = AzureQueueStorageMessageEncoding.Binary
+                },
                 endpointUrlString);
             });
         }

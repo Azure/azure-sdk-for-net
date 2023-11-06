@@ -33,7 +33,10 @@ namespace CoreWCF.AzureQueueStorage.Tests
             app.UseServiceModel(services =>
             {
                 services.AddService<TestService_EndToEnd>();
-                services.AddServiceEndpoint<TestService_EndToEnd, ITestContract_EndToEndTest>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
+                services.AddServiceEndpoint<TestService_EndToEnd, ITestContract_EndToEndTest>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName)
+                {
+                    MessageEncoding = AzureQueueStorageMessageEncoding.Text
+                },
                 endpointUrlString);
             });
         }

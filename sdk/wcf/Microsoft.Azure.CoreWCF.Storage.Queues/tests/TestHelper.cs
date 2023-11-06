@@ -21,7 +21,8 @@ namespace CoreWCF.AzureQueueStorage.Tests
             out string connectionString,
             out string endpointUrlString,
             string conflictingQueueName = "",
-            bool createWithNoQueueName = false
+            bool createWithNoQueueName = false,
+            QueueMessageEncoding queueMessageEncoding = QueueMessageEncoding.None
             )
         {
             if (conflictingQueueName == "")
@@ -60,7 +61,7 @@ namespace CoreWCF.AzureQueueStorage.Tests
                 };
             }
             endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
-            var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport });
+            var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport , MessageEncoding = queueMessageEncoding });;
             queueClient.CreateIfNotExists();
             services.AddSingleton(queueClient);
         }
