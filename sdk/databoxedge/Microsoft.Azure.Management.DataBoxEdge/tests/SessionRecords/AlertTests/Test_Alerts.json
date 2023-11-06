@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/alerts?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9hbGVydHM/YXBpLXZlcnNpb249MjAyMS0wMi0wMQ==",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/alerts?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvYWxlcnRzP2FwaS12ZXJzaW9uPTIwMjMtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "015e9e6e-7435-4855-8428-3dd952a5dcfe"
+          "734e6d5a-312b-4878-a51a-5d22521010d4"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -36,19 +36,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "0182d896-62ff-4f1c-8d20-a2f53b2e64a0"
+          "0c8341d8-c671-4669-a3fc-17ba78804a94"
         ],
         "x-ms-client-request-id": [
-          "015e9e6e-7435-4855-8428-3dd952a5dcfe"
+          "734e6d5a-312b-4878-a51a-5d22521010d4"
         ],
         "x-ms-correlation-request-id": [
-          "0182d896-62ff-4f1c-8d20-a2f53b2e64a0"
+          "0c8341d8-c671-4669-a3fc-17ba78804a94"
         ],
         "x-ms-routing-request-id": [
-          "JIOINDIAWEST:20210913T040349Z:0182d896-62ff-4f1c-8d20-a2f53b2e64a0"
+          "SOUTHINDIA:20231102T065847Z:0c8341d8-c671-4669-a3fc-17ba78804a94"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:03:49 GMT"
+          "Thu, 02 Nov 2023 06:58:46 GMT"
         ],
         "Content-Length": [
           "19"
@@ -66,7 +66,7 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "706c087b-4c6c-46bf-8adf-766ae266d5bf",
-    "SubId": "706c087b-4c6c-46bf-8adf-766ae266d5bf"
+    "SubscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+    "SubId": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
   }
 }

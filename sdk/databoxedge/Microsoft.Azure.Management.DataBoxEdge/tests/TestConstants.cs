@@ -23,7 +23,7 @@
         /// <summary>
         /// Encryption key of edge resource
         /// </summary>
-        public const string EdgeDeviceCIK = "A+etUJ991YyaVRVuKEfL9eKZjc9OHh6FkM3M2raJZLhts6uvtVq3flrsFo6xrdDYXZJucIqN+w8TO8t3mXvsBpy6sllkMMvZyDjoO3zhOOTw/7mq0yFW0bFBsJDIXmMo";
+        public const string EdgeDeviceCIK = "5a6ba59a0e67c9ccadd887c3573a0e0cdba8b9921406b6a5ed4107f0de4bad256092940f76954a7ab356e0ac7c8dc8cbfcf1a2c16aba4931758639008b3f8fc6";
 
         /// <summary>
         /// Name of the gateway resource being used in the test
@@ -33,7 +33,7 @@
         /// <summary>
         /// Name of the edge resource being used in the test
         /// </summary>
-        public const string EdgeResourceName = "demo-edge-sdk-2021";
+        public const string EdgeResourceName = "sdk-refresh-2023";
 
         /// <summary>
         /// KeyVault associcated to Edge Device
@@ -54,5 +54,20 @@
         /// ProviderNameSpace
         /// </summary>
         public const string ProviderNameSpace = "Microsoft.DataBoxEdge";
+
+        /// <summary>
+        /// TestStorageAccountName
+        /// </summary>
+        public const string TestStorageAccountName = "storageaccounttest15";
+
+        /// <summary>
+        /// TestSAC
+        /// </summary>
+        public const string TestSAC = "asesdkrefresh";
+
+        /// <summary>
+        /// User1
+        /// </summary>
+        public const string User1 = "user1";
     }
 }

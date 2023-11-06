@@ -41,5 +41,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public const string RCALarge = "RCA_Large";
         public const string RDC = "RDC";
         public const string Management = "Management";
+        public const string EP264Mx1W = "EP2_64_Mx1_W";
+        public const string EP2128GPU1Mx1W = "EP2_128_GPU1_Mx1_W";
+        public const string EP2256GPU2Mx1 = "EP2_256_GPU2_Mx1";
+        public const string EdgeMRTCP = "EdgeMR_TCP";
     }
 }

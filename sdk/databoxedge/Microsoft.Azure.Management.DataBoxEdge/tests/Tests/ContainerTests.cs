@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.Management.DataBoxEdge;
 using Microsoft.Azure.Management.DataBoxEdge.Models;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -28,8 +27,8 @@ namespace DataBoxEdge.Tests
         [Fact]
         public void Test_ContainerOperations()
         {
-            string storageAccountName = "storageaccount2";
-            string containerName = "container1";
+            string storageAccountName = TestConstants.TestStorageAccountName;
+            string containerName = "containertest1";
 
             // Get storage account details
             string storageAccountId = null;

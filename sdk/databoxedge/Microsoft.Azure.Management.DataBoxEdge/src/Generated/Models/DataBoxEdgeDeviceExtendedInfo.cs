@@ -59,7 +59,21 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// 'KeyVaultNotSynced'</param>
         /// <param name="deviceSecrets">Device secrets, will be returned only
         /// with ODataFilter $expand=deviceSecrets</param>
-        public DataBoxEdgeDeviceExtendedInfo(string id = default(string), string name = default(string), string type = default(string), string encryptionKeyThumbprint = default(string), string encryptionKey = default(string), string resourceKey = default(string), string clientSecretStoreId = default(string), string clientSecretStoreUrl = default(string), string channelIntegrityKeyName = default(string), string channelIntegrityKeyVersion = default(string), string keyVaultSyncStatus = default(string), IDictionary<string, Secret> deviceSecrets = default(IDictionary<string, Secret>))
+        /// <param name="clusterWitnessType">Cluster Witness Type. Possible
+        /// values include: 'None', 'Cloud', 'FileShare'</param>
+        /// <param name="fileShareWitnessLocation">The witness location of file
+        /// share.</param>
+        /// <param name="fileShareWitnessUsername">The username of file
+        /// share.</param>
+        /// <param name="cloudWitnessStorageAccountName">The Cloud Witness
+        /// Storage account name.</param>
+        /// <param name="cloudWitnessContainerName">The Container for cloud
+        /// witness in the storage account.</param>
+        /// <param name="cloudWitnessStorageEndpoint">The Azure service
+        /// endpoint of the cloud witness storage account.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of DataBoxEdgeDevice</param>
+        public DataBoxEdgeDeviceExtendedInfo(string id = default(string), string name = default(string), string type = default(string), string encryptionKeyThumbprint = default(string), string encryptionKey = default(string), string resourceKey = default(string), string clientSecretStoreId = default(string), string clientSecretStoreUrl = default(string), string channelIntegrityKeyName = default(string), string channelIntegrityKeyVersion = default(string), string keyVaultSyncStatus = default(string), IDictionary<string, Secret> deviceSecrets = default(IDictionary<string, Secret>), string clusterWitnessType = default(string), string fileShareWitnessLocation = default(string), string fileShareWitnessUsername = default(string), string cloudWitnessStorageAccountName = default(string), string cloudWitnessContainerName = default(string), string cloudWitnessStorageEndpoint = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             EncryptionKeyThumbprint = encryptionKeyThumbprint;
@@ -71,6 +85,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
             ChannelIntegrityKeyVersion = channelIntegrityKeyVersion;
             KeyVaultSyncStatus = keyVaultSyncStatus;
             DeviceSecrets = deviceSecrets;
+            ClusterWitnessType = clusterWitnessType;
+            FileShareWitnessLocation = fileShareWitnessLocation;
+            FileShareWitnessUsername = fileShareWitnessUsername;
+            CloudWitnessStorageAccountName = cloudWitnessStorageAccountName;
+            CloudWitnessContainerName = cloudWitnessContainerName;
+            CloudWitnessStorageEndpoint = cloudWitnessStorageEndpoint;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -138,6 +159,51 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.deviceSecrets")]
         public IDictionary<string, Secret> DeviceSecrets { get; private set; }
+
+        /// <summary>
+        /// Gets cluster Witness Type. Possible values include: 'None',
+        /// 'Cloud', 'FileShare'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clusterWitnessType")]
+        public string ClusterWitnessType { get; private set; }
+
+        /// <summary>
+        /// Gets the witness location of file share.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fileShareWitnessLocation")]
+        public string FileShareWitnessLocation { get; private set; }
+
+        /// <summary>
+        /// Gets the username of file share.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fileShareWitnessUsername")]
+        public string FileShareWitnessUsername { get; private set; }
+
+        /// <summary>
+        /// Gets the Cloud Witness Storage account name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloudWitnessStorageAccountName")]
+        public string CloudWitnessStorageAccountName { get; private set; }
+
+        /// <summary>
+        /// Gets the Container for cloud witness in the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloudWitnessContainerName")]
+        public string CloudWitnessContainerName { get; private set; }
+
+        /// <summary>
+        /// Gets the Azure service endpoint of the cloud witness storage
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloudWitnessStorageEndpoint")]
+        public string CloudWitnessStorageEndpoint { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of
+        /// DataBoxEdgeDevice
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

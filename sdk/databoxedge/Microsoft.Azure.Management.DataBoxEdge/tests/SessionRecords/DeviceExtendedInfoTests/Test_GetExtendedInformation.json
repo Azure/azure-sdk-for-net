@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/getExtendedInformation?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9nZXRFeHRlbmRlZEluZm9ybWF0aW9uP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/getExtendedInformation?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvZ2V0RXh0ZW5kZWRJbmZvcm1hdGlvbj9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a8e891b6-8a18-4861-bdee-7f61a07fc550"
+          "5626bb0a-5eef-47d9-8c44-e76895af0d26"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -36,22 +36,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "0a1ae49f-96d6-4e71-9f9e-c71831c7ebec"
+          "00c33068-f83e-4acb-9174-9cbd29be556b"
         ],
         "x-ms-client-request-id": [
-          "a8e891b6-8a18-4861-bdee-7f61a07fc550"
+          "5626bb0a-5eef-47d9-8c44-e76895af0d26"
         ],
         "x-ms-correlation-request-id": [
-          "0a1ae49f-96d6-4e71-9f9e-c71831c7ebec"
+          "00c33068-f83e-4acb-9174-9cbd29be556b"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040606Z:0a1ae49f-96d6-4e71-9f9e-c71831c7ebec"
+          "SOUTHINDIA:20231102T075645Z:00c33068-f83e-4acb-9174-9cbd29be556b"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:06:06 GMT"
+          "Thu, 02 Nov 2023 07:56:44 GMT"
         ],
         "Content-Length": [
-          "2379"
+          "2450"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,13 +60,13 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"encryptionKeyThumbprint\": \"782BEAA19BD694F1604BCC98AE728D9556D31487\",\r\n    \"encryptionKey\": \"EAAAAO2qBxYFdWnUvcBxKzgnsp3/7nZLva8udyrXdg1tvIhqGdmdGjEBpLlb7bxLh9i9Ls9m3CO4cliCJo3noxT4x3jpKEsyad9w9xL6boXK6u/Zr6aPssWKOLuPtAKmogOhm1FT/cMD9mYPH42sul1PeSNfSCJxJvY3N+9o9e8Gh5R/g9GsjYFZvg29IQUv/+RUnDuyCj9W0R176iI42EKxn6F39T0wqjcfJwdgUJghgeNlyCuuWABbYe2QB3oNACqu3sajNdca7kSYhYeQ83NTwcM5Xg4MoVzg28vt+DY4GfgqADADbWO0B7jGtPFFl7tYce/QifgKnR7NHIWy3H6KmdlfAaCqyMvVJ7lGoRCAzRy2vydQHsR5ADobsONNYJu7pHwqi+Us1qtZYDu2gAYxNeHqqfi1L66kdKvSTPNFMTB7gXthWGsMJGITdHqOBU12usyszUOJEgrfSUptqo9JlaWwLnnvu/nHP78GpnLDnXC0dUFuNvo/AHe4ePM+HR70GccJKvYSjd2QhT+wPGKKBl0vgOatiJSvTnVHskDD06AjMfXf5XXvPIjszknRP8IhFdkjn3KjhI8tBrRpKKfCnroA/VsgKzdTR2ede6G206BEg5nqySEcw/4dD1hp88JWO95ujWnTnf/1UDENZeUqhEauGysjqAT4za6jfWXZQFfCDeG3LVQsJlohSpZaEyH8Lk7PlAdYhIftrkX3nd+QiiWk4VapiHsCqyU6KMFjkgOGGLvLmcqZcW9QWTVarwBlrtXXvNg/x4gxY0Oqap0FjiwhacLFg4WqcOcJbKHQH0AojxonZBizSNZZulJBjsvT+gqy064J3y5YAmNFDAVT2DRUrIzXeNLbo3G0dRGZUk/28uyav5k29WdxIUR3v3NftRB856hrqfze+pstyUyum3Vl7zD2jYfVIZrIKH14H076jBCoOi8wgWuQbj3xqIZj/OMoFWRgZbsR0AyzAqKKv0BI0u8XxP5Ek2bXEons1g7A0KcAu63GW47CJy/8XPCuA/EyJ+4vKjYgCyaEA9zUKgSWYFaZXHQDGhuGs/Bx6hg3VGczVr2KVABAXDqyWVgwzjKR68u1NeTX633Ync6hEU3iCbWipakbNiy1/G4LAn4H0sEoce7F4OSxaYVGGtBbvZCota5iaaAj7FmTtGJZTFjeKJCRlF0Q7UqxMddDQMrS62UmFc/D+TbSvuDXHvLUeqGES/rgOp046eNyb5gUvqRzcQ6gfRPl36tAv4G8X7kGIZoBW6gDneLZXf4lzsjoZCxtXL/mLBDGYd+iop9iuVDNyxH/DMpV83Yn4zUYc3lS0cjNOQYb+QNunuMebAp4g+pJRE7pS4AV16BE8xt5s6ZpwyeDQvb1cYK1ZWh1I1ZqyMPCvQspT8ith+SuukX0mq8WazVIW70W5YeLIO2yzjBmv+ttjNTdQpbaK3nKuTX34Zn/mbvfIjaJEu1jY+5Vp8ZZMskFyaopR9dVf5zqci9zzDtfpUO3I4TY4QQl2a1PCam/5fnN/FNq/GwRsf0ldQ==\",\r\n    \"resourceKey\": \"3209792326060258784\",\r\n    \"clientSecretStoreId\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.KeyVault/vaults/test-sdk-keyvault-123\",\r\n    \"clientSecretStoreUrl\": \"https://test-sdk-keyvault-123.vault.azure.net\",\r\n    \"channelIntegrityKeyName\": \"ase-cik\",\r\n    \"channelIntegrityKeyVersion\": \"4fcb9ee6c8594c41a03933b687e3b67c\",\r\n    \"keyVaultSyncStatus\": \"KeyVaultNotSynced\"\r\n  },\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021\",\r\n  \"name\": \"demo-edge-sdk-2021\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"encryptionKeyThumbprint\": \"456D3942A05E6C7DE8D140B14682157362357FFE\",\r\n    \"encryptionKey\": \"EAAAALv8NXGKRfz1n9d18ZItQ1o+7zA7oZCoZHrvBkbWkPt/gWMPWADK3gGCC6UOmw4Wybp3hZAplHFROCjyFr1R1QO1VUMmeVTYhXbscKkMQ09LRAEogBDVrwLr01xOEZIGfygBFz4u26Jgk9WkjPDdELHrtHlRMvwSeqUTeiIyc9WWisZgi3lPQCznXX9Z99cvJchBe/kyvbDv9HqI6lzsH0aMGxFuObb04SbSDG7QVl/028ypoyFFDf2U0PzN5MF1Hz3jQeBNmABroVi5HybcWvjfW/Ifi4v50HQs+l9t56foCjLRuldz0eTELSSumKyUA78BFWKrsfyMQnednT/GqD76owVNx46K+j2yU3H8yLiIU/IWdGtbf1bu1sziwZlFcmWEsOODvj+N0Lu32A3nAt9KnjOMSlcqNwOMezT5T7xa9uRAm8toPraZ6o86UcQST5DF8Rkd2rfl9D4THujkxoPQCNOl2HyFricf1EuHQv5D+IX9AmQZFV/+vdhV+y54MH9Umi/5jMx+4H45s4KX4xA8jGlwFLDsQ6CgedtpLQ2CgRL9pCSkyC9l5DA+rfQDHWc2Vk5qduPj6j3auwhMQ7DEFeUDmJIFGIM7xFL0jM6qBF2U+FvY8MZPTbjyzOzAdb2X+Lyu7BuQvHKlgqF18UrLtmFy635DPh3RcWKYus3CUq08utYwpFE8Wj22haQxhOf7efxuvlKLMLgKCHa0dduIjtb97zABR5NBeBaO47WH3u9uAZWlJRaAmgAjMgar9cEm4JdRrI0svN2sLXYBmAQI2BXl6xdzJF2aefPONrDjMue85KprLVa7B23q8uvsRxVUFiUe9Njv20PfNP/BhJCv459vPvj+Q8QMyzrw+Tz7Xco1LzdYRdEHU5Y2wPiQn0m5bNft95Pb7QdgtgE/4ZXRZpo89rA6Da6x0LT7IZ9L8rs8Q/qjX72t0p/IO42wHm2Bj+2OHW3ExfZpRf7EtT0NwH3MAXDhyU4H3FBiRBkd6qQhnFN4vpRZi5FbFsThUug6IdH8SrD3JvbrdOOU7cHeeQcAikYug3O4LyE904Ws7CHN7umy9tGpi5jAeYmaNcuAISACx3zYM2xXK4M81GdlZNIlGQ5fMmYanqfGG9nKvubt7KTPp4+EkLZhnO8alpANmxozOeXcvL1TOmVCxep3b0oJr9KsBcbU1BQVpNv74uLbPHhxKBml1Eb2stauumCQqx7QCkoXe7GiDEqTP+ryBDlAzsXsYWP4sTuL4lVEYGuob/ybZo5/TN0AFK2TUgBIZiCJsBuMNSMW623Axpcgec7u9iRe1KhJv8teRflR/Dmb3fmYpnD8XWRBbMFeopGH7kq83dmeFEm3jOOL28f5F/QyyaS6U6doNK3m4fFkyxKkTPMgHaqJ0I9+eo30mNDKJtTDX3waIKC9fvbN81bNEn+WygY4MXvjkLRR0ngPXzRA6jLq/nzR7WjToW3zyR54vHyZcJ8fKC2/PEdy/lPGlJrpgQz/a+QdvbY3dn8NKFwa9z0bXxLi/D3L9Uc20w==\",\r\n    \"resourceKey\": \"4932780943654056534\",\r\n    \"clientSecretStoreId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.KeyVault/vaults/ase-sdkrefresh-7bd36124f\",\r\n    \"clientSecretStoreUrl\": \"https://ase-sdkrefresh-7bd36124f.vault.azure.net\",\r\n    \"channelIntegrityKeyName\": \"ase-cik-53e72ae8-1dc4-4ced-81d7-e00696c5b812\",\r\n    \"channelIntegrityKeyVersion\": \"b5a2d77deea04c719e15f0df5a05a4ef\",\r\n    \"keyVaultSyncStatus\": \"KeyVaultSynced\",\r\n    \"clusterWitnessType\": \"None\"\r\n  },\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourcegroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023\",\r\n  \"name\": \"sdk-refresh-2023\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "706c087b-4c6c-46bf-8adf-766ae266d5bf",
-    "SubId": "706c087b-4c6c-46bf-8adf-766ae266d5bf"
+    "SubscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+    "SubId": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
   }
 }

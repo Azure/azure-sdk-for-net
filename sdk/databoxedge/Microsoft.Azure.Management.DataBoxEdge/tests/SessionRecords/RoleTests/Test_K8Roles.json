@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9yb2xlcy9rOHJvbGUxP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvcm9sZXMvazhyb2xlMT9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"Kubernetes\",\r\n  \"properties\": {\r\n    \"hostPlatform\": \"Linux\",\r\n    \"kubernetesClusterInfo\": {\r\n      \"version\": \"v1.17.3\"\r\n    },\r\n    \"kubernetesRoleResources\": {\r\n      \"compute\": {\r\n        \"vmProfile\": \"DS1_v2\"\r\n      }\r\n    },\r\n    \"roleStatus\": \"Enabled\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c74f915f-7e2d-4e73-9565-81c25a9c9f60"
+          "0153ed4a-fd83-43bc-bdba-d106bb127c17"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,31 +36,31 @@
           "30"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1/operationResults/fbb463fc-c74d-4086-a1cb-869712c59de3?api-version=2021-02-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1/operationResults/4b0ede3e-aad7-49c1-9891-4df4da69f153?api-version=2023-07-01"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "33242208-50ce-4335-9c87-71629ffd57a4"
+          "e3fda398-da40-4e4a-8686-62213ef812d8"
         ],
         "x-ms-client-request-id": [
-          "c74f915f-7e2d-4e73-9565-81c25a9c9f60"
+          "0153ed4a-fd83-43bc-bdba-d106bb127c17"
         ],
         "x-ms-correlation-request-id": [
-          "33242208-50ce-4335-9c87-71629ffd57a4"
+          "e3fda398-da40-4e4a-8686-62213ef812d8"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210913T041254Z:33242208-50ce-4335-9c87-71629ffd57a4"
+          "JIOINDIACENTRAL:20231106T040438Z:e3fda398-da40-4e4a-8686-62213ef812d8"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:12:54 GMT"
+          "Mon, 06 Nov 2023 04:04:37 GMT"
         ],
         "Content-Length": [
           "23"
@@ -76,16 +76,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1/operationResults/fbb463fc-c74d-4086-a1cb-869712c59de3?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9yb2xlcy9rOHJvbGUxL29wZXJhdGlvblJlc3VsdHMvZmJiNDYzZmMtYzc0ZC00MDg2LWExY2ItODY5NzEyYzU5ZGUzP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1/operationResults/4b0ede3e-aad7-49c1-9891-4df4da69f153?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvcm9sZXMvazhyb2xlMS9vcGVyYXRpb25SZXN1bHRzLzRiMGVkZTNlLWFhZDctNDljMS05ODkxLTRkZjRkYTY5ZjE1Mz9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -105,19 +105,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "1377d5c2-530d-494a-b4c2-bb9c42d4c4e2"
+          "28d5ae37-007f-45b3-bd08-aa8fc2a881c5"
         ],
         "x-ms-client-request-id": [
-          "560e335d-f4b8-4308-a488-226f270279a0"
+          "9dccdc9f-4dbf-429f-9376-144645ee2e27"
         ],
         "x-ms-correlation-request-id": [
-          "1377d5c2-530d-494a-b4c2-bb9c42d4c4e2"
+          "28d5ae37-007f-45b3-bd08-aa8fc2a881c5"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210913T041325Z:1377d5c2-530d-494a-b4c2-bb9c42d4c4e2"
+          "JIOINDIACENTRAL:20231106T040509Z:28d5ae37-007f-45b3-bd08-aa8fc2a881c5"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:13:24 GMT"
+          "Mon, 06 Nov 2023 04:05:08 GMT"
         ],
         "Content-Length": [
           "22"
@@ -133,16 +133,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9yb2xlcy9rOHJvbGUxP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvcm9sZXMvazhyb2xlMT9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -162,22 +162,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "345e3c09-5c6a-4836-8bd1-473598e47c66"
+          "a040c524-045b-4154-8b15-94229d44a2d7"
         ],
         "x-ms-client-request-id": [
-          "d1974fb2-4d94-41b9-a698-461bedba30eb"
+          "492022ed-6c57-4e8a-ac7a-286517ad79be"
         ],
         "x-ms-correlation-request-id": [
-          "345e3c09-5c6a-4836-8bd1-473598e47c66"
+          "a040c524-045b-4154-8b15-94229d44a2d7"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210913T041326Z:345e3c09-5c6a-4836-8bd1-473598e47c66"
+          "JIOINDIACENTRAL:20231106T040510Z:a040c524-045b-4154-8b15-94229d44a2d7"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:13:25 GMT"
+          "Mon, 06 Nov 2023 04:05:09 GMT"
         ],
         "Content-Length": [
-          "1951"
+          "2223"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -186,26 +186,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hostPlatform\": \"Linux\",\r\n    \"provisioningState\": \"Created\",\r\n    \"hostPlatformType\": \"KubernetesCluster\",\r\n    \"kubernetesClusterInfo\": {\r\n      \"etcdInfo\": {\r\n        \"type\": \"Etcd\",\r\n        \"version\": \"v3.4.3\"\r\n      },\r\n      \"nodes\": [\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-1DHMHQ2\",\r\n          \"type\": \"Worker\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch1\",\r\n              \"ipAddress\": \"5.5.166.1\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-M0\",\r\n          \"type\": \"Master\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch2\",\r\n              \"ipAddress\": \"5.5.166.2\"\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"version\": \"v1.17.3\"\r\n    },\r\n    \"kubernetesRoleResources\": {\r\n      \"storage\": {\r\n        \"storageClasses\": [\r\n          {\r\n            \"name\": \"storageclass1\",\r\n            \"type\": \"SMB\",\r\n            \"posixCompliant\": \"Disabled\"\r\n          },\r\n          {\r\n            \"name\": \"storageclass2\",\r\n            \"type\": \"Blob\",\r\n            \"posixCompliant\": \"Enabled\"\r\n          }\r\n        ]\r\n      },\r\n      \"compute\": {\r\n        \"vmProfile\": \"DS1_v2\",\r\n        \"memoryInBytes\": 17179869184,\r\n        \"processorCount\": 12\r\n      },\r\n      \"network\": {\r\n        \"cniConfig\": {\r\n          \"type\": \"Calico\",\r\n          \"version\": \"v3.1.7\",\r\n          \"podSubnet\": \"172.27.0.0/16\",\r\n          \"serviceSubnet\": \"172.28.0.0/16\"\r\n        },\r\n        \"loadBalancerConfig\": {\r\n          \"type\": \"Metallb\",\r\n          \"version\": \"v0.8.1\"\r\n        }\r\n      }\r\n    },\r\n    \"roleStatus\": \"Enabled\"\r\n  },\r\n  \"kind\": \"Kubernetes\",\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1\",\r\n  \"name\": \"k8role1\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hostPlatform\": \"Linux\",\r\n    \"provisioningState\": \"Created\",\r\n    \"hostPlatformType\": \"KubernetesCluster\",\r\n    \"kubernetesClusterInfo\": {\r\n      \"etcdInfo\": {\r\n        \"type\": \"Etcd\",\r\n        \"version\": \"v3.4.3\",\r\n        \"componentType\": \"Etcd\"\r\n      },\r\n      \"nodes\": [\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-1DHMHQ2\",\r\n          \"type\": \"Worker\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch1\",\r\n              \"ipAddress\": \"5.5.166.1\"\r\n            }\r\n          ],\r\n          \"componentType\": \"Node\"\r\n        },\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-M0\",\r\n          \"type\": \"Master\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch2\",\r\n              \"ipAddress\": \"5.5.166.2\"\r\n            }\r\n          ],\r\n          \"componentType\": \"Node\"\r\n        }\r\n      ],\r\n      \"version\": \"v1.17.3\",\r\n      \"componentType\": \"Cluster\"\r\n    },\r\n    \"kubernetesRoleResources\": {\r\n      \"storage\": {\r\n        \"storageClasses\": [\r\n          {\r\n            \"name\": \"storageclass1\",\r\n            \"type\": \"SMB\",\r\n            \"posixCompliant\": \"Disabled\"\r\n          },\r\n          {\r\n            \"name\": \"storageclass2\",\r\n            \"type\": \"Blob\",\r\n            \"posixCompliant\": \"Enabled\"\r\n          }\r\n        ]\r\n      },\r\n      \"compute\": {\r\n        \"vmProfile\": \"DS1_v2\",\r\n        \"memoryInBytes\": 17179869184,\r\n        \"processorCount\": 12,\r\n        \"hugePage2M\": -1,\r\n        \"hugePage1G\": -1\r\n      },\r\n      \"network\": {\r\n        \"cniConfig\": {\r\n          \"type\": \"Calico\",\r\n          \"version\": \"v3.1.7\",\r\n          \"podSubnet\": \"172.27.0.0/16\",\r\n          \"serviceSubnet\": \"172.28.0.0/16\",\r\n          \"componentType\": \"CNI\"\r\n        },\r\n        \"loadBalancerConfig\": {\r\n          \"type\": \"Metallb\",\r\n          \"version\": \"v0.8.1\",\r\n          \"componentType\": \"LoadBalancer\"\r\n        }\r\n      }\r\n    },\r\n    \"roleStatus\": \"Enabled\"\r\n  },\r\n  \"kind\": \"Kubernetes\",\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1\",\r\n  \"name\": \"k8role1\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9yb2xlcy9rOHJvbGUxP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvcm9sZXMvazhyb2xlMT9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4195734a-b23f-4387-8880-7adaee197305"
+          "2d6134a9-6a89-4d0f-b3ec-e99f9749292a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -225,22 +225,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "3548f872-93ec-4f42-ae62-ceb43c99dab1"
+          "11d51e7d-dd1e-4d1a-b0b1-ff1a24566589"
         ],
         "x-ms-client-request-id": [
-          "4195734a-b23f-4387-8880-7adaee197305"
+          "2d6134a9-6a89-4d0f-b3ec-e99f9749292a"
         ],
         "x-ms-correlation-request-id": [
-          "3548f872-93ec-4f42-ae62-ceb43c99dab1"
+          "11d51e7d-dd1e-4d1a-b0b1-ff1a24566589"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210913T041327Z:3548f872-93ec-4f42-ae62-ceb43c99dab1"
+          "JIOINDIACENTRAL:20231106T040510Z:11d51e7d-dd1e-4d1a-b0b1-ff1a24566589"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:13:26 GMT"
+          "Mon, 06 Nov 2023 04:05:09 GMT"
         ],
         "Content-Length": [
-          "1951"
+          "2223"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -249,26 +249,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hostPlatform\": \"Linux\",\r\n    \"provisioningState\": \"Created\",\r\n    \"hostPlatformType\": \"KubernetesCluster\",\r\n    \"kubernetesClusterInfo\": {\r\n      \"etcdInfo\": {\r\n        \"type\": \"Etcd\",\r\n        \"version\": \"v3.4.3\"\r\n      },\r\n      \"nodes\": [\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-1DHMHQ2\",\r\n          \"type\": \"Worker\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch1\",\r\n              \"ipAddress\": \"5.5.166.1\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-M0\",\r\n          \"type\": \"Master\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch2\",\r\n              \"ipAddress\": \"5.5.166.2\"\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"version\": \"v1.17.3\"\r\n    },\r\n    \"kubernetesRoleResources\": {\r\n      \"storage\": {\r\n        \"storageClasses\": [\r\n          {\r\n            \"name\": \"storageclass1\",\r\n            \"type\": \"SMB\",\r\n            \"posixCompliant\": \"Disabled\"\r\n          },\r\n          {\r\n            \"name\": \"storageclass2\",\r\n            \"type\": \"Blob\",\r\n            \"posixCompliant\": \"Enabled\"\r\n          }\r\n        ]\r\n      },\r\n      \"compute\": {\r\n        \"vmProfile\": \"DS1_v2\",\r\n        \"memoryInBytes\": 17179869184,\r\n        \"processorCount\": 12\r\n      },\r\n      \"network\": {\r\n        \"cniConfig\": {\r\n          \"type\": \"Calico\",\r\n          \"version\": \"v3.1.7\",\r\n          \"podSubnet\": \"172.27.0.0/16\",\r\n          \"serviceSubnet\": \"172.28.0.0/16\"\r\n        },\r\n        \"loadBalancerConfig\": {\r\n          \"type\": \"Metallb\",\r\n          \"version\": \"v0.8.1\"\r\n        }\r\n      }\r\n    },\r\n    \"roleStatus\": \"Enabled\"\r\n  },\r\n  \"kind\": \"Kubernetes\",\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1\",\r\n  \"name\": \"k8role1\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hostPlatform\": \"Linux\",\r\n    \"provisioningState\": \"Created\",\r\n    \"hostPlatformType\": \"KubernetesCluster\",\r\n    \"kubernetesClusterInfo\": {\r\n      \"etcdInfo\": {\r\n        \"type\": \"Etcd\",\r\n        \"version\": \"v3.4.3\",\r\n        \"componentType\": \"Etcd\"\r\n      },\r\n      \"nodes\": [\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-1DHMHQ2\",\r\n          \"type\": \"Worker\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch1\",\r\n              \"ipAddress\": \"5.5.166.1\"\r\n            }\r\n          ],\r\n          \"componentType\": \"Node\"\r\n        },\r\n        {\r\n          \"name\": \"K8S-1DHMHQ2CL-M0\",\r\n          \"type\": \"Master\",\r\n          \"ipConfiguration\": [\r\n            {\r\n              \"port\": \"vSwitch2\",\r\n              \"ipAddress\": \"5.5.166.2\"\r\n            }\r\n          ],\r\n          \"componentType\": \"Node\"\r\n        }\r\n      ],\r\n      \"version\": \"v1.17.3\",\r\n      \"componentType\": \"Cluster\"\r\n    },\r\n    \"kubernetesRoleResources\": {\r\n      \"storage\": {\r\n        \"storageClasses\": [\r\n          {\r\n            \"name\": \"storageclass1\",\r\n            \"type\": \"SMB\",\r\n            \"posixCompliant\": \"Disabled\"\r\n          },\r\n          {\r\n            \"name\": \"storageclass2\",\r\n            \"type\": \"Blob\",\r\n            \"posixCompliant\": \"Enabled\"\r\n          }\r\n        ]\r\n      },\r\n      \"compute\": {\r\n        \"vmProfile\": \"DS1_v2\",\r\n        \"memoryInBytes\": 17179869184,\r\n        \"processorCount\": 12,\r\n        \"hugePage2M\": -1,\r\n        \"hugePage1G\": -1\r\n      },\r\n      \"network\": {\r\n        \"cniConfig\": {\r\n          \"type\": \"Calico\",\r\n          \"version\": \"v3.1.7\",\r\n          \"podSubnet\": \"172.27.0.0/16\",\r\n          \"serviceSubnet\": \"172.28.0.0/16\",\r\n          \"componentType\": \"CNI\"\r\n        },\r\n        \"loadBalancerConfig\": {\r\n          \"type\": \"Metallb\",\r\n          \"version\": \"v0.8.1\",\r\n          \"componentType\": \"LoadBalancer\"\r\n        }\r\n      }\r\n    },\r\n    \"roleStatus\": \"Enabled\"\r\n  },\r\n  \"kind\": \"Kubernetes\",\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1\",\r\n  \"name\": \"k8role1\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9yb2xlcz9hcGktdmVyc2lvbj0yMDIxLTAyLTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvcm9sZXM/YXBpLXZlcnNpb249MjAyMy0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bd545ca5-6c12-447b-b57d-5998d912fe6e"
+          "000cf771-2ebf-4db8-9115-5fce830a8260"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -288,22 +288,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "66194878-358d-40bc-a2ac-fec91408c922"
+          "b6314935-49f2-495e-9535-33ece9c5f8d0"
         ],
         "x-ms-client-request-id": [
-          "bd545ca5-6c12-447b-b57d-5998d912fe6e"
+          "000cf771-2ebf-4db8-9115-5fce830a8260"
         ],
         "x-ms-correlation-request-id": [
-          "66194878-358d-40bc-a2ac-fec91408c922"
+          "b6314935-49f2-495e-9535-33ece9c5f8d0"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210913T041327Z:66194878-358d-40bc-a2ac-fec91408c922"
+          "JIOINDIACENTRAL:20231106T040511Z:b6314935-49f2-495e-9535-33ece9c5f8d0"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:13:26 GMT"
+          "Mon, 06 Nov 2023 04:05:11 GMT"
         ],
         "Content-Length": [
-          "2998"
+          "3300"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -312,26 +312,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"hostPlatform\": \"Linux\",\r\n        \"provisioningState\": \"Created\",\r\n        \"hostPlatformType\": \"KubernetesCluster\",\r\n        \"kubernetesClusterInfo\": {\r\n          \"etcdInfo\": {\r\n            \"type\": \"Etcd\",\r\n            \"version\": \"v3.4.3\"\r\n          },\r\n          \"nodes\": [\r\n            {\r\n              \"name\": \"K8S-1DHMHQ2CL-1DHMHQ2\",\r\n              \"type\": \"Worker\",\r\n              \"ipConfiguration\": [\r\n                {\r\n                  \"port\": \"vSwitch1\",\r\n                  \"ipAddress\": \"5.5.166.1\"\r\n                }\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"K8S-1DHMHQ2CL-M0\",\r\n              \"type\": \"Master\",\r\n              \"ipConfiguration\": [\r\n                {\r\n                  \"port\": \"vSwitch2\",\r\n                  \"ipAddress\": \"5.5.166.2\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"version\": \"v1.17.3\"\r\n        },\r\n        \"kubernetesRoleResources\": {\r\n          \"storage\": {\r\n            \"storageClasses\": [\r\n              {\r\n                \"name\": \"storageclass1\",\r\n                \"type\": \"SMB\",\r\n                \"posixCompliant\": \"Disabled\"\r\n              },\r\n              {\r\n                \"name\": \"storageclass2\",\r\n                \"type\": \"Blob\",\r\n                \"posixCompliant\": \"Enabled\"\r\n              }\r\n            ]\r\n          },\r\n          \"compute\": {\r\n            \"vmProfile\": \"DS1_v2\",\r\n            \"memoryInBytes\": 17179869184,\r\n            \"processorCount\": 12\r\n          },\r\n          \"network\": {\r\n            \"cniConfig\": {\r\n              \"type\": \"Calico\",\r\n              \"version\": \"v3.1.7\",\r\n              \"podSubnet\": \"172.27.0.0/16\",\r\n              \"serviceSubnet\": \"172.28.0.0/16\"\r\n            },\r\n            \"loadBalancerConfig\": {\r\n              \"type\": \"Metallb\",\r\n              \"version\": \"v0.8.1\"\r\n            }\r\n          }\r\n        },\r\n        \"roleStatus\": \"Enabled\"\r\n      },\r\n      \"kind\": \"Kubernetes\",\r\n      \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1\",\r\n      \"name\": \"k8role1\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"localManagementStatus\": \"Enabled\",\r\n        \"edgeProfile\": {\r\n          \"subscription\": {\r\n            \"registrationId\": \"e5b0fd21-0002-400c-79d5-510edbb3d95f\",\r\n            \"state\": \"Registered\",\r\n            \"subscriptionId\": \"608dd339-648d-4eb8-6b95-8d1d3e332131\"\r\n          }\r\n        },\r\n        \"roleStatus\": \"Disabled\"\r\n      },\r\n      \"kind\": \"CloudEdgeManagement\",\r\n      \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/CloudEdgeManagementRole\",\r\n      \"name\": \"CloudEdgeManagementRole\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"hostPlatform\": \"Linux\",\r\n        \"provisioningState\": \"Created\",\r\n        \"hostPlatformType\": \"KubernetesCluster\",\r\n        \"kubernetesClusterInfo\": {\r\n          \"etcdInfo\": {\r\n            \"type\": \"Etcd\",\r\n            \"version\": \"v3.4.3\",\r\n            \"componentType\": \"Etcd\"\r\n          },\r\n          \"nodes\": [\r\n            {\r\n              \"name\": \"K8S-1DHMHQ2CL-1DHMHQ2\",\r\n              \"type\": \"Worker\",\r\n              \"ipConfiguration\": [\r\n                {\r\n                  \"port\": \"vSwitch1\",\r\n                  \"ipAddress\": \"5.5.166.1\"\r\n                }\r\n              ],\r\n              \"componentType\": \"Node\"\r\n            },\r\n            {\r\n              \"name\": \"K8S-1DHMHQ2CL-M0\",\r\n              \"type\": \"Master\",\r\n              \"ipConfiguration\": [\r\n                {\r\n                  \"port\": \"vSwitch2\",\r\n                  \"ipAddress\": \"5.5.166.2\"\r\n                }\r\n              ],\r\n              \"componentType\": \"Node\"\r\n            }\r\n          ],\r\n          \"version\": \"v1.17.3\",\r\n          \"componentType\": \"Cluster\"\r\n        },\r\n        \"kubernetesRoleResources\": {\r\n          \"storage\": {\r\n            \"storageClasses\": [\r\n              {\r\n                \"name\": \"storageclass1\",\r\n                \"type\": \"SMB\",\r\n                \"posixCompliant\": \"Disabled\"\r\n              },\r\n              {\r\n                \"name\": \"storageclass2\",\r\n                \"type\": \"Blob\",\r\n                \"posixCompliant\": \"Enabled\"\r\n              }\r\n            ]\r\n          },\r\n          \"compute\": {\r\n            \"vmProfile\": \"DS1_v2\",\r\n            \"memoryInBytes\": 17179869184,\r\n            \"processorCount\": 12,\r\n            \"hugePage2M\": -1,\r\n            \"hugePage1G\": -1\r\n          },\r\n          \"network\": {\r\n            \"cniConfig\": {\r\n              \"type\": \"Calico\",\r\n              \"version\": \"v3.1.7\",\r\n              \"podSubnet\": \"172.27.0.0/16\",\r\n              \"serviceSubnet\": \"172.28.0.0/16\",\r\n              \"componentType\": \"CNI\"\r\n            },\r\n            \"loadBalancerConfig\": {\r\n              \"type\": \"Metallb\",\r\n              \"version\": \"v0.8.1\",\r\n              \"componentType\": \"LoadBalancer\"\r\n            }\r\n          }\r\n        },\r\n        \"roleStatus\": \"Enabled\"\r\n      },\r\n      \"kind\": \"Kubernetes\",\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1\",\r\n      \"name\": \"k8role1\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"localManagementStatus\": \"Enabled\",\r\n        \"edgeProfile\": {\r\n          \"subscription\": {\r\n            \"registrationId\": \"50027783-0002-400c-74f8-521b7e351fa5\",\r\n            \"state\": \"Registered\",\r\n            \"subscriptionId\": \"c02f92da-8fca-4ba8-5edc-3a1913112222\"\r\n          }\r\n        },\r\n        \"roleStatus\": \"Disabled\"\r\n      },\r\n      \"kind\": \"CloudEdgeManagement\",\r\n      \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/CloudEdgeManagementRole\",\r\n      \"name\": \"CloudEdgeManagementRole\",\r\n      \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9yb2xlcy9rOHJvbGUxP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvcm9sZXMvazhyb2xlMT9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5dfeccb2-ac58-4af9-8151-f9faba513390"
+          "833f261a-ce6c-4b95-8b56-110872ffe0e3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -351,25 +351,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1/operationResults/7c98cd42-19c0-47be-a110-793727b014d8?api-version=2021-02-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1/operationResults/f897f842-4394-4a33-883e-effa053a4692?api-version=2023-07-01"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "ffa764a4-5098-4ad8-b314-d7e6ab5cf07f"
+          "29b92b1c-5c67-4afc-a39e-380f5686fc22"
         ],
         "x-ms-client-request-id": [
-          "5dfeccb2-ac58-4af9-8151-f9faba513390"
+          "833f261a-ce6c-4b95-8b56-110872ffe0e3"
         ],
         "x-ms-correlation-request-id": [
-          "ffa764a4-5098-4ad8-b314-d7e6ab5cf07f"
+          "29b92b1c-5c67-4afc-a39e-380f5686fc22"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210913T041328Z:ffa764a4-5098-4ad8-b314-d7e6ab5cf07f"
+          "JIOINDIACENTRAL:20231106T040512Z:29b92b1c-5c67-4afc-a39e-380f5686fc22"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:13:27 GMT"
+          "Mon, 06 Nov 2023 04:05:12 GMT"
         ],
         "Content-Length": [
           "23"
@@ -385,16 +385,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/roles/k8role1/operationResults/7c98cd42-19c0-47be-a110-793727b014d8?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9yb2xlcy9rOHJvbGUxL29wZXJhdGlvblJlc3VsdHMvN2M5OGNkNDItMTljMC00N2JlLWExMTAtNzkzNzI3YjAxNGQ4P2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/roles/k8role1/operationResults/f897f842-4394-4a33-883e-effa053a4692?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvcm9sZXMvazhyb2xlMS9vcGVyYXRpb25SZXN1bHRzL2Y4OTdmODQyLTQzOTQtNGEzMy04ODNlLWVmZmEwNTNhNDY5Mj9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -414,19 +414,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "4d5b5e1d-bbda-4864-848a-607811622d33"
+          "975a66af-c199-4d05-9556-80faaa914292"
         ],
         "x-ms-client-request-id": [
-          "b428a548-1d10-4b78-bfc2-74d6d03d1196"
+          "12f634c2-b55e-4646-bd2f-e771e71d4dda"
         ],
         "x-ms-correlation-request-id": [
-          "4d5b5e1d-bbda-4864-848a-607811622d33"
+          "975a66af-c199-4d05-9556-80faaa914292"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210913T041359Z:4d5b5e1d-bbda-4864-848a-607811622d33"
+          "JIOINDIACENTRAL:20231106T040543Z:975a66af-c199-4d05-9556-80faaa914292"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:13:58 GMT"
+          "Mon, 06 Nov 2023 04:05:43 GMT"
         ],
         "Content-Length": [
           "22"
@@ -444,7 +444,7 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "706c087b-4c6c-46bf-8adf-766ae266d5bf",
-    "SubId": "706c087b-4c6c-46bf-8adf-766ae266d5bf"
+    "SubscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+    "SubId": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
   }
 }

@@ -71,10 +71,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticProactiveLogCollectionSettings>> UpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the diagnostic remote support settings of the specified Data
         /// Box Edge/Data Box Gateway device.
@@ -123,10 +126,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticRemoteSupportSettings>> UpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the proactive log collection settings on a Data Box
         /// Edge/Data Box Gateway device.
@@ -149,10 +155,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticProactiveLogCollectionSettings>> BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the diagnostic remote support settings on a Data Box
         /// Edge/Data Box Gateway device.
@@ -175,9 +184,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticRemoteSupportSettings>> BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

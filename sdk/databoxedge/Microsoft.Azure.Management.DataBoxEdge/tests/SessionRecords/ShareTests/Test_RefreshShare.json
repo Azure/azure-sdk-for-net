@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1/refresh?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9zaGFyZXMvbmZzMS9yZWZyZXNoP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1/refresh?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvc2hhcmVzL25mczEvcmVmcmVzaD9hcGktdmVyc2lvbj0yMDIzLTA3LTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8dbdb994-7e17-4879-b3ab-3c7e6206ddf0"
+          "fb84964b-c76c-4e0e-9c02-f9fda44da8a0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1/operationResults/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2021-02-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1/operationResults/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2023-07-01"
         ],
         "Retry-After": [
           "30"
@@ -45,13 +45,13 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "7a3d4a25-a168-4836-877b-557f71ca11ed"
+          "e696f791-d8a6-4c08-a42e-d224473096bd"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040610Z:7a3d4a25-a168-4836-877b-557f71ca11ed"
+          "SOUTHINDIA:20231102T081128Z:e696f791-d8a6-4c08-a42e-d224473096bd"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:06:09 GMT"
+          "Thu, 02 Nov 2023 08:11:28 GMT"
         ],
         "Expires": [
           "-1"
@@ -64,16 +64,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1/operationResults/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2021-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9zaGFyZXMvbmZzMS9vcGVyYXRpb25SZXN1bHRzL2ZiNDczN2IyLTUyNDQtNGJiNS1iOTg3LTJkNzRjZmVkYTg1Yj9hcGktdmVyc2lvbj0yMDIxLTAyLTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1/operationResults/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2023-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvc2hhcmVzL25mczEvb3BlcmF0aW9uUmVzdWx0cy84N2E2NDQ1Zi1jMmNkLTRhN2ItYTUyMi1iNmQ1ZTEwNzc2ODM/YXBpLXZlcnNpb249MjAyMy0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -84,7 +84,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2019-07-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2019-07-01"
         ],
         "Retry-After": [
           "10"
@@ -93,28 +93,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2019-07-01"
+          "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2019-07-01"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "276e92d6-fff0-492f-a106-d9384013f7a8"
+          "9e41f07f-a454-4509-aba3-6fda6165fcf6"
         ],
         "x-ms-client-request-id": [
-          "7a6935d9-8136-4155-8817-a9b21219bf68"
+          "01a00eb0-c832-4fb0-9948-3dd5dcdf29a6"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "276e92d6-fff0-492f-a106-d9384013f7a8"
+          "9e41f07f-a454-4509-aba3-6fda6165fcf6"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040640Z:276e92d6-fff0-492f-a106-d9384013f7a8"
+          "SOUTHINDIA:20231102T081159Z:9e41f07f-a454-4509-aba3-6fda6165fcf6"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:06:40 GMT"
+          "Thu, 02 Nov 2023 08:11:59 GMT"
         ],
         "Expires": [
           "-1"
@@ -127,16 +127,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2019-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9vcGVyYXRpb25zU3RhdHVzL2ZiNDczN2IyLTUyNDQtNGJiNS1iOTg3LTJkNzRjZmVkYTg1Yj9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvb3BlcmF0aW9uc1N0YXR1cy84N2E2NDQ1Zi1jMmNkLTRhN2ItYTUyMi1iNmQ1ZTEwNzc2ODM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -156,22 +156,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "47111d88-dac1-4cfa-85d6-b4f91f39d247"
+          "51f84ba2-bafe-452e-98b4-fafb0fcacb4d"
         ],
         "x-ms-client-request-id": [
-          "ef570903-8c55-4123-ba29-cfdf1f31cd07"
+          "62e544cf-5638-452e-a96f-bc2c2a6938fb"
         ],
         "x-ms-correlation-request-id": [
-          "47111d88-dac1-4cfa-85d6-b4f91f39d247"
+          "51f84ba2-bafe-452e-98b4-fafb0fcacb4d"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040651Z:47111d88-dac1-4cfa-85d6-b4f91f39d247"
+          "SOUTHINDIA:20231102T081210Z:51f84ba2-bafe-452e-98b4-fafb0fcacb4d"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:06:50 GMT"
+          "Thu, 02 Nov 2023 08:12:09 GMT"
         ],
         "Content-Length": [
-          "741"
+          "737"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -180,20 +180,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"name\": \"fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-09-13T04:06:12Z\",\r\n  \"percentComplete\": 0,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"shareId\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"name\": \"87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2023-11-02T08:11:31Z\",\r\n  \"percentComplete\": 0,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"shareId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2019-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9vcGVyYXRpb25zU3RhdHVzL2ZiNDczN2IyLTUyNDQtNGJiNS1iOTg3LTJkNzRjZmVkYTg1Yj9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvb3BlcmF0aW9uc1N0YXR1cy84N2E2NDQ1Zi1jMmNkLTRhN2ItYTUyMi1iNmQ1ZTEwNzc2ODM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -213,22 +213,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "d6ee4aa5-10e6-46a6-a40f-215ee4dcd4a7"
+          "fa1f4587-3ca3-4202-b81c-d8f32477264e"
         ],
         "x-ms-client-request-id": [
-          "791f213b-2c9d-45e9-9601-3be6041f63f0"
+          "fc3bf402-db53-4819-a67f-398762ffe802"
         ],
         "x-ms-correlation-request-id": [
-          "d6ee4aa5-10e6-46a6-a40f-215ee4dcd4a7"
+          "fa1f4587-3ca3-4202-b81c-d8f32477264e"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040701Z:d6ee4aa5-10e6-46a6-a40f-215ee4dcd4a7"
+          "SOUTHINDIA:20231102T081220Z:fa1f4587-3ca3-4202-b81c-d8f32477264e"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:07:00 GMT"
+          "Thu, 02 Nov 2023 08:12:19 GMT"
         ],
         "Content-Length": [
-          "741"
+          "737"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -237,20 +237,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"name\": \"fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-09-13T04:06:12Z\",\r\n  \"percentComplete\": 0,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"shareId\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"name\": \"87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2023-11-02T08:11:31Z\",\r\n  \"percentComplete\": 0,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"shareId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2019-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9vcGVyYXRpb25zU3RhdHVzL2ZiNDczN2IyLTUyNDQtNGJiNS1iOTg3LTJkNzRjZmVkYTg1Yj9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvb3BlcmF0aW9uc1N0YXR1cy84N2E2NDQ1Zi1jMmNkLTRhN2ItYTUyMi1iNmQ1ZTEwNzc2ODM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -270,22 +270,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "bb949cd5-2c80-463b-8815-e376e6273aff"
+          "9d6f82e3-360d-4924-a77e-ec321fceea95"
         ],
         "x-ms-client-request-id": [
-          "8bb7e4ca-a7f9-4c9f-8a4d-6558e4cf4e20"
+          "c5b9e72d-eaca-48d7-b177-9bfc3a0fefdb"
         ],
         "x-ms-correlation-request-id": [
-          "bb949cd5-2c80-463b-8815-e376e6273aff"
+          "9d6f82e3-360d-4924-a77e-ec321fceea95"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040712Z:bb949cd5-2c80-463b-8815-e376e6273aff"
+          "SOUTHINDIA:20231102T081231Z:9d6f82e3-360d-4924-a77e-ec321fceea95"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:07:12 GMT"
+          "Thu, 02 Nov 2023 08:12:30 GMT"
         ],
         "Content-Length": [
-          "741"
+          "737"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -294,20 +294,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"name\": \"fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2021-09-13T04:06:12Z\",\r\n  \"percentComplete\": 0,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"shareId\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"name\": \"87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Running\",\r\n  \"startTime\": \"2023-11-02T08:11:31Z\",\r\n  \"percentComplete\": 0,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"shareId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2019-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9vcGVyYXRpb25zU3RhdHVzL2ZiNDczN2IyLTUyNDQtNGJiNS1iOTg3LTJkNzRjZmVkYTg1Yj9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvb3BlcmF0aW9uc1N0YXR1cy84N2E2NDQ1Zi1jMmNkLTRhN2ItYTUyMi1iNmQ1ZTEwNzc2ODM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -327,22 +327,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "6e2685da-0157-44e1-b8ee-fc5c80efc7e3"
+          "3795ac3b-5c68-4ad1-bed9-26a3e4204400"
         ],
         "x-ms-client-request-id": [
-          "c3770c2a-072a-4d1d-b451-23405a37ef52"
+          "b732ff73-993d-4a91-9783-7dcaf95969d3"
         ],
         "x-ms-correlation-request-id": [
-          "6e2685da-0157-44e1-b8ee-fc5c80efc7e3"
+          "3795ac3b-5c68-4ad1-bed9-26a3e4204400"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040722Z:6e2685da-0157-44e1-b8ee-fc5c80efc7e3"
+          "SOUTHINDIA:20231102T081241Z:3795ac3b-5c68-4ad1-bed9-26a3e4204400"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:07:22 GMT"
+          "Thu, 02 Nov 2023 08:12:41 GMT"
         ],
         "Content-Length": [
-          "861"
+          "857"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -351,20 +351,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"name\": \"fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-09-13T04:06:12Z\",\r\n  \"endTime\": \"2021-09-13T04:11:12Z\",\r\n  \"percentComplete\": 100,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"errorManifestFile\": \"__Microsoft Data Box Edge__\\\\Refresh\\\\Errors.xml\",\r\n    \"shareId\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"name\": \"87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2023-11-02T08:11:31Z\",\r\n  \"endTime\": \"2023-11-02T08:16:31Z\",\r\n  \"percentComplete\": 100,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"errorManifestFile\": \"__Microsoft Data Box Edge__\\\\Refresh\\\\Errors.xml\",\r\n    \"shareId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b?api-version=2019-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9vcGVyYXRpb25zU3RhdHVzL2ZiNDczN2IyLTUyNDQtNGJiNS1iOTg3LTJkNzRjZmVkYTg1Yj9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestUri": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGI0ZTJmZGItNmQ4MC00ZTZlLWI3Y2QtNzM2MDk4MjcwNjY0L3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL3Nkay1yZWZyZXNoLTIwMjMvb3BlcmF0aW9uc1N0YXR1cy84N2E2NDQ1Zi1jMmNkLTRhN2ItYTUyMi1iNmQ1ZTEwNzc2ODM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.55902",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22631",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -384,22 +384,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "dcf316b1-3294-4e40-b7e3-1770e0b540e5"
+          "69611a93-fa99-44eb-8af3-4f984e2e6949"
         ],
         "x-ms-client-request-id": [
-          "13ead10e-bf4c-4dac-ba6c-ceaa6573de02"
+          "cf14f33d-ef09-41ee-ae36-22fae1597d68"
         ],
         "x-ms-correlation-request-id": [
-          "dcf316b1-3294-4e40-b7e3-1770e0b540e5"
+          "69611a93-fa99-44eb-8af3-4f984e2e6949"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20210913T040723Z:dcf316b1-3294-4e40-b7e3-1770e0b540e5"
+          "SOUTHINDIA:20231102T081242Z:69611a93-fa99-44eb-8af3-4f984e2e6949"
         ],
         "Date": [
-          "Mon, 13 Sep 2021 04:07:23 GMT"
+          "Thu, 02 Nov 2023 08:12:42 GMT"
         ],
         "Content-Length": [
-          "861"
+          "857"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -408,13 +408,13 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/operationsStatus/fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"name\": \"fb4737b2-5244-4bb5-b987-2d74cfeda85b\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-09-13T04:06:12Z\",\r\n  \"endTime\": \"2021-09-13T04:11:12Z\",\r\n  \"percentComplete\": 100,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"errorManifestFile\": \"__Microsoft Data Box Edge__\\\\Refresh\\\\Errors.xml\",\r\n    \"shareId\": \"/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/operationsStatus/87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"name\": \"87a6445f-c2cd-4a7b-a522-b6d5e1077683\",\r\n  \"type\": \"Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2023-11-02T08:11:31Z\",\r\n  \"endTime\": \"2023-11-02T08:16:31Z\",\r\n  \"percentComplete\": 100,\r\n  \"properties\": {\r\n    \"jobType\": \"RefreshShare\",\r\n    \"currentStage\": \"Unknown\",\r\n    \"totalRefreshErrors\": 0,\r\n    \"errorManifestFile\": \"__Microsoft Data Box Edge__\\\\Refresh\\\\Errors.xml\",\r\n    \"shareId\": \"/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/sdk-refresh-2023/shares/nfs1\",\r\n    \"folder\": \"\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "706c087b-4c6c-46bf-8adf-766ae266d5bf",
-    "SubId": "706c087b-4c6c-46bf-8adf-766ae266d5bf"
+    "SubscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+    "SubId": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
   }
 }

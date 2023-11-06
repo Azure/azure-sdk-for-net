@@ -97,6 +97,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         public virtual IBandwidthSchedulesOperations BandwidthSchedules { get; private set; }
 
         /// <summary>
+        /// Gets the IDeviceCapacityCheckOperations.
+        /// </summary>
+        public virtual IDeviceCapacityCheckOperations DeviceCapacityCheck { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeviceCapacityInfoOperations.
+        /// </summary>
+        public virtual IDeviceCapacityInfoOperations DeviceCapacityInfo { get; private set; }
+
+        /// <summary>
         /// Gets the IDiagnosticSettingsOperations.
         /// </summary>
         public virtual IDiagnosticSettingsOperations DiagnosticSettings { get; private set; }
@@ -417,6 +427,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             Devices = new DevicesOperations(this);
             Alerts = new AlertsOperations(this);
             BandwidthSchedules = new BandwidthSchedulesOperations(this);
+            DeviceCapacityCheck = new DeviceCapacityCheckOperations(this);
+            DeviceCapacityInfo = new DeviceCapacityInfoOperations(this);
             DiagnosticSettings = new DiagnosticSettingsOperations(this);
             Jobs = new JobsOperations(this);
             Nodes = new NodesOperations(this);
@@ -433,7 +445,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             SupportPackages = new SupportPackagesOperations(this);
             Users = new UsersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-02-01";
+            ApiVersion = "2023-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -19,39 +19,41 @@ namespace Microsoft.Azure.Management.DataBoxEdge
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DataBoxEdge", "Addons", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Alerts", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "AvailableSkus", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "BandwidthSchedules", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Containers", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Devices", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "DiagnosticSettings", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Jobs", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "MonitoringConfig", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Nodes", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Operations", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "OperationsStatus", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Orders", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Roles", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Shares", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "StorageAccountCredentials", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "StorageAccounts", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "SupportPackages", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Triggers", "2021-02-01"),
-                new Tuple<string, string, string>("DataBoxEdge", "Users", "2021-02-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Addons", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Alerts", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "AvailableSkus", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "BandwidthSchedules", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Containers", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "DeviceCapacityCheck", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "DeviceCapacityInfo", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Devices", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "DiagnosticSettings", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Jobs", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "MonitoringConfig", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Nodes", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Operations", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "OperationsStatus", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Orders", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Roles", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Shares", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "StorageAccountCredentials", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "StorageAccounts", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "SupportPackages", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Triggers", "2023-07-01"),
+                new Tuple<string, string, string>("DataBoxEdge", "Users", "2023-07-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestVersion = "2.0.4421";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/databoxedge/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\SDKRepos\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/databoxedge/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Codebase\\ASE\\AzureRestAPISpecs2\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "b020247789ba2ab0065ebbcfa69050ce729493b8";
-      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "15ba5b8a954afb74a6bb8902038835f0cddb9930";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
+
 

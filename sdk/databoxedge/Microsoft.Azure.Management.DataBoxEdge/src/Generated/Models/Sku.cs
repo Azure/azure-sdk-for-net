@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// 'TMA', 'TDC', 'TCA_Small', 'GPU', 'TCA_Large', 'EdgeP_Base',
         /// 'EdgeP_High', 'EdgePR_Base', 'EdgePR_Base_UPS', 'EP2_64_1VPU_W',
         /// 'EP2_128_1T4_Mx1_W', 'EP2_256_2T4_W', 'EdgeMR_Mini', 'RCA_Small',
-        /// 'RCA_Large', 'RDC', 'Management'</param>
+        /// 'RCA_Large', 'RDC', 'Management', 'EP2_64_Mx1_W',
+        /// 'EP2_128_GPU1_Mx1_W', 'EP2_256_GPU2_Mx1', 'EdgeMR_TCP'</param>
         /// <param name="tier">The SKU tier. This is based on the SKU name.
         /// Possible values include: 'Standard'</param>
         public Sku(string name = default(string), string tier = default(string))
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// 'TMA', 'TDC', 'TCA_Small', 'GPU', 'TCA_Large', 'EdgeP_Base',
         /// 'EdgeP_High', 'EdgePR_Base', 'EdgePR_Base_UPS', 'EP2_64_1VPU_W',
         /// 'EP2_128_1T4_Mx1_W', 'EP2_256_2T4_W', 'EdgeMR_Mini', 'RCA_Small',
-        /// 'RCA_Large', 'RDC', 'Management'
+        /// 'RCA_Large', 'RDC', 'Management', 'EP2_64_Mx1_W',
+        /// 'EP2_128_GPU1_Mx1_W', 'EP2_256_GPU2_Mx1', 'EdgeMR_TCP'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

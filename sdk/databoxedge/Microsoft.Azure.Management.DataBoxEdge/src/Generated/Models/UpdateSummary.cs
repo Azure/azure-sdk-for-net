@@ -39,7 +39,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
-        /// <param name="systemData">UpdateSummary Result</param>
         /// <param name="deviceVersionNumber">The current version of the device
         /// in format: 1.2.17312.13.",</param>
         /// <param name="friendlyDeviceVersionName">The current version of the
@@ -98,10 +97,11 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <param name="totalUpdateSizeInBytes">The total size of updates
         /// available for download in bytes.</param>
         /// <param name="totalTimeInMinutes">The total time in Minutes</param>
-        public UpdateSummary(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string deviceVersionNumber = default(string), string friendlyDeviceVersionName = default(string), System.DateTime? deviceLastScannedDateTime = default(System.DateTime?), System.DateTime? lastCompletedScanJobDateTime = default(System.DateTime?), System.DateTime? lastSuccessfulScanJobTime = default(System.DateTime?), System.DateTime? lastCompletedDownloadJobDateTime = default(System.DateTime?), string lastCompletedDownloadJobId = default(string), string lastDownloadJobStatus = default(string), System.DateTime? lastSuccessfulInstallJobDateTime = default(System.DateTime?), System.DateTime? lastCompletedInstallJobDateTime = default(System.DateTime?), string lastCompletedInstallJobId = default(string), string lastInstallJobStatus = default(string), int? totalNumberOfUpdatesAvailable = default(int?), int? totalNumberOfUpdatesPendingDownload = default(int?), int? totalNumberOfUpdatesPendingInstall = default(int?), string rebootBehavior = default(string), string ongoingUpdateOperation = default(string), string inProgressDownloadJobId = default(string), string inProgressInstallJobId = default(string), System.DateTime? inProgressDownloadJobStartedDateTime = default(System.DateTime?), System.DateTime? inProgressInstallJobStartedDateTime = default(System.DateTime?), IList<string> updateTitles = default(IList<string>), IList<UpdateDetails> updates = default(IList<UpdateDetails>), double? totalUpdateSizeInBytes = default(double?), int? totalTimeInMinutes = default(int?))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of UpdateSummary</param>
+        public UpdateSummary(string id = default(string), string name = default(string), string type = default(string), string deviceVersionNumber = default(string), string friendlyDeviceVersionName = default(string), System.DateTime? deviceLastScannedDateTime = default(System.DateTime?), System.DateTime? lastCompletedScanJobDateTime = default(System.DateTime?), System.DateTime? lastSuccessfulScanJobTime = default(System.DateTime?), System.DateTime? lastCompletedDownloadJobDateTime = default(System.DateTime?), string lastCompletedDownloadJobId = default(string), string lastDownloadJobStatus = default(string), System.DateTime? lastSuccessfulInstallJobDateTime = default(System.DateTime?), System.DateTime? lastCompletedInstallJobDateTime = default(System.DateTime?), string lastCompletedInstallJobId = default(string), string lastInstallJobStatus = default(string), int? totalNumberOfUpdatesAvailable = default(int?), int? totalNumberOfUpdatesPendingDownload = default(int?), int? totalNumberOfUpdatesPendingInstall = default(int?), string rebootBehavior = default(string), string ongoingUpdateOperation = default(string), string inProgressDownloadJobId = default(string), string inProgressInstallJobId = default(string), System.DateTime? inProgressDownloadJobStartedDateTime = default(System.DateTime?), System.DateTime? inProgressInstallJobStartedDateTime = default(System.DateTime?), IList<string> updateTitles = default(IList<string>), IList<UpdateDetails> updates = default(IList<UpdateDetails>), double? totalUpdateSizeInBytes = default(double?), int? totalTimeInMinutes = default(int?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
-            SystemData = systemData;
             DeviceVersionNumber = deviceVersionNumber;
             FriendlyDeviceVersionName = friendlyDeviceVersionName;
             DeviceLastScannedDateTime = deviceLastScannedDateTime;
@@ -127,6 +127,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
             Updates = updates;
             TotalUpdateSizeInBytes = totalUpdateSizeInBytes;
             TotalTimeInMinutes = totalTimeInMinutes;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -134,12 +135,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets updateSummary Result
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Gets or sets the current version of the device in format:
@@ -305,6 +300,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.totalTimeInMinutes")]
         public int? TotalTimeInMinutes { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of
+        /// UpdateSummary
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

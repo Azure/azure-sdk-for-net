@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            public static void UpdateDiagnosticProactiveLogCollectionSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName)
+            public static DiagnosticProactiveLogCollectionSettings UpdateDiagnosticProactiveLogCollectionSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName)
             {
-                operations.UpdateDiagnosticProactiveLogCollectionSettingsAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName).GetAwaiter().GetResult();
+                return operations.UpdateDiagnosticProactiveLogCollectionSettingsAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -103,9 +103,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateDiagnosticProactiveLogCollectionSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DiagnosticProactiveLogCollectionSettings> UpdateDiagnosticProactiveLogCollectionSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -166,9 +169,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            public static void UpdateDiagnosticRemoteSupportSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName)
+            public static DiagnosticRemoteSupportSettings UpdateDiagnosticRemoteSupportSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName)
             {
-                operations.UpdateDiagnosticRemoteSupportSettingsAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName).GetAwaiter().GetResult();
+                return operations.UpdateDiagnosticRemoteSupportSettingsAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -190,9 +193,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateDiagnosticRemoteSupportSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DiagnosticRemoteSupportSettings> UpdateDiagnosticRemoteSupportSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -211,9 +217,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            public static void BeginUpdateDiagnosticProactiveLogCollectionSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName)
+            public static DiagnosticProactiveLogCollectionSettings BeginUpdateDiagnosticProactiveLogCollectionSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName)
             {
-                operations.BeginUpdateDiagnosticProactiveLogCollectionSettingsAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName).GetAwaiter().GetResult();
+                return operations.BeginUpdateDiagnosticProactiveLogCollectionSettingsAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -235,9 +241,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateDiagnosticProactiveLogCollectionSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DiagnosticProactiveLogCollectionSettings> BeginUpdateDiagnosticProactiveLogCollectionSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -256,9 +265,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            public static void BeginUpdateDiagnosticRemoteSupportSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName)
+            public static DiagnosticRemoteSupportSettings BeginUpdateDiagnosticRemoteSupportSettings(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName)
             {
-                operations.BeginUpdateDiagnosticRemoteSupportSettingsAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName).GetAwaiter().GetResult();
+                return operations.BeginUpdateDiagnosticRemoteSupportSettingsAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -280,9 +289,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateDiagnosticRemoteSupportSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DiagnosticRemoteSupportSettings> BeginUpdateDiagnosticRemoteSupportSettingsAsync(this IDiagnosticSettingsOperations operations, string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

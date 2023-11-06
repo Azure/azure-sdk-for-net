@@ -39,7 +39,10 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
-        /// <param name="systemData">Order configured on ASE resource</param>
+        /// <param name="kind">It specify the order api version.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of Order</param>
+        /// <param name="orderId">It specify the order resource id.</param>
         /// <param name="shippingAddress">The shipping address.</param>
         /// <param name="currentStatus">Current status of the order.</param>
         /// <param name="orderHistory">List of status changes in the
@@ -54,10 +57,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <param name="shipmentType">ShipmentType of the order. Possible
         /// values include: 'NotApplicable', 'ShippedToCustomer',
         /// 'SelfPickup'</param>
-        public Order(ContactDetails contactInformation, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), Address shippingAddress = default(Address), OrderStatus currentStatus = default(OrderStatus), IList<OrderStatus> orderHistory = default(IList<OrderStatus>), string serialNumber = default(string), IList<TrackingInfo> deliveryTrackingInfo = default(IList<TrackingInfo>), IList<TrackingInfo> returnTrackingInfo = default(IList<TrackingInfo>), string shipmentType = default(string))
+        public Order(ContactDetails contactInformation, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), SystemData systemData = default(SystemData), string orderId = default(string), Address shippingAddress = default(Address), OrderStatus currentStatus = default(OrderStatus), IList<OrderStatus> orderHistory = default(IList<OrderStatus>), string serialNumber = default(string), IList<TrackingInfo> deliveryTrackingInfo = default(IList<TrackingInfo>), IList<TrackingInfo> returnTrackingInfo = default(IList<TrackingInfo>), string shipmentType = default(string))
             : base(id, name, type)
         {
+            Kind = kind;
             SystemData = systemData;
+            OrderId = orderId;
             ContactInformation = contactInformation;
             ShippingAddress = shippingAddress;
             CurrentStatus = currentStatus;
@@ -75,10 +80,22 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets order configured on ASE resource
+        /// Gets it specify the order api version.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of Order
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; set; }
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets it specify the order resource id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.orderId")]
+        public string OrderId { get; private set; }
 
         /// <summary>
         /// Gets or sets the contact details.

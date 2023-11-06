@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// 'TCA_Large', 'EdgeP_Base', 'EdgeP_High', 'EdgePR_Base',
         /// 'EdgePR_Base_UPS', 'EP2_64_1VPU_W', 'EP2_128_1T4_Mx1_W',
         /// 'EP2_256_2T4_W', 'EdgeMR_Mini', 'RCA_Small', 'RCA_Large', 'RDC',
-        /// 'Management'</param>
+        /// 'Management', 'EP2_64_Mx1_W', 'EP2_128_GPU1_Mx1_W',
+        /// 'EP2_256_GPU2_Mx1', 'EdgeMR_TCP'</param>
         /// <param name="kind">The Sku kind.</param>
         /// <param name="tier">The Sku tier. Possible values include:
         /// 'Standard'</param>
@@ -99,7 +100,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// 'TMA', 'TDC', 'TCA_Small', 'GPU', 'TCA_Large', 'EdgeP_Base',
         /// 'EdgeP_High', 'EdgePR_Base', 'EdgePR_Base_UPS', 'EP2_64_1VPU_W',
         /// 'EP2_128_1T4_Mx1_W', 'EP2_256_2T4_W', 'EdgeMR_Mini', 'RCA_Small',
-        /// 'RCA_Large', 'RDC', 'Management'
+        /// 'RCA_Large', 'RDC', 'Management', 'EP2_64_Mx1_W',
+        /// 'EP2_128_GPU1_Mx1_W', 'EP2_256_GPU2_Mx1', 'EdgeMR_TCP'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }

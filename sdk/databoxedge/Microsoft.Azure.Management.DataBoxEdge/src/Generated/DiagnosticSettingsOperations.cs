@@ -266,10 +266,10 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DiagnosticProactiveLogCollectionSettings>> UpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse _response = await BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DiagnosticProactiveLogCollectionSettings> _response = await BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(deviceName, proactiveLogCollectionSettings, resourceGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -489,10 +489,10 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DiagnosticRemoteSupportSettings>> UpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse _response = await BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DiagnosticRemoteSupportSettings> _response = await BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(deviceName, diagnosticRemoteSupportSettings, resourceGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -518,6 +518,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -527,7 +530,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DiagnosticProactiveLogCollectionSettings>> BeginUpdateDiagnosticProactiveLogCollectionSettingsWithHttpMessagesAsync(string deviceName, DiagnosticProactiveLogCollectionSettings proactiveLogCollectionSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (deviceName == null)
             {
@@ -676,12 +679,30 @@ namespace Microsoft.Azure.Management.DataBoxEdge
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<DiagnosticProactiveLogCollectionSettings>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DiagnosticProactiveLogCollectionSettings>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -712,6 +733,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -721,7 +745,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DiagnosticRemoteSupportSettings>> BeginUpdateDiagnosticRemoteSupportSettingsWithHttpMessagesAsync(string deviceName, DiagnosticRemoteSupportSettings diagnosticRemoteSupportSettings, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (deviceName == null)
             {
@@ -866,12 +890,30 @@ namespace Microsoft.Azure.Management.DataBoxEdge
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<DiagnosticRemoteSupportSettings>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DiagnosticRemoteSupportSettings>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {

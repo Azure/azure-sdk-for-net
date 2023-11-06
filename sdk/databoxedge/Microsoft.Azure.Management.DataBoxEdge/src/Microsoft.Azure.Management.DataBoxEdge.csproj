@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.DataBoxEdge</PackageId>
 		<Description>Microsoft Azure Management DataBoxEdge library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBoxEdge</AssemblyName>
-		<Version>1.1.0</Version>
+		<Version>1.1.7</Version>
 		<PackageTags>AzureDataBoxEdge;DataBox;</PackageTags>
     <PackageReleaseNotes>
 	      <![CDATA[

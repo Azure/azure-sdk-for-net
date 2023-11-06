@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
-        /// <param name="systemData">Addon type</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of Addon</param>
         public Addon(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
@@ -47,10 +48,10 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets addon type
+        /// Gets metadata pertaining to creation and last modification of Addon
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; set; }
+        public SystemData SystemData { get; private set; }
 
     }
 }

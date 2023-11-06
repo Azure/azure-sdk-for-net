@@ -41,18 +41,19 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
-        /// <param name="systemData">User in DataBoxEdge Resource</param>
         /// <param name="encryptedPassword">The password details.</param>
         /// <param name="shareAccessRights">List of shares that the user has
         /// rights on. This field should not be specified during user
         /// creation.</param>
-        public User(string userType, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), AsymmetricEncryptedSecret encryptedPassword = default(AsymmetricEncryptedSecret), IList<ShareAccessRight> shareAccessRights = default(IList<ShareAccessRight>))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of User</param>
+        public User(string userType, string id = default(string), string name = default(string), string type = default(string), AsymmetricEncryptedSecret encryptedPassword = default(AsymmetricEncryptedSecret), IList<ShareAccessRight> shareAccessRights = default(IList<ShareAccessRight>), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
-            SystemData = systemData;
             EncryptedPassword = encryptedPassword;
             ShareAccessRights = shareAccessRights;
             UserType = userType;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -60,12 +61,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets user in DataBoxEdge Resource
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Gets or sets the password details.
@@ -86,6 +81,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.userType")]
         public string UserType { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of User
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -38,7 +38,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
-        /// <param name="systemData">Container in DataBoxEdge Resource</param>
         /// <param name="containerStatus">Current status of the container.
         /// Possible values include: 'OK', 'Offline', 'Unknown', 'Updating',
         /// 'NeedsAttention'</param>
@@ -46,14 +45,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// container.</param>
         /// <param name="createdDateTime">The UTC time when container got
         /// created.</param>
-        public Container(string dataFormat, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string containerStatus = default(string), RefreshDetails refreshDetails = default(RefreshDetails), System.DateTime? createdDateTime = default(System.DateTime?))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of Container</param>
+        public Container(string dataFormat, string id = default(string), string name = default(string), string type = default(string), string containerStatus = default(string), RefreshDetails refreshDetails = default(RefreshDetails), System.DateTime? createdDateTime = default(System.DateTime?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
-            SystemData = systemData;
             ContainerStatus = containerStatus;
             DataFormat = dataFormat;
             RefreshDetails = refreshDetails;
             CreatedDateTime = createdDateTime;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -61,12 +62,6 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets container in DataBoxEdge Resource
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Gets current status of the container. Possible values include:
@@ -93,6 +88,13 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDateTime")]
         public System.DateTime? CreatedDateTime { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of
+        /// Container
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

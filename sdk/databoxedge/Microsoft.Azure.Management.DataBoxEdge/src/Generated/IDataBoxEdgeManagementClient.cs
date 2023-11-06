@@ -94,6 +94,16 @@ namespace Microsoft.Azure.Management.DataBoxEdge
         IBandwidthSchedulesOperations BandwidthSchedules { get; }
 
         /// <summary>
+        /// Gets the IDeviceCapacityCheckOperations.
+        /// </summary>
+        IDeviceCapacityCheckOperations DeviceCapacityCheck { get; }
+
+        /// <summary>
+        /// Gets the IDeviceCapacityInfoOperations.
+        /// </summary>
+        IDeviceCapacityInfoOperations DeviceCapacityInfo { get; }
+
+        /// <summary>
         /// Gets the IDiagnosticSettingsOperations.
         /// </summary>
         IDiagnosticSettingsOperations DiagnosticSettings { get; }

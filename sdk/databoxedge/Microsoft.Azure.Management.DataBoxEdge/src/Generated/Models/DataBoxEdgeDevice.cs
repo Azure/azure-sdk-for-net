@@ -90,7 +90,9 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// resource</param>
         /// <param name="dataResidency">The details of data-residency related
         /// properties for this resource</param>
-        public DataBoxEdgeDevice(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string etag = default(string), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), SystemData systemData = default(SystemData), SystemData systemData1 = default(SystemData), string dataBoxEdgeDeviceStatus = default(string), string serialNumber = default(string), string description = default(string), string modelDescription = default(string), string deviceType = default(string), string friendlyName = default(string), string culture = default(string), string deviceModel = default(string), string deviceSoftwareVersion = default(string), long? deviceLocalCapacity = default(long?), string timeZone = default(string), string deviceHcsVersion = default(string), IList<string> configuredRoleTypes = default(IList<string>), int? nodeCount = default(int?), ResourceMoveDetails resourceMoveDetails = default(ResourceMoveDetails), EdgeProfile edgeProfile = default(EdgeProfile), DataResidency dataResidency = default(DataResidency))
+        /// <param name="kubernetesWorkloadProfile">Kubernetes Workload
+        /// Profile</param>
+        public DataBoxEdgeDevice(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string etag = default(string), ResourceIdentity identity = default(ResourceIdentity), string kind = default(string), SystemData systemData = default(SystemData), SystemData systemData1 = default(SystemData), string dataBoxEdgeDeviceStatus = default(string), string serialNumber = default(string), string description = default(string), string modelDescription = default(string), string deviceType = default(string), string friendlyName = default(string), string culture = default(string), string deviceModel = default(string), string deviceSoftwareVersion = default(string), long? deviceLocalCapacity = default(long?), string timeZone = default(string), string deviceHcsVersion = default(string), IList<string> configuredRoleTypes = default(IList<string>), int? nodeCount = default(int?), ResourceMoveDetails resourceMoveDetails = default(ResourceMoveDetails), EdgeProfile edgeProfile = default(EdgeProfile), DataResidency dataResidency = default(DataResidency), string kubernetesWorkloadProfile = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -118,6 +120,7 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
             ResourceMoveDetails = resourceMoveDetails;
             EdgeProfile = edgeProfile;
             DataResidency = dataResidency;
+            KubernetesWorkloadProfile = kubernetesWorkloadProfile;
             CustomInit();
         }
 
@@ -162,33 +165,33 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public ResourceIdentity Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets the kind of the device. Possible values include:
+        /// Gets the kind of the device. Possible values include:
         /// 'AzureDataBoxGateway', 'AzureStackEdge', 'AzureStackHub',
         /// 'AzureModularDataCentre'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
+        public string Kind { get; private set; }
 
         /// <summary>
-        /// Gets or sets dataBoxEdge Resource
+        /// Gets dataBoxEdge Resource
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; set; }
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
-        /// Gets or sets dataBoxEdge Device Properties
+        /// Gets dataBoxEdge Device Properties
         /// </summary>
         [JsonProperty(PropertyName = "properties.systemData")]
-        public SystemData SystemData1 { get; set; }
+        public SystemData SystemData1 { get; private set; }
 
         /// <summary>
-        /// Gets or sets the status of the Data Box Edge/Gateway device.
-        /// Possible values include: 'ReadyToSetup', 'Online', 'Offline',
+        /// Gets the status of the Data Box Edge/Gateway device. Possible
+        /// values include: 'ReadyToSetup', 'Online', 'Offline',
         /// 'NeedsAttention', 'Disconnected', 'PartiallyDisconnected',
         /// 'Maintenance'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataBoxEdgeDeviceStatus")]
-        public string DataBoxEdgeDeviceStatus { get; set; }
+        public string DataBoxEdgeDeviceStatus { get; private set; }
 
         /// <summary>
         /// Gets the Serial Number of Data Box Edge/Gateway device.
@@ -288,6 +291,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataResidency")]
         public DataResidency DataResidency { get; set; }
+
+        /// <summary>
+        /// Gets kubernetes Workload Profile
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kubernetesWorkloadProfile")]
+        public string KubernetesWorkloadProfile { get; private set; }
 
         /// <summary>
         /// Validate the object.
