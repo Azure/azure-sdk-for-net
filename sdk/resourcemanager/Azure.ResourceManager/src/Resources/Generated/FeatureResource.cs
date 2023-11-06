@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Resources
     public partial class FeatureResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FeatureResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceProviderNamespace"> The resourceProviderNamespace. </param>
+        /// <param name="featureName"> The featureName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace, string featureName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}";

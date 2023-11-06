@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class DnsForwardingRulesetVirtualNetworkLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="rulesetName"> The rulesetName. </param>
+        /// <param name="virtualNetworkLinkName"> The virtualNetworkLinkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string rulesetName, string virtualNetworkLinkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{rulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}";

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string notebook = default;
             Optional<RunNotebookSparkSessionOptions> sessionOptions = default;
             Optional<bool> honorSessionTimeToLive = default;
-            Optional<long> sessionId = default;
+            Optional<string> sessionId = default;
             Optional<string> sparkPool = default;
             Optional<IReadOnlyDictionary<string, RunNotebookParameter>> parameters = default;
             Optional<NotebookResource> notebookContent = default;
@@ -68,11 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("sessionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sessionId = property.Value.GetInt64();
+                    sessionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sparkPool"u8))
@@ -104,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Optional.ToNullable(honorSessionTimeToLive), Optional.ToNullable(sessionId), sparkPool.Value, Optional.ToDictionary(parameters), notebookContent.Value);
+            return new RunNotebookSnapshot(exitValue.Value, id, notebook, sessionOptions.Value, Optional.ToNullable(honorSessionTimeToLive), sessionId.Value, sparkPool.Value, Optional.ToDictionary(parameters), notebookContent.Value);
         }
 
         internal partial class RunNotebookSnapshotConverter : JsonConverter<RunNotebookSnapshot>

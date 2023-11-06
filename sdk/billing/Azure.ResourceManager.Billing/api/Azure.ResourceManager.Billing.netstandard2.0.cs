@@ -269,6 +269,37 @@ namespace Azure.ResourceManager.Billing
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Models.BillingSubscriptionValidateMoveEligibilityResult>> ValidateMoveEligibilityAsync(Azure.ResourceManager.Billing.Models.BillingSubscriptionMoveContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Billing.Mocking
+{
+    public partial class MockableBillingArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBillingArmClient() { }
+        public virtual Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingPaymentMethodResource GetBillingPaymentMethodResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingSubscriptionResource GetBillingSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableBillingTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBillingTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(string billingAccountName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource> GetBillingPaymentMethod(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodResource>> GetBillingPaymentMethodAsync(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(string billingAccountName, string billingProfileName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(string billingAccountName, string billingProfileName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(string billingAccountName, string billingProfileName) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingPaymentMethodCollection GetBillingPaymentMethods() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource> GetBillingSubscription(string billingAccountName, string billingSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(string billingAccountName, string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(string billingAccountName, string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(string billingAccountName) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingSubscriptionResource>> GetBillingSubscriptionAsync(string billingAccountName, string billingSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Billing.BillingSubscriptionCollection GetBillingSubscriptions(string billingAccountName) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Billing.Models
 {
     public static partial class ArmBillingModelFactory

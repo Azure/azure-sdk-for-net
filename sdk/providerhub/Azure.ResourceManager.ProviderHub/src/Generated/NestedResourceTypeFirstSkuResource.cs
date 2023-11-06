@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.ProviderHub
     public partial class NestedResourceTypeFirstSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NestedResourceTypeFirstSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="nestedResourceTypeFirst"> The nestedResourceTypeFirst. </param>
+        /// <param name="sku"> The sku. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}";

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.StorageSync
     }
     public partial class StorageSyncServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageSyncServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StorageSyncServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? IncomingTrafficPolicy { get { throw null; } set { } }
         public string LastOperationName { get { throw null; } }
         public string LastWorkflowId { get { throw null; } }
@@ -374,6 +374,35 @@ namespace Azure.ResourceManager.StorageSync
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string workflowId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncWorkflowResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncWorkflowResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.StorageSync.Mocking
+{
+    public partial class MockableStorageSyncArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageSyncArmClient() { }
+        public virtual Azure.ResourceManager.StorageSync.CloudEndpointResource GetCloudEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncGroupResource GetStorageSyncGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionResource GetStorageSyncPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource GetStorageSyncServerEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncServiceResource GetStorageSyncServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncWorkflowResource GetStorageSyncWorkflowResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableStorageSyncResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageSyncResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServiceResource> GetStorageSyncService(string storageSyncServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.StorageSyncServiceResource>> GetStorageSyncServiceAsync(string storageSyncServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.StorageSync.StorageSyncServiceCollection GetStorageSyncServices() { throw null; }
+    }
+    public partial class MockableStorageSyncSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageSyncSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityResult> CheckStorageSyncNameAvailability(string locationName, Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityResult>> CheckStorageSyncNameAvailabilityAsync(string locationName, Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageSync.StorageSyncServiceResource> GetStorageSyncServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageSync.StorageSyncServiceResource> GetStorageSyncServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.StorageSync.Models

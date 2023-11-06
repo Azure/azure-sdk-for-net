@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Automanage
     public partial class AutomanageHciClusterConfigurationProfileAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="configurationProfileAssignmentName"> The configurationProfileAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string configurationProfileAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}";
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageHciClusterConfigurationProfileAssignmentReportResources and their operations over a AutomanageHciClusterConfigurationProfileAssignmentReportResource. </returns>
         public virtual AutomanageHciClusterConfigurationProfileAssignmentReportCollection GetAutomanageHciClusterConfigurationProfileAssignmentReports()
         {
-            return GetCachedClient(Client => new AutomanageHciClusterConfigurationProfileAssignmentReportCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageHciClusterConfigurationProfileAssignmentReportCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageHciClusterConfigurationProfileAssignmentReportResource>> GetAutomanageHciClusterConfigurationProfileAssignmentReportAsync(string reportName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAutomanageHciClusterConfigurationProfileAssignmentReport(string reportName, CancellationToken cancellationToken = default)
         {

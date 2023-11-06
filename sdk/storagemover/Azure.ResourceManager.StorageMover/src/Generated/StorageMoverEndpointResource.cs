@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.StorageMover
     public partial class StorageMoverEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageMoverEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageMoverName"> The storageMoverName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/endpoints/{endpointName}";

@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="condition">
         /// A rule of one of the following types:
         ///
@@ -64,7 +64,7 @@ namespace Azure.Communication.JobRouter
         /// OAuth2.0 authentication protocol.
         /// </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        internal ConditionalQueueSelectorAttachment(string kind, RouterRule condition, IReadOnlyList<RouterQueueSelector> queueSelectors) : base(kind)
+        internal ConditionalQueueSelectorAttachment(string kind, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind)
         {
             Condition = condition;
             QueueSelectors = queueSelectors;
@@ -88,7 +88,5 @@ namespace Azure.Communication.JobRouter
         /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>
         public RouterRule Condition { get; }
-        /// <summary> The queue selectors to attach. </summary>
-        public IReadOnlyList<RouterQueueSelector> QueueSelectors { get; }
     }
 }

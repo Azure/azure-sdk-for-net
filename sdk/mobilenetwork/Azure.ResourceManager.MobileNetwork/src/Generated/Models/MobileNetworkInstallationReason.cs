@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The reason for the installation state of the packet core. </summary>
+    /// <summary> The reason or list of reasons why a packet core has not been installed or requires a reinstall. </summary>
     public readonly partial struct MobileNetworkInstallationReason : IEquatable<MobileNetworkInstallationReason>
     {
         private readonly string _value;
@@ -25,13 +25,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string NoSlicesValue = "NoSlices";
         private const string NoPacketCoreDataPlaneValue = "NoPacketCoreDataPlane";
         private const string NoAttachedDataNetworksValue = "NoAttachedDataNetworks";
+        private const string PublicLandMobileNetworkIdentifierHasChangedValue = "PublicLandMobileNetworkIdentifierHasChanged";
+        private const string ControlPlaneAccessInterfaceHasChangedValue = "ControlPlaneAccessInterfaceHasChanged";
+        private const string UserPlaneAccessInterfaceHasChangedValue = "UserPlaneAccessInterfaceHasChanged";
+        private const string UserPlaneDataInterfaceHasChangedValue = "UserPlaneDataInterfaceHasChanged";
+        private const string ControlPlaneAccessVirtualIPv4AddressesHasChangedValue = "ControlPlaneAccessVirtualIpv4AddressesHasChanged";
+        private const string UserPlaneAccessVirtualIPv4AddressesHasChangedValue = "UserPlaneAccessVirtualIpv4AddressesHasChanged";
 
-        /// <summary> The mobile network does not have any applicable configured slices. </summary>
+        /// <summary> The packet core has not been installed as the mobile network does not have any applicable configured slices. </summary>
         public static MobileNetworkInstallationReason NoSlices { get; } = new MobileNetworkInstallationReason(NoSlicesValue);
-        /// <summary> There is no configured data plane for this packet core. </summary>
+        /// <summary> The packet core has not been installed as there is no configured data plane for this packet core. </summary>
         public static MobileNetworkInstallationReason NoPacketCoreDataPlane { get; } = new MobileNetworkInstallationReason(NoPacketCoreDataPlaneValue);
-        /// <summary> The packet core has no attached data networks. </summary>
+        /// <summary> The packet core has not been installed as the packet core has no attached data networks. </summary>
         public static MobileNetworkInstallationReason NoAttachedDataNetworks { get; } = new MobileNetworkInstallationReason(NoAttachedDataNetworksValue);
+        /// <summary> A reinstall is required as the packet core is running with out-of-date PLMN ID. </summary>
+        public static MobileNetworkInstallationReason PublicLandMobileNetworkIdentifierHasChanged { get; } = new MobileNetworkInstallationReason(PublicLandMobileNetworkIdentifierHasChangedValue);
+        /// <summary> A reinstall is required as the packet core is running with out-of-date control plane access interface information. </summary>
+        public static MobileNetworkInstallationReason ControlPlaneAccessInterfaceHasChanged { get; } = new MobileNetworkInstallationReason(ControlPlaneAccessInterfaceHasChangedValue);
+        /// <summary> A reinstall is required as the packet core is running with out-of-date user plane core interface. </summary>
+        public static MobileNetworkInstallationReason UserPlaneAccessInterfaceHasChanged { get; } = new MobileNetworkInstallationReason(UserPlaneAccessInterfaceHasChangedValue);
+        /// <summary> A reinstall is required as the packet core is running with out-of-date user plane access interface. </summary>
+        public static MobileNetworkInstallationReason UserPlaneDataInterfaceHasChanged { get; } = new MobileNetworkInstallationReason(UserPlaneDataInterfaceHasChangedValue);
+        /// <summary> A reinstall is required as the packet core is running with out-of-date control plane access network virtual IP address. </summary>
+        public static MobileNetworkInstallationReason ControlPlaneAccessVirtualIPv4AddressesHasChanged { get; } = new MobileNetworkInstallationReason(ControlPlaneAccessVirtualIPv4AddressesHasChangedValue);
+        /// <summary> A reinstall is required as the packet core is running with out-of-date user plane access network virtual IP address. </summary>
+        public static MobileNetworkInstallationReason UserPlaneAccessVirtualIPv4AddressesHasChanged { get; } = new MobileNetworkInstallationReason(UserPlaneAccessVirtualIPv4AddressesHasChangedValue);
         /// <summary> Determines if two <see cref="MobileNetworkInstallationReason"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkInstallationReason left, MobileNetworkInstallationReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkInstallationReason"/> values are not the same. </summary>
