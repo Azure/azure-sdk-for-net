@@ -25,7 +25,7 @@ namespace Azure.Storage.CoreWCF.Channels
         {
             _logger = logger;
             _logger.LogInformation(string.Format(CultureInfo.CurrentCulture,
-                "MessageQueue constructor: QueueEndPoint: {0} QueueName: {1}",
+                "DeadLetterQueue constructor: QueueEndPoint: {0} QueueName: {1}",
                 AzureQueueStorageChannelHelpers.GetEndpointStringFromConnectionString(connectionString), queueName));
             _client = new QueueClient(connectionString, queueName, queueClientOptions);
         }
@@ -36,7 +36,7 @@ namespace Azure.Storage.CoreWCF.Channels
             ILogger<DeadLetterQueue> logger)
         {
             _logger = logger;
-            _logger.LogInformation("MessageQueue constructor: QueueEndPoint: " + queueUri.AbsoluteUri);
+            _logger.LogInformation("DeadLetterQueue constructor: QueueEndPoint: " + queueUri.AbsoluteUri);
             _client = new QueueClient(queueUri, queueClientOptions);
         }
 
@@ -64,10 +64,11 @@ namespace Azure.Storage.CoreWCF.Channels
             try
             {
                 await _client.SendMessageAsync(binaryData, default, default, token).ConfigureAwait(false);
+                _logger.LogInformation(Task.CurrentId + " DeadLetterQueue SendMessageAsync: Sent message with data: " + binaryData.ToString());
             }
             catch (Exception e)
             {
-                _logger.LogDebug("SendMessageAsync: SendMessageAsync failed with error message: " + e.Message);
+                _logger.LogDebug(Task.CurrentId + "DeadLetterQueue SendMessageAsync: SendMessageAsync failed with error message: " + e.Message);
                 throw AzureQueueStorageChannelHelpers.ConvertTransferException(e);
             }
         }

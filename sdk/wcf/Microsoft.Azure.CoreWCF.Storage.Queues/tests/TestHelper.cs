@@ -65,5 +65,17 @@ namespace CoreWCF.AzureQueueStorage.Tests
             queueClient.CreateIfNotExists();
             services.AddSingleton(queueClient);
         }
+
+        internal static QueueClient GetQueueClient(
+            Azure.Storage.Test.Shared.AzuriteFixture azuriteFixture,
+            string queueName,
+            QueueMessageEncoding queueMessageEncoding)
+        {
+            var transport = azuriteFixture.GetTransport();
+            var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
+            var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport, MessageEncoding = queueMessageEncoding });
+            queueClient.CreateIfNotExists();
+            return queueClient;
+        }
     }
 }

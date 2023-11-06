@@ -61,11 +61,19 @@ namespace Azure.Storage.CoreWCF.Channels
             }
             catch (Exception e)
             {
-                _logger.LogDebug("ReceiveMessageAsync: ReceiveMessageAsync failed with error message: " + e.Message);
+                _logger.LogDebug(Task.CurrentId + "MessageQueue ReceiveMessageAsync: ReceiveMessageAsync failed with error message: " + e.Message);
             }
             if (message == null)
             {
                 await Task.Delay(_pollingInterval).ConfigureAwait(false);
+            }
+            if (message == null)
+            {
+                _logger.LogInformation(Task.CurrentId + " MessageQueue ReceiveMessageAsync: Received null message");
+            }
+            else
+            {
+                _logger.LogInformation(Task.CurrentId + " MessageQueue ReceiveMessageAsync: Received message with id: " + message.MessageId);
             }
             return message;
         }
