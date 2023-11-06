@@ -54,20 +54,19 @@ namespace Azure.Storage.DataMovement
         internal StorageResourceContainer _destinationResourceContainer;
 
         /// <summary>
-        /// The maximum length of an transfer in bytes.
+        /// The maximum size to use for each chunk when transferring data in chunks.
         ///
-        /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
-        /// or will default to 8 MB if the total size is greater than or equal to 100MB.
+        /// This is the user specified value from options bag.
         /// </summary>
         internal long? _maximumTransferChunkSize { get; set; }
 
         /// <summary>
         /// The size of the first range request in bytes. Single Transfer sizes smaller than this
-        /// limit will be Uploaded or Downloaded in a single request.
-        /// Transfers larger than this limit will continue being downloaded or uploaded
-        /// in chunks of size <see cref="_maximumTransferChunkSize"/>.
+        /// limit will be Uploaded or Downloaded in a single request. Transfers larger than this
+        /// limit will continue being downloaded or uploaded in chunks of size
+        /// <see cref="_maximumTransferChunkSize"/>.
         ///
-        /// On Uploads, if the value is not set, it will set at 256 MB.
+        /// This is the user specified value from options bag.
         /// </summary>
         internal long? _initialTransferSize { get; set; }
 
