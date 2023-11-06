@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public bool UseNonRootDirectory { get; }
 
         public ShareDirectoryStartTransferUploadTests(bool async, ShareClientOptions.ServiceVersion serviceVersion, bool useNonRootDirectory)
-            : base(async, Core.TestFramework.RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
             UseNonRootDirectory = useNonRootDirectory;

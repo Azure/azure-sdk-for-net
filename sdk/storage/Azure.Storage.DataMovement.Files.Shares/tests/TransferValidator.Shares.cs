@@ -45,7 +45,6 @@ namespace Azure.Storage.DataMovement.Tests
                     else
                     {
                         ShareFileClient fileClient = dir.GetFileClient(fileItem.Name);
-                        Console.WriteLine($"FileClient path {fileClient.Path}");
                         result.Add(new ShareFileResourceEnumerationItem(
                             fileClient, fileClient.Path.Substring(container.Path.Length).Trim('/')));
                     }
