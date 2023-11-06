@@ -67,7 +67,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             foreach (int i in Enumerable.Range(0, expectedItemTransferCount))
             {
-                Console.WriteLine($"comparing rel paths {sourceFiles[i].RelativePath} and {destinationFiles[i].RelativePath}");
                 using Stream sourceStream = await sourceFiles[i].OpenReadAsync(cancellationToken);
                 using Stream destinationStream = await destinationFiles[i].OpenReadAsync(cancellationToken);
                 Assert.That(sourceStream, Is.EqualTo(destinationStream));
