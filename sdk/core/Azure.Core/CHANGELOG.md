@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version to 1.23.0.
+
 ### Bugs Fixed
 
 ### Other Changes
