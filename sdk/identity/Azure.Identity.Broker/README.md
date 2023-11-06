@@ -10,7 +10,7 @@
 Install the Azure Identity client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Identity.Broker --prerelease
+dotnet add package Azure.Identity.Broker
 ```
 
 ### Prerequisites
