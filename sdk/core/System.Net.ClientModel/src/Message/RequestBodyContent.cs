@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core
 {
-    public abstract class RequestBody : IDisposable
+    public abstract class RequestBodyContent : IDisposable
     {
         /// <summary>
-        /// Creates an instance of <see cref="RequestBody"/> that wraps a <see cref="BinaryData"/>.
+        /// Creates an instance of <see cref="RequestBodyContent"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="value">The <see cref="BinaryData"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestBody"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static RequestBody Create(BinaryData value) => new BinaryDataMessageBody(value.ToMemory());
+        /// <returns>An instance of <see cref="RequestBodyContent"/> that wraps a <see cref="BinaryData"/>.</returns>
+        public static RequestBodyContent Create(BinaryData value) => new BinaryDataMessageBody(value.ToMemory());
 
         /// <summary>
-        /// Creates an instance of <see cref="RequestBody"/> that wraps a <see cref="IModel{T}"/>.
+        /// Creates an instance of <see cref="RequestBodyContent"/> that wraps a <see cref="IModel{T}"/>.
         /// </summary>
         /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestBody"/> that wraps a <see cref="IModel{T}"/>.</returns>
-        public static RequestBody Create(IModel<object> model, ModelReaderWriterOptions? options = default)
+        /// <returns>An instance of <see cref="RequestBodyContent"/> that wraps a <see cref="IModel{T}"/>.</returns>
+        public static RequestBodyContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
             => new ModelMessageBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace System.Net.ClientModel.Core
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
         public abstract void Dispose();
 
-        private sealed class ModelMessageBody : RequestBody
+        private sealed class ModelMessageBody : RequestBodyContent
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
@@ -147,7 +147,7 @@ namespace System.Net.ClientModel.Core
             }
         }
 
-        private sealed class BinaryDataMessageBody : RequestBody
+        private sealed class BinaryDataMessageBody : RequestBodyContent
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 

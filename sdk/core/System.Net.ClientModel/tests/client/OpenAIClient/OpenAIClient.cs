@@ -51,7 +51,7 @@ public class OpenAIClient
         return Result.FromValue(completions, response);
     }
 
-    public virtual Result GetCompletions(string deploymentId, RequestBody content, RequestOptions options = null)
+    public virtual Result GetCompletions(string deploymentId, RequestBodyContent content, RequestOptions options = null)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
@@ -73,7 +73,7 @@ public class OpenAIClient
         return Result.FromResponse(response);
     }
 
-    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBody content, RequestOptions options)
+    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
     {
         ClientMessage message = _pipeline.CreateMessage();
 
@@ -94,7 +94,7 @@ public class OpenAIClient
         request.Headers.Set("Accept", "application/json");
         request.Headers.Set("Content-Type", "application/json");
 
-        request.Body = content;
+        request.Content = content;
 
         return message;
     }
