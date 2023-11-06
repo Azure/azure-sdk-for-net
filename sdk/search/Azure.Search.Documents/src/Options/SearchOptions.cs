@@ -225,11 +225,7 @@ namespace Azure.Search.Documents
         {
             get
             {
-                if (SemanticSearch?.MaxWait != null)
-                {
-                    return (int)SemanticSearch.MaxWait?.TotalMilliseconds;
-                }
-                return null;
+                return (int?)SemanticSearch?.MaxWait?.TotalMilliseconds;
             }
             set
             {

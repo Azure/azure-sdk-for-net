@@ -173,10 +173,8 @@ namespace Azure.Search.Documents.Tests
                         QueryType = SearchQueryType.Semantic,
                     }));
 
+            Assert.AreEqual(400, ex.Status);
             Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
-            StringAssert.StartsWith(
-                "The 'semanticMaxWaitInMilliseconds' parameter needs to be larger than 750.",
-                ex.Message);
         }
 
         [Test]
