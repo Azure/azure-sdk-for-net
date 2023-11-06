@@ -15,7 +15,6 @@ public class MapsClient
 
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
-    private readonly MessagePipeline _pipeline;
     private readonly string _serviceVersion;
 
     public MapsClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
@@ -42,7 +41,7 @@ public class MapsClient
 
         options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
-        _pipeline = options.GetPipeline();
+        options.GetPipeline();
     }
 
     public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
@@ -65,7 +64,8 @@ public class MapsClient
 
         using ClientMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        _pipeline.Send(message);
+        MessagePipeline pipeline = options.GetPipeline();
+        pipeline.Send(message);
 
         MessageResponse response = message.Response;
 
@@ -79,9 +79,11 @@ public class MapsClient
 
     private ClientMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
-        ClientMessage message = _pipeline.CreateMessage();
+        MessagePipeline pipeline = options.GetPipeline();
+        ClientMessage message = pipeline.CreateMessage();
 
-        // TODO: this overrides anything the caller passed, so we need to fix it.
+        // TODO: this overrides anything the caller passed, so we need to fix that.
+        // Note: this throws right now because options are frozen.
         options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
         options.Apply(message);
 

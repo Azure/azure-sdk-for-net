@@ -12,7 +12,6 @@ public class OpenAIClient
 {
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
-    private readonly MessagePipeline _pipeline;
 
     public OpenAIClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
     {
@@ -36,7 +35,7 @@ public class OpenAIClient
 
         options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
 
-        _pipeline = options.GetPipeline();
+        options.GetPipeline();
     }
 
     public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
@@ -61,7 +60,8 @@ public class OpenAIClient
 
         using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
-        _pipeline.Send(message);
+        MessagePipeline pipeline = options.GetPipeline();
+        pipeline.Send(message);
 
         MessageResponse response = message.Response;
 
@@ -75,7 +75,8 @@ public class OpenAIClient
 
     internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
     {
-        ClientMessage message = _pipeline.CreateMessage();
+        MessagePipeline pipeline = options.GetPipeline();
+        ClientMessage message = pipeline.CreateMessage();
 
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.MessageClassifier = MessageClassifier200;
