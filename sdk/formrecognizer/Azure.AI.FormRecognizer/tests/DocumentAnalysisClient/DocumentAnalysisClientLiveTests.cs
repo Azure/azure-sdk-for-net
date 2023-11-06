@@ -223,10 +223,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModel(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             if (useStream)
             {
@@ -273,10 +272,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModelWithSelectionMarks()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.SelectionMarks);
+            await using var customModel = await BuildDisposableDocumentModelAsync(ContainerType.SelectionMarks);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
@@ -311,10 +309,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModelCanParseMultipageDocument(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.MultipageFiles);
+            await using var customModel = await BuildDisposableDocumentModelAsync(ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -367,10 +364,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModelCanParseMultipageDocumentWithBlankPage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             if (useStream)
             {
@@ -416,12 +412,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModelCanParseDifferentTypeOfDocument()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
             // Use Form_<id>.<ext> files for building model.
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             // Attempt to recognize a different type of document: Invoice_1.pdf. This document does not contain all the labels
             // the newly built model expects.
@@ -447,22 +442,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModelCanParseBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
 
             AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
-                modelId,
+                customModel.ModelId,
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
@@ -486,16 +480,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModelThrowsForDamagedFile()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
 
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, customModel.ModelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -503,13 +496,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentFromUriWithCustomModelThrowsForNonExistingContent()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, modelId, invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, customModel.ModelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 

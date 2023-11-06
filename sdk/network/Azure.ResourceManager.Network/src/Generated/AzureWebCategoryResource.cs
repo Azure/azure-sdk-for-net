@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Network
     public partial class AzureWebCategoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AzureWebCategoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}";

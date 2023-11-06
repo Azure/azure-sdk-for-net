@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.ResourceManager.SelfHelp.Tests.Scenario
+namespace Azure.ResourceManager.SelfHelp.Tests
 {
     using Azure.Core.TestFramework;
     using Azure.Core;
     using System.Threading.Tasks;
-    using Azure.ResourceManager.SelfHelp.Tests;
     using NUnit.Framework;
     using System;
     using Azure.ResourceManager.SelfHelp.Models;

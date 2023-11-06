@@ -306,6 +306,72 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<PrivateStoreResource>> GetIfExistsAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _privateStoreRestClient.GetAsync(privateStoreId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<PrivateStoreResource> GetIfExists(Guid privateStoreId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _privateStoreRestClient.Get(privateStoreId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PrivateStoreResource> IEnumerable<PrivateStoreResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

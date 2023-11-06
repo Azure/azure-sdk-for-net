@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Read-only endpoint of the failover group instance. </summary>
-    internal partial class FailoverGroupReadOnlyEndpoint
+    public partial class FailoverGroupReadOnlyEndpoint
     {
         /// <summary> Initializes a new instance of FailoverGroupReadOnlyEndpoint. </summary>
         public FailoverGroupReadOnlyEndpoint()
@@ -17,12 +19,16 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of FailoverGroupReadOnlyEndpoint. </summary>
         /// <param name="failoverPolicy"> Failover policy of the read-only endpoint for the failover group. </param>
-        internal FailoverGroupReadOnlyEndpoint(ReadOnlyEndpointFailoverPolicy? failoverPolicy)
+        /// <param name="targetServer"> The target partner server where the read-only endpoint points to. </param>
+        internal FailoverGroupReadOnlyEndpoint(ReadOnlyEndpointFailoverPolicy? failoverPolicy, ResourceIdentifier targetServer)
         {
             FailoverPolicy = failoverPolicy;
+            TargetServer = targetServer;
         }
 
         /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
         public ReadOnlyEndpointFailoverPolicy? FailoverPolicy { get; set; }
+        /// <summary> The target partner server where the read-only endpoint points to. </summary>
+        public ResourceIdentifier TargetServer { get; set; }
     }
 }

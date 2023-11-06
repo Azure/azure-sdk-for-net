@@ -4,26 +4,17 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Sse;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Azure OpenAI APIs for completions and search. </summary>
-    [CodeGenSuppress("GetCompletions", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("GetCompletionsAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("GetChatCompletions", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("GetChatCompletionsAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("GetEmbeddings", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("GetEmbeddingsAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetChatCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetEmbeddingsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class OpenAIClient
     {
-        private const int DefaultMaxCompletionsTokens = 100;
         private const string PublicOpenAIApiVersion = "1";
         private const string PublicOpenAIEndpoint = $"https://api.openai.com/v{PublicOpenAIApiVersion}";
 
@@ -137,29 +128,26 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return textual completions as configured for a given prompt. </summary>
-        /// <param name="deploymentOrModelName">
-        ///     Specifies either the model deployment name (when using Azure OpenAI) or model name (when using
-        ///     non-Azure OpenAI) to use for this request.
-        /// </param>
         /// <param name="completionsOptions">
         ///     The options for this completions request.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="deploymentOrModelName"/> or <paramref name="completionsOptions"/> is null.
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<Completions> GetCompletions(
-            string deploymentOrModelName,
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+            Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
             scope.Start();
 
-            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             completionsOptions.InternalShouldStreamResponse = null;
 
             RequestContent content = completionsOptions.ToRequestContent();
@@ -167,7 +155,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                using HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "completions", content, context);
+                using HttpMessage message = CreatePostRequestMessage(completionsOptions, content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(Completions.FromResponse(response), response);
             }
@@ -178,30 +166,27 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Response<Completions> GetCompletions(
-            string deploymentOrModelName,
-            string prompt,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(prompt, nameof(prompt));
-            CompletionsOptions simpleOptions = GetDefaultCompletionsOptions(prompt);
-            return GetCompletions(deploymentOrModelName, simpleOptions, cancellationToken);
-        }
-
-        /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
+        /// <summary> Return textual completions as configured for a given prompt. </summary>
+        /// <param name="completionsOptions">
+        ///     The options for this completions request.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
+        /// </exception>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(
-            string deploymentOrModelName,
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+            Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
             scope.Start();
 
-            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             completionsOptions.InternalShouldStreamResponse = null;
 
             RequestContent content = completionsOptions.ToRequestContent();
@@ -209,7 +194,7 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                using HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "completions", content, context);
+                using HttpMessage message = CreatePostRequestMessage(completionsOptions, content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(Completions.FromResponse(response), response);
@@ -221,48 +206,34 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetCompletions(string, CompletionsOptions, CancellationToken)"/>
-        public virtual Task<Response<Completions>> GetCompletionsAsync(
-            string deploymentOrModelName,
-            string prompt,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(prompt, nameof(prompt));
-            CompletionsOptions simpleOptions = GetDefaultCompletionsOptions(prompt);
-            return GetCompletionsAsync(deploymentOrModelName, simpleOptions, cancellationToken);
-        }
-
         /// <summary>
         ///     Begin a completions request and get an object that can stream response data as it becomes available.
         /// </summary>
-        /// <param name="deploymentOrModelName">
-        ///     <inheritdoc
-        ///         cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
-        ///         path="/param[@name='deploymentOrModelName']" />
-        /// </param>
         /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
         /// <param name="cancellationToken">
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="deploymentOrModelName"/> or <paramref name="completionsOptions"/> is null.
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
         /// </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
+        /// </exception>
         /// <returns>
-        /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
+        /// A response that, if the request was successful, may be asynchronously enumerated for
+        /// <see cref="Completions"/> instances.
         /// </returns>
-        public virtual Response<StreamingCompletions> GetCompletionsStreaming(
-            string deploymentOrModelName,
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual StreamingResponse<Completions> GetCompletionsStreaming(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+            Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletionsStreaming");
             scope.Start();
 
-            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             completionsOptions.InternalShouldStreamResponse = true;
 
             RequestContent content = completionsOptions.ToRequestContent();
@@ -271,14 +242,15 @@ namespace Azure.AI.OpenAI
             try
             {
                 // Response value object takes IDisposable ownership of message
-                HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    "completions",
-                    content,
-                    context);
+                HttpMessage message = CreatePostRequestMessage(completionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
+                return StreamingResponse<Completions>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
+                        Completions.DeserializeCompletions,
+                        cancellationToken));
             }
             catch (Exception e)
             {
@@ -287,16 +259,31 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetCompletionsStreaming(string, CompletionsOptions, CancellationToken)"/>
-        public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
-            string deploymentOrModelName,
+        /// <summary>
+        ///     Begin a completions request and get an object that can stream response data as it becomes available.
+        /// </summary>
+        /// <param name="completionsOptions"> the chat completions options for this completions request. </param>
+        /// <param name="cancellationToken">
+        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
+        /// </exception>
+        /// <returns>
+        /// A response that, if the request was successful, may be asynchronously enumerated for
+        /// <see cref="Completions"/> instances.
+        /// </returns>
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual async Task<StreamingResponse<Completions>> GetCompletionsStreamingAsync(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+            Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
 
-            completionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             completionsOptions.InternalShouldStreamResponse = true;
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletionsStreaming");
@@ -308,15 +295,16 @@ namespace Azure.AI.OpenAI
             try
             {
                 // Response value object takes IDisposable ownership of message
-                HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    "completions",
-                    content,
-                    context);
+                HttpMessage message = CreatePostRequestMessage(completionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
-                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
+                return StreamingResponse<Completions>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
+                        Completions.DeserializeCompletions,
+                        cancellationToken));
             }
             catch (Exception e)
             {
@@ -326,42 +314,32 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Get chat completions for provided chat context messages. </summary>
-        /// <param name="deploymentOrModelName">
-        /// <inheritdoc
-        ///     cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
-        ///     path="/param[@name='deploymentOrModelName']"/>
-        /// </param>
         /// <param name="chatCompletionsOptions"> The options for this chat completions request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="deploymentOrModelName"/> or <paramref name="chatCompletionsOptions"/> is null.
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<ChatCompletions> GetChatCompletions(
-            string deploymentOrModelName,
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
             scope.Start();
 
-            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = null;
-
-            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try
             {
-                using HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    operationPath,
-                    content,
-                    context);
+                using HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(ChatCompletions.FromResponse(response), response);
             }
@@ -372,33 +350,33 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetChatCompletions(string, ChatCompletionsOptions, CancellationToken)"/>
+        /// <summary> Get chat completions for provided chat context messages. </summary>
+        /// <param name="chatCompletionsOptions"> The options for this chat completions request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
+        /// </exception>
         public virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(
-            string deploymentOrModelName,
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
             scope.Start();
 
-            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = null;
-
-            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try
             {
-                using HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    operationPath,
-                    content,
-                    context);
+                using HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(ChatCompletions.FromResponse(response), response);
@@ -414,11 +392,6 @@ namespace Azure.AI.OpenAI
         ///     Begin a chat completions request and get an object that can stream response data as it becomes
         ///     available.
         /// </summary>
-        /// <param name="deploymentOrModelName">
-        ///     <inheritdoc
-        ///         cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
-        ///         path="/param[@name='deploymentOrModelName']"/>
-        /// </param>
         /// <param name="chatCompletionsOptions">
         ///     the chat completions options for this chat completions request.
         /// </param>
@@ -426,25 +399,24 @@ namespace Azure.AI.OpenAI
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="deploymentOrModelName"/> or <paramref name="chatCompletionsOptions"/> is null.
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
         /// </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
+        /// </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
-            string deploymentOrModelName,
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual StreamingResponse<StreamingChatCompletionsUpdate> GetChatCompletionsStreaming(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
             scope.Start();
 
-            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = true;
-
-            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -452,14 +424,16 @@ namespace Azure.AI.OpenAI
             try
             {
                 // Response value object takes IDisposable ownership of message
-                HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    operationPath,
-                    content,
-                    context);
+                HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
+                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration)
+                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            responseForEnumeration.ContentStream,
+                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                            cancellationToken));
             }
             catch (Exception e)
             {
@@ -468,22 +442,38 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetChatCompletionsStreaming(string, ChatCompletionsOptions, CancellationToken)"/>
-        public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
-            string deploymentOrModelName,
+        /// <summary>
+        ///     Begin a chat completions request and get an object that can stream response data as it becomes
+        ///     available.
+        /// </summary>
+        /// <param name="chatCompletionsOptions">
+        ///     the chat completions options for this chat completions request.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
+        /// </exception>
+        /// <returns>
+        /// A response that, if the request was successful, may be asynchronously enumerated for
+        /// <see cref="StreamingChatCompletionsUpdate"/> instances.
+        /// </returns>
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual async Task<StreamingResponse<StreamingChatCompletionsUpdate>> GetChatCompletionsStreamingAsync(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
             scope.Start();
 
-            chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = true;
-
-            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -491,17 +481,19 @@ namespace Azure.AI.OpenAI
             try
             {
                 // Response value object takes IDisposable ownership of message
-                HttpMessage message = CreatePostRequestMessage(
-                    deploymentOrModelName,
-                    operationPath,
-                    content,
-                    context);
+                HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(
                     message,
                     context,
                     cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
+                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration)
+                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            responseForEnumeration.ContentStream,
+                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                            cancellationToken));
             }
             catch (Exception e)
             {
@@ -511,38 +503,30 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Return the computed embeddings for a given prompt. </summary>
-        /// <param name="deploymentOrModelName">
-        ///     <inheritdoc
-        ///         cref="GetCompletions(string, CompletionsOptions, CancellationToken)"
-        ///         path="/param[@name='deploymentOrModelName']"/>
-        /// </param>
         /// <param name="embeddingsOptions"> The options for this embeddings request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="deploymentOrModelName"/> or <paramref name="embeddingsOptions"/> is null.
+        ///     <paramref name="embeddingsOptions"/> or <paramref name="embeddingsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="deploymentOrModelName"/> is an empty string and was expected to be non-empty.
+        ///     <paramref name="embeddingsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<Embeddings> GetEmbeddings(
-            string deploymentOrModelName,
             EmbeddingsOptions embeddingsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
+            Argument.AssertNotNullOrEmpty(embeddingsOptions.DeploymentName, nameof(embeddingsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
-
-            embeddingsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
 
             RequestContent content = embeddingsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try
             {
-                HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "embeddings", content, context);
+                HttpMessage message = CreatePostRequestMessage(embeddingsOptions, content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return Response.FromValue(Embeddings.FromResponse(response), response);
             }
@@ -553,26 +537,31 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="GetEmbeddings(string, EmbeddingsOptions, CancellationToken)"/>
+        /// <summary> Return the computed embeddings for a given prompt. </summary>
+        /// <param name="embeddingsOptions"> The options for this embeddings request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="embeddingsOptions"/> or <paramref name="embeddingsOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="embeddingsOptions.DeploymentName"/> is an empty string.
+        /// </exception>
         public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(
-            string deploymentOrModelName,
             EmbeddingsOptions embeddingsOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentOrModelName, nameof(deploymentOrModelName));
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
+            Argument.AssertNotNullOrEmpty(embeddingsOptions.DeploymentName, nameof(embeddingsOptions.DeploymentName));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
             scope.Start();
-
-            embeddingsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
 
             RequestContent content = embeddingsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
             try
             {
-                HttpMessage message = CreatePostRequestMessage(deploymentOrModelName, "embeddings", content, context);
+                HttpMessage message = CreatePostRequestMessage(embeddingsOptions, content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(Embeddings.FromResponse(response), response);
@@ -594,6 +583,9 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken">
         ///     An optional cancellation token that may be used to abort an ongoing request.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="imageGenerationOptions"/> is null.
+        /// </exception>
         /// <returns>
         ///     The response information for the image generations request.
         /// </returns>
@@ -613,16 +605,15 @@ namespace Azure.AI.OpenAI
 
                 if (_isConfiguredForAzureOpenAI)
                 {
-                    Operation<BatchImageGenerationOperationResponse> imagesOperation
+                    Operation<ImageGenerations> imagesOperation
                         = BeginAzureBatchImageGeneration(
                             WaitUntil.Completed,
                             imageGenerationOptions,
                             cancellationToken);
 
                     rawResponse = imagesOperation.GetRawResponse();
-                    BatchImageGenerationOperationResponse operationResponse = imagesOperation.Value;
 
-                    responseValue = operationResponse.Result;
+                    responseValue = imagesOperation.Value;
                 }
                 else
                 {
@@ -654,6 +645,9 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken">
         ///     An optional cancellation token that may be used to abort an ongoing request.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="imageGenerationOptions"/> is null.
+        /// </exception>
         /// <returns>
         ///     The response information for the image generations request.
         /// </returns>
@@ -673,7 +667,7 @@ namespace Azure.AI.OpenAI
 
                 if (_isConfiguredForAzureOpenAI)
                 {
-                    Operation<BatchImageGenerationOperationResponse> imagesOperation
+                    Operation<ImageGenerations> imagesOperation
                         = await BeginAzureBatchImageGenerationAsync(
                             WaitUntil.Completed,
                             imageGenerationOptions,
@@ -681,9 +675,8 @@ namespace Azure.AI.OpenAI
                         .ConfigureAwait(false);
 
                     rawResponse = imagesOperation.GetRawResponse();
-                    BatchImageGenerationOperationResponse operationResponse = imagesOperation.Value;
 
-                    responseValue = operationResponse.Result;
+                    responseValue = imagesOperation.Value;
                 }
                 else
                 {
@@ -706,6 +699,170 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary> Transcribes audio into the input language. </summary>
+        /// <param name="audioTranscriptionOptions">
+        /// Transcription request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="audioTranscriptionOptions"/> or <paramref name="audioTranscriptionOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="audioTranscriptionOptions.DeploymentName"/> is an empty string.
+        /// </exception>
+        public virtual async Task<Response<AudioTranscription>> GetAudioTranscriptionAsync(
+            AudioTranscriptionOptions audioTranscriptionOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
+            Argument.AssertNotNullOrEmpty(audioTranscriptionOptions.DeploymentName, nameof(audioTranscriptionOptions.DeploymentName));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
+            scope.Start();
+
+            RequestContent content = audioTranscriptionOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranscriptionRequest(audioTranscriptionOptions, content, context);
+                rawResponse = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
+        }
+
+        /// <summary> Transcribes audio into the input language. </summary>
+        /// <param name="audioTranscriptionOptions">
+        /// Transcription request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="audioTranscriptionOptions"/> or <paramref name="audioTranscriptionOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="audioTranscriptionOptions.DeploymentName"/> is an empty string.
+        /// </exception>
+        public virtual Response<AudioTranscription> GetAudioTranscription(
+            AudioTranscriptionOptions audioTranscriptionOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
+            Argument.AssertNotNullOrEmpty(audioTranscriptionOptions.DeploymentName, nameof(audioTranscriptionOptions.DeploymentName));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
+            scope.Start();
+
+            RequestContent content = audioTranscriptionOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranscriptionRequest(audioTranscriptionOptions, content, context);
+                rawResponse = _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranscription.FromResponse(rawResponse), rawResponse);
+        }
+
+        /// <summary> Transcribes and translates input audio into English text. </summary>
+        /// <param name="audioTranslationOptions">
+        /// Translation request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="audioTranslationOptions"/> or <paramref name="audioTranslationOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="audioTranslationOptions.DeploymentName"/> is an empty string.
+        /// </exception>
+        public virtual async Task<Response<AudioTranslation>> GetAudioTranslationAsync(
+            AudioTranslationOptions audioTranslationOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
+            Argument.AssertNotNullOrEmpty(audioTranslationOptions.DeploymentName, nameof(audioTranslationOptions.DeploymentName));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
+            scope.Start();
+
+            RequestContent content = audioTranslationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranslationRequest(audioTranslationOptions, content, context);
+                rawResponse = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
+        }
+
+        /// <summary> Transcribes and translates input audio into English text. </summary>
+        /// <param name="audioTranslationOptions">
+        /// Translation request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="audioTranslationOptions"/> or <paramref name="audioTranslationOptions.DeploymentName"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="audioTranslationOptions.DeploymentName"/> is an empty string.
+        /// </exception>
+        public virtual Response<AudioTranslation> GetAudioTranslation(
+            AudioTranslationOptions audioTranslationOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
+            Argument.AssertNotNullOrEmpty(audioTranslationOptions.DeploymentName, nameof(audioTranslationOptions.DeploymentName));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
+            scope.Start();
+
+            RequestContent content = audioTranslationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response rawResponse = default;
+
+            try
+            {
+                using HttpMessage message = CreateGetAudioTranslationRequest(audioTranslationOptions, content, context);
+                rawResponse = _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+            return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
+        }
+
         internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)
         {
             var uri = new RawRequestUriBuilder();
@@ -724,6 +881,29 @@ namespace Azure.AI.OpenAI
             }
             return uri;
         }
+
+        internal HttpMessage CreatePostRequestMessage(
+            CompletionsOptions completionsOptions,
+            RequestContent content,
+            RequestContext context)
+            => CreatePostRequestMessage(completionsOptions.DeploymentName, "completions", content, context);
+
+        internal HttpMessage CreatePostRequestMessage(
+            ChatCompletionsOptions chatCompletionsOptions,
+            RequestContent content,
+            RequestContext context)
+        {
+            string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
+                ? "extensions/chat/completions"
+                : "chat/completions";
+            return CreatePostRequestMessage(chatCompletionsOptions.DeploymentName, operationPath, content, context);
+        }
+
+        internal HttpMessage CreatePostRequestMessage(
+            EmbeddingsOptions embeddingsOptions,
+            RequestContent content,
+            RequestContext context)
+            => CreatePostRequestMessage(embeddingsOptions.DeploymentName, "embeddings", content, context);
 
         internal HttpMessage CreatePostRequestMessage(
             string deploymentOrModelName,
@@ -747,21 +927,34 @@ namespace Azure.AI.OpenAI
             return DelegatedTokenCredential.Create((_, _) => accessToken);
         }
 
-        private static CompletionsOptions GetDefaultCompletionsOptions(string prompt)
+        internal HttpMessage CreateGetAudioTranscriptionRequest(
+            AudioTranscriptionOptions audioTranscriptionOptions,
+            RequestContent content,
+            RequestContext context)
         {
-            return new CompletionsOptions()
-            {
-                Prompts =
-                {
-                    prompt,
-                },
-                MaxTokens = DefaultMaxCompletionsTokens,
-            };
+            HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            request.Uri = GetUri(audioTranscriptionOptions.DeploymentName, "audio/transcriptions");
+            request.Content = content;
+            string boundary = (content as MultipartFormDataRequestContent).Boundary;
+            request.Headers.Add("content-type", $"multipart/form-data; boundary={boundary}");
+            return message;
         }
 
-        private static string GetOperationPath(ChatCompletionsOptions chatCompletionsOptions)
-            => chatCompletionsOptions.AzureExtensionsOptions != null
-                ? "extensions/chat/completions"
-                : "chat/completions";
+        internal HttpMessage CreateGetAudioTranslationRequest(
+            AudioTranslationOptions audioTranslationOptions,
+            RequestContent content,
+            RequestContext context)
+        {
+            HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            request.Uri = GetUri(audioTranslationOptions.DeploymentName, "audio/translations");
+            request.Content = content;
+            string boundary = (content as MultipartFormDataRequestContent).Boundary;
+            request.Headers.Add("content-type", $"multipart/form-data; boundary={boundary}");
+            return message;
+        }
     }
 }

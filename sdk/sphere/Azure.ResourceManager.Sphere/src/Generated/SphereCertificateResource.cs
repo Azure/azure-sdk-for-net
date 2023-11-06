@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sphere
     public partial class SphereCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SphereCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="serialNumber"> The serialNumber. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/certificates/{serialNumber}";

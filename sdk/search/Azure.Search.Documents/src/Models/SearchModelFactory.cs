@@ -189,10 +189,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <returns> A new SearchIndexStatistics instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchIndexStatistics SearchIndexStatistics(
             long documentCount,
             long storageSize) =>
-            new SearchIndexStatistics(documentCount, storageSize);
+            new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize: default);
 
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
         /// <param name="usage"> The resource usage amount. </param>

@@ -242,6 +242,80 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudBareMetalMachineResource>> GetIfExistsAsync(string bareMetalMachineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+
+            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, bareMetalMachineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudBareMetalMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudBareMetalMachineResource> GetIfExists(string bareMetalMachineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+
+            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, bareMetalMachineName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudBareMetalMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkCloudBareMetalMachineResource> IEnumerable<NetworkCloudBareMetalMachineResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

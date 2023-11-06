@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Tests
     public class ExperimentTests : ChaosManagementTestBase
     {
         public ExperimentTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Chaos.Tests
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 await Initialize().ConfigureAwait(false);
+            }
+
+            if (Mode == RecordedTestMode.Record)
+            {
+                await Task.Delay(10000);
             }
         }
 

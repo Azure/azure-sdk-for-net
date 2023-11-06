@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix LRO in ProtectionContainers PUT operation
 
 ### Other Changes
 

@@ -170,6 +170,7 @@ namespace Azure.Identity
                 return message.Response.Status switch
                 {
                     404 => true,
+                    410 => true,
                     502 => false,
                     _ => base.IsRetriableResponse(message)
                 };

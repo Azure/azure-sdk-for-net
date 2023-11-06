@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.DevSpaces
         public virtual Azure.Pageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevSpaces.ControllerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevSpaces.ControllerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevSpaces.ControllerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevSpaces.ControllerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevSpaces.ControllerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevSpaces.ControllerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ControllerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ControllerData(Azure.Core.AzureLocation location, Azure.ResourceManager.DevSpaces.Models.DevSpacesSku sku, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64) : base (default(Azure.Core.AzureLocation)) { }
+        public ControllerData(Azure.Core.AzureLocation location, Azure.ResourceManager.DevSpaces.Models.DevSpacesSku sku, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64) { }
         public string DataPlaneFqdn { get { throw null; } }
         public string HostSuffix { get { throw null; } }
         public Azure.ResourceManager.DevSpaces.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -58,6 +60,29 @@ namespace Azure.ResourceManager.DevSpaces
         public static Azure.ResourceManager.DevSpaces.ControllerCollection GetControllers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetControllers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetControllersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.DevSpaces.Mocking
+{
+    public partial class MockableDevSpacesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDevSpacesArmClient() { }
+        public virtual Azure.ResourceManager.DevSpaces.ControllerResource GetControllerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDevSpacesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDevSpacesResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DevSpaces.Models.ContainerHostMapping> GetContainerHostMappingContainerHostMapping(Azure.Core.AzureLocation location, Azure.ResourceManager.DevSpaces.Models.ContainerHostMapping containerHostMapping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevSpaces.Models.ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DevSpaces.Models.ContainerHostMapping containerHostMapping, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource> GetController(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource>> GetControllerAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevSpaces.ControllerCollection GetControllers() { throw null; }
+    }
+    public partial class MockableDevSpacesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDevSpacesSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetControllers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetControllersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DevSpaces.Models

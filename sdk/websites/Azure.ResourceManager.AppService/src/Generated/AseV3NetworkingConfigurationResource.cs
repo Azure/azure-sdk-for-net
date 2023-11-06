@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.AppService
     public partial class AseV3NetworkingConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AseV3NetworkingConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking";

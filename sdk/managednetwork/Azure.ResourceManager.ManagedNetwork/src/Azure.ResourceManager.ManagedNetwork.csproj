@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.ManagedNetwork</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ManagedNetwork.</Description>
     <PackageTags>azure;management;arm;resource manager;managednetwork</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

@@ -331,6 +331,80 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardProxyName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceGuardProxyResource>> GetIfExistsAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+
+            using var scope = _resourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceGuardProxyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGuardProxyResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardProxyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardProxyName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        public virtual NullableResponse<ResourceGuardProxyResource> GetIfExists(string resourceGuardProxyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+
+            using var scope = _resourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceGuardProxyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGuardProxyResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardProxyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ResourceGuardProxyResource> IEnumerable<ResourceGuardProxyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

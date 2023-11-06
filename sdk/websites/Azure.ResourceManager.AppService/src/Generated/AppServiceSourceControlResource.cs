@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.AppService
     public partial class AppServiceSourceControlResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppServiceSourceControlResource"/> instance. </summary>
+        /// <param name="sourceControlType"> The sourceControlType. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string sourceControlType)
         {
             var resourceId = $"/providers/Microsoft.Web/sourcecontrols/{sourceControlType}";

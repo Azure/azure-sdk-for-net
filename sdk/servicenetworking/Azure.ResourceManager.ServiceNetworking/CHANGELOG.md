@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2023-11-01)
+
+### Features Added
+
+- Perform CRUD Operations for Application Gateway for Containers (AGC).
+- Use the latest API version for (2023-11-01)
 
 ## 1.0.0-beta.2 (2023-05-31)
 

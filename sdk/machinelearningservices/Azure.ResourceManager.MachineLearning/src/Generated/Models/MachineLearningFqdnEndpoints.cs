@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningFqdnEndpoints. </summary>
+    /// <summary> Property bag for FQDN endpoints result. </summary>
     public partial class MachineLearningFqdnEndpoints
     {
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>

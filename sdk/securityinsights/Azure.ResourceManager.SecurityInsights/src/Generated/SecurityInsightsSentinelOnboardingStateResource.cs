@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsSentinelOnboardingStateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsSentinelOnboardingStateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sentinelOnboardingStateName"> The sentinelOnboardingStateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}";
