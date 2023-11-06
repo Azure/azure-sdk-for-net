@@ -1,5 +1,15 @@
 # Release History
 
+## 12.18.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.17.0 (2023-11-06)
 - Includes all features from 12.17.0-beta.1.
 - Fixed bug where the x-ms-file-request-intent request header was not being sent for ShareFileClient.UploadRangeFromUri() and .UploadRangeFromUriAsync().
