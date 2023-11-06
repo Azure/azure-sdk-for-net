@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 - Change `ActivitySource` name used to report message activity from `Azure.Messaging.ServiceBus` to `Azure.Messaging.ServiceBus.Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
 
 ### Bugs Fixed
 

@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
-        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
+        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.23.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
 
         private readonly ActivityAdapter? _activityAdapter;

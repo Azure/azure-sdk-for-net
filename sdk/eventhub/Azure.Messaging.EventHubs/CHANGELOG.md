@@ -7,7 +7,8 @@
 ### Breaking Changes
 
 - Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`
-  and message `Activity` name from `EventHubs.Message` to `Message`
+  and message `Activity` name from `EventHubs.Message` to `Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
 
 ### Bugs Fixed
 

@@ -6,7 +6,7 @@
 
 ### Breaking Changes
 
-- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version to 1.23.0.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
 - Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot). Now we append provided activity name as is to the client namespace name.
   Previously, provided activity name was omitted and `ActivitySource` name matched provided client namespace.
 
