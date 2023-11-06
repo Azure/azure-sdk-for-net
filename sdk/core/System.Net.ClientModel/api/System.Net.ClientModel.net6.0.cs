@@ -191,7 +191,6 @@ namespace System.Net.ClientModel.Core
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
-        public System.Net.ClientModel.Core.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
@@ -199,6 +198,7 @@ namespace System.Net.ClientModel.Core
         public System.Net.ClientModel.Core.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public string? ServiceVersion { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelineTransport? Transport { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessagePipeline GetPipeline() { throw null; }
     }
     public abstract partial class PipelinePolicy
     {

@@ -216,6 +216,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
     #endregion
 
+    // TODO: remove this and make it settable only via the request options
     #region Network Timeout Override
 
     public static void SetNetworkTimeout(ClientMessage message, TimeSpan networkTimeout)

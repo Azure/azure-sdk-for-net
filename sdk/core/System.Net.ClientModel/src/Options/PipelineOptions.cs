@@ -5,29 +5,140 @@ namespace System.Net.ClientModel.Core;
 
 /// <summary>
 /// Controls the creation of the pipeline.
-/// Works with RequestOptions (TODO: RequestOptions), which controls the behavior of the pipeline.
+/// Works with RequestOptions, which controls the behavior of the pipeline.
 /// </summary>
 public class PipelineOptions
 {
+    private readonly object _lock = new();
+    private MessagePipeline? _pipeline;
+    private volatile bool _isFrozen;
+
+    private PipelinePolicy[]? _perCallPolicies;
+    private PipelinePolicy[]? _perTryPolicies;
+    private PipelinePolicy? _retryPolicy;
+    private PipelineTransport? _transport;
+
+    private string? _serviceVersion;
+    private TimeSpan? _networkTimeout;
+    private MessageClassifier? _messageClassifier;
+
+    public PipelineOptions()
+    {
+    }
+
+    public virtual MessagePipeline GetPipeline()
+    {
+        if (_pipeline != null) return _pipeline;
+
+        lock (_lock)
+        {
+            if (IsFrozen)
+            {
+                if (_pipeline == null)
+                {
+                    throw new InvalidOperationException("Unexpected state: null pipeline and frozen options.");
+                }
+
+                return _pipeline;
+            }
+
+            _pipeline = MessagePipeline.Create(this);
+
+            Freeze();
+
+            return _pipeline;
+        }
+    }
+
+    private bool IsFrozen => _isFrozen;
+
+    private void Freeze() => _isFrozen = true;
+
+    #region Pipeline creation options
+
     // Note that all properties on PipelineOptions are nullable.
     // This gives us the ability to understand whether a caller passed them
     // as input or whether anything we add/set on PipelineOptions was set
     // internally.  If a property on PipelineOptions has a null value initially,
     // we will set a default value for it when options is frozen.
 
-    public string? ServiceVersion { get; set; }
+    public PipelinePolicy[]? PerCallPolicies
+    {
+        get => _perCallPolicies;
+        set
+        {
+            AssertNotFrozen();
+            _perCallPolicies = value;
+        }
+    }
 
-    public PipelinePolicy[]? PerTryPolicies { get; set; }
+    public PipelinePolicy[]? PerTryPolicies
+    {
+        get => _perTryPolicies;
+        set
+        {
+            AssertNotFrozen();
+            _perTryPolicies = value;
+        }
+    }
 
-    public PipelinePolicy[]? PerCallPolicies { get; set; }
+    public PipelinePolicy? RetryPolicy
+    {
+        get => _retryPolicy;
+        set
+        {
+            AssertNotFrozen();
+            _retryPolicy = value;
+        }
+    }
 
-    public PipelinePolicy? RetryPolicy { get; set; }
+    public PipelineTransport? Transport
+    {
+        get => _transport;
+        set
+        {
+            AssertNotFrozen();
+            _transport = value;
+        }
+    }
 
-    public PipelinePolicy? LoggingPolicy { get; set; }
+    public string? ServiceVersion
+    {
+        get => _serviceVersion;
+        set
+        {
+            AssertNotFrozen();
+            _serviceVersion = value;
+        }
+    }
 
-    public PipelineTransport? Transport { get; set; }
+    public TimeSpan? NetworkTimeout
+    {
+        get => _networkTimeout;
+        set
+        {
+            AssertNotFrozen();
+            _networkTimeout = value;
+        }
+    }
 
-    public TimeSpan? NetworkTimeout { get; set; }
+    public virtual MessageClassifier? MessageClassifier
+    {
+        get => _messageClassifier;
+        set
+        {
+            AssertNotFrozen();
+            _messageClassifier = value;
+        }
+    }
 
-    public virtual MessageClassifier? MessageClassifier { get; set; }
+    #endregion
+
+    private void AssertNotFrozen()
+    {
+        if (IsFrozen)
+        {
+            throw new InvalidOperationException("Cannot modify PipelineOptions after the pipeline has been created.");
+        }
+    }
 }
