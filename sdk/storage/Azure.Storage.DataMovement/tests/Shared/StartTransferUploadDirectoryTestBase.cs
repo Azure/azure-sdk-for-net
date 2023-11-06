@@ -41,8 +41,11 @@ namespace Azure.Storage.DataMovement.Tests
             : base(async, mode)
         { }
 
-        protected string GetNewObjectName()
-            => /*_generatedResourceNamePrefix +*/ ClientBuilder.Recording.Random.NewGuid().ToString();
+        protected string GetNewObjectName(int? maxChars = 8)
+        {
+            string result = ClientBuilder.Recording.Random.NewGuid().ToString();
+            return maxChars < result.Length ? result.Substring(0, maxChars.Value) : result;
+        }
 
         #region Service-Specific Implementations
         /// <summary>
