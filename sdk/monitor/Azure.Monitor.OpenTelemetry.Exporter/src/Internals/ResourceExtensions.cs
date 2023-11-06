@@ -67,7 +67,7 @@ internal static class ResourceExtensions
                     {
                         SdkVersionUtils.IsDistro = true;
                     }
-                    continue;
+                    break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
                     {
