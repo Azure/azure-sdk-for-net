@@ -27,7 +27,7 @@ public class MessagePipeline
         _policies = policies;
     }
 
-    public static MessagePipeline Create(PipelineOptions options)
+    internal static MessagePipeline Create(PipelineOptions options)
     {
         int pipelineLength = 0;
 

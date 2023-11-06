@@ -36,7 +36,7 @@ public class OpenAIClient
 
         options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
 
-        _pipeline = MessagePipeline.Create(options);
+        _pipeline = options.GetPipeline();
     }
 
     public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)

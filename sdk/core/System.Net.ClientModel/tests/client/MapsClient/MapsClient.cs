@@ -42,7 +42,7 @@ public class MapsClient
 
         options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
-        _pipeline = MessagePipeline.Create(options);
+        _pipeline = options.GetPipeline();
     }
 
     public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
