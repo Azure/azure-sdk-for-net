@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Hci
     public partial class OfferResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OfferResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="offerName"> The offerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}";
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of HciSkuResources and their operations over a HciSkuResource. </returns>
         public virtual HciSkuCollection GetHciSkus()
         {
-            return GetCachedClient(Client => new HciSkuCollection(Client, Id));
+            return GetCachedClient(client => new HciSkuCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +114,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HciSkuResource>> GetHciSkuAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -133,8 +138,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HciSkuResource> GetHciSku(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {

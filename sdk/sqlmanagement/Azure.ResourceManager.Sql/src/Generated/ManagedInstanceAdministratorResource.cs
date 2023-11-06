@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceAdministratorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceAdministratorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="administratorName"> The administratorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, SqlAdministratorName administratorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}";

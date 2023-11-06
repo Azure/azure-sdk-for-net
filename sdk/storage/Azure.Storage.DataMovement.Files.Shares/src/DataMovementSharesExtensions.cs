@@ -25,10 +25,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
 
         internal static ShareFileUploadRangeFromUriOptions ToShareFileUploadRangeFromUriOptions(
-            this ShareFileStorageResourceOptions options)
+            this ShareFileStorageResourceOptions options,
+            HttpAuthorization sourceAuthorization)
             => new()
             {
                 Conditions = options?.DestinationConditions,
+                SourceAuthentication = sourceAuthorization
             };
 
         internal static StorageResourceProperties ToStorageResourceProperties(
@@ -41,7 +43,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 copyStatusDescription: properties?.CopyStatusDescription,
                 copyId: properties?.CopyId,
                 copyProgress: properties?.CopyProgress,
-                copySource: new Uri(properties?.CopySource),
+                copySource: properties?.CopySource != null ? new Uri(properties?.CopySource) : null,
                 contentLength: properties.ContentLength,
                 contentType: properties?.ContentType,
                 eTag: properties.ETag,

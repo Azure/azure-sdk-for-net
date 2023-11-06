@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.StoragePool
     public partial class DiskPoolIscsiTargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskPoolIscsiTargetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="diskPoolName"> The diskPoolName. </param>
+        /// <param name="iscsiTargetName"> The iscsiTargetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}/iscsiTargets/{iscsiTargetName}";

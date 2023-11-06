@@ -9,7 +9,6 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Used to specify default behavior of greedy matching of jobs and worker.
     /// </summary>
-    [CodeGenModel("QueueAndMatchMode")]
     public partial class QueueAndMatchMode : IUtf8JsonSerializable
     {
         /// <summary>

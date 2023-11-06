@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class RegulatoryComplianceControlResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RegulatoryComplianceControlResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="regulatoryComplianceStandardName"> The regulatoryComplianceStandardName. </param>
+        /// <param name="regulatoryComplianceControlName"> The regulatoryComplianceControlName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}";
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of RegulatoryComplianceAssessmentResources and their operations over a RegulatoryComplianceAssessmentResource. </returns>
         public virtual RegulatoryComplianceAssessmentCollection GetRegulatoryComplianceAssessments()
         {
-            return GetCachedClient(Client => new RegulatoryComplianceAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new RegulatoryComplianceAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +111,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RegulatoryComplianceAssessmentResource>> GetRegulatoryComplianceAssessmentAsync(string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +134,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RegulatoryComplianceAssessmentResource> GetRegulatoryComplianceAssessment(string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
         {

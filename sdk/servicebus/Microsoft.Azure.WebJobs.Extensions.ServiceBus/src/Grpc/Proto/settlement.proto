@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 // this namespace will be shared between isolated worker and WebJobs extension so make it somewhat generic
 option csharp_namespace = "Microsoft.Azure.ServiceBus.Grpc";
@@ -35,8 +36,8 @@ message AbandonRequest {
 message DeadletterRequest {
   string locktoken = 1;
   bytes propertiesToModify = 2;
-  string deadletterReason = 3;
-  string deadletterErrorDescription = 4;
+  google.protobuf.StringValue deadletterReason = 3;
+  google.protobuf.StringValue deadletterErrorDescription = 4;
 }
 
 // The defer message request containing the locktoken and properties to modify.

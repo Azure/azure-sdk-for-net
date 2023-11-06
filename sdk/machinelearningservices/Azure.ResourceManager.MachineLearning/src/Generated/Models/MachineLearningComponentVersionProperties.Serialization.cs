@@ -25,7 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ComponentSpec);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(ComponentSpec.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(ComponentSpec))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else

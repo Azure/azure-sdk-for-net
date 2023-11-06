@@ -102,9 +102,10 @@ The following table indicates the state of in-memory and persistent caching in e
 | `ClientSecretCredential`       | Supported                                                              | Supported                     |
 | `DefaultAzureCredential`       | Supported if the target credential in the credential chain supports it | Not Supported                 |
 | `DeviceCodeCredential`         | Supported                                                              | Supported                     |
-| `VisualStudioCredential`       | Supported                                                              | Not Supported                 |
+| `EnvironmentCredential`        | Supported                                                              | Supported                     |
 | `InteractiveBrowserCredential` | Supported                                                              | Supported                     |
 | `ManagedIdentityCredential`    | Supported                                                              | Not Supported                 |
 | `OnBehalfOfCredential`         | Supported                                                              | Supported                     |
 | `UsernamePasswordCredential`   | Supported                                                              | Supported                     |
+| `VisualStudioCredential`       | Supported                                                              | Not Supported                 |
 | `WorkloadIdentityCredential`   | Supported                                                              | Supported                     |

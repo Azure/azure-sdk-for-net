@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Advisor
     public partial class MetadataEntityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MetadataEntityResource"/> instance. </summary>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string name)
         {
             var resourceId = $"/providers/Microsoft.Advisor/metadata/{name}";

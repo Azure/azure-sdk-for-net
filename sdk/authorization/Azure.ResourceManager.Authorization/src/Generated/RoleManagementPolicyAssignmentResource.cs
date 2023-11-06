@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Authorization
     public partial class RoleManagementPolicyAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RoleManagementPolicyAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleManagementPolicyAssignmentName"> The roleManagementPolicyAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleManagementPolicyAssignmentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}";

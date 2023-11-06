@@ -54,7 +54,7 @@ namespace Azure.Identity
         /// <summary>
         /// Create an instance of the <see cref="AzureDeveloperCliCredential"/> class.
         /// </summary>
-        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        /// <param name="options"> The Microsoft Entra tenant (directory) ID of the service principal. </param>
         public AzureDeveloperCliCredential(AzureDeveloperCliCredentialOptions options)
             : this(CredentialPipeline.GetInstance(null), default, options)
         { }

@@ -244,6 +244,10 @@ operations-to-skip-lro-api-version-override:
 - Tags_UpdateAtScope
 - Tags_DeleteAtScope
 
+generate-arm-resource-extensions:
+- /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
+- /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'

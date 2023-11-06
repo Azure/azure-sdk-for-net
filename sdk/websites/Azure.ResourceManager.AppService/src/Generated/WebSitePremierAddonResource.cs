@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSitePremierAddonResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSitePremierAddonResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="premierAddOnName"> The premierAddOnName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string premierAddOnName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}";

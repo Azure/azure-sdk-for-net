@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql
     public partial class DistributedAvailabilityGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DistributedAvailabilityGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="distributedAvailabilityGroupName"> The distributedAvailabilityGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string distributedAvailabilityGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}";

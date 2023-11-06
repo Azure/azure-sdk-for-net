@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.NetApp
     public partial class NetAppVolumeQuotaRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetAppVolumeQuotaRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="poolName"> The poolName. </param>
+        /// <param name="volumeName"> The volumeName. </param>
+        /// <param name="volumeQuotaRuleName"> The volumeQuotaRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string volumeQuotaRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/volumeQuotaRules/{volumeQuotaRuleName}";

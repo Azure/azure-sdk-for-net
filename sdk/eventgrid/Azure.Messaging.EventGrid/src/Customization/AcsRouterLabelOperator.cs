@@ -11,6 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Router Job Worker Selector Label Operator. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct AcsRouterLabelOperator : IEquatable<AcsRouterLabelOperator>
     {
         private readonly string _value;

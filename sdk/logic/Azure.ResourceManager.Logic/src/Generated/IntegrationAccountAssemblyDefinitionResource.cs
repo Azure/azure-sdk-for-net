@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationAccountAssemblyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationAccountAssemblyDefinitionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="integrationAccountName"> The integrationAccountName. </param>
+        /// <param name="assemblyArtifactName"> The assemblyArtifactName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/assemblies/{assemblyArtifactName}";
