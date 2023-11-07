@@ -4375,7 +4375,7 @@ namespace Azure.Messaging.EventGrid.Tests
               ""subject"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}"",
               ""data"": {
                 ""resourceInfo"": {
-                  ""tags"": """",
+                  ""tags"": {},
                   ""id"": ""/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}"",
                   ""name"": ""StorageAccount-name"",
                   ""type"": ""Microsoft.Storage/storageAccounts"",
