@@ -2,13 +2,8 @@
 
 ## 1.0.0-beta.10 (Unreleased)
 
-
 ### Features Added
 - Encryption at rest
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 - Upgraded api version to 2023-07-01
