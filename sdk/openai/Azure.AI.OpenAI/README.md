@@ -105,7 +105,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples).
 
-### Generate Chatbot Response
+### Generate chatbot response
 
 The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredential, then generates text responses to input prompts.
 
@@ -124,7 +124,7 @@ string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {completion}");
 ```
 
-### Generate Multiple Chatbot Responses With Subscription Key
+### Generate multiple chatbot responses with subscription key
 
 The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an example of generating text responses to input prompts using an Azure subscription key
 
@@ -155,7 +155,7 @@ foreach (Choice choice in completionsResponse.Value.Choices)
 }
 ```
 
-### Summarize Text with Completion
+### Summarize text with completion
 
 The `SummarizeText` method generates a summarization of the given input prompt.
 
@@ -192,7 +192,7 @@ string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Summarization: {completion}");
 ```
 
-### Stream Chat Messages with non-Azure OpenAI
+### Stream chat messages with non-Azure OpenAI
 
 ```C# Snippet:StreamChatMessages
 string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
@@ -222,7 +222,39 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatComple
 }
 ```
 
-### Use Chat Functions
+When explicitly requesting more than one `Choice` while streaming, use the `ChoiceIndex` property on
+`StreamingChatCompletionsUpdate` to determine which `Choice` each update corresponds to.
+
+```C# Snippet:StreamChatMessagesWithMultipleChoices
+// A ChoiceCount > 1 will feature multiple, parallel, independent text generations arriving on the
+// same response. This may be useful when choosing between multiple candidates for a single request.
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+    ChoiceCount = 4
+};
+
+await foreach (StreamingChatCompletionsUpdate chatUpdate
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
+    // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.
+    if (chatUpdate.ChoiceIndex.HasValue)
+    {
+        int choiceIndex = chatUpdate.ChoiceIndex.Value;
+        if (chatUpdate.Role.HasValue)
+        {
+            textBoxes[choiceIndex].Text += $"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ";
+        }
+        if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+        {
+            textBoxes[choiceIndex].Text += chatUpdate.ContentUpdate;
+        }
+    }
+}
+```
+
+### Use chat functions
 
 Chat Functions allow a caller of Chat Completions to define capabilities that the model can use to extend its
 functionality into external tools and data sources.
@@ -337,6 +369,47 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
 }
 ```
 
+When using streaming, capture streaming response components as they arrive and accumulate streaming function arguments
+in the same manner used for streaming content. Then, in the place of using the `ChatMessage` from the non-streaming
+response, instead add a new `ChatMessage` instance for history, created from the streamed information.
+
+```C# Snippet::ChatFunctions::StreamingFunctions
+string functionName = null;
+StringBuilder contentBuilder = new();
+StringBuilder functionArgumentsBuilder = new();
+ChatRole streamedRole = default;
+CompletionsFinishReason finishReason = default;
+
+await foreach (StreamingChatCompletionsUpdate update
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    contentBuilder.Append(update.ContentUpdate);
+    functionName ??= update.FunctionName;
+    functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
+    streamedRole = update.Role ?? default;
+    finishReason = update.FinishReason ?? default;
+}
+
+if (finishReason == CompletionsFinishReason.FunctionCall)
+{
+    string lastContent = contentBuilder.ToString();
+    string unvalidatedArguments = functionArgumentsBuilder.ToString();
+    ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+    {
+        FunctionCall = new(functionName, unvalidatedArguments),
+    };
+    conversationMessages.Add(chatMessageForHistory);
+
+    // Handle from here just like the non-streaming case
+}
+```
+
+Please note: while streamed function information (name, arguments) may be evaluated as it arrives, it should not be
+considered complete or confirmed until the `FinishReason` of `FunctionCall` is received. It may be appropriate to make
+best-effort attempts at "warm-up" or other speculative preparation based on a function name or particular key/value
+appearing in the accumulated, partial JSON arguments, but no strong assumptions about validity, ordering, or other
+details should be evaluated until the arguments are fully available and confirmed via `FinishReason`.
+
 ### Use your own data with Azure OpenAI
 
 The use your own data feature is unique to Azure OpenAI and won't work with a client configured to use the non-Azure service.
@@ -390,6 +463,21 @@ foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
     Console.WriteLine($"{contextMessage.Role}: {contextMessage.Content}");
 }
 ```
+
+### Generate embeddings
+
+```C# Snippet:GenerateEmbeddings
+EmbeddingsOptions embeddingsOptions = new()
+{
+    DeploymentName = "text-embedding-ada-002",
+    Input = { "Your text string goes here" },
+};
+Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsOptions);
+
+// The response includes the generated embedding.
+EmbeddingItem item = response.Value.Data[0];
+ReadOnlyMemory<float> embedding = item.Embedding;
+``````
 
 ### Generate images with DALL-E image generation models
 
