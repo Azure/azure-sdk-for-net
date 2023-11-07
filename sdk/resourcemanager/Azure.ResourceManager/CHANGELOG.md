@@ -1,14 +1,22 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.1 (2023-11-07)
+
+### Other Changes
+
+- Refines the `JsonConverter` of `ManagedServiceIdentityType` to include only its string literal value.
+
+## 1.8.0 (2023-11-02)
 
 ### Features Added
 
-### Breaking Changes
+- Add a new method `GetCachedClient` in `ArmClient` class to unify the mocking experience.
 
-### Bugs Fixed
+## 1.8.0-beta.1 (2023-08-09)
 
-### Other Changes
+### Features Added
+
+- Add a method `GetCachedClient` in `ArmClient` to enable mocking for extension methods.
 
 ## 1.7.0 (2023-07-13)
 

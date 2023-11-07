@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ManagedServices
     public partial class ManagedServicesRegistrationAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedServicesRegistrationAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="registrationAssignmentId"> The registrationAssignmentId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string registrationAssignmentId)
         {
             var resourceId = $"{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}";

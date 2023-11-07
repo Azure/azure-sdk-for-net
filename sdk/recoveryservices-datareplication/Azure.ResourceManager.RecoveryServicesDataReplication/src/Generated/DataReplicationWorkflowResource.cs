@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     public partial class DataReplicationWorkflowResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataReplicationWorkflowResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="jobName"> The jobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}";

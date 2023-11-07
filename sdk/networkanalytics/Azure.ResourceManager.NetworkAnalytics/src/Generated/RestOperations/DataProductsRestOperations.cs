@@ -681,7 +681,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(body);
 #else
-            JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(body.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(body))
+            {
+                JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+            }
 #endif
             request.Content = content;
             _userAgent.Apply(message);

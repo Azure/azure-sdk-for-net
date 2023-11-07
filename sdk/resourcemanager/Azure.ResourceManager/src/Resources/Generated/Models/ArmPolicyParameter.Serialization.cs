@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultValue);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(DefaultValue))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Metadata))

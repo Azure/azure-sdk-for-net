@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Automanage
     public partial class AutomanageConfigurationProfileVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageConfigurationProfileVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configurationProfileName"> The configurationProfileName. </param>
+        /// <param name="versionName"> The versionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configurationProfileName, string versionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}";

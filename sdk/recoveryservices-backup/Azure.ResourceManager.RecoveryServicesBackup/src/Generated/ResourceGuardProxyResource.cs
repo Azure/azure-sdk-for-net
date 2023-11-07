@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     public partial class ResourceGuardProxyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGuardProxyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="resourceGuardProxyName"> The resourceGuardProxyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string resourceGuardProxyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}";

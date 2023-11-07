@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Network
     public partial class FlowLogResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FlowLogResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkWatcherName"> The networkWatcherName. </param>
+        /// <param name="flowLogName"> The flowLogName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}";

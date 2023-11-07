@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.CustomerInsights
     public partial class ConnectorMappingResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConnectorMappingResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="connectorName"> The connectorName. </param>
+        /// <param name="mappingName"> The mappingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/connectors/{connectorName}/mappings/{mappingName}";

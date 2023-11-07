@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.MobileNetwork
     public partial class MobileNetworkSliceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkSliceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mobileNetworkName"> The mobileNetworkName. </param>
+        /// <param name="sliceName"> The sliceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}";

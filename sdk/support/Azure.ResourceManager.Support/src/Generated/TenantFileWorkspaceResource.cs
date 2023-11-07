@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Support
     public partial class TenantFileWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantFileWorkspaceResource"/> instance. </summary>
+        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string fileWorkspaceName)
         {
             var resourceId = $"/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}";
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketNoSubFileResources and their operations over a SupportTicketNoSubFileResource. </returns>
         public virtual SupportTicketNoSubFileCollection GetSupportTicketNoSubFiles()
         {
-            return GetCachedClient(Client => new SupportTicketNoSubFileCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketNoSubFileCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +110,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="fileName"> File Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketNoSubFileResource>> GetSupportTicketNoSubFileAsync(string fileName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +133,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="fileName"> File Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketNoSubFileResource> GetSupportTicketNoSubFile(string fileName, CancellationToken cancellationToken = default)
         {

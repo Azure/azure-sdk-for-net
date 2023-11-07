@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearninRegistryComponentVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearninRegistryComponentVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="componentName"> The componentName. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string componentName, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/components/{componentName}/versions/{version}";

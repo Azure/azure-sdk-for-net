@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class CommitmentPlanAccountAssociationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommitmentPlanAccountAssociationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="commitmentPlanName"> The commitmentPlanName. </param>
+        /// <param name="commitmentPlanAssociationName"> The commitmentPlanAssociationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}";

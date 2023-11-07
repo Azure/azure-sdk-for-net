@@ -16,7 +16,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of UnknownDistributionMode. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
         /// <param name="bypassSelectors">
@@ -29,7 +28,8 @@ namespace Azure.Communication.JobRouter
         /// This flag is intended more for temporary usage.
         /// By default, set to false.
         /// </param>
-        internal UnknownDistributionMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors)
+        /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
+        internal UnknownDistributionMode(int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, string kind) : base(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind)
         {
         }
     }

@@ -6,6 +6,7 @@
     <PackageId>Azure.ResourceManager.AppService</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Web.</Description>
     <PackageTags>azure;management;AppService</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
 </Project>

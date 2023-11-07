@@ -7,13 +7,16 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("DistributionPolicy")]
-    [CodeGenSuppress("DistributionPolicy")]
     public partial class DistributionPolicy : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
-        internal DistributionPolicy()
+        /// <param name="distributionPolicyId"> Id of the policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        public DistributionPolicy(string distributionPolicyId)
         {
+            Argument.AssertNotNullOrWhiteSpace(distributionPolicyId, nameof(distributionPolicyId));
+
+            Id = distributionPolicyId;
         }
 
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
@@ -42,14 +45,30 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> (Optional) The name of the distribution policy. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Abstract base class for defining a distribution mode
         /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
         /// </summary>
-        public DistributionMode Mode { get; internal set; }
+        public DistributionMode Mode { get; set; }
+
+        [CodeGenMember("Etag")]
+        internal string _etag
+        {
+            get
+            {
+                return ETag.ToString();
+            }
+            set
+            {
+                ETag = new ETag(value);
+            }
+        }
+
+        /// <summary> Concurrency Token. </summary>
+        public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -68,6 +87,11 @@ namespace Azure.Communication.JobRouter
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteObjectValue(Mode);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
             }
             writer.WriteEndObject();
         }

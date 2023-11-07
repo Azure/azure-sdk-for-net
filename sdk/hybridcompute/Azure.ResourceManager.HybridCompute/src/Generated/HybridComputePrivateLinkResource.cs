@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridCompute
     public partial class HybridComputePrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridComputePrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scopeName"> The scopeName. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}";

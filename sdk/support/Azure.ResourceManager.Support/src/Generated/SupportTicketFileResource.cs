@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Support
     public partial class SupportTicketFileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SupportTicketFileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
+        /// <param name="fileName"> The fileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string fileWorkspaceName, string fileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}";

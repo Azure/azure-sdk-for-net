@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Support
     public partial class SupportTicketNoSubCommunicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SupportTicketNoSubCommunicationResource"/> instance. </summary>
+        /// <param name="supportTicketName"> The supportTicketName. </param>
+        /// <param name="communicationName"> The communicationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string supportTicketName, string communicationName)
         {
             var resourceId = $"/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}";

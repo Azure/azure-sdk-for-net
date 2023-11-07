@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added configuration settings snapshot feature which allow users to create a point-in-time snapshot of their configuration store.
 
 ## 1.3.0-beta.3 (2023-10-09)
 

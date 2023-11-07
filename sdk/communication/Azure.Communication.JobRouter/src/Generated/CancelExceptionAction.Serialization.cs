@@ -21,6 +21,7 @@ namespace Azure.Communication.JobRouter
             }
             Optional<string> note = default;
             Optional<string> dispositionCode = default;
+            Optional<string> id = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,13 +35,18 @@ namespace Azure.Communication.JobRouter
                     dispositionCode = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
             }
-            return new CancelExceptionAction(kind, note.Value, dispositionCode.Value);
+            return new CancelExceptionAction(id.Value, kind, note.Value, dispositionCode.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

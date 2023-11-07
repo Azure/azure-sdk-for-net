@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabArtifactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabArtifactResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string artifactSourceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}";

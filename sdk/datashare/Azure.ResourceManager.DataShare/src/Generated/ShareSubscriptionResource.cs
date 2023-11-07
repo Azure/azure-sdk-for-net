@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataShare
     public partial class ShareSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ShareSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareSubscriptionName"> The shareSubscriptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}";
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of ShareDataSetMappingResources and their operations over a ShareDataSetMappingResource. </returns>
         public virtual ShareDataSetMappingCollection GetShareDataSetMappings()
         {
-            return GetCachedClient(Client => new ShareDataSetMappingCollection(Client, Id));
+            return GetCachedClient(client => new ShareDataSetMappingCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +118,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ShareDataSetMappingResource>> GetShareDataSetMappingAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +141,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ShareDataSetMappingResource> GetShareDataSetMapping(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareTriggerResources and their operations over a DataShareTriggerResource. </returns>
         public virtual DataShareTriggerCollection GetDataShareTriggers()
         {
-            return GetCachedClient(Client => new DataShareTriggerCollection(Client, Id));
+            return GetCachedClient(client => new DataShareTriggerCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +171,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataShareTriggerResource>> GetDataShareTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +194,8 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataShareTriggerResource> GetDataShareTrigger(string triggerName, CancellationToken cancellationToken = default)
         {

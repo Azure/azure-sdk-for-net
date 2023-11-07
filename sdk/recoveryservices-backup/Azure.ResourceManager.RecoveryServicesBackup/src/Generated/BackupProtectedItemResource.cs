@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     public partial class BackupProtectedItemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupProtectedItemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="containerName"> The containerName. </param>
+        /// <param name="protectedItemName"> The protectedItemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}";
@@ -101,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupRecoveryPointResources and their operations over a BackupRecoveryPointResource. </returns>
         public virtual BackupRecoveryPointCollection GetBackupRecoveryPoints()
         {
-            return GetCachedClient(Client => new BackupRecoveryPointCollection(Client, Id));
+            return GetCachedClient(client => new BackupRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +126,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupRecoveryPointResource>> GetBackupRecoveryPointAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
@@ -144,8 +150,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </summary>
         /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupRecoveryPointResource> GetBackupRecoveryPoint(string recoveryPointId, CancellationToken cancellationToken = default)
         {

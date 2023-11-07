@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Resources
     public partial class TemplateSpecVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TemplateSpecVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="templateSpecName"> The templateSpecName. </param>
+        /// <param name="templateSpecVersion"> The templateSpecVersion. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}/versions/{templateSpecVersion}";

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
     }
     public partial class DataProductData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataProductData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DataProductData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<string> AvailableMinorVersions { get { throw null; } }
         public Azure.ResourceManager.NetworkAnalytics.Models.ConsumptionEndpointsProperties ConsumptionEndpoints { get { throw null; } }
         public string CurrentMinorVersion { get { throw null; } set { } }
@@ -104,6 +104,31 @@ namespace Azure.ResourceManager.NetworkAnalytics
         public static Azure.AsyncPageable<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource> GetDataProductsCatalogsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.NetworkAnalytics.Mocking
+{
+    public partial class MockableNetworkAnalyticsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkAnalyticsArmClient() { }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductResource GetDataProductResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource GetDataProductsCatalogResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableNetworkAnalyticsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkAnalyticsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductResource> GetDataProduct(string dataProductName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductResource>> GetDataProductAsync(string dataProductName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductCollection GetDataProducts() { throw null; }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource GetDataProductsCatalog() { throw null; }
+    }
+    public partial class MockableNetworkAnalyticsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkAnalyticsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkAnalytics.DataProductResource> GetDataProducts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkAnalytics.DataProductResource> GetDataProductsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource> GetDataProductsCatalogs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource> GetDataProductsCatalogsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class AccountSasContent
@@ -123,7 +148,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static Azure.ResourceManager.NetworkAnalytics.Models.AccountSasToken AccountSasToken(string storageAccountSasToken = null) { throw null; }
         public static Azure.ResourceManager.NetworkAnalytics.Models.ConsumptionEndpointsProperties ConsumptionEndpointsProperties(System.Uri ingestionUri = null, Azure.Core.ResourceIdentifier ingestionResourceId = null, System.Uri fileAccessUri = null, Azure.Core.ResourceIdentifier fileAccessResourceId = null, System.Uri queryUri = null, Azure.Core.ResourceIdentifier queryResourceId = null) { throw null; }
         public static Azure.ResourceManager.NetworkAnalytics.DataProductData DataProductData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string resourceGuid = null, Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState?), string publisher = null, string product = null, string majorVersion = null, System.Collections.Generic.IEnumerable<string> owners = null, Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState? redundancy = default(Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState?), string purviewAccount = null, string purviewCollection = null, Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState? privateLinksEnabled = default(Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState?), Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState? publicNetworkAccess = default(Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState?), Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState? customerManagedKeyEncryptionEnabled = default(Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState?), Azure.ResourceManager.NetworkAnalytics.Models.EncryptionKeyDetails customerEncryptionKey = null, Azure.ResourceManager.NetworkAnalytics.Models.DataProductNetworkAcls networkacls = null, Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, System.Collections.Generic.IEnumerable<string> availableMinorVersions = null, string currentMinorVersion = null, string documentation = null, Azure.ResourceManager.NetworkAnalytics.Models.ConsumptionEndpointsProperties consumptionEndpoints = null, System.Uri keyVaultUri = null) { throw null; }
-        public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataType DataProductDataType(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState?), Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState? state = default(Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState?), string stateReason = null, int? storageOutputRetention = default(int?), int? databaseCacheRetention = default(int?), int? databaseRetention = default(int?), System.Uri visualizationUri = null) { throw null; }
+        public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataType DataProductDataType(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState?), Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState? state = default(Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState?), string stateReason = null, int? storageOutputRetention = default(int?), int? databaseCacheRetention = default(int?), int? databaseRetention = default(int?), System.Uri visualizationUri = null) { throw null; }
         public static Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData DataProductsCatalogData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkAnalytics.Models.PublisherInformation> publishers = null) { throw null; }
         public static Azure.ResourceManager.NetworkAnalytics.Models.RoleAssignmentListResult RoleAssignmentListResult(int count = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkAnalytics.Models.RoleAssignmentDetail> roleAssignmentResponse = null) { throw null; }
     }
@@ -136,24 +161,6 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public System.Uri IngestionUri { get { throw null; } }
         public Azure.Core.ResourceIdentifier QueryResourceId { get { throw null; } }
         public System.Uri QueryUri { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataProducDataTypeState : System.IEquatable<Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataProducDataTypeState(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState Running { get { throw null; } }
-        public static Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState Stopped { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState left, Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState left, Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataProductControlState : System.IEquatable<Azure.ResourceManager.NetworkAnalytics.Models.DataProductControlState>
@@ -179,10 +186,28 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public int? DatabaseCacheRetention { get { throw null; } set { } }
         public int? DatabaseRetention { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.NetworkAnalytics.Models.DataProducDataTypeState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState? State { get { throw null; } set { } }
         public string StateReason { get { throw null; } }
         public int? StorageOutputRetention { get { throw null; } set { } }
         public System.Uri VisualizationUri { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataProductDataTypeState : System.IEquatable<Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataProductDataTypeState(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState Running { get { throw null; } }
+        public static Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState Stopped { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState left, Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState left, Azure.ResourceManager.NetworkAnalytics.Models.DataProductDataTypeState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DataProductInformation
     {

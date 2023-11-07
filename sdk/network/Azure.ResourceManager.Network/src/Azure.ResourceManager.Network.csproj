@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Network</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Network.</Description>
     <PackageTags>azure;management;network</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

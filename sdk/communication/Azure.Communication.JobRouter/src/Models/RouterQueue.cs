@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -7,9 +8,18 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterQueue")]
     public partial class RouterQueue : IUtf8JsonSerializable
     {
+        /// <summary> Initializes a new instance of RouterQueue. </summary>
+        /// <param name="queueId"> Id of the policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
+        public RouterQueue(string queueId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
+
+            Id = queueId;
+        }
+
         [CodeGenMember("Labels")]
         internal IDictionary<string, object> _labels
         {
@@ -25,7 +35,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new RouterValue(label.Value);
                     }
                 }
             }
@@ -34,16 +44,32 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary> The name of this queue. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; set; }
 
         /// <summary> The ID of the distribution policy that will determine how a job is distributed to workers. </summary>
-        public string DistributionPolicyId { get; internal set; }
+        public string DistributionPolicyId { get; set; }
 
         /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
-        public string ExceptionPolicyId { get; internal set; }
+        public string ExceptionPolicyId { get; set; }
+
+        [CodeGenMember("Etag")]
+        internal string _etag
+        {
+            get
+            {
+                return ETag.ToString();
+            }
+            set
+            {
+                ETag = new ETag(value);
+            }
+        }
+
+        /// <summary> Concurrency Token. </summary>
+        public ETag ETag { get; internal set; }
 
         /// <summary> Initializes a new instance of JobQueue. </summary>
         internal RouterQueue()
@@ -84,6 +110,11 @@ namespace Azure.Communication.JobRouter
             {
                 writer.WritePropertyName("exceptionPolicyId"u8);
                 writer.WriteStringValue(ExceptionPolicyId);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
             }
             writer.WriteEndObject();
         }
