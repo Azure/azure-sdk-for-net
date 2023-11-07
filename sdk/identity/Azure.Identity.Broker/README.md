@@ -20,7 +20,7 @@ dotnet add package Azure.Identity.Broker
 
 ## Key concepts
 
-This package enables broker support via the `InteractiveBrowserCredentialBrokerOptions` in combination with the `InteractiveBrowserCredential` of the `Azure.Identity` library.
+This package enables authentication broker support via `InteractiveBrowserCredentialBrokerOptions`, in combination with `InteractiveBrowserCredential` in the `Azure.Identity` package.
 
 ### Parent window handles
 
@@ -28,7 +28,7 @@ When authenticating interactively via `InteractiveBrowserCredential` constructed
 
 ### Microsoft account (MSA) passthrough
 
-Microsoft accounts (MSA) are personal accounts created by users to access Microsoft services. MSA passthrough is a legacy configuration which enables users to get tokens to resources which normally don't accept MSA logins. This feature is only available to first-party applications. Users authenticating with an application that is configured to use MSA passthrough can set `IsLegacyMsaPassthroughEnabled` to `true` on the `InteractiveBrowserCredentialBrokerOptions` to allow these personal accounts to be listed by WAM.
+Microsoft accounts (MSA) are personal accounts created by users to access Microsoft services. MSA passthrough is a legacy configuration which enables users to get tokens to resources which normally don't accept MSA logins. This feature is only available to first-party applications. Users authenticating with an application that is configured to use MSA passthrough can set the `InteractiveBrowserCredentialBrokerOptions.IsLegacyMsaPassthroughEnabled` property to `true` to allow these personal accounts to be listed by WAM.
 
 ## Redirect URIs
 
