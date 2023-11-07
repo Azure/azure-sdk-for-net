@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -41,5 +42,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> the location of the resource for which the event is being emitted. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Location { get; }
+
+        /// <summary> the tags on the resource for which the event is being emitted. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Tags { get; internal set; }
+
+        /// <summary> the tags on the resource for which the event is being emitted. </summary>
+        [CodeGenMember("Tags")]
+        public IReadOnlyDictionary<string, string> ResourceTags { get; }
     }
 }
