@@ -513,8 +513,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public void FailedStopsActivityAndWritesErrorTypeException()
         {
-            using var _ = SetAppConfigSwitch();
-
             using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
 
@@ -532,8 +530,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public void FailedStopsActivityAndWritesErrorTypeRequestException()
         {
-            using var _ = SetAppConfigSwitch();
-
             using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
 
@@ -551,8 +547,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public void FailedStopsActivityAndWritesErrorTypeString()
         {
-            using var _ = SetAppConfigSwitch();
-
             using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
 

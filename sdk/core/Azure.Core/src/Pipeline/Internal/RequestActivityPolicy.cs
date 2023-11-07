@@ -204,7 +204,7 @@ namespace Azure.Core.Pipeline
 #endif
 
 #if NETCOREAPP2_1
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled;
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
 #else
         private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
 #endif
