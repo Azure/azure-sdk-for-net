@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
@@ -44,6 +45,14 @@ namespace Azure.Data.Tables.Models
                 }
             }
             return new TableQueryResponse(odataMetadata.Value, Optional.ToList(value));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TableQueryResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTableQueryResponse(document.RootElement);
         }
     }
 }
