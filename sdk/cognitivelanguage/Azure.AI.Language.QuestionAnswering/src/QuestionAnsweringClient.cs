@@ -16,8 +16,8 @@ namespace Azure.AI.Language.QuestionAnswering
     public class QuestionAnsweringClient
     {
         internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private const string OTelProjectNameKey = "az.question_answering.project.name";
-        private const string OTelDeploymentNameKey = "az.question_answering.deployment.name";
+        private const string OTelProjectNameKey = "az.cognitivelanguage.project.name";
+        private const string OTelDeploymentNameKey = "az.cognitivelanguage.deployment.name";
 
         private readonly QuestionAnsweringRestClient _restClient;
 

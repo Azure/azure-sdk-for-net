@@ -1,7 +1,7 @@
 # Release History
 
 ## Unreleased
-- Renamed `conversionId` and `sessionId` tags reported on `RemoteRenderingClient` activities to `az.remote_rendering.conversion.id` and `az.remote_rendering.session.id` following OpenTelemetry attribute naming conventions.
+- Renamed `conversionId` and `sessionId` tags reported on `RemoteRenderingClient` activities to `az.remoterendering.conversion.id` and `az.remoterendering.session.id` following OpenTelemetry attribute naming conventions.
 
 ## 1.2.1 (2022-08-09)
 - Minor documentation fixes.

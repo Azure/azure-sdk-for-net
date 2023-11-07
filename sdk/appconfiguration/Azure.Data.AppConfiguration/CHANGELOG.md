@@ -18,7 +18,7 @@
 
 ### Breaking Changes
 
-- Renamed `key` tag reported on `ConfigurationClient` activities to `az.app_configuration.key` following OpenTelemetry attribute naming conventions.
+- Renamed `key` tag reported on `ConfigurationClient` activities to `az.appconfiguration.key` following OpenTelemetry attribute naming conventions.
   
 ### Bugs Fixed
 

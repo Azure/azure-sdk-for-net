@@ -15,8 +15,8 @@ namespace Azure.MixedReality.RemoteRendering
     /// </summary>
     public class RemoteRenderingClient
     {
-        private const string OTelConversionIdKey = "az.remote_rendering.conversion.id";
-        private const string OTelSessionIdKey = "az.remote_rendering.session.id";
+        private const string OTelConversionIdKey = "az.remoterendering.conversion.id";
+        private const string OTelSessionIdKey = "az.remoterendering.session.id";
         private readonly Guid _accountId;
 
         private readonly ClientDiagnostics _clientDiagnostics;

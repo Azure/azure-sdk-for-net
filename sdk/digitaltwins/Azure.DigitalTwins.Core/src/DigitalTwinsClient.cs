@@ -22,15 +22,15 @@ namespace Azure.DigitalTwins.Core
     public class DigitalTwinsClient
     {
         private const bool IncludeModelDefinition = true;
-        private const string OTelTwinIdKey = "az.digital_twins.twin.id";
-        private const string OTelModelIdKey = "az.digital_twins.model.id";
-        private const string OTelComponentNameKey = "az.digital_twins.component.name";
-        private const string OTelRelationshipNameKey = "az.digital_twins.relationship.name";
-        private const string OTelRelationshipIdKey = "az.digital_twins.relationship.id";
-        private const string OTelMessageIdKey = "az.digital_twins.message.id";
-        private const string OTelJobIdKey = "az.digital_twins.job.id";
-        private const string OTeQueryKey = "az.digital_twins.query";
-        private const string OTelEventRouteIdKey = "az.digital_twins.event_route.id";
+        private const string OTelTwinIdKey = "az.digitaltwins.twin.id";
+        private const string OTelModelIdKey = "az.digitaltwins.model.id";
+        private const string OTelComponentNameKey = "az.digitaltwins.component.name";
+        private const string OTelRelationshipNameKey = "az.digitaltwins.relationship.name";
+        private const string OTelRelationshipIdKey = "az.digitaltwins.relationship.id";
+        private const string OTelMessageIdKey = "az.digitaltwins.message.id";
+        private const string OTelJobIdKey = "az.digitaltwins.job.id";
+        private const string OTeQueryKey = "az.digitaltwins.query";
+        private const string OTelEventRouteIdKey = "az.digitaltwins.event_route.id";
 
         // Vanity representation for azure digital twin app Id "0b07f429-9f4b-4714-9392-cc5e8e80c8b0" in the public cloud
         // and shared by other clouds.

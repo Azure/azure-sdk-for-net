@@ -19,6 +19,9 @@ namespace Azure.Core.Pipeline
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
+
+        // we follow OpenTelemtery Semantic Conventions 1.23.0
+        // https://github.com/open-telemetry/semantic-conventions/blob/v1.23.0
         internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.23.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
 

@@ -24,6 +24,7 @@ namespace Azure.Core.TestFramework
             .GetMethod(nameof(WrapAsyncResultCore), BindingFlags.NonPublic | BindingFlags.Static)
             ?? throw new InvalidOperationException("Unable to find DiagnosticScopeValidatingInterceptor.WrapAsyncResultCore method");
 
+        private static Regex AttributeNameRegex = new Regex(@"^[a-z\._]+$", RegexOptions.Compiled);
         public void Intercept(IInvocation invocation)
         {
             var type = invocation.Method.ReturnType;
@@ -274,7 +275,7 @@ namespace Azure.Core.TestFramework
                     continue;
                 }
 
-                if (!Regex.IsMatch(tag.Key, @"^[a-z\._]+$"))
+                if (!AttributeNameRegex.IsMatch(tag.Key))
                 {
                     throw new InvalidOperationException("Attribute name can only have lowercase letters, dot (`.`), and underscore (`_`). " +
                         "Use dot to separate namespaces and underscore to separate words (e.g. http.request.status_code). " + $"Attribute name: {tag.Key}");
@@ -297,7 +298,7 @@ namespace Azure.Core.TestFramework
                 string tagValueStr = tag.Value?.ToString();
                 if (string.IsNullOrEmpty(tagValueStr) || (tag.Key.StartsWith("az.") && tagValueStr.Length > 256))
                 {
-                    throw new InvalidOperationException("Attribute values must not be null, empty, or too long. "
+                    throw new InvalidOperationException("Attribute values must not be null, empty, or longer than 256 characters. "
                         + $"Attribute name: `{tag.Key}`, value: `{tag.Value}`, activity name: `{activity.OperationName}`");
                 }
             }
@@ -312,7 +313,7 @@ namespace Azure.Core.TestFramework
 
             if (activity.Status == ActivityStatusCode.Error && activity.Source?.HasListeners() == true && !activity.TagObjects.Any(kvp => kvp.Key == "error.type"))
             {
-                throw new InvalidOperationException("All failed activities must have `error.type` attribute set to low-cardinality error code or a full name of exception type");
+                throw new InvalidOperationException("All failed activities must have `error.type` attribute set to known or documented error code or a full name of exception type");
             }
         }
 
