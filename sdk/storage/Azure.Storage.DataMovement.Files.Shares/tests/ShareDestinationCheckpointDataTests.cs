@@ -7,7 +7,6 @@ using System.IO;
 using System.Text;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
-using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
