@@ -163,7 +163,7 @@ namespace Azure.Core.Pipeline
 
             var redirectPolicy = defaultTransportOptions?.IsClientRedirectEnabled switch
             {
-                true => new RedirectPolicy(true),
+                true => new RedirectPolicy(true, defaultTransportOptions.ClientRedirectAuthorizationRemovalCallback),
                 _ => RedirectPolicy.Shared,
             };
             policies.Add(redirectPolicy);

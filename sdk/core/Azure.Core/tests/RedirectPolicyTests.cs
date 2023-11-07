@@ -178,7 +178,7 @@ namespace Azure.Core.Tests
             var response = await SendRequestAsync(mockTransport, messageAction: message =>
             {
                 message.Request.Uri.Reset(new Uri("https://example.com/"));
-            }, new RedirectPolicy(isClientRedirectEnabled));
+            }, new RedirectPolicy(isClientRedirectEnabled, null));
 
             if (isClientRedirectEnabled)
             {
@@ -209,7 +209,7 @@ namespace Azure.Core.Tests
                 {
                     RedirectPolicy.SetAllowAutoRedirect(message, setAllowAutoRedirect.Value);
                 }
-            }, new RedirectPolicy(isClientRedirectEnabled));
+            }, new RedirectPolicy(isClientRedirectEnabled, null));
 
             if (setAllowAutoRedirect ?? false || (!setAllowAutoRedirect.HasValue && isClientRedirectEnabled))
             {
@@ -220,6 +220,35 @@ namespace Azure.Core.Tests
             {
                 Assert.AreEqual(300, response.Status);
                 Assert.AreEqual(1, mockTransport.Requests.Count);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ClearAuthorizationCallbackRespected(bool clearAuthHeader)
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(300)
+                    .AddHeader("Location", "https://new.host/"),
+                new MockResponse(200));
+            var pipeline = new HttpPipeline(mockTransport, new HttpPipelinePolicy[] { new RedirectPolicy(true, _ => clearAuthHeader) });
+
+            var message = await SendMessageRequestAsync(pipeline, messageAction: message =>
+            {
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+                message.Request.Headers.Add("Authorization", "Bearer ");
+            });
+
+            Assert.AreEqual(200, message.Response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            if (clearAuthHeader)
+            {
+                Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out _));
+            }
+            else
+            {
+                Assert.IsTrue(message.Request.Headers.TryGetValue("Authorization", out _));
             }
         }
 

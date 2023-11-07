@@ -41,5 +41,12 @@ namespace Azure.Core.Pipeline
         /// <c>true</c> if the redirect policy should follow redirection responses; otherwise <c>false</c>. The default value is <c>false</c>.
         /// </value>
         public bool IsClientRedirectEnabled { get; set; }
+
+        /// <summary>
+        /// A delegate that can be used to indicate whether the Authorization header should be removed when a request is being
+        /// redirected. This applies only when <see cref="IsClientRedirectEnabled"/> is set to <value>true</value>. The default
+        /// behavior is to remove the Authorization header when being redirected.
+        /// </summary>
+        public Func<HttpMessage, bool>? ClientRedirectAuthorizationRemovalCallback { get; }
     }
 }

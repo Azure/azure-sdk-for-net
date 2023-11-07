@@ -1046,6 +1046,7 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipelineTransportOptions() { }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
+        public System.Func<Azure.Core.HttpMessage, bool>? ClientRedirectAuthorizationRemovalCallback { get { throw null; } }
         public bool IsClientRedirectEnabled { get { throw null; } set { } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }

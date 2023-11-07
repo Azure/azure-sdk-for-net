@@ -16,17 +16,27 @@ namespace Azure.Core.Pipeline
     {
         private readonly int _maxAutomaticRedirections;
         private readonly bool _allowAutoRedirects = false;
+        private readonly Func<HttpMessage,bool> _authorizationHeaderRemovalCallback;
 
-        internal static RedirectPolicy Shared { get; } = new RedirectPolicy(false);
+        internal static RedirectPolicy Shared { get; } = new RedirectPolicy(false, null);
 
         /// <summary>
         /// Creates a new instance of the <see cref="RedirectPolicy"/> class.
         /// </summary>
-        /// <param name="allowAutoRedirect">Determinds whether redirects will be handled by this policy. Rather than passing false, consider using the static <see cref="Shared"/> instance instead which defaults to false.</param>
-        internal RedirectPolicy(bool allowAutoRedirect)
+        /// <param name="allowAutoRedirect">Determines whether redirects will be handled by this policy. Rather than passing false, consider using the static <see cref="Shared"/> instance instead which defaults to false.</param>
+        /// <param name="authorizationHeaderRemovalCallback">A delegate that can be used to indicate whether the Authorization header should be removed when a request is being
+        /// redirected.</param>
+        internal RedirectPolicy(bool allowAutoRedirect, Func<HttpMessage, bool>? authorizationHeaderRemovalCallback)
         {
             _allowAutoRedirects = allowAutoRedirect;
             _maxAutomaticRedirections = 50;
+            if (!allowAutoRedirect && authorizationHeaderRemovalCallback != null)
+            {
+                throw new ArgumentException(
+                    "Authorization header removal callback should only be specified when redirects are enabled.");
+            }
+
+            _authorizationHeaderRemovalCallback = authorizationHeaderRemovalCallback ?? (_ => true);
         }
 
         /// <summary>
@@ -79,8 +89,11 @@ namespace Azure.Core.Pipeline
 
                 response.Dispose();
 
-                // Clear the authorization header.
-                request.Headers.Remove(HttpHeader.Names.Authorization);
+                // Clear the authorization header if necessary
+                if (_authorizationHeaderRemovalCallback.Invoke(message))
+                {
+                    request.Headers.Remove(HttpHeader.Names.Authorization);
+                }
 
                 AzureCoreEventSource.Singleton.RequestRedirect(request, redirectUri, response);
 
