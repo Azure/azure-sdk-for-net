@@ -137,7 +137,7 @@ namespace System.Net.ClientModel.Core
     }
     public partial class MessagePipeline
     {
-        protected MessagePipeline(System.Net.ClientModel.Core.PipelineTransport transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
+        internal MessagePipeline() { }
         public System.Net.ClientModel.Core.ClientMessage CreateMessage() { throw null; }
         public void Send(System.Net.ClientModel.Core.ClientMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.ClientMessage message) { throw null; }

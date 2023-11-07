@@ -11,16 +11,6 @@ public class MessagePipeline
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    protected MessagePipeline(PipelineTransport transport,
-        ReadOnlyMemory<PipelinePolicy> policies)
-    {
-        _transport = transport;
-        var larger = new PipelinePolicy[policies.Length + 1];
-        policies.Span.CopyTo(larger);
-        larger[policies.Length] = transport;
-        _policies = larger;
-    }
-
     private MessagePipeline(ReadOnlyMemory<PipelinePolicy> policies)
     {
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
