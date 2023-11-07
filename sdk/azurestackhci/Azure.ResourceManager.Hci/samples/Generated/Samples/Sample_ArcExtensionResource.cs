@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcExtensionResource arcExtension = client.GetArcExtensionResource(arcExtensionResourceId);
 
             // invoke the operation
-            ArcExtensionResource result = await arcExtension.GetAsync();
+            ArcExtensionResource result = arcExtension.GetAsync().Result;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Hci.Samples
                     ["workspaceId"] = "xx"
                 }),
             };
-            ArmOperation<ArcExtensionResource> lro = await arcExtension.UpdateAsync(WaitUntil.Completed, data);
-            ArcExtensionResource result = lro.Value;
+            ArmOperation<ArcExtensionResource> lro = arcExtension.UpdateAsync(WaitUntil.Completed, data).Result;
+            ArcExtensionResource result = await lro.WaitForCompletionAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Hci.Samples
             };
             await arcExtension.UpgradeAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+                
         }
     }
 }
