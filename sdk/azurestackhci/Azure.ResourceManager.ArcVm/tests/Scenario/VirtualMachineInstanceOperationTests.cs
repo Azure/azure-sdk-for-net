@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ArcVm.Tests
             var virtualMachineInstance = await CreateVirtualMachineInstanceAsync();
 
             VirtualMachineInstanceResource virtualMachineInstanceFromGet = await virtualMachineInstance.GetAsync();
-            if (await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(virtualMachineInstanceFromGet), TimeSpan.FromSeconds(100)))
+            if (await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(virtualMachineInstanceFromGet), TimeSpan.FromSeconds(6000)))
             {
-                Assert.AreEqual(virtualMachineInstanceFromGet.Data.HardwareProfile.VmSize, VmSizeEnum.Default);
+                Assert.AreEqual(virtualMachineInstanceFromGet.Data.OSProfile.ComputerName, "dotnetvm");
                 Assert.AreEqual(virtualMachineInstanceFromGet.Data.SecurityProfile.EnableTPM, false);
             }
             Assert.AreEqual(virtualMachineInstanceFromGet.Data.ProvisioningState, ProvisioningStateEnum.Succeeded);

@@ -238,6 +238,11 @@ namespace Azure.ResourceManager.ArcVm.Tests
                     AdminPassword = TestEnvironment.VmPass,
                     AdminUsername = TestEnvironment.VmUsername,
                     ComputerName = "dotnetvm",
+                    WindowsConfiguration = new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration()
+                    {
+                        ProvisionVmAgent = false,
+                        EnableAutomaticUpdates = false,
+                    },
                 },
                 StorageProfile = new VirtualMachineInstancePropertiesStorageProfile()
                 {
@@ -258,12 +263,15 @@ namespace Azure.ResourceManager.ArcVm.Tests
             {
                 Id = nic.Id,
             });
+            string resourceUri = $"{DefaultSubscription.Id.ToString()}/resourceGroups/hci-dotnet-test-rg/providers/Microsoft.HybridCompute/machines/{TestEnvironment.MachineName}";
 
-            string resourceUri = $"{DefaultSubscription.Id.ToString()}/resourceGroups/hci-dotnet-test-rg/Microsoft.HybridCompute/machines/{TestEnvironment.MachineName}";
+            // hybrid compute machine name distinguished depending on is async or not due to sdk not supporting machine creation at the moment.
+            if (IsAsync)
+            {
+                resourceUri = $"{DefaultSubscription.Id.ToString()}/resourceGroups/hci-dotnet-test-rg/providers/Microsoft.HybridCompute/machines/{TestEnvironment.MachineNameAsync}";
+            }
             ResourceIdentifier virtualMachineInstanceResourceId = VirtualMachineInstanceResource.CreateResourceIdentifier(resourceUri);
-            Console.WriteLine(virtualMachineInstanceResourceId.ResourceType);
-            Console.WriteLine(resourceUri);
-            VirtualMachineInstanceResource virtualMachineInstanceResource = new VirtualMachineInstanceResource(Client, virtualMachineInstanceResourceId);
+            VirtualMachineInstanceResource virtualMachineInstanceResource = Client.GetVirtualMachineInstanceResource(virtualMachineInstanceResourceId);
             var lro = await virtualMachineInstanceResource.CreateOrUpdateAsync(WaitUntil.Completed, data);
             return lro.Value;
         }
