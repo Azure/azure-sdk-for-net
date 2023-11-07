@@ -535,6 +535,52 @@ Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
 Console.WriteLine(translation.Text);
 ```
 
+### Customize HTTP behavior
+
+As part of the Azure SDK, `OpenAIClient` integrates with Azure.Core's `HttpPipeline` and supports rich customization of
+HTTP messaging behavior via instances of `HttpPipelinePolicy`. This allows traffic manipulation like proxy redirection,
+API gateway use, insertion of custom query string parameters, and more.
+
+To customize the HTTP behavior of OpenAIClient, first implement a class derived from
+`Azure.Core.Pipeline.HttpPipelinePolicy` that performs any desired per-message operations before continuing pipeline
+execution via `ProcessNext`/`ProcessNextAsync`. For example, this is a custom policy that adds a static query string
+parameter key/value pair to all request URIs:
+
+```C# Snippet:ImplementACustomHttpPipelinePolicy
+public class SimpleQueryStringPolicy : HttpPipelinePolicy
+{
+    public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        message?.Request?.Uri?.AppendQuery("myParameterName", "valueForMyParameter");
+        ProcessNext(message, pipeline);
+    }
+
+    public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        message?.Request?.Uri?.AppendQuery("myParameterName", "valueForMyParameter");
+        return ProcessNextAsync(message, pipeline);
+    }
+}
+```
+
+Then, to apply the custom policy, add it to an instance of `OpenAIClientOptions` that is in turn used to instantiate an
+`OpenAIClient` instance:
+
+```C# Snippet:ConfigureClientsWithCustomHttpPipelinePolicy
+OpenAIClientOptions clientOptions = new();
+clientOptions.AddPolicy(
+    policy: new SimpleQueryStringPolicy(),
+    position: HttpPipelinePosition.PerRetry);
+
+OpenAIClient client = new(
+    endpoint: new Uri("https://myresource.openai.azure.com"),
+    keyCredential: new AzureKeyCredential(myApiKey),
+    clientOptions);
+```
+
+The above client will execute the custom policy on all requests, including retries, ensuring that the additional query
+string parameter key/value pair is added.
+
 ## Troubleshooting
 
 When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.
