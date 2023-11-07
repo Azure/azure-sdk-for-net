@@ -252,6 +252,12 @@ namespace Azure.Core.Tests
             }
         }
 
+        [Test]
+        public void CannotSetAuthorizationRemovalCallbackWhenRedirectsDisabled()
+        {
+            Assert.Throws<ArgumentException>(() => new RedirectPolicy(false, message => true));
+        }
+
         public static readonly object[][] RedirectStatusCodes = {
             new object[] { 300 },
             new object[] { 301 },
