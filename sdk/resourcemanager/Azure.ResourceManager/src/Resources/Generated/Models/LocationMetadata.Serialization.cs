@@ -15,78 +15,85 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static LocationMetadata DeserializeLocationMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RegionType> regionType = default;
             Optional<RegionCategory> regionCategory = default;
+            Optional<string> geography = default;
             Optional<string> geographyGroup = default;
             Optional<double> longitude = default;
             Optional<double> latitude = default;
             Optional<string> physicalLocation = default;
-            Optional<IReadOnlyList<PairedRegion>> pairedRegions = default;
+            Optional<IReadOnlyList<PairedRegion>> pairedRegion = default;
             Optional<string> homeLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("regionType"))
+                if (property.NameEquals("regionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionType = new RegionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("regionCategory"))
+                if (property.NameEquals("regionCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionCategory = new RegionCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("geographyGroup"))
+                if (property.NameEquals("geography"u8))
+                {
+                    geography = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("geographyGroup"u8))
                 {
                     geographyGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("longitude"))
+                if (property.NameEquals("longitude"u8))
                 {
-                    longitude = double.Parse(property.Value.GetString());
+                    ReadLongitude(property, ref longitude);
                     continue;
                 }
-                if (property.NameEquals("latitude"))
+                if (property.NameEquals("latitude"u8))
                 {
-                    latitude = double.Parse(property.Value.GetString());
+                    ReadLatitude(property, ref latitude);
                     continue;
                 }
-                if (property.NameEquals("physicalLocation"))
+                if (property.NameEquals("physicalLocation"u8))
                 {
                     physicalLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pairedRegion"))
+                if (property.NameEquals("pairedRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.PairedRegion.DeserializePairedRegion(item));
+                        array.Add(PairedRegion.DeserializePairedRegion(item));
                     }
-                    pairedRegions = array;
+                    pairedRegion = array;
                     continue;
                 }
-                if (property.NameEquals("homeLocation"))
+                if (property.NameEquals("homeLocation"u8))
                 {
                     homeLocation = property.Value.GetString();
                     continue;
                 }
             }
-            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geographyGroup.Value, longitude.Value, latitude.Value, physicalLocation.Value, Optional.ToList(pairedRegions), homeLocation.Value);
+            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, Optional.ToNullable(longitude), Optional.ToNullable(latitude), physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value);
         }
     }
 }

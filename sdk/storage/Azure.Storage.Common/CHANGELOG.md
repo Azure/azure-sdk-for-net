@@ -1,14 +1,7 @@
 # Release History
 
-## 12.18.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.18.0 (2023-11-06)
+- Includes all features from 12.18.0-beta.1.
 
 ## 12.18.0-beta.1 (2023-10-16)
 - This release contains bug fixes to improve quality.
