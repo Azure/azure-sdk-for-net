@@ -363,7 +363,7 @@ namespace Azure.Core.Tests
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
             using var clientListener = new TestActivitySourceListener("Azure.Clients.ClientName");
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true, false);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true, true);
             using DiagnosticScope outerScope = clientDiagnostics.CreateScope("ClientName.ActivityName", ActivityKind.Internal);
             outerScope.Start();
 
