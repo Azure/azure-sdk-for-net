@@ -342,4 +342,7 @@
   <data name="TroubleshootingGuideLink" xml:space="preserve">
     <value>For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot</value>
   </data>
+  <data name="UnsureTransportOnlyAllowedOnLocalhost" xml:space="preserve">
+    <value>Unsecure transport {0} is not allowed for the host {1} , is only supported on localhost.</value>
+  </data>
 </root>

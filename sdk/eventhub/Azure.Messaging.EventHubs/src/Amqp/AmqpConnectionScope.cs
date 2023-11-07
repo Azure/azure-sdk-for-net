@@ -517,9 +517,19 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var amqpSettings = CreateAmpqSettings(AmqpVersion);
                 var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier, ConnectionIdleTimeoutMilliseconds);
 
-                var transportSettings = transportType.IsWebSocketTransport()
-                    ? CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes)
-                    : CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback);
+                TransportSettings transportSettings = null;
+                switch (transportType)
+                {
+                    case EventHubsTransportType.AmqpTcp:
+                        transportSettings = CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback);
+                        break;
+                    case EventHubsTransportType.AmqpWebSockets:
+                        transportSettings = CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes);
+                        break;
+                    case EventHubsTransportType.AmqpTcpNonTls:
+                        transportSettings = CreateTransportSettingsforTcpNonTls(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes);
+                        break;
+                }
 
                 // Create and open the connection, respecting the timeout constraint
                 // that was received.
@@ -1282,6 +1292,33 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
+        ///  Creates the transport settings for use with TCP without TLS.
+        /// </summary>
+        ///
+        /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
+        /// <param name="port">The port to use for connecting to the endpoint.</param>
+        /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
+        /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
+        ///
+        /// <returns>The settings to use for transport.</returns>
+        ///
+        private static TransportSettings CreateTransportSettingsforTcpNonTls(string hostName,
+                                                                       int port,
+                                                                       int sendBufferSizeBytes,
+                                                                       int receiveBufferSizeBytes)
+        {
+            var tcpSettings = new TcpTransportSettings
+            {
+                Host = hostName,
+                Port = port < 0 ? AmqpConstants.DefaultPort : port,
+                SendBufferSize = sendBufferSizeBytes,
+                ReceiveBufferSize = receiveBufferSizeBytes,
+            };
+
+            return tcpSettings;
+        }
+
+        /// <summary>
         ///   Creates the AMQP connection settings to use when communicating with the Event Hubs service.
         /// </summary>
         ///
@@ -1320,9 +1357,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static void ValidateTransport(EventHubsTransportType transport)
         {
-            if ((transport != EventHubsTransportType.AmqpTcp) && (transport != EventHubsTransportType.AmqpWebSockets))
+            if ((transport != EventHubsTransportType.AmqpTcp) && (transport != EventHubsTransportType.AmqpWebSockets) && (transport != EventHubsTransportType.AmqpTcpNonTls))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport), nameof(transport));
+            }
+        }
+
+        private static void ValidateNonSecureTransport(EventHubsTransportType transport,string hostName)
+        {
+            if ((transport == EventHubsTransportType.AmqpTcpNonTls) && !hostName.ToLower().EndsWith("servicebus.localhost.net"))
+            {
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnsureTransportOnlyAllowedOnLocalhost, transport, hostName), nameof(transport));
             }
         }
     }

@@ -901,5 +901,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("TroubleshootingGuideLink", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar toUnsecure transport {0} is not allowed for the host {1} , is only supported on localhost..
+        /// </summary>
+        internal static string UnsureTransportOnlyAllowedOnLocalhost
+        {
+            get
+            {
+                return ResourceManager.GetString("UnsureTransportOnlyAllowedOnLocalhost", resourceCulture);
+            }
+        }
     }
 }

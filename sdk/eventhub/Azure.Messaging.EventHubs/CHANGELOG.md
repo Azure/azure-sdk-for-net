@@ -4,6 +4,8 @@
 
 ### Features Added
 
+-  Added Non-TLS TCP Transport Type
+
 ### Breaking Changes
 
 - Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`

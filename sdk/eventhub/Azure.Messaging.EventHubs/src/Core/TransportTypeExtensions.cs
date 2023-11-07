@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using Azure.Messaging.EventHubs.Amqp;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -13,7 +14,10 @@ namespace Azure.Messaging.EventHubs.Core
     internal static class TransportTypeExtensions
     {
         /// <summary>The URI scheme used for an AMQP-based connection.</summary>
-        private const string AmqpUriScheme = "amqps";
+        private const string AmqpsUriScheme = "amqps";
+
+        /// <summary>The URI scheme used for unsecure AMQP-based connection.</summary>
+        private const string AmqpUriScheme = "amqp";
 
         /// <summary>
         ///   Determines the URI scheme to be used for the given connection type.
@@ -29,6 +33,9 @@ namespace Azure.Messaging.EventHubs.Core
             {
                 case EventHubsTransportType.AmqpTcp:
                 case EventHubsTransportType.AmqpWebSockets:
+                    return AmqpsUriScheme;
+
+                case EventHubsTransportType.AmqpTcpNonTls:
                     return AmqpUriScheme;
 
                 default:

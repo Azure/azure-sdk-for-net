@@ -14,6 +14,9 @@ namespace Azure.Messaging.EventHubs
         AmqpTcp,
 
         /// <summary>The connection uses the AMQP protocol over web sockets.</summary>
-        AmqpWebSockets
+        AmqpWebSockets,
+
+        /// <summary>The connection uses the AMQP protocol over TCP without TLS</summary>
+        AmqpTcpNonTls
     }
 }
