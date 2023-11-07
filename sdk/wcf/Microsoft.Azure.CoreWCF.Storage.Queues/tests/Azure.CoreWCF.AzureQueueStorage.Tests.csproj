@@ -22,6 +22,8 @@
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" VersionOverride="3.1.13" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" VersionOverride="3.1.32" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" VersionOverride="8.0.0-rc.2.23479.6" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="xunit.runner.visualstudio">
@@ -35,7 +37,7 @@
   </ItemGroup>
   
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
-    <PackageReference Include="System.ServiceModel.Primitives" VersionOverride="6.1.0"/>
+    <PackageReference Include="System.ServiceModel.Primitives" VersionOverride="6.1.0" />
   </ItemGroup>
     
   <ItemGroup>
