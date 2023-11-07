@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.GetLineageGraph("<guid>", "BOTH", null, null, null, null, null);
+            Response response = client.GetLineageGraph("<guid>", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.GetLineageGraphAsync("<guid>", "BOTH", null, null, null, null, null);
+            Response response = await client.GetLineageGraphAsync("<guid>", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.GetLineageGraph("<guid>", "BOTH", 1234, 1234, true, true, null);
+            Response response = client.GetLineageGraph("<guid>", "BOTH", depth: 1234, width: 1234, includeParent: true, getDerivedLineage: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.GetLineageGraphAsync("<guid>", "BOTH", 1234, 1234, true, true, null);
+            Response response = await client.GetLineageGraphAsync("<guid>", "BOTH", depth: 1234, width: 1234, includeParent: true, getDerivedLineage: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.NextPageLineage("<guid>", "BOTH", null, null, null, null);
+            Response response = client.NextPageLineage("<guid>", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.NextPageLineageAsync("<guid>", "BOTH", null, null, null, null);
+            Response response = await client.NextPageLineageAsync("<guid>", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.NextPageLineage("<guid>", "BOTH", true, 1234, 1234, null);
+            Response response = client.NextPageLineage("<guid>", "BOTH", getDerivedLineage: true, offset: 1234, limit: 1234);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -253,7 +253,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.NextPageLineageAsync("<guid>", "BOTH", true, 1234, 1234, null);
+            Response response = await client.NextPageLineageAsync("<guid>", "BOTH", getDerivedLineage: true, offset: 1234, limit: 1234);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.GetLineageByUniqueAttribute("<typeName>", "BOTH", null, null, null, null, null);
+            Response response = client.GetLineageByUniqueAttribute("<typeName>", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -324,7 +324,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "BOTH", null, null, null, null, null);
+            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "BOTH");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -338,7 +338,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.GetLineageByUniqueAttribute("<typeName>", "BOTH", 1234, 1234, true, true, null);
+            Response response = client.GetLineageByUniqueAttribute("<typeName>", "BOTH", depth: 1234, width: 1234, includeParent: true, getDerivedLineage: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
@@ -395,7 +395,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "BOTH", 1234, 1234, true, true, null);
+            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "BOTH", depth: 1234, width: 1234, includeParent: true, getDerivedLineage: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("baseEntityGuid").ToString());
