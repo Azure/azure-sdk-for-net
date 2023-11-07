@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadChunkHandler : IAsyncDisposable
+    internal class DownloadChunkHandler : IDisposable
     {
         // Indicates whether the current thread is processing stage chunks.
         private static Task _processDownloadRangeEvents;
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Create channel of <see cref="DownloadRangeEventArgs"/> to keep track of that are
-        /// waiting to update the bytesTransferredand other required operations.
+        /// waiting to update the bytesTransferred and other required operations.
         /// </summary>
         private readonly Channel<DownloadRangeEventArgs> _downloadRangeChannel;
         private CancellationToken _cancellationToken;
@@ -156,10 +156,9 @@ namespace Azure.Storage.DataMovement
             ClientDiagnostics = clientDiagnostics;
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             _downloadRangeChannel.Writer.TryComplete();
-            await _downloadRangeChannel.Reader.Completion.ConfigureAwait(false);
 
             if (_currentBytesSemaphore != default)
             {

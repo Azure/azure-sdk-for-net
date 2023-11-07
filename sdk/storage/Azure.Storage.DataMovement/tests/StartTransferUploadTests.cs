@@ -1461,25 +1461,5 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
         }
         #endregion
-
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/2010")]
-        [Test]
-        public async Task SupportsLongFiles()
-        {
-            long fileSize = 5L * Constants.GB;
-
-            StorageResourceItem srcResource = MockStorageResource.MakeSourceResource(fileSize, maxChunkSize: Constants.GB);
-            StorageResourceItem dstResource = MockStorageResource.MakeDestinationResource(maxChunkSize: Constants.GB);
-            TransferManager transferManager = new TransferManager();
-
-            DataTransferOptions options = new();
-            TestEventsRaised events = new(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
-            await transfer.WaitForCompletionAsync();
-
-            Assert.IsEmpty(events.FailedEvents);
-            Assert.IsTrue(transfer.HasCompleted);
-            await events.AssertSingleCompletedCheck();
-        }
     }
 }
