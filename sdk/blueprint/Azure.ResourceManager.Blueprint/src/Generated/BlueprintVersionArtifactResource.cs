@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Blueprint
     public partial class BlueprintVersionArtifactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlueprintVersionArtifactResource"/> instance. </summary>
+        /// <param name="resourceScope"> The resourceScope. </param>
+        /// <param name="blueprintName"> The blueprintName. </param>
+        /// <param name="versionId"> The versionId. </param>
+        /// <param name="artifactName"> The artifactName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceScope, string blueprintName, string versionId, string artifactName)
         {
             var resourceId = $"{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}";

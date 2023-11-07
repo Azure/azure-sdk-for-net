@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceStartStopScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceStartStopScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="startStopScheduleName"> The startStopScheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, ManagedInstanceStartStopScheduleName startStopScheduleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}";

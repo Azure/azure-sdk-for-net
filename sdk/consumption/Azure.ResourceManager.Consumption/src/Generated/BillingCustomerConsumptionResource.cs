@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Consumption
     public partial class BillingCustomerConsumptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingCustomerConsumptionResource"/> instance. </summary>
+        /// <param name="billingAccountId"> The billingAccountId. </param>
+        /// <param name="customerId"> The customerId. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string billingAccountId, string customerId)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}";

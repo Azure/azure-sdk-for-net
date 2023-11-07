@@ -11,6 +11,8 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSuppress("JobRouterClient", typeof(Uri))]
+    [CodeGenSuppress("JobRouterClient", typeof(Uri), typeof(JobRouterClientOptions))]
     [CodeGenSuppress("CreateGetJobsNextPageRequest", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetWorkersNextPageRequest", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(bool), typeof(RequestContext))]
     public partial class JobRouterClient
@@ -58,6 +60,32 @@ namespace Azure.Communication.JobRouter
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new JobRouterClientOptions())
         {
+        }
+
+        #endregion
+
+        #region internal constructors
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal JobRouterClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of JobRouterClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal JobRouterClient(Uri endpoint, JobRouterClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new JobRouterClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         #endregion
@@ -150,9 +178,9 @@ namespace Azure.Communication.JobRouter
                 }
 
                 var response = await UpsertJobAsync(
-                        id: options.JobId,
+                        jobId: options.JobId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -208,9 +236,9 @@ namespace Azure.Communication.JobRouter
                 }
 
                 var response = UpsertJob(
-                    id: options.JobId,
+                    jobId: options.JobId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterJob.FromResponse(response), response);
@@ -268,9 +296,9 @@ namespace Azure.Communication.JobRouter
                 }
 
                 var response = await UpsertJobAsync(
-                        id: options.JobId,
+                        jobId: options.JobId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -325,9 +353,9 @@ namespace Azure.Communication.JobRouter
                 }
 
                 var response = UpsertJob(
-                    id: options.JobId,
+                    jobId: options.JobId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterJob.FromResponse(response), response);
@@ -342,52 +370,22 @@ namespace Azure.Communication.JobRouter
         #endregion Create job with direct queue assignment
 
         /// <summary> Update an existing job. </summary>
-        /// <param name="options"> Options for updating a job. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="job"> Job to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterJob>> UpdateJobAsync(
-            UpdateJobOptions options,
+            RouterJob job, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
             scope.Start();
             try
             {
-                var request = new RouterJob
-                {
-                    ChannelId = options.ChannelId,
-                    ClassificationPolicyId = options.ClassificationPolicyId,
-                    ChannelReference = options.ChannelReference,
-                    QueueId = options.QueueId,
-                    Priority = options.Priority,
-                    DispositionCode = options.DispositionCode,
-                    MatchingMode = options.MatchingMode,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var workerSelector in options.RequestedWorkerSelectors)
-                {
-                    request.RequestedWorkerSelectors.Add(workerSelector);
-                }
-
-                foreach (var note in options.Notes)
-                {
-                    request.Notes.Add(note);
-                }
-
                 var response = await UpsertJobAsync(
-                        id: options.JobId,
-                        content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        jobId: job.Id,
+                        content: job.ToRequestContent(),
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -401,52 +399,22 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Update an existing job. </summary>
-        /// <param name="options"> Options for updating a job. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="job"> Job to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterJob> UpdateJob(
-            UpdateJobOptions options,
+            RouterJob job, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
             scope.Start();
             try
             {
-                var request = new RouterJob
-                {
-                    ChannelId = options.ChannelId,
-                    ClassificationPolicyId = options.ClassificationPolicyId,
-                    ChannelReference = options.ChannelReference,
-                    QueueId = options.QueueId,
-                    Priority = options.Priority,
-                    DispositionCode = options.DispositionCode,
-                    MatchingMode = options.MatchingMode,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var workerSelector in options.RequestedWorkerSelectors)
-                {
-                    request.RequestedWorkerSelectors.Add(workerSelector);
-                }
-
-                foreach (var note in options.Notes)
-                {
-                    request.Notes.Add(note);
-                }
-
                 var response = UpsertJob(
-                    id: options.JobId,
-                    content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    jobId: job.Id,
+                    content: job.ToRequestContent(),
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterJob.FromResponse(response), response);
@@ -458,14 +426,92 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary>
+        /// [Protocol Method] Updates a router job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateJobAsync(string jobId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertJobRequest(jobId, content, requestConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a router job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpdateJob(string jobId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertJobRequest(jobId, content, requestConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Reclassify a job. </summary>
         /// <param name="jobId"> The id of the job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         ///<exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> ReclassifyJobAsync(
-            string jobId,
-            CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ReclassifyJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
@@ -473,10 +519,10 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await ReclassifyJobAsync(
-                    id: jobId,
-                    reclassifyJobRequest: new Dictionary<string, string>(),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await ReclassifyJobAsync(jobId: jobId,
+                        options: new Dictionary<string, string>(),
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -490,9 +536,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         ///<exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response ReclassifyJob(
-            string jobId,
-            CancellationToken cancellationToken = default)
+        public virtual Response ReclassifyJob(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
@@ -501,155 +545,8 @@ namespace Azure.Communication.JobRouter
             try
             {
                 return ReclassifyJob(
-                    id: jobId,
-                    reclassifyJobRequest: new Dictionary<string, string>(),
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
-        /// <param name="options"> Options for cancelling a job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> CancelJobAsync(
-            CancelJobOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CancelJob)}");
-            scope.Start();
-            try
-            {
-                return await CancelJobAsync(
-                        id: options.JobId,
-                        cancelJobRequest: new CancelJobRequest(options.Note, options.DispositionCode),
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
-        /// <param name="options"> Options for cancelling a job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CancelJob(
-            CancelJobOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CancelJob)}");
-            scope.Start();
-            try
-            {
-                return CancelJob(
-                    id: options.JobId,
-                    cancelJobRequest: new CancelJobRequest(options.Note, options.DispositionCode),
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Completes an assigned job. </summary>
-        /// <param name="options"> Options for completing a job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> CompleteJobAsync(
-            CompleteJobOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
-            scope.Start();
-            try
-            {
-                return await CompleteJobAsync(
-                        id: options.JobId,
-                        completeJobRequest: new CompleteJobRequest(options.AssignmentId, options.Note),
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Completes an assigned job. </summary>
-        /// <param name="options"> Options for completing a job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CompleteJob(
-            CompleteJobOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
-            scope.Start();
-            try
-            {
-                return CompleteJob(
-                    id: options.JobId,
-                    completeJobRequest: new CompleteJobRequest(options.AssignmentId, options.Note),
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Closes a completed job. </summary>
-        /// <param name="options"> Options for closing a job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> CloseJobAsync(
-            CloseJobOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
-            scope.Start();
-            try
-            {
-                return await CloseJobAsync(
-                        id: options.JobId,
-                        closeJobRequest: new CloseJobRequest(options.AssignmentId, options.DispositionCode, options.CloseAt, options.Note),
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Closes a completed job. </summary>
-        /// <param name="options"> Options for closing a job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response CloseJob(
-            CloseJobOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
-            scope.Start();
-            try
-            {
-                return CloseJob(
-                    id: options.JobId,
-                    closeJobRequest: new CloseJobRequest(options.AssignmentId, options.DispositionCode, options.CloseAt, options.Note),
+                    jobId: jobId,
+                    options: new Dictionary<string, string>(),
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -660,57 +557,6 @@ namespace Azure.Communication.JobRouter
         }
 
         #endregion Job
-
-        #region Offer
-
-        /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="options"> The options for declining a job offer. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> DeclineJobOfferAsync(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
-            scope.Start();
-            try
-            {
-                return await DeclineJobOfferAsync(
-                        workerId: options.WorkerId,
-                        offerId: options.OfferId,
-                        declineJobOfferRequest: new DeclineJobOfferRequest { RetryOfferAt = options.RetryOfferAt },
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="options"> The options for declining a job offer. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response DeclineJobOffer(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
-            scope.Start();
-            try
-            {
-                return DeclineJobOffer(
-                    workerId: options.WorkerId,
-                    offerId: options.OfferId,
-                    declineJobOfferRequest: new DeclineJobOfferRequest { RetryOfferAt = options.RetryOfferAt },
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        #endregion Offer
 
         #region Worker
 
@@ -726,16 +572,14 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                var request = new RouterWorker()
+                var request = new RouterWorker
                 {
-                    TotalCapacity = options.TotalCapacity,
+                    Capacity = options.Capacity,
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueAssignments)
-                {
-                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
-                }
+                request.Queues.AddRange(options.Queues);
+                request.Channels.AddRange(options.Channels);
 
                 foreach (var label in options.Labels)
                 {
@@ -747,15 +591,10 @@ namespace Azure.Communication.JobRouter
                     request.Tags[tag.Key] = tag.Value;
                 }
 
-                foreach (var channel in options.ChannelConfigurations)
-                {
-                    request.ChannelConfigurations[channel.Key] = channel.Value;
-                }
-
                 var response = await UpsertWorkerAsync(
                         workerId: options.WorkerId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -780,16 +619,14 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                var request = new RouterWorker()
+                var request = new RouterWorker
                 {
-                    TotalCapacity = options.TotalCapacity,
+                    Capacity = options.Capacity,
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueAssignments)
-                {
-                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
-                }
+                request.Queues.AddRange(options.Queues);
+                request.Channels.AddRange(options.Channels);
 
                 foreach (var label in options.Labels)
                 {
@@ -801,15 +638,10 @@ namespace Azure.Communication.JobRouter
                     request.Tags[tag.Key] = tag.Value;
                 }
 
-                foreach (var channel in options.ChannelConfigurations)
-                {
-                    request.ChannelConfigurations[channel.Key] = channel.Value;
-                }
-
                 var response = UpsertWorker(
                     workerId: options.WorkerId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterWorker.FromResponse(response), response);
@@ -821,48 +653,23 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Create or update a worker to process jobs. </summary>
-        /// <param name="options"> Options for updating a router worker. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <summary> Update a worker to process jobs. </summary>
+        /// <param name="worker"> Worker to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterWorker>> UpdateWorkerAsync(
-            UpdateWorkerOptions options,
+            RouterWorker worker, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();
             try
             {
-                var request = new RouterWorker()
-                {
-                    TotalCapacity = options?.TotalCapacity,
-                    AvailableForOffers = options?.AvailableForOffers
-                };
-
-                foreach (var queueAssignment in options.QueueAssignments)
-                {
-                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
-                }
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var channel in options.ChannelConfigurations)
-                {
-                    request.ChannelConfigurations[channel.Key] = channel.Value;
-                }
-
                 var response = await UpsertWorkerAsync(
-                        workerId: options.WorkerId,
-                        content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        workerId: worker.Id,
+                        content: worker.ToRequestContent(),
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -875,48 +682,23 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Create or update a worker to process jobs. </summary>
-        /// <param name="options"> Options for updating a router worker. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <summary> Update a worker to process jobs. </summary>
+        /// <param name="worker"> Worker to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterWorker> UpdateWorker(
-            UpdateWorkerOptions options,
+            RouterWorker worker, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();
             try
             {
-                var request = new RouterWorker()
-                {
-                    TotalCapacity = options.TotalCapacity,
-                    AvailableForOffers = options?.AvailableForOffers
-                };
-
-                foreach (var queueAssignment in options.QueueAssignments)
-                {
-                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
-                }
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var channel in options.ChannelConfigurations)
-                {
-                    request.ChannelConfigurations[channel.Key] = channel.Value;
-                }
-
                 var response = UpsertWorker(
-                    workerId: options.WorkerId,
-                    content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    workerId: worker.Id,
+                    content: worker.ToRequestContent(),
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterWorker.FromResponse(response), response);
@@ -928,53 +710,82 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Unassign a job from a worker. </summary>
-        /// <param name="options"> Options for unassigning a job from a worker. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Updates a worker.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateWorkerAsync(string workerId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UnassignJobAsync)}");
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();
             try
             {
-                var response = await UnassignJobAsync(
-                        id: options.JobId,
-                        assignmentId: options.AssignmentId,
-                        unassignJobRequest: new UnassignJobRequest(options.SuspendMatching),
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, requestConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                scope.Failed(ex);
+                scope.Failed(e);
                 throw;
             }
         }
 
-        /// <summary> Unassign a job from a worker. </summary>
-        /// <param name="options"> Options for unassigning a job from a worker. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<UnassignJobResult> UnassignJob(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Updates a worker.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpdateWorker(string workerId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UnassignJob)}");
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();
             try
             {
-                var response = UnassignJob(
-                    id: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    unassignJobRequest: new UnassignJobRequest(options.SuspendMatching),
-                    cancellationToken: cancellationToken);
-
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, requestConditions, context);
+                return _pipeline.ProcessMessage(message, context);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                scope.Failed(ex);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -1015,40 +826,40 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        /// <summary> Un-assign a job. </summary>
-        /// <param name="id"> Id of the job to un-assign. </param>
-        /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
-        /// <param name="unassignJobRequest"> Request body for unassign route. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJobAsync(string,string,UnassignJobRequest,CancellationToken)']/*" />
-        internal virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UnassignJobAsync(id, assignmentId, unassignJobRequest?.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(UnassignJobResult.FromResponse(response), response);
-        }
-
-        /// <summary> Un-assign a job. </summary>
-        /// <param name="id"> Id of the job to un-assign. </param>
-        /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
-        /// <param name="unassignJobRequest"> Request body for unassign route. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJob(string,string,UnassignJobRequest,CancellationToken)']/*" />
-        internal virtual Response<UnassignJobResult> UnassignJob(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UnassignJob(id, assignmentId, unassignJobRequest?.ToRequestContent(), context);
-            return Response.FromValue(UnassignJobResult.FromResponse(response), response);
-        }
+        // /// <summary> Un-assign a job. </summary>
+        // /// <param name="id"> Id of the job to un-assign. </param>
+        // /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        // /// <param name="unassignJobRequest"> Request body for unassign route. </param>
+        // /// <param name="cancellationToken"> The cancellation token to use. </param>
+        // /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        // /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        // /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJobAsync(string,string,UnassignJobRequest,CancellationToken)']/*" />
+        // internal virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
+        // {
+        //     Argument.AssertNotNullOrEmpty(id, nameof(id));
+        //     Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
+        //
+        //     RequestContext context = FromCancellationToken(cancellationToken);
+        //     Response response = await UnassignJobAsync(id, assignmentId, unassignJobRequest?.ToRequestContent(), context).ConfigureAwait(false);
+        //     return Response.FromValue(UnassignJobResult.FromResponse(response), response);
+        // }
+        //
+        // /// <summary> Un-assign a job. </summary>
+        // /// <param name="id"> Id of the job to un-assign. </param>
+        // /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
+        // /// <param name="unassignJobRequest"> Request body for unassign route. </param>
+        // /// <param name="cancellationToken"> The cancellation token to use. </param>
+        // /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        // /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        // /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJob(string,string,UnassignJobRequest,CancellationToken)']/*" />
+        // internal virtual Response<UnassignJobResult> UnassignJob(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
+        // {
+        //     Argument.AssertNotNullOrEmpty(id, nameof(id));
+        //     Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
+        //
+        //     RequestContext context = FromCancellationToken(cancellationToken);
+        //     Response response = UnassignJob(id, assignmentId, unassignJobRequest?.ToRequestContent(), context);
+        //     return Response.FromValue(UnassignJobResult.FromResponse(response), response);
+        // }
     }
 }

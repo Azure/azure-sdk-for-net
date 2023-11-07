@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.BotService
     }
     public partial class BotChannelData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotChannelData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotChannelData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotChannelProperties Properties { get { throw null; } set { } }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService
     }
     public partial class BotConnectionSettingData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotConnectionSettingData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotConnectionSettingData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties Properties { get { throw null; } set { } }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.BotService
     }
     public partial class BotData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotProperties Properties { get { throw null; } set { } }
@@ -217,6 +217,42 @@ namespace Azure.ResourceManager.BotService
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.BotService.Mocking
+{
+    public partial class MockableBotServiceArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBotServiceArmClient() { }
+        public virtual Azure.ResourceManager.BotService.BotChannelResource GetBotChannelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.BotService.BotConnectionSettingResource GetBotConnectionSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.BotService.BotResource GetBotResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableBotServiceResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBotServiceResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.BotResource> GetBot(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotResource>> GetBotAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.BotService.BotCollection GetBots() { throw null; }
+    }
+    public partial class MockableBotServiceSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBotServiceSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.BotService.Models.BotServiceProvider> GetBotConnectionServiceProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.Models.BotServiceProvider> GetBotConnectionServiceProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.BotService.BotResource> GetBots(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.BotResource> GetBotsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult> GetBotServiceHostSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceHostSettingsResult>> GetBotServiceHostSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableBotServiceTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBotServiceTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class AcsChatChannel : Azure.ResourceManager.BotService.Models.BotChannelProperties
@@ -286,7 +322,7 @@ namespace Azure.ResourceManager.BotService.Models
     }
     public partial class BotChannelGetWithKeysResult : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotChannelGetWithKeysResult(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotChannelGetWithKeysResult(Azure.Core.AzureLocation location) { }
         public string ChangedTime { get { throw null; } set { } }
         public string EntityTag { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }

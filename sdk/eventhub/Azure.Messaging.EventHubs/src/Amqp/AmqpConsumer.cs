@@ -396,9 +396,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                     operationId,
                     failedAttemptCount,
                     receivedEventCount,
+                    stopWatch.GetElapsedTime().TotalSeconds,
                     firstReceivedEvent?.SequenceNumber.ToString(),
-                    LastReceivedEvent?.SequenceNumber.ToString(),
-                    stopWatch.GetElapsedTime().TotalSeconds);
+                    LastReceivedEvent?.SequenceNumber.ToString());
             }
         }
 

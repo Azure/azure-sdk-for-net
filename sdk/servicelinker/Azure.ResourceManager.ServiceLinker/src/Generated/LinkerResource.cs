@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.ServiceLinker
     public partial class LinkerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LinkerResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="linkerName"> The linkerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string linkerName)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}";

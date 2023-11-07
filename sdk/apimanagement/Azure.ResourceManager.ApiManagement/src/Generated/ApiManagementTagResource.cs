@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementTagResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementTagResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="tagId"> The tagId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string tagId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}";

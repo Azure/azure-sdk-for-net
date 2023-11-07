@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class ServiceAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceAlertResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="alertId"> The alertId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Guid alertId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}";

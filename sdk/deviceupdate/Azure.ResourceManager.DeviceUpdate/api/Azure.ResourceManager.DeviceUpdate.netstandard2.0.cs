@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.DeviceUpdate
     }
     public partial class DeviceUpdateAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DeviceUpdateAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DeviceUpdateAccountData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.DeviceUpdate.Models.Encryption Encryption { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail> Locations { get { throw null; } }
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate
     }
     public partial class DeviceUpdateInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DeviceUpdateInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DeviceUpdateInstanceData(Azure.Core.AzureLocation location) { }
         public string AccountName { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties DiagnosticStorageProperties { get { throw null; } set { } }
         public bool? EnableDiagnostics { get { throw null; } set { } }
@@ -237,13 +238,40 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.PrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DeviceUpdate.Mocking
+{
+    public partial class MockableDeviceUpdateArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDeviceUpdateArmClient() { }
+        public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource GetDeviceUpdateAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceResource GetDeviceUpdateInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionResource GetDeviceUpdatePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyResource GetPrivateEndpointConnectionProxyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceUpdate.PrivateLinkResource GetPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDeviceUpdateResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDeviceUpdateResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> GetDeviceUpdateAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>> GetDeviceUpdateAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountCollection GetDeviceUpdateAccounts() { throw null; }
+    }
+    public partial class MockableDeviceUpdateSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDeviceUpdateSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> GetDeviceUpdateAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> GetDeviceUpdateAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public static partial class ArmDeviceUpdateModelFactory
     {
         public static Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = default(bool?), Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityReason? reason = default(Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.DeviceUpdate.Models.ConnectionDetails ConnectionDetails(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null) { throw null; }
-        public static Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData DeviceUpdateAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState?), string hostName = null, Azure.ResourceManager.DeviceUpdate.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DeviceUpdate.Models.PublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku? sku = default(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail> locations = null) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData DeviceUpdateAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState?), string hostName = null, Azure.ResourceManager.DeviceUpdate.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DeviceUpdate.Models.PublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku? sku = default(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku?), Azure.ResourceManager.DeviceUpdate.Models.Encryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail> locations = null) { throw null; }
         public static Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail DeviceUpdateAccountLocationDetail(string name = null, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole? role = default(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole?)) { throw null; }
         public static Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceData DeviceUpdateInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState?), string accountName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.Models.IotHubSettings> iotHubs = null, bool? enableDiagnostics = default(bool?), Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties diagnosticStorageProperties = null) { throw null; }
         public static Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData DeviceUpdatePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState connectionState = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionProvisioningState?)) { throw null; }
@@ -414,6 +442,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public Azure.ResourceManager.DeviceUpdate.Models.AuthenticationType AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
+    }
+    public partial class Encryption
+    {
+        public Encryption() { }
+        public System.Uri KeyVaultKeyUri { get { throw null; } set { } }
+        public string UserAssignedIdentity { get { throw null; } set { } }
     }
     public partial class GroupConnectivityInformation
     {
