@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns("BlockBlob");
             mock.Setup(b => b.ProviderId)
                 .Returns("blob");
-            mock.Setup(b => b.MaxChunkSize)
+            mock.Setup(b => b.MaxSupportedChunkSize)
                 .Returns(Constants.GB);
             mock.Setup(b => b.GetSourceCheckpointData())
                 .Returns(new MockResourceCheckpointData());
@@ -113,7 +113,7 @@ namespace Azure.Storage.DataMovement.Tests
             destMock.Verify(b => b.Uri, Times.Exactly(5));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
-            destMock.Verify(b => b.MaxChunkSize, Times.Exactly(2));
+            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
             destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
             destMock.Verify(b => b.CopyFromUriAsync(
                 sourceMock.Object,
@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement.Tests
             destMock.Verify(b => b.Uri, Times.Exactly(5));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
-            destMock.Verify(b => b.MaxChunkSize, Times.Exactly(2));
+            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
             destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
             destMock.Verify(b => b.CopyFromUriAsync(
                 sourceMock.Object,
