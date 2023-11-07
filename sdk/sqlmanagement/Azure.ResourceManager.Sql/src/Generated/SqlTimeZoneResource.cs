@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlTimeZoneResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlTimeZoneResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="timeZoneId"> The timeZoneId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string timeZoneId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}";

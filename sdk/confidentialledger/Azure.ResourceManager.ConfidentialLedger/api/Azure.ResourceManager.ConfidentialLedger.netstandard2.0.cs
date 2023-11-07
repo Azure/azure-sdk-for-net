@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
     }
     public partial class ConfidentialLedgerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConfidentialLedgerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ConfidentialLedgerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties Properties { get { throw null; } set { } }
     }
     public static partial class ConfidentialLedgerExtensions
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
     }
     public partial class ManagedCcfData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedCcfData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedCcfData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties Properties { get { throw null; } set { } }
     }
     public partial class ManagedCcfResource : Azure.ResourceManager.ArmResource
@@ -100,6 +100,35 @@ namespace Azure.ResourceManager.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.ManagedCcfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.ManagedCcfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ConfidentialLedger.Mocking
+{
+    public partial class MockableConfidentialLedgerArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableConfidentialLedgerArmClient() { }
+        public virtual Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource GetConfidentialLedgerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource GetManagedCcfResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableConfidentialLedgerResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableConfidentialLedgerResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> GetConfidentialLedger(string ledgerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>> GetConfidentialLedgerAsync(string ledgerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerCollection GetConfidentialLedgers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource> GetManagedCcf(string appName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource>> GetManagedCcfAsync(string appName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConfidentialLedger.ManagedCcfCollection GetManagedCcfs() { throw null; }
+    }
+    public partial class MockableConfidentialLedgerSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableConfidentialLedgerSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> GetConfidentialLedgers(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> GetConfidentialLedgersAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource> GetManagedCcfs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource> GetManagedCcfsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ConfidentialLedger.Models

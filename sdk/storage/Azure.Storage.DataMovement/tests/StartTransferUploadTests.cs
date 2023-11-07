@@ -1462,6 +1462,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
         #endregion
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/2010")]
         [Test]
         public async Task SupportsLongFiles()
         {

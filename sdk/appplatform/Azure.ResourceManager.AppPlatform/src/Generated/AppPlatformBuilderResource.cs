@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.AppPlatform
     public partial class AppPlatformBuilderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBuilderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
+        /// <param name="builderName"> The builderName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string builderName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}";
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBuildpackBindingResources and their operations over a AppPlatformBuildpackBindingResource. </returns>
         public virtual AppPlatformBuildpackBindingCollection GetAppPlatformBuildpackBindings()
         {
-            return GetCachedClient(Client => new AppPlatformBuildpackBindingCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBuildpackBindingCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +114,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildpackBindingName"> The name of the Buildpack Binding Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildpackBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBuildpackBindingResource>> GetAppPlatformBuildpackBindingAsync(string buildpackBindingName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +137,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildpackBindingName"> The name of the Buildpack Binding Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildpackBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildpackBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBuildpackBindingResource> GetAppPlatformBuildpackBinding(string buildpackBindingName, CancellationToken cancellationToken = default)
         {

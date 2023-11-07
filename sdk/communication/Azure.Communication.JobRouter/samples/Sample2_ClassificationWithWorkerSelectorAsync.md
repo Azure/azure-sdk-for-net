@@ -64,9 +64,9 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
         Name = "Classification_Policy_O365",
         WorkerSelectorAttachments =
         {
-            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Location", LabelOperator.Equal, new LabelValue("United States"))),
-            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us"))),
-            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")))
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Location", LabelOperator.Equal, new RouterValue("United States"))),
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Language", LabelOperator.Equal, new RouterValue("en-us"))),
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Geo", LabelOperator.Equal, new RouterValue("NA")))
         }
     });
 
@@ -94,10 +94,10 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
         Channels = { new RouterChannel("general", 10), },
         Labels =
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Geo"] = new LabelValue("NA"),
-            ["Skill_English_Lvl"] = new LabelValue(7),
+            ["Location"] = new RouterValue("United States"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Geo"] = new RouterValue("NA"),
+            ["Skill_English_Lvl"] = new RouterValue(7),
         }, // attaching labels associated with worker
         Queues = { queueId }
     });
@@ -109,7 +109,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     {
         AvailableForOffers = true, // registering worker at the time of creation
         Channels = { new RouterChannel("general", 10), },
-        Labels = { ["Skill_English_Lvl"] = new LabelValue(7) }, // attaching labels associated with worker
+        Labels = { ["Skill_English_Lvl"] = new RouterValue(7) }, // attaching labels associated with worker
         Queues = { queueId }
     });
 
@@ -182,17 +182,17 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
                 condition: new ExpressionRouterRule("If(job.Location = \"United States\", true, false)"),
                 workerSelectors: new List<RouterWorkerSelector>()
                 {
-                    new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us")),
-                    new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
-                    new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
+                    new RouterWorkerSelector("Language", LabelOperator.Equal, new RouterValue("en-us")),
+                    new RouterWorkerSelector("Geo", LabelOperator.Equal, new RouterValue("NA")),
+                    new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanOrEqual, new RouterValue(5))
                 }),
             new ConditionalWorkerSelectorAttachment(
                 condition: new ExpressionRouterRule("If(job.Location = \"Canada\", true, false)"),
                 workerSelectors: new List<RouterWorkerSelector>()
                 {
-                    new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-ca")),
-                    new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
-                    new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
+                    new RouterWorkerSelector("Language", LabelOperator.Equal, new RouterValue("en-ca")),
+                    new RouterWorkerSelector("Geo", LabelOperator.Equal, new RouterValue("NA")),
+                    new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanOrEqual, new RouterValue(5))
                 }),
         }
     });
@@ -206,7 +206,7 @@ Response<RouterJob> jobO365 = await routerClient.CreateJobWithClassificationPoli
         Priority = 10, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify priority
         Labels = // we will attach a label to the job which will affects its classification
         {
-            ["Location"] = new LabelValue("United States"),
+            ["Location"] = new RouterValue("United States"),
         }
     });
 
@@ -225,9 +225,9 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
         Channels = { new RouterChannel("general", 10), },
         Labels =
         {
-            ["Language"] = new LabelValue("en-us"),
-            ["Geo"] = new LabelValue("NA"),
-            ["Skill_English_Lvl"] = new LabelValue(7)
+            ["Language"] = new RouterValue("en-us"),
+            ["Geo"] = new RouterValue("NA"),
+            ["Skill_English_Lvl"] = new RouterValue(7)
         }, // attaching labels associated with worker
         Queues = { queueId }
     });
@@ -240,9 +240,9 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
         Channels = { new RouterChannel("general", 10) },
         Labels =
         {
-            ["Language"] = new LabelValue("en-ca"),
-            ["Geo"] = new LabelValue("NA"),
-            ["Skill_English_Lvl"] = new LabelValue(7)
+            ["Language"] = new RouterValue("en-ca"),
+            ["Geo"] = new RouterValue("NA"),
+            ["Skill_English_Lvl"] = new RouterValue(7)
         }, // attaching labels associated with worker
         Queues = { queueId }
     });
@@ -311,7 +311,7 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
             new PassThroughWorkerSelectorAttachment("Geo", LabelOperator.Equal),
             new PassThroughWorkerSelectorAttachment("Language", LabelOperator.Equal),
             new PassThroughWorkerSelectorAttachment("Dept", LabelOperator.Equal),
-            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))),
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanOrEqual, new RouterValue(5))),
         }
     });
 
@@ -324,10 +324,10 @@ Response<RouterJob> jobO365 = await routerClient.CreateJobWithClassificationPoli
         Priority = 10, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify priority
         Labels = // we will attach a label to the job which will affects its classification
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Geo"] = new LabelValue("NA"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Dept"] = new LabelValue("O365")
+            ["Location"] = new RouterValue("United States"),
+            ["Geo"] = new RouterValue("NA"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Dept"] = new RouterValue("O365")
         }
     });
 
@@ -339,10 +339,10 @@ Response<RouterJob> jobXbox = await routerClient.CreateJobWithClassificationPoli
         Priority = 10, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify priority
         Labels = // we will attach a label to the job which will affects its classification
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Geo"] = new LabelValue("NA"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Dept"] = new LabelValue("Xbox")
+            ["Location"] = new RouterValue("United States"),
+            ["Geo"] = new RouterValue("NA"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Dept"] = new RouterValue("Xbox")
         }
     });
 
@@ -366,11 +366,11 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
         Channels = { new RouterChannel("general", 10), },
         Labels =
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Geo"] = new LabelValue("NA"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Dept"] = new LabelValue("O365"),
-            ["Skill_English_Lvl"] = new LabelValue(10),
+            ["Location"] = new RouterValue("United States"),
+            ["Geo"] = new RouterValue("NA"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Dept"] = new RouterValue("O365"),
+            ["Skill_English_Lvl"] = new RouterValue(10),
         }, // attaching labels associated with worker
         Queues = { queueId }
     });
@@ -384,11 +384,11 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
         Channels = { new RouterChannel("general", 10), },
         Labels =
         {
-            ["Location"] = new LabelValue("United States"),
-            ["Geo"] = new LabelValue("NA"),
-            ["Language"] = new LabelValue("en-us"),
-            ["Dept"] = new LabelValue("Xbox"),
-            ["Skill_English_Lvl"] = new LabelValue(10),
+            ["Location"] = new RouterValue("United States"),
+            ["Geo"] = new RouterValue("NA"),
+            ["Language"] = new RouterValue("en-us"),
+            ["Dept"] = new RouterValue("Xbox"),
+            ["Skill_English_Lvl"] = new RouterValue(10),
         }, // attaching labels associated with worker
         Queues = { queueId }
     });
