@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,11 +20,11 @@ namespace Azure.Communication.Chat
                 return null;
             }
             string id = default;
-            AttachmentType attachmentType = default;
+            ChatAttachmentType attachmentType = default;
             Optional<string> extension = default;
             Optional<string> name = default;
-            Optional<string> url = default;
-            Optional<string> previewUrl = default;
+            Optional<Uri> url = default;
+            Optional<Uri> previewUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -33,7 +34,7 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("attachmentType"u8))
                 {
-                    attachmentType = new AttachmentType(property.Value.GetString());
+                    attachmentType = new ChatAttachmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -48,12 +49,20 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("previewUrl"u8))
                 {
-                    previewUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    previewUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ChatAttachmentInternal(string id, AttachmentType attachmentType)
+        internal ChatAttachmentInternal(string id, ChatAttachmentType attachmentType)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -32,7 +32,7 @@ namespace Azure.Communication.Chat
         /// <param name="name"> The name of the attachment content. </param>
         /// <param name="url"> The URL where the attachment can be downloaded. </param>
         /// <param name="previewUrl"> The URL where the preview of attachment can be downloaded. </param>
-        internal ChatAttachmentInternal(string id, AttachmentType attachmentType, string extension, string name, string url, string previewUrl)
+        internal ChatAttachmentInternal(string id, ChatAttachmentType attachmentType, string extension, string name, Uri url, Uri previewUrl)
         {
             Id = id;
             AttachmentType = attachmentType;
@@ -45,14 +45,14 @@ namespace Azure.Communication.Chat
         /// <summary> Id of the attachment. </summary>
         public string Id { get; }
         /// <summary> The type of attachment. </summary>
-        public AttachmentType AttachmentType { get; }
+        public ChatAttachmentType AttachmentType { get; }
         /// <summary> The file extension of the attachment, if available. </summary>
         public string Extension { get; }
         /// <summary> The name of the attachment content. </summary>
         public string Name { get; }
         /// <summary> The URL where the attachment can be downloaded. </summary>
-        public string Url { get; }
+        public Uri Url { get; }
         /// <summary> The URL where the preview of attachment can be downloaded. </summary>
-        public string PreviewUrl { get; }
+        public Uri PreviewUrl { get; }
     }
 }

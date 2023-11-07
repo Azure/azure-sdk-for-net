@@ -12,7 +12,7 @@ namespace Azure.Communication.Chat
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ChatAttachment(string id, AttachmentType attachmentType)
+        internal ChatAttachment(string id, ChatAttachmentType attachmentType)
         {
             Id = id;
             AttachmentType = attachmentType;
@@ -23,16 +23,16 @@ namespace Azure.Communication.Chat
         /// <param name="attachmentType"> The type of attachment. </param>
         /// <param name="extension"> The file extension of the attachment, if available. </param>
         /// <param name="name"> The name of the attachment content. </param>
-        /// <param name="url"> The URL where the attachment can be downloaded. </param>
-        /// <param name="previewUrl"> The URL where the preview of attachment can be downloaded. </param>
-        internal ChatAttachment(string id, AttachmentType attachmentType, string extension, string name, string url, string previewUrl)
+        /// <param name="uri"> The URI where the attachment can be downloaded. </param>
+        /// <param name="previewUri"> The URI where the preview of attachment can be downloaded. </param>
+        internal ChatAttachment(string id, ChatAttachmentType attachmentType, string extension, string name, Uri uri, Uri previewUri)
         {
             Id = id;
             AttachmentType = attachmentType;
             Extension = extension;
             Name = name;
-            Url = url;
-            PreviewUrl = previewUrl;
+            Uri = uri;
+            PreviewUri = previewUri;
         }
 
         internal ChatAttachment(ChatAttachmentInternal chatAttachmentInternal)
@@ -41,26 +41,26 @@ namespace Azure.Communication.Chat
             AttachmentType = chatAttachmentInternal.AttachmentType;
             Extension = chatAttachmentInternal.Extension;
             Name = chatAttachmentInternal.Name;
-            Url = chatAttachmentInternal.Url;
-            PreviewUrl = chatAttachmentInternal.PreviewUrl;
+            Uri = chatAttachmentInternal.Url;
+            PreviewUri = chatAttachmentInternal.PreviewUrl;
         }
 
         /// <summary> Id of the attachment. </summary>
         public string Id { get; }
         /// <summary> The type of attachment. </summary>
-        public AttachmentType AttachmentType { get; }
+        public ChatAttachmentType AttachmentType { get; }
         /// <summary> The file extension of the attachment, if available. </summary>
         public string Extension { get; }
         /// <summary> The name of the attachment content. </summary>
         public string Name { get; }
         /// <summary> The URL where the attachment can be downloaded. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
         /// <summary> The URL where the preview of attachment can be downloaded. </summary>
-        public string PreviewUrl { get; }
+        public Uri PreviewUri { get; }
 
         internal ChatAttachmentInternal ToChatAttachmentInternal()
         {
-            return new ChatAttachmentInternal(Id, AttachmentType, Extension, Name, Url, PreviewUrl);
+            return new ChatAttachmentInternal(Id, AttachmentType, Extension, Name, Uri, PreviewUri);
         }
     }
 }
