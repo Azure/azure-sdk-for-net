@@ -7,12 +7,6 @@
 - Upgraded API version.
 - Added Some Properties on GoogleAds Connector 
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.4 (2023-09-26)
 
 ### Features Added
