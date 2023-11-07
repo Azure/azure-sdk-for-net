@@ -107,14 +107,14 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                 }
 
-                string finalPath = Path.Combine(directoryPath, filePath);
+                currRelPath = string.Join("/", currRelPath, pathSegments.Last()).Trim('/');
                 if (size < 0)
                 {
-                    Directory.CreateDirectory(Path.Combine(finalPath));
+                    Directory.CreateDirectory(Path.Combine(directoryPath, currRelPath));
                 }
                 else
                 {
-                    using FileStream fs = File.OpenWrite(finalPath);
+                    using FileStream fs = File.OpenWrite(Path.Combine(directoryPath, currRelPath));
                     using Stream data = await CreateLimitedMemoryStream(size);
                     await data.CopyToAsync(fs, bufferSize: 4 * Constants.KB, cancellationToken);
                 }
