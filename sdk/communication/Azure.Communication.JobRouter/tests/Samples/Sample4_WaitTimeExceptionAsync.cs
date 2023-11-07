@@ -53,20 +53,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             {
                 QueueId = fallbackQueueId,
                 Priority = 100,
-                WorkerSelectors = { new RouterWorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true)) }
+                WorkerSelectors = { new RouterWorkerSelector("HandleEscalation", LabelOperator.Equal, new RouterValue(true)) }
             };
 
             string exceptionPolicyId = "execption-policy-id";
             Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
                 exceptionPolicyId: exceptionPolicyId,
-                exceptionRules: new Dictionary<string, ExceptionRule>()
+                exceptionRules: new List<ExceptionRule>()
                 {
-                    ["WaitTimeTriggerExceptionRule"] = new ExceptionRule(
+                    new ExceptionRule(id: "WaitTimeTriggerExceptionRule",
                         trigger: trigger,
-                        actions: new Dictionary<string, ExceptionAction?>()
-                        {
-                            ["EscalateJobToFallbackQueueAction"] = action,
-                        })
+                        actions: new List<ExceptionAction> { action })
                 }));
 
             // Create initial queue

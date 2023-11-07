@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationOrderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReservationOrderResource"/> instance. </summary>
+        /// <param name="reservationOrderId"> The reservationOrderId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId)
         {
             var resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}";
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An object representing collection of ReservationDetailResources and their operations over a ReservationDetailResource. </returns>
         public virtual ReservationDetailCollection GetReservationDetails()
         {
-            return GetCachedClient(Client => new ReservationDetailCollection(Client, Id));
+            return GetCachedClient(client => new ReservationDetailCollection(client, Id));
         }
 
         /// <summary>

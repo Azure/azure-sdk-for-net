@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationSecurityGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApplicationSecurityGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="applicationSecurityGroupName"> The applicationSecurityGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationSecurityGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}";

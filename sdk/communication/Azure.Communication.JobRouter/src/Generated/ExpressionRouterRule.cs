@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     public partial class ExpressionRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of ExpressionRouterRule. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="language"> The expression language to compile to and execute. </param>
         /// <param name="expression">
         /// The string containing the expression to evaluate. Should contain return

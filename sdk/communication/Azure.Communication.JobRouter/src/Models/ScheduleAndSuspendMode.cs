@@ -7,8 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenSuppress("ScheduleAndSuspendMode")]
-    [CodeGenSuppress("ScheduleAndSuspendMode", typeof(DateTimeOffset?))]
     public partial class ScheduleAndSuspendMode : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>

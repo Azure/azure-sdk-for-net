@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.LabServices
     public partial class LabVirtualMachineImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LabVirtualMachineImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labPlanName"> The labPlanName. </param>
+        /// <param name="imageName"> The imageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labPlanName, string imageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}/images/{imageName}";

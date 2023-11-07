@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Sphere
     public partial class SphereDeviceGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SphereDeviceGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="productName"> The productName. </param>
+        /// <param name="deviceGroupName"> The deviceGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}";
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereDeploymentResources and their operations over a SphereDeploymentResource. </returns>
         public virtual SphereDeploymentCollection GetSphereDeployments()
         {
-            return GetCachedClient(Client => new SphereDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new SphereDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +114,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="deploymentName"> Deployment name. Use .default for deployment creation and to get the current deployment for the associated device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereDeploymentResource>> GetSphereDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +137,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="deploymentName"> Deployment name. Use .default for deployment creation and to get the current deployment for the associated device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SphereDeploymentResource> GetSphereDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +149,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereDeviceResources and their operations over a SphereDeviceResource. </returns>
         public virtual SphereDeviceCollection GetSphereDevices()
         {
-            return GetCachedClient(Client => new SphereDeviceCollection(Client, Id));
+            return GetCachedClient(client => new SphereDeviceCollection(client, Id));
         }
 
         /// <summary>
@@ -162,8 +167,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="deviceName"> Device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereDeviceResource>> GetSphereDeviceAsync(string deviceName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +190,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="deviceName"> Device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SphereDeviceResource> GetSphereDevice(string deviceName, CancellationToken cancellationToken = default)
         {

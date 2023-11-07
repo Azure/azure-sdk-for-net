@@ -14,6 +14,7 @@ namespace Azure.Communication.JobRouter
     public partial class RouterQueue
     {
         /// <summary> Initializes a new instance of RouterQueue. </summary>
+        /// <param name="etag"> Concurrency Token. </param>
         /// <param name="id"> The Id of this queue. </param>
         /// <param name="name"> The name of this queue. </param>
         /// <param name="distributionPolicyId">
@@ -28,15 +29,15 @@ namespace Azure.Communication.JobRouter
         /// (Optional) The ID of the exception policy that determines various job
         /// escalation rules.
         /// </param>
-        internal RouterQueue(string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
+        internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
         {
+            _etag = etag;
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;
             _labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
         }
-
         /// <summary> The Id of this queue. </summary>
         public string Id { get; }
     }

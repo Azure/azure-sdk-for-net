@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService
     public partial class ContainerServiceMaintenanceConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerServiceMaintenanceConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="configName"> The configName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string configName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}";
