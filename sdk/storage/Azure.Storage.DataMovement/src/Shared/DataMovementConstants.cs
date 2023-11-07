@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Reflection;
-
 namespace Azure.Storage.DataMovement
 {
     internal class DataMovementConstants
@@ -17,6 +15,9 @@ namespace Azure.Storage.DataMovement
         internal const int MaxJobChunkTasks = 3000;
         internal const int StatusCheckInSec = 10;
         internal const int DefaultArrayPoolArraySize = 4 * 1024;
+
+        internal const long DefaultInitialTransferSize = 32 * Constants.MB;
+        internal const long DefaultChunkSize = 4 * Constants.MB;
 
         internal static class ConcurrencyTuner
         {

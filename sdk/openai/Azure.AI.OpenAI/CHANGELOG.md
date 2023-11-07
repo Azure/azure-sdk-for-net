@@ -1,8 +1,16 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.9 (2023-11-06)
 
 ### Breaking Changes
 
@@ -80,14 +88,18 @@ And *added* as replacements are:
 - `CompletionsOptions(string, IEnumerable<string>)`
 - `EmbeddingsOptions(string, IEnumerable<string>)`
 
-#### Embeddings
+#### Embeddings now represented as `ReadOnlyMemory<float>`
 
-To align representations of embeddings across Azure AI, the `Embeddings` type has been updated to use
-`ReadOnlyMemory<float>` instead of `IReadOnlyList<float>`.
+Changed the representation of embeddings (specifically, the type of the `Embedding` property of the `EmbeddingItem` class)
+from `IReadOnlyList<float>` to `ReadOnlyMemory<float>` as part of a broader effort to establish consistency across the
+.NET ecosystem.
 
-### Bugs Fixed
+#### `SearchKey` and `EmbeddingKey` properties replaced by `SetSearchKey` and `SetEmbeddingKey` methods
 
-### Other Changes
+Replaced the `SearchKey` and `EmbeddingKey` properties of the `AzureCognitiveSearchChatExtensionConfiguration` class with
+new `SetSearchKey` and `SetEmbeddingKey` methods respectively. These methods simplify the configuration of the Azure Cognitive
+Search chat extension by receiving a plain string instead of an `AzureKeyCredential`, promote more sensible key and secret
+management, and align with the Azure SDK guidelines.
 
 ## 1.0.0-beta.8 (2023-09-21)
 

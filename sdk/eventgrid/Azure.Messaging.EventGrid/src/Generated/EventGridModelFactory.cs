@@ -2334,23 +2334,28 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
         /// <param name="properties"> The thread properties. </param>
+        /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
         {
             properties ??= new Dictionary<string, object>();
+            metadata ??= new Dictionary<string, string>();
             participants ??= new List<AcsChatThreadParticipantProperties>();
 
-            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, participants?.ToList());
+            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, metadata, participants?.ToList());
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
         /// <param name="displayName"> The name of the user. </param>
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
+        /// <param name="metadata"> The metadata of the user. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadParticipantProperties"/> instance for mocking. </returns>
-        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = null, CommunicationIdentifierModel participantCommunicationIdentifier = null)
+        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = null, CommunicationIdentifierModel participantCommunicationIdentifier = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier);
+            metadata ??= new Dictionary<string, string>();
+
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata);
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadEventBaseProperties. </summary>
@@ -2428,13 +2433,15 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the thread. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
+        /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, object> properties = null)
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, string> metadata = null, IReadOnlyDictionary<string, object> properties = null)
         {
+            metadata ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, object>();
 
-            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties);
+            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, metadata, properties);
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedEventData. </summary>
@@ -2445,12 +2452,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="properties"> The updated thread properties. </param>
+        /// <param name="metadata"> The thread metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, object> properties = null)
+        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null)
         {
             properties ??= new Dictionary<string, object>();
+            metadata ??= new Dictionary<string, string>();
 
-            return new AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties);
+            return new AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties, metadata);
         }
 
         /// <summary> Initializes a new instance of AcsChatParticipantAddedToThreadWithUserEventData. </summary>
@@ -3024,14 +3033,15 @@ namespace Azure.Messaging.EventGrid
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
         /// <param name="location"> the location of the resource for which the event is being emitted. </param>
-        /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
+        /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string resourceType = null, string location = null, string tags = null, IReadOnlyDictionary<string, object> properties = null)
+        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string resourceType = null, string location = null, IReadOnlyDictionary<string, string> resourceTags = null, IReadOnlyDictionary<string, object> properties = null)
         {
+            resourceTags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, object>();
 
-            return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location, tags, properties);
+            return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location, resourceTags, properties);
         }
 
         /// <summary> Initializes a new instance of ResourceNotificationsOperationalDetails. </summary>
@@ -3052,6 +3062,15 @@ namespace Azure.Messaging.EventGrid
             return new ResourceNotificationsResourceUpdatedEventData(resourceDetails, operationalDetails, apiVersion);
         }
 
+        /// <summary> Initializes a new instance of ResourceNotificationsResourceDeletedEventData. </summary>
+        /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
+        /// <param name="operationalDetails"> details about operational info. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceDeletedEventData"/> instance for mocking. </returns>
+        public static ResourceNotificationsResourceDeletedEventData ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null)
+        {
+            return new ResourceNotificationsResourceDeletedEventData(resourceDetails, operationalDetails);
+        }
+
         /// <summary> Initializes a new instance of ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
@@ -3070,6 +3089,25 @@ namespace Azure.Messaging.EventGrid
         public static ResourceNotificationsHealthResourcesAnnotatedEventData ResourceNotificationsHealthResourcesAnnotatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
         {
             return new ResourceNotificationsHealthResourcesAnnotatedEventData(resourceDetails, operationalDetails, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsResourceManagementCreatedOrUpdatedEventData. </summary>
+        /// <param name="resourceDetails"> resourceInfo details for update event. </param>
+        /// <param name="operationalDetails"> details about operational info. </param>
+        /// <param name="apiVersion"> api version of the resource properties bag. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/> instance for mocking. </returns>
+        public static ResourceNotificationsResourceManagementCreatedOrUpdatedEventData ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
+        {
+            return new ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(resourceDetails, operationalDetails, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsResourceManagementDeletedEventData. </summary>
+        /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
+        /// <param name="operationalDetails"> details about operational info. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceManagementDeletedEventData"/> instance for mocking. </returns>
+        public static ResourceNotificationsResourceManagementDeletedEventData ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null)
+        {
+            return new ResourceNotificationsResourceManagementDeletedEventData(resourceDetails, operationalDetails);
         }
     }
 }
