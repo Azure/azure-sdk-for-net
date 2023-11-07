@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -363,7 +362,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
+            Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -382,7 +381,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
+            Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -401,7 +400,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
+            Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -430,7 +429,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
+            Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());

@@ -326,7 +326,7 @@ This sample shows how to call GetStacFeatureAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
+Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -342,7 +342,7 @@ This sample shows how to call GetStacFeatureAsync with all parameters and parse 
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
+Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -371,7 +371,7 @@ This sample shows how to call GetStacFeature and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
+Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -387,7 +387,7 @@ This sample shows how to call GetStacFeature with all parameters and parse the r
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
+Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("stacVersion").ToString());
