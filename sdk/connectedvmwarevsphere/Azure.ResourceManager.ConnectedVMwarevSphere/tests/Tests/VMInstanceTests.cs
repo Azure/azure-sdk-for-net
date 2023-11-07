@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // this example assumes you already have this VirtualMachineInstanceResource created on azure
             // for more information of creating VirtualMachineInstanceResource, please refer to the document of VirtualMachineInstanceResource
-            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet";
+            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet-sdk";
             ResourceIdentifier virtualMachineInstanceResourceId = VMwareVmInstanceResource.CreateResourceIdentifier(resourceUri);
             VMwareVmInstanceResource vMwareVmInstance = client.GetVMwareVmInstanceResource(virtualMachineInstanceResourceId);
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // this example assumes you already have this VirtualMachineInstanceResource created on azure
             // for more information of creating VirtualMachineInstanceResource, please refer to the document of VirtualMachineInstanceResource
-            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet";
+            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet-sdk";
             ResourceIdentifier virtualMachineInstanceResourceId = VMwareVmInstanceResource.CreateResourceIdentifier(resourceUri);
             VMwareVmInstanceResource virtualMachineInstance = client.GetVMwareVmInstanceResource(virtualMachineInstanceResourceId);
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // this example assumes you already have this VirtualMachineInstanceResource created on azure
             // for more information of creating VirtualMachineInstanceResource, please refer to the document of VirtualMachineInstanceResource
-            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet";
+            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet-sdk";
             ResourceIdentifier virtualMachineInstanceResourceId = VMwareVmInstanceResource.CreateResourceIdentifier(resourceUri);
             VMwareVmInstanceResource vMwareVmInstance = client.GetVMwareVmInstanceResource(virtualMachineInstanceResourceId);
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // this example assumes you already have this VirtualMachineInstanceResource created on azure
             // for more information of creating VirtualMachineInstanceResource, please refer to the document of VirtualMachineInstanceResource
-            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet";
+            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet-sdk";
             ResourceIdentifier virtualMachineInstanceResourceId = VMwareVmInstanceResource.CreateResourceIdentifier(resourceUri);
             VMwareVmInstanceResource virtualMachineInstance = client.GetVMwareVmInstanceResource(virtualMachineInstanceResourceId);
 
@@ -176,37 +176,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 
             // this example assumes you already have this VirtualMachineInstanceResource created on azure
             // for more information of creating VirtualMachineInstanceResource, please refer to the document of VirtualMachineInstanceResource
-            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet";
+            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet-sdk";
             ResourceIdentifier virtualMachineInstanceResourceId = VMwareVmInstanceResource.CreateResourceIdentifier(resourceUri);
             VMwareVmInstanceResource virtualMachineInstance = client.GetVMwareVmInstanceResource(virtualMachineInstanceResourceId);
 
             // invoke the operation
             await virtualMachineInstance.StartAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // RestartVirtualMachine
-        [TestCase]
-        [RecordedTest]
-        public async Task Restart_RestartVirtualMachine()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/RestartVirtualMachineInstance.json
-            // this example is just showing the usage of "VirtualMachineInstances_Restart" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualMachineInstanceResource created on azure
-            // for more information of creating VirtualMachineInstanceResource, please refer to the document of VirtualMachineInstanceResource
-            string resourceUri = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.HybridCompute/machines/test-machine-dotnet";
-            ResourceIdentifier virtualMachineInstanceResourceId = VMwareVmInstanceResource.CreateResourceIdentifier(resourceUri);
-            VMwareVmInstanceResource virtualMachineInstance = client.GetVMwareVmInstanceResource(virtualMachineInstanceResourceId);
-
-            // invoke the operation
-            await virtualMachineInstance.RestartAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
