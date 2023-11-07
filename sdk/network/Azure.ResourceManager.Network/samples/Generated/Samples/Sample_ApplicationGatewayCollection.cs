@@ -179,7 +179,7 @@ Name = "appgwipc",
 {
 new ApplicationGatewayTrustedRootCertificate()
 {
-Data = BinaryData.FromString("****"),
+Data = BinaryData.FromString("\"****\""),
 Name = "rootcert",
 },new ApplicationGatewayTrustedRootCertificate()
 {
@@ -191,7 +191,7 @@ Name = "rootcert1",
 {
 new ApplicationGatewayTrustedClientCertificate()
 {
-Data = BinaryData.FromString("****"),
+Data = BinaryData.FromString("\"****\""),
 Name = "clientcert",
 }
 },
@@ -199,7 +199,7 @@ Name = "clientcert",
 {
 new ApplicationGatewaySslCertificate()
 {
-Data = BinaryData.FromString("****"),
+Data = BinaryData.FromString("\"****\""),
 Password = "****",
 Name = "sslcert",
 },new ApplicationGatewaySslCertificate()

@@ -134,12 +134,6 @@ namespace Azure.Search.Documents.Tests
             (a == null) ? (b == null || b.Length == 0) : a.SequenceEqual(b ?? new T[0]);
 
         /// <summary>
-        /// Check if two sequences are equal.
-        /// </summary>
-        public static bool SequenceEqualsNullSafe<T>(this IReadOnlyList<T> a, IReadOnlyList<T> b) =>
-            (a == null) ? (b == null || b.Count == 0) : a.SequenceEqual(b ?? new T[0]);
-
-        /// <summary>
         /// Converts the elements of a collection to strings and concatenates
         /// them into a comma-separated list, or returns null for null or
         /// empty collections.
