@@ -98,7 +98,7 @@ namespace Microsoft.Extensions.Configuration
             AzureKeyVaultConfigurationOptions options)
         {
             Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
-            Argument.AssertNotNull(options, nameof(configurationBuilder));
+            Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(options.Manager, $"{nameof(options)}.{nameof(options.Manager)}");
 

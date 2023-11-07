@@ -16,6 +16,9 @@ Thank you to our developer community members who helped to make the Key Vault co
 
 ### Bugs Fixed
 
+- Corrected the parameter name in the `ArgumentNullException` that is thrown if a null `options` argument is passed 
+  to `AddAzureKeyVault`.
+
 ### Other Changes
 
 ## 1.2.2 (2022-04-05)
