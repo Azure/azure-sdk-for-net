@@ -102,7 +102,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob
 
             Response completeJob = routerClient.CompleteJob(
-                jobId: job.Value.Id, new CompleteJobOptions(acceptJobOfferResult.Value.AssignmentId)
+                jobId: job.Value.Id, acceptJobOfferResult.Value.AssignmentId, new CompleteJobOptions()
                 {
                     Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
@@ -114,7 +114,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
 
             Response closeJob = routerClient.CloseJob(
-                jobId: job.Value.Id, new CloseJobOptions(acceptJobOfferResult.Value.AssignmentId)
+                jobId: job.Value.Id, acceptJobOfferResult.Value.AssignmentId, new CloseJobOptions()
                 {
                     Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
@@ -129,7 +129,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Optionally, a job can also be set up to be marked as closed in the future.
             var closeJobInFuture = routerClient.CloseJob(
-                jobId: job.Value.Id, new CloseJobOptions(acceptJobOfferResult.Value.AssignmentId)
+                jobId: job.Value.Id, acceptJobOfferResult.Value.AssignmentId, new CloseJobOptions()
                 {
                     CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
                     Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"

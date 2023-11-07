@@ -155,7 +155,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Once a worker completes the job, it needs to mark the job as completed
 
-            Response completedJobResult = routerClient.CompleteJob(jobId, new CompleteJobOptions(acceptedJobOffer.Value.AssignmentId));
+            Response completedJobResult = routerClient.CompleteJob(jobId, acceptedJobOffer.Value.AssignmentId);
 
             queriedJob = routerClient.GetJob(jobId);
             Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.Status}"); // "Completed"
@@ -164,7 +164,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob
 
-            Response closeJobResult = routerClient.CloseJob(jobId, new CloseJobOptions(acceptedJobOffer.Value.AssignmentId));
+            Response closeJobResult = routerClient.CloseJob(jobId, acceptedJobOffer.Value.AssignmentId);
 
             queriedJob = routerClient.GetJob(jobId);
             Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.Status}"); // "Closed"

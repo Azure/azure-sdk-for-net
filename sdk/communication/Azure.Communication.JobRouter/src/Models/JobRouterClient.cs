@@ -8,6 +8,7 @@ using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Communication.JobRouter
 {
@@ -519,10 +520,11 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await ReclassifyJobAsync(jobId: jobId,
+                var response = await ReclassifyJobAsync(jobId: jobId,
                         options: new Dictionary<string, string>(),
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -544,14 +546,415 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return ReclassifyJob(
+                var response = ReclassifyJob(
                     jobId: jobId,
                     options: new Dictionary<string, string>(),
                     cancellationToken: cancellationToken);
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="options"> Request model for cancelling job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CancelJobAsync(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CancelJob)}");
+            scope.Start();
+            try
+            {
+                var response = await CancelJobInternalAsync(
+                    jobId: jobId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="options"> Request model for cancelling job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response CancelJob(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CancelJob)}");
+            scope.Start();
+            try
+            {
+                var response = CancelJobInternal(
+                    jobId: jobId,
+                    options: options,
+                    cancellationToken: cancellationToken);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Submits request to cancel an existing job by Id while supplying free-form cancellation reason.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelJobAsync(string,CancelJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CancelJobAsync(string jobId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CancelJob)}");
+            scope.Start();
+            try
+            {
+                return await CancelJobInternalAsync(
+                    jobId: jobId,
+                    content: content,
+                    context: context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Submits request to cancel an existing job by Id while supplying free-form cancellation reason.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelJob(string,CancelJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CancelJob(string jobId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CancelJob)}");
+            scope.Start();
+            try
+            {
+                return CancelJobInternal(
+                    jobId: jobId,
+                    content: content,
+                    context: context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Closes a completed job. </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="options"> Request model for closing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CloseJobAsync(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+            try
+            {
+                var response = await CloseJobInternalAsync(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Closes a completed job. </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="options"> Request model for closing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response CloseJob(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+            try
+            {
+                var response = CloseJobInternal(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Closes a completed job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CloseJobAsync(string,string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CloseJobAsync(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+            try
+            {
+                return await CloseJobInternalAsync(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    content: content,
+                    context: context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Closes a completed job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CloseJob(string,string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CloseJob(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
+            scope.Start();
+            try
+            {
+                return CloseJobInternal(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    content: content,
+                    context: context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Completes an assigned job. </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="options"> Request model for completing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CompleteJobAsync(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
+            scope.Start();
+            try
+            {
+                var response = await CompleteJobInternalAsync(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Completes an assigned job. </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="options"> Request model for completing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CompleteJob(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
+            scope.Start();
+            try
+            {
+                var response = CompleteJobInternal(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    options: options,
+                    cancellationToken: cancellationToken);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Completes an assigned job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CompleteJobAsync(string,string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CompleteJobAsync(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
+            scope.Start();
+            try
+            {
+                return await CompleteJobInternalAsync(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    content: content,
+                    context: context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Completes an assigned job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CompleteJob(string,string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CompleteJob(string jobId, string assignmentId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
+            scope.Start();
+            try
+            {
+                return CompleteJobInternal(
+                    jobId: jobId,
+                    assignmentId: assignmentId,
+                    content: content,
+                    context: context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
                 throw;
             }
         }
@@ -792,6 +1195,148 @@ namespace Azure.Communication.JobRouter
 
         #endregion Worker
 
+        #region Offer
+
+        /// <summary> Declines an offer to work on a job. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="options"> Request model for declining offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeclineJobOfferAsync(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
+            scope.Start();
+            try
+            {
+                var response = await DeclineJobOfferInternalAsync(
+                    workerId: workerId,
+                    offerId: offerId,
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Declines an offer to work on a job. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="options"> Request model for declining offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeclineJobOffer(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
+            scope.Start();
+            try
+            {
+                var response = DeclineJobOfferInternal(
+                    workerId: workerId,
+                    offerId: offerId,
+                    options: options,
+                    cancellationToken: cancellationToken);
+                return response.GetRawResponse();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Declines an offer to work on a job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeclineJobOfferAsync(string,string,DeclineJobOfferOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeclineJobOfferAsync(string workerId, string offerId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
+            scope.Start();
+            try
+            {
+                return await DeclineJobOfferInternalAsync(
+                    workerId: workerId,
+                    offerId: offerId,
+                    content: content,
+                    context: context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Declines an offer to work on a job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeclineJobOffer(string,string,DeclineJobOfferOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeclineJobOffer(string workerId, string offerId, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
+            scope.Start();
+            try
+            {
+                return DeclineJobOfferInternal(
+                    workerId: workerId,
+                    offerId: offerId,
+                    content: content,
+                    context: context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion Offer
+
 #pragma warning disable CA1801 // Review unused parameters
         // Temporary work around before fix: https://github.com/Azure/autorest.csharp/issues/2323
         internal HttpMessage CreateGetJobsNextPageRequest(string nextLink, int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
@@ -825,41 +1370,5 @@ namespace Azure.Communication.JobRouter
             request.Headers.Add("Accept", "application/json");
             return message;
         }
-
-        // /// <summary> Un-assign a job. </summary>
-        // /// <param name="id"> Id of the job to un-assign. </param>
-        // /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
-        // /// <param name="unassignJobRequest"> Request body for unassign route. </param>
-        // /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        // /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        // /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJobAsync(string,string,UnassignJobRequest,CancellationToken)']/*" />
-        // internal virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
-        // {
-        //     Argument.AssertNotNullOrEmpty(id, nameof(id));
-        //     Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
-        //
-        //     RequestContext context = FromCancellationToken(cancellationToken);
-        //     Response response = await UnassignJobAsync(id, assignmentId, unassignJobRequest?.ToRequestContent(), context).ConfigureAwait(false);
-        //     return Response.FromValue(UnassignJobResult.FromResponse(response), response);
-        // }
-        //
-        // /// <summary> Un-assign a job. </summary>
-        // /// <param name="id"> Id of the job to un-assign. </param>
-        // /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
-        // /// <param name="unassignJobRequest"> Request body for unassign route. </param>
-        // /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        // /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        // /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJob(string,string,UnassignJobRequest,CancellationToken)']/*" />
-        // internal virtual Response<UnassignJobResult> UnassignJob(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
-        // {
-        //     Argument.AssertNotNullOrEmpty(id, nameof(id));
-        //     Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
-        //
-        //     RequestContext context = FromCancellationToken(cancellationToken);
-        //     Response response = UnassignJob(id, assignmentId, unassignJobRequest?.ToRequestContent(), context);
-        //     return Response.FromValue(UnassignJobResult.FromResponse(response), response);
-        // }
     }
 }

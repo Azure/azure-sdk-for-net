@@ -15,12 +15,9 @@ namespace Azure.Communication.JobRouter
         /// selection
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueSelector"/> is null. </exception>
-        public StaticQueueSelectorAttachment(RouterQueueSelector queueSelector)
+        public StaticQueueSelectorAttachment(RouterQueueSelector queueSelector): this("static", queueSelector)
         {
             Argument.AssertNotNull(queueSelector, nameof(queueSelector));
-
-            Kind = "static";
-            QueueSelector = queueSelector;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

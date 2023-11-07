@@ -5,10 +5,10 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
-    public class LabelValueTests
+    public class RouterValueTests
     {
         [Test]
-        public void LabelValueAcceptsNull()
+        public void RouterValueAcceptsNull()
         {
             var labelValue = new RouterValue(null);
             Assert.IsNotNull(labelValue);
@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsInt16()
+        public void RouterValueAcceptsInt16()
         {
             short input = 1;
             var labelValue = new RouterValue(input);
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsInt32()
+        public void RouterValueAcceptsInt32()
         {
             int input = 1;
             var labelValue = new RouterValue(input);
@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsInt64()
+        public void RouterValueAcceptsInt64()
         {
             long input = 1;
             var labelValue = new RouterValue(input);
@@ -49,7 +49,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsFloat()
+        public void RouterValueAcceptsFloat()
         {
             float input = 1;
             var labelValue = new RouterValue(input);
@@ -59,7 +59,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsDouble()
+        public void RouterValueAcceptsDouble()
         {
             double input = 1;
             var labelValue = new RouterValue(input);
@@ -69,7 +69,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsDecimal()
+        public void RouterValueAcceptsDecimal()
         {
             decimal input = 1;
             var labelValue = new RouterValue(input);
@@ -79,7 +79,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsString()
+        public void RouterValueAcceptsString()
         {
             string input = "1";
             var labelValue = new RouterValue(input);
@@ -91,7 +91,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void LabelValueAcceptsBoolean(bool input)
+        public void RouterValueAcceptsBoolean(bool input)
         {
             var labelValue = new RouterValue(input);
             Assert.IsNotNull(labelValue);
@@ -100,7 +100,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueOverrideToString()
+        public void RouterValueOverrideToString()
         {
             string input = "1";
             var labelValue = new RouterValue(input);

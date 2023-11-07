@@ -76,13 +76,13 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(
                     worker.Value.Id, offer.OfferId, new DeclineJobOfferOptions { RetryOfferAt = DateTimeOffset.MinValue }));
 
-            var complete = await client.CompleteJobAsync(createJob.Value.Id, new CompleteJobOptions(accept.Value.AssignmentId)
+            var complete = await client.CompleteJobAsync(createJob.Value.Id, accept.Value.AssignmentId, new CompleteJobOptions()
             {
                 Note = $"Job completed by {workerId1}"
             });
             Assert.AreEqual(200, complete.Status);
 
-            var close = await client.CloseJobAsync(createJob.Value.Id, new CloseJobOptions(accept.Value.AssignmentId)
+            var close = await client.CloseJobAsync(createJob.Value.Id, accept.Value.AssignmentId, new CloseJobOptions()
             {
                 Note = $"Job closed by {workerId1}"
             });
