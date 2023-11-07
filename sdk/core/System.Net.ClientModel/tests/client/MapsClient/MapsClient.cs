@@ -47,6 +47,8 @@ public class MapsClient
         // Might be nice for only RequestOptions to hold the pipeline?
         // Why?  Thinking about how to separate client-user APIs from client-author APIs
         // and not have to EBN GetPipeline....
+
+        // This freezes the pipeline; can no longer modify PipelineOptions
         options.GetPipeline();
 
         _pipelineOptions = options;
@@ -88,12 +90,12 @@ public class MapsClient
     private ClientMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         MessagePipeline pipeline = options.GetPipeline();
-        ClientMessage message = pipeline.CreateMessage();
 
         // TODO: this overrides anything the caller passed, so we need to fix that.
         // We have classifier-chaining logic in Azure.Core we can use if that's what we want.
         options.PipelineOptions.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
-        options.Apply(message);
+
+        ClientMessage message = pipeline.CreateMessage(options);
 
         MessageRequest request = message.Request;
         request.Method = "GET";

@@ -17,6 +17,14 @@ public class MessagePipeline
         _policies = policies;
     }
 
+    //internal static MessagePipeline Create(
+    //    PipelineOptions options,
+    //    PipelinePolicy[] perCallPolicies,
+    //    PipelinePolicy[] perTryPolicies)
+    //{
+
+    //}
+
     internal static MessagePipeline Create(PipelineOptions options)
     {
         int pipelineLength = 0;
@@ -78,7 +86,12 @@ public class MessagePipeline
     // TODO: note that without a common base type, nothing validates that MessagePipeline
     // and Azure.Core.HttpPipeline have the same API shape. This is something a human
     // must keep track of if we wanted to add a common base class later.
-    public ClientMessage CreateMessage() => _transport.CreateMessage();
+    public ClientMessage CreateMessage(RequestOptions options)
+    {
+        ClientMessage message = _transport.CreateMessage();
+        options.Apply(message);
+        return message;
+    }
 
     public void Send(ClientMessage message)
     {

@@ -26,7 +26,7 @@ public class RequestOptions
         CancellationToken = CancellationToken.None;
     }
 
-    public virtual void Apply(ClientMessage message)
+    protected internal virtual void Apply(ClientMessage message)
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;

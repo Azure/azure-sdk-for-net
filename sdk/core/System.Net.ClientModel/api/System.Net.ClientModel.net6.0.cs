@@ -57,7 +57,7 @@ namespace System.Net.ClientModel
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelineOptions PipelineOptions { get { throw null; } }
-        public virtual void Apply(System.Net.ClientModel.Core.ClientMessage message) { }
+        protected internal virtual void Apply(System.Net.ClientModel.Core.ClientMessage message) { }
         public System.Net.ClientModel.Core.MessagePipeline GetPipeline() { throw null; }
     }
     public abstract partial class Result
@@ -141,7 +141,7 @@ namespace System.Net.ClientModel.Core
     public partial class MessagePipeline
     {
         internal MessagePipeline() { }
-        public System.Net.ClientModel.Core.ClientMessage CreateMessage() { throw null; }
+        public System.Net.ClientModel.Core.ClientMessage CreateMessage(System.Net.ClientModel.RequestOptions options) { throw null; }
         public void Send(System.Net.ClientModel.Core.ClientMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
     }

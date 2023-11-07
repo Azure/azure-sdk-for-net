@@ -70,13 +70,14 @@ namespace Azure
         /// Initializes a new instance of the <see cref="RequestContext"/> class using the given <see cref="ErrorOptions"/>.
         /// </summary>
         /// <param name="options"></param>
-        public static implicit operator RequestContext(ErrorOptions options) => new RequestContext { ErrorOptions = options };
+        public static implicit operator RequestContext(ErrorOptions options)
+            => new RequestContext { ErrorOptions = options };
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        public override void Apply(ClientMessage message)
+        protected override void Apply(ClientMessage message)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -90,7 +91,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        public void Apply(HttpMessage message)
+        internal void Apply(HttpMessage message)
         {
             message.CancellationToken = CancellationToken;
 
