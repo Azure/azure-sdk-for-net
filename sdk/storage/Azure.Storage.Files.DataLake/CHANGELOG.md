@@ -1,6 +1,9 @@
 # Release History
 
-## 12.17.0-beta.1 (Unreleased)
+## 12.17.0 (2023-11-06)
+- Includes all features from 12.17.0-beta.1.
+
+## 12.17.0-beta.1 (2023-10-16)
 - Added support for service version 2023-11-03.
 - Added support for DataLakeClientOptions.Audience
 

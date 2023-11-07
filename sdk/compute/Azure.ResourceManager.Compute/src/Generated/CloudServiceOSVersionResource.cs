@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudServiceOSVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="osVersionName"> The osVersionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string osVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}";

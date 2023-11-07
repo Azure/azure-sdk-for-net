@@ -15,6 +15,11 @@ namespace Azure.Communication.JobRouter
             second.ToList().ForEach(pair => first[pair.Key] = pair.Value);
             return second;
         }
+
+        public static void AddRange<T>(this IList<T> list, IEnumerable<T> collection)
+        {
+            collection.ToList().ForEach(list.Add);
+        }
     }
 }
 

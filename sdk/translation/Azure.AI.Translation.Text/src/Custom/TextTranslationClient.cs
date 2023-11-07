@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using System.Text.Json;
+using System.Security.Principal;
 
 namespace Azure.AI.Translation.Text
 {
@@ -187,6 +188,17 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Translate Text. </summary>
+        /// <param name="options">The client translation options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
+        public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
+       {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.TranslateAsync(options.TargetLanguages, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, options.SourceLanguage, options.TextType?.ToString(), options.Category, options.ProfanityAction?.ToString(), options.ProfanityMarker?.ToString(), options.IncludeAlignment, options.IncludeSentenceLength, options.SuggestedFrom, options.FromScript, options.ToScript, options.AllowFallback, cancellationToken);
+        }
+
+        /// <summary> Translate Text. </summary>
         /// <param name="targetLanguage">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. For example, use to=de to translate to German.
@@ -308,6 +320,17 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Translate Text. </summary>
+        /// <param name="options">The client translation options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.Translate(options.TargetLanguages, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, options.SourceLanguage, options.TextType?.ToString(), options.Category, options.ProfanityAction?.ToString(), options.ProfanityMarker?.ToString(), options.IncludeAlignment, options.IncludeSentenceLength, options.SuggestedFrom, options.FromScript, options.ToScript, options.AllowFallback, cancellationToken);
+        }
+
+        /// <summary> Translate Text. </summary>
         /// <param name="targetLanguage">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. For example, use to=de to translate to German.
@@ -387,6 +410,17 @@ namespace Azure.AI.Translation.Text
             return this.TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
         }
 
+        /// <summary>Transliterate Text. </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
+       {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.TransliterateAsync(options.Language, options.FromScript, options.ToScript, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, cancellationToken);
+        }
+
         /// <summary> Transliterate Text. </summary>
         /// <param name="language">
         /// Specifies the language of the text to convert from one script to another.
@@ -440,6 +474,17 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(content, nameof(content));
 
             return this.Transliterate(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="options">The configuration options for the transliterate call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.Transliterate(options.Language, options.FromScript, options.ToScript, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>

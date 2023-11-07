@@ -54,20 +54,19 @@ namespace Azure.Storage.DataMovement
         internal StorageResourceContainer _destinationResourceContainer;
 
         /// <summary>
-        /// The maximum length of an transfer in bytes.
+        /// The maximum size to use for each chunk when transferring data in chunks.
         ///
-        /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
-        /// or will default to 8 MB if the total size is greater than or equal to 100MB.
+        /// This is the user specified value from options bag.
         /// </summary>
         internal long? _maximumTransferChunkSize { get; set; }
 
         /// <summary>
         /// The size of the first range request in bytes. Single Transfer sizes smaller than this
-        /// limit will be Uploaded or Downloaded in a single request.
-        /// Transfers larger than this limit will continue being downloaded or uploaded
-        /// in chunks of size <see cref="_maximumTransferChunkSize"/>.
+        /// limit will be Uploaded or Downloaded in a single request. Transfers larger than this
+        /// limit will continue being downloaded or uploaded in chunks of size
+        /// <see cref="_maximumTransferChunkSize"/>.
         ///
-        /// On Uploads, if the value is not set, it will set at 256 MB.
+        /// This is the user specified value from options bag.
         /// </summary>
         internal long? _initialTransferSize { get; set; }
 
@@ -403,8 +402,14 @@ namespace Azure.Storage.DataMovement
                 status: _dataTransfer.TransferStatus).ConfigureAwait(false);
         }
 
-        internal async Task OnEnumerationComplete()
+        /// <summary>
+        /// Called when enumeration is complete whether it finished successfully, failed, or was paused.
+        /// All resources may or may not have been enumerated.
+        /// </summary>
+        protected async Task OnEnumerationComplete()
         {
+            _enumerationComplete = true;
+
             // If there were no job parts enumerated and we haven't already aborted/completed the job.
             if (_jobParts.Count == 0 &&
                 _dataTransfer.TransferStatus.State != DataTransferState.Paused &&
@@ -421,6 +426,14 @@ namespace Azure.Storage.DataMovement
                 }
             }
             await CheckAndUpdateStatusAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Called when all resources have been enumerated successfully.
+        /// </summary>
+        protected async Task OnAllResourcesEnumerated()
+        {
+            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id).ConfigureAwait(false);
         }
 
         internal async Task CheckAndUpdateStatusAsync()
@@ -466,9 +479,9 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal List<string> GetJobPartSourceResourcePaths()
+        internal HashSet<Uri> GetJobPartSourceResourcePaths()
         {
-            return _jobParts.Select( x => x._sourceResource.Uri.GetPath() ).ToList();
+            return new HashSet<Uri>(_jobParts.Select(x => x._sourceResource.Uri));
         }
 
         internal void QueueJobPart()

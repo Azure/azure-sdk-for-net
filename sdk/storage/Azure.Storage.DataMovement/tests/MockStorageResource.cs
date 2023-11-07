@@ -16,18 +16,20 @@ namespace Azure.Storage.DataMovement.Tests
 
         public override Uri Uri => _uri;
 
+        public override string ProviderId => "mock";
+
         protected internal override string ResourceId => "Mock";
 
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        protected internal override long MaxChunkSize { get; }
+        protected internal override long MaxSupportedChunkSize { get; }
 
         protected internal override long? Length { get; }
 
         private MockStorageResource(long? length, long maxChunkSize, Uri uri = default)
         {
             Length = length;
-            MaxChunkSize = maxChunkSize;
+            MaxSupportedChunkSize = maxChunkSize;
             if (length.HasValue)
             {
                 _readStream = new RepeatingStream((int)(1234567 % length.Value), length.Value, revealsLength: true);
@@ -85,22 +87,14 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
         }
 
-        /// <summary>
-        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
         protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return null;
+            return new MockResourceCheckpointData();
         }
 
-        /// <summary>
-        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
         protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return null;
+            return new MockResourceCheckpointData();
         }
 
         protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)

@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -49,6 +51,7 @@ namespace Azure.Data.AppConfiguration.Tests
               ""enabled"": false,
               ""custom_stuff"": { ""id"":""dummy"", ""description"":""dummy"", ""enabled"":false },
               ""conditions"": {
+                ""custom_condition"": { ""id"":""custcond"", ""description"":""a thing"" },
                 ""client_filters"": [
                   {
                     ""name"": ""Flag1"",
@@ -78,7 +81,8 @@ namespace Azure.Data.AppConfiguration.Tests
                       ]
                     }
                   }
-                ]
+                ],
+                ""condition_val"":1
               }
             }";
 
@@ -90,6 +94,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }";
 
         private const string MinimalFeatureValueWithFormatting = "{  \"id\"    :     \"my feature\"   ,   \"enabled\":false,\"conditions\":{}}";
+        private const string MinimalFeatureValueWithInvalidConditions = "{\"id\":\"my feature\",\"enabled\":false,\"conditions\": \"broken\"}";
         private readonly JsonElementEqualityComparer _jsonComparer = new();
 
         [Test]
@@ -105,6 +110,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         [TestCase("INVALID")]
         [TestCase(MinimalFeatureValue)]
+        [TestCase(MinimalFeatureValueWithInvalidConditions)]
         [TestCase("")]
         public void CanRountripValue(string value)
         {
@@ -371,6 +377,26 @@ namespace Azure.Data.AppConfiguration.Tests
 
             using var expected = JsonDocument.Parse(UnknownAttributeMinimalFeatureValue);
             using var actual = JsonDocument.Parse(feature.Value);
+
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
+        }
+
+        [Test]
+        public void InvalidConditionTypeIsTreatedAsInvalid()
+        {
+            var featureFlag = new FeatureFlagConfigurationSetting();
+            featureFlag.Value = MinimalFeatureValueWithInvalidConditions;
+
+            Assert.Throws<InvalidOperationException>(() =>
+                featureFlag.ClientFilters.Add(new FeatureFlagFilter(
+                    "file",
+                    new Dictionary<string, object>()
+                    {
+                        {"p1", 1}
+                    })));
+
+            using var expected = JsonDocument.Parse(MinimalFeatureValueWithInvalidConditions);
+            using var actual = JsonDocument.Parse(featureFlag.Value);
 
             Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }

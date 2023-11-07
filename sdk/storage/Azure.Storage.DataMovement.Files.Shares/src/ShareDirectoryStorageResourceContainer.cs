@@ -11,14 +11,16 @@ using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class ShareDirectoryStorageResourceContainer : StorageResourceContainer
+    internal class ShareDirectoryStorageResourceContainer : StorageResourceContainerInternal
     {
         internal ShareFileStorageResourceOptions ResourceOptions { get; set; }
-        internal PathScanner PathScanner { get; set; }
+        internal PathScanner PathScanner { get; set; } = PathScanner.Singleton.Value;
 
         internal ShareDirectoryClient ShareDirectoryClient { get; }
 
         public override Uri Uri => ShareDirectoryClient.Uri;
+
+        public override string ProviderId => "share";
 
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
@@ -35,32 +37,46 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 dir = dir.GetSubdirectoryClient(pathSegment);
             }
             ShareFileClient file = dir.GetFileClient(pathSegments.Last());
-            return new ShareFileStorageResourceItem(file, ResourceOptions);
+            return new ShareFileStorageResource(file, ResourceOptions);
         }
 
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (ShareFileClient client in PathScanner.ScanFilesAsync(
+            await foreach ((ShareDirectoryClient dir, ShareFileClient file) in PathScanner.ScanAsync(
                 ShareDirectoryClient, cancellationToken).ConfigureAwait(false))
             {
-                yield return new ShareFileStorageResourceItem(client, ResourceOptions);
+                if (file != default)
+                {
+                    yield return new ShareFileStorageResource(file, ResourceOptions);
+                }
+                else
+                {
+                    yield return new ShareDirectoryStorageResourceContainer(dir, ResourceOptions);
+                }
             }
         }
 
-        #region Protected Hooks
-        // Internal func to access protected member for testing.
-        internal async IAsyncEnumerable<StorageResource> GetStorageResourcesInternal(
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            await foreach (StorageResource resource in GetStorageResourcesAsync(cancellationToken).ConfigureAwait(false))
-            {
-                yield return resource;
-            }
+            return new ShareFileSourceCheckpointData();
         }
 
-        internal StorageResourceItem GetStorageResourceReferenceInternal(string path)
-            => GetStorageResourceReference(path);
-        #endregion
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new ShareFileDestinationCheckpointData(null, null);
+        }
+
+        protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+        {
+            await ShareDirectoryClient.CreateIfNotExistsAsync(
+                metadata: default,
+                smbProperties: default,
+                filePermission: default,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
+            => new ShareDirectoryStorageResourceContainer(ShareDirectoryClient.GetSubdirectoryClient(path), ResourceOptions);
     }
 }

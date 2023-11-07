@@ -26,20 +26,18 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private UriToStreamJobPart(
             UriToStreamTransferJob job,
-            int partNumber,
-            bool isFinalPart)
+            int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -57,21 +55,21 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            bool isFinalPart,
             DataTransferStatus jobPartStatus = default,
-            long? length = default)
+            long? length = default,
+            long? initialTransferSize = default,
+            long? transferChunkSize = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -81,53 +79,79 @@ namespace Azure.Storage.DataMovement
                   cancellationToken: job._cancellationToken,
                   jobPartStatus: jobPartStatus,
                   length: length)
-        { }
-
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
-            int partNumber,
-            bool isFinalPart)
         {
-            // Create Job Part file as we're intializing the job part
-            UriToStreamJobPart part = new UriToStreamJobPart(
-                job: job,
-                partNumber: partNumber,
-                isFinalPart: isFinalPart);
-            await part.AddJobPartToCheckpointerAsync(
-                chunksTotal: 1,
-                isFinalPart: isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
-            return part;
-        }
-
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
-            int partNumber,
-            StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
-            bool isFinalPart,
-            DataTransferStatus jobPartStatus = default,
-            long? length = default,
-            bool partPlanFileExists = false)
-        {
-            // Create Job Part file as we're intializing the job part
-            UriToStreamJobPart part = new UriToStreamJobPart(
-                job: job,
-                partNumber: partNumber,
-                jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource,
-                destinationResource: destinationResource,
-                isFinalPart: isFinalPart,
-                length: length);
-            if (!partPlanFileExists)
+            // If transfer sizes null at the job level (from options bag) then
+            // override the default with the provided values if present.
+            // Else, they were set correctly by the base constructor.
+            if (!job._maximumTransferChunkSize.HasValue && transferChunkSize.HasValue)
             {
-                await part.AddJobPartToCheckpointerAsync(1, isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
+                _transferChunkSize = transferChunkSize.Value;
             }
-            return part;
+            if (!job._initialTransferSize.HasValue && initialTransferSize.HasValue)
+            {
+                _initialTransferSize = initialTransferSize.Value;
+            }
         }
 
         public async ValueTask DisposeAsync()
         {
             await DisposeHandlers().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a single transfer.
+        /// </summary>
+        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
+            UriToStreamTransferJob job,
+            int partNumber)
+        {
+            // Create Job Part file as we're initializing the job part
+            UriToStreamJobPart part = new UriToStreamJobPart(job, partNumber);
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
+            return part;
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a container transfer.
+        /// </summary>
+        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
+            UriToStreamTransferJob job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            long? length = default)
+        {
+            // Create Job Part file as we're initializing the job part
+            UriToStreamJobPart part = new UriToStreamJobPart(
+                job: job,
+                partNumber: partNumber,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                length: length);
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
+            return part;
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a checkpoint file on resume.
+        /// </summary>
+        public static UriToStreamJobPart CreateJobPartFromCheckpoint(
+            UriToStreamTransferJob job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize)
+        {
+            return new UriToStreamJobPart(
+                job: job,
+                partNumber: partNumber,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
         }
 
         /// <summary>
@@ -221,7 +245,7 @@ namespace Azure.Storage.DataMovement
                     else
                     {
                         // Set rangeSize
-                        long rangeSize = CalculateBlockSize(totalLength);
+                        long rangeSize = _transferChunkSize;
 
                         // Get list of ranges of the blob
                         IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
@@ -298,7 +322,7 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Set rangeSize
-                long rangeSize = CalculateBlockSize(totalLength);
+                long rangeSize = _transferChunkSize;
 
                 // Get list of ranges of the blob
                 IList<HttpRange> ranges = GetRangesList(0, totalLength, rangeSize);

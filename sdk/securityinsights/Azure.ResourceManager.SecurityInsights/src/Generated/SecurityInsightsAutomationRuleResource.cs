@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsAutomationRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsAutomationRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="automationRuleId"> The automationRuleId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}";

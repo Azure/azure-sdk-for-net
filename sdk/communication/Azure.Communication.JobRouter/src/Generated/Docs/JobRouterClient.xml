@@ -1,0 +1,1335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetJobAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJob> response = await client.GetJobAsync("<jobId>");
+]]></code>
+This sample shows how to call GetJobAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJob> response = await client.GetJobAsync("<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetJob(string,CancellationToken)">
+      <example>
+This sample shows how to call GetJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJob> response = client.GetJob("<jobId>");
+]]></code>
+This sample shows how to call GetJob with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJob> response = client.GetJob("<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetJobAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetJobAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetJobAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetJobAsync with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetJobAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("channelReference").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+Console.WriteLine(result.GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
+Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
+]]></code></example>
+    </member>
+    <member name="GetJob(string,RequestContext)">
+      <example>
+This sample shows how to call GetJob and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetJob("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetJob with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetJob("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("channelReference").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+Console.WriteLine(result.GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
+Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteJobAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.DeleteJobAsync("<jobId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteJobAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.DeleteJobAsync("<jobId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteJob(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.DeleteJob("<jobId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteJob with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.DeleteJob("<jobId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CancelJobAsync(string,CancelJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call CancelJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.CancelJobAsync("<jobId>");
+]]></code>
+This sample shows how to call CancelJobAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CancelJobOptions options = new CancelJobOptions
+{
+    Note = "<note>",
+    DispositionCode = "<dispositionCode>",
+};
+Response response = await client.CancelJobAsync("<jobId>", options: options);
+]]></code></example>
+    </member>
+    <member name="CancelJob(string,CancelJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call CancelJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.CancelJob("<jobId>");
+]]></code>
+This sample shows how to call CancelJob with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CancelJobOptions options = new CancelJobOptions
+{
+    Note = "<note>",
+    DispositionCode = "<dispositionCode>",
+};
+Response response = client.CancelJob("<jobId>", options: options);
+]]></code></example>
+    </member>
+    <member name="CancelJobAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CancelJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = null;
+Response response = await client.CancelJobAsync("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelJobAsync with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    note = "<note>",
+    dispositionCode = "<dispositionCode>",
+});
+Response response = await client.CancelJobAsync("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CancelJob(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CancelJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = null;
+Response response = client.CancelJob("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelJob with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    note = "<note>",
+    dispositionCode = "<dispositionCode>",
+});
+Response response = client.CancelJob("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CompleteJobAsync(string,CompleteJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call CompleteJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
+Response response = await client.CompleteJobAsync("<jobId>", options);
+]]></code>
+This sample shows how to call CompleteJobAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
+{
+    Note = "<note>",
+};
+Response response = await client.CompleteJobAsync("<jobId>", options);
+]]></code></example>
+    </member>
+    <member name="CompleteJob(string,CompleteJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call CompleteJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
+Response response = client.CompleteJob("<jobId>", options);
+]]></code>
+This sample shows how to call CompleteJob with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
+{
+    Note = "<note>",
+};
+Response response = client.CompleteJob("<jobId>", options);
+]]></code></example>
+    </member>
+    <member name="CompleteJobAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CompleteJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+});
+Response response = await client.CompleteJobAsync("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CompleteJobAsync with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+    note = "<note>",
+});
+Response response = await client.CompleteJobAsync("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CompleteJob(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CompleteJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+});
+Response response = client.CompleteJob("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CompleteJob with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+    note = "<note>",
+});
+Response response = client.CompleteJob("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CloseJobAsync(string,CloseJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call CloseJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CloseJobOptions options = new CloseJobOptions("<assignmentId>");
+Response response = await client.CloseJobAsync("<jobId>", options);
+]]></code>
+This sample shows how to call CloseJobAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CloseJobOptions options = new CloseJobOptions("<assignmentId>")
+{
+    DispositionCode = "<dispositionCode>",
+    CloseAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    Note = "<note>",
+};
+Response response = await client.CloseJobAsync("<jobId>", options);
+]]></code></example>
+    </member>
+    <member name="CloseJob(string,CloseJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call CloseJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CloseJobOptions options = new CloseJobOptions("<assignmentId>");
+Response response = client.CloseJob("<jobId>", options);
+]]></code>
+This sample shows how to call CloseJob with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+CloseJobOptions options = new CloseJobOptions("<assignmentId>")
+{
+    DispositionCode = "<dispositionCode>",
+    CloseAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    Note = "<note>",
+};
+Response response = client.CloseJob("<jobId>", options);
+]]></code></example>
+    </member>
+    <member name="CloseJobAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CloseJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+});
+Response response = await client.CloseJobAsync("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CloseJobAsync with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+    dispositionCode = "<dispositionCode>",
+    closeAt = "2022-05-10T14:57:31.2311892-04:00",
+    note = "<note>",
+});
+Response response = await client.CloseJobAsync("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CloseJob(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CloseJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+});
+Response response = client.CloseJob("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CloseJob with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignmentId = "<assignmentId>",
+    dispositionCode = "<dispositionCode>",
+    closeAt = "2022-05-10T14:57:31.2311892-04:00",
+    note = "<note>",
+});
+Response response = client.CloseJob("<jobId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetQueuePositionAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueuePositionAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
+]]></code>
+This sample shows how to call GetQueuePositionAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetQueuePosition(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueuePosition.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
+]]></code>
+This sample shows how to call GetQueuePosition with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetQueuePositionAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueuePositionAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetQueuePositionAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code>
+This sample shows how to call GetQueuePositionAsync with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetQueuePositionAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code></example>
+    </member>
+    <member name="GetQueuePosition(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueuePosition and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetQueuePosition("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code>
+This sample shows how to call GetQueuePosition with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetQueuePosition("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("position").ToString());
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("queueLength").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
+]]></code></example>
+    </member>
+    <member name="UnassignJobAsync(string,string,UnassignJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call UnassignJobAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>");
+]]></code>
+This sample shows how to call UnassignJobAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+UnassignJobOptions options = new UnassignJobOptions
+{
+    SuspendMatching = true,
+};
+Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", options: options);
+]]></code></example>
+    </member>
+    <member name="UnassignJob(string,string,UnassignJobOptions,CancellationToken)">
+      <example>
+This sample shows how to call UnassignJob.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>");
+]]></code>
+This sample shows how to call UnassignJob with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+UnassignJobOptions options = new UnassignJobOptions
+{
+    SuspendMatching = true,
+};
+Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>", options: options);
+]]></code></example>
+    </member>
+    <member name="UnassignJobAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UnassignJobAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = null;
+Response response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code>
+This sample shows how to call UnassignJobAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    suspendMatching = true,
+});
+Response response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code></example>
+    </member>
+    <member name="UnassignJob(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UnassignJob and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = null;
+Response response = client.UnassignJob("<jobId>", "<assignmentId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code>
+This sample shows how to call UnassignJob with all parameters and request content and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    suspendMatching = true,
+});
+Response response = client.UnassignJob("<jobId>", "<assignmentId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
+]]></code></example>
+    </member>
+    <member name="AcceptJobOfferAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call AcceptJobOfferAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
+]]></code>
+This sample shows how to call AcceptJobOfferAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
+]]></code></example>
+    </member>
+    <member name="AcceptJobOffer(string,string,CancellationToken)">
+      <example>
+This sample shows how to call AcceptJobOffer.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
+]]></code>
+This sample shows how to call AcceptJobOffer with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
+]]></code></example>
+    </member>
+    <member name="AcceptJobOfferAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call AcceptJobOfferAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code>
+This sample shows how to call AcceptJobOfferAsync with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code></example>
+    </member>
+    <member name="AcceptJobOffer(string,string,RequestContext)">
+      <example>
+This sample shows how to call AcceptJobOffer and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code>
+This sample shows how to call AcceptJobOffer with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("workerId").ToString());
+]]></code></example>
+    </member>
+    <member name="DeclineJobOfferAsync(string,string,DeclineJobOfferOptions,CancellationToken)">
+      <example>
+This sample shows how to call DeclineJobOfferAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>");
+]]></code>
+This sample shows how to call DeclineJobOfferAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+DeclineJobOfferOptions options = new DeclineJobOfferOptions
+{
+    RetryOfferAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+};
+Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", options: options);
+]]></code></example>
+    </member>
+    <member name="DeclineJobOffer(string,string,DeclineJobOfferOptions,CancellationToken)">
+      <example>
+This sample shows how to call DeclineJobOffer.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.DeclineJobOffer("<workerId>", "<offerId>");
+]]></code>
+This sample shows how to call DeclineJobOffer with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+DeclineJobOfferOptions options = new DeclineJobOfferOptions
+{
+    RetryOfferAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+};
+Response response = client.DeclineJobOffer("<workerId>", "<offerId>", options: options);
+]]></code></example>
+    </member>
+    <member name="DeclineJobOfferAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DeclineJobOfferAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = null;
+Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeclineJobOfferAsync with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    retryOfferAt = "2022-05-10T14:57:31.2311892-04:00",
+});
+Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeclineJobOffer(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DeclineJobOffer.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = null;
+Response response = client.DeclineJobOffer("<workerId>", "<offerId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeclineJobOffer with all parameters and request content.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    retryOfferAt = "2022-05-10T14:57:31.2311892-04:00",
+});
+Response response = client.DeclineJobOffer("<workerId>", "<offerId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetQueueStatisticsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueueStatisticsAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
+]]></code>
+This sample shows how to call GetQueueStatisticsAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
+]]></code></example>
+    </member>
+    <member name="GetQueueStatistics(string,CancellationToken)">
+      <example>
+This sample shows how to call GetQueueStatistics.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
+]]></code>
+This sample shows how to call GetQueueStatistics with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
+]]></code></example>
+    </member>
+    <member name="GetQueueStatisticsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueueStatisticsAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+]]></code>
+This sample shows how to call GetQueueStatisticsAsync with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("longestJobWaitTimeMinutes").ToString());
+]]></code></example>
+    </member>
+    <member name="GetQueueStatistics(string,RequestContext)">
+      <example>
+This sample shows how to call GetQueueStatistics and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetQueueStatistics("<queueId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+]]></code>
+This sample shows how to call GetQueueStatistics with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetQueueStatistics("<queueId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("queueId").ToString());
+Console.WriteLine(result.GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("longestJobWaitTimeMinutes").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWorkerAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetWorkerAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
+]]></code>
+This sample shows how to call GetWorkerAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
+]]></code></example>
+    </member>
+    <member name="GetWorker(string,CancellationToken)">
+      <example>
+This sample shows how to call GetWorker.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterWorker> response = client.GetWorker("<workerId>");
+]]></code>
+This sample shows how to call GetWorker with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response<RouterWorker> response = client.GetWorker("<workerId>");
+]]></code></example>
+    </member>
+    <member name="GetWorkerAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetWorkerAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetWorkerAsync("<workerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetWorkerAsync with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.GetWorkerAsync("<workerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("queues")[0].ToString());
+Console.WriteLine(result.GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("loadRatio").ToString());
+Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWorker(string,RequestContext)">
+      <example>
+This sample shows how to call GetWorker and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetWorker("<workerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetWorker with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.GetWorker("<workerId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("queues")[0].ToString());
+Console.WriteLine(result.GetProperty("capacity").ToString());
+Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+Console.WriteLine(result.GetProperty("loadRatio").ToString());
+Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteWorkerAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteWorkerAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.DeleteWorkerAsync("<workerId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteWorkerAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = await client.DeleteWorkerAsync("<workerId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteWorker(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteWorker.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.DeleteWorker("<workerId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteWorker with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+Response response = client.DeleteWorker("<workerId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetJobsAsync(int?,RouterJobStatusSelector?,string,string,string,DateTimeOffset?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call GetJobsAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (RouterJob item in client.GetJobsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetJobsAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (RouterJob item in client.GetJobsAsync(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetJobs(int?,RouterJobStatusSelector?,string,string,string,DateTimeOffset?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call GetJobs.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (RouterJob item in client.GetJobs())
+{
+}
+]]></code>
+This sample shows how to call GetJobs with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (RouterJob item in client.GetJobs(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetJobsAsync(int?,string,string,string,string,DateTimeOffset?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call GetJobsAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (BinaryData item in client.GetJobsAsync(null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code>
+This sample shows how to call GetJobsAsync with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (BinaryData item in client.GetJobsAsync(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("channelReference").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+    Console.WriteLine(result.GetProperty("channelId").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("queueId").ToString());
+    Console.WriteLine(result.GetProperty("priority").ToString());
+    Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
+    Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+    Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetJobs(int?,string,string,string,string,DateTimeOffset?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call GetJobs and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (BinaryData item in client.GetJobs(null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code>
+This sample shows how to call GetJobs with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (BinaryData item in client.GetJobs(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("channelReference").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("enqueuedAt").ToString());
+    Console.WriteLine(result.GetProperty("channelId").ToString());
+    Console.WriteLine(result.GetProperty("classificationPolicyId").ToString());
+    Console.WriteLine(result.GetProperty("queueId").ToString());
+    Console.WriteLine(result.GetProperty("priority").ToString());
+    Console.WriteLine(result.GetProperty("dispositionCode").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("requestedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("key").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("labelOperator").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAfterSeconds").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expedite").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("attachedWorkerSelectors")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("workerId").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("assignments").GetProperty("<key>").GetProperty("closedAt").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("notes")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("notes")[0].GetProperty("addedAt").ToString());
+    Console.WriteLine(result.GetProperty("scheduledAt").ToString());
+    Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetWorkersAsync(int?,RouterWorkerStateSelector?,string,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetWorkersAsync.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (RouterWorker item in client.GetWorkersAsync())
+{
+}
+]]></code>
+This sample shows how to call GetWorkersAsync with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (RouterWorker item in client.GetWorkersAsync(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetWorkers(int?,RouterWorkerStateSelector?,string,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetWorkers.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (RouterWorker item in client.GetWorkers())
+{
+}
+]]></code>
+This sample shows how to call GetWorkers with all parameters.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (RouterWorker item in client.GetWorkers(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetWorkersAsync(int?,string,string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetWorkersAsync and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (BinaryData item in client.GetWorkersAsync(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkersAsync with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+await foreach (BinaryData item in client.GetWorkersAsync(1234, "active", "<channelId>", "<queueId>", true, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("queues")[0].ToString());
+    Console.WriteLine(result.GetProperty("capacity").ToString());
+    Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+    Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+    Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("loadRatio").ToString());
+    Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetWorkers(int?,string,string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetWorkers and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (BinaryData item in client.GetWorkers(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkers with all parameters and parse the result.
+<code><![CDATA[
+JobRouterClient client = new JobRouterClient((string)null);
+
+foreach (BinaryData item in client.GetWorkers(1234, "active", "<channelId>", "<queueId>", true, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("queues")[0].ToString());
+    Console.WriteLine(result.GetProperty("capacity").ToString());
+    Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("channels")[0].GetProperty("channelId").ToString());
+    Console.WriteLine(result.GetProperty("channels")[0].GetProperty("capacityCostPerJob").ToString());
+    Console.WriteLine(result.GetProperty("channels")[0].GetProperty("maxNumberOfJobs").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offerId").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("offeredAt").ToString());
+    Console.WriteLine(result.GetProperty("offers")[0].GetProperty("expiresAt").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignmentId").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("capacityCost").ToString());
+    Console.WriteLine(result.GetProperty("assignedJobs")[0].GetProperty("assignedAt").ToString());
+    Console.WriteLine(result.GetProperty("loadRatio").ToString());
+    Console.WriteLine(result.GetProperty("availableForOffers").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

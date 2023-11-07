@@ -1,5 +1,11 @@
 namespace Azure.Storage.DataMovement.Files.Shares
 {
+    public partial class ShareDirectoryClientTransferOptions
+    {
+        public ShareDirectoryClientTransferOptions() { }
+        public Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions ShareDirectoryOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferOptions TransferOptions { get { throw null; } set { } }
+    }
     public partial class ShareFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
         public ShareFilesStorageResourceProvider() { }
@@ -9,7 +15,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public ShareFilesStorageResourceProvider(Azure.Storage.DataMovement.Files.Shares.ShareFilesStorageResourceProvider.GetStorageSharedKeyCredential getStorageSharedKeyCredentialAsync) { }
         public ShareFilesStorageResourceProvider(Azure.Storage.DataMovement.Files.Shares.ShareFilesStorageResourceProvider.GetTokenCredential getTokenCredentialAsync) { }
         public ShareFilesStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
-        protected override string TypeId { get { throw null; } }
+        protected override string ProviderId { get { throw null; } }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareFileClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -23,5 +29,24 @@ namespace Azure.Storage.DataMovement.Files.Shares
     public partial class ShareFileStorageResourceOptions
     {
         public ShareFileStorageResourceOptions() { }
+        public bool? Archive { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationConditions { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> DirectoryMetadata { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> FileMetadata { get { throw null; } set { } }
+        public string FilePermissions { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareProtocols? Protocols { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
+    }
+}
+namespace Azure.Storage.Files.Shares
+{
+    public static partial class ShareDirectoryClientExtensions
+    {
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartDownloadToDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartUploadDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null) { throw null; }
     }
 }

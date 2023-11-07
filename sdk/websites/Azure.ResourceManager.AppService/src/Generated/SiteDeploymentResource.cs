@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteDeploymentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDeploymentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="id"> The id. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string id)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}";

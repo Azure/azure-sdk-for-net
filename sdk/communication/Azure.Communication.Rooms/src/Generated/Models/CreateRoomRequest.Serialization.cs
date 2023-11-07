@@ -25,6 +25,11 @@ namespace Azure.Communication.Rooms
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
+            if (Optional.IsDefined(PstnDialOutEnabled))
+            {
+                writer.WritePropertyName("pstnDialOutEnabled"u8);
+                writer.WriteBooleanValue(PstnDialOutEnabled.Value);
+            }
             if (Optional.IsCollectionDefined(Participants))
             {
                 writer.WritePropertyName("participants"u8);

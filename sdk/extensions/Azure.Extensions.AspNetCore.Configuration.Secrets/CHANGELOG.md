@@ -2,7 +2,15 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Key Vault configuration library better with their contributions to this release:
+
+- Daniel Laughland _([GitHub](https://github.com/jabberwik))_
+
 ### Features Added
+
+- Changed visibility of `AzureKeyVaultConfigurationSource` as public to allow for custom ordering of configuration sections when reading.  _(A community contribution, courtesy of [jabberwik](https://github.com/jabberwik))_
 
 ### Breaking Changes
 
@@ -13,7 +21,8 @@
 ## 1.2.2 (2022-04-05)
 
 ### Acknowledgments
-Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+Thank you to our developer community members who helped to make the Key Vault configuration library better with their contributions to this release:
 
 - Martin Costello  _([GitHub](https://github.com/martincostello))_
 

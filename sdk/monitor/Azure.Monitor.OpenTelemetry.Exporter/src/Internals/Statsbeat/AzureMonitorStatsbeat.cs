@@ -133,7 +133,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     {
                         httpClient.DefaultRequestHeaders.Add("Metadata", "True");
                         var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
-                        var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
+                        VmMetadataResponse? vmMetadata;
+#if NET6_0_OR_GREATER
+                        vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result, SourceGenerationContext.Default.VmMetadataResponse);
+#else
+                        vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
+#endif
 
                         return vmMetadata;
                     }
@@ -180,6 +185,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
                 // osType takes precedence.
                 s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
+
+                return;
+            }
+
+            var aksArmNamespaceId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID);
+            if (aksArmNamespaceId != null)
+            {
+                _resourceProvider = "aks";
+                _resourceProviderId = aksArmNamespaceId;
 
                 return;
             }

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataLakeStore
     public partial class DataLakeStoreTrustedIdProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataLakeStoreTrustedIdProviderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="trustedIdProviderName"> The trustedIdProviderName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string trustedIdProviderName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}";
