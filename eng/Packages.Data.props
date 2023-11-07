@@ -244,7 +244,6 @@
     <PackageReference Update="Microsoft.Azure.Management.EventGrid" Version="4.0.1-preview" />
     <PackageReference Update="Microsoft.Azure.Management.EventHub" Version="2.5.0" />
     <PackageReference Update="Microsoft.Azure.Management.HDInsight" Version="4.1.0-preview" />
-    <PackageReference Update="Microsoft.Azure.Management.HybridCompute" Version="1.0.0-beta.5" />
     <PackageReference Update="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Management.ServiceBus" Version="2.1.0" />
     <PackageReference Update="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
