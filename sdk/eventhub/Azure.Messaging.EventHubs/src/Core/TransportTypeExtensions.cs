@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Azure.Messaging.EventHubs.Amqp;
 
 namespace Azure.Messaging.EventHubs.Core
 {
