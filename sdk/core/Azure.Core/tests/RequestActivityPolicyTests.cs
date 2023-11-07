@@ -5,9 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -322,7 +326,7 @@ namespace Azure.Core.Tests
                 Task<Response> requestTask = SendRequestAsync(mockTransport, request =>
                 {
                     request.Method = RequestMethod.Get;
-                    request.Uri.Reset(new Uri("http://example.com/path"));
+                    request.Uri.Reset(new Uri("https://example.com/path"));
                     if (port != null)
                     {
                         request.Uri.Port = port.Value;
@@ -336,26 +340,22 @@ namespace Azure.Core.Tests
 
                 await requestTask;
 
-                Assert.AreEqual(activity, testListener.Activities.Single());
+                Assert.AreSame(activity, testListener.Activities.Single());
+                Assert.AreEqual("GET", activity.DisplayName);
 
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("http.status_code", 201));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.url", url));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.method", "GET"));
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.user_agent", "agent"));
+                Assert.AreEqual(ActivityKind.Client, activity.Kind);
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("http.response.status_code", 201));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("url.full", url));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.request.method", "GET"));
+                Assert.IsEmpty(activity.Tags.Where(kvp => kvp.Key == "http.user_agent"));
+                Assert.IsEmpty(activity.Tags.Where(kvp => kvp.Key == "requestId"));
+                Assert.IsEmpty(activity.Tags.Where(kvp => kvp.Key == "serviceRequestId"));
 
-                CollectionAssert.DoesNotContain(activity.TagObjects, new KeyValuePair<string, string>("requestId", clientRequestId));
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.client_request_id", clientRequestId));
-
-                CollectionAssert.DoesNotContain(activity.TagObjects, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.service_request_id", "server request id"));
 
-                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("net.peer.name", "example.com"));
-
-                if (port is null or 443)
-                    CollectionAssert.DoesNotContain(activity.TagObjects, new KeyValuePair<string, int>("net.peer.port", 443));
-                else
-                    CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("net.peer.port", port.Value));
-
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("server.address", "example.com"));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, object>("server.port", port ?? 443));
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
             }
             finally
@@ -392,7 +392,7 @@ namespace Azure.Core.Tests
                 await requestTask;
 
                 Assert.AreEqual(1, testListener.Activities.Count);
-                CollectionAssert.Contains(testListener.Activities.Single().TagObjects, new KeyValuePair<string, int>("http.status_code", 201));
+                CollectionAssert.Contains(testListener.Activities.Single().TagObjects, new KeyValuePair<string, int>("http.response.status_code", 201));
             }
             finally
             {
@@ -405,23 +405,20 @@ namespace Azure.Core.Tests
         public void ActivityShouldBeStoppedWhenTransportThrowsActivitySource()
         {
             using var _ = SetAppConfigSwitch();
-            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
-            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
-
-            Exception exception = new Exception("Test exception");
+            HttpRequestException exception = new HttpRequestException("Test exception");
             using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
 
             MockTransport mockTransport = CreateMockTransport(_ => throw exception);
 
-            Assert.ThrowsAsync<Exception>(async () => await SendRequestAsync(mockTransport, request =>
+            Assert.ThrowsAsync<HttpRequestException>(async () => await SendRequestAsync(mockTransport, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("http://example.com"));
-                request.Headers.Add("User-Agent", "agent");
             }, s_enabledPolicy));
 
             var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
 
+            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "System.Net.Http.HttpRequestException"));
             Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
             StringAssert.Contains("Test exception", activity.StatusDescription);
         }
@@ -431,8 +428,6 @@ namespace Azure.Core.Tests
         public async Task ActivityMarkedAsErrorForErrorResponseActivitySource()
         {
             using var _ = SetAppConfigSwitch();
-            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
-            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
 
             MockTransport mockTransport = CreateMockTransport(_ =>
@@ -445,9 +440,40 @@ namespace Azure.Core.Tests
 
             var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
 
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
+            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "500"));
             Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
             Assert.IsNull(activity.StatusDescription);
+            Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == "otel.status_code"));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task ActivityHasHttpResendCountOnRetries()
+        {
+            using var _ = SetAppConfigSwitch();
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
+
+            MockTransport mockTransport = CreateMockTransport(_ =>
+            {
+                MockResponse mockResponse = new MockResponse(500);
+                return mockResponse;
+            });
+
+            await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Get;
+                message.RetryNumber = 42;
+                message.Request.Uri.Reset(new Uri("http://example.com"));
+            }, s_enabledPolicy);
+
+            var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
+
+            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, object>("http.request.resend_count", 42));
+            CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "500"));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
+            Assert.IsNull(activity.StatusDescription);
+            Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == "otel.status_code"));
         }
 #endif
     }

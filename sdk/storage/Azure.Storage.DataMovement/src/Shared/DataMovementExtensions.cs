@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
                 lastAccessed: fileInfo.LastAccessTimeUtc);
         }
 
-        public static async Task<StreamToUriJobPart> ToJobPartAsync(
+        public static StreamToUriJobPart ToJobPartAsync(
             this StreamToUriTransferJob baseJob,
             Stream planFileStream,
             StorageResourceItem sourceResource,
@@ -28,15 +28,15 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
             DataTransferStatus jobPartStatus = header.JobPartStatus;
-            StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
+            StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true).ConfigureAwait(false);
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: header.InitialTransferSize,
+                transferChunkSize: header.ChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<ServiceToServiceJobPart> ToJobPartAsync(
+        public static ServiceToServiceJobPart ToJobPartAsync(
             this ServiceToServiceTransferJob baseJob,
             Stream planFileStream,
             StorageResourceItem sourceResource,
@@ -53,15 +53,15 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
             DataTransferStatus jobPartStatus = header.JobPartStatus;
-            ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
+            ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true).ConfigureAwait(false);
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: header.InitialTransferSize,
+                transferChunkSize: header.ChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<UriToStreamJobPart> ToJobPartAsync(
+        public static UriToStreamJobPart ToJobPartAsync(
             this UriToStreamTransferJob baseJob,
             Stream planFileStream,
             StorageResourceItem sourceResource,
@@ -78,15 +78,15 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
             DataTransferStatus jobPartStatus = header.JobPartStatus;
-            UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
+            UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true).ConfigureAwait(false);
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: header.InitialTransferSize,
+                transferChunkSize: header.ChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -94,7 +94,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<StreamToUriJobPart> ToJobPartAsync(
+        public static StreamToUriJobPart ToJobPartAsync(
             this StreamToUriTransferJob baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
@@ -103,19 +103,19 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             DataTransferStatus jobPartStatus = header.JobPartStatus;
-            StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
+            StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                partPlanFileExists: true).ConfigureAwait(false);
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: header.InitialTransferSize,
+                transferChunkSize: header.ChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<ServiceToServiceJobPart> ToJobPartAsync(
+        public static ServiceToServiceJobPart ToJobPartAsync(
             this ServiceToServiceTransferJob baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
@@ -132,17 +132,17 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
             string childDestinationPath = header.DestinationPath;
             DataTransferStatus jobPartStatus = header.JobPartStatus;
-            ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
+            ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
-                partPlanFileExists: true).ConfigureAwait(false);
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: header.InitialTransferSize,
+                transferChunkSize: header.ChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<UriToStreamJobPart> ToJobPartAsync(
+        public static UriToStreamJobPart ToJobPartAsync(
             this UriToStreamTransferJob baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
@@ -165,13 +165,14 @@ namespace Azure.Storage.DataMovement
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             DataTransferStatus jobPartStatus = header.JobPartStatus;
-            UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
+            UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                partPlanFileExists: true).ConfigureAwait(false);
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: header.InitialTransferSize,
+                transferChunkSize: header.ChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -198,7 +199,7 @@ namespace Azure.Storage.DataMovement
                 destinationPath: destinationPath,
                 overwrite: jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists,
                 initialTransferSize: jobPart._initialTransferSize,
-                chunkSize: jobPart._maximumTransferChunkSize,
+                chunkSize: jobPart._transferChunkSize,
                 priority: 0, // TODO: add priority feature
                 jobPartStatus: jobPart.JobPartStatus);
         }
