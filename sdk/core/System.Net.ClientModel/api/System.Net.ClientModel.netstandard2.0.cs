@@ -50,12 +50,15 @@ namespace System.Net.ClientModel
         public virtual T? Value { get { throw null; } }
         public override System.Net.ClientModel.Core.MessageResponse GetRawResponse() { throw null; }
     }
-    public partial class RequestOptions : System.Net.ClientModel.Core.PipelineOptions
+    public partial class RequestOptions
     {
         public RequestOptions() { }
+        public RequestOptions(System.Net.ClientModel.Core.PipelineOptions pipelineOptions) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
+        public System.Net.ClientModel.Core.PipelineOptions PipelineOptions { get { throw null; } }
         public virtual void Apply(System.Net.ClientModel.Core.ClientMessage message) { }
+        public System.Net.ClientModel.Core.MessagePipeline GetPipeline() { throw null; }
     }
     public abstract partial class Result
     {

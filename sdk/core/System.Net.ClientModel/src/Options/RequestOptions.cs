@@ -11,11 +11,17 @@ namespace System.Net.ClientModel;
 /// the message being sent down the pipeline.  For the duration of pipeline.Send,
 /// this may change some behaviors in various pipeline policies and the transport.
 /// </summary>
-// TODO: Make options freezable
-public class RequestOptions : PipelineOptions
+public class RequestOptions
 {
-    public RequestOptions()
+    private MessagePipeline? _requestPipeline;
+
+    public RequestOptions() : this(new PipelineOptions())
     {
+    }
+
+    public RequestOptions(PipelineOptions pipelineOptions)
+    {
+        PipelineOptions = pipelineOptions;
         ErrorBehavior = ErrorBehavior.Default;
         CancellationToken = CancellationToken.None;
     }
@@ -24,18 +30,33 @@ public class RequestOptions : PipelineOptions
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
-        message.MessageClassifier = MessageClassifier ?? MessageClassifier.Default;
+        message.MessageClassifier = PipelineOptions.MessageClassifier ?? MessageClassifier.Default;
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why
         // and when we use what, etc., then simplify it back to that per reasons.
-        if (NetworkTimeout.HasValue)
+        if (PipelineOptions.NetworkTimeout.HasValue)
         {
-            ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
+            ResponseBufferingPolicy.SetNetworkTimeout(message, PipelineOptions.NetworkTimeout.Value);
         }
     }
+
+    public PipelineOptions PipelineOptions { get; }
 
     public virtual ErrorBehavior ErrorBehavior { get; set; }
 
     public virtual CancellationToken CancellationToken { get; set; }
+
+    public MessagePipeline GetPipeline()
+    {
+        if (_requestPipeline is not null)
+        {
+            return _requestPipeline;
+        }
+
+        // TODO: what is the logic where we set _requestPipeline to cache it?
+        _requestPipeline = default;
+
+        return PipelineOptions.GetPipeline();
+    }
 }

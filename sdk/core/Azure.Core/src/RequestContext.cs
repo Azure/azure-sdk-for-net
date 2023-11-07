@@ -97,9 +97,9 @@ namespace Azure
             // TODO: Note, we don't set response classifier here, but need to rethink this
             // story e2e.
 
-            if (NetworkTimeout.HasValue)
+            if (PipelineOptions.NetworkTimeout.HasValue)
             {
-                ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
+                ResponseBufferingPolicy.SetNetworkTimeout(message, PipelineOptions.NetworkTimeout.Value);
             }
         }
 

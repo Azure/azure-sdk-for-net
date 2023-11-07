@@ -11,6 +11,8 @@ public class PipelineOptions
 {
     private readonly object _lock = new();
     private MessagePipeline? _pipeline;
+
+    // TODO: don't freeze but track changes
     private volatile bool _isFrozen;
 
     private PipelinePolicy[]? _perCallPolicies;
@@ -117,7 +119,7 @@ public class PipelineOptions
         get => _networkTimeout;
         set
         {
-            AssertNotFrozen();
+            // This one doesn't freeze with the pipeline
             _networkTimeout = value;
         }
     }
@@ -127,7 +129,7 @@ public class PipelineOptions
         get => _messageClassifier;
         set
         {
-            AssertNotFrozen();
+            // This one doesn't freeze with the pipeline
             _messageClassifier = value;
         }
     }

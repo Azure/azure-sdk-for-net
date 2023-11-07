@@ -79,7 +79,7 @@ public class OpenAIClient
         ClientMessage message = pipeline.CreateMessage();
 
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
-        options.MessageClassifier = MessageClassifier200;
+        options.PipelineOptions.MessageClassifier = MessageClassifier200;
         options.Apply(message);
 
         MessageRequest request = message.Request;
