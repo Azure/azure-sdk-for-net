@@ -99,12 +99,9 @@ namespace Azure.Core.Pipeline
                 return null;
             }
 
-            string clientName = ns;
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot != -1)
-            {
-                clientName += "." + name.Substring(0, indexOfDot);
-            }
+            string clientName = ns + "." + ((indexOfDot < 0) ? name : name.Substring(0, indexOfDot));
+
 #if NETCOREAPP2_1
             return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
 #else

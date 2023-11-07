@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -119,9 +120,9 @@ namespace Azure.Core.Tests
         {
             using var _ = SetAppConfigSwitch();
 
-            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
 
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients.ClientName", "Microsoft.Azure.Core.Cool.Tests", true, false);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             Assert.IsTrue(scope.IsEnabled);
@@ -395,12 +396,12 @@ namespace Azure.Core.Tests
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
-                "Azure.Clients.ClientName",
+                "Azure.Clients",
                 "Microsoft.Azure.Core.Cool.Tests",
                 true,
                 false);
 
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
             scope.SetTraceContext(parentId, traceState);
             scope.Start();
             scope.Dispose();
@@ -420,12 +421,12 @@ namespace Azure.Core.Tests
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
-                "Azure.Clients.ClientName",
+                "Azure.Clients",
                 "Microsoft.Azure.Core.Cool.Tests",
                 true,
                 false);
 
-            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
             scope.Start();
             Assert.Throws<InvalidOperationException>(() => scope.SetTraceContext(parentId));
         }
@@ -435,10 +436,10 @@ namespace Azure.Core.Tests
         public void FailedStopsActivityAndWritesExceptionEventActivitySource()
         {
             using var _ = SetAppConfigSwitch();
-            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
-                "Azure.Clients.ClientName",
+                "Azure.Clients",
                 "Microsoft.Azure.Core.Cool.Tests",
                 true,
                 false);
@@ -529,6 +530,63 @@ namespace Azure.Core.Tests
             }
 
             Assert.AreEqual(4, activeActivityCounts); // 1 activity will be dropped due to sampler logic
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void FailedStopsActivityAndWritesErrorTypeException()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            scope.Failed(new ArgumentException());
+
+            Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
+            Assert.IsEmpty(activity.Events);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", typeof(ArgumentException).FullName));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void FailedStopsActivityAndWritesErrorTypeRequestException()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            scope.Failed(new RequestFailedException(400, "error", "errorCode", new HttpRequestException()));
+
+            Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
+            Assert.IsEmpty(activity.Events);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", "errorCode"));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void FailedStopsActivityAndWritesErrorTypeString()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var testListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            scope.Failed("errorCode");
+
+            Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
+            Assert.IsEmpty(activity.Events);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", "errorCode"));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
         }
 
         private class CustomSampler : Sampler
