@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/def187e2e78d7173d8fdd7f77740dd9719e1dfbf/specification/security/resource-manager/readme.md
+require: https://github.com/eliagrady/azure-rest-api-specs/blob/89939011317bf646545bab3e5eed2980abcafc34/specification/security/resource-manager/readme.md
 #tag: package-composite-v3
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -24,6 +24,7 @@ tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 deserialize-null-collection-as-null-value: true
 
 #mgmt-debug:
@@ -247,6 +248,7 @@ rename-mapping:
   Code: ExtensionOperationStatusCode
   OperationStatus: ExtensionOperationStatus
   IsEnabled: IsExtensionEnabled
+  GitlabScopeEnvironmentData: GitlabScopeEnvironment
 
 prepend-rp-prefix:
   - CloudName
@@ -341,6 +343,7 @@ operation-positions:
 list-exception:
   - /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
   - /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
+  - /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}
 
 directive:
   - rename-operation:
