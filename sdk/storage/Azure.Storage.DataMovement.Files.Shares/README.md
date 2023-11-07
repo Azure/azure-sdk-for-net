@@ -15,6 +15,10 @@ Azure Storage client libraries.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
+## Known Issues
+
+This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](../Azure.Storage.DataMovement/KnownIssues) for detailed information.
+
 ## Getting started
 
 ### Install the package

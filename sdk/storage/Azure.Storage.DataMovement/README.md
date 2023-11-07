@@ -2,6 +2,8 @@
 
 > Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
+
+
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant.
 
@@ -11,6 +13,10 @@ copying customer data.
 Currently this version of the Data Movement library only supports Blobs.
 
 [Source code][source] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
+
+## Known Issues
+
+This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](./KnownIssues) for detailed information.
 
 ## Getting started
 
