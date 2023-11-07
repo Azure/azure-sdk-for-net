@@ -30,14 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CopyBehavior);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CopyBehavior))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, CopyBehavior);
             }
             foreach (var item in AdditionalProperties)
             {

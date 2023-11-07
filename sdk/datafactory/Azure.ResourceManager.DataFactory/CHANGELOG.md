@@ -1,8 +1,11 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2023-11-07)
 
 ### Features Added
+
+- Upgraded API version.
+- Added Some Properties on GoogleAds Connector 
 
 ### Breaking Changes
 

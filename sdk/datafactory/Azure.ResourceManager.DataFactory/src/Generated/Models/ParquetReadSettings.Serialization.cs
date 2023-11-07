@@ -9,22 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class JsonWriteSettings : IUtf8JsonSerializable
+    public partial class ParquetReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilePattern))
+            if (Optional.IsDefined(CompressionProperties))
             {
-                writer.WritePropertyName("filePattern"u8);
-                JsonSerializer.Serialize(writer, FilePattern);
+                writer.WritePropertyName("compressionProperties"u8);
+                writer.WriteObjectValue(CompressionProperties);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(FormatWriteSettingsType);
+            writer.WriteStringValue(FormatReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -40,25 +39,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static JsonWriteSettings DeserializeJsonWriteSettings(JsonElement element)
+        internal static ParquetReadSettings DeserializeParquetReadSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> filePattern = default;
+            Optional<CompressionReadSettings> compressionProperties = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePattern"u8))
+                if (property.NameEquals("compressionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filePattern = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonWriteSettings(type, additionalProperties, filePattern.Value);
+            return new ParquetReadSettings(type, additionalProperties, compressionProperties.Value);
         }
     }
 }
