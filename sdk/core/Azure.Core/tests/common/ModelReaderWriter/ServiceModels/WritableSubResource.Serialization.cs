@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
     [JsonConverter(typeof(WritableSubResourceConverter))]
     public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModel<WritableSubResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WritableSubResource>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WritableSubResource>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<WritableSubResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.GetWireOptions());
             }
         }
 
@@ -114,6 +114,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<WritableSubResource>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<WritableSubResource>);
+            }
+            else
+            {
+                return typeof(IModel<WritableSubResource>);
+            }
+        }
     }
 }

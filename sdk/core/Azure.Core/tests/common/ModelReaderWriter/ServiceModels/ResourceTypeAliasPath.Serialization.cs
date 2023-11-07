@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ResourceTypeAliasPath : IUtf8JsonSerializable, IJsonModel<ResourceTypeAliasPath>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPath>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPath>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,6 +133,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ResourceTypeAliasPath>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ResourceTypeAliasPath>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ResourceTypeAliasPath>);
+            }
+            else
+            {
+                return typeof(IModel<ResourceTypeAliasPath>);
+            }
+        }
     }
 }

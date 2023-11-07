@@ -43,11 +43,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonModelForCombinedInterface>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonModelForCombinedInterface>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -128,6 +128,16 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<JsonModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<JsonModelForCombinedInterface>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<JsonModelForCombinedInterface>);
+            }
+            else
+            {
+                return typeof(IModel<JsonModelForCombinedInterface>);
+            }
+        }
     }
 }

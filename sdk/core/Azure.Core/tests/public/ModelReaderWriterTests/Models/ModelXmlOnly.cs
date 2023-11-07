@@ -43,9 +43,9 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         [XmlElement("RenamedChildModelXml")]
         public ChildModelXmlOnly RenamedChildModelXml { get; set; }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static ModelXmlOnly DeserializeModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -118,6 +118,9 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeModelXmlOnly(XElement.Load(data.ToStream()), options);
         }
 
-        ModelReaderWriterFormat IModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ModelXmlOnly>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            return typeof(IModel<JsonModelForCombinedInterface>);
+        }
     }
 }

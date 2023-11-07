@@ -48,9 +48,9 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, ModelReaderWriterFormat format)
         {
-            Assert.AreEqual(format == ModelReaderWriterFormat.Wire ? null : model.Id, model2.Id);
+            Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
             Assert.AreEqual(model.Location, model2.Location);
-            Assert.AreEqual(format == ModelReaderWriterFormat.Wire ? null : model.Name, model2.Name);
+            Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
             Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
             Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
             if (format == ModelReaderWriterFormat.Json)

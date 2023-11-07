@@ -46,9 +46,9 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         [XmlElement("RenamedChildModelXml")]
         public ChildModelXml RenamedChildModelXml { get; set; }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -88,7 +88,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static ModelXml DeserializeModelXml(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -123,7 +123,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.GetWireOptions();
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelXml DeserializeModelXml(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -209,8 +209,18 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return DeserializeModelXml(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions());
 
-        ModelReaderWriterFormat IModel<ModelXml>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        Type IModel<ModelXml>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                return typeof(IJsonModel<ModelXml>);
+            }
+            else
+            {
+                return typeof(IModel<ModelXml>);
+            }
+        }
     }
 }

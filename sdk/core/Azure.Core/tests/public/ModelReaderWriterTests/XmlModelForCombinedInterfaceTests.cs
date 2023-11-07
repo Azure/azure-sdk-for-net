@@ -20,7 +20,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override string GetExpectedResult(ModelReaderWriterFormat format)
         {
-            if (format == ModelReaderWriterFormat.Wire)
+            if (format == "W")
             {
                 var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
                 if (format.Equals(ModelReaderWriterFormat.Json))

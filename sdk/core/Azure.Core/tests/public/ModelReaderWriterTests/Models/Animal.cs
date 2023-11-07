@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Animal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Animal>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<Animal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static Animal DeserializeAnimal(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             double weight = default;
             string name = "";
@@ -143,7 +143,17 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<Animal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<Animal>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<Animal>);
+            }
+            else
+            {
+                return typeof(IModel<Animal>);
+            }
+        }
 
         #endregion
     }

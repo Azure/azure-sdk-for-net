@@ -24,14 +24,7 @@ namespace System.Net.ClientModel.Core
         /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default format of <see cref="ModelReaderWriterFormat.Json"/>.
         /// </summary>
         public ModelJsonConverter()
-            : this(ModelReaderWriterFormat.Json) { }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
-        /// </summary>
-        /// <param name="format"> The format to write to and read from. </param>
-        public ModelJsonConverter(ModelReaderWriterFormat format)
-            : this(ModelReaderWriterOptions.GetOptions(format)) { }
+            : this(ModelReaderWriterOptions.GetDataOptions(ModelReaderWriterFormat.Json)) { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelJsonConverter"/>.

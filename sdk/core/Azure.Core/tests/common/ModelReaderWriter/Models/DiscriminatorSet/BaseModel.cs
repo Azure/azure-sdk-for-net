@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             }
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseModel>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseModel>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static BaseModel DeserializeBaseModel(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,6 +132,16 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<BaseModel>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<BaseModel>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<BaseModel>);
+            }
+            else
+            {
+                return typeof(IModel<BaseModel>);
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
     internal class ModelReaderWriterOptionsTests
     {
         [Test]
-        public void ValidatePropertyIsFrozen() => ValidateFrozenInstance(ModelReaderWriterOptions.DefaultWireOptions);
+        public void ValidatePropertyIsFrozen() => ValidateFrozenInstance(ModelReaderWriterOptions.GetWireOptions());
 
         [Test]
         public void AllInstancesInMapShouldBeFrozen()
@@ -33,7 +33,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void NewInstanceShouldNotBeFrozen()
         {
-            ModelReaderWriterOptions nonFrozen = new ModelReaderWriterOptions();
+            ModelReaderWriterOptions nonFrozen = ModelReaderWriterOptions.GetOptions();
             //Assert.DoesNotThrow(() => nonFrozen.ObjectSerializerResolver = type => null);
         }
     }

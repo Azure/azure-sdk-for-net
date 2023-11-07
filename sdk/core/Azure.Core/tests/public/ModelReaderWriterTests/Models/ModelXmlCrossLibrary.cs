@@ -16,7 +16,7 @@ using Azure.Core.Tests.ModelReaderWriterTests.Models;
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 {
     [XmlRoot("Tag")]
-    public class ModelXmlCrossLibrary : IXmlSerializable, IModel<ModelXmlCrossLibrary>, IJsonModel<ModelXmlCrossLibrary>, IUtf8JsonSerializable
+    public class ModelXmlCrossLibrary : IXmlSerializable, IJsonModel<ModelXmlCrossLibrary>, IUtf8JsonSerializable
     {
         internal ModelXmlCrossLibrary() { }
 
@@ -47,9 +47,9 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         [XmlElement("ChildTag")]
         public ChildModelXml ChildModelXml { get; set; }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -93,7 +93,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static ModelXmlCrossLibrary DeserializeModelXmlCrossLibrary(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -133,7 +133,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.GetWireOptions();
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -151,7 +151,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static ModelXmlCrossLibrary DeserializeModelXmlCrossLibrary(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -219,8 +219,18 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeModelXmlCrossLibrary(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions());
 
-        ModelReaderWriterFormat IModel<ModelXmlCrossLibrary>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        Type IModel<ModelXmlCrossLibrary>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                return typeof(IJsonModel<ModelXmlCrossLibrary>);
+            }
+            else
+            {
+                return typeof(IModel<ModelXmlCrossLibrary>);
+            }
+        }
     }
 }

@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ProviderResourceType : IUtf8JsonSerializable, IJsonModel<ProviderResourceType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderResourceType>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderResourceType>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -282,6 +282,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ProviderResourceType>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ProviderResourceType>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ProviderResourceType>);
+            }
+            else
+            {
+                return typeof(IModel<ProviderResourceType>);
+            }
+        }
     }
 }

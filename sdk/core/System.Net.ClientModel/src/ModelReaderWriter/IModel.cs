@@ -32,6 +32,6 @@ namespace System.Net.ClientModel.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// </summary>
         /// <returns>The <see cref="ModelReaderWriterFormat"/> that the model uses for its wire format.</returns>
-        ModelReaderWriterFormat GetWireFormat(ModelReaderWriterOptions options);
+        Type GetInterfaceType(ModelReaderWriterOptions options);
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<CatReadOnlyProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             double weight = default;
             string name = "";
@@ -134,7 +134,17 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<CatReadOnlyProperty>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<CatReadOnlyProperty>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<CatReadOnlyProperty>);
+            }
+            else
+            {
+                return typeof(IModel<CatReadOnlyProperty>);
+            }
+        }
 
         #endregion
     }

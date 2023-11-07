@@ -19,7 +19,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             string modelXResponse = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
             var options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(format));
+            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterOptions.GetOptions(format)));
             ModelY modelY = JsonSerializer.Deserialize<ModelY>(modelYResponse, options);
 
             Assert.AreEqual("Y", modelY.Kind);

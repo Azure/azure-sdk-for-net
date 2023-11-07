@@ -38,7 +38,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+            Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string value = default;
             string readonlyProperty = default;
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string childValue = default;
             string childReadOnlyProperty = default;
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.GetWireOptions();
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -166,8 +166,18 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+            Serialize(writer, ModelReaderWriterOptions.GetWireOptions());
 
-        ModelReaderWriterFormat IModel<ChildModelXml>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        Type IModel<ChildModelXml>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                return typeof(IJsonModel<ChildModelXml>);
+            }
+            else
+            {
+                return typeof(IModel<ChildModelXml>);
+            }
+        }
     }
 }

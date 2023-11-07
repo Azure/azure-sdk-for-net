@@ -19,11 +19,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!));
 
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, ModelReaderWriterFormat.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), ModelReaderWriterFormat.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!, ModelReaderWriterFormat.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, ModelReaderWriterFormat.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, ModelReaderWriterFormat.Wire));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, ModelReaderWriterOptions.GetWireOptions()));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), ModelReaderWriterOptions.GetWireOptions()));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!, ModelReaderWriterOptions.GetWireOptions()));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, ModelReaderWriterOptions.GetWireOptions()));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, ModelReaderWriterOptions.GetWireOptions()));
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "InvalidOperationBinaryData")]
@@ -109,7 +109,17 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         private class SubType : BaseWithNoUnknown, IJsonModel<SubType>
         {
-            ModelReaderWriterFormat IModel<SubType>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+            Type IModel<SubType>.GetInterfaceType(ModelReaderWriterOptions options)
+            {
+                if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+                {
+                    return typeof(IJsonModel<SubType>);
+                }
+                else
+                {
+                    return typeof(IModel<SubType>);
+                }
+            }
 
             SubType IJsonModel<SubType>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
@@ -134,7 +144,17 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         private abstract class BaseWithNoUnknown : IJsonModel<BaseWithNoUnknown>
         {
-            ModelReaderWriterFormat IModel<BaseWithNoUnknown>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+            Type IModel<BaseWithNoUnknown>.GetInterfaceType(ModelReaderWriterOptions options)
+            {
+                if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+                {
+                    return typeof(IJsonModel<BaseWithNoUnknown>);
+                }
+                else
+                {
+                    return typeof(IModel<BaseWithNoUnknown>);
+                }
+            }
 
             BaseWithNoUnknown IJsonModel<BaseWithNoUnknown>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
@@ -161,7 +181,17 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         {
             public ModelWithNoDefaultCtor(int x) { }
 
-            ModelReaderWriterFormat IModel<ModelWithNoDefaultCtor>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+            Type IModel<ModelWithNoDefaultCtor>.GetInterfaceType(ModelReaderWriterOptions options)
+            {
+                if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+                {
+                    return typeof(IJsonModel<ModelWithNoDefaultCtor>);
+                }
+                else
+                {
+                    return typeof(IModel<ModelWithNoDefaultCtor>);
+                }
+            }
 
             ModelWithNoDefaultCtor IJsonModel<ModelWithNoDefaultCtor>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {

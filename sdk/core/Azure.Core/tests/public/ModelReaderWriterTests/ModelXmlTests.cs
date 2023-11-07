@@ -22,18 +22,18 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [Test]
         public void ThrowsIfMismatch()
         {
-            ModelReaderWriterOptions jsonOptions = new ModelReaderWriterOptions(ModelReaderWriterFormat.Json);
+            ModelReaderWriterOptions jsonOptions = ModelReaderWriterOptions.GetOptions(ModelReaderWriterFormat.Json);
             ModelXml model = System.Net.ClientModel.ModelReaderWriter.Read<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), jsonOptions);
 
             Assert.Throws(Is.InstanceOf<JsonException>(), () => System.Net.ClientModel.ModelReaderWriter.Read<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
 
-            ModelReaderWriterOptions wireOptions = ModelReaderWriterOptions.DefaultWireOptions;
+            ModelReaderWriterOptions wireOptions = ModelReaderWriterOptions.GetWireOptions();
             Assert.Throws<XmlException>(() => System.Net.ClientModel.ModelReaderWriter.Read<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
         }
 
         protected override string GetExpectedResult(ModelReaderWriterFormat format)
         {
-            if (format == ModelReaderWriterFormat.Wire)
+            if (format == "W")
             {
                 var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
                 if (format.Equals(ModelReaderWriterFormat.Json))

@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [TestCase("W")]
         public void CanDeserializeModelX(string format)
         {
-            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            ModelReaderWriterOptions options = ModelReaderWriterOptions.GetOptions(format);
             BinaryData data = new BinaryData(Encoding.UTF8.GetBytes("{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}"));
             object modelX = System.Net.ClientModel.ModelReaderWriter.Read(data, typeof(ModelXDeserializationProxy), options);
             Assert.IsNotNull(modelX);

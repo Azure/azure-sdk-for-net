@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class ComputeSku : IUtf8JsonSerializable, IJsonModel<ComputeSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSku>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSku>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<ComputeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -43,7 +43,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 
         internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,6 +129,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ComputeSku>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ComputeSku>);
+            }
+            else
+            {
+                return typeof(IModel<ComputeSku>);
+            }
+        }
     }
 }

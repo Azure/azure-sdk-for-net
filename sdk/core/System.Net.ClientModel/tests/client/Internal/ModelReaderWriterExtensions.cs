@@ -185,7 +185,7 @@ namespace System.Net.ClientModel.Tests.Client
                     writer.WriteNullValue();
                     break;
                 case IJsonModel<object> writeable:
-                    writeable.Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+                    writeable.Write(writer, ModelReaderWriterOptions.GetWireOptions());
                     break;
                 case byte[] bytes:
                     writer.WriteBase64StringValue(bytes);

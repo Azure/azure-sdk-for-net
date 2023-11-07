@@ -8,10 +8,9 @@ namespace System.Net.ClientModel
     /// <summary>
     /// A format used to specify how a model should be read and written.
     /// </summary>
-    public readonly partial struct ModelReaderWriterFormat : IEquatable<ModelReaderWriterFormat>
+    public readonly partial struct ModelReaderWriterFormat : IEquatable<ModelReaderWriterFormat>, IEquatable<string>
     {
         private const string JsonValue = "J";
-        private const string WireValue = "W";
         private const string XmlValue = "X";
 
         /// <summary>
@@ -24,16 +23,6 @@ namespace System.Net.ClientModel
         /// Xml format which will write all properties including read-only and additional properties.
         /// </summary>
         public static ModelReaderWriterFormat Xml { get; } = new ModelReaderWriterFormat(XmlValue);
-
-        /// <summary>
-        /// Format used to write this model when sending as a request to a service.
-        /// It may not write read-only properties or additional properties.
-        /// The content-type will vary between JSON, XML, etc., depending on the service.
-        ///
-        /// Most use cases should prefer a more complete format like <see cref="ModelReaderWriterFormat.Json"/> that includes
-        /// read-only and additional properties.
-        /// </summary>
-        public static ModelReaderWriterFormat Wire { get; } = new ModelReaderWriterFormat(WireValue);
 
         private readonly string _value;
 
@@ -80,5 +69,8 @@ namespace System.Net.ClientModel
 
         /// <inheritdoc/>
         public override string ToString() => _value;
+
+        /// <inheritdoc/>
+        public bool Equals(string? other) => string.Equals(_value?.ToString(), other, StringComparison.Ordinal);
     }
 }

@@ -44,15 +44,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void RoundTripWithModelReaderWriterFormatOverload(string format)
-        {
-            //if we only pass in the format we can't test BYOM
-            if (!typeof(T).IsGenericType)
-                RoundTripTest(format, new ModelReaderWriterFormatOverloadStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
         public void RoundTripWithModelInterface(string format)
             => RoundTripTest(format, new ModelInterfaceStrategy<T>());
 
@@ -65,7 +56,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         {
             string serviceResponse = format == ModelReaderWriterFormat.Json ? JsonPayload : WirePayload;
 
-            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            ModelReaderWriterOptions options = ModelReaderWriterOptions.GetOptions(format);
             //options.ObjectSerializerResolver = GetObjectSerializerFactory(format);
 
             var expectedSerializedString = GetExpectedResult(format);
@@ -88,7 +79,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         private bool AssertFailures(RoundTripStrategy<T> strategy, ModelReaderWriterFormat format, string serviceResponse, ModelReaderWriterOptions options)
         {
             bool result = false;
-            if (IsXmlWireFormat && (strategy.IsExplicitJsonRead || strategy.IsExplicitJsonWrite) && format == ModelReaderWriterFormat.Wire)
+            if (IsXmlWireFormat && (strategy.IsExplicitJsonRead || strategy.IsExplicitJsonWrite) && format == "W")
             {
                 if (strategy.IsExplicitJsonRead)
                 {
@@ -134,7 +125,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [Test]
         public void ThrowsIfUnknownFormat()
         {
-            ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
+            ModelReaderWriterOptions options = ModelReaderWriterOptions.GetOptions("x");
             Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
@@ -181,12 +172,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         {
             if (ModelInstance is IJsonModel<T> jsonModel && IsXmlWireFormat)
             {
-                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), new ModelReaderWriterOptions(ModelReaderWriterFormat.Wire)));
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterOptions.GetWireOptions()));
                 Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Read(ref reader, new ModelReaderWriterOptions(ModelReaderWriterFormat.Wire));
+                    jsonModel.Read(ref reader, ModelReaderWriterOptions.GetWireOptions());
                 }
                 catch (InvalidOperationException)
                 {

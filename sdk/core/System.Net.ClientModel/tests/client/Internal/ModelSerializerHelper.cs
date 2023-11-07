@@ -12,7 +12,7 @@ namespace System.Net.ClientModel.Tests.Client
         public static void ValidateFormat<T>(IModel<T> model, ModelReaderWriterFormat format)
         {
             bool implementsJson = model is IJsonModel<T>;
-            bool isValid = (format == ModelReaderWriterFormat.Json && implementsJson) || format == ModelReaderWriterFormat.Wire;
+            bool isValid = (format == ModelReaderWriterFormat.Json && implementsJson) || format == "W";
             if (!isValid)
             {
                 throw new FormatException($"The model {model.GetType().Name} does not support '{format}' format.");

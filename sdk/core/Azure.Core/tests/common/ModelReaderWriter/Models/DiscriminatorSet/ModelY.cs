@@ -28,7 +28,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public string YProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelY>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelY>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<ModelY>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,6 +110,16 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ModelY>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ModelY>);
+            }
+            else
+            {
+                return typeof(IModel<ModelY>);
+            }
+        }
     }
 }

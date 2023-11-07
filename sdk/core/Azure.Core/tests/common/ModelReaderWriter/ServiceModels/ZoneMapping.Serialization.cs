@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ZoneMapping : IUtf8JsonSerializable, IJsonModel<ZoneMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZoneMapping>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZoneMapping>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,6 +105,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ZoneMapping>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ZoneMapping>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ZoneMapping>);
+            }
+            else
+            {
+                return typeof(IModel<ZoneMapping>);
+            }
+        }
     }
 }

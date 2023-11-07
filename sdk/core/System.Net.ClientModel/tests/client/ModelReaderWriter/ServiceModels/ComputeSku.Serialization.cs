@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,6 +123,16 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ComputeSku>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ComputeSku>);
+            }
+            else
+            {
+                return typeof(IModel<ComputeSku>);
+            }
+        }
     }
 }

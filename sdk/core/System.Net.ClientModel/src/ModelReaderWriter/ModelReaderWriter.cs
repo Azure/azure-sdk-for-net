@@ -25,32 +25,22 @@ namespace System.Net.ClientModel
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
 
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
-            if (model is IJsonModel<T> jsonModel &&
-                (options.Format == ModelReaderWriterFormat.Json || (options.Format == ModelReaderWriterFormat.Wire && model.GetWireFormat(options) == ModelReaderWriterFormat.Json)))
+            Type interfaceToUse = model.GetInterfaceType(options);
+
+            if (interfaceToUse.Equals(typeof(IJsonModel<T>)))
             {
-                using ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options);
-                return writer.ToBinaryData();
+                using (ModelWriter<T> writer = new ModelWriter<T>((IJsonModel<T>)model, options))
+                {
+                    return writer.ToBinaryData();
+                }
             }
             else
             {
                 return model.Write(options);
             }
         }
-
-        /// <summary>
-        /// Converts the value of a model into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <typeparam name="T">The type of the value to write.</typeparam>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="format">The <see cref="ModelReaderWriterFormat"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterFormat"/> specified by the <paramref name="format"/>.</returns>
-        /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterFormat"/>.</exception>
-        /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-        public static BinaryData Write<T>(T model, ModelReaderWriterFormat format)
-            where T : IModel<T>
-            => Write<T>(model, ModelReaderWriterOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the value of a model into a <see cref="BinaryData"/>.
@@ -66,7 +56,7 @@ namespace System.Net.ClientModel
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
 
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             var iModel = model as IModel<object>;
             if (iModel is null)
@@ -74,29 +64,20 @@ namespace System.Net.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModel<object>)}");
             }
 
-            if (iModel is IJsonModel<object> jsonObject &&
-                (options.Format == ModelReaderWriterFormat.Json || (options.Format == ModelReaderWriterFormat.Wire && iModel.GetWireFormat(options) == ModelReaderWriterFormat.Json)))
+            Type interfaceToUse = iModel.GetInterfaceType(options);
+
+            if (typeof(IJsonModel<object>).IsAssignableFrom(interfaceToUse))
             {
-                using ModelWriter writer = new ModelWriter(jsonObject, options);
-                return writer.ToBinaryData();
+                using (ModelWriter<object> writer = new ModelWriter<object>((IJsonModel<object>)model, options))
+                {
+                    return writer.ToBinaryData();
+                }
             }
             else
             {
                 return iModel.Write(options);
             }
         }
-
-        /// <summary>
-        /// Converts the value of a model into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="format">The <see cref="ModelReaderWriterFormat"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterFormat"/> specified by the <paramref name="format"/>.</returns>
-        /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModel{T}"/>.</exception>
-        /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterFormat"/>.</exception>
-        /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-        public static BinaryData Write(object model, ModelReaderWriterFormat format)
-            => Write(model, ModelReaderWriterOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
@@ -112,23 +93,10 @@ namespace System.Net.ClientModel
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             return GetInstance<T>().Read(data, options);
         }
-
-        /// <summary>
-        /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
-        /// </summary>
-        /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
-        /// <param name="format">The <see cref="ModelReaderWriterFormat"/> to use.</param>
-        /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
-        /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
-        /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterFormat"/>.</exception>
-        /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterFormat format)
-            where T : IModel<T>
-            => Read<T>(data, ModelReaderWriterOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
@@ -148,24 +116,10 @@ namespace System.Net.ClientModel
             if (returnType is null)
                 throw new ArgumentNullException(nameof(returnType));
 
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             return GetInstance(returnType).Read(data, options);
         }
-
-        /// <summary>
-        /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
-        /// </summary>
-        /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
-        /// <param name="returnType">The type of the objec to convert and return.</param>
-        /// <param name="format">The <see cref="ModelReaderWriterFormat"/> to use.</param>
-        /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
-        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModel{T}"/>.</exception>
-        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
-        /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterFormat"/>.</exception>
-        /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
-        public static object? Read(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelReaderWriterFormat format)
-            => Read(data, returnType, ModelReaderWriterOptions.GetOptions(format));
 
         private static IModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {

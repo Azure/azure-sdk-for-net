@@ -69,7 +69,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             int id = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -122,8 +122,28 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ModelAsStruct>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ModelAsStruct>);
+            }
+            else
+            {
+                return typeof(IModel<ModelAsStruct>);
+            }
+        }
 
-        ModelReaderWriterFormat IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<object>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<object>);
+            }
+            else
+            {
+                return typeof(IModel<object>);
+            }
+        }
     }
 }

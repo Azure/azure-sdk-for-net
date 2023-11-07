@@ -51,7 +51,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,6 +105,16 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ModelY>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ModelY>);
+            }
+            else
+            {
+                return typeof(IModel<ModelY>);
+            }
+        }
     }
 }

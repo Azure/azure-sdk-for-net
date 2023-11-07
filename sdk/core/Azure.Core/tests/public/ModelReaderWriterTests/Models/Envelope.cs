@@ -38,7 +38,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<Envelope<T>>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -164,7 +164,17 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<Envelope<T>>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<Envelope<T>>);
+            }
+            else
+            {
+                return typeof(IModel<Envelope<T>>);
+            }
+        }
         #endregion
     }
 }

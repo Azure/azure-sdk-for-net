@@ -14,7 +14,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,6 +100,16 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ApiProfile>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ApiProfile>);
+            }
+            else
+            {
+                return typeof(IModel<ApiProfile>);
+            }
+        }
     }
 }

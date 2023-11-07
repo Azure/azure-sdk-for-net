@@ -10,40 +10,52 @@ namespace System.Net.ClientModel
     /// </summary>
     public class ModelReaderWriterOptions
     {
-        private static readonly IReadOnlyDictionary<ModelReaderWriterFormat, ModelReaderWriterOptions> _singletonMap = new Dictionary<ModelReaderWriterFormat, ModelReaderWriterOptions>()
-        {
-            { ModelReaderWriterFormat.Json, new ModelReaderWriterOptions(ModelReaderWriterFormat.Json, true) },
-            { ModelReaderWriterFormat.Wire, new ModelReaderWriterOptions(ModelReaderWriterFormat.Wire, true) }
-        };
-
-        /// <summary>
-        /// Default options for writing models into the format the serivce is expecting.
-        /// </summary>
-        public static ModelReaderWriterOptions DefaultWireOptions { get; } = _singletonMap[ModelReaderWriterFormat.Wire];
-
-        /// <summary>
-        /// Gets the cached <see cref="ModelReaderWriterOptions"/> for the specified <see cref="ModelReaderWriterFormat"/>.
-        /// The <see cref="ModelReaderWriterOptions"/> are cached to avoid unnecessary allocations.
-        /// The <see cref="ModelReaderWriterOptions"/> are frozen to avoid accidental modification.
-        /// </summary>
-        /// <param name="format">The <see cref="ModelReaderWriterFormat"/> the options should represent.</param>
-        internal static ModelReaderWriterOptions GetOptions(ModelReaderWriterFormat format)
-            => _singletonMap.TryGetValue(format, out ModelReaderWriterOptions? options) ? options! : new ModelReaderWriterOptions(format);
+        private static readonly Dictionary<ModelReaderWriterFormat, ModelReaderWriterOptions> _singletonMap = new Dictionary<ModelReaderWriterFormat, ModelReaderWriterOptions>();
 
         private bool _isFrozen;
 
+        private static ModelReaderWriterOptions? _wireOptions;
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelReaderWriterOptions" /> class. Defaults to format <see cref="ModelReaderWriterFormat.Json"/>.
+        /// Default options for writing models into the format the serivce is expecting.
         /// </summary>
-        public ModelReaderWriterOptions() : this(ModelReaderWriterFormat.Json, false) { }
+        public static ModelReaderWriterOptions GetWireOptions() => _wireOptions ??= new ModelReaderWriterOptions("W", true) { IncludeAdditionalProperties = false, IncludeReadOnlyProperties = false };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelReaderWriterOptions" /> class.
+        /// .
         /// </summary>
-        /// <param name="format">String that determines <see cref="ModelReaderWriterFormat"/> of written model..</param>
-        public ModelReaderWriterOptions(ModelReaderWriterFormat format) : this(format, false) { }
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static ModelReaderWriterOptions GetDataOptions(ModelReaderWriterFormat format = default)
+        {
+            if (format.Equals(default))
+                format = ModelReaderWriterFormat.Json;
 
-        private ModelReaderWriterOptions(ModelReaderWriterFormat format, bool isFrozen)
+            if (!_singletonMap.TryGetValue(format, out var options))
+            {
+                options = new ModelReaderWriterOptions(format.ToString(), true);
+                _singletonMap[format] = options;
+            }
+
+            return options;
+        }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static ModelReaderWriterOptions GetOptions(ModelReaderWriterFormat format = default)
+        {
+            if (format.Equals(default))
+                format = ModelReaderWriterFormat.Json;
+
+            if (format == "W")
+                return GetWireOptions();
+
+            return new ModelReaderWriterOptions(format.ToString(), false);
+        }
+
+        private ModelReaderWriterOptions(string format, bool isFrozen)
         {
             Format = format;
             _isFrozen = isFrozen;
@@ -52,6 +64,16 @@ namespace System.Net.ClientModel
         /// <summary>
         /// Gets the <see cref="ModelReaderWriterFormat"/> that determines format of written model.
         /// </summary>
-        public ModelReaderWriterFormat Format { get; }
+        public string Format { get; }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        public bool IncludeReadOnlyProperties { get; set; } = true;
+
+        /// <summary>
+        /// .
+        /// </summary>
+        public bool IncludeAdditionalProperties { get; set; } = true;
     }
 }

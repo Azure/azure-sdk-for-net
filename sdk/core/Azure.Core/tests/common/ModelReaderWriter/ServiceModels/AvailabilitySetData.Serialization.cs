@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModel<AvailabilitySetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetData>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -280,6 +280,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<AvailabilitySetData>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<AvailabilitySetData>);
+            }
+            else
+            {
+                return typeof(IModel<AvailabilitySetData>);
+            }
+        }
     }
 }

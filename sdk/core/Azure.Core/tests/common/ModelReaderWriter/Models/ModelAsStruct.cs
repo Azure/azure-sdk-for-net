@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         /// <summary> Gets the id. </summary>
         public int Id { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
 
         void IJsonModel<ModelAsStruct>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             int id = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -127,8 +127,28 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ModelAsStruct>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ModelAsStruct>);
+            }
+            else
+            {
+                return typeof(IModel<ModelAsStruct>);
+            }
+        }
 
-        ModelReaderWriterFormat IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<object>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<object>);
+            }
+            else
+            {
+                return typeof(IModel<object>);
+            }
+        }
     }
 }

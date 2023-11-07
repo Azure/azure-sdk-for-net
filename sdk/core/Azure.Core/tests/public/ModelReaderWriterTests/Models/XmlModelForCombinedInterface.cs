@@ -43,11 +43,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string ReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+            Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -110,7 +110,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.GetWireOptions();
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -128,7 +128,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             string key = default;
             string value = default;
@@ -193,8 +193,18 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+            Serialize(writer, ModelReaderWriterOptions.GetWireOptions());
 
-        ModelReaderWriterFormat IModel<XmlModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        Type IModel<XmlModelForCombinedInterface>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                return typeof(IJsonModel<XmlModelForCombinedInterface>);
+            }
+            else
+            {
+                return typeof(IModel<XmlModelForCombinedInterface>);
+            }
+        }
     }
 }

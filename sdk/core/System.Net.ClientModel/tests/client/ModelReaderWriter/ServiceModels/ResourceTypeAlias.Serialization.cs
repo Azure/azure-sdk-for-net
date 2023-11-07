@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.GetWireOptions();
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,6 +156,16 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ResourceTypeAlias>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        Type IModel<ResourceTypeAlias>.GetInterfaceType(ModelReaderWriterOptions options)
+        {
+            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
+            {
+                return typeof(IJsonModel<ResourceTypeAlias>);
+            }
+            else
+            {
+                return typeof(IModel<ResourceTypeAlias>);
+            }
+        }
     }
 }
