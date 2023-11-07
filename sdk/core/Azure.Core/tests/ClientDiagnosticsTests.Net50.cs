@@ -437,7 +437,7 @@ namespace Azure.Core.Tests
         public void FailedStopsActivityAndWritesExceptionEventActivitySource()
         {
             using var _ = SetAppConfigSwitch();
-            using var activityListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
                 "Azure.Clients",
