@@ -14,116 +14,40 @@ namespace Azure.Communication.JobRouter
     /// <summary> Model factory for models. </summary>
     public static partial class JobRouterModelFactory
     {
-        /// <summary> Initializes a new instance of ExpressionRouterRule. </summary>
-        /// <param name="language"> The expression language to compile to and execute. </param>
-        /// <param name="expression">
-        /// The string containing the expression to evaluate. Should contain return
-        /// statement with calculated values.
+        /// <summary> Initializes a new instance of DistributionMode. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors">
+        /// (Optional)
+        /// If set to true, then router will match workers to jobs even if they
+        /// don't match label selectors.
+        /// Warning: You may get workers that are not
+        /// qualified for the job they are matched with if you set this
+        /// variable to true.
+        /// This flag is intended more for temporary usage.
+        /// By default, set to false.
         /// </param>
-        /// <returns> A new <see cref="JobRouter.ExpressionRouterRule"/> instance for mocking. </returns>
-        public static ExpressionRouterRule ExpressionRouterRule(string language = null, string expression = null)
+        /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
+        /// <returns> A new <see cref="JobRouter.DistributionMode"/> instance for mocking. </returns>
+        public static DistributionMode DistributionMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null, string kind = null)
         {
-            return new ExpressionRouterRule("expression-rule", language, expression);
+            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind);
         }
 
-        /// <summary> Initializes a new instance of FunctionRouterRule. </summary>
-        /// <param name="functionUri"> URL for Azure Function. </param>
-        /// <param name="credential"> Credentials used to access Azure function rule. </param>
-        /// <returns> A new <see cref="JobRouter.FunctionRouterRule"/> instance for mocking. </returns>
-        public static FunctionRouterRule FunctionRouterRule(Uri functionUri = null, FunctionRouterRuleCredential credential = null)
+        /// <summary> Initializes a new instance of RouterRule. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
+        /// <returns> A new <see cref="JobRouter.RouterRule"/> instance for mocking. </returns>
+        public static RouterRule RouterRule(string kind = null)
         {
-            return new FunctionRouterRule("azure-function-rule", functionUri, credential);
+            return new UnknownRouterRule(kind);
         }
 
-        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
-        /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
-        /// <param name="clientCredential">
-        /// OAuth2.0 Credentials used to Contoso's Authorization server.
-        /// Reference:
-        /// https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
-        /// </param>
-        /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
-        /// <returns> A new <see cref="JobRouter.WebhookRouterRule"/> instance for mocking. </returns>
-        public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = null, OAuth2WebhookClientCredential clientCredential = null, Uri webhookUri = null)
+        /// <summary> Initializes a new instance of QueueSelectorAttachment. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <returns> A new <see cref="JobRouter.QueueSelectorAttachment"/> instance for mocking. </returns>
+        public static QueueSelectorAttachment QueueSelectorAttachment(string kind = null)
         {
-            return new WebhookRouterRule("webhook-rule", authorizationServerUri, clientCredential, webhookUri);
-        }
-
-        /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
-        /// <param name="condition">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
-        /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        /// <returns> A new <see cref="JobRouter.ConditionalQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static ConditionalQueueSelectorAttachment ConditionalQueueSelectorAttachment(RouterRule condition = null, IEnumerable<RouterQueueSelector> queueSelectors = null)
-        {
-            queueSelectors ??= new List<RouterQueueSelector>();
-
-            return new ConditionalQueueSelectorAttachment("conditional", condition, queueSelectors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
-        /// <param name="key"> The label key to query against. </param>
-        /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        /// <returns> A new <see cref="JobRouter.PassThroughQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static PassThroughQueueSelectorAttachment PassThroughQueueSelectorAttachment(string key = null, LabelOperator labelOperator = default)
-        {
-            return new PassThroughQueueSelectorAttachment("pass-through", key, labelOperator);
-        }
-
-        /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
-        /// <param name="rule">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static RuleEngineQueueSelectorAttachment RuleEngineQueueSelectorAttachment(RouterRule rule = null)
-        {
-            return new RuleEngineQueueSelectorAttachment("rule-engine", rule);
-        }
-
-        /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
-        /// <param name="queueSelector">
-        /// Describes a condition that must be met against a set of labels for queue
-        /// selection
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.StaticQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static StaticQueueSelectorAttachment StaticQueueSelectorAttachment(RouterQueueSelector queueSelector = null)
-        {
-            return new StaticQueueSelectorAttachment("static", queueSelector);
-        }
-
-        /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
-        /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        /// <returns> A new <see cref="JobRouter.WeightedAllocationQueueSelectorAttachment"/> instance for mocking. </returns>
-        public static WeightedAllocationQueueSelectorAttachment WeightedAllocationQueueSelectorAttachment(IEnumerable<QueueWeightedAllocation> allocations = null)
-        {
-            allocations ??= new List<QueueWeightedAllocation>();
-
-            return new WeightedAllocationQueueSelectorAttachment("weighted-allocation-queue-selector", allocations?.ToList());
+            return new UnknownQueueSelectorAttachment(kind);
         }
 
         /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
@@ -140,72 +64,12 @@ namespace Azure.Communication.JobRouter
             return new QueueWeightedAllocation(weight, queueSelectors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
-        /// <param name="condition">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
-        /// <param name="workerSelectors"> The worker selectors to attach. </param>
-        /// <returns> A new <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static ConditionalWorkerSelectorAttachment ConditionalWorkerSelectorAttachment(RouterRule condition = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
+        /// <returns> A new <see cref="JobRouter.WorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static WorkerSelectorAttachment WorkerSelectorAttachment(string kind = null)
         {
-            workerSelectors ??= new List<RouterWorkerSelector>();
-
-            return new ConditionalWorkerSelectorAttachment("conditional", condition, workerSelectors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
-        /// <param name="rule">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static RuleEngineWorkerSelectorAttachment RuleEngineWorkerSelectorAttachment(RouterRule rule = null)
-        {
-            return new RuleEngineWorkerSelectorAttachment("rule-engine", rule);
-        }
-
-        /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
-        /// <param name="workerSelector">
-        /// Describes a condition that must be met against a set of labels for worker
-        /// selection
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.StaticWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static StaticWorkerSelectorAttachment StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector = null)
-        {
-            return new StaticWorkerSelectorAttachment("static", workerSelector);
-        }
-
-        /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
-        /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        /// <returns> A new <see cref="JobRouter.WeightedAllocationWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static WeightedAllocationWorkerSelectorAttachment WeightedAllocationWorkerSelectorAttachment(IEnumerable<WorkerWeightedAllocation> allocations = null)
-        {
-            allocations ??= new List<WorkerWeightedAllocation>();
-
-            return new WeightedAllocationWorkerSelectorAttachment("weighted-allocation-worker-selector", allocations?.ToList());
+            return new UnknownWorkerSelectorAttachment(kind);
         }
 
         /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
@@ -224,8 +88,16 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of ExceptionRule. </summary>
         /// <param name="id"> Id of the exception rule. </param>
-        /// <param name="trigger"> The trigger for this exception rule. </param>
-        /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
+        /// <param name="trigger">
+        /// The trigger for this exception rule
+        /// Please note <see cref="JobRouter.ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
+        /// </param>
+        /// <param name="actions">
+        /// A collection of actions to perform once the exception is triggered.
+        /// Please note <see cref="JobRouter.ExceptionAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.CancelExceptionAction"/>, <see cref="JobRouter.ManualReclassifyExceptionAction"/> and <see cref="ReclassifyExceptionAction"/>.
+        /// </param>
         /// <returns> A new <see cref="JobRouter.ExceptionRule"/> instance for mocking. </returns>
         public static ExceptionRule ExceptionRule(string id = null, ExceptionTrigger trigger = null, IEnumerable<ExceptionAction> actions = null)
         {
@@ -234,12 +106,12 @@ namespace Azure.Communication.JobRouter
             return new ExceptionRule(id, trigger, actions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>
-        /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
-        /// <returns> A new <see cref="JobRouter.QueueLengthExceptionTrigger"/> instance for mocking. </returns>
-        public static QueueLengthExceptionTrigger QueueLengthExceptionTrigger(int threshold = default)
+        /// <summary> Initializes a new instance of ExceptionTrigger. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionTrigger"/> instance for mocking. </returns>
+        public static ExceptionTrigger ExceptionTrigger(string kind = null)
         {
-            return new QueueLengthExceptionTrigger("queue-length", threshold);
+            return new UnknownExceptionTrigger(kind);
         }
 
         /// <summary> Initializes a new instance of ExceptionAction. </summary>
@@ -249,35 +121,6 @@ namespace Azure.Communication.JobRouter
         public static ExceptionAction ExceptionAction(string id = null, string kind = null)
         {
             return new UnknownExceptionAction(id, kind);
-        }
-
-        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
-        /// <param name="id"> Unique Id of the exception action. </param>
-        /// <param name="note">
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
-        /// current timestamp.
-        /// </param>
-        /// <param name="dispositionCode">
-        /// (Optional) Indicates the outcome of the job, populate this field with your own
-        /// custom values.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.CancelExceptionAction"/> instance for mocking. </returns>
-        public static CancelExceptionAction CancelExceptionAction(string id = null, string note = null, string dispositionCode = null)
-        {
-            return new CancelExceptionAction(id, "cancel", note, dispositionCode);
-        }
-
-        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
-        /// <param name="id"> Unique Id of the exception action. </param>
-        /// <param name="queueId"> Updated QueueId. </param>
-        /// <param name="priority"> Updated Priority. </param>
-        /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        /// <returns> A new <see cref="JobRouter.ManualReclassifyExceptionAction"/> instance for mocking. </returns>
-        public static ManualReclassifyExceptionAction ManualReclassifyExceptionAction(string id = null, string queueId = null, int? priority = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
-        {
-            workerSelectors ??= new List<RouterWorkerSelector>();
-
-            return new ManualReclassifyExceptionAction(id, "manual-reclassify", queueId, priority, workerSelectors?.ToList());
         }
 
         /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
@@ -301,12 +144,12 @@ namespace Azure.Communication.JobRouter
             return new RouterJobNote(message, addedAt);
         }
 
-        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
-        /// <param name="scheduleAt"> Scheduled time. </param>
-        /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
-        public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
+        /// <summary> Initializes a new instance of JobMatchingMode. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
+        /// <returns> A new <see cref="JobRouter.JobMatchingMode"/> instance for mocking. </returns>
+        public static JobMatchingMode JobMatchingMode(string kind = null)
         {
-            return new ScheduleAndSuspendMode("schedule-and-suspend", scheduleAt);
+            return new UnknownJobMatchingMode(kind);
         }
 
         /// <summary> Initializes a new instance of UnassignJobResult. </summary>
@@ -392,6 +235,338 @@ namespace Azure.Communication.JobRouter
             }
 
             return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt);
+        }
+
+        /// <summary> Initializes a new instance of BestWorkerMode. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors">
+        /// (Optional)
+        /// If set to true, then router will match workers to jobs even if they
+        /// don't match label selectors.
+        /// Warning: You may get workers that are not
+        /// qualified for the job they are matched with if you set this
+        /// variable to true.
+        /// This flag is intended more for temporary usage.
+        /// By default, set to false.
+        /// </param>
+        /// <param name="scoringRule">
+        /// A rule of one of the following types:
+        ///
+        /// StaticRule:  A rule
+        /// providing static rules that always return the same result, regardless of
+        /// input.
+        /// DirectMapRule:  A rule that return the same labels as the input
+        /// labels.
+        /// ExpressionRule: A rule providing inline expression
+        /// rules.
+        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
+        /// Function.
+        /// WebhookRule: A rule providing a binding to a webserver following
+        /// OAuth2.0 authentication protocol.
+        /// Please note <see cref="JobRouter.RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.DirectMapRouterRule"/>, <see cref="JobRouter.ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
+        /// <param name="scoringRuleOptions">
+        /// Encapsulates all options that can be passed as parameters for scoring rule with
+        /// BestWorkerMode
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.BestWorkerMode"/> instance for mocking. </returns>
+        public static BestWorkerMode BestWorkerMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null, RouterRule scoringRule = null, ScoringRuleOptions scoringRuleOptions = null)
+        {
+            return new BestWorkerMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, "best-worker", scoringRule, scoringRuleOptions);
+        }
+
+        /// <summary> Initializes a new instance of DirectMapRouterRule. </summary>
+        /// <returns> A new <see cref="JobRouter.DirectMapRouterRule"/> instance for mocking. </returns>
+        public static DirectMapRouterRule DirectMapRouterRule()
+        {
+            return new DirectMapRouterRule("direct-map-rule");
+        }
+
+        /// <summary> Initializes a new instance of ExpressionRouterRule. </summary>
+        /// <param name="language"> The expression language to compile to and execute. </param>
+        /// <param name="expression">
+        /// The string containing the expression to evaluate. Should contain return
+        /// statement with calculated values.
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.ExpressionRouterRule"/> instance for mocking. </returns>
+        public static ExpressionRouterRule ExpressionRouterRule(string language = null, string expression = null)
+        {
+            return new ExpressionRouterRule("expression-rule", language, expression);
+        }
+
+        /// <summary> Initializes a new instance of FunctionRouterRule. </summary>
+        /// <param name="functionUri"> URL for Azure Function. </param>
+        /// <param name="credential"> Credentials used to access Azure function rule. </param>
+        /// <returns> A new <see cref="JobRouter.FunctionRouterRule"/> instance for mocking. </returns>
+        public static FunctionRouterRule FunctionRouterRule(Uri functionUri = null, FunctionRouterRuleCredential credential = null)
+        {
+            return new FunctionRouterRule("azure-function-rule", functionUri, credential);
+        }
+
+        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
+        /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
+        /// <param name="clientCredential">
+        /// OAuth2.0 Credentials used to Contoso's Authorization server.
+        /// Reference:
+        /// https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
+        /// </param>
+        /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
+        /// <returns> A new <see cref="JobRouter.WebhookRouterRule"/> instance for mocking. </returns>
+        public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = null, OAuth2WebhookClientCredential clientCredential = null, Uri webhookUri = null)
+        {
+            return new WebhookRouterRule("webhook-rule", authorizationServerUri, clientCredential, webhookUri);
+        }
+
+        /// <summary> Initializes a new instance of LongestIdleMode. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors">
+        /// (Optional)
+        /// If set to true, then router will match workers to jobs even if they
+        /// don't match label selectors.
+        /// Warning: You may get workers that are not
+        /// qualified for the job they are matched with if you set this
+        /// variable to true.
+        /// This flag is intended more for temporary usage.
+        /// By default, set to false.
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.LongestIdleMode"/> instance for mocking. </returns>
+        public static LongestIdleMode LongestIdleMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null)
+        {
+            return new LongestIdleMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, "longest-idle");
+        }
+
+        /// <summary> Initializes a new instance of RoundRobinMode. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors">
+        /// (Optional)
+        /// If set to true, then router will match workers to jobs even if they
+        /// don't match label selectors.
+        /// Warning: You may get workers that are not
+        /// qualified for the job they are matched with if you set this
+        /// variable to true.
+        /// This flag is intended more for temporary usage.
+        /// By default, set to false.
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.RoundRobinMode"/> instance for mocking. </returns>
+        public static RoundRobinMode RoundRobinMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null)
+        {
+            return new RoundRobinMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, "round-robin");
+        }
+
+        /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
+        /// <param name="condition">
+        /// A rule of one of the following types:
+        ///
+        /// StaticRule:  A rule
+        /// providing static rules that always return the same result, regardless of
+        /// input.
+        /// DirectMapRule:  A rule that return the same labels as the input
+        /// labels.
+        /// ExpressionRule: A rule providing inline expression
+        /// rules.
+        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
+        /// Function.
+        /// WebhookRule: A rule providing a binding to a webserver following
+        /// OAuth2.0 authentication protocol.
+        /// Please note <see cref="JobRouter.RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.DirectMapRouterRule"/>, <see cref="JobRouter.ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
+        /// <param name="queueSelectors"> The queue selectors to attach. </param>
+        /// <returns> A new <see cref="JobRouter.ConditionalQueueSelectorAttachment"/> instance for mocking. </returns>
+        public static ConditionalQueueSelectorAttachment ConditionalQueueSelectorAttachment(RouterRule condition = null, IEnumerable<RouterQueueSelector> queueSelectors = null)
+        {
+            queueSelectors ??= new List<RouterQueueSelector>();
+
+            return new ConditionalQueueSelectorAttachment("conditional", condition, queueSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
+        /// <returns> A new <see cref="JobRouter.PassThroughQueueSelectorAttachment"/> instance for mocking. </returns>
+        public static PassThroughQueueSelectorAttachment PassThroughQueueSelectorAttachment(string key = null, LabelOperator labelOperator = default)
+        {
+            return new PassThroughQueueSelectorAttachment("pass-through", key, labelOperator);
+        }
+
+        /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
+        /// <param name="rule">
+        /// A rule of one of the following types:
+        ///
+        /// StaticRule:  A rule
+        /// providing static rules that always return the same result, regardless of
+        /// input.
+        /// DirectMapRule:  A rule that return the same labels as the input
+        /// labels.
+        /// ExpressionRule: A rule providing inline expression
+        /// rules.
+        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
+        /// Function.
+        /// WebhookRule: A rule providing a binding to a webserver following
+        /// OAuth2.0 authentication protocol.
+        /// Please note <see cref="JobRouter.RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.DirectMapRouterRule"/>, <see cref="JobRouter.ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/> instance for mocking. </returns>
+        public static RuleEngineQueueSelectorAttachment RuleEngineQueueSelectorAttachment(RouterRule rule = null)
+        {
+            return new RuleEngineQueueSelectorAttachment("rule-engine", rule);
+        }
+
+        /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
+        /// <param name="queueSelector">
+        /// Describes a condition that must be met against a set of labels for queue
+        /// selection
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.StaticQueueSelectorAttachment"/> instance for mocking. </returns>
+        public static StaticQueueSelectorAttachment StaticQueueSelectorAttachment(RouterQueueSelector queueSelector = null)
+        {
+            return new StaticQueueSelectorAttachment("static", queueSelector);
+        }
+
+        /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
+        /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
+        /// <returns> A new <see cref="JobRouter.WeightedAllocationQueueSelectorAttachment"/> instance for mocking. </returns>
+        public static WeightedAllocationQueueSelectorAttachment WeightedAllocationQueueSelectorAttachment(IEnumerable<QueueWeightedAllocation> allocations = null)
+        {
+            allocations ??= new List<QueueWeightedAllocation>();
+
+            return new WeightedAllocationQueueSelectorAttachment("weighted-allocation-queue-selector", allocations?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
+        /// <param name="condition">
+        /// A rule of one of the following types:
+        ///
+        /// StaticRule:  A rule
+        /// providing static rules that always return the same result, regardless of
+        /// input.
+        /// DirectMapRule:  A rule that return the same labels as the input
+        /// labels.
+        /// ExpressionRule: A rule providing inline expression
+        /// rules.
+        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
+        /// Function.
+        /// WebhookRule: A rule providing a binding to a webserver following
+        /// OAuth2.0 authentication protocol.
+        /// Please note <see cref="JobRouter.RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.DirectMapRouterRule"/>, <see cref="JobRouter.ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
+        /// <param name="workerSelectors"> The worker selectors to attach. </param>
+        /// <returns> A new <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static ConditionalWorkerSelectorAttachment ConditionalWorkerSelectorAttachment(RouterRule condition = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        {
+            workerSelectors ??= new List<RouterWorkerSelector>();
+
+            return new ConditionalWorkerSelectorAttachment("conditional", condition, workerSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
+        /// <param name="rule">
+        /// A rule of one of the following types:
+        ///
+        /// StaticRule:  A rule
+        /// providing static rules that always return the same result, regardless of
+        /// input.
+        /// DirectMapRule:  A rule that return the same labels as the input
+        /// labels.
+        /// ExpressionRule: A rule providing inline expression
+        /// rules.
+        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
+        /// Function.
+        /// WebhookRule: A rule providing a binding to a webserver following
+        /// OAuth2.0 authentication protocol.
+        /// Please note <see cref="JobRouter.RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.DirectMapRouterRule"/>, <see cref="JobRouter.ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static RuleEngineWorkerSelectorAttachment RuleEngineWorkerSelectorAttachment(RouterRule rule = null)
+        {
+            return new RuleEngineWorkerSelectorAttachment("rule-engine", rule);
+        }
+
+        /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
+        /// <param name="workerSelector">
+        /// Describes a condition that must be met against a set of labels for worker
+        /// selection
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.StaticWorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static StaticWorkerSelectorAttachment StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector = null)
+        {
+            return new StaticWorkerSelectorAttachment("static", workerSelector);
+        }
+
+        /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
+        /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
+        /// <returns> A new <see cref="JobRouter.WeightedAllocationWorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static WeightedAllocationWorkerSelectorAttachment WeightedAllocationWorkerSelectorAttachment(IEnumerable<WorkerWeightedAllocation> allocations = null)
+        {
+            allocations ??= new List<WorkerWeightedAllocation>();
+
+            return new WeightedAllocationWorkerSelectorAttachment("weighted-allocation-worker-selector", allocations?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>
+        /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
+        /// <returns> A new <see cref="JobRouter.QueueLengthExceptionTrigger"/> instance for mocking. </returns>
+        public static QueueLengthExceptionTrigger QueueLengthExceptionTrigger(int threshold = default)
+        {
+            return new QueueLengthExceptionTrigger("queue-length", threshold);
+        }
+
+        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="note">
+        /// (Optional) A note that will be appended to the jobs' Notes collection with the
+        /// current timestamp.
+        /// </param>
+        /// <param name="dispositionCode">
+        /// (Optional) Indicates the outcome of the job, populate this field with your own
+        /// custom values.
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.CancelExceptionAction"/> instance for mocking. </returns>
+        public static CancelExceptionAction CancelExceptionAction(string id = null, string note = null, string dispositionCode = null)
+        {
+            return new CancelExceptionAction(id, "cancel", note, dispositionCode);
+        }
+
+        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="queueId"> Updated QueueId. </param>
+        /// <param name="priority"> Updated Priority. </param>
+        /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
+        /// <returns> A new <see cref="JobRouter.ManualReclassifyExceptionAction"/> instance for mocking. </returns>
+        public static ManualReclassifyExceptionAction ManualReclassifyExceptionAction(string id = null, string queueId = null, int? priority = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        {
+            workerSelectors ??= new List<RouterWorkerSelector>();
+
+            return new ManualReclassifyExceptionAction(id, "manual-reclassify", queueId, priority, workerSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
+        /// <param name="scheduleAt"> Scheduled time. </param>
+        /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
+        public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
+        {
+            return new ScheduleAndSuspendMode("schedule-and-suspend", scheduleAt);
+        }
+
+        /// <summary> Initializes a new instance of QueueAndMatchMode. </summary>
+        /// <returns> A new <see cref="JobRouter.QueueAndMatchMode"/> instance for mocking. </returns>
+        public static QueueAndMatchMode QueueAndMatchMode()
+        {
+            return new QueueAndMatchMode("queue-and-match");
+        }
+
+        /// <summary> Initializes a new instance of SuspendMode. </summary>
+        /// <returns> A new <see cref="JobRouter.SuspendMode"/> instance for mocking. </returns>
+        public static SuspendMode SuspendMode()
+        {
+            return new SuspendMode("suspend");
         }
     }
 }

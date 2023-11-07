@@ -21,7 +21,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicy_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetDistributionPolicy("<distributionPolicyId>", null);
 
@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicy_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetDistributionPolicyAsync("<distributionPolicyId>", null);
 
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicy_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<DistributionPolicy> response = client.GetDistributionPolicy("<distributionPolicyId>");
         }
@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicy_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<distributionPolicyId>");
         }
@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicy_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetDistributionPolicy("<distributionPolicyId>", null);
 
@@ -84,7 +84,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicy_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetDistributionPolicyAsync("<distributionPolicyId>", null);
 
@@ -103,7 +103,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicy_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<DistributionPolicy> response = client.GetDistributionPolicy("<distributionPolicyId>");
         }
@@ -112,7 +112,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicy_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<distributionPolicyId>");
         }
@@ -121,7 +121,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDistributionPolicy_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteDistributionPolicy("<distributionPolicyId>");
 
@@ -132,7 +132,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteDistributionPolicy_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteDistributionPolicyAsync("<distributionPolicyId>");
 
@@ -143,7 +143,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDistributionPolicy_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteDistributionPolicy("<distributionPolicyId>");
 
@@ -154,7 +154,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteDistributionPolicy_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteDistributionPolicyAsync("<distributionPolicyId>");
 
@@ -165,7 +165,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicy_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetClassificationPolicy("<classificationPolicyId>", null);
 
@@ -178,7 +178,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicy_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetClassificationPolicyAsync("<classificationPolicyId>", null);
 
@@ -191,7 +191,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicy_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ClassificationPolicy> response = client.GetClassificationPolicy("<classificationPolicyId>");
         }
@@ -200,7 +200,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicy_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<classificationPolicyId>");
         }
@@ -209,7 +209,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicy_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetClassificationPolicy("<classificationPolicyId>", null);
 
@@ -227,7 +227,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicy_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetClassificationPolicyAsync("<classificationPolicyId>", null);
 
@@ -245,7 +245,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicy_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ClassificationPolicy> response = client.GetClassificationPolicy("<classificationPolicyId>");
         }
@@ -254,7 +254,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicy_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<classificationPolicyId>");
         }
@@ -263,7 +263,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteClassificationPolicy_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteClassificationPolicy("<classificationPolicyId>");
 
@@ -274,7 +274,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassificationPolicy_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteClassificationPolicyAsync("<classificationPolicyId>");
 
@@ -285,7 +285,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteClassificationPolicy_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteClassificationPolicy("<classificationPolicyId>");
 
@@ -296,7 +296,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassificationPolicy_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteClassificationPolicyAsync("<classificationPolicyId>");
 
@@ -307,7 +307,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicy_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetExceptionPolicy("<exceptionPolicyId>", null);
 
@@ -320,7 +320,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicy_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetExceptionPolicyAsync("<exceptionPolicyId>", null);
 
@@ -333,7 +333,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicy_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ExceptionPolicy> response = client.GetExceptionPolicy("<exceptionPolicyId>");
         }
@@ -342,7 +342,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicy_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<exceptionPolicyId>");
         }
@@ -351,7 +351,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicy_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetExceptionPolicy("<exceptionPolicyId>", null);
 
@@ -369,7 +369,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicy_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetExceptionPolicyAsync("<exceptionPolicyId>", null);
 
@@ -387,7 +387,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicy_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ExceptionPolicy> response = client.GetExceptionPolicy("<exceptionPolicyId>");
         }
@@ -396,7 +396,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicy_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<exceptionPolicyId>");
         }
@@ -405,7 +405,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteExceptionPolicy_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteExceptionPolicy("<exceptionPolicyId>");
 
@@ -416,7 +416,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteExceptionPolicy_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteExceptionPolicyAsync("<exceptionPolicyId>");
 
@@ -427,7 +427,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteExceptionPolicy_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteExceptionPolicy("<exceptionPolicyId>");
 
@@ -438,7 +438,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteExceptionPolicy_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteExceptionPolicyAsync("<exceptionPolicyId>");
 
@@ -449,7 +449,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueue_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetQueue("<queueId>", null);
 
@@ -462,7 +462,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueue_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetQueueAsync("<queueId>", null);
 
@@ -475,7 +475,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueue_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<RouterQueue> response = client.GetQueue("<queueId>");
         }
@@ -484,7 +484,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueue_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<RouterQueue> response = await client.GetQueueAsync("<queueId>");
         }
@@ -493,7 +493,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueue_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.GetQueue("<queueId>", null);
 
@@ -510,7 +510,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueue_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.GetQueueAsync("<queueId>", null);
 
@@ -527,7 +527,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueue_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<RouterQueue> response = client.GetQueue("<queueId>");
         }
@@ -536,7 +536,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueue_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response<RouterQueue> response = await client.GetQueueAsync("<queueId>");
         }
@@ -545,7 +545,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteQueue_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteQueue("<queueId>");
 
@@ -556,7 +556,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteQueue_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteQueueAsync("<queueId>");
 
@@ -567,7 +567,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteQueue_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = client.DeleteQueue("<queueId>");
 
@@ -578,7 +578,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteQueue_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             Response response = await client.DeleteQueueAsync("<queueId>");
 
@@ -589,7 +589,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicies_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetDistributionPolicies(null, null))
             {
@@ -603,7 +603,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicies_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetDistributionPoliciesAsync(null, null))
             {
@@ -617,7 +617,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicies_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (DistributionPolicy item in client.GetDistributionPolicies())
             {
@@ -628,7 +628,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicies_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (DistributionPolicy item in client.GetDistributionPoliciesAsync())
             {
@@ -639,7 +639,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicies_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetDistributionPolicies(1234, null))
             {
@@ -659,7 +659,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicies_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetDistributionPoliciesAsync(1234, null))
             {
@@ -679,7 +679,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicies_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (DistributionPolicy item in client.GetDistributionPolicies(maxpagesize: 1234))
             {
@@ -690,7 +690,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicies_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (DistributionPolicy item in client.GetDistributionPoliciesAsync(maxpagesize: 1234))
             {
@@ -701,7 +701,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicies_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetClassificationPolicies(null, null))
             {
@@ -715,7 +715,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicies_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetClassificationPoliciesAsync(null, null))
             {
@@ -729,7 +729,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicies_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (ClassificationPolicy item in client.GetClassificationPolicies())
             {
@@ -740,7 +740,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicies_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (ClassificationPolicy item in client.GetClassificationPoliciesAsync())
             {
@@ -751,7 +751,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicies_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetClassificationPolicies(1234, null))
             {
@@ -770,7 +770,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicies_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetClassificationPoliciesAsync(1234, null))
             {
@@ -789,7 +789,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicies_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (ClassificationPolicy item in client.GetClassificationPolicies(maxpagesize: 1234))
             {
@@ -800,7 +800,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicies_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (ClassificationPolicy item in client.GetClassificationPoliciesAsync(maxpagesize: 1234))
             {
@@ -811,7 +811,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicies_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetExceptionPolicies(null, null))
             {
@@ -825,7 +825,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicies_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetExceptionPoliciesAsync(null, null))
             {
@@ -839,7 +839,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicies_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (ExceptionPolicy item in client.GetExceptionPolicies())
             {
@@ -850,7 +850,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicies_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (ExceptionPolicy item in client.GetExceptionPoliciesAsync())
             {
@@ -861,7 +861,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicies_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetExceptionPolicies(1234, null))
             {
@@ -880,7 +880,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicies_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetExceptionPoliciesAsync(1234, null))
             {
@@ -899,7 +899,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicies_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (ExceptionPolicy item in client.GetExceptionPolicies(maxpagesize: 1234))
             {
@@ -910,7 +910,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicies_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (ExceptionPolicy item in client.GetExceptionPoliciesAsync(maxpagesize: 1234))
             {
@@ -921,7 +921,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueues_ShortVersion()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetQueues(null, null))
             {
@@ -935,7 +935,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueues_ShortVersion_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetQueuesAsync(null, null))
             {
@@ -949,7 +949,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueues_ShortVersion_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (RouterQueue item in client.GetQueues())
             {
@@ -960,7 +960,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueues_ShortVersion_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (RouterQueue item in client.GetQueuesAsync())
             {
@@ -971,7 +971,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueues_AllParameters()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (BinaryData item in client.GetQueues(1234, null))
             {
@@ -989,7 +989,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueues_AllParameters_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (BinaryData item in client.GetQueuesAsync(1234, null))
             {
@@ -1007,7 +1007,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueues_AllParameters_Convenience()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             foreach (RouterQueue item in client.GetQueues(maxpagesize: 1234))
             {
@@ -1018,7 +1018,7 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueues_AllParameters_Convenience_Async()
         {
-            JobRouterAdministrationClient client = new JobRouterAdministrationClient((string)null);
+            JobRouterAdministrationClient client = new JobRouterAdministrationClient(null);
 
             await foreach (RouterQueue item in client.GetQueuesAsync(maxpagesize: 1234))
             {
