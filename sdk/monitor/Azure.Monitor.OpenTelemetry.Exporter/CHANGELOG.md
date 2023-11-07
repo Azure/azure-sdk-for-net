@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+* Added NET6 target framework to support Trimming.
+  ([#38459](https://github.com/Azure/azure-sdk-for-net/pull/38459))
+* Added support for Trimming and AOT.
+  ([#38459](https://github.com/Azure/azure-sdk-for-net/pull/38459))
+
 ## 1.0.0 (2023-09-20)
 
 ### Bugs Fixed
