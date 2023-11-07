@@ -19,7 +19,7 @@ using Azure.ResourceManager.ExtendedLocations.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 
-namespace Azure.ResourceManager.AppContainers.Tests.TestCase
+namespace Azure.ResourceManager.AppContainers.Tests
 {
     public class EnviromentTests : AppContainersManagementTestBase
     {

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Azure.ResourceManager.AppContainers.Tests.TestCase
+namespace Azure.ResourceManager.AppContainers.Tests
 {
     public class SourceControlTests : AppContainersManagementTestBase
     {

@@ -3,9 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.AppContainers.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scenario\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.ExtendedLocations" />
     <PackageReference Include="Azure.ResourceManager.Kubernetes" />
     <PackageReference Include="Azure.ResourceManager.KubernetesConfiguration" />

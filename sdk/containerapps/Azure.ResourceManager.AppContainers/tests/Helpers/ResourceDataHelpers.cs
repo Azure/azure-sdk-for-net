@@ -308,7 +308,7 @@ SecretRef = "masterkey",
         {
             ContainerAppJobData data = new ContainerAppJobData(new AzureLocation("West US"))
             {
-                EnvironmentId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktest1168/providers/Microsoft.App/managedEnvironments/enviroment1102",
+                EnvironmentId = envId,
                 Configuration = new ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 10)
                 {
                     ReplicaRetryLimit = 10,

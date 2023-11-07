@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 
-namespace Azure.ResourceManager.AppContainers.Tests.TestCase
+namespace Azure.ResourceManager.AppContainers.Tests
 {
     public class ContainerAppJobTests : AppContainersManagementTestBase
     {
