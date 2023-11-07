@@ -187,7 +187,7 @@ Console.WriteLine(result.GetProperty("uniqueId").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 Console.WriteLine(result.GetProperty("location").ToString());
 Console.WriteLine(result.GetProperty("osType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
@@ -238,7 +238,7 @@ Console.WriteLine(result.GetProperty("uniqueId").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 Console.WriteLine(result.GetProperty("location").ToString());
 Console.WriteLine(result.GetProperty("osType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
@@ -672,7 +672,7 @@ await foreach (BinaryData item in client.GetAllDevBoxesAsync("<filter>", 1234, n
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -725,7 +725,7 @@ foreach (BinaryData item in client.GetAllDevBoxes("<filter>", 1234, null))
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -778,7 +778,7 @@ await foreach (BinaryData item in client.GetAllDevBoxesByUserAsync("<userId>", "
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -831,7 +831,7 @@ foreach (BinaryData item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -884,7 +884,7 @@ await foreach (BinaryData item in client.GetDevBoxesAsync("<projectName>", "<use
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -937,7 +937,7 @@ foreach (BinaryData item in client.GetDevBoxes("<projectName>", "<userId>", "<fi
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
     Console.WriteLine(result.GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("osType").ToString());
     Console.WriteLine(result.GetProperty("user").ToString());
@@ -1055,7 +1055,7 @@ await foreach (BinaryData item in client.DelayAllActionsAsync("<projectName>", "
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 }
 ]]></code></example>
     </member>
@@ -1093,7 +1093,7 @@ foreach (BinaryData item in client.DelayAllActions("<projectName>", "<userId>", 
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 }
 ]]></code></example>
     </member>
@@ -1142,7 +1142,7 @@ Console.WriteLine(result.GetProperty("uniqueId").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 Console.WriteLine(result.GetProperty("location").ToString());
 Console.WriteLine(result.GetProperty("osType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1204,7 +1204,7 @@ Console.WriteLine(result.GetProperty("uniqueId").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 Console.WriteLine(result.GetProperty("location").ToString());
 Console.WriteLine(result.GetProperty("osType").ToString());
 Console.WriteLine(result.GetProperty("user").ToString());
