@@ -15,15 +15,15 @@ using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
-    public partial class Sample_SenderUsernameResourceCollection
+    public partial class Sample_SuppressionListResourceCollection
     {
-        // Get all SenderUsernames resources for a Domain.
+        // Get all SuppressionLists resources.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_GetAllSenderUsernamesResourcesForADomain()
+        public async Task GetAll_GetAllSuppressionListsResources()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/senderUsernames/listByDomain.json
-            // this example is just showing the usage of "SenderUsernames_ListByDomains" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/suppressionLists/getSuppressionLists.json
+            // this example is just showing the usage of "SuppressionLists_ListByDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SenderUsernameResource
-            SenderUsernameResourceCollection collection = communicationDomainResource.GetSenderUsernameResources();
+            // get the collection of this SuppressionListResource
+            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
 
             // invoke the operation and iterate over the result
-            await foreach (SenderUsernameResource item in collection.GetAllAsync())
+            await foreach (SuppressionListResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SenderUsernameResourceData resourceData = item.Data;
+                SuppressionListResourceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get SenderUsernames resource
+        // Get a SuppressionList resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetSenderUsernamesResource()
+        public async Task Get_GetASuppressionListResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/senderUsernames/get.json
-            // this example is just showing the usage of "SenderUsernames_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/suppressionLists/getSuppressionList.json
+            // this example is just showing the usage of "SuppressionLists_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,27 +77,27 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SenderUsernameResource
-            SenderUsernameResourceCollection collection = communicationDomainResource.GetSenderUsernameResources();
+            // get the collection of this SuppressionListResource
+            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
 
             // invoke the operation
-            string senderUsername = "contosoNewsAlerts";
-            SenderUsernameResource result = await collection.GetAsync(senderUsername);
+            string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
+            SuppressionListResource result = await collection.GetAsync(suppressionListName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SenderUsernameResourceData resourceData = result.Data;
+            SuppressionListResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get SenderUsernames resource
+        // Get a SuppressionList resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetSenderUsernamesResource()
+        public async Task Exists_GetASuppressionListResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/senderUsernames/get.json
-            // this example is just showing the usage of "SenderUsernames_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/suppressionLists/getSuppressionList.json
+            // this example is just showing the usage of "SuppressionLists_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -113,23 +113,23 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SenderUsernameResource
-            SenderUsernameResourceCollection collection = communicationDomainResource.GetSenderUsernameResources();
+            // get the collection of this SuppressionListResource
+            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
 
             // invoke the operation
-            string senderUsername = "contosoNewsAlerts";
-            bool result = await collection.ExistsAsync(senderUsername);
+            string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
+            bool result = await collection.ExistsAsync(suppressionListName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get SenderUsernames resource
+        // Get a SuppressionList resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetSenderUsernamesResource()
+        public async Task GetIfExists_GetASuppressionListResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/senderUsernames/get.json
-            // this example is just showing the usage of "SenderUsernames_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/suppressionLists/getSuppressionList.json
+            // this example is just showing the usage of "SuppressionLists_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -145,13 +145,13 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SenderUsernameResource
-            SenderUsernameResourceCollection collection = communicationDomainResource.GetSenderUsernameResources();
+            // get the collection of this SuppressionListResource
+            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
 
             // invoke the operation
-            string senderUsername = "contosoNewsAlerts";
-            NullableResponse<SenderUsernameResource> response = await collection.GetIfExistsAsync(senderUsername);
-            SenderUsernameResource result = response.HasValue ? response.Value : null;
+            string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
+            NullableResponse<SuppressionListResource> response = await collection.GetIfExistsAsync(suppressionListName);
+            SuppressionListResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -161,19 +161,19 @@ namespace Azure.ResourceManager.Communication.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SenderUsernameResourceData resourceData = result.Data;
+                SuppressionListResourceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
         }
 
-        // Create or update SenderUsernames resource
+        // CreateOrUpdate SuppressionLists resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateSenderUsernamesResource()
+        public async Task CreateOrUpdate_CreateOrUpdateSuppressionListsResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/senderUsernames/createOrUpdate.json
-            // this example is just showing the usage of "SenderUsernames_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/suppressionLists/createOrUpdateSuppressionList.json
+            // this example is just showing the usage of "SuppressionLists_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -189,22 +189,21 @@ namespace Azure.ResourceManager.Communication.Samples
             ResourceIdentifier communicationDomainResourceId = CommunicationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, emailServiceName, domainName);
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
-            // get the collection of this SenderUsernameResource
-            SenderUsernameResourceCollection collection = communicationDomainResource.GetSenderUsernameResources();
+            // get the collection of this SuppressionListResource
+            SuppressionListResourceCollection collection = communicationDomainResource.GetSuppressionListResources();
 
             // invoke the operation
-            string senderUsername = "contosoNewsAlerts";
-            SenderUsernameResourceData data = new SenderUsernameResourceData()
+            string suppressionListName = "aaaa1111-bbbb-2222-3333-aaaa11112222";
+            SuppressionListResourceData data = new SuppressionListResourceData()
             {
-                Username = "contosoNewsAlerts",
-                DisplayName = "Contoso News Alerts",
+                ListName = "contosoNewsAlerts",
             };
-            ArmOperation<SenderUsernameResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, senderUsername, data);
-            SenderUsernameResource result = lro.Value;
+            ArmOperation<SuppressionListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, suppressionListName, data);
+            SuppressionListResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SenderUsernameResourceData resourceData = result.Data;
+            SuppressionListResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
