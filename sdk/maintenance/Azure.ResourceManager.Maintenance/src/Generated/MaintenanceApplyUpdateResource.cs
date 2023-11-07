@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Maintenance
             scope.Start();
             try
             {
-                var response = await _maintenanceApplyUpdateApplyUpdatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _maintenanceApplyUpdateApplyUpdatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Maintenance
             scope.Start();
             try
             {
-                var response = _maintenanceApplyUpdateApplyUpdatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _maintenanceApplyUpdateApplyUpdatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.Maintenance
             scope.Start();
             try
             {
-                var response = await _maintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateOrCancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _maintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateOrCancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 var operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.Maintenance
             scope.Start();
             try
             {
-                var response = _maintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateOrCancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _maintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateOrCancel(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data, cancellationToken);
                 var operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
