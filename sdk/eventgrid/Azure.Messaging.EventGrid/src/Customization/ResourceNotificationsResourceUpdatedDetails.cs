@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> the tags on the resource for which the event is being emitted. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Tags { get; }
+        public string Tags { get; internal set; }
 
         /// <summary> the tags on the resource for which the event is being emitted. </summary>
         [CodeGenMember("Tags")]

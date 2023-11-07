@@ -689,7 +689,11 @@ namespace Azure.Messaging.EventGrid
         {
             properties ??= new Dictionary<string, object>();
 
-            return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location, new Dictionary<string, string>(), properties);
+            return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location,
+                new Dictionary<string, string>(), properties)
+            {
+                Tags = tags
+            };
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
