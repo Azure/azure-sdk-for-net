@@ -23,16 +23,20 @@ namespace System.Net.ClientModel
         public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default) where T : IModel<T>
         {
             if (model is null)
+            {
                 throw new ArgumentNullException(nameof(model));
+            }
 
             options ??= ModelReaderWriterOptions.Json;
 
             if (options.Format == "J" || (options.Format == "W" && model.GetWireFormat(options) == "J"))
             {
                 if (model is not IJsonModel<T> jsonModel)
+                {
                     throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
+                }
 
-                using (ModelWriter<T> writer = new ModelWriter<T>((IJsonModel<T>)model, options))
+                using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
                 {
                     return writer.ToBinaryData();
                 }
@@ -55,7 +59,9 @@ namespace System.Net.ClientModel
         public static BinaryData Write(object model, ModelReaderWriterOptions? options = default)
         {
             if (model is null)
+            {
                 throw new ArgumentNullException(nameof(model));
+            }
 
             options ??= ModelReaderWriterOptions.Json;
 
@@ -65,20 +71,7 @@ namespace System.Net.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModel<object>)}");
             }
 
-            if (options.Format == "J" || (options.Format == "W" && iModel.GetWireFormat(options) == "J"))
-            {
-                if (iModel is not IJsonModel<object> jsonModel)
-                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
-
-                using (ModelWriter<object> writer = new ModelWriter<object>((IJsonModel<object>)model, options))
-                {
-                    return writer.ToBinaryData();
-                }
-            }
-            else
-            {
-                return iModel.Write(options);
-            }
+            return Write(iModel, options);
         }
 
         /// <summary>
@@ -93,7 +86,9 @@ namespace System.Net.ClientModel
         public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default) where T : IModel<T>
         {
             if (data is null)
+            {
                 throw new ArgumentNullException(nameof(data));
+            }
 
             options ??= ModelReaderWriterOptions.Json;
 
@@ -114,9 +109,14 @@ namespace System.Net.ClientModel
         public static object? Read(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelReaderWriterOptions? options = default)
         {
             if (data is null)
+            {
                 throw new ArgumentNullException(nameof(data));
+            }
+
             if (returnType is null)
+            {
                 throw new ArgumentNullException(nameof(returnType));
+            }
 
             options ??= ModelReaderWriterOptions.Json;
 
