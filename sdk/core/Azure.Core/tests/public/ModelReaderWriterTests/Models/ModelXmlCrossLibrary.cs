@@ -185,7 +185,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new ModelXmlCrossLibrary(key, value, readOnlyProperty, childModelXml);
         }
 
-        ModelXmlCrossLibrary IModel<ModelXmlCrossLibrary>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelXmlCrossLibrary IModel<ModelXmlCrossLibrary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -209,7 +209,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             Serialize(writer, options);
         }
 
-        ModelXmlCrossLibrary IJsonModel<ModelXmlCrossLibrary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelXmlCrossLibrary IJsonModel<ModelXmlCrossLibrary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

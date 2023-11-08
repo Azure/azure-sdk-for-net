@@ -159,14 +159,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new ModelX(kind, name, xProperty, OptionalProperty.ToNullable(nullProperty), OptionalProperty.ToList(fields), OptionalProperty.ToDictionary(keyValuePairs), rawData);
         }
 
-        ModelX IModel<ModelX>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelX IModel<ModelX>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        ModelX IJsonModel<ModelX>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelX IJsonModel<ModelX>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

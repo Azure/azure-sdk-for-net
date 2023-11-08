@@ -142,13 +142,13 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public Optional<ResourceTypeAliasPathMetadata> DefaultMetadata { get; set; }
         }
 
-        ResourceTypeAlias IJsonModel<ResourceTypeAlias>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeAlias IJsonModel<ResourceTypeAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeAlias(doc.RootElement, options);
         }
 
-        ResourceTypeAlias IModel<ResourceTypeAlias>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ResourceTypeAlias IModel<ResourceTypeAlias>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAlias(doc.RootElement, options);

@@ -59,7 +59,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelAsStruct IModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -89,7 +89,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new ModelAsStruct(id, rawData);
         }
 
-        ModelAsStruct IJsonModel<ModelAsStruct>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelAsStruct IJsonModel<ModelAsStruct>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -99,7 +99,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
-        object IJsonModel<object>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -114,7 +114,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options)
+        object IModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 

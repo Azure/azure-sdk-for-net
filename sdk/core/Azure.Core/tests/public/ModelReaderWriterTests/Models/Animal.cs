@@ -125,12 +125,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         #region InterfaceImplementation
 
-        Animal IModel<Animal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        Animal IModel<Animal>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeAnimal(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        Animal IJsonModel<Animal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Animal IJsonModel<Animal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeAnimal(doc.RootElement, options);

@@ -70,7 +70,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<ResourceTypeAliasPathAttributes> Attributes { get; set; }
         }
 
-        ResourceTypeAliasPathMetadata IJsonModel<ResourceTypeAliasPathMetadata>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeAliasPathMetadata IJsonModel<ResourceTypeAliasPathMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);
@@ -95,7 +95,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        ResourceTypeAliasPathMetadata IModel<ResourceTypeAliasPathMetadata>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ResourceTypeAliasPathMetadata IModel<ResourceTypeAliasPathMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);

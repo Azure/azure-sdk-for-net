@@ -67,7 +67,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public Optional<string> ApiVersion { get; set; }
         }
 
-        ApiProfile IJsonModel<ApiProfile>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiProfile IJsonModel<ApiProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeApiProfile(doc.RootElement, options);
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        ApiProfile IModel<ApiProfile>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ApiProfile IModel<ApiProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeApiProfile(doc.RootElement, options);

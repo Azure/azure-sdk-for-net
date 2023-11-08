@@ -233,7 +233,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses));
         }
 
-        AvailabilitySetData IModel<AvailabilitySetData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        AvailabilitySetData IModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -257,7 +257,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             public OptionalProperty<IReadOnlyList<InstanceViewStatus>> Statuses { get; set; }
         }
 
-        AvailabilitySetData IJsonModel<AvailabilitySetData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

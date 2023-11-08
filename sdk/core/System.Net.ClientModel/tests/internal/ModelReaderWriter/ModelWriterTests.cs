@@ -325,12 +325,12 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             string IModel<ExplodingModel>.GetWireFormat(ModelReaderWriterOptions options) => throw new NotImplementedException();
 
-            ExplodingModel IJsonModel<ExplodingModel>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            ExplodingModel IJsonModel<ExplodingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 throw new NotImplementedException();
             }
 
-            ExplodingModel IModel<ExplodingModel>.Read(BinaryData data, ModelReaderWriterOptions options)
+            ExplodingModel IModel<ExplodingModel>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 throw new NotImplementedException();
             }

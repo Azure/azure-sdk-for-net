@@ -20,20 +20,20 @@ namespace System.Net.ClientModel.Core
 {
     public partial interface IJsonModel<out T> : System.Net.ClientModel.Core.IModel<T>
     {
-        T Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options);
+        T Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options);
         void Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options);
     }
     public partial interface IModel<out T>
     {
+        T Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options);
         string GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options);
-        T Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options);
         System.BinaryData Write(System.Net.ClientModel.ModelReaderWriterOptions options);
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<System.Net.ClientModel.Core.IJsonModel<object>>
     {
         public ModelJsonConverter() { }
         public ModelJsonConverter(System.Net.ClientModel.ModelReaderWriterOptions options) { }
-        public System.Net.ClientModel.ModelReaderWriterOptions ModelReaderWriterOptions { get { throw null; } }
+        public System.Net.ClientModel.ModelReaderWriterOptions Options { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.Net.ClientModel.Core.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.Core.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }

@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public Optional<ResourceTypeAliasPathAttributes> Attributes { get; set; }
         }
 
-        ResourceTypeAliasPathMetadata IJsonModel<ResourceTypeAliasPathMetadata>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeAliasPathMetadata IJsonModel<ResourceTypeAliasPathMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);
@@ -100,7 +100,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        ResourceTypeAliasPathMetadata IModel<ResourceTypeAliasPathMetadata>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ResourceTypeAliasPathMetadata IModel<ResourceTypeAliasPathMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);

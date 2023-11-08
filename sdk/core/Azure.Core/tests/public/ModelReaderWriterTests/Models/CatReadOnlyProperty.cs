@@ -116,12 +116,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new CatReadOnlyProperty(weight, latinName, name, isHungry, hasWhiskers, rawData);
         }
 
-        CatReadOnlyProperty IModel<CatReadOnlyProperty>.Read(BinaryData data, ModelReaderWriterOptions options)
+        CatReadOnlyProperty IModel<CatReadOnlyProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeCatReadOnlyProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        CatReadOnlyProperty IJsonModel<CatReadOnlyProperty>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CatReadOnlyProperty IJsonModel<CatReadOnlyProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeCatReadOnlyProperty(doc.RootElement, options);

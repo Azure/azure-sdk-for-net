@@ -93,13 +93,13 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<IReadOnlyList<string>> ExtendedLocations { get; set; }
         }
 
-        ProviderExtendedLocation IJsonModel<ProviderExtendedLocation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderExtendedLocation IJsonModel<ProviderExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        ProviderExtendedLocation IModel<ProviderExtendedLocation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ProviderExtendedLocation IModel<ProviderExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderExtendedLocation(doc.RootElement, options);

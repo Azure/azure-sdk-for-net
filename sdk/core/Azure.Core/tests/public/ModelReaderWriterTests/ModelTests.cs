@@ -139,7 +139,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
                 try
                 {
                     Utf8JsonReader reader = default;
-                    jsonModel.Read(ref reader, options);
+                    jsonModel.Create(ref reader, options);
                 }
                 catch (FormatException)
                 {
@@ -154,7 +154,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
                 try
                 {
                     Utf8JsonReader reader = default;
-                    ((IJsonModel<object>)jsonModel).Read(ref reader, options);
+                    ((IJsonModel<object>)jsonModel).Create(ref reader, options);
                 }
                 catch (FormatException)
                 {
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Read(ref reader, ModelReaderWriterOptions.Wire);
+                    jsonModel.Create(ref reader, ModelReaderWriterOptions.Wire);
                 }
                 catch (InvalidOperationException)
                 {

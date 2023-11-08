@@ -111,7 +111,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
         }
 
-        ModelXmlOnly IModel<ModelXmlOnly>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelXmlOnly IModel<ModelXmlOnly>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

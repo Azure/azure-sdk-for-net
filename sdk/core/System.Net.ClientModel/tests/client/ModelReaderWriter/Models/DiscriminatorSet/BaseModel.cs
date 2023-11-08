@@ -105,14 +105,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new UnknownBaseModel(kind, name, rawData);
         }
 
-        BaseModel IModel<BaseModel>.Read(BinaryData data, ModelReaderWriterOptions options)
+        BaseModel IModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        BaseModel IJsonModel<BaseModel>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BaseModel IJsonModel<BaseModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

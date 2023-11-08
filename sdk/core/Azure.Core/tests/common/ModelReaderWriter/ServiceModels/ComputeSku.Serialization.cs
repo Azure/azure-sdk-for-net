@@ -84,7 +84,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             public Optional<long> Capacity { get; set; }
         }
 
-        ComputeSku IJsonModel<ComputeSku>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeSku IJsonModel<ComputeSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeSku(doc.RootElement, options);
@@ -116,7 +116,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             reader.Skip();
         }
 
-        ComputeSku IModel<ComputeSku>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ComputeSku IModel<ComputeSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeComputeSku(doc.RootElement, options);

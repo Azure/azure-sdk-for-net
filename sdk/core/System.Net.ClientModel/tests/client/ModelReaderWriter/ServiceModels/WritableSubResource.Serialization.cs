@@ -65,7 +65,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public string Id { get; set; }
         }
 
-        WritableSubResource IJsonModel<WritableSubResource>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WritableSubResource IJsonModel<WritableSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeWritableSubResource(doc.RootElement, options);
@@ -83,7 +83,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        WritableSubResource IModel<WritableSubResource>.Read(BinaryData data, ModelReaderWriterOptions options)
+        WritableSubResource IModel<WritableSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeWritableSubResource(doc.RootElement, options);

@@ -156,7 +156,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        XmlModelForCombinedInterface IModel<XmlModelForCombinedInterface>.Read(BinaryData data, ModelReaderWriterOptions options)
+        XmlModelForCombinedInterface IModel<XmlModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -181,7 +181,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             Serialize(writer, options);
         }
 
-        XmlModelForCombinedInterface IJsonModel<XmlModelForCombinedInterface>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        XmlModelForCombinedInterface IJsonModel<XmlModelForCombinedInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

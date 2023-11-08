@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
         }
 
-        ResourceProviderData IModel<ResourceProviderData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ResourceProviderData IModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -154,7 +154,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public Optional<ProviderAuthorizationConsentState> ProviderAuthorizationConsentState { get; set; }
         }
 
-        ResourceProviderData IJsonModel<ResourceProviderData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceProviderData IJsonModel<ResourceProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

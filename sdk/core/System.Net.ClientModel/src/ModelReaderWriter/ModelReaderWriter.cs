@@ -107,7 +107,7 @@ namespace System.Net.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            return GetInstance<T>().Read(data, options);
+            return GetInstance<T>().Create(data, options);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace System.Net.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            return GetInstance(returnType).Read(data, options);
+            return GetInstance(returnType).Create(data, options);
         }
 
         private static IModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)

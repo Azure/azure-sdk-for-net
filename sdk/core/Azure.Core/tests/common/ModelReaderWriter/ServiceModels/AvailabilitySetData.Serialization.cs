@@ -238,7 +238,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return new AvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses));
         }
 
-        AvailabilitySetData IModel<AvailabilitySetData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        AvailabilitySetData IModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -265,7 +265,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             public Optional<IReadOnlyList<InstanceViewStatus>> Statuses { get; set; }
         }
 
-        AvailabilitySetData IJsonModel<AvailabilitySetData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new ChildModelXmlOnly(value, readonlyProperty);
         }
 
-        ChildModelXmlOnly IModel<ChildModelXmlOnly>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ChildModelXmlOnly IModel<ChildModelXmlOnly>.Create(BinaryData data, ModelReaderWriterOptions options)
             => DeserializeChildModelXmlOnly(XElement.Load(data.ToStream()), options);
 
         BinaryData IModel<ChildModelXmlOnly>.Write(ModelReaderWriterOptions options)

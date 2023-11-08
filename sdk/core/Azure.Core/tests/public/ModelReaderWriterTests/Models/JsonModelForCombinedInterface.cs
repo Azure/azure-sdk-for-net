@@ -110,12 +110,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        JsonModelForCombinedInterface IModel<JsonModelForCombinedInterface>.Read(BinaryData data, ModelReaderWriterOptions options)
+        JsonModelForCombinedInterface IModel<JsonModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeJsonModelForCombinedInterface(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        JsonModelForCombinedInterface IJsonModel<JsonModelForCombinedInterface>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        JsonModelForCombinedInterface IJsonModel<JsonModelForCombinedInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);

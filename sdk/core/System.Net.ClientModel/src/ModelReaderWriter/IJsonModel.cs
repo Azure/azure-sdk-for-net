@@ -28,6 +28,6 @@ namespace System.Net.ClientModel.Core
         /// <returns>A <typeparamref name="T"/> representation of the JSON value.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="InvalidOperationException">If <see cref="ModelReaderWriterOptions.Wire"/> format is passed in and the model does not use JSON for its wire format.</exception>
-        T Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
+        T Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
     }
 }

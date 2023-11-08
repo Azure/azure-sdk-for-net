@@ -87,12 +87,12 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new ModelY(kind, name, yProperty, rawData);
         }
 
-        ModelY IModel<ModelY>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelY IModel<ModelY>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeModelY(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        ModelY IJsonModel<ModelY>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelY IJsonModel<ModelY>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelY(doc.RootElement, options);

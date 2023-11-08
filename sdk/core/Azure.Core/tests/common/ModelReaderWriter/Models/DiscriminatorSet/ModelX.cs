@@ -164,7 +164,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new ModelX(kind, name, xProperty, Optional.ToNullable(nullProperty), Optional.ToList(fields), Optional.ToDictionary(keyValuePairs), rawData);
         }
 
-        ModelX IModel<ModelX>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelX IModel<ModelX>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             ((IUtf8JsonSerializable)this).Write(writer);
         }
 
-        ModelX IJsonModel<ModelX>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelX IJsonModel<ModelX>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

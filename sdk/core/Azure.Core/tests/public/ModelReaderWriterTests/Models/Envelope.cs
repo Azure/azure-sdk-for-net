@@ -142,14 +142,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return (T)serializer.Deserialize(m, typeof(T), default);
         }
 
-        Envelope<T> IModel<Envelope<T>>.Read(BinaryData data, ModelReaderWriterOptions options)
+        Envelope<T> IModel<Envelope<T>>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return DeserializeEnvelope(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        Envelope<T> IJsonModel<Envelope<T>>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Envelope<T> IJsonModel<Envelope<T>>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

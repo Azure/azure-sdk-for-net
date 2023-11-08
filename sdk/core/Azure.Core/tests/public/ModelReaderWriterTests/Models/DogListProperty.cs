@@ -152,15 +152,15 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                return modelConverter is not null ? modelConverter.ModelReaderWriterOptions : ModelReaderWriterOptions.Wire;
+                return modelConverter is not null ? modelConverter.Options : ModelReaderWriterOptions.Wire;
             }
         }
-        DogListProperty IModel<DogListProperty>.Read(BinaryData data, ModelReaderWriterOptions options)
+        DogListProperty IModel<DogListProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeDogListProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        DogListProperty IJsonModel<DogListProperty>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DogListProperty IJsonModel<DogListProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeDogListProperty(doc.RootElement, options);

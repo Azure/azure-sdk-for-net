@@ -18,7 +18,7 @@ namespace System.Net.ClientModel.Core
         /// <summary>
         /// Gets the <see cref="ModelReaderWriterOptions"/> used to read and write models.
         /// </summary>
-        public ModelReaderWriterOptions ModelReaderWriterOptions { get; }
+        public ModelReaderWriterOptions Options { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
@@ -32,7 +32,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         public ModelJsonConverter(ModelReaderWriterOptions options)
         {
-            ModelReaderWriterOptions = options;
+            Options = options;
         }
 
         /// <inheritdoc/>
@@ -45,13 +45,13 @@ namespace System.Net.ClientModel.Core
         public override IJsonModel<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return (IJsonModel<object>)ModelReaderWriter.Read(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, ModelReaderWriterOptions)!;
+            return (IJsonModel<object>)ModelReaderWriter.Read(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, Options)!;
         }
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
         {
-            value.Write(writer, ModelReaderWriterOptions);
+            value.Write(writer, Options);
         }
     }
 }

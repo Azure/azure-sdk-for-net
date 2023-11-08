@@ -141,7 +141,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         [BenchmarkCategory("PublicInterface")]
         public T Read_PublicInterfaceFromBinaryData()
         {
-            return _model.Read(_data, _options);
+            return _model.Create(_data, _options);
         }
 
         [Benchmark]
@@ -149,7 +149,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public T Read_Utf8JsonReaderFromBinaryData()
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
-            return _model.Read(ref reader, _options);
+            return _model.Create(ref reader, _options);
         }
     }
 }

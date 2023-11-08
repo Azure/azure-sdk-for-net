@@ -112,7 +112,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             public Optional<DateTimeOffset> Time { get; set; }
         }
 
-        InstanceViewStatus IJsonModel<InstanceViewStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InstanceViewStatus IJsonModel<InstanceViewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInstanceViewStatus(doc.RootElement, options);
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             reader.Skip();
         }
 
-        InstanceViewStatus IModel<InstanceViewStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        InstanceViewStatus IModel<InstanceViewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeInstanceViewStatus(doc.RootElement, options);

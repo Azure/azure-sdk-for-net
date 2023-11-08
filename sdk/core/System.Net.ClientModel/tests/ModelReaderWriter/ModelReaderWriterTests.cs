@@ -111,12 +111,12 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         {
             string IModel<SubType>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
-            SubType IJsonModel<SubType>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            SubType IJsonModel<SubType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
 
-            SubType IModel<SubType>.Read(BinaryData data, ModelReaderWriterOptions options)
+            SubType IModel<SubType>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
@@ -136,12 +136,12 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         {
             string IModel<BaseWithNoUnknown>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
-            BaseWithNoUnknown IJsonModel<BaseWithNoUnknown>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            BaseWithNoUnknown IJsonModel<BaseWithNoUnknown>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
 
-            BaseWithNoUnknown IModel<BaseWithNoUnknown>.Read(BinaryData data, ModelReaderWriterOptions options)
+            BaseWithNoUnknown IModel<BaseWithNoUnknown>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
@@ -163,12 +163,12 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
             string IModel<ModelWithNoDefaultCtor>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
-            ModelWithNoDefaultCtor IJsonModel<ModelWithNoDefaultCtor>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            ModelWithNoDefaultCtor IJsonModel<ModelWithNoDefaultCtor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 return new ModelWithNoDefaultCtor(1);
             }
 
-            ModelWithNoDefaultCtor IModel<ModelWithNoDefaultCtor>.Read(BinaryData data, ModelReaderWriterOptions options)
+            ModelWithNoDefaultCtor IModel<ModelWithNoDefaultCtor>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 return new ModelWithNoDefaultCtor(1);
             }

@@ -175,7 +175,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new ModelXml(key, value, readOnlyProperty, childModelXml);
         }
 
-        ModelXml IModel<ModelXml>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelXml IModel<ModelXml>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -199,7 +199,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Serialize(writer, options);
         }
 
-        ModelXml IJsonModel<ModelXml>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelXml IJsonModel<ModelXml>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

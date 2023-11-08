@@ -258,13 +258,13 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<IReadOnlyDictionary<string, string>> Properties { get; set; }
         }
 
-        ProviderResourceType IJsonModel<ProviderResourceType>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderResourceType IJsonModel<ProviderResourceType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        ProviderResourceType IModel<ProviderResourceType>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ProviderResourceType IModel<ProviderResourceType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderResourceType(doc.RootElement, options);

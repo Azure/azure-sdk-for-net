@@ -138,7 +138,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
                 try
                 {
                     Utf8JsonReader reader = default;
-                    jsonModel.Read(ref reader, options);
+                    jsonModel.Create(ref reader, options);
                 }
                 catch (FormatException)
                 {
@@ -153,7 +153,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
                 try
                 {
                     Utf8JsonReader reader = default;
-                    ((IJsonModel<object>)jsonModel).Read(ref reader, options);
+                    ((IJsonModel<object>)jsonModel).Create(ref reader, options);
                 }
                 catch (FormatException)
                 {
@@ -176,7 +176,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Read(ref reader, ModelReaderWriterOptions.Wire);
+                    jsonModel.Create(ref reader, ModelReaderWriterOptions.Wire);
                 }
                 catch (InvalidOperationException)
                 {
