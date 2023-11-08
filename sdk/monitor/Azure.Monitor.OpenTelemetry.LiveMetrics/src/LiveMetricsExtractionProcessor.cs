@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
@@ -29,12 +28,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         private readonly Counter<long> _dependencySucceededPerSecond;
         private readonly Counter<long> _dependencyFailedPerSecond;
         private readonly Counter<long> _exceptionsPerSecond;
-        // TODO: Explore concurrent collections.
-        private readonly List<DocumentIngress> _documentIngress = new();
+        private readonly DoubleBuffer _doubleBuffer;
 
         internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal LiveMetricsExtractionProcessor(LiveMetricsExporter liveMetricExporter)
+        internal LiveMetricsExtractionProcessor(DoubleBuffer doubleBuffer, LiveMetricsExporter liveMetricExporter)
         {
             _meterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(LiveMetricConstants.LiveMetricMeterName)
@@ -54,6 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             _dependencySucceededPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.DependencySucceededPerSecondInstrumentName);
             _dependencyFailedPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.DependencyFailedPerSecondInstrumentName);
             _exceptionsPerSecond = _meter.CreateCounter<long>(LiveMetricConstants.ExceptionsPerSecondInstrumentName);
+            _doubleBuffer = doubleBuffer;
         }
 
         public override void OnEnd(Activity activity)
@@ -176,7 +175,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: DocumentStreamIds = new List<string>(),
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
-            _documentIngress.Add(exceptionDocumentIngress);
+
+            _doubleBuffer.WriteDocument(exceptionDocumentIngress);
         }
 
         private void AddRemoteDependencyDocument(Activity activity)
@@ -196,7 +196,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: DocumentStreamIds = new List<string>(),
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
-            _documentIngress.Add(remoteDependencyDocumentIngress);
+
+            _doubleBuffer.WriteDocument(remoteDependencyDocumentIngress);
         }
 
         private void AddRequestDocument(Activity activity, string? statusCodeAttributeValue)
@@ -215,7 +216,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 // TODO: DocumentStreamIds = new List<string>(),
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
-            _documentIngress.Add(requestDocumentIngress);
+
+            _doubleBuffer.WriteDocument(requestDocumentIngress);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
