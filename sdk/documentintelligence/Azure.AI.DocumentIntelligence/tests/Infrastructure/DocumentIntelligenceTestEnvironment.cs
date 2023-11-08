@@ -17,6 +17,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public string ResourceRegion => GetRecordedVariable("RESOURCE_REGION");
 
+        public string BlobContainerSasUrl => GetRecordedVariable("SINGLEPAGE_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
         public string ClassifierTrainingSasUrl => GetRecordedVariable("CLASSIFIER_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
     }
 }

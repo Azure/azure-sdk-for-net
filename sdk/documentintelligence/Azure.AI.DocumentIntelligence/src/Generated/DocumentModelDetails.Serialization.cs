@@ -116,13 +116,5 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags), buildMode, azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(docTypes));
         }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new DocumentModelDetails FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentModelDetails(document.RootElement);
-        }
     }
 }

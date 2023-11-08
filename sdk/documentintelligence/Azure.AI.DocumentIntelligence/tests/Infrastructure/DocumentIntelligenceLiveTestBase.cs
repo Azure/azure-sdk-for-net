@@ -45,6 +45,30 @@ namespace Azure.AI.DocumentIntelligence.Tests
             return InstrumentClient(nonInstrumentedClient);
         }
 
+        protected async Task<DisposableDocumentModel> BuildDisposableDocumentModelAsync(string containerUrlString, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        {
+            var client = CreateDocumentModelAdministrationClient();
+            var modelId = Recording.GenerateId();
+            var containerUrl = new Uri(containerUrlString);
+            var source = new AzureBlobContentSource(containerUrl);
+
+            var request = new BuildDocumentModelRequest(modelId, DocumentBuildMode.Template)
+            {
+                AzureBlobSource = source,
+                Description = description
+            };
+
+            if (tags != null)
+            {
+                foreach (var tag in tags)
+                {
+                    request.Tags.Add(tag);
+                }
+            }
+
+            return await DisposableDocumentModel.BuildAsync(client, request);
+        }
+
         protected async Task<DisposableDocumentClassifier> BuildDisposableDocumentClassifierAsync(string description = null)
         {
             var client = CreateDocumentModelAdministrationClient();
