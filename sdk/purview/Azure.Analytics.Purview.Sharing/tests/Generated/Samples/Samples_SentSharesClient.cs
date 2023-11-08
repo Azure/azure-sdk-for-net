@@ -146,7 +146,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -434,7 +434,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -472,7 +472,7 @@ containerName = "<containerName>",
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -510,7 +510,7 @@ containerName = "<containerName>",
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -557,7 +557,7 @@ senderPath = "<senderPath>",
             TokenCredential credential = new DefaultAzureCredential();
             SentSharesClient client = new SentSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {

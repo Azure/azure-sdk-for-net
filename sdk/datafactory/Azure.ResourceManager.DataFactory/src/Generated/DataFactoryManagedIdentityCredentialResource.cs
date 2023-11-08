@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFactoryManagedIdentityCredentialResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryManagedIdentityCredentialResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="credentialName"> The credentialName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string credentialName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}";

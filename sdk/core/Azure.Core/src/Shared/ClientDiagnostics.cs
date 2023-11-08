@@ -49,7 +49,7 @@ namespace Azure.Core.Pipeline
         ///  The default value could change in the future, the flag should be only set to false if suppression for the client
         ///  should never be enabled.</param>
         public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = null)
-            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities.GetValueOrDefault(false))
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities.GetValueOrDefault(true))
         {
         }
 

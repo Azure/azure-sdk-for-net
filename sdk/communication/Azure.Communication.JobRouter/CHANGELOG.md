@@ -1,5 +1,157 @@
 # Release History
 
+## 1.0.0
+
+### Features Added
+
+#### RouterAdministrationClient
+- Added `RequestContext` to all methods which can override default behaviors of the client pipeline on a per-call basis.
+- Added `RequestConditions` to all `Update` methods which can specify HTTP options for conditional requests based on modification time.
+
+#### RouterClient
+- Added `RequestContext` to all methods which can override default behaviors of the client pipeline on a per-call basis.
+- Added `RequestConditions` to all `Update` methods which can specify HTTP options for conditional requests based on modification time.
+
+### Breaking Changes
+
+#### RouterAdministrationClient
+- `GetQueues` returns `AsyncPageable<RouterQueue>` rather than `Pageable<RouterQueueItem>`
+- `GetDistributionPolicies` returns `AsyncPageable<DistributionPolicy>` rather than `Pageable<DistributionPolicyItem>`
+- `GetClassificationPolicies` returns `AsyncPageable<ClassificationPolicy>` rather than `Pageable<ClassificationPolicyItem>`
+- `GetExceptionPolicies` returns `AsyncPageable<ExceptionPolicy>` rather than `Pageable<ExceptionPolicyItem>`
+- `UpdateQueue(UpdateQueueOptions options, CancellationToken cancellationToken)` changed to `UpdateQueue(RouterQueue queue, CancellationToken cancellationToken)`
+- `UpdateDistributionPolicy(UpdateDistributionPolicyOptions options, CancellationToken cancellationToken)` changed to `UpdateDistributionPolicy(DistributionPolicy distributionPolicy, CancellationToken cancellationToken)`
+- `UpdateClassificationPolicy(UpdateClassificationPolicyOptions options, CancellationToken cancellationToken)` changed to `UpdateClassificationPolicy(ClassificationPolicy classificationPolicy, CancellationToken cancellationToken)`
+- `UpdateExceptionPolicy(UpdateExceptionPolicyOptions options, CancellationToken cancellationToken)` changed to `UpdateExceptionPolicy(ExceptionPolicy exceptionPolicy, CancellationToken cancellationToken)`
+
+#### RouterClient
+- `GetJobs` returns `AsyncPageable<RouterJob>` rather than `AsyncPageable<RouterJobItem>`
+- `GetWorkers` returns `AsyncPageable<RouterWorker>` rather than `AsyncPageable<RouterJobWorker>`
+- `UpdateJob(UpdateJobOptions options, CancellationToken cancellationToken)` changed to `UpdateJob(RouterJob job, CancellationToken cancellationToken)`
+- `UpdateWorker(UpdateWorkerOptions options, CancellationToken cancellationToken)` changed to `UpdateWorker(RouterWorker worker, CancellationToken cancellationToken)`
+
+#### RouterJob && CreateJobOptions && CreateJobWithClassificationOptions
+- Property `Notes` - Changed from `List<RouterJobNote>` to `IList<RouterJobNote>`
+- Property `RequestedWorkerSelectors` - Changed from `List<RouterWorkerSelector>`to `IList<RouterWorkerSelector>`
+- Property `Labels` - Changed from `Dictionary<string, LabelValue>` to `IDictionary<string, LabelValue>`
+- Property `Tags` - Changed from `Dictionary<string, LabelValue>` to `IDictionary<string, LabelValue>`
+
+##### RouterJobNote
+- Changed constructor from `RouterJobNote()` to `RouterJobNote(string message)`
+- Removed setter from `Message`
+
+#### RouterWorker && CreateWorkerOptions
+- Rename property `QueueAssignments` -> `Queues`
+- `Queues` - Changed `Dictionary<string, RouterQueueAssignment>` -> `IList<string>`
+- Rename property `TotalCapacity` -> `Capacity`
+- Rename property `ChannelConfigurations` -> `Channels`
+- `Channels` - Changed `Dictionary<string, ChannelConfiguration>` -> `IList<RouterChannel>`
+
+#### ClassificationPolicy && CreateClassificationPolicyOptions
+- Property `List<QueueSelectorAttachment> QueueSelectors` changed to `IList<QueueSelectorAttachment> QueueSelectorAttachments`
+- Property `List<WorkerSelectorAttachment> WorkerSelectors` changed to `IList<WorkerSelectorAttachment> WorkerSelectorAttachments`
+
+#### ExceptionPolicy && CreateExceptionPolicyOptions
+- Property `ExceptionRules` - Changed from `Dictionary<string, ExceptionRule>` -> `IList<ExceptionRule>`
+
+##### ExceptionRule
+- `Actions` - Changed `Dictionary<string, ExceptionAction>` -> `IList<ExceptionAction>`
+
+##### CancelExceptionAction
+- Changed constructor from `CancelExceptionAction(string note = null, string dispositionCode = null)` to `CancelExceptionAction()`
+
+##### ReclassifyExceptionAction
+- Changed constructor from `ReclassifyExceptionAction(string classificationPolicyId, IDictionary<string, LabelValue> labelsToUpsert = null)` to `ReclassifyExceptionAction()`
+- Removed setter from `LabelsToUpsert`
+
+#### BestWorkerMode
+- Removed constructor `BestWorkerMode(RouterRule scoringRule = null, IList<ScoringRuleParameterSelector> scoringParameterSelectors = null, bool allowScoringBatchOfWorkers = false, int? batchSize = null, bool descendingOrder = true, bool bypassSelectors = false)`
+
+##### ScoringRuleOptions
+- Rename property `AllowScoringBatchOfWorkers` -> `IsBatchScoringEnabled`
+
+#### FunctionRouterRuleCredential
+- Removed properties `AppKey` and `FunctionKey`
+
+#### OAuth2WebhookClientCredential
+- Removed property `ClientSecret`
+
+#### RouterQueueStatistics
+- Changed `IReadOnlyDictionary<string, double> EstimatedWaitTimeMinutes` to `IDictionary<int, TimeSpan> EstimatedWaitTimes`
+
+#### LabelOperator
+- Renamed `GreaterThanEqual` to `GreaterThanOrEqual`
+- Renamed `LessThanEqual` to `LessThanOrEqual`
+
+#### Renames
+- `ChannelConfiguration` -> `RouterChannel`
+- `Oauth2ClientCredential` -> `OAuth2WebhookClientCredential`
+- `LabelValue` -> `RouterValue`
+
+#### Deletions
+- `ClassificationPolicyItem`
+- `DistributionPolicyItem`
+- `ExceptionPolicyItem`
+- `RouterQueueItem`
+- `RouterWorkerItem`
+- `RouterJobItem`
+- `RouterQueueAssignment`
+- `UpdateClassificationPolicyOptions`
+- `UpdateDistributionPolicyOptions`
+- `UpdateExceptionPolicyOptions`
+- `UpdateQueueOptions`
+- `UpdateWorkerOptions`
+- `UpdateJobOptions`
+
+### Other Changes
+
+#### ClassificationPolicy
+- Add `ETag`
+- Added constructor `ClassificationPolicy(string classificationPolicyId)`
+- Added setters to `FallbackQueueId`, `Name`, and `PrioritizationRule`
+
+#### DistributionPolicy
+- Add `ETag`
+- Added constructor `DistributionPolicy(string distributionPolicyId)`
+- Added setters to `Mode` and `Name`
+
+#### ExceptionPolicy
+- Added `ETag`
+- Added constructor `ExceptionPolicy(string exceptionPolicyId)`
+- Added setter to `Name`
+
+##### ExceptionRule
+- Added `Id`
+
+##### ExceptionAction
+- Added `Id`. Property is read-only. If not provided, it will be generated by the service.
+
+##### ReclassifyExceptionAction
+- Added setter to `ClassificationPolicyId`
+
+#### RouterChannel
+- Added `ChannelId`
+
+#### RouterJob
+- Added `ETag`
+- Added constructor `RouterJob(string jobId)`
+- Added setters for `ChannelId`, `ChannelReference`, `ClassificationPolicyId`, `DispositionCode`, `MatchingMode`, `Priority`, `QueueId`
+
+#### RouterQueue
+- Added `ETag`
+- Added constructor `RouterQueue(string queueId)`
+- Added setters for `DistributionPolicyId`, `ExceptionPolicyId` and `Name`
+
+#### RouterWorker
+- Added `ETag`
+- Added constructor `RouterWorker(string workerId)`
+
+#### BestWorkerMode
+- Added setters to `ScoringRule` and `ScoringRuleOptions`
+
+#### OAuth2WebhookClientCredential
+- Added constructor `OAuth2WebhookClientCredential(string clientId, string clientSecret)`
+
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added

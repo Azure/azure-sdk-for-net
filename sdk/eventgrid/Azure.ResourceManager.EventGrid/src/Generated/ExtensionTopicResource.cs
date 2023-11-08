@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.EventGrid
     public partial class ExtensionTopicResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExtensionTopicResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope)
         {
             var resourceId = $"{scope}/providers/Microsoft.EventGrid/extensionTopics/default";

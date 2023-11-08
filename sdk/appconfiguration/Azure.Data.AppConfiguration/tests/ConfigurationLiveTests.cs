@@ -13,12 +13,18 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
+    [ClientTestFixture(
+        ConfigurationClientOptions.ServiceVersion.V1_0,
+        ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
+        private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
+
         private string specialChars = "~`!@#$^&()_+=[]{}|;\"'<>./-";
 
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
+        public ConfigurationLiveTests(bool isAsync, ConfigurationClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
         }
 
         private string GenerateKeyId(string prefix = null)
@@ -37,7 +43,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 throw new TestRecordingMismatchException();
             }
-            var options = InstrumentClientOptions(new ConfigurationClientOptions());
+            var options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
             return InstrumentClient(new ConfigurationClient(TestEnvironment.ConnectionString, options));
         }
 
@@ -45,7 +51,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
-            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions());
+            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
@@ -1692,6 +1698,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingAutomaticPolling()
         {
             var service = GetClient();
@@ -1719,6 +1726,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingWaitForCompletion()
         {
             var service = GetClient();
@@ -1747,6 +1755,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingManualPolling()
         {
             var service = GetClient();
@@ -1783,6 +1792,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingWildCardKeyFilter()
         {
             var service = GetClient();
@@ -1823,6 +1833,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task ArchiveSnapshotStatus()
         {
             var service = GetClient();
@@ -1854,6 +1865,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task RecoverSnapshotStatus()
         {
             var service = GetClient();
@@ -1889,6 +1901,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task GetSnapshots()
         {
             var service = GetClient();
@@ -1923,6 +1936,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task GetSnapshotsUsingNameFilter()
         {
             var service = GetClient();
@@ -1962,6 +1976,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task GetConfigurationSettingsForSnapshot()
         {
             var service = GetClient();
@@ -1987,6 +2002,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task UnchangedSnapshotAfterSettingsUpdate()
         {
             var service = GetClient();

@@ -67,6 +67,7 @@
 - [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
 
 ### Bugs Fixed
+- Fixed bug where if a transfer was in a failed state, and during clean up an exception was thrown the transfer would throw or hang.
 
 ### Other Changes
 

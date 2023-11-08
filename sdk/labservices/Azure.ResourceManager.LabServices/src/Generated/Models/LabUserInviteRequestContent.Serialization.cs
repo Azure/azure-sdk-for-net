@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.LabServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Text);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Text.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Text))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ManagedNetwork
     public partial class ManagedNetworkPeeringPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedNetworkPeeringPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedNetworkName"> The managedNetworkName. </param>
+        /// <param name="managedNetworkPeeringPolicyName"> The managedNetworkPeeringPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkPeeringPolicies/{managedNetworkPeeringPolicyName}";

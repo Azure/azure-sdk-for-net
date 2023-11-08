@@ -763,7 +763,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -786,7 +786,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -821,7 +821,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {
@@ -844,7 +844,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-RequestContent content = RequestContent.Create(new object[]
+using RequestContent content = RequestContent.Create(new object[]
 {
     new
     {

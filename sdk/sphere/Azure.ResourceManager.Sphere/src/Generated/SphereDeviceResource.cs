@@ -26,6 +26,12 @@ namespace Azure.ResourceManager.Sphere
     public partial class SphereDeviceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SphereDeviceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="productName"> The productName. </param>
+        /// <param name="deviceGroupName"> The deviceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/products/{productName}/deviceGroups/{deviceGroupName}/devices/{deviceName}";

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudAgentPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudAgentPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="kubernetesClusterName"> The kubernetesClusterName. </param>
+        /// <param name="agentPoolName"> The agentPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}/agentPools/{agentPoolName}";

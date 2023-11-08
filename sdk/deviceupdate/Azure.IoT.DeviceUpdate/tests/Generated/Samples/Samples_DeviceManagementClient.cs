@@ -102,7 +102,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 friendlyName = "<friendlyName>",
             });
@@ -121,7 +121,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 friendlyName = "<friendlyName>",
             });
@@ -140,7 +140,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 friendlyName = "<friendlyName>",
             });
@@ -167,7 +167,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 friendlyName = "<friendlyName>",
             });
@@ -842,7 +842,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -876,7 +876,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -910,7 +910,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -972,7 +972,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -1996,7 +1996,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 deviceList = new object[]
             {
@@ -2020,7 +2020,7 @@ deviceId = "<deviceId>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 deviceList = new object[]
             {
@@ -2044,7 +2044,7 @@ deviceId = "<deviceId>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 operationId = "<operationId>",
                 deviceList = new object[]
@@ -2077,7 +2077,7 @@ moduleId = "<moduleId>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 operationId = "<operationId>",
                 deviceList = new object[]
@@ -3282,7 +3282,7 @@ moduleId = "<moduleId>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create("Devices");
+            using RequestContent content = RequestContent.Create("Devices");
             Operation operation = client.ImportDevices(WaitUntil.Completed, content);
         }
 
@@ -3294,7 +3294,7 @@ moduleId = "<moduleId>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create("Devices");
+            using RequestContent content = RequestContent.Create("Devices");
             Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, content);
         }
 
@@ -3306,7 +3306,7 @@ moduleId = "<moduleId>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create("Devices");
+            using RequestContent content = RequestContent.Create("Devices");
             Operation operation = client.ImportDevices(WaitUntil.Completed, content);
         }
 
@@ -3318,7 +3318,7 @@ moduleId = "<moduleId>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create("Devices");
+            using RequestContent content = RequestContent.Create("Devices");
             Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, content);
         }
     }

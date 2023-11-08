@@ -23,9 +23,11 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 : new OpenAIClient("your-api-key-from-platform.openai.com");
             #endregion
 
-            Response<Completions> response = await client.GetCompletionsAsync(
-                "text-davinci-003", // assumes a matching model deployment or model name
-                "Hello, world!");
+            Response<Completions> response = await client.GetCompletionsAsync(new CompletionsOptions()
+            {
+                DeploymentName = "text-davinci-003", // assumes a matching model deployment or model name
+                Prompts = { "Hello, world!" },
+            });
 
             foreach (Choice choice in response.Value.Choices)
             {

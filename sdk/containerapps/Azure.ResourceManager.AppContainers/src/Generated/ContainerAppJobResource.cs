@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers
     public partial class ContainerAppJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}";
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppJobExecutionResources and their operations over a ContainerAppJobExecutionResource. </returns>
         public virtual ContainerAppJobExecutionCollection GetContainerAppJobExecutions()
         {
-            return GetCachedClient(Client => new ContainerAppJobExecutionCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppJobExecutionCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="jobExecutionName"> Job execution name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppJobExecutionResource>> GetContainerAppJobExecutionAsync(string jobExecutionName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="jobExecutionName"> Job execution name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppJobExecutionResource> GetContainerAppJobExecution(string jobExecutionName, CancellationToken cancellationToken = default)
         {

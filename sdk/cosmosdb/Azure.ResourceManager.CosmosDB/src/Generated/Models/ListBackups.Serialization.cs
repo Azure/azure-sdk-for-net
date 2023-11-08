@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CassandraClusterBackupResourceData>> value = default;
+            Optional<IReadOnlyList<CassandraClusterBackupResourceInfo>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,10 +28,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CassandraClusterBackupResourceData> array = new List<CassandraClusterBackupResourceData>();
+                    List<CassandraClusterBackupResourceInfo> array = new List<CassandraClusterBackupResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterBackupResourceData.DeserializeCassandraClusterBackupResourceData(item));
+                        array.Add(CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo(item));
                     }
                     value = array;
                     continue;

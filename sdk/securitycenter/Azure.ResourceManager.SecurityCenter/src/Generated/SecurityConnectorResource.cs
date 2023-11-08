@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityConnectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityConnectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="securityConnectorName"> The securityConnectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}";
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecurityConnectorApplicationResources and their operations over a SecurityConnectorApplicationResource. </returns>
         public virtual SecurityConnectorApplicationCollection GetSecurityConnectorApplications()
         {
-            return GetCachedClient(Client => new SecurityConnectorApplicationCollection(Client, Id));
+            return GetCachedClient(client => new SecurityConnectorApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityConnectorApplicationResource>> GetSecurityConnectorApplicationAsync(string applicationId, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityConnectorApplicationResource> GetSecurityConnectorApplication(string applicationId, CancellationToken cancellationToken = default)
         {

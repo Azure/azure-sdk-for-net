@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewayNatRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkGatewayNatRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualNetworkGatewayName"> The virtualNetworkGatewayName. </param>
+        /// <param name="natRuleName"> The natRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, string natRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}";

@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>An OpenTelemetry .NET AzureMonitor OpenTelemetry Live Metrics</Description>
+    <AssemblyTitle>AzureMonitor OpenTelemetry Live Metrics</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure Monitor OpenTelemetry live Metrics ApplicationInsights</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);LIVE_METRICS_EXPORTER;</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" VersionOverride="1.6.0" />
+  </ItemGroup>
+
+  <!-- Shared sorce from Azure.Monitor.OpenTelemetry.Exporter -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ConnectionString\*.cs" LinkBase="Internals\ConnectionString" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\Platform\*.cs" LinkBase="Internals\Platform" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AksResourceProcessor.cs" Link="AksResourceProcessor.cs" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\NullableAttributes.cs" LinkBase="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SchemaConstants.cs" Link="SchemaConstants.cs" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" Link="SemanticConventions.cs" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+  </ItemGroup>
+  
+</Project>

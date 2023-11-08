@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudServiceRoleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceRoleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudServiceName"> The cloudServiceName. </param>
+        /// <param name="roleName"> The roleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}";

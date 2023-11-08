@@ -8,7 +8,7 @@ Create a `DevCenterClient` and issue a request to get all projects the signed-in
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
@@ -21,7 +21,7 @@ Create a `DevBoxesClient` and issue a request to get all pools in a project.
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
+await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetPoolName = result.GetProperty("name").ToString();
@@ -58,7 +58,8 @@ Once your dev box is created, issue a request to get URLs for connecting to it v
 Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
     targetProjectName,
     "me",
-    "MyDevBox");
+    "MyDevBox",
+    null);
 JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
 ```

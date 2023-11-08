@@ -1,0 +1,47 @@
+# Lint the CODEOWNERS file for a given repository and filter out baseline errors
+# Note: Due to the nature of the verifications, which includes source paths/globs
+# for the repository, this pipeline cannot use sparse-checkout.
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - .github/CODEOWNERS
+      - .github/CODEOWNERS_baseline_errors.txt
+      - eng/common/pipelines/codeowners-linter.yml
+
+stages:
+- stage: Run
+  variables:
+    skipComponentGovernanceDetection: true
+
+  jobs:
+  - job: Run
+    timeoutInMinutes: 120
+    pool:
+      name: azsdk-pool-mms-ubuntu-2204-general
+      vmImage: ubuntu-22.04
+
+    variables:
+      CodeownersLinterVersion: '1.0.0-dev.20231107.2'
+      DotNetDevOpsFeed: "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
+      RepoLabelUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/repository-labels-blob"
+      TeamUserUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/azure-sdk-write-teams-blob"
+      UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
+
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Install CodeownersLinter'
+        inputs:
+          command: custom
+          custom: 'tool'
+          arguments: 'install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"'
+      - pwsh: |
+          codeowners-linter --repoRoot $(Build.SourcesDirectory) --repoName $(Build.Repository.Name) -fbl -rUri "$(RepoLabelUri)" -tUri "$(TeamUserUri)" -uUri "$(UserOrgUri)"
+        displayName: 'Lint CODEOWNERS and filter using baseline'

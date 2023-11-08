@@ -816,27 +816,33 @@ namespace Azure.Core.Tests
             Assert.IsFalse(ResourceIdentifier.TryParse(id, out var result));
         }
 
+        [TestCase(null)]
+        public void NullInput(string invalidID)
+        {
+            Assert.Throws<ArgumentNullException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
+            Assert.Throws<ArgumentNullException>(() => ResourceIdentifier.Parse(invalidID));
+            Assert.IsFalse(ResourceIdentifier.TryParse(invalidID, out var result));
+        }
+
         [TestCase("")]
+        public void EmptyInput(string invalidID)
+        {
+            Assert.Throws<ArgumentException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
+            Assert.Throws<ArgumentException>(() => ResourceIdentifier.Parse(invalidID));
+            Assert.IsFalse(ResourceIdentifier.TryParse(invalidID, out var result));
+        }
+
         [TestCase(" ")]
         [TestCase("asdfghj")]
         [TestCase("123456")]
         [TestCase("!@#$%^&*/")]
         [TestCase("/subscriptions/")]
         [TestCase("/0c2f6471-1bf0-4dda-aec3-cb9272f09575/myRg/")]
-        public void InvalidRPIds(string invalidID)
+        public void InvalidInput(string invalidID)
         {
-            if (invalidID == String.Empty)
-            {
-                Assert.Throws<ArgumentException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
-                Assert.Throws<ArgumentException>(() => ResourceIdentifier.Parse(invalidID));
-                Assert.IsFalse(ResourceIdentifier.TryParse(invalidID, out var result));
-            }
-            else
-            {
-                Assert.Throws<FormatException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
-                Assert.Throws<FormatException>(() => ResourceIdentifier.Parse(invalidID));
-                Assert.IsFalse(ResourceIdentifier.TryParse(invalidID, out var result));
-            }
+            Assert.Throws<FormatException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
+            Assert.Throws<FormatException>(() => ResourceIdentifier.Parse(invalidID));
+            Assert.IsFalse(ResourceIdentifier.TryParse(invalidID, out var result));
         }
 
         [TestCase(TrackedResourceId)]

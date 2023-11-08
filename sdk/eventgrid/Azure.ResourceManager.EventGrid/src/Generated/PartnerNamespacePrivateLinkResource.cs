@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.EventGrid
     public partial class PartnerNamespacePrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PartnerNamespacePrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="parentName"> The parentName. </param>
+        /// <param name="privateLinkResourceName"> The privateLinkResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateLinkResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{parentName}/privateLinkResources/{privateLinkResourceName}";

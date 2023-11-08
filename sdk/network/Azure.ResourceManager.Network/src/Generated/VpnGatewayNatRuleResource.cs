@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class VpnGatewayNatRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VpnGatewayNatRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
+        /// <param name="natRuleName"> The natRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/natRules/{natRuleName}";

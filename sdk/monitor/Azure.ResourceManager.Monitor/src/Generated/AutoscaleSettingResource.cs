@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Monitor
     public partial class AutoscaleSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutoscaleSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="autoscaleSettingName"> The autoscaleSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string autoscaleSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}";

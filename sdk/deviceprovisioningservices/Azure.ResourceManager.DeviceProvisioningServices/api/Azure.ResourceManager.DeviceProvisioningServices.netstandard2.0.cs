@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     }
     public partial class DeviceProvisioningServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DeviceProvisioningServiceData(Azure.Core.AzureLocation location, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties properties, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
+        public DeviceProvisioningServiceData(Azure.Core.AzureLocation location, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties properties, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo sku) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo Sku { get { throw null; } set { } }
@@ -185,6 +185,32 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     {
         internal DeviceProvisioningServicesPrivateLinkResourceData() { }
         public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkResourceProperties Properties { get { throw null; } }
+    }
+}
+namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
+{
+    public partial class MockableDeviceProvisioningServicesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDeviceProvisioningServicesArmClient() { }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDeviceProvisioningServicesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDeviceProvisioningServicesResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningService(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceCollection GetDeviceProvisioningServices() { throw null; }
+    }
+    public partial class MockableDeviceProvisioningServicesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDeviceProvisioningServicesSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
