@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
         }
 
-        [Test, Pairwise]
+        [Test, Pairwise, Timeout(30000)]
         public async Task LargeSingleFile(
             [Values(TransferDirection.Copy, TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection,
             [Values(DataTransferOrder.Sequential, DataTransferOrder.Unordered)] DataTransferOrder transferOrder)
