@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// Attaches a queue selector where the value is passed through from the job label
-    /// with the same key
-    /// </summary>
+    /// <summary> Attaches a queue selector where the value is passed through from the job label with the same key. </summary>
     public partial class PassThroughQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
