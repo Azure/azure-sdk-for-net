@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementProductResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementProductResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="productId"> The productId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string productId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}";
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementProductPolicyResources and their operations over a ApiManagementProductPolicyResource. </returns>
         public virtual ApiManagementProductPolicyCollection GetApiManagementProductPolicies()
         {
-            return GetCachedClient(Client => new ApiManagementProductPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ApiManagementProductPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementProductTagResources and their operations over a ApiManagementProductTagResource. </returns>
         public virtual ApiManagementProductTagCollection GetApiManagementProductTags()
         {
-            return GetCachedClient(Client => new ApiManagementProductTagCollection(Client, Id));
+            return GetCachedClient(client => new ApiManagementProductTagCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +177,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementProductTagResource>> GetApiManagementProductTagAsync(string tagId, CancellationToken cancellationToken = default)
         {
@@ -196,8 +200,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiManagementProductTagResource> GetApiManagementProductTag(string tagId, CancellationToken cancellationToken = default)
         {

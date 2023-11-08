@@ -29,12 +29,14 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
                         new LongestIdleMode())
                     { Name = "Simple-Queue-Distribution" });
+            AddForCleanup(new Task(async () => await administrationClient.DeleteDistributionPolicyAsync(distributionPolicyResponse.Value.Id)));
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
                 });
+            AddForCleanup(new Task(async () => await administrationClient.DeleteQueueAsync(queueResponse.Value.Id)));
 
             var workerId1 = GenerateUniqueId($"{IdPrefix}-w1");
             var registerWorker = await client.CreateWorkerAsync(
@@ -44,7 +46,6 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Channels = { new RouterChannel(channelResponse, 1) },
                     AvailableForOffers = true,
                 });
-            AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false })));
             AddForCleanup(new Task(async () => await client.DeleteWorkerAsync(workerId1)));
 
             var jobId = GenerateUniqueId($"{IdPrefix}-JobId-SQ-{ScenarioPrefix}");
@@ -114,6 +115,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.NotNull(finalJobState.Value.ScheduledAt);
 
             // delete worker for straggling offers if any
+            await client.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false });
             await client.DeleteWorkerAsync(workerId1);
         }
     }

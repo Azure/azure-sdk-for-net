@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Peering
     public partial class ConnectionMonitorTestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConnectionMonitorTestResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="peeringServiceName"> The peeringServiceName. </param>
+        /// <param name="connectionMonitorTestName"> The connectionMonitorTestName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringServiceName, string connectionMonitorTestName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}";

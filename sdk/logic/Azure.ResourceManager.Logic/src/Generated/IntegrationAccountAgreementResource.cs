@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationAccountAgreementResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationAccountAgreementResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="integrationAccountName"> The integrationAccountName. </param>
+        /// <param name="agreementName"> The agreementName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string agreementName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/agreements/{agreementName}";

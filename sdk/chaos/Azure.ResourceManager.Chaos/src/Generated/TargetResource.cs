@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Chaos
     public partial class TargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TargetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="parentProviderNamespace"> The parentProviderNamespace. </param>
+        /// <param name="parentResourceType"> The parentResourceType. </param>
+        /// <param name="parentResourceName"> The parentResourceName. </param>
+        /// <param name="targetName"> The targetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}";
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of CapabilityResources and their operations over a CapabilityResource. </returns>
         public virtual CapabilityCollection GetCapabilities()
         {
-            return GetCachedClient(Client => new CapabilityCollection(Client, Id));
+            return GetCachedClient(client => new CapabilityCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +116,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CapabilityResource>> GetCapabilityAsync(string capabilityName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +139,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CapabilityResource> GetCapability(string capabilityName, CancellationToken cancellationToken = default)
         {

@@ -26,10 +26,10 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary> A set of non-identifying attributes attached to this job. </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
         public IList<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
@@ -73,7 +73,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
+                        Labels[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -94,11 +94,27 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value.ToObjectFromJson());
+                        Tags[tag.Key] = new RouterValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
         }
+
+        [CodeGenMember("Etag")]
+        internal string _etag
+        {
+            get
+            {
+                return ETag.ToString();
+            }
+            set
+            {
+                ETag = new ETag(value);
+            }
+        }
+
+        /// <summary> Concurrency Token. </summary>
+        public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -189,6 +205,11 @@ namespace Azure.Communication.JobRouter
             {
                 writer.WritePropertyName("matchingMode"u8);
                 writer.WriteObjectValue(MatchingMode);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
             }
             writer.WriteEndObject();
         }

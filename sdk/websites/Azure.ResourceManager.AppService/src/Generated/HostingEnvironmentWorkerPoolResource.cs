@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppService
     public partial class HostingEnvironmentWorkerPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentWorkerPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="workerPoolName"> The workerPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}";

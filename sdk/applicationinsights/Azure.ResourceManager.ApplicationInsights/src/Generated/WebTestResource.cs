@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ApplicationInsights
     public partial class WebTestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebTestResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="webTestName"> The webTestName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string webTestName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}";

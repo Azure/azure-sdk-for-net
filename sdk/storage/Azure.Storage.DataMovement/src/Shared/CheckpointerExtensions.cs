@@ -78,6 +78,25 @@ namespace Azure.Storage.DataMovement
             writer.Write(length);
         }
 
+        internal static void WritePaddedString(this BinaryWriter writer, string value, int setSizeInBytes)
+        {
+            byte[] valueBytes = Encoding.UTF8.GetBytes(value);
+            writer.Write(valueBytes);
+
+            int padding = setSizeInBytes - valueBytes.Length;
+            if (padding > 0)
+            {
+                char[] paddingArray = new char[padding];
+                writer.Write(paddingArray);
+            }
+        }
+
+        internal static string ReadPaddedString(this BinaryReader reader, int numBytes)
+        {
+            byte[] stringBytes = reader.ReadBytes(numBytes);
+            return stringBytes.ToString(numBytes).TrimEnd('\0');
+        }
+
         internal static string ToSanitizedString(this Uri uri)
         {
             UriBuilder builder = new(uri);

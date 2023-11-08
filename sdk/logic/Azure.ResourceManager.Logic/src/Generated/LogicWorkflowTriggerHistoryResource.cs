@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Logic
     public partial class LogicWorkflowTriggerHistoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowTriggerHistoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
+        /// <param name="historyName"> The historyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, string historyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}";

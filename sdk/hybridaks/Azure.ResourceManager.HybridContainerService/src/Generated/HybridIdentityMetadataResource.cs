@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService
     public partial class HybridIdentityMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridIdentityMetadataResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="hybridIdentityMetadataResourceName"> The hybridIdentityMetadataResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}";

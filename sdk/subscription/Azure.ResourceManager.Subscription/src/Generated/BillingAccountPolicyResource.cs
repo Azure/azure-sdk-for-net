@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Subscription
     public partial class BillingAccountPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingAccountPolicyResource"/> instance. </summary>
+        /// <param name="billingAccountId"> The billingAccountId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string billingAccountId)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default";

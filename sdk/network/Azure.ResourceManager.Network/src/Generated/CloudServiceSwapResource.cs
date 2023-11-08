@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network
     public partial class CloudServiceSwapResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceSwapResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/swap";

@@ -1,14 +1,9 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.1 (2023-11-07)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed serialization issue when VolumeSnapshotProperties.SnapshotPolicyId is empty string 
 
 ## 1.4.0 (2023-10-19)
 - Updated to support ANF api-version 2023-05-01

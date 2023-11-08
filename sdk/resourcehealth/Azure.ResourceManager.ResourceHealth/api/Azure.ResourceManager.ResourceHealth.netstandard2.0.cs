@@ -266,6 +266,59 @@ namespace Azure.ResourceManager.ResourceHealth
         public virtual Azure.ResourceManager.ResourceHealth.TenantResourceHealthEventImpactedResourceCollection GetTenantResourceHealthEventImpactedResources() { throw null; }
     }
 }
+namespace Azure.ResourceManager.ResourceHealth.Mocking
+{
+    public partial class MockableResourceHealthArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceHealthArmClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatus(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetHealthEventsOfSingleResource(Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(Azure.Core.ResourceIdentifier scope, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource GetResourceHealthEventResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityResource GetResourceHealthMetadataEntityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueResource GetServiceEmergingIssueResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.TenantResourceHealthEventImpactedResource GetTenantResourceHealthEventImpactedResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.TenantResourceHealthEventResource GetTenantResourceHealthEventResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableResourceHealthResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceHealthResourceGroupResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableResourceHealthSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceHealthSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource> GetResourceHealthEvent(string eventTrackingId, string filter = null, string queryStartTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>> GetResourceHealthEventAsync(string eventTrackingId, string filter = null, string queryStartTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthEventCollection GetResourceHealthEvents() { throw null; }
+    }
+    public partial class MockableResourceHealthTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceHealthTenantResource() { }
+        public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityCollection GetResourceHealthMetadataEntities() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityResource> GetResourceHealthMetadataEntity(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityResource>> GetResourceHealthMetadataEntityAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueResource> GetServiceEmergingIssue(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent issueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueResource>> GetServiceEmergingIssueAsync(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent issueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueCollection GetServiceEmergingIssues() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.TenantResourceHealthEventResource> GetTenantResourceHealthEvent(string eventTrackingId, string filter = null, string queryStartTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.TenantResourceHealthEventResource>> GetTenantResourceHealthEventAsync(string eventTrackingId, string filter = null, string queryStartTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.TenantResourceHealthEventCollection GetTenantResourceHealthEvents() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public static partial class ArmResourceHealthModelFactory

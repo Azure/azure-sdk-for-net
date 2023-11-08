@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class CustomEntityStoreAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CustomEntityStoreAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="customEntityStoreAssignmentName"> The customEntityStoreAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customEntityStoreAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customEntityStoreAssignments/{customEntityStoreAssignmentName}";

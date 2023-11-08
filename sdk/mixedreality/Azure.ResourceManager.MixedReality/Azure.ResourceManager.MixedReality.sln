@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
+<<<<<<< HEAD
 VisualStudioVersion = 17.7.34009.444
+=======
+VisualStudioVersion = 17.6.33829.357
+>>>>>>> b7e362737062d3782db56db255a91a0a7fc1891a
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MixedReality", "src\Azure.ResourceManager.MixedReality.csproj", "{0F146ABF-D6F4-4645-975E-A5D272AC8C68}"
 EndProject

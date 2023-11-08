@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     public partial class ContainerServiceFleetUpdateRunResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerServiceFleetUpdateRunResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fleetName"> The fleetName. </param>
+        /// <param name="updateRunName"> The updateRunName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}";

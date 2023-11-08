@@ -31,16 +31,13 @@ namespace Azure.Communication.JobRouter
         /// </param>
         internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;
             _labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
         /// <summary> The Id of this queue. </summary>
         public string Id { get; }
     }

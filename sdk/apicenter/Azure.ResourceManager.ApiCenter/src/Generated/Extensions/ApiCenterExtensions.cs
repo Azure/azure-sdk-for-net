@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApiCenter.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiCenter
@@ -18,62 +19,49 @@ namespace Azure.ResourceManager.ApiCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApiCenter. </summary>
     public static partial class ApiCenterExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableApiCenterArmClient GetMockableApiCenterArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableApiCenterArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableApiCenterResourceGroupResource GetMockableApiCenterResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableApiCenterResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableApiCenterSubscriptionResource GetMockableApiCenterSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableApiCenterSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ApiCenterServiceResource
         /// <summary>
         /// Gets an object representing an <see cref="ApiCenterServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApiCenterServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApiCenterServiceResource" /> object. </returns>
         public static ApiCenterServiceResource GetApiCenterServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiCenterServiceResource.ValidateResourceId(id);
-                return new ApiCenterServiceResource(client, id);
-            }
-            );
+            return GetMockableApiCenterArmClient(client).GetApiCenterServiceResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of ApiCenterServiceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ApiCenterServiceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterServices()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
         public static ApiCenterServiceCollection GetApiCenterServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApiCenterServices();
+            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterServices();
         }
 
         /// <summary>
@@ -88,16 +76,20 @@ namespace Azure.ResourceManager.ApiCenter
         /// <description>Services_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ApiCenterServiceResource>> GetApiCenterServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetApiCenterServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,16 +104,20 @@ namespace Azure.ResourceManager.ApiCenter
         /// <description>Services_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterService(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ApiCenterServiceResource> GetApiCenterService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetApiCenterServices().Get(serviceName, cancellationToken);
+            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterService(serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -136,13 +132,17 @@ namespace Azure.ResourceManager.ApiCenter
         /// <description>Services_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetApiCenterServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiCenterServiceResource> GetApiCenterServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiCenterServicesAsync(cancellationToken);
+            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -157,13 +157,17 @@ namespace Azure.ResourceManager.ApiCenter
         /// <description>Services_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetApiCenterServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiCenterServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiCenterServiceResource> GetApiCenterServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiCenterServices(cancellationToken);
+            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterServices(cancellationToken);
         }
     }
 }

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class GremlinDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GremlinDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}";
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of GremlinGraphResources and their operations over a GremlinGraphResource. </returns>
         public virtual GremlinGraphCollection GetGremlinGraphs()
         {
-            return GetCachedClient(Client => new GremlinGraphCollection(Client, Id));
+            return GetCachedClient(client => new GremlinGraphCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +121,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="graphName"> Cosmos DB graph name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GremlinGraphResource>> GetGremlinGraphAsync(string graphName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +144,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="graphName"> Cosmos DB graph name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GremlinGraphResource> GetGremlinGraph(string graphName, CancellationToken cancellationToken = default)
         {
