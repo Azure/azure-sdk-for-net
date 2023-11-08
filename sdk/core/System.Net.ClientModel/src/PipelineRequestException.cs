@@ -6,19 +6,19 @@ using System.Net.ClientModel.Core;
 
 namespace System.Net.ClientModel
 {
-    public class UnsuccessfulRequestException : Exception
+    public class PipelineRequestException : Exception
     {
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
         /// </summary>
         public int Status { get; }
 
-        public UnsuccessfulRequestException(MessageResponse response) : base(GetMessageFromResponse(response))
+        public PipelineRequestException(MessageResponse response) : base(GetMessageFromResponse(response))
         {
             Status = response.Status;
         }
 
-        protected UnsuccessfulRequestException(MessageResponse response, string message, Exception? innerException)
+        protected PipelineRequestException(MessageResponse response, string message, Exception? innerException)
             // TODO: what is the actual behavior of the EBN RFE constructor that takes both erroCode and message?
             // Duplicate that here.
             : base(message, innerException)
@@ -26,7 +26,7 @@ namespace System.Net.ClientModel
             Status = response.Status;
         }
 
-        internal UnsuccessfulRequestException(string message, Exception? innerException) : base(message, innerException)
+        internal PipelineRequestException(string message, Exception? innerException) : base(message, innerException)
         {
             // TODO: What is the experience if someone tries to access this.Response?
         }
@@ -42,7 +42,7 @@ namespace System.Net.ClientModel
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
-        protected UnsuccessfulRequestException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected PipelineRequestException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             Status = info.GetInt32(nameof(Status));
         }

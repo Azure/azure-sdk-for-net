@@ -23,7 +23,7 @@ public static class PipelineProtocolExtensions
             return message.Response;
         }
 
-        throw new UnsuccessfulRequestException(message.Response);
+        throw new PipelineRequestException(message.Response);
     }
 
     public static MessageResponse ProcessMessage(this MessagePipeline pipeline, ClientMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
@@ -40,7 +40,7 @@ public static class PipelineProtocolExtensions
             return message.Response;
         }
 
-        throw new UnsuccessfulRequestException(message.Response);
+        throw new PipelineRequestException(message.Response);
     }
 
     public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, ClientMessage message, RequestOptions requestContext)
@@ -53,7 +53,7 @@ public static class PipelineProtocolExtensions
             case >= 400 and < 500:
                 return Result.FromValue(false, response);
             default:
-                return new ErrorResult<bool>(response, new UnsuccessfulRequestException(response));
+                return new ErrorResult<bool>(response, new PipelineRequestException(response));
         }
     }
 
@@ -67,16 +67,16 @@ public static class PipelineProtocolExtensions
             case >= 400 and < 500:
                 return Result.FromValue(false, response);
             default:
-                return new ErrorResult<bool>(response, new UnsuccessfulRequestException(response));
+                return new ErrorResult<bool>(response, new PipelineRequestException(response));
         }
     }
 
     internal class ErrorResult<T> : NullableResult<T>
     {
         private readonly MessageResponse _response;
-        private readonly UnsuccessfulRequestException _exception;
+        private readonly PipelineRequestException _exception;
 
-        public ErrorResult(MessageResponse response, UnsuccessfulRequestException exception)
+        public ErrorResult(MessageResponse response, PipelineRequestException exception)
             : base(default, response)
         {
             _response = response;
