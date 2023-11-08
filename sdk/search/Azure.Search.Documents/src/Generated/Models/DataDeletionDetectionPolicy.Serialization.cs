@@ -31,7 +31,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy": return NativeBlobSoftDeleteDeletionDetectionPolicy.DeserializeNativeBlobSoftDeleteDeletionDetectionPolicy(element);
                     case "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy": return SoftDeleteColumnDeletionDetectionPolicy.DeserializeSoftDeleteColumnDeletionDetectionPolicy(element);
                 }
             }

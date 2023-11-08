@@ -14,11 +14,11 @@ namespace Azure.AI.OpenAI
     public static partial class AzureOpenAIModelFactory
     {
         /// <summary> Initializes a new instance of ChatChoice. </summary>
-        /// <param name="message"> The chat message associated with this chat completions choice </param>
+        /// <param name="message"> The chat message associated with this chat completions choice. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        /// <param name="deltaMessage"> For streamed choices, the internal representation of a 'delta' payload </param>
-        /// <param name="contentFilterResults"> The category annotations for this chat choice's content filtering </param>
+        /// <param name="deltaMessage"> For streamed choices, the internal representation of a 'delta' payload. </param>
+        /// <param name="contentFilterResults"> The category annotations for this chat choice's content filtering. </param>
         /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
         public static ChatChoice ChatChoice(
             ChatMessage message = null,
@@ -30,50 +30,29 @@ namespace Azure.AI.OpenAI
             return new ChatChoice(message, index, finishReason, deltaMessage, contentFilterResults);
         }
 
-        /// <summary>
-        /// Initializes a new instance of StreamingChoice for tests and mocking.
-        /// </summary>
-        /// <param name="originalBaseChoice"> An underlying Choice for this streaming representation </param>
-        /// <returns> A new instance of StreamingChoice </returns>
-        public static StreamingChoice StreamingChoice(Choice originalBaseChoice = null)
+        public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
+            string id,
+            DateTimeOffset created,
+            int? choiceIndex = null,
+            ChatRole? role = null,
+            string authorName = null,
+            string contentUpdate = null,
+            CompletionsFinishReason? finishReason = null,
+            string functionName = null,
+            string functionArgumentsUpdate = null,
+            AzureChatExtensionsMessageContext azureExtensionsContext = null)
         {
-            return new StreamingChoice(originalBaseChoice);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of StreamingCompletions for tests and mocking.
-        /// </summary>
-        /// <param name="baseCompletions"> The non-streaming completions to base this streaming representation on </param>
-        /// <param name="streamingChoices"> The streaming choices associated with this streaming completions </param>
-        /// <returns> A new instance of StreamingCompletions </returns>
-        public static StreamingCompletions StreamingCompletions(
-            Completions baseCompletions = null,
-            List<StreamingChoice> streamingChoices = null)
-        {
-            return new StreamingCompletions(baseCompletions, streamingChoices);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of StreamingChatChoice for tests and mocking.
-        /// </summary>
-        /// <param name="originalBaseChoice"> An underlying ChatChoice for this streaming representation </param>
-        /// <returns> A new instance of StreamingChatChoice </returns>
-        public static StreamingChatChoice StreamingChatChoice(ChatChoice originalBaseChoice = null)
-        {
-            return new StreamingChatChoice(originalBaseChoice);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of StreamingChatCompletions for tests and mocking.
-        /// </summary>
-        /// <param name="baseChatCompletions"> The non-streaming completions to base this streaming representation on </param>
-        /// <param name="streamingChatChoices"> The streaming choices associated with this streaming chat completions </param>
-        /// <returns> A new instance of StreamingChatCompletions </returns>
-        public static StreamingChatCompletions StreamingChatCompletions(
-            ChatCompletions baseChatCompletions = null,
-            List<StreamingChatChoice> streamingChatChoices = null)
-        {
-            return new StreamingChatCompletions(baseChatCompletions, streamingChatChoices);
+            return new StreamingChatCompletionsUpdate(
+                id,
+                created,
+                choiceIndex,
+                role,
+                authorName,
+                contentUpdate,
+                finishReason,
+                functionName,
+                functionArgumentsUpdate,
+                azureExtensionsContext);
         }
 
         /// <summary> Initializes a new instance of AudioTranscription. </summary>

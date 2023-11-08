@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
     }
     public partial class HDInsightClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HDInsightClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HDInsightClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile { get { throw null; } set { } }
         public string ClusterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> ComputeNodes { get { throw null; } set { } }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
     }
     public partial class HDInsightClusterPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HDInsightClusterPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HDInsightClusterPoolData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile { get { throw null; } }
         public string AksManagedResourceGroupName { get { throw null; } }
         public string ClusterPoolVersion { get { throw null; } set { } }
@@ -128,6 +128,34 @@ namespace Azure.ResourceManager.HDInsight.Containers
         public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource> GetHDInsightClusterPools(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource> GetHDInsightClusterPoolsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource GetHDInsightClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.HDInsight.Containers.Mocking
+{
+    public partial class MockableHDInsightContainersArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableHDInsightContainersArmClient() { }
+        public virtual Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource GetHDInsightClusterPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource GetHDInsightClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableHDInsightContainersResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableHDInsightContainersResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource> GetHDInsightClusterPool(string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource>> GetHDInsightClusterPoolAsync(string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolCollection GetHDInsightClusterPools() { throw null; }
+    }
+    public partial class MockableHDInsightContainersSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableHDInsightContainersSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion> GetAvailableClusterVersionsByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterVersion> GetAvailableClusterVersionsByLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource> GetHDInsightClusterPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource> GetHDInsightClusterPoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -335,7 +363,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class ClusterResizeContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ClusterResizeContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ClusterResizeContent(Azure.Core.AzureLocation location) { }
         public int? TargetWorkerNodeCount { get { throw null; } set { } }
     }
     public partial class ClusterSecretReference
@@ -461,7 +489,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class HDInsightClusterPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HDInsightClusterPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HDInsightClusterPatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile ClusterProfile { get { throw null; } set { } }
     }
     public partial class HDInsightClusterPoolPatch

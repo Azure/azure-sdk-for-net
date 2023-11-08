@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.PostgreSql
     public partial class PostgreSqlServerKeyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlServerKeyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="keyName"> The keyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string keyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/keys/{keyName}";

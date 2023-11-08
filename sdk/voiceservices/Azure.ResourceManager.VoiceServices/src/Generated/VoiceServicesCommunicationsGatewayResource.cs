@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.VoiceServices
     public partial class VoiceServicesCommunicationsGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VoiceServicesCommunicationsGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="communicationsGatewayName"> The communicationsGatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationsGatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}";
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> An object representing collection of VoiceServicesTestLineResources and their operations over a VoiceServicesTestLineResource. </returns>
         public virtual VoiceServicesTestLineCollection GetVoiceServicesTestLines()
         {
-            return GetCachedClient(Client => new VoiceServicesTestLineCollection(Client, Id));
+            return GetCachedClient(client => new VoiceServicesTestLineCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.VoiceServices
         /// </summary>
         /// <param name="testLineName"> Unique identifier for this test line. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VoiceServicesTestLineResource>> GetVoiceServicesTestLineAsync(string testLineName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.VoiceServices
         /// </summary>
         /// <param name="testLineName"> Unique identifier for this test line. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VoiceServicesTestLineResource> GetVoiceServicesTestLine(string testLineName, CancellationToken cancellationToken = default)
         {

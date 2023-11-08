@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.FrontDoor
     public partial class FrontDoorExperimentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorExperimentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="experimentName"> The experimentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string experimentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}";

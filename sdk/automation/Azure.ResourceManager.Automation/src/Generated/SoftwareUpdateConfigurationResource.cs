@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Automation
     public partial class SoftwareUpdateConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SoftwareUpdateConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="softwareUpdateConfigurationName"> The softwareUpdateConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}";

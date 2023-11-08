@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Support
     public partial class SubscriptionSupportTicketResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionSupportTicketResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="supportTicketName"> The supportTicketName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}";
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketCommunicationResources and their operations over a SupportTicketCommunicationResource. </returns>
         public virtual SupportTicketCommunicationCollection GetSupportTicketCommunications()
         {
-            return GetCachedClient(Client => new SupportTicketCommunicationCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketCommunicationCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +117,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketCommunicationResource>> GetSupportTicketCommunicationAsync(string communicationName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +140,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketCommunicationResource> GetSupportTicketCommunication(string communicationName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +152,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketChatTranscriptResources and their operations over a SupportTicketChatTranscriptResource. </returns>
         public virtual SupportTicketChatTranscriptCollection GetSupportTicketChatTranscripts()
         {
-            return GetCachedClient(Client => new SupportTicketChatTranscriptCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketChatTranscriptCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +170,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketChatTranscriptResource>> GetSupportTicketChatTranscriptAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +193,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketChatTranscriptResource> GetSupportTicketChatTranscript(string chatTranscriptName, CancellationToken cancellationToken = default)
         {

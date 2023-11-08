@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.ContainerService
     public partial class OSOptionProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OSOptionProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default";

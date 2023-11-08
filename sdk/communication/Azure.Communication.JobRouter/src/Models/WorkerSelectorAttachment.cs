@@ -7,10 +7,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("WorkerSelectorAttachment")]
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<WorkerSelectorAttachment>))]
     public abstract partial class WorkerSelectorAttachment : IUtf8JsonSerializable
     {
+        /// <summary> The type discriminator describing a sub-type of WorkerSelectorAttachment. </summary>
+        public string Kind { get; protected set; }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();

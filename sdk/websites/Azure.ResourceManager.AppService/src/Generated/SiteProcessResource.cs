@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteProcessResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteProcessResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="processId"> The processId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}";
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteProcessModuleResources and their operations over a SiteProcessModuleResource. </returns>
         public virtual SiteProcessModuleCollection GetSiteProcessModules()
         {
-            return GetCachedClient(Client => new SiteProcessModuleCollection(Client, Id));
+            return GetCachedClient(client => new SiteProcessModuleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +115,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteProcessModuleResource>> GetSiteProcessModuleAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
@@ -134,8 +138,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteProcessModuleResource> GetSiteProcessModule(string baseAddress, CancellationToken cancellationToken = default)
         {

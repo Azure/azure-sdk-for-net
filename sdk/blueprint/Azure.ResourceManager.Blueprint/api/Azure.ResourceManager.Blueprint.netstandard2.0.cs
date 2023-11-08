@@ -254,6 +254,25 @@ namespace Azure.ResourceManager.Blueprint
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Blueprint.PublishedBlueprintResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Blueprint.PublishedBlueprintData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Blueprint.Mocking
+{
+    public partial class MockableBlueprintArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBlueprintArmClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.Blueprint.AssignmentResource> GetAssignment(Azure.Core.ResourceIdentifier scope, string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.AssignmentResource>> GetAssignmentAsync(Azure.Core.ResourceIdentifier scope, string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.AssignmentOperationResource GetAssignmentOperationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.AssignmentResource GetAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.AssignmentCollection GetAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Blueprint.BlueprintResource> GetBlueprint(Azure.Core.ResourceIdentifier scope, string blueprintName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintArtifactResource GetBlueprintArtifactResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintResource>> GetBlueprintAsync(Azure.Core.ResourceIdentifier scope, string blueprintName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintResource GetBlueprintResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintCollection GetBlueprints(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource GetBlueprintVersionArtifactResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.PublishedBlueprintResource GetPublishedBlueprintResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Blueprint.Models
 {
     public static partial class ArmBlueprintModelFactory

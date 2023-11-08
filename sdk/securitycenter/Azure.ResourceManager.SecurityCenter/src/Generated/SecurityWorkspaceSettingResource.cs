@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityWorkspaceSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityWorkspaceSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="workspaceSettingName"> The workspaceSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string workspaceSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}";

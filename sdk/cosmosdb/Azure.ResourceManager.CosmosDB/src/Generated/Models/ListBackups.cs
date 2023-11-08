@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -17,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ListBackups. </summary>
         internal ListBackups()
         {
-            Value = new ChangeTrackingList<CassandraClusterBackupResourceData>();
+            Value = new ChangeTrackingList<CassandraClusterBackupResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of ListBackups. </summary>
         /// <param name="value"> Container for array of backups. </param>
-        internal ListBackups(IReadOnlyList<CassandraClusterBackupResourceData> value)
+        internal ListBackups(IReadOnlyList<CassandraClusterBackupResourceInfo> value)
         {
             Value = value;
         }
 
         /// <summary> Container for array of backups. </summary>
-        public IReadOnlyList<CassandraClusterBackupResourceData> Value { get; }
+        public IReadOnlyList<CassandraClusterBackupResourceInfo> Value { get; }
     }
 }

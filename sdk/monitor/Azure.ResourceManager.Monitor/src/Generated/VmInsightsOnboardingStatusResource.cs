@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Monitor
     public partial class VmInsightsOnboardingStatusResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VmInsightsOnboardingStatusResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Insights/vmInsightsOnboardingStatuses/default";

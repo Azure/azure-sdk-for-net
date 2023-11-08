@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeOrderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeOrderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/orders/default";
