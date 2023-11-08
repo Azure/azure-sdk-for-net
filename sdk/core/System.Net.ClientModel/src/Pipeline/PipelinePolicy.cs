@@ -7,7 +7,7 @@ namespace System.Net.ClientModel.Core;
 
 public abstract class PipelinePolicy
 {
-    public abstract void Process(ClientMessage message, PipelineProcessor pipeline);
+    public abstract void Process(PipelineMessage message, PipelineProcessor pipeline);
 
-    public abstract ValueTask ProcessAsync(ClientMessage message, PipelineProcessor pipeline);
+    public abstract ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline);
 }

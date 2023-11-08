@@ -76,7 +76,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        public override void Apply(ClientMessage message)
+        public override void Apply(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
             {

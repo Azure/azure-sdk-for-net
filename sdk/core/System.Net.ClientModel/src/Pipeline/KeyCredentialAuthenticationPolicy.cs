@@ -31,7 +31,7 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         _keyPrefix = keyPrefix;
     }
 
-    public override void Process(ClientMessage message, PipelineProcessor pipeline)
+    public override void Process(PipelineMessage message, PipelineProcessor pipeline)
     {
         string key = _credential.Key;
 
@@ -40,7 +40,7 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         pipeline.ProcessNext();
     }
 
-    public override async ValueTask ProcessAsync(ClientMessage message, PipelineProcessor pipeline)
+    public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
     {
         string key = _credential.Key;
 
