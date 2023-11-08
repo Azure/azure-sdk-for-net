@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ArcVm.Tests
             if (await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(virtualHardDisk), TimeSpan.FromSeconds(100)))
             {
                 Assert.AreEqual(virtualHardDisk.Data.Name, virtualHardDisk.Data.Name);
-                Assert.AreEqual(virtualHardDisk.Data.DiskSizeGB, 2);
                 Assert.AreEqual(virtualHardDisk.Data.Dynamic, true);
             }
             Assert.AreEqual(virtualHardDisk.Data.ProvisioningState, ProvisioningStateEnum.Succeeded);

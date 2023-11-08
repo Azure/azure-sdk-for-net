@@ -4,8 +4,6 @@
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ArcVm.Models;
-using Azure.ResourceManager.HybridCompute;
-using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
