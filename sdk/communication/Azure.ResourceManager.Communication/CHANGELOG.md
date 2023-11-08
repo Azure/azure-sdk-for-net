@@ -1,16 +1,10 @@
 # Release History
 
-## 1.2.0-beta.4 (2023-11-08)
+## 1.2.0-beta.3 (2023-11-08)
 
 ### Features Added
 
 - Added support for Email Suppression List and Address resources.
-
-## 1.2.0-beta.3 (2023-10-12)
-
-### Other Changes
-
-- This version is not released.
 
 ## 1.2.0-beta.2 (2023-09-12)
 
