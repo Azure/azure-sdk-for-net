@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,19 +17,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ApplicationDeltaHealthPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationDeltaHealthPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationDeltaHealthPolicy"/>. </summary>
         public ApplicationDeltaHealthPolicy()
         {
             ServiceTypeDeltaHealthPolicies = new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationDeltaHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationDeltaHealthPolicy"/>. </summary>
         /// <param name="defaultServiceTypeDeltaHealthPolicy"> The delta health policy used by default to evaluate the health of a service type when upgrading the cluster. </param>
         /// <param name="serviceTypeDeltaHealthPolicies"> The map with service type delta health policy per service type name. The map is empty by default. </param>
-        internal ApplicationDeltaHealthPolicy(ServiceTypeDeltaHealthPolicy defaultServiceTypeDeltaHealthPolicy, IDictionary<string, ServiceTypeDeltaHealthPolicy> serviceTypeDeltaHealthPolicies)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationDeltaHealthPolicy(ServiceTypeDeltaHealthPolicy defaultServiceTypeDeltaHealthPolicy, IDictionary<string, ServiceTypeDeltaHealthPolicy> serviceTypeDeltaHealthPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultServiceTypeDeltaHealthPolicy = defaultServiceTypeDeltaHealthPolicy;
             ServiceTypeDeltaHealthPolicies = serviceTypeDeltaHealthPolicies;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The delta health policy used by default to evaluate the health of a service type when upgrading the cluster. </summary>

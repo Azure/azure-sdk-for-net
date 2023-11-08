@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Guest disk signature based disk exclusion option when doing enable protection of virtual machine in InMage provider. </summary>
     public partial class InMageVolumeExclusionOptions
     {
-        /// <summary> Initializes a new instance of InMageVolumeExclusionOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageVolumeExclusionOptions"/>. </summary>
         public InMageVolumeExclusionOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageVolumeExclusionOptions"/>. </summary>
+        /// <param name="volumeLabel"> The volume label. The disk having any volume with this label will be excluded from replication. </param>
+        /// <param name="onlyExcludeIfSingleVolume"> The value indicating whether to exclude multi volume disk or not. If a disk has multiple volumes and one of the volume has label matching with VolumeLabel this disk will be excluded from replication if OnlyExcludeIfSingleVolume is false. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageVolumeExclusionOptions(string volumeLabel, string onlyExcludeIfSingleVolume, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VolumeLabel = volumeLabel;
+            OnlyExcludeIfSingleVolume = onlyExcludeIfSingleVolume;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The volume label. The disk having any volume with this label will be excluded from replication. </summary>

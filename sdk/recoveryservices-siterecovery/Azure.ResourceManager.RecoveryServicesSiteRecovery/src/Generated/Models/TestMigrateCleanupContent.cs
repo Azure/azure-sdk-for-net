@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input for test migrate cleanup. </summary>
     public partial class TestMigrateCleanupContent
     {
-        /// <summary> Initializes a new instance of TestMigrateCleanupContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateCleanupContent"/>. </summary>
         /// <param name="properties"> Test migrate cleanup input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TestMigrateCleanupContent(TestMigrateCleanupProperties properties)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateCleanupContent"/>. </summary>
+        /// <param name="properties"> Test migrate cleanup input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TestMigrateCleanupContent(TestMigrateCleanupProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateCleanupContent"/> for deserialization. </summary>
+        internal TestMigrateCleanupContent()
+        {
         }
 
         /// <summary> Test migrate cleanup input properties. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> A status describing the success/failure of the extension's enablement/disablement operation. </summary>
     public partial class ExtensionOperationStatus
     {
-        /// <summary> Initializes a new instance of ExtensionOperationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionOperationStatus"/>. </summary>
         internal ExtensionOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtensionOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionOperationStatus"/>. </summary>
         /// <param name="code"> The operation status code. </param>
         /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
-        internal ExtensionOperationStatus(ExtensionOperationStatusCode? code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensionOperationStatus(ExtensionOperationStatusCode? code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation status code. </summary>

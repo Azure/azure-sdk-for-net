@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Replication usages for vault. </summary>
     internal partial class ReplicationUsageListResult
     {
-        /// <summary> Initializes a new instance of ReplicationUsageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
         internal ReplicationUsageListResult()
         {
             Value = new ChangeTrackingList<ReplicationUsage>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
         /// <param name="value"> The list of replication usages for the given vault. </param>
-        internal ReplicationUsageListResult(IReadOnlyList<ReplicationUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationUsageListResult(IReadOnlyList<ReplicationUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of replication usages for the given vault. </summary>

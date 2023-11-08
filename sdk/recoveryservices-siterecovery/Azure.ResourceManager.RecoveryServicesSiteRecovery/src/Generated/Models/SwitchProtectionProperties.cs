@@ -5,14 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Switch protection input properties. </summary>
     public partial class SwitchProtectionProperties
     {
-        /// <summary> Initializes a new instance of SwitchProtectionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwitchProtectionProperties"/>. </summary>
         public SwitchProtectionProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SwitchProtectionProperties"/>. </summary>
+        /// <param name="replicationProtectedItemName"> The unique replication protected item name. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific switch protection input.
+        /// Please note <see cref="SwitchProtectionProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2ASwitchProtectionContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwitchProtectionProperties(string replicationProtectedItemName, SwitchProtectionProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ReplicationProtectedItemName = replicationProtectedItemName;
+            ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique replication protected item name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Redis;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> The response of list Redis operation. </summary>
     internal partial class RedisListResult
     {
-        /// <summary> Initializes a new instance of RedisListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisListResult"/>. </summary>
         internal RedisListResult()
         {
             Value = new ChangeTrackingList<RedisData>();
         }
 
-        /// <summary> Initializes a new instance of RedisListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisListResult"/>. </summary>
         /// <param name="value"> List of Redis cache instances. </param>
         /// <param name="nextLink"> Link for next page of results. </param>
-        internal RedisListResult(IReadOnlyList<RedisData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisListResult(IReadOnlyList<RedisData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Redis cache instances. </summary>

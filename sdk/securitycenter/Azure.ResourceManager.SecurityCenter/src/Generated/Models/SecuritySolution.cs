@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecuritySolution. </summary>
     public partial class SecuritySolution : ResourceData
     {
-        /// <summary> Initializes a new instance of SecuritySolution. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySolution"/>. </summary>
         public SecuritySolution()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,13 +33,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="template"> The security solutions' template. </param>
         /// <param name="protectionStatus"> The security solutions' status. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal SecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SecurityFamily = securityFamily;
             ProvisioningState = provisioningState;
             Template = template;
             ProtectionStatus = protectionStatus;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The security family of the security solution. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific Health Details. </summary>
     public partial class MabContainerHealthDetails
     {
-        /// <summary> Initializes a new instance of MabContainerHealthDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MabContainerHealthDetails"/>. </summary>
         public MabContainerHealthDetails()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MabContainerHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainerHealthDetails"/>. </summary>
         /// <param name="code"> Health Code. </param>
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>
         /// <param name="recommendations"> Health Recommended Actions. </param>
-        internal MabContainerHealthDetails(int? code, string title, string message, IList<string> recommendations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MabContainerHealthDetails(int? code, string title, string message, IList<string> recommendations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Title = title;
             Message = message;
             Recommendations = recommendations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Health Code. </summary>

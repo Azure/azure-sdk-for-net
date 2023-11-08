@@ -5,19 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReplicationProviderSpecificContainerCreationContent : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownReplicationProviderSpecificContainerCreationContent))]
+    public partial class ReplicationProviderSpecificContainerCreationContent : IUtf8JsonSerializable, IJsonModel<ReplicationProviderSpecificContainerCreationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProviderSpecificContainerCreationContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ReplicationProviderSpecificContainerCreationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ReplicationProviderSpecificContainerCreationContent IJsonModel<ReplicationProviderSpecificContainerCreationContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationProviderSpecificContainerCreationContent(document.RootElement, options);
+        }
+
+        internal static ReplicationProviderSpecificContainerCreationContent DeserializeReplicationProviderSpecificContainerCreationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "A2A": return A2AContainerCreationContent.DeserializeA2AContainerCreationContent(element);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationContainerCreationContent.DeserializeA2ACrossClusterMigrationContainerCreationContent(element);
+                    case "VMwareCbt": return VMwareCbtContainerCreationContent.DeserializeVMwareCbtContainerCreationContent(element);
+                }
+            }
+            return UnknownReplicationProviderSpecificContainerCreationContent.DeserializeUnknownReplicationProviderSpecificContainerCreationContent(element);
+        }
+
+        BinaryData IModel<ReplicationProviderSpecificContainerCreationContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReplicationProviderSpecificContainerCreationContent IModel<ReplicationProviderSpecificContainerCreationContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReplicationProviderSpecificContainerCreationContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ReplicationProviderSpecificContainerCreationContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

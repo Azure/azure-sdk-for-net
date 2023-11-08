@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Request to configure alerts for the system. </summary>
     public partial class SiteRecoveryAlertCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAlertCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryAlertCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> The properties of a configure alert request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryAlertCreateOrUpdateContent(SiteRecoveryConfigureAlertProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties of a configure alert request. </summary>

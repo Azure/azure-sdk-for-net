@@ -5,16 +5,103 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VmmVmDetails
+    public partial class VmmVmDetails : IUtf8JsonSerializable, IJsonModel<VmmVmDetails>
     {
-        internal static VmmVmDetails DeserializeVmmVmDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmmVmDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VmmVmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SourceItemId))
+            {
+                writer.WritePropertyName("sourceItemId"u8);
+                writer.WriteStringValue(SourceItemId);
+            }
+            if (Optional.IsDefined(Generation))
+            {
+                writer.WritePropertyName("generation"u8);
+                writer.WriteStringValue(Generation);
+            }
+            if (Optional.IsDefined(OSDetails))
+            {
+                writer.WritePropertyName("osDetails"u8);
+                writer.WriteObjectValue(OSDetails);
+            }
+            if (Optional.IsCollectionDefined(DiskDetails))
+            {
+                writer.WritePropertyName("diskDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in DiskDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HasPhysicalDisk))
+            {
+                writer.WritePropertyName("hasPhysicalDisk"u8);
+                writer.WriteStringValue(HasPhysicalDisk.Value.ToString());
+            }
+            if (Optional.IsDefined(HasFibreChannelAdapter))
+            {
+                writer.WritePropertyName("hasFibreChannelAdapter"u8);
+                writer.WriteStringValue(HasFibreChannelAdapter.Value.ToString());
+            }
+            if (Optional.IsDefined(HasSharedVhd))
+            {
+                writer.WritePropertyName("hasSharedVhd"u8);
+                writer.WriteStringValue(HasSharedVhd.Value.ToString());
+            }
+            if (Optional.IsDefined(HyperVHostId))
+            {
+                writer.WritePropertyName("hyperVHostId"u8);
+                writer.WriteStringValue(HyperVHostId);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VmmVmDetails IJsonModel<VmmVmDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmmVmDetails(document.RootElement, options);
+        }
+
+        internal static VmmVmDetails DeserializeVmmVmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +115,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
             Optional<string> hyperVHostId = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceItemId"u8))
@@ -100,8 +189,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmmVmDetails(instanceType, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmmVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
         }
+
+        BinaryData IModel<VmmVmDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VmmVmDetails IModel<VmmVmDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVmmVmDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VmmVmDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

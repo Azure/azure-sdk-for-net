@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,24 +16,134 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class RegulatoryComplianceAssessmentData : IUtf8JsonSerializable
+    public partial class RegulatoryComplianceAssessmentData : IUtf8JsonSerializable, IJsonModel<RegulatoryComplianceAssessmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegulatoryComplianceAssessmentData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RegulatoryComplianceAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AssessmentType))
+                {
+                    writer.WritePropertyName("assessmentType"u8);
+                    writer.WriteStringValue(AssessmentType);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AssessmentDetailsLink))
+                {
+                    writer.WritePropertyName("assessmentDetailsLink"u8);
+                    writer.WriteStringValue(AssessmentDetailsLink);
+                }
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PassedResources))
+                {
+                    writer.WritePropertyName("passedResources"u8);
+                    writer.WriteNumberValue(PassedResources.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FailedResources))
+                {
+                    writer.WritePropertyName("failedResources"u8);
+                    writer.WriteNumberValue(FailedResources.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SkippedResources))
+                {
+                    writer.WritePropertyName("skippedResources"u8);
+                    writer.WriteNumberValue(SkippedResources.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UnsupportedResources))
+                {
+                    writer.WritePropertyName("unsupportedResources"u8);
+                    writer.WriteNumberValue(UnsupportedResources.Value);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegulatoryComplianceAssessmentData DeserializeRegulatoryComplianceAssessmentData(JsonElement element)
+        RegulatoryComplianceAssessmentData IJsonModel<RegulatoryComplianceAssessmentData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegulatoryComplianceAssessmentData(document.RootElement, options);
+        }
+
+        internal static RegulatoryComplianceAssessmentData DeserializeRegulatoryComplianceAssessmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +160,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<int> failedResources = default;
             Optional<int> skippedResources = default;
             Optional<int> unsupportedResources = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,8 +260,38 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegulatoryComplianceAssessmentData(id, name, type, systemData.Value, description.Value, assessmentType.Value, assessmentDetailsLink.Value, Optional.ToNullable(state), Optional.ToNullable(passedResources), Optional.ToNullable(failedResources), Optional.ToNullable(skippedResources), Optional.ToNullable(unsupportedResources));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RegulatoryComplianceAssessmentData(id, name, type, systemData.Value, description.Value, assessmentType.Value, assessmentDetailsLink.Value, Optional.ToNullable(state), Optional.ToNullable(passedResources), Optional.ToNullable(failedResources), Optional.ToNullable(skippedResources), Optional.ToNullable(unsupportedResources), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RegulatoryComplianceAssessmentData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RegulatoryComplianceAssessmentData IModel<RegulatoryComplianceAssessmentData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRegulatoryComplianceAssessmentData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RegulatoryComplianceAssessmentData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

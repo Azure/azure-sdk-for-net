@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -16,18 +18,19 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlFirewallRuleData : ProxyResourceWithWritableName
     {
-        /// <summary> Initializes a new instance of SqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlFirewallRuleData"/>. </summary>
         public SqlFirewallRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlFirewallRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
         /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
-        internal SqlFirewallRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, string startIPAddress, string endIPAddress) : base(id, name, resourceType)
+        internal SqlFirewallRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string startIPAddress, string endIPAddress) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;

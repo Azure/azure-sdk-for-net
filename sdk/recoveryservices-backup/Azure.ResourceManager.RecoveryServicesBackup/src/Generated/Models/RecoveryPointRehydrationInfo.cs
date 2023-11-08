@@ -6,27 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> RP Rehydration Info. </summary>
     public partial class RecoveryPointRehydrationInfo
     {
-        /// <summary> Initializes a new instance of RecoveryPointRehydrationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointRehydrationInfo"/>. </summary>
         public RecoveryPointRehydrationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointRehydrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointRehydrationInfo"/>. </summary>
         /// <param name="rehydrationRetentionDuration">
         /// How long the rehydrated RP should be kept
         /// Should be ISO8601 Duration format e.g. "P7D"
         /// </param>
         /// <param name="rehydrationPriority"> Rehydration Priority. </param>
-        internal RecoveryPointRehydrationInfo(TimeSpan? rehydrationRetentionDuration, RehydrationPriority? rehydrationPriority)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointRehydrationInfo(TimeSpan? rehydrationRetentionDuration, RehydrationPriority? rehydrationPriority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RehydrationRetentionDuration = rehydrationRetentionDuration;
             RehydrationPriority = rehydrationPriority;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

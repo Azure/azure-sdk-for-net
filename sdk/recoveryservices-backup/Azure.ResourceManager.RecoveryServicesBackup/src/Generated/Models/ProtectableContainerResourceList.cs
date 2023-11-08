@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of ProtectableContainer resources. </summary>
     internal partial class ProtectableContainerResourceList
     {
-        /// <summary> Initializes a new instance of ProtectableContainerResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainerResourceList"/>. </summary>
         internal ProtectableContainerResourceList()
         {
             Value = new ChangeTrackingList<ProtectableContainerResource>();
         }
 
-        /// <summary> Initializes a new instance of ProtectableContainerResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainerResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
-        internal ProtectableContainerResourceList(IReadOnlyList<ProtectableContainerResource> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectableContainerResourceList(IReadOnlyList<ProtectableContainerResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of resources. </summary>

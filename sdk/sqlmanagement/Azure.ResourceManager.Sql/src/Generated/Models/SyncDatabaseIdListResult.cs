@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of sync database ID properties. </summary>
     internal partial class SyncDatabaseIdListResult
     {
-        /// <summary> Initializes a new instance of SyncDatabaseIdListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncDatabaseIdListResult"/>. </summary>
         internal SyncDatabaseIdListResult()
         {
             Value = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of SyncDatabaseIdListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncDatabaseIdListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SyncDatabaseIdListResult(IReadOnlyList<SubResource> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncDatabaseIdListResult(IReadOnlyList<SubResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of results. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Key value tuple. </summary>
     public partial class ResourceHealthKeyValueItem
     {
-        /// <summary> Initializes a new instance of ResourceHealthKeyValueItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthKeyValueItem"/>. </summary>
         internal ResourceHealthKeyValueItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthKeyValueItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthKeyValueItem"/>. </summary>
         /// <param name="key"> Key of tuple. </param>
         /// <param name="value"> Value of tuple. </param>
-        internal ResourceHealthKeyValueItem(string key, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthKeyValueItem(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key of tuple. </summary>

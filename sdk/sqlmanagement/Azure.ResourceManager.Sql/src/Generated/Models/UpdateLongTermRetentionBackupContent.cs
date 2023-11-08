@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform long term retention backup update operation. </summary>
     public partial class UpdateLongTermRetentionBackupContent
     {
-        /// <summary> Initializes a new instance of UpdateLongTermRetentionBackupContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateLongTermRetentionBackupContent"/>. </summary>
         public UpdateLongTermRetentionBackupContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateLongTermRetentionBackupContent"/>. </summary>
+        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateLongTermRetentionBackupContent(SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage redundancy type of the copied backup. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceLinker;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The list of Linker. </summary>
     internal partial class LinkerList
     {
-        /// <summary> Initializes a new instance of LinkerList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkerList"/>. </summary>
         internal LinkerList()
         {
             Value = new ChangeTrackingList<LinkerResourceData>();
         }
 
-        /// <summary> Initializes a new instance of LinkerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Linker list. </param>
         /// <param name="value"> The list of Linkers. </param>
-        internal LinkerList(string nextLink, IReadOnlyList<LinkerResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkerList(string nextLink, IReadOnlyList<LinkerResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of Linker list. </summary>

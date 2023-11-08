@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataData"/>. </summary>
         public SecurityAssessmentMetadataData()
         {
             Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Techniques = new ChangeTrackingList<SecurityAssessmentTechnique>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="plannedDeprecationDate"></param>
         /// <param name="tactics"></param>
         /// <param name="techniques"></param>
-        internal SecurityAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity? severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType? assessmentType, SecurityAssessmentMetadataPartner partnerData, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity? severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType? assessmentType, SecurityAssessmentMetadataPartner partnerData, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
             PlannedDeprecationDate = plannedDeprecationDate;
             Tactics = tactics;
             Techniques = techniques;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User friendly display name of the assessment. </summary>

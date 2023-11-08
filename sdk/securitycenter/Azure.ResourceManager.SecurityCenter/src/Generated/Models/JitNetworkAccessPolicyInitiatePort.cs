@@ -6,19 +6,41 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The JitNetworkAccessPolicyInitiatePort. </summary>
     public partial class JitNetworkAccessPolicyInitiatePort
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyInitiatePort. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="endOn"> The time to close the request in UTC. </param>
         public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endOn)
         {
             Number = number;
             EndOn = endOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
+        /// <param name="number"></param>
+        /// <param name="allowedSourceAddressPrefix"> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPolicyInitiatePort(int number, string allowedSourceAddressPrefix, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Number = number;
+            AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
+            EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/> for deserialization. </summary>
+        internal JitNetworkAccessPolicyInitiatePort()
+        {
         }
 
         /// <summary> Gets the number. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Provider specific input for unpairing operations. </summary>
     internal partial class ReplicationProviderContainerUnmappingContent
     {
-        /// <summary> Initializes a new instance of ReplicationProviderContainerUnmappingContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderContainerUnmappingContent"/>. </summary>
         public ReplicationProviderContainerUnmappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderContainerUnmappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProviderContainerUnmappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The class type. </summary>

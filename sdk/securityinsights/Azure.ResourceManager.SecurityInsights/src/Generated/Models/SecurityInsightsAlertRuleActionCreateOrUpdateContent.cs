@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Action for alert rule. </summary>
     public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
         public SecurityInsightsAlertRuleActionCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,11 +32,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
         /// <param name="triggerUri"> Logic App Callback URL for this specific workflow. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsAlertRuleActionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier logicAppResourceId, Uri triggerUri, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertRuleActionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier logicAppResourceId, Uri triggerUri, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LogicAppResourceId = logicAppResourceId;
             TriggerUri = triggerUri;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </summary>

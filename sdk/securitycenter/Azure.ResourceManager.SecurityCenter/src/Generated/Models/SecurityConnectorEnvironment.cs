@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of SecurityConnectorEnvironment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         protected SecurityConnectorEnvironment()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityConnectorEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
-        internal SecurityConnectorEnvironment(EnvironmentType environmentType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityConnectorEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnvironmentType = environmentType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the environment data. </summary>

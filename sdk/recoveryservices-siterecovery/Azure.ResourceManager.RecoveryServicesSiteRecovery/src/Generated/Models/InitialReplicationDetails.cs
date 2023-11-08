@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Initial replication details. </summary>
     public partial class InitialReplicationDetails
     {
-        /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InitialReplicationDetails"/>. </summary>
         internal InitialReplicationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitialReplicationDetails"/>. </summary>
         /// <param name="initialReplicationType"> Initial replication type. </param>
         /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
-        internal InitialReplicationDetails(string initialReplicationType, string initialReplicationProgressPercentage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InitialReplicationDetails(string initialReplicationType, string initialReplicationProgressPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InitialReplicationType = initialReplicationType;
             InitialReplicationProgressPercentage = initialReplicationProgressPercentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initial replication type. </summary>

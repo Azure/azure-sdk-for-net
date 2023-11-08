@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update migration item input properties. </summary>
     internal partial class UpdateMigrationItemProperties
     {
-        /// <summary> Initializes a new instance of UpdateMigrationItemProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMigrationItemProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific input to update migration item.
         /// Please note <see cref="UpdateMigrationItemProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -25,6 +29,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
 
             ProviderSpecificDetails = providerSpecificDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMigrationItemProperties"/>. </summary>
+        /// <param name="providerSpecificDetails">
+        /// The provider specific input to update migration item.
+        /// Please note <see cref="UpdateMigrationItemProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtUpdateMigrationItemContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateMigrationItemProperties(UpdateMigrationItemProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMigrationItemProperties"/> for deserialization. </summary>
+        internal UpdateMigrationItemProperties()
+        {
         }
 
         /// <summary>

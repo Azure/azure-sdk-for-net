@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Planned failover model. </summary>
     public partial class PlannedFailoverModel
     {
-        /// <summary> Initializes a new instance of PlannedFailoverModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverModel"/>. </summary>
         /// <param name="properties"> Planned failover model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public PlannedFailoverModel(PlannedFailoverModelProperties properties)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverModel"/>. </summary>
+        /// <param name="properties"> Planned failover model properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlannedFailoverModel(PlannedFailoverModelProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverModel"/> for deserialization. </summary>
+        internal PlannedFailoverModel()
+        {
         }
 
         /// <summary> Planned failover model properties. </summary>

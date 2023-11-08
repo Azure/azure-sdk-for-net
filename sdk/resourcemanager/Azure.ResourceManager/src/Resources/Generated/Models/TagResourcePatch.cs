@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -12,9 +13,23 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Wrapper resource for tags patch API request only. </summary>
     public partial class TagResourcePatch
     {
-        /// <summary> Initializes a new instance of TagResourcePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
         public TagResourcePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
+        /// <param name="patchMode"> The operation type for the patch API. </param>
+        /// <param name="properties"> The set of tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagResourcePatch(TagPatchMode? patchMode, Tag properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PatchMode = patchMode;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation type for the patch API. </summary>

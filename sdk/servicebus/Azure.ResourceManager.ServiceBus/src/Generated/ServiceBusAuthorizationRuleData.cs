@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,23 +19,28 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusAuthorizationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAuthorizationRuleData"/>. </summary>
         public ServiceBusAuthorizationRuleData()
         {
             Rights = new ChangeTrackingList<ServiceBusAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServiceBusAccessRight> rights, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServiceBusAccessRight> rights, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Rights = rights;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The rights associated with the rule. </summary>

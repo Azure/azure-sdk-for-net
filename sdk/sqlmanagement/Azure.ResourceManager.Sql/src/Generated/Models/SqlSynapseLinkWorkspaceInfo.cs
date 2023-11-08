@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a Synapse link workspaces. </summary>
     public partial class SqlSynapseLinkWorkspaceInfo
     {
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspaceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlSynapseLinkWorkspaceInfo"/>. </summary>
         public SqlSynapseLinkWorkspaceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspaceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSynapseLinkWorkspaceInfo"/>. </summary>
         /// <param name="workspaceId"> Synapse link workspace id. </param>
         /// <param name="linkConnectionName"> Link connection name. </param>
-        internal SqlSynapseLinkWorkspaceInfo(ResourceIdentifier workspaceId, string linkConnectionName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlSynapseLinkWorkspaceInfo(ResourceIdentifier workspaceId, string linkConnectionName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkspaceId = workspaceId;
             LinkConnectionName = linkConnectionName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Synapse link workspace id. </summary>

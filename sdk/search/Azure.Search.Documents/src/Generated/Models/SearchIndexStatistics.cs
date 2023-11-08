@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Statistics for a given index. Statistics are collected periodically and are not guaranteed to always be up-to-date. </summary>
     public partial class SearchIndexStatistics
     {
-        /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexStatistics"/>. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
@@ -19,6 +25,24 @@ namespace Azure.Search.Documents.Indexes.Models
             DocumentCount = documentCount;
             StorageSize = storageSize;
             VectorIndexSize = vectorIndexSize;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexStatistics"/>. </summary>
+        /// <param name="documentCount"> The number of documents in the index. </param>
+        /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
+        /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexStatistics(long documentCount, long storageSize, long vectorIndexSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DocumentCount = documentCount;
+            StorageSize = storageSize;
+            VectorIndexSize = vectorIndexSize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexStatistics"/> for deserialization. </summary>
+        internal SearchIndexStatistics()
+        {
         }
 
         /// <summary> The number of documents in the index. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -13,12 +16,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class BackupTieringPolicy
     {
-        /// <summary> Initializes a new instance of BackupTieringPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupTieringPolicy"/>. </summary>
         public BackupTieringPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupTieringPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupTieringPolicy"/>. </summary>
         /// <param name="tieringMode">
         /// Tiering Mode to control automatic tiering of recovery points. Supported values are:
         /// 1. TierRecommended: Tier all recovery points recommended to be tiered
@@ -33,11 +39,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Retention duration type: days/weeks/months/years
         /// Used only if TieringMode is set to TierAfter
         /// </param>
-        internal BackupTieringPolicy(TieringMode? tieringMode, int? durationValue, RetentionDurationType? durationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupTieringPolicy(TieringMode? tieringMode, int? durationValue, RetentionDurationType? durationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TieringMode = tieringMode;
             DurationValue = durationValue;
             DurationType = durationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

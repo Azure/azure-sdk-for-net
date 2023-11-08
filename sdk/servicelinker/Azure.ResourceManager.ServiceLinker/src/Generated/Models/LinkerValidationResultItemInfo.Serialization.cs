@@ -5,15 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class LinkerValidationResultItemInfo
+    public partial class LinkerValidationResultItemInfo : IUtf8JsonSerializable, IJsonModel<LinkerValidationResultItemInfo>
     {
-        internal static LinkerValidationResultItemInfo DeserializeLinkerValidationResultItemInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerValidationResultItemInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LinkerValidationResultItemInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(Result))
+            {
+                if (Result != null)
+                {
+                    writer.WritePropertyName("result"u8);
+                    writer.WriteStringValue(Result.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("result");
+                }
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage");
+                }
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                if (ErrorCode != null)
+                {
+                    writer.WritePropertyName("errorCode"u8);
+                    writer.WriteStringValue(ErrorCode);
+                }
+                else
+                {
+                    writer.WriteNull("errorCode");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkerValidationResultItemInfo IJsonModel<LinkerValidationResultItemInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkerValidationResultItemInfo(document.RootElement, options);
+        }
+
+        internal static LinkerValidationResultItemInfo DeserializeLinkerValidationResultItemInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +117,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<LinkerValidationResultStatus?> result = default;
             Optional<string> errorMessage = default;
             Optional<string> errorCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,8 +166,38 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     errorCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkerValidationResultItemInfo(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkerValidationResultItemInfo(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LinkerValidationResultItemInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkerValidationResultItemInfo IModel<LinkerValidationResultItemInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkerValidationResultItemInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LinkerValidationResultItemInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

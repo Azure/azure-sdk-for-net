@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Usage event details. </summary>
     public partial class UsageEvent
     {
-        /// <summary> Initializes a new instance of UsageEvent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UsageEvent"/>. </summary>
         internal UsageEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of UsageEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageEvent"/>. </summary>
         /// <param name="dimensionId"> The dimension id. </param>
         /// <param name="dimensionName"> The dimension name. </param>
         /// <param name="measureUnit"> The unit of measure. </param>
         /// <param name="amountBilled"> The amount billed. </param>
         /// <param name="amountConsumed"> The amount consumed. </param>
         /// <param name="unitPrice"> The unit price. </param>
-        internal UsageEvent(string dimensionId, string dimensionName, string measureUnit, float? amountBilled, float? amountConsumed, float? unitPrice)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UsageEvent(string dimensionId, string dimensionName, string measureUnit, float? amountBilled, float? amountConsumed, float? unitPrice, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DimensionId = dimensionId;
             DimensionName = dimensionName;
@@ -30,6 +37,7 @@ namespace Azure.Quantum.Jobs.Models
             AmountBilled = amountBilled;
             AmountConsumed = amountConsumed;
             UnitPrice = unitPrice;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The dimension id. </summary>

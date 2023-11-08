@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,27 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The descendant. </summary>
     public partial class DescendantData : ResourceData
     {
-        /// <summary> Initializes a new instance of DescendantData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DescendantData"/>. </summary>
         internal DescendantData()
         {
         }
 
-        /// <summary> Initializes a new instance of DescendantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DescendantData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> The friendly name of the management group. </param>
         /// <param name="parent"> The ID of the parent management group. </param>
-        internal DescendantData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DescendantParentGroupInfo parent) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DescendantData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DescendantParentGroupInfo parent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Parent = parent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The friendly name of the management group. </summary>

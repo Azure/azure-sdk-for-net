@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The available data types for office data connector. </summary>
     public partial class SecurityInsightsOfficeDataConnectorDataTypes
     {
-        /// <summary> Initializes a new instance of SecurityInsightsOfficeDataConnectorDataTypes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
         public SecurityInsightsOfficeDataConnectorDataTypes()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsOfficeDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
         /// <param name="exchange"> Exchange data type connection. </param>
         /// <param name="sharePoint"> SharePoint data type connection. </param>
         /// <param name="teams"> Teams data type connection. </param>
-        internal SecurityInsightsOfficeDataConnectorDataTypes(OfficeDataConnectorDataTypesExchange exchange, OfficeDataConnectorDataTypesSharePoint sharePoint, OfficeDataConnectorDataTypesTeams teams)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsOfficeDataConnectorDataTypes(OfficeDataConnectorDataTypesExchange exchange, OfficeDataConnectorDataTypesSharePoint sharePoint, OfficeDataConnectorDataTypesTeams teams, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Exchange = exchange;
             SharePoint = sharePoint;
             Teams = teams;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Exchange data type connection. </summary>

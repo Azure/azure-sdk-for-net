@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Reverse replication input. </summary>
     public partial class ReverseReplicationContent
     {
-        /// <summary> Initializes a new instance of ReverseReplicationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReverseReplicationContent"/>. </summary>
         public ReverseReplicationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReverseReplicationContent"/>. </summary>
+        /// <param name="properties"> Reverse replication properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReverseReplicationContent(ReverseReplicationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Reverse replication properties. </summary>

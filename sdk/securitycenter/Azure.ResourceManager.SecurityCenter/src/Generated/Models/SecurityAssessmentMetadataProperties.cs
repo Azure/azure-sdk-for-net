@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes properties of an assessment metadata. </summary>
     public partial class SecurityAssessmentMetadataProperties
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataProperties"/>. </summary>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="severity"> The severity level of the assessment. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AssessmentType = assessmentType;
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataProperties"/>. </summary>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
         /// <param name="description"> Human readable description of the assessment. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
-        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -57,6 +61,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IsPreview = isPreview;
             AssessmentType = assessmentType;
             PartnerData = partnerData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataProperties"/> for deserialization. </summary>
+        internal SecurityAssessmentMetadataProperties()
+        {
         }
 
         /// <summary> User friendly display name of the assessment. </summary>

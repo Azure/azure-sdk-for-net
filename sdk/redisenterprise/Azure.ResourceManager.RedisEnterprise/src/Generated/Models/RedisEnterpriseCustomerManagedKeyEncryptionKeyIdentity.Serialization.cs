@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity : IUtf8JsonSerializable
+    public partial class RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentityResourceId))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("identityType"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(JsonElement element)
+        RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(document.RootElement, options);
+        }
+
+        internal static RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
             Optional<RedisEnterpriseCustomerManagedKeyIdentityType> identityType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentityResourceId"u8))
@@ -56,8 +93,38 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     identityType = new RedisEnterpriseCustomerManagedKeyIdentityType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId.Value, Optional.ToNullable(identityType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId.Value, Optional.ToNullable(identityType), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity IModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

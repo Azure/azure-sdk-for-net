@@ -7,15 +7,114 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculatePriceResultProperties
+    public partial class CalculatePriceResultProperties : IUtf8JsonSerializable, IJsonModel<CalculatePriceResultProperties>
     {
-        internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalculatePriceResultProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CalculatePriceResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue(BillingCurrencyTotal);
+            }
+            if (Optional.IsDefined(NetTotal))
+            {
+                writer.WritePropertyName("netTotal"u8);
+                writer.WriteNumberValue(NetTotal.Value);
+            }
+            if (Optional.IsDefined(TaxTotal))
+            {
+                writer.WritePropertyName("taxTotal"u8);
+                writer.WriteNumberValue(TaxTotal.Value);
+            }
+            if (Optional.IsDefined(GrandTotal))
+            {
+                writer.WritePropertyName("grandTotal"u8);
+                writer.WriteNumberValue(GrandTotal.Value);
+            }
+            if (Optional.IsDefined(IsTaxIncluded))
+            {
+                writer.WritePropertyName("isTaxIncluded"u8);
+                writer.WriteBooleanValue(IsTaxIncluded.Value);
+            }
+            if (Optional.IsDefined(IsBillingPartnerManaged))
+            {
+                writer.WritePropertyName("isBillingPartnerManaged"u8);
+                writer.WriteBooleanValue(IsBillingPartnerManaged.Value);
+            }
+            if (Optional.IsDefined(ReservationOrderId))
+            {
+                writer.WritePropertyName("reservationOrderId"u8);
+                writer.WriteStringValue(ReservationOrderId.Value);
+            }
+            if (Optional.IsDefined(SkuTitle))
+            {
+                writer.WritePropertyName("skuTitle"u8);
+                writer.WriteStringValue(SkuTitle);
+            }
+            if (Optional.IsDefined(SkuDescription))
+            {
+                writer.WritePropertyName("skuDescription"u8);
+                writer.WriteStringValue(SkuDescription);
+            }
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue(PricingCurrencyTotal);
+            }
+            if (Optional.IsCollectionDefined(PaymentSchedule))
+            {
+                writer.WritePropertyName("paymentSchedule"u8);
+                writer.WriteStartArray();
+                foreach (var item in PaymentSchedule)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CalculatePriceResultProperties IJsonModel<CalculatePriceResultProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCalculatePriceResultProperties(document.RootElement, options);
+        }
+
+        internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +130,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> skuDescription = default;
             Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
             Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -129,8 +230,38 @@ namespace Azure.ResourceManager.Reservations.Models
                     paymentSchedule = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CalculatePriceResultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CalculatePriceResultProperties IModel<CalculatePriceResultProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCalculatePriceResultProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CalculatePriceResultProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

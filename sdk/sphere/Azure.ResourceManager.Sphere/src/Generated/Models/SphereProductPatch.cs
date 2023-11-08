@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary>
@@ -13,9 +16,24 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereProductPatch
     {
-        /// <summary> Initializes a new instance of SphereProductPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereProductPatch"/>. </summary>
         public SphereProductPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereProductPatch"/>. </summary>
+        /// <param name="description">
+        /// Description of the product
+        /// Serialized Name: ProductUpdate.properties.description
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereProductPatch(string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

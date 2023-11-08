@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Statistical information about the number of alerts per alert type during last set number of days. </summary>
     public partial class IotSecurityDeviceAlert
     {
-        /// <summary> Initializes a new instance of IotSecurityDeviceAlert. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceAlert"/>. </summary>
         public IotSecurityDeviceAlert()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSecurityDeviceAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceAlert"/>. </summary>
         /// <param name="alertDisplayName"> Display name of the alert. </param>
         /// <param name="reportedSeverity"> Assessed Alert severity. </param>
         /// <param name="alertsCount"> Number of alerts raised for this alert type. </param>
-        internal IotSecurityDeviceAlert(string alertDisplayName, ReportedSeverity? reportedSeverity, long? alertsCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecurityDeviceAlert(string alertDisplayName, ReportedSeverity? reportedSeverity, long? alertsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertDisplayName = alertDisplayName;
             ReportedSeverity = reportedSeverity;
             AlertsCount = alertsCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the alert. </summary>

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityContactPropertiesAlertNotifications : IUtf8JsonSerializable
+    public partial class SecurityContactPropertiesAlertNotifications : IUtf8JsonSerializable, IJsonModel<SecurityContactPropertiesAlertNotifications>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityContactPropertiesAlertNotifications>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SecurityContactPropertiesAlertNotifications>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("minimalSeverity"u8);
                 writer.WriteStringValue(MinimalSeverity.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityContactPropertiesAlertNotifications DeserializeSecurityContactPropertiesAlertNotifications(JsonElement element)
+        SecurityContactPropertiesAlertNotifications IJsonModel<SecurityContactPropertiesAlertNotifications>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesAlertNotifications)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityContactPropertiesAlertNotifications(document.RootElement, options);
+        }
+
+        internal static SecurityContactPropertiesAlertNotifications DeserializeSecurityContactPropertiesAlertNotifications(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SecurityAlertNotificationState> state = default;
             Optional<SecurityAlertMinimalSeverity> minimalSeverity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -56,8 +93,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     minimalSeverity = new SecurityAlertMinimalSeverity(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityContactPropertiesAlertNotifications(Optional.ToNullable(state), Optional.ToNullable(minimalSeverity));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityContactPropertiesAlertNotifications(Optional.ToNullable(state), Optional.ToNullable(minimalSeverity), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SecurityContactPropertiesAlertNotifications>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesAlertNotifications)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityContactPropertiesAlertNotifications IModel<SecurityContactPropertiesAlertNotifications>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesAlertNotifications)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityContactPropertiesAlertNotifications(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SecurityContactPropertiesAlertNotifications>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

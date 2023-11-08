@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security alerts. </summary>
     internal partial class AlertList
     {
-        /// <summary> Initializes a new instance of AlertList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertList"/>. </summary>
         internal AlertList()
         {
             Value = new ChangeTrackingList<SecurityAlertData>();
         }
 
-        /// <summary> Initializes a new instance of AlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertList"/>. </summary>
         /// <param name="value"> describes security alert properties. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal AlertList(IReadOnlyList<SecurityAlertData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertList(IReadOnlyList<SecurityAlertData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> describes security alert properties. </summary>

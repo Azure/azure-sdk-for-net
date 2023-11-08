@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class DeploymentListResult
     {
-        /// <summary> Initializes a new instance of DeploymentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/>. </summary>
         /// <param name="value">
         /// The Deployment items on this page
         /// Serialized Name: DeploymentListResult.value
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DeploymentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/>. </summary>
         /// <param name="value">
         /// The Deployment items on this page
         /// Serialized Name: DeploymentListResult.value
@@ -41,10 +44,17 @@ namespace Azure.ResourceManager.Sphere.Models
         /// The link to the next page of items
         /// Serialized Name: DeploymentListResult.nextLink
         /// </param>
-        internal DeploymentListResult(IReadOnlyList<SphereDeploymentData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentListResult(IReadOnlyList<SphereDeploymentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/> for deserialization. </summary>
+        internal DeploymentListResult()
+        {
         }
 
         /// <summary>

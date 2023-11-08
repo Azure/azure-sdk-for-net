@@ -15,7 +15,10 @@ namespace Azure.Search.Documents.Models
     /// <summary> Response containing suggestion query results from an index. </summary>
     internal partial class SuggestDocumentsResult
     {
-        /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SuggestDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal SuggestDocumentsResult(IEnumerable<SuggestResult> results)
@@ -25,13 +28,20 @@ namespace Azure.Search.Documents.Models
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </param>
-        internal SuggestDocumentsResult(IReadOnlyList<SuggestResult> results, double? coverage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SuggestDocumentsResult(IReadOnlyList<SuggestResult> results, double? coverage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Results = results;
             Coverage = coverage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SuggestDocumentsResult"/> for deserialization. </summary>
+        internal SuggestDocumentsResult()
+        {
         }
 
         /// <summary> The sequence of results returned by the query. </summary>

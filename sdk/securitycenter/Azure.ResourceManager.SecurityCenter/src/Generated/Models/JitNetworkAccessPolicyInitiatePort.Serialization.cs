@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPolicyInitiatePort : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPolicyInitiatePort : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessPolicyInitiatePort>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessPolicyInitiatePort>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<JitNetworkAccessPolicyInitiatePort>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
@@ -24,7 +30,98 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("endTimeUtc"u8);
             writer.WriteStringValue(EndOn, "O");
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        JitNetworkAccessPolicyInitiatePort IJsonModel<JitNetworkAccessPolicyInitiatePort>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyInitiatePort)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessPolicyInitiatePort(document.RootElement, options);
+        }
+
+        internal static JitNetworkAccessPolicyInitiatePort DeserializeJitNetworkAccessPolicyInitiatePort(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int number = default;
+            Optional<string> allowedSourceAddressPrefix = default;
+            DateTimeOffset endTimeUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("number"u8))
+                {
+                    number = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("allowedSourceAddressPrefix"u8))
+                {
+                    allowedSourceAddressPrefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("endTimeUtc"u8))
+                {
+                    endTimeUtc = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix.Value, endTimeUtc, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<JitNetworkAccessPolicyInitiatePort>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyInitiatePort)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JitNetworkAccessPolicyInitiatePort IModel<JitNetworkAccessPolicyInitiatePort>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyInitiatePort)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJitNetworkAccessPolicyInitiatePort(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<JitNetworkAccessPolicyInitiatePort>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

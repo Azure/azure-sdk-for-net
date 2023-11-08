@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The SqlServerJobAgentResourceGetJobExecutionsByAgentOptions. </summary>
     public partial class SqlServerJobAgentResourceGetJobExecutionsByAgentOptions
     {
-        /// <summary> Initializes a new instance of SqlServerJobAgentResourceGetJobExecutionsByAgentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobAgentResourceGetJobExecutionsByAgentOptions"/>. </summary>
         public SqlServerJobAgentResourceGetJobExecutionsByAgentOptions()
         {
         }

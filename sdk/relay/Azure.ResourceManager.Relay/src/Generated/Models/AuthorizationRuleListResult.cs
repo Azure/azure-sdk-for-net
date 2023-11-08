@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Relay;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> The response from the list namespace operation. </summary>
     internal partial class AuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleListResult"/>. </summary>
         internal AuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<RelayAuthorizationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleListResult"/>. </summary>
         /// <param name="value"> Result of the list authorization rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list of authorization rules. </param>
-        internal AuthorizationRuleListResult(IReadOnlyList<RelayAuthorizationRuleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationRuleListResult(IReadOnlyList<RelayAuthorizationRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the list authorization rules operation. </summary>

@@ -13,19 +13,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solutions metrics based chart. </summary>
     public partial class MetricsBasedChart
     {
-        /// <summary> Initializes a new instance of MetricsBasedChart. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricsBasedChart"/>. </summary>
         public MetricsBasedChart()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricsBasedChart. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsBasedChart"/>. </summary>
         /// <param name="name"> Chart name. </param>
         /// <param name="aggregationType"> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </param>
         /// <param name="timeSpanDuration"> Time span duration. </param>
         /// <param name="title"> Chart title. </param>
         /// <param name="filterGroup"> Filter group. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
-        internal MetricsBasedChart(string name, AggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, FilterGroup filterGroup, string replacementKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricsBasedChart(string name, AggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, FilterGroup filterGroup, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AggregationType = aggregationType;
@@ -33,6 +37,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Title = title;
             FilterGroup = filterGroup;
             ReplacementKey = replacementKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Chart name. </summary>

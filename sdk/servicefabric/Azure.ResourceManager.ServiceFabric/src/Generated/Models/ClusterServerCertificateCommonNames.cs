@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes a list of server certificates referenced by common name that are used to secure the cluster. </summary>
     public partial class ClusterServerCertificateCommonNames
     {
-        /// <summary> Initializes a new instance of ClusterServerCertificateCommonNames. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonNames"/>. </summary>
         public ClusterServerCertificateCommonNames()
         {
             CommonNames = new ChangeTrackingList<ClusterServerCertificateCommonName>();
         }
 
-        /// <summary> Initializes a new instance of ClusterServerCertificateCommonNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonNames"/>. </summary>
         /// <param name="commonNames"> The list of server certificates referenced by common name that are used to secure the cluster. </param>
         /// <param name="x509StoreName"> The local certificate store location. </param>
-        internal ClusterServerCertificateCommonNames(IList<ClusterServerCertificateCommonName> commonNames, ClusterCertificateStoreName? x509StoreName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterServerCertificateCommonNames(IList<ClusterServerCertificateCommonName> commonNames, ClusterCertificateStoreName? x509StoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommonNames = commonNames;
             X509StoreName = x509StoreName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of server certificates referenced by common name that are used to secure the cluster. </summary>

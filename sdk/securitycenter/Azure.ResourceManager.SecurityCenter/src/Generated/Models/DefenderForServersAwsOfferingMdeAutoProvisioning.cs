@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
     public partial class DefenderForServersAwsOfferingMdeAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingMdeAutoProvisioning. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingMdeAutoProvisioning"/>. </summary>
         public DefenderForServersAwsOfferingMdeAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingMdeAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingMdeAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is Microsoft Defender for Endpoint auto provisioning enabled. </param>
         /// <param name="configuration"> configuration for Microsoft Defender for Endpoint autoprovisioning. </param>
-        internal DefenderForServersAwsOfferingMdeAutoProvisioning(bool? isEnabled, BinaryData configuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForServersAwsOfferingMdeAutoProvisioning(bool? isEnabled, BinaryData configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Configuration = configuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Is Microsoft Defender for Endpoint auto provisioning enabled. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,13 +17,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ArmApplicationHealthPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationHealthPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationHealthPolicy"/>. </summary>
         public ArmApplicationHealthPolicy()
         {
             ServiceTypeHealthPolicyMap = new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationHealthPolicy"/>. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
@@ -33,12 +37,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// </param>
         /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
         /// <param name="serviceTypeHealthPolicyMap"> The map with service type health policy per service type name. The map is empty by default. </param>
-        internal ArmApplicationHealthPolicy(bool? considerWarningAsError, int? maxPercentUnhealthyDeployedApplications, ArmServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationHealthPolicy(bool? considerWarningAsError, int? maxPercentUnhealthyDeployedApplications, ArmServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConsiderWarningAsError = considerWarningAsError;
             MaxPercentUnhealthyDeployedApplications = maxPercentUnhealthyDeployedApplications;
             DefaultServiceTypeHealthPolicy = defaultServiceTypeHealthPolicy;
             ServiceTypeHealthPolicyMap = serviceTypeHealthPolicyMap;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether warnings are treated with the same severity as errors. </summary>

@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Task of the Job. </summary>
     public partial class AsrTask
     {
-        /// <summary> Initializes a new instance of AsrTask. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AsrTask"/>. </summary>
         internal AsrTask()
         {
             AllowedActions = new ChangeTrackingList<string>();
             Errors = new ChangeTrackingList<SiteRecoveryJobErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of AsrTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsrTask"/>. </summary>
         /// <param name="taskId"> The Id. </param>
         /// <param name="name"> The unique Task name. </param>
         /// <param name="startOn"> The start time. </param>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </param>
         /// <param name="errors"> The task error details. </param>
-        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, SiteRecoveryTaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, SiteRecoveryTaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskId = taskId;
             Name = name;
@@ -56,6 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
             GroupTaskCustomDetails = groupTaskCustomDetails;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Id. </summary>

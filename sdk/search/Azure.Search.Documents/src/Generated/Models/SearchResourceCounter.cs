@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a resource's usage and quota. </summary>
     public partial class SearchResourceCounter
     {
-        /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceCounter"/>. </summary>
         /// <param name="usage"> The resource usage amount. </param>
         internal SearchResourceCounter(long usage)
         {
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchResourceCounter"/>. </summary>
         /// <param name="usage"> The resource usage amount. </param>
         /// <param name="quota"> The resource amount quota. </param>
-        internal SearchResourceCounter(long usage, long? quota)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchResourceCounter(long usage, long? quota, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Usage = usage;
             Quota = quota;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceCounter"/> for deserialization. </summary>
+        internal SearchResourceCounter()
+        {
         }
 
         /// <summary> The resource usage amount. </summary>

@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class GenerateCapabilityImageContent
     {
-        /// <summary> Initializes a new instance of GenerateCapabilityImageContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
         /// <param name="capabilities">
         /// List of capabilities to create
         /// Serialized Name: GenerateCapabilityImageRequest.capabilities
@@ -29,6 +32,23 @@ namespace Azure.ResourceManager.Sphere.Models
             Argument.AssertNotNull(capabilities, nameof(capabilities));
 
             Capabilities = capabilities.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
+        /// <param name="capabilities">
+        /// List of capabilities to create
+        /// Serialized Name: GenerateCapabilityImageRequest.capabilities
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateCapabilityImageContent(IList<SphereCapabilityType> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/> for deserialization. </summary>
+        internal GenerateCapabilityImageContent()
+        {
         }
 
         /// <summary>

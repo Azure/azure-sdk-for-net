@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Only for AutomatedStep type. </summary>
     public partial class AutomatedCheckResult
     {
-        /// <summary> Initializes a new instance of AutomatedCheckResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomatedCheckResult"/>. </summary>
         internal AutomatedCheckResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomatedCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomatedCheckResult"/>. </summary>
         /// <param name="result"> Insight Article Content. </param>
         /// <param name="resultType"> Type of Result. </param>
-        internal AutomatedCheckResult(string result, AutomatedCheckResultType? resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomatedCheckResult(string result, AutomatedCheckResultType? resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Result = result;
             ResultType = resultType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Insight Article Content. </summary>

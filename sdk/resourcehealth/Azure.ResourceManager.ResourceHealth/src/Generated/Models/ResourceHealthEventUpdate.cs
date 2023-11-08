@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Update for service health event. </summary>
     public partial class ResourceHealthEventUpdate
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventUpdate"/>. </summary>
         internal ResourceHealthEventUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventUpdate"/>. </summary>
         /// <param name="summary"> Summary text for the given update for the service health event. </param>
         /// <param name="updatedOn"> It provides the Timestamp for the given update for the service health event. </param>
-        internal ResourceHealthEventUpdate(string summary, DateTimeOffset? updatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventUpdate(string summary, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Summary = summary;
             UpdatedOn = updatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Summary text for the given update for the service health event. </summary>

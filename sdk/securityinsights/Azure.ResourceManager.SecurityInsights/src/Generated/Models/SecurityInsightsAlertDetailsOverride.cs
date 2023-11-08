@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Settings for how to dynamically override alert static details. </summary>
     public partial class SecurityInsightsAlertDetailsOverride
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertDetailsOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
         public SecurityInsightsAlertDetailsOverride()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertDetailsOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
         /// <param name="alertDisplayNameFormat"> the format containing columns name(s) to override the alert name. </param>
         /// <param name="alertDescriptionFormat"> the format containing columns name(s) to override the alert description. </param>
         /// <param name="alertTacticsColumnName"> the column name to take the alert tactics from. </param>
         /// <param name="alertSeverityColumnName"> the column name to take the alert severity from. </param>
-        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertDisplayNameFormat = alertDisplayNameFormat;
             AlertDescriptionFormat = alertDescriptionFormat;
             AlertTacticsColumnName = alertTacticsColumnName;
             AlertSeverityColumnName = alertSeverityColumnName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the format containing columns name(s) to override the alert name. </summary>

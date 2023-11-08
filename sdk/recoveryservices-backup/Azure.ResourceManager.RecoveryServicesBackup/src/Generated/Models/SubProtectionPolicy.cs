@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Sub-protection policy which includes schedule and retention. </summary>
     public partial class SubProtectionPolicy
     {
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         public SubProtectionPolicy()
         {
             TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
         }
 
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         /// <param name="policyType"> Type of backup policy type. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
@@ -36,12 +40,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </param>
-        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyType = policyType;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
             TieringPolicy = tieringPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of backup policy type. </summary>

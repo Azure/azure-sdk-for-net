@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use. </summary>
     public partial class ProxyServerProperties
     {
-        /// <summary> Initializes a new instance of ProxyServerProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProxyServerProperties"/>. </summary>
         public ProxyServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyServerProperties"/>. </summary>
         /// <param name="ip"> Proxy server IP. </param>
         /// <param name="port"> Proxy server port. </param>
-        internal ProxyServerProperties(string ip, string port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProxyServerProperties(string ip, string port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IP = ip;
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Proxy server IP. </summary>

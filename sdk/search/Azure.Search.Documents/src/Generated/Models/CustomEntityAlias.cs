@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A complex object that can be used to specify alternative spellings or synonyms to the root entity name. </summary>
     public partial class CustomEntityAlias
     {
-        /// <summary> Initializes a new instance of CustomEntityAlias. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/>. </summary>
         /// <param name="text"> The text of the alias. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public CustomEntityAlias(string text)
@@ -23,17 +27,24 @@ namespace Azure.Search.Documents.Indexes.Models
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of CustomEntityAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/>. </summary>
         /// <param name="text"> The text of the alias. </param>
         /// <param name="caseSensitive"> Determine if the alias is case sensitive. </param>
         /// <param name="accentSensitive"> Determine if the alias is accent sensitive. </param>
         /// <param name="fuzzyEditDistance"> Determine the fuzzy edit distance of the alias. </param>
-        internal CustomEntityAlias(string text, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomEntityAlias(string text, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             CaseSensitive = caseSensitive;
             AccentSensitive = accentSensitive;
             FuzzyEditDistance = fuzzyEditDistance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/> for deserialization. </summary>
+        internal CustomEntityAlias()
+        {
         }
 
         /// <summary> The text of the alias. </summary>

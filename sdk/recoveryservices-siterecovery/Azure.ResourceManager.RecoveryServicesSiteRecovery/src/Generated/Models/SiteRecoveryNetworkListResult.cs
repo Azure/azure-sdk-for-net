@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> List of networks. </summary>
     internal partial class SiteRecoveryNetworkListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkListResult"/>. </summary>
         internal SiteRecoveryNetworkListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkListResult"/>. </summary>
         /// <param name="value"> The Networks list details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryNetworkListResult(IReadOnlyList<SiteRecoveryNetworkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryNetworkListResult(IReadOnlyList<SiteRecoveryNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Networks list details. </summary>

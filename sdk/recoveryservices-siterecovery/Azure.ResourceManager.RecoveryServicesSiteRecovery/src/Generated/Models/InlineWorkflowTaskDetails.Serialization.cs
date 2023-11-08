@@ -5,16 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InlineWorkflowTaskDetails
+    public partial class InlineWorkflowTaskDetails : IUtf8JsonSerializable, IJsonModel<InlineWorkflowTaskDetails>
     {
-        internal static InlineWorkflowTaskDetails DeserializeInlineWorkflowTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InlineWorkflowTaskDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<InlineWorkflowTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(WorkflowIds))
+            {
+                writer.WritePropertyName("workflowIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in WorkflowIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (Optional.IsCollectionDefined(ChildTasks))
+            {
+                writer.WritePropertyName("childTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChildTasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InlineWorkflowTaskDetails IJsonModel<InlineWorkflowTaskDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInlineWorkflowTaskDetails(document.RootElement, options);
+        }
+
+        internal static InlineWorkflowTaskDetails DeserializeInlineWorkflowTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> workflowIds = default;
             string instanceType = default;
             Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workflowIds"u8))
@@ -57,8 +121,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     childTasks = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InlineWorkflowTaskDetails(instanceType, Optional.ToList(childTasks), Optional.ToList(workflowIds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InlineWorkflowTaskDetails(instanceType, Optional.ToList(childTasks), serializedAdditionalRawData, Optional.ToList(workflowIds));
         }
+
+        BinaryData IModel<InlineWorkflowTaskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InlineWorkflowTaskDetails IModel<InlineWorkflowTaskDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInlineWorkflowTaskDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<InlineWorkflowTaskDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

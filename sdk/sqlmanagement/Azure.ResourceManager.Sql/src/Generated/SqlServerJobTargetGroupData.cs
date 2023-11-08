@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,21 +19,26 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobTargetGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobTargetGroupData"/>. </summary>
         public SqlServerJobTargetGroupData()
         {
             Members = new ChangeTrackingList<JobTarget>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobTargetGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="members"> Members of the target group. </param>
-        internal SqlServerJobTargetGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JobTarget> members) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerJobTargetGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JobTarget> members, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Members = members;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Members of the target group. </summary>

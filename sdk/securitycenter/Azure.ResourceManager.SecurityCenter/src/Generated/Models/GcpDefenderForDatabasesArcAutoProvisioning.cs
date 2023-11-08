@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The native cloud connection configuration. </summary>
     public partial class GcpDefenderForDatabasesArcAutoProvisioning
     {
-        /// <summary> Initializes a new instance of GcpDefenderForDatabasesArcAutoProvisioning. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GcpDefenderForDatabasesArcAutoProvisioning"/>. </summary>
         public GcpDefenderForDatabasesArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of GcpDefenderForDatabasesArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpDefenderForDatabasesArcAutoProvisioning"/>. </summary>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for this offering. </param>
-        internal GcpDefenderForDatabasesArcAutoProvisioning(string serviceAccountEmailAddress, string workloadIdentityProviderId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GcpDefenderForDatabasesArcAutoProvisioning(string serviceAccountEmailAddress, string workloadIdentityProviderId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The service account email address in GCP for this offering. </summary>

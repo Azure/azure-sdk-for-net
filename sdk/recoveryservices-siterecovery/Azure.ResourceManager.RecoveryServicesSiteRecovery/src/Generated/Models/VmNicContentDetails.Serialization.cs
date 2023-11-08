@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VmNicContentDetails : IUtf8JsonSerializable
+    public partial class VmNicContentDetails : IUtf8JsonSerializable, IJsonModel<VmNicContentDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmNicContentDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VmNicContentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(NicId))
@@ -90,7 +96,189 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("targetNicName"u8);
                 writer.WriteStringValue(TargetNicName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VmNicContentDetails IJsonModel<VmNicContentDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmNicContentDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmNicContentDetails(document.RootElement, options);
+        }
+
+        internal static VmNicContentDetails DeserializeVmNicContentDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> nicId = default;
+            Optional<IList<HyperVFailoverIPConfigDetails>> ipConfigs = default;
+            Optional<string> selectionType = default;
+            Optional<string> recoveryNetworkSecurityGroupId = default;
+            Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
+            Optional<string> tfoNetworkSecurityGroupId = default;
+            Optional<bool> enableAcceleratedNetworkingOnTfo = default;
+            Optional<string> recoveryNicName = default;
+            Optional<string> recoveryNicResourceGroupName = default;
+            Optional<bool> reuseExistingNic = default;
+            Optional<string> tfoNicName = default;
+            Optional<string> tfoNicResourceGroupName = default;
+            Optional<bool> tfoReuseExistingNic = default;
+            Optional<string> targetNicName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("nicId"u8))
+                {
+                    nicId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("ipConfigs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HyperVFailoverIPConfigDetails> array = new List<HyperVFailoverIPConfigDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HyperVFailoverIPConfigDetails.DeserializeHyperVFailoverIPConfigDetails(item));
+                    }
+                    ipConfigs = array;
+                    continue;
+                }
+                if (property.NameEquals("selectionType"u8))
+                {
+                    selectionType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryNetworkSecurityGroupId"u8))
+                {
+                    recoveryNetworkSecurityGroupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableAcceleratedNetworkingOnRecovery"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAcceleratedNetworkingOnRecovery = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("tfoNetworkSecurityGroupId"u8))
+                {
+                    tfoNetworkSecurityGroupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableAcceleratedNetworkingOnTfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAcceleratedNetworkingOnTfo = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("recoveryNicName"u8))
+                {
+                    recoveryNicName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryNicResourceGroupName"u8))
+                {
+                    recoveryNicResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("reuseExistingNic"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reuseExistingNic = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("tfoNicName"u8))
+                {
+                    tfoNicName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tfoNicResourceGroupName"u8))
+                {
+                    tfoNicResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tfoReuseExistingNic"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tfoReuseExistingNic = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("targetNicName"u8))
+                {
+                    targetNicName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmNicContentDetails(nicId.Value, Optional.ToList(ipConfigs), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Optional.ToNullable(reuseExistingNic), tfoNicName.Value, tfoNicResourceGroupName.Value, Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<VmNicContentDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmNicContentDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VmNicContentDetails IModel<VmNicContentDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmNicContentDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVmNicContentDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VmNicContentDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

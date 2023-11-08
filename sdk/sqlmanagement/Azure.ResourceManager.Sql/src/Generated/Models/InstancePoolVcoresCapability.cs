@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The managed instance virtual cores capability. </summary>
     public partial class InstancePoolVcoresCapability
     {
-        /// <summary> Initializes a new instance of InstancePoolVcoresCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstancePoolVcoresCapability"/>. </summary>
         internal InstancePoolVcoresCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolVcoresCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
         /// <param name="storageLimit"> Storage limit. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal InstancePoolVcoresCapability(string name, int? value, MaxSizeCapability storageLimit, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancePoolVcoresCapability(string name, int? value, MaxSizeCapability storageLimit, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             StorageLimit = storageLimit;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The virtual cores identifier. </summary>

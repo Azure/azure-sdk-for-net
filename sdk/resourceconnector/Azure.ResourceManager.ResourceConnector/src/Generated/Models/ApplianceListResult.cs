@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ResourceConnector;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The List Appliances operation response. </summary>
     internal partial class ApplianceListResult
     {
-        /// <summary> Initializes a new instance of ApplianceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceListResult"/>. </summary>
         internal ApplianceListResult()
         {
             Value = new ChangeTrackingList<ResourceConnectorApplianceData>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceListResult"/>. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="value"> The list of Appliances. </param>
-        internal ApplianceListResult(string nextLink, IReadOnlyList<ResourceConnectorApplianceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceListResult(string nextLink, IReadOnlyList<ResourceConnectorApplianceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL to use for getting the next set of results. </summary>

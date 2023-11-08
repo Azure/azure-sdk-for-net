@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The Upgrade Graph Properties for appliance. </summary>
     public partial class ApplianceUpgradeGraphProperties
     {
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraphProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraphProperties"/>. </summary>
         internal ApplianceUpgradeGraphProperties()
         {
             SupportedVersions = new ChangeTrackingList<ApplianceSupportedVersion>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraphProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraphProperties"/>. </summary>
         /// <param name="applianceVersion"> The current appliance version. </param>
         /// <param name="supportedVersions"> This contains the current version and supported upgrade versions. </param>
-        internal ApplianceUpgradeGraphProperties(string applianceVersion, IReadOnlyList<ApplianceSupportedVersion> supportedVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceUpgradeGraphProperties(string applianceVersion, IReadOnlyList<ApplianceSupportedVersion> supportedVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplianceVersion = applianceVersion;
             SupportedVersions = supportedVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current appliance version. </summary>

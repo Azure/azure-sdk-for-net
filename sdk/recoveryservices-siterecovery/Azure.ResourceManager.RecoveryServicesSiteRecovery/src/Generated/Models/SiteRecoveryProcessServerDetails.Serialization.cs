@@ -8,15 +8,301 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProcessServerDetails
+    public partial class SiteRecoveryProcessServerDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryProcessServerDetails>
     {
-        internal static SiteRecoveryProcessServerDetails DeserializeSiteRecoveryProcessServerDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryProcessServerDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SiteRecoveryProcessServerDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(BiosId))
+                {
+                    writer.WritePropertyName("biosId"u8);
+                    writer.WriteStringValue(BiosId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FabricObjectId))
+                {
+                    writer.WritePropertyName("fabricObjectId"u8);
+                    writer.WriteStringValue(FabricObjectId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Fqdn))
+                {
+                    writer.WritePropertyName("fqdn"u8);
+                    writer.WriteStringValue(Fqdn);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(IPAddresses))
+                {
+                    writer.WritePropertyName("ipAddresses"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in IPAddresses)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastHeartbeatReceivedOn))
+                {
+                    writer.WritePropertyName("lastHeartbeatUtc"u8);
+                    writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TotalMemoryInBytes))
+                {
+                    writer.WritePropertyName("totalMemoryInBytes"u8);
+                    writer.WriteNumberValue(TotalMemoryInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AvailableMemoryInBytes))
+                {
+                    writer.WritePropertyName("availableMemoryInBytes"u8);
+                    writer.WriteNumberValue(AvailableMemoryInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UsedMemoryInBytes))
+                {
+                    writer.WritePropertyName("usedMemoryInBytes"u8);
+                    writer.WriteNumberValue(UsedMemoryInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MemoryUsagePercentage))
+                {
+                    writer.WritePropertyName("memoryUsagePercentage"u8);
+                    writer.WriteNumberValue(MemoryUsagePercentage.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TotalSpaceInBytes))
+                {
+                    writer.WritePropertyName("totalSpaceInBytes"u8);
+                    writer.WriteNumberValue(TotalSpaceInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AvailableSpaceInBytes))
+                {
+                    writer.WritePropertyName("availableSpaceInBytes"u8);
+                    writer.WriteNumberValue(AvailableSpaceInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UsedSpaceInBytes))
+                {
+                    writer.WritePropertyName("usedSpaceInBytes"u8);
+                    writer.WriteNumberValue(UsedSpaceInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FreeSpacePercentage))
+                {
+                    writer.WritePropertyName("freeSpacePercentage"u8);
+                    writer.WriteNumberValue(FreeSpacePercentage.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ThroughputUploadPendingDataInBytes))
+                {
+                    writer.WritePropertyName("throughputUploadPendingDataInBytes"u8);
+                    writer.WriteNumberValue(ThroughputUploadPendingDataInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ThroughputInBytes))
+                {
+                    writer.WritePropertyName("throughputInBytes"u8);
+                    writer.WriteNumberValue(ThroughputInBytes.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProcessorUsagePercentage))
+                {
+                    writer.WritePropertyName("processorUsagePercentage"u8);
+                    writer.WriteNumberValue(ProcessorUsagePercentage.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ThroughputStatus))
+                {
+                    writer.WritePropertyName("throughputStatus"u8);
+                    writer.WriteStringValue(ThroughputStatus.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemLoad))
+                {
+                    writer.WritePropertyName("systemLoad"u8);
+                    writer.WriteNumberValue(SystemLoad.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemLoadStatus))
+                {
+                    writer.WritePropertyName("systemLoadStatus"u8);
+                    writer.WriteStringValue(SystemLoadStatus.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DiskUsageStatus))
+                {
+                    writer.WritePropertyName("diskUsageStatus"u8);
+                    writer.WriteStringValue(DiskUsageStatus.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MemoryUsageStatus))
+                {
+                    writer.WritePropertyName("memoryUsageStatus"u8);
+                    writer.WriteStringValue(MemoryUsageStatus.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProcessorUsageStatus))
+                {
+                    writer.WritePropertyName("processorUsageStatus"u8);
+                    writer.WriteStringValue(ProcessorUsageStatus.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Health))
+                {
+                    writer.WritePropertyName("health"u8);
+                    writer.WriteStringValue(Health.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(HealthErrors))
+                {
+                    writer.WritePropertyName("healthErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HealthErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProtectedItemCount))
+                {
+                    writer.WritePropertyName("protectedItemCount"u8);
+                    writer.WriteNumberValue(ProtectedItemCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(HistoricHealth))
+                {
+                    writer.WritePropertyName("historicHealth"u8);
+                    writer.WriteStringValue(HistoricHealth.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryProcessServerDetails IJsonModel<SiteRecoveryProcessServerDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryProcessServerDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryProcessServerDetails DeserializeSiteRecoveryProcessServerDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +336,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<int> protectedItemCount = default;
             Optional<SiteRecoveryProtectionHealth> historicHealth = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -310,8 +598,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     historicHealth = new SiteRecoveryProtectionHealth(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SiteRecoveryProcessServerDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryProcessServerDetails IModel<SiteRecoveryProcessServerDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryProcessServerDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SiteRecoveryProcessServerDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

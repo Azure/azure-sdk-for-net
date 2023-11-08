@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment dependency information. </summary>
     public partial class BasicArmDependency
     {
-        /// <summary> Initializes a new instance of BasicArmDependency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BasicArmDependency"/>. </summary>
         internal BasicArmDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of BasicArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="BasicArmDependency"/>. </summary>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal BasicArmDependency(string id, ResourceType? resourceType, string resourceName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BasicArmDependency(string id, ResourceType? resourceType, string resourceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResourceType = resourceType;
             ResourceName = resourceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the dependency. </summary>

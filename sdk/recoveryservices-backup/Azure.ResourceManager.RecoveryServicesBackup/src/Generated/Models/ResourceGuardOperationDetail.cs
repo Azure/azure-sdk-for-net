@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The ResourceGuardOperationDetail. </summary>
     public partial class ResourceGuardOperationDetail
     {
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         public ResourceGuardOperationDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         /// <param name="vaultCriticalOperation"></param>
         /// <param name="defaultResourceId"></param>
-        internal ResourceGuardOperationDetail(string vaultCriticalOperation, ResourceIdentifier defaultResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardOperationDetail(string vaultCriticalOperation, ResourceIdentifier defaultResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VaultCriticalOperation = vaultCriticalOperation;
             DefaultResourceId = defaultResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the vault critical operation. </summary>

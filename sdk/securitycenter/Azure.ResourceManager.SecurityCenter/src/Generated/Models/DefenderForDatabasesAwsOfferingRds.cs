@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The RDS configuration. </summary>
     public partial class DefenderForDatabasesAwsOfferingRds
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingRds. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingRds"/>. </summary>
         public DefenderForDatabasesAwsOfferingRds()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingRds. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingRds"/>. </summary>
         /// <param name="isEnabled"> Is RDS protection enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal DefenderForDatabasesAwsOfferingRds(bool? isEnabled, string cloudRoleArn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForDatabasesAwsOfferingRds(bool? isEnabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Is RDS protection enabled. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
@@ -16,7 +17,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereDeviceInsight
     {
-        /// <summary> Initializes a new instance of SphereDeviceInsight. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/>. </summary>
         /// <param name="deviceId">
         /// Device ID
         /// Serialized Name: DeviceInsight.deviceId
@@ -66,6 +70,58 @@ namespace Azure.ResourceManager.Sphere.Models
             EventClass = eventClass;
             EventType = eventType;
             EventCount = eventCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/>. </summary>
+        /// <param name="deviceId">
+        /// Device ID
+        /// Serialized Name: DeviceInsight.deviceId
+        /// </param>
+        /// <param name="description">
+        /// Event description
+        /// Serialized Name: DeviceInsight.description
+        /// </param>
+        /// <param name="startTimestampUtc">
+        /// Event start timestamp
+        /// Serialized Name: DeviceInsight.startTimestampUtc
+        /// </param>
+        /// <param name="endTimestampUtc">
+        /// Event end timestamp
+        /// Serialized Name: DeviceInsight.endTimestampUtc
+        /// </param>
+        /// <param name="eventCategory">
+        /// Event category
+        /// Serialized Name: DeviceInsight.eventCategory
+        /// </param>
+        /// <param name="eventClass">
+        /// Event class
+        /// Serialized Name: DeviceInsight.eventClass
+        /// </param>
+        /// <param name="eventType">
+        /// Event type
+        /// Serialized Name: DeviceInsight.eventType
+        /// </param>
+        /// <param name="eventCount">
+        /// Event count
+        /// Serialized Name: DeviceInsight.eventCount
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereDeviceInsight(string deviceId, string description, DateTimeOffset startTimestampUtc, DateTimeOffset endTimestampUtc, string eventCategory, string eventClass, string eventType, int eventCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DeviceId = deviceId;
+            Description = description;
+            StartTimestampUtc = startTimestampUtc;
+            EndTimestampUtc = endTimestampUtc;
+            EventCategory = eventCategory;
+            EventClass = eventClass;
+            EventType = eventType;
+            EventCount = eventCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceInsight"/> for deserialization. </summary>
+        internal SphereDeviceInsight()
+        {
         }
 
         /// <summary>

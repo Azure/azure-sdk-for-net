@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ServiceObjectiveData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveData"/>. </summary>
         public ServiceObjectiveData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,13 +36,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isSystem"> Gets whether the service level objective is a system service objective. </param>
         /// <param name="description"> The description for the service level objective. </param>
         /// <param name="isEnabled"> Gets whether the service level objective is enabled. </param>
-        internal ServiceObjectiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceObjectiveName, bool? isDefault, bool? isSystem, string description, bool? isEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceObjectiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceObjectiveName, bool? isDefault, bool? isSystem, string description, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServiceObjectiveName = serviceObjectiveName;
             IsDefault = isDefault;
             IsSystem = isSystem;
             Description = description;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name for the service objective. </summary>

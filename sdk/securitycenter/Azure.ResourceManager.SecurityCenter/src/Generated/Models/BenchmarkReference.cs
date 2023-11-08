@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The benchmark references. </summary>
     public partial class BenchmarkReference
     {
-        /// <summary> Initializes a new instance of BenchmarkReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
         public BenchmarkReference()
         {
         }
 
-        /// <summary> Initializes a new instance of BenchmarkReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
         /// <param name="benchmark"> The benchmark name. </param>
         /// <param name="reference"> The benchmark reference. </param>
-        internal BenchmarkReference(string benchmark, string reference)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BenchmarkReference(string benchmark, string reference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Benchmark = benchmark;
             Reference = reference;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The benchmark name. </summary>

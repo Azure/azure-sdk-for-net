@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of ingestion settings. </summary>
     internal partial class IngestionSettingList
     {
-        /// <summary> Initializes a new instance of IngestionSettingList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingList"/>. </summary>
         internal IngestionSettingList()
         {
             Value = new ChangeTrackingList<IngestionSettingData>();
         }
 
-        /// <summary> Initializes a new instance of IngestionSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingList"/>. </summary>
         /// <param name="value"> List of ingestion settings. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal IngestionSettingList(IReadOnlyList<IngestionSettingData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionSettingList(IReadOnlyList<IngestionSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of ingestion settings. </summary>

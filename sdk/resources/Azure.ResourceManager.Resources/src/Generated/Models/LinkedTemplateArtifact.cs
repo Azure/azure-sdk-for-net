@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Represents a Template Spec artifact containing an embedded Azure Resource Manager template for use as a linked template. </summary>
     public partial class LinkedTemplateArtifact
     {
-        /// <summary> Initializes a new instance of LinkedTemplateArtifact. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedTemplateArtifact"/>. </summary>
         /// <param name="path"> A filesystem safe relative path of the artifact. </param>
         /// <param name="template"> The Azure Resource Manager template. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="template"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Resources.Models
 
             Path = path;
             Template = template;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedTemplateArtifact"/>. </summary>
+        /// <param name="path"> A filesystem safe relative path of the artifact. </param>
+        /// <param name="template"> The Azure Resource Manager template. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedTemplateArtifact(string path, BinaryData template, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Path = path;
+            Template = template;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedTemplateArtifact"/> for deserialization. </summary>
+        internal LinkedTemplateArtifact()
+        {
         }
 
         /// <summary> A filesystem safe relative path of the artifact. </summary>

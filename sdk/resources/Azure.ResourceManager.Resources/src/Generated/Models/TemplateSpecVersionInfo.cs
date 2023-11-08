@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> High-level information about a Template Spec version. </summary>
     public partial class TemplateSpecVersionInfo
     {
-        /// <summary> Initializes a new instance of TemplateSpecVersionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionInfo"/>. </summary>
         internal TemplateSpecVersionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecVersionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionInfo"/>. </summary>
         /// <param name="description"> Template Spec version description. </param>
         /// <param name="timeCreated"> The timestamp of when the version was created. </param>
         /// <param name="timeModified"> The timestamp of when the version was last modified. </param>
-        internal TemplateSpecVersionInfo(string description, DateTimeOffset? timeCreated, DateTimeOffset? timeModified)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateSpecVersionInfo(string description, DateTimeOffset? timeCreated, DateTimeOffset? timeModified, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             TimeCreated = timeCreated;
             TimeModified = timeModified;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Template Spec version description. </summary>

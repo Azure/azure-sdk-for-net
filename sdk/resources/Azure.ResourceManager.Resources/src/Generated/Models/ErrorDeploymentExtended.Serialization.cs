@@ -5,15 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorDeploymentExtended
+    public partial class ErrorDeploymentExtended : IUtf8JsonSerializable, IJsonModel<ErrorDeploymentExtended>
     {
-        internal static ErrorDeploymentExtended DeserializeErrorDeploymentExtended(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ErrorDeploymentExtended>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ErrorDeploymentExtended>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (Optional.IsDefined(DeploymentType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(DeploymentType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("deploymentName"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ErrorDeploymentExtended IJsonModel<ErrorDeploymentExtended>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeErrorDeploymentExtended(document.RootElement, options);
+        }
+
+        internal static ErrorDeploymentExtended DeserializeErrorDeploymentExtended(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +80,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> provisioningState = default;
             Optional<ErrorDeploymentType> type = default;
             Optional<string> deploymentName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -42,8 +103,38 @@ namespace Azure.ResourceManager.Resources.Models
                     deploymentName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ErrorDeploymentExtended>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ErrorDeploymentExtended IModel<ErrorDeploymentExtended>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeErrorDeploymentExtended(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ErrorDeploymentExtended>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

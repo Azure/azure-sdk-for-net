@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedServerDnsAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasData"/>. </summary>
         public ManagedServerDnsAliasData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="azureDnsRecord"> The fully qualified DNS record for managed server alias. </param>
         /// <param name="publicAzureDnsRecord"> The fully qualified public DNS record for managed server alias. </param>
-        internal ManagedServerDnsAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azureDnsRecord, string publicAzureDnsRecord) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServerDnsAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azureDnsRecord, string publicAzureDnsRecord, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AzureDnsRecord = azureDnsRecord;
             PublicAzureDnsRecord = publicAzureDnsRecord;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The fully qualified DNS record for managed server alias. </summary>

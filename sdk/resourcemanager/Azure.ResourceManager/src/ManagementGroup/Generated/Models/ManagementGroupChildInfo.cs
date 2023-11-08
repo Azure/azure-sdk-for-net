@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The child information of a management group. </summary>
     public partial class ManagementGroupChildInfo
     {
-        /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupChildInfo"/>. </summary>
         internal ManagementGroupChildInfo()
         {
             Children = new ChangeTrackingList<ManagementGroupChildInfo>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupChildInfo"/>. </summary>
         /// <param name="childType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
         /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
         /// <param name="name"> The name of the child entity. </param>
         /// <param name="displayName"> The friendly name of the child resource. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupChildInfo(ManagementGroupChildType? childType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildInfo> children)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementGroupChildInfo(ManagementGroupChildType? childType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildInfo> children, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ChildType = childType;
             Id = id;
             Name = name;
             DisplayName = displayName;
             Children = children;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>

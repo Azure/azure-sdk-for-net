@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerVirtualNetworkRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerVirtualNetworkRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerVirtualNetworkRuleData"/>. </summary>
         public SqlServerVirtualNetworkRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +35,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="virtualNetworkSubnetId"> The ARM resource id of the virtual network subnet. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
         /// <param name="state"> Virtual Network Rule State. </param>
-        internal SqlServerVirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, SqlServerVirtualNetworkRuleState? state) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerVirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, SqlServerVirtualNetworkRuleState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM resource id of the virtual network subnet. </summary>

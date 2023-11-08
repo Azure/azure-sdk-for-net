@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> A single field mapping of the mapped entity. </summary>
     public partial class SecurityInsightsFieldMapping
     {
-        /// <summary> Initializes a new instance of SecurityInsightsFieldMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFieldMapping"/>. </summary>
         public SecurityInsightsFieldMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsFieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFieldMapping"/>. </summary>
         /// <param name="identifier"> the V3 identifier of the entity. </param>
         /// <param name="columnName"> the column name to be mapped to the identifier. </param>
-        internal SecurityInsightsFieldMapping(string identifier, string columnName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsFieldMapping(string identifier, string columnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identifier = identifier;
             ColumnName = columnName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the V3 identifier of the entity. </summary>

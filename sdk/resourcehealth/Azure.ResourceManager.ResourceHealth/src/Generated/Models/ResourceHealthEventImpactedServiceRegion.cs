@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Azure region impacted by the service health event. </summary>
     public partial class ResourceHealthEventImpactedServiceRegion
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedServiceRegion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedServiceRegion"/>. </summary>
         internal ResourceHealthEventImpactedServiceRegion()
         {
             ImpactedSubscriptions = new ChangeTrackingList<string>();
@@ -22,14 +25,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Updates = new ChangeTrackingList<ResourceHealthEventUpdate>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedServiceRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedServiceRegion"/>. </summary>
         /// <param name="impactedRegion"> Impacted region name. </param>
         /// <param name="status"> Current status of event in the region. </param>
         /// <param name="impactedSubscriptions"> List subscription impacted by the service health event. </param>
         /// <param name="impactedTenants"> List tenant impacted by the service health event. </param>
         /// <param name="lastUpdateOn"> It provides the Timestamp for when the last update for the service health event. </param>
         /// <param name="updates"> List of updates for given service health event. </param>
-        internal ResourceHealthEventImpactedServiceRegion(string impactedRegion, ResourceHealthEventStatusValue? status, IReadOnlyList<string> impactedSubscriptions, IReadOnlyList<string> impactedTenants, DateTimeOffset? lastUpdateOn, IReadOnlyList<ResourceHealthEventUpdate> updates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventImpactedServiceRegion(string impactedRegion, ResourceHealthEventStatusValue? status, IReadOnlyList<string> impactedSubscriptions, IReadOnlyList<string> impactedTenants, DateTimeOffset? lastUpdateOn, IReadOnlyList<ResourceHealthEventUpdate> updates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImpactedRegion = impactedRegion;
             Status = status;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             ImpactedTenants = impactedTenants;
             LastUpdateOn = lastUpdateOn;
             Updates = updates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Impacted region name. </summary>

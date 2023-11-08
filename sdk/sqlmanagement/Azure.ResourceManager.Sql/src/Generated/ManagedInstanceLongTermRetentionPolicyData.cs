@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceLongTermRetentionPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionPolicyData"/>. </summary>
         public ManagedInstanceLongTermRetentionPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,12 +35,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
-        internal ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceLongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WeeklyRetention = weeklyRetention;
             MonthlyRetention = monthlyRetention;
             YearlyRetention = yearlyRetention;
             WeekOfYear = weekOfYear;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The weekly retention policy for an LTR backup in an ISO 8601 format. </summary>

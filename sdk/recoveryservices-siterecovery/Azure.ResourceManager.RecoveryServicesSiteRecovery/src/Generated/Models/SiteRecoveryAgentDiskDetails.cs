@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Agent disk details. </summary>
     public partial class SiteRecoveryAgentDiskDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDiskDetails"/>. </summary>
         internal SiteRecoveryAgentDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
         /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
         /// <param name="lunId"> The lun of disk. </param>
-        internal SiteRecoveryAgentDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, int? lunId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryAgentDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, int? lunId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             DiskName = diskName;
             IsOSDisk = isOSDisk;
             CapacityInBytes = capacityInBytes;
             LunId = lunId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk Id. </summary>

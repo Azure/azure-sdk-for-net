@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,18 +18,23 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class DatabaseSchemaData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseSchemaData"/>. </summary>
         public DatabaseSchemaData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        internal DatabaseSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

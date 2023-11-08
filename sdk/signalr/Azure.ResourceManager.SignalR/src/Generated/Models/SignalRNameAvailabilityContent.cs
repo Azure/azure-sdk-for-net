@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
     public partial class SignalRNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of SignalRNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRNameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.SignalR.Models
 
             ResourceType = resourceType;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRNameAvailabilityContent"/>. </summary>
+        /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
+        /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRNameAvailabilityContent(ResourceType resourceType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceType = resourceType;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRNameAvailabilityContent"/> for deserialization. </summary>
+        internal SignalRNameAvailabilityContent()
+        {
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>

@@ -7,15 +7,182 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class LinkerValidateOperationResult
+    public partial class LinkerValidateOperationResult : IUtf8JsonSerializable, IJsonModel<LinkerValidateOperationResult>
     {
-        internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerValidateOperationResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LinkerValidateOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
+            }
+            if (Optional.IsDefined(Status))
+            {
+                if (Status != null)
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+                else
+                {
+                    writer.WriteNull("status");
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LinkerName))
+            {
+                if (LinkerName != null)
+                {
+                    writer.WritePropertyName("linkerName"u8);
+                    writer.WriteStringValue(LinkerName);
+                }
+                else
+                {
+                    writer.WriteNull("linkerName");
+                }
+            }
+            if (Optional.IsDefined(IsConnectionAvailable))
+            {
+                if (IsConnectionAvailable != null)
+                {
+                    writer.WritePropertyName("isConnectionAvailable"u8);
+                    writer.WriteBooleanValue(IsConnectionAvailable.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isConnectionAvailable");
+                }
+            }
+            if (Optional.IsDefined(ReportStartOn))
+            {
+                if (ReportStartOn != null)
+                {
+                    writer.WritePropertyName("reportStartTimeUtc"u8);
+                    writer.WriteStringValue(ReportStartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("reportStartTimeUtc");
+                }
+            }
+            if (Optional.IsDefined(ReportEndOn))
+            {
+                if (ReportEndOn != null)
+                {
+                    writer.WritePropertyName("reportEndTimeUtc"u8);
+                    writer.WriteStringValue(ReportEndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("reportEndTimeUtc");
+                }
+            }
+            if (Optional.IsDefined(SourceId))
+            {
+                if (SourceId != null)
+                {
+                    writer.WritePropertyName("sourceId"u8);
+                    writer.WriteStringValue(SourceId);
+                }
+                else
+                {
+                    writer.WriteNull("sourceId");
+                }
+            }
+            if (Optional.IsDefined(TargetId))
+            {
+                if (TargetId != null)
+                {
+                    writer.WritePropertyName("targetId"u8);
+                    writer.WriteStringValue(TargetId);
+                }
+                else
+                {
+                    writer.WriteNull("targetId");
+                }
+            }
+            if (Optional.IsDefined(AuthType))
+            {
+                if (AuthType != null)
+                {
+                    writer.WritePropertyName("authType"u8);
+                    writer.WriteStringValue(AuthType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("authType");
+                }
+            }
+            if (Optional.IsCollectionDefined(ValidationDetail))
+            {
+                if (ValidationDetail != null)
+                {
+                    writer.WritePropertyName("validationDetail"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ValidationDetail)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("validationDetail");
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkerValidateOperationResult IJsonModel<LinkerValidateOperationResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkerValidateOperationResult(document.RootElement, options);
+        }
+
+        internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +197,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<ResourceIdentifier> targetId = default;
             Optional<LinkerAuthType?> authType = default;
             Optional<IReadOnlyList<LinkerValidationResultItemInfo>> validationDetail = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -149,8 +318,38 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LinkerValidateOperationResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkerValidateOperationResult IModel<LinkerValidateOperationResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkerValidateOperationResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LinkerValidateOperationResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

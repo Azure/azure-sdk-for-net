@@ -15,7 +15,10 @@ namespace Azure.Search.Documents.Models
     /// <summary> Contains a batch of document write actions to send to the index. </summary>
     internal partial class IndexBatch
     {
-        /// <summary> Initializes a new instance of IndexBatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
         public IndexBatch(IEnumerable<IndexAction> actions)
@@ -23,6 +26,20 @@ namespace Azure.Search.Documents.Models
             Argument.AssertNotNull(actions, nameof(actions));
 
             Actions = actions.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
+        /// <param name="actions"> The actions in the batch. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexBatch(IList<IndexAction> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IndexBatch"/> for deserialization. </summary>
+        internal IndexBatch()
+        {
         }
 
         /// <summary> The actions in the batch. </summary>

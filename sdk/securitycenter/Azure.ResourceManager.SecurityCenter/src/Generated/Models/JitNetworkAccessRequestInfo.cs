@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessRequestInfo. </summary>
     public partial class JitNetworkAccessRequestInfo
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
         /// <param name="virtualMachines"></param>
         /// <param name="startOn"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
@@ -30,17 +33,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Requestor = requestor;
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
         /// <param name="virtualMachines"></param>
         /// <param name="startOn"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
         /// <param name="justification"> The justification for making the initiate request. </param>
-        internal JitNetworkAccessRequestInfo(IList<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startOn, string requestor, string justification)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessRequestInfo(IList<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startOn, string requestor, string justification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachines = virtualMachines;
             StartOn = startOn;
             Requestor = requestor;
             Justification = justification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/> for deserialization. </summary>
+        internal JitNetworkAccessRequestInfo()
+        {
         }
 
         /// <summary> Gets the virtual machines. </summary>

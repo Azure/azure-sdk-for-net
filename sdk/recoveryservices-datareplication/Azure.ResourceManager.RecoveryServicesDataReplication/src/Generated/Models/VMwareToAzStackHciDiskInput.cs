@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> VMwareToAzStack disk input. </summary>
     public partial class VMwareToAzStackHciDiskInput
     {
-        /// <summary> Initializes a new instance of VMwareToAzStackHciDiskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciDiskInput"/>. </summary>
         /// <param name="diskId"> Gets or sets the disk Id. </param>
         /// <param name="diskSizeGB"> Gets or sets the disk size in GB. </param>
         /// <param name="diskFileFormat"> Gets or sets the type of the virtual hard disk, vhd or vhdx. </param>
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             IsOSDisk = isOSDisk;
         }
 
-        /// <summary> Initializes a new instance of VMwareToAzStackHciDiskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciDiskInput"/>. </summary>
         /// <param name="diskId"> Gets or sets the disk Id. </param>
         /// <param name="storageContainerId"> Gets or sets the target storage account ARM Id. </param>
         /// <param name="isDynamic">
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="diskSizeGB"> Gets or sets the disk size in GB. </param>
         /// <param name="diskFileFormat"> Gets or sets the type of the virtual hard disk, vhd or vhdx. </param>
         /// <param name="isOSDisk"> Gets or sets a value indicating whether disk is os disk. </param>
-        internal VMwareToAzStackHciDiskInput(string diskId, string storageContainerId, bool? isDynamic, long diskSizeGB, string diskFileFormat, bool isOSDisk)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareToAzStackHciDiskInput(string diskId, string storageContainerId, bool? isDynamic, long diskSizeGB, string diskFileFormat, bool isOSDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             StorageContainerId = storageContainerId;
@@ -48,6 +53,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DiskSizeGB = diskSizeGB;
             DiskFileFormat = diskFileFormat;
             IsOSDisk = isOSDisk;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciDiskInput"/> for deserialization. </summary>
+        internal VMwareToAzStackHciDiskInput()
+        {
         }
 
         /// <summary> Gets or sets the disk Id. </summary>

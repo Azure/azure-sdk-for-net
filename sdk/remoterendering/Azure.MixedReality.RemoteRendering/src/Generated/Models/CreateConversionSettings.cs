@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
@@ -13,7 +14,10 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> Request to start a conversion. </summary>
     internal partial class CreateConversionSettings
     {
-        /// <summary> Initializes a new instance of CreateConversionSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateConversionSettings"/>. </summary>
         /// <param name="settings"> Conversion settings describe the origin of input files and destination of output files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public CreateConversionSettings(AssetConversionOptions settings)
@@ -21,6 +25,20 @@ namespace Azure.MixedReality.RemoteRendering
             Argument.AssertNotNull(settings, nameof(settings));
 
             Settings = settings;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateConversionSettings"/>. </summary>
+        /// <param name="settings"> Conversion settings describe the origin of input files and destination of output files. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateConversionSettings(AssetConversionOptions settings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Settings = settings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateConversionSettings"/> for deserialization. </summary>
+        internal CreateConversionSettings()
+        {
         }
 
         /// <summary> Conversion settings describe the origin of input files and destination of output files. </summary>

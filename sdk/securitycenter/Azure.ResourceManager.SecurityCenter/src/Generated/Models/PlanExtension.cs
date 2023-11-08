@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A plan's extension properties. </summary>
     public partial class PlanExtension
     {
-        /// <summary> Initializes a new instance of PlanExtension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlanExtension"/>. </summary>
         /// <param name="name">
         /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
         /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalExtensionProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PlanExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanExtension"/>. </summary>
         /// <param name="name">
         /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
         /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
@@ -44,12 +47,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
         /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
         /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
-        internal PlanExtension(string name, IsExtensionEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, ExtensionOperationStatus operationStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlanExtension(string name, IsExtensionEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, ExtensionOperationStatus operationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsEnabled = isEnabled;
             AdditionalExtensionProperties = additionalExtensionProperties;
             OperationStatus = operationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlanExtension"/> for deserialization. </summary>
+        internal PlanExtension()
+        {
         }
 
         /// <summary>

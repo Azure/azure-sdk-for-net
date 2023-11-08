@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The properties of a security event sql injection additional properties. </summary>
     public partial class SecurityEventSqlInjectionAdditionalProperties
     {
-        /// <summary> Initializes a new instance of SecurityEventSqlInjectionAdditionalProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityEventSqlInjectionAdditionalProperties"/>. </summary>
         internal SecurityEventSqlInjectionAdditionalProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityEventSqlInjectionAdditionalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityEventSqlInjectionAdditionalProperties"/>. </summary>
         /// <param name="threatId"> The threat ID. </param>
         /// <param name="statement"> The statement. </param>
         /// <param name="statementHighlightOffset"> The statement highlight offset. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="errorCode"> The sql error code. </param>
         /// <param name="errorSeverity"> The sql error severity. </param>
         /// <param name="errorMessage"> The sql error message. </param>
-        internal SecurityEventSqlInjectionAdditionalProperties(string threatId, string statement, int? statementHighlightOffset, int? statementHighlightLength, int? errorCode, int? errorSeverity, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityEventSqlInjectionAdditionalProperties(string threatId, string statement, int? statementHighlightOffset, int? statementHighlightLength, int? errorCode, int? errorSeverity, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ThreatId = threatId;
             Statement = statement;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
             ErrorCode = errorCode;
             ErrorSeverity = errorSeverity;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The threat ID. </summary>

@@ -6,21 +6,73 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics
+    public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics : IUtf8JsonSerializable, IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>
     {
-        internal static IotSecuritySolutionAnalyticsModelDevicesMetrics DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Date))
+            {
+                writer.WritePropertyName("date"u8);
+                writer.WriteStringValue(Date.Value, "O");
+            }
+            if (Optional.IsDefined(DevicesMetrics))
+            {
+                writer.WritePropertyName("devicesMetrics"u8);
+                writer.WriteObjectValue(DevicesMetrics);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IotSecuritySolutionAnalyticsModelDevicesMetrics IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(document.RootElement, options);
+        }
+
+        internal static IotSecuritySolutionAnalyticsModelDevicesMetrics DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> date = default;
             Optional<IotSeverityMetrics> devicesMetrics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"u8))
@@ -41,8 +93,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IotSecuritySolutionAnalyticsModelDevicesMetrics IModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

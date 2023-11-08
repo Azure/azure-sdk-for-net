@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The PatchPropertiesRenewProperties. </summary>
     internal partial class PatchPropertiesRenewProperties
     {
-        /// <summary> Initializes a new instance of PatchPropertiesRenewProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PatchPropertiesRenewProperties"/>. </summary>
         public PatchPropertiesRenewProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PatchPropertiesRenewProperties"/>. </summary>
+        /// <param name="purchaseProperties"> The request for reservation purchase. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PatchPropertiesRenewProperties(ReservationPurchaseContent purchaseProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PurchaseProperties = purchaseProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The request for reservation purchase. </summary>

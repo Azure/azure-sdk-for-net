@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes the quota usage for a particular sku supported by Azure Cognitive Search. </summary>
     public partial class QuotaUsageResult
     {
-        /// <summary> Initializes a new instance of QuotaUsageResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaUsageResult"/>. </summary>
         internal QuotaUsageResult()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsageResult"/>. </summary>
         /// <param name="id"> The resource id of the quota usage sku endpoint for Microsoft.Search provider. </param>
         /// <param name="unit"> The unit of measurement for the search sku. </param>
         /// <param name="currentValue"> The currently used up value for the particular search sku. </param>
         /// <param name="limit"> The quota limit for the particular search sku. </param>
         /// <param name="name"> The name of the sku supported by Azure Cognitive Search. </param>
-        internal QuotaUsageResult(ResourceIdentifier id, string unit, int? currentValue, int? limit, QuotaUsageResultName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaUsageResult(ResourceIdentifier id, string unit, int? currentValue, int? limit, QuotaUsageResultName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id of the quota usage sku endpoint for Microsoft.Search provider. </summary>

@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> General Replication extension model custom properties. </summary>
     public partial class GeneralReplicationExtensionModelCustomProperties : ReplicationExtensionModelCustomProperties
     {
-        /// <summary> Initializes a new instance of GeneralReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralReplicationExtensionModelCustomProperties"/>. </summary>
         public GeneralReplicationExtensionModelCustomProperties()
         {
             InstanceType = "ReplicationExtensionModelCustomProperties";
         }
 
-        /// <summary> Initializes a new instance of GeneralReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal GeneralReplicationExtensionModelCustomProperties(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeneralReplicationExtensionModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "ReplicationExtensionModelCustomProperties";
         }

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Update replication protected item input. </summary>
     public partial class ReplicationProtectedItemPatch
     {
-        /// <summary> Initializes a new instance of ReplicationProtectedItemPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemPatch"/>. </summary>
         public ReplicationProtectedItemPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemPatch"/>. </summary>
+        /// <param name="properties"> Update replication protected item properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProtectedItemPatch(UpdateReplicationProtectedItemProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Update replication protected item properties. </summary>

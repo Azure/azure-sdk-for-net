@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> VideoGroup video detail. </summary>
     public partial class VideoGroupVideo
     {
-        /// <summary> Initializes a new instance of VideoGroupVideo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VideoGroupVideo"/>. </summary>
         public VideoGroupVideo()
         {
         }
 
-        /// <summary> Initializes a new instance of VideoGroupVideo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoGroupVideo"/>. </summary>
         /// <param name="src"> Link to the video. </param>
         /// <param name="title"> Title of the video. </param>
-        internal VideoGroupVideo(string src, string title)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VideoGroupVideo(string src, string title, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Src = src;
             Title = title;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Link to the video. </summary>

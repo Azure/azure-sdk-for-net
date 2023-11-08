@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The response payload for CheckNameAvailability API. </summary>
     public partial class PurviewAccountNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of PurviewAccountNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityResult"/>. </summary>
         internal PurviewAccountNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates if name is valid and available. </param>
         /// <param name="reason"> The reason the name is not available. </param>
-        internal PurviewAccountNameAvailabilityResult(string message, bool? isNameAvailable, PurviewAccountNameUnavailableReason? reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountNameAvailabilityResult(string message, bool? isNameAvailable, PurviewAccountNameUnavailableReason? reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error message. </summary>

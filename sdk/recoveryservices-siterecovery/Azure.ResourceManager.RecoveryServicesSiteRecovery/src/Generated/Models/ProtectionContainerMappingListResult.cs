@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection container mapping collection class. </summary>
     internal partial class ProtectionContainerMappingListResult
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingListResult"/>. </summary>
         internal ProtectionContainerMappingListResult()
         {
             Value = new ChangeTrackingList<ProtectionContainerMappingData>();
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingListResult"/>. </summary>
         /// <param name="value"> List of container mappings. </param>
         /// <param name="nextLink"> Link to fetch rest of the data. </param>
-        internal ProtectionContainerMappingListResult(IReadOnlyList<ProtectionContainerMappingData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectionContainerMappingListResult(IReadOnlyList<ProtectionContainerMappingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of container mappings. </summary>

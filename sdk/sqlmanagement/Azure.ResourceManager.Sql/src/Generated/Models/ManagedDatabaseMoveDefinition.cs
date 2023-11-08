@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a managed database move. </summary>
     public partial class ManagedDatabaseMoveDefinition
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseMoveDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseMoveDefinition"/>. </summary>
         /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destinationManagedDatabaseId"/> is null. </exception>
         public ManagedDatabaseMoveDefinition(ResourceIdentifier destinationManagedDatabaseId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Sql.Models
             Argument.AssertNotNull(destinationManagedDatabaseId, nameof(destinationManagedDatabaseId));
 
             DestinationManagedDatabaseId = destinationManagedDatabaseId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseMoveDefinition"/>. </summary>
+        /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDatabaseMoveDefinition(ResourceIdentifier destinationManagedDatabaseId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DestinationManagedDatabaseId = destinationManagedDatabaseId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseMoveDefinition"/> for deserialization. </summary>
+        internal ManagedDatabaseMoveDefinition()
+        {
         }
 
         /// <summary> The destination managed database ID. </summary>

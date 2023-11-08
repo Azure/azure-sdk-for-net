@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Synapse link workspace resource. </summary>
     public partial class SqlSynapseLinkWorkspace : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspace. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlSynapseLinkWorkspace"/>. </summary>
         public SqlSynapseLinkWorkspace()
         {
             Workspaces = new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>();
         }
 
-        /// <summary> Initializes a new instance of SqlSynapseLinkWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSynapseLinkWorkspace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="workspaces"> List of all synapselink workspaces. </param>
-        internal SqlSynapseLinkWorkspace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SqlSynapseLinkWorkspaceInfo> workspaces) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlSynapseLinkWorkspace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SqlSynapseLinkWorkspaceInfo> workspaces, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Workspaces = workspaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of all synapselink workspaces. </summary>
