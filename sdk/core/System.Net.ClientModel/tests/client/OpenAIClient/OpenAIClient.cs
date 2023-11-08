@@ -14,7 +14,7 @@ public class OpenAIClient
 {
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
-    private readonly MessagePipeline _pipeline;
+    private readonly ClientPipeline _pipeline;
 
     public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
     {
@@ -37,7 +37,7 @@ public class OpenAIClient
 
         options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
 
-        _pipeline = MessagePipeline.Create(options);
+        _pipeline = ClientPipeline.Create(options);
     }
 
     public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)

@@ -14,7 +14,7 @@ public class MapsClient
 {
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
-    private readonly MessagePipeline _pipeline;
+    private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
     public MapsClient(Uri endpoint, KeyCredential credential, MapsClientOptions options = default)
@@ -40,7 +40,7 @@ public class MapsClient
 
         options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
-        _pipeline = MessagePipeline.Create(options);
+        _pipeline = ClientPipeline.Create(options);
     }
 
     public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
