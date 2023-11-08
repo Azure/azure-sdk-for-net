@@ -71,7 +71,22 @@ namespace System.Net.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModel<object>)}");
             }
 
-            return Write(iModel, options);
+            if (options.Format == "J" || (options.Format == "W" && iModel.GetWireFormat(options) == "J"))
+            {
+                if (model is not IJsonModel<object> jsonModel)
+                {
+                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
+                }
+
+                using (ModelWriter<object> writer = new ModelWriter<object>(jsonModel, options))
+                {
+                    return writer.ToBinaryData();
+                }
+            }
+            else
+            {
+                return iModel.Write(options);
+            }
         }
 
         /// <summary>
