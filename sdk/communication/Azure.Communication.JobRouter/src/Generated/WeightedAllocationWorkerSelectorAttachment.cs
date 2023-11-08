@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// Describes multiple sets of worker selectors, of which one will be selected and
-    /// attached according to a weighting
-    /// </summary>
+    /// <summary> Describes multiple sets of worker selectors, of which one will be selected and attached according to a weighting. </summary>
     public partial class WeightedAllocationWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
