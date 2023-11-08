@@ -6,27 +6,25 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
-    public partial class ChatMessage
+    /// <summary>
+    /// A single, role-attributed message within a chat completion interaction.
+    /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TextChatMessage"/>.
+    /// </summary>
+    public abstract partial class ChatMessage
     {
         /// <summary> Initializes a new instance of ChatMessage. </summary>
-        /// <param name="content"> The text associated with the message. </param>
         /// <param name="role"> The role associated with the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public ChatMessage(string content, ChatRole role)
+        protected ChatMessage(ChatRole role)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            Content = content;
             Role = role;
         }
 
         /// <summary> Initializes a new instance of ChatMessage. </summary>
-        /// <param name="content"> The text associated with the message. </param>
+        /// <param name="kind"> The type of the message. If not specified, the message is assumed to be text. </param>
         /// <param name="role"> The role associated with the message. </param>
         /// <param name="sessionState">
         /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
@@ -34,15 +32,15 @@ namespace Azure.AI.ChatProtocol
         /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
         /// conversations or user preferences.
         /// </param>
-        internal ChatMessage(string content, ChatRole role, BinaryData sessionState)
+        internal ChatMessage(MessageKind kind, ChatRole role, BinaryData sessionState)
         {
-            Content = content;
+            Kind = kind;
             Role = role;
             SessionState = sessionState;
         }
 
-        /// <summary> The text associated with the message. </summary>
-        public string Content { get; set; }
+        /// <summary> The type of the message. If not specified, the message is assumed to be text. </summary>
+        internal MessageKind Kind { get; set; }
         /// <summary> The role associated with the message. </summary>
         public ChatRole Role { get; set; }
         /// <summary>

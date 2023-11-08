@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -17,8 +16,8 @@ namespace Azure.AI.ChatProtocol
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             if (Optional.IsDefined(SessionState))
@@ -34,40 +33,6 @@ namespace Azure.AI.ChatProtocol
 #endif
             }
             writer.WriteEndObject();
-        }
-
-        internal static ChatMessage DeserializeChatMessage(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string content = default;
-            ChatRole role = default;
-            Optional<BinaryData> sessionState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("content"u8))
-                {
-                    content = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("role"u8))
-                {
-                    role = new ChatRole(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sessionState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sessionState = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-            }
-            return new ChatMessage(content, role, sessionState.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

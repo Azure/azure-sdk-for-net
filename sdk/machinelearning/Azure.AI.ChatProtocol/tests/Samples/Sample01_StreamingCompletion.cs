@@ -30,7 +30,7 @@ namespace Azure.AI.ChatProtocol.Tests.Samples
             var response = await client.CreateStreamingAsync(new StreamingChatCompletionOptions(
                 messages: new[]
                 {
-                    new ChatMessage("Hello", ChatRole.Assistant),
+                    new TextChatMessage(ChatRole.Assistant, "Hello"),
                 },
                 sessionState: BinaryData.FromString("Hello"),
                 context: new Dictionary<string, BinaryData>
@@ -44,7 +44,10 @@ namespace Azure.AI.ChatProtocol.Tests.Samples
                 foreach (var choiceDelta in completionChunk.Choices)
                 {
                     Console.WriteLine("Index: " + choiceDelta.Index);
-                    PrintIfNotNull("Content: ", choiceDelta.Delta?.Content);
+                    if (choiceDelta.Delta is TextChatMessageDelta textMessageDelta)
+                    {
+                        Console.WriteLine("Content: ", textMessageDelta.Content);
+                    }
                     PrintIfNotNull("Role: ", choiceDelta.Delta?.Role);
                     PrintIfNotNull("SessionState: ", choiceDelta.SessionState);
                     PrintIfNotNull("Context: ", choiceDelta.Context);

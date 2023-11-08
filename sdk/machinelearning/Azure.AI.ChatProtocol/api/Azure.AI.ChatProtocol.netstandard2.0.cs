@@ -5,7 +5,6 @@ namespace Azure.AI.ChatProtocol
         public static Azure.AI.ChatProtocol.ChatChoice ChatChoice(long index = (long)0, Azure.AI.ChatProtocol.ChatMessage message = null, System.BinaryData sessionState = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> context = null, Azure.AI.ChatProtocol.FinishReason finishReason = default(Azure.AI.ChatProtocol.FinishReason)) { throw null; }
         public static Azure.AI.ChatProtocol.ChatCompletion ChatCompletion(System.Collections.Generic.IEnumerable<Azure.AI.ChatProtocol.ChatChoice> choices = null) { throw null; }
         public static Azure.AI.ChatProtocol.ChatCompletionChunk ChatCompletionChunk(System.Collections.Generic.IEnumerable<Azure.AI.ChatProtocol.ChoiceDelta> choices = null) { throw null; }
-        public static Azure.AI.ChatProtocol.ChatMessageDelta ChatMessageDelta(string content = null, Azure.AI.ChatProtocol.ChatRole? role = default(Azure.AI.ChatProtocol.ChatRole?), System.BinaryData sessionState = null) { throw null; }
         public static Azure.AI.ChatProtocol.ChoiceDelta ChoiceDelta(long index = (long)0, Azure.AI.ChatProtocol.ChatMessageDelta delta = null, System.BinaryData sessionState = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> context = null, Azure.AI.ChatProtocol.FinishReason? finishReason = default(Azure.AI.ChatProtocol.FinishReason?)) { throw null; }
     }
     public partial class ChatChoice
@@ -36,17 +35,15 @@ namespace Azure.AI.ChatProtocol
         public System.Collections.Generic.IList<Azure.AI.ChatProtocol.ChatMessage> Messages { get { throw null; } }
         public System.BinaryData SessionState { get { throw null; } set { } }
     }
-    public partial class ChatMessage
+    public abstract partial class ChatMessage
     {
-        public ChatMessage(string content, Azure.AI.ChatProtocol.ChatRole role) { }
-        public string Content { get { throw null; } set { } }
+        protected ChatMessage(Azure.AI.ChatProtocol.ChatRole role) { }
         public Azure.AI.ChatProtocol.ChatRole Role { get { throw null; } set { } }
         public System.BinaryData SessionState { get { throw null; } set { } }
     }
-    public partial class ChatMessageDelta
+    public abstract partial class ChatMessageDelta
     {
-        internal ChatMessageDelta() { }
-        public string Content { get { throw null; } }
+        protected ChatMessageDelta() { }
         public Azure.AI.ChatProtocol.ChatRole? Role { get { throw null; } }
         public System.BinaryData SessionState { get { throw null; } }
     }
@@ -59,15 +56,16 @@ namespace Azure.AI.ChatProtocol
         public ChatProtocolClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.ChatProtocol.ChatProtocolClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.ChatProtocol.ChatCompletion> Create(Azure.AI.ChatProtocol.ChatCompletionOptions chatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ChatProtocol.ChatCompletion>> CreateAsync(Azure.AI.ChatProtocol.ChatCompletionOptions chatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IEnumerable<Azure.AI.ChatProtocol.ChatCompletionChunk>> CreateStreaming(Azure.AI.ChatProtocol.StreamingChatCompletionOptions streamingChatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IAsyncEnumerable<Azure.AI.ChatProtocol.ChatCompletionChunk>>> CreateStreamingAsync(Azure.AI.ChatProtocol.StreamingChatCompletionOptions streamingChatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ChatProtocolClientOptions : Azure.Core.ClientOptions
     {
-        public ChatProtocolClientOptions(Azure.AI.ChatProtocol.ChatProtocolClientOptions.ServiceVersion version = Azure.AI.ChatProtocol.ChatProtocolClientOptions.ServiceVersion.V2023_10_01_Preview) { }
+        public ChatProtocolClientOptions(string chatRoute = "chat", string[]? authorizationScopes = null, string? apiKeyHeader = null) { }
+        public string? APIKeyHeader { get { throw null; } set { } }
+        public string[]? AuthorizationScopes { get { throw null; } set { } }
+        public string ChatRoute { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2023_10_01_Preview = 1,

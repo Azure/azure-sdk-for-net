@@ -22,7 +22,7 @@ namespace Azure.AI.ChatProtocol.Tests.Samples
             ChatCompletion completion = await client.CreateAsync(new ChatCompletionOptions(
                 messages: new[]
                 {
-                    new ChatMessage("Hello", ChatRole.Assistant),
+                    new TextChatMessage(ChatRole.Assistant, "Hello"),
                 },
                 sessionState: BinaryData.FromString("Hello"),
                 context: new Dictionary<string, BinaryData>
@@ -34,7 +34,10 @@ namespace Azure.AI.ChatProtocol.Tests.Samples
             foreach (var choice in completion.Choices)
             {
                 Console.WriteLine("Index: " + choice.Index);
-                Console.WriteLine("Content: ", choice.Message.Content);
+                if (choice.Message is TextChatMessage textMessage)
+                {
+                    Console.WriteLine("Content: ", textMessage.Content);
+                }
                 Console.WriteLine("Role: ", choice.Message.Role);
                 Console.WriteLine("SessionState: ", choice.SessionState);
                 Console.WriteLine("Context: ", choice.Context);

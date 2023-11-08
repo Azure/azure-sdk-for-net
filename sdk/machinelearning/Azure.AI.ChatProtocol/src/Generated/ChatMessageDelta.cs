@@ -9,16 +9,20 @@ using System;
 
 namespace Azure.AI.ChatProtocol
 {
-    /// <summary> The representation of a delta message received in a streaming completion. </summary>
-    public partial class ChatMessageDelta
+    /// <summary>
+    /// The representation of a delta message received in a streaming completion.
+    /// Please note <see cref="ChatMessageDelta"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TextChatMessageDelta"/>.
+    /// </summary>
+    public abstract partial class ChatMessageDelta
     {
         /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
-        internal ChatMessageDelta()
+        protected ChatMessageDelta()
         {
         }
 
         /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
-        /// <param name="content"> An incremental part of the text associated with the message. </param>
+        /// <param name="kind"> The type of the message. If not specified, the message is assumed to be text. </param>
         /// <param name="role"> The role associated with the message. </param>
         /// <param name="sessionState">
         /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
@@ -26,15 +30,15 @@ namespace Azure.AI.ChatProtocol
         /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
         /// conversations or user preferences.
         /// </param>
-        internal ChatMessageDelta(string content, ChatRole? role, BinaryData sessionState)
+        internal ChatMessageDelta(MessageKind kind, ChatRole? role, BinaryData sessionState)
         {
-            Content = content;
+            Kind = kind;
             Role = role;
             SessionState = sessionState;
         }
 
-        /// <summary> An incremental part of the text associated with the message. </summary>
-        public string Content { get; }
+        /// <summary> The type of the message. If not specified, the message is assumed to be text. </summary>
+        internal MessageKind Kind { get; set; }
         /// <summary> The role associated with the message. </summary>
         public ChatRole? Role { get; }
         /// <summary>

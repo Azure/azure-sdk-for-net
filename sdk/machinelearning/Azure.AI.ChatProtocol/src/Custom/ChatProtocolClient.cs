@@ -32,9 +32,13 @@ internal static class StreamReaderExtensions
 }
 
 [CodeGenSuppress("CreateStreamingAsync", typeof(string), typeof(StreamingChatCompletionOptions), typeof(CancellationToken))]
+[CodeGenSuppress("CreateStreamingAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
 [CodeGenSuppress("CreateStreaming", typeof(string), typeof(StreamingChatCompletionOptions), typeof(CancellationToken))]
+[CodeGenSuppress("CreateStreaming", typeof(string), typeof(RequestContent), typeof(RequestContext))]
 [CodeGenSuppress("CreateAsync", typeof(string), typeof(ChatCompletionOptions), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
 [CodeGenSuppress("Create", typeof(string), typeof(ChatCompletionOptions), typeof(CancellationToken))]
+[CodeGenSuppress("Create", typeof(string), typeof(RequestContent), typeof(RequestContext))]
 public partial class ChatProtocolClient
 {
     private readonly string _chatRoute;
@@ -106,6 +110,36 @@ public partial class ChatProtocolClient
         }
     }
 
+    private async Task<Response> ProcessMessageAsync(string scopeName, HttpMessage message, RequestContext context)
+    {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope(scopeName);
+        scope.Start();
+        try
+        {
+            return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
+    }
+
+    private Response ProcessMessage(string scopeName, HttpMessage message, RequestContext context)
+    {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope(scopeName);
+        scope.Start();
+        try
+        {
+            return _pipeline.ProcessMessage(message, context);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
+    }
+
     /// <summary> Creates a new streaming chat completion.</summary>
     /// <param name="streamingChatCompletionOptions"> The configuration for a streaming chat completion request. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,9 +149,11 @@ public partial class ChatProtocolClient
         Argument.AssertNotNull(streamingChatCompletionOptions, nameof(streamingChatCompletionOptions));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        Response response = await CreateStreamingAsync(_chatRoute, streamingChatCompletionOptions.ToRequestContent(), context).ConfigureAwait(false);
+        using RequestContent requestContent = streamingChatCompletionOptions.ToRequestContent();
+        using HttpMessage message = CreateCreateStreamingRequest(_chatRoute, requestContent, context);
+
+        Response response = await ProcessMessageAsync("ChatProtocolClient.CreateStreaming", message, context).ConfigureAwait(false);
         IAsyncEnumerable<ChatCompletionChunk> value = GetStreamingEnumerableAsync(response);
-        // IAsyncEnumerable<ChatCompletionChunk> value = new SSEStream<ChatCompletionChunk>(response, ChatCompletionChunk.DeserializeChatCompletionChunk);
         return Response.FromValue(value, response);
     }
 
@@ -130,7 +166,10 @@ public partial class ChatProtocolClient
         Argument.AssertNotNull(streamingChatCompletionOptions, nameof(streamingChatCompletionOptions));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        Response response = CreateStreaming(_chatRoute, streamingChatCompletionOptions.ToRequestContent(), context);
+        using RequestContent requestContent = streamingChatCompletionOptions.ToRequestContent();
+        using HttpMessage message = CreateCreateStreamingRequest(_chatRoute, requestContent, context);
+
+        Response response = ProcessMessage("ChatProtocolClient.CreateStreaming", message, context);
         IEnumerable<ChatCompletionChunk> value = GetStreamingEnumerable(response);
         return Response.FromValue(value, response);
     }
@@ -141,12 +180,13 @@ public partial class ChatProtocolClient
     /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
     public virtual async Task<Response<ChatCompletion>> CreateAsync(ChatCompletionOptions chatCompletionOptions, CancellationToken cancellationToken = default)
     {
-        // https://github.com/Azure/autorest.csharp/issues/3880
         Argument.AssertNotNull(chatCompletionOptions, nameof(chatCompletionOptions));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        using RequestContent content = chatCompletionOptions.ToRequestContent();
-        Response response = await CreateAsync(_chatRoute, content, context).ConfigureAwait(false);
+        using RequestContent requestContent = chatCompletionOptions.ToRequestContent();
+        using HttpMessage message = CreateCreateRequest(_chatRoute, requestContent, context);
+
+        Response response = await ProcessMessageAsync("ChatProtocolClient.Create", message, context).ConfigureAwait(false);
         return Response.FromValue(ChatCompletion.FromResponse(response), response);
     }
 
@@ -156,12 +196,13 @@ public partial class ChatProtocolClient
     /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
     public virtual Response<ChatCompletion> Create(ChatCompletionOptions chatCompletionOptions, CancellationToken cancellationToken = default)
     {
-        // https://github.com/Azure/autorest.csharp/issues/3880
         Argument.AssertNotNull(chatCompletionOptions, nameof(chatCompletionOptions));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        using RequestContent content = chatCompletionOptions.ToRequestContent();
-        Response response = Create(_chatRoute, content, context);
+        using RequestContent requestContent = chatCompletionOptions.ToRequestContent();
+        using HttpMessage message = CreateCreateRequest(_chatRoute, requestContent, context);
+
+        Response response = ProcessMessage("ChatProtocolClient.Create", message, context);
         return Response.FromValue(ChatCompletion.FromResponse(response), response);
     }
 }

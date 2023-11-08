@@ -5,6 +5,5 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol;
 
-[CodeGenModel("ChatMessageDeltaunknown")]
 public partial class ChatMessageDelta
 {}

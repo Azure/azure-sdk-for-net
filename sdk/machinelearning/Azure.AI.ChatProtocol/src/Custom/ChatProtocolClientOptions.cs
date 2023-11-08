@@ -21,16 +21,14 @@ public partial class ChatProtocolClientOptions : ClientOptions
     /// <summary> If set this will override the header used in an API key flow. If not set 'api-key' is used. </summary>
     public string? APIKeyHeader { get; set;}
 
+#pragma warning disable AZC0009
     /// <summary> Initializes new instance of ChatProtocolClientOptions. </summary>
-    public ChatProtocolClientOptions(ServiceVersion version = LatestVersion, string chatRoute = "chat", string[]? authorizationScopes = null, string? apiKeyHeader = null)
+    public ChatProtocolClientOptions(string chatRoute = "chat", string[]? authorizationScopes = null, string? apiKeyHeader = null)
     {
-        Version = version switch
-        {
-            ServiceVersion.V2023_10_01_Preview => "2023-10-01-preview",
-            _ => throw new NotSupportedException()
-        };
+        Version = "2023-10-01-preview";
         ChatRoute = chatRoute;
         AuthorizationScopes = authorizationScopes;
         APIKeyHeader = apiKeyHeader;
     }
+#pragma warning restore AZC0009
 }

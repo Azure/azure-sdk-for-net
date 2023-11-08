@@ -7,8 +7,6 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol;
 
-#pragma warning disable AZC0030 // Disabling error about renaming type to Options
-[CodeGenModel("StreamingChatCompletionOptionsunknownRecord")]
 public partial class StreamingChatCompletionOptions
 {
     internal bool Stream { get; } = true;
@@ -35,4 +33,3 @@ public partial class StreamingChatCompletionOptions
         Context = context;
     }
 }
-#pragma warning restore AZC0030

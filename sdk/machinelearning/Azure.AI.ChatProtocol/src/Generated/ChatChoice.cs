@@ -54,7 +54,11 @@ namespace Azure.AI.ChatProtocol
 
         /// <summary> The index of the of the chat choice, relative to the other choices in the same completion. </summary>
         public long Index { get; }
-        /// <summary> The chat message for a given chat completion. </summary>
+        /// <summary>
+        /// The chat message for a given chat completion.
+        /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TextChatMessage"/>.
+        /// </summary>
         public ChatMessage Message { get; }
         /// <summary>
         /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend

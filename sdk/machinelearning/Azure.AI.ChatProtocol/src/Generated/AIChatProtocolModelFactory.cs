@@ -46,21 +46,6 @@ namespace Azure.AI.ChatProtocol
             return new ChoiceDelta(index, delta, sessionState, context, finishReason);
         }
 
-        /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
-        /// <param name="content"> An incremental part of the text associated with the message. </param>
-        /// <param name="role"> The role associated with the message. </param>
-        /// <param name="sessionState">
-        /// Field that allows the chat app to store and retrieve data, the structure of such data is dependant on the backend
-        /// being used. The client must send back the data in this field unchanged in subsequent requests, until the chat app
-        /// sends a new one. The data in this field can be used to implement stateful services, such as remembering previous
-        /// conversations or user preferences.
-        /// </param>
-        /// <returns> A new <see cref="ChatProtocol.ChatMessageDelta"/> instance for mocking. </returns>
-        public static ChatMessageDelta ChatMessageDelta(string content = null, ChatRole? role = null, BinaryData sessionState = null)
-        {
-            return new ChatMessageDelta(content, role, sessionState);
-        }
-
         /// <summary> Initializes a new instance of ChatCompletion. </summary>
         /// <param name="choices"> The collection of generated completions. </param>
         /// <returns> A new <see cref="ChatProtocol.ChatCompletion"/> instance for mocking. </returns>

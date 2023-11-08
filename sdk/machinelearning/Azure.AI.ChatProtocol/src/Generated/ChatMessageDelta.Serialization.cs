@@ -5,53 +5,13 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
     public partial class ChatMessageDelta
     {
-        internal static ChatMessageDelta DeserializeChatMessageDelta(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> content = default;
-            Optional<ChatRole> role = default;
-            Optional<BinaryData> sessionState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("content"u8))
-                {
-                    content = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("role"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    role = new ChatRole(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sessionState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sessionState = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-            }
-            return new ChatMessageDelta(content.Value, Optional.ToNullable(role), sessionState.Value);
-        }
-
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatMessageDelta FromResponse(Response response)
