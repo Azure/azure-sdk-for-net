@@ -13,21 +13,51 @@ public class MessagePipeline
 
     private MessagePipeline(ReadOnlyMemory<PipelinePolicy> policies)
     {
+        if (policies.Span[policies.Length - 1] is not PipelineTransport)
+        {
+            throw new ArgumentException("Last policy in the array must be of type 'PipelineTransport'.", nameof(policies));
+        }
+
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
     }
 
-    //internal static MessagePipeline Create(
-    //    PipelineOptions options,
-    //    PipelinePolicy[] perCallPolicies,
-    //    PipelinePolicy[] perTryPolicies)
-    //{
+    internal static MessagePipeline Create(ReadOnlyMemory<PipelinePolicy> policies)
+        => new MessagePipeline(policies);
 
-    //}
+    public static void Create(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
+        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    internal static MessagePipeline Create(PipelineOptions options)
+    public static void Create(RequestOptions options, params PipelinePolicy[] perCallPolicies)
+        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
+
+    public static void Create(
+        RequestOptions options,
+        ReadOnlySpan<PipelinePolicy> perCallPolicies,
+        ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
-        int pipelineLength = 0;
+        // If PipelineOptions haven't been modified, we don't need to create a new pipeline.
+        if (!options.PipelineOptions.Modified)
+        {
+            options.PipelineOptions.Freeze();
+            return;
+        }
+
+        Create(options.PipelineOptions, perCallPolicies, perTryPolicies);
+    }
+
+    public static void Create(
+        PipelineOptions options,
+        ReadOnlySpan<PipelinePolicy> perCallPolicies,
+        ReadOnlySpan<PipelinePolicy> perTryPolicies)
+    {
+        if (options.IsFrozen)
+        {
+            // Pipeline is already set on options.
+            return;
+        }
+
+        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
         if (options.PerTryPolicies != null)
         {
@@ -48,9 +78,12 @@ public class MessagePipeline
 
         int index = 0;
 
+        perCallPolicies.CopyTo(pipeline.AsSpan(index));
+        index += perCallPolicies.Length;
+
         if (options.PerCallPolicies != null)
         {
-            options.PerCallPolicies.CopyTo(pipeline.AsSpan());
+            options.PerCallPolicies.CopyTo(pipeline.AsSpan(index));
             index += options.PerCallPolicies.Length;
         }
 
@@ -58,6 +91,9 @@ public class MessagePipeline
         {
             pipeline[index++] = options.RetryPolicy;
         }
+
+        perTryPolicies.CopyTo(pipeline.AsSpan(index));
+        index += perTryPolicies.Length;
 
         if (options.PerTryPolicies != null)
         {
@@ -80,7 +116,8 @@ public class MessagePipeline
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new MessagePipeline(pipeline);
+        // Set and freeze the pipeline.
+        options.SetPipeline(new MessagePipeline(pipeline));
     }
 
     // TODO: note that without a common base type, nothing validates that MessagePipeline

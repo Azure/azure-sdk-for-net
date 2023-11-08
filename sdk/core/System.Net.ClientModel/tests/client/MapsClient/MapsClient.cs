@@ -15,7 +15,8 @@ public class MapsClient
 
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
-    private PipelineOptions _pipelineOptions;
+    private readonly PipelineOptions _pipelineOptions;
+    private readonly PipelinePolicy[] _clientPolicies;
 
     public MapsClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
     {
@@ -25,31 +26,13 @@ public class MapsClient
         _endpoint = endpoint;
         _credential = credential;
 
-        // We modify options in-place so callers can get the cached pipeline to save for later.
         options ??= new PipelineOptions();
-        options.ServiceVersion ??= LatestServiceVersion;
 
-        // TODO: Can this be simplified?
-        if (options.PerCallPolicies is null)
-        {
-            options.PerCallPolicies = new PipelinePolicy[1];
-        }
-        else
-        {
-            var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
-            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan().Slice(1));
-        }
+        _clientPolicies = new PipelinePolicy[1];
+        _clientPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
-        options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
-
-        // TODO: Do we need to call this here?
-        // Is it just to freeze it?  Can we do that differently?
-        // Might be nice for only RequestOptions to hold the pipeline?
-        // Why?  Thinking about how to separate client-user APIs from client-author APIs
-        // and not have to EBN GetPipeline....
-
-        // This freezes the pipeline; can no longer modify PipelineOptions
-        options.GetPipeline();
+        // This creates the pipeline, caches it in options, and freezes options.
+        MessagePipeline.Create(options, _clientPolicies);
 
         _pipelineOptions = options;
     }
@@ -74,8 +57,7 @@ public class MapsClient
 
         using ClientMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        MessagePipeline pipeline = options.GetPipeline();
-        pipeline.Send(message);
+        options.Pipeline.Send(message);
 
         MessageResponse response = message.Response;
 
@@ -89,13 +71,14 @@ public class MapsClient
 
     private ClientMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
-        MessagePipeline pipeline = options.GetPipeline();
-
         // TODO: this overrides anything the caller passed, so we need to fix that.
         // We have classifier-chaining logic in Azure.Core we can use if that's what we want.
-        options.PipelineOptions.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
+        options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
-        ClientMessage message = pipeline.CreateMessage(options);
+        // TODO: Should this be called "GetPipeline" instead of Create?
+        MessagePipeline.Create(options, _clientPolicies);
+
+        ClientMessage message = options.Pipeline.CreateMessage(options);
 
         MessageRequest request = message.Request;
         request.Method = "GET";
@@ -109,7 +92,7 @@ public class MapsClient
 
         StringBuilder query = new();
         query.Append("api-version=");
-        query.Append(Uri.EscapeDataString(options.PipelineOptions.ServiceVersion));
+        query.Append(Uri.EscapeDataString(options.PipelineOptions.ServiceVersion ?? LatestServiceVersion));
         query.Append("&ip=");
         query.Append(Uri.EscapeDataString(ipAddress));
         uriBuilder.Query = query.ToString();

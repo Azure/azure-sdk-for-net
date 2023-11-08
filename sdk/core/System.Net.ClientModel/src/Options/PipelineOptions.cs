@@ -9,11 +9,11 @@ namespace System.Net.ClientModel.Core;
 /// </summary>
 public class PipelineOptions
 {
-    private readonly object _lock = new();
+    //private readonly object _lock = new();
     private MessagePipeline? _pipeline;
+    private bool _isFrozen;
 
-    // TODO: don't freeze but track changes
-    private volatile bool _isFrozen;
+    private bool _modified;
 
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
@@ -28,33 +28,72 @@ public class PipelineOptions
     {
     }
 
-    public virtual MessagePipeline GetPipeline()
+    public PipelineOptions(ReadOnlyMemory<PipelinePolicy> policies)
+        => SetPipeline(MessagePipeline.Create(policies));
+
+    // Copy Constructor
+    internal PipelineOptions(PipelineOptions options)
     {
-        if (_pipeline != null) return _pipeline;
+        _perCallPolicies = options.PerCallPolicies;
+        _perTryPolicies = options.PerTryPolicies;
+        _retryPolicy = options.RetryPolicy;
+        _transport = options.Transport;
+        _serviceVersion = options.ServiceVersion;
+        _networkTimeout = options.NetworkTimeout;
+        _messageClassifier = options.MessageClassifier;
 
-        lock (_lock)
+        // Cache the pipeline for possible reuse, but don't freeze it yet.
+        _pipeline = options.Pipeline;
+    }
+
+    internal bool IsFrozen => _isFrozen;
+
+    internal void Freeze() => _isFrozen = true;
+
+    internal bool Modified => _modified;
+
+    internal void SetPipeline(MessagePipeline pipeline)
+    {
+        _pipeline = pipeline;
+        Freeze();
+    }
+
+    public MessagePipeline Pipeline
+    {
+        get
         {
-            if (IsFrozen)
+            if (_pipeline is null || !IsFrozen)
             {
-                if (_pipeline == null)
-                {
-                    throw new InvalidOperationException("Unexpected state: null pipeline and frozen options.");
-                }
-
-                return _pipeline;
+                throw new InvalidOperationException("MessagePipeline.Create must be called to cache a pipeline instance prior to accessing PipelineOptions.Pipeline");
             }
-
-            _pipeline = MessagePipeline.Create(this);
-
-            Freeze();
 
             return _pipeline;
         }
     }
 
-    private bool IsFrozen => _isFrozen;
+    //public virtual MessagePipeline GetPipeline()
+    //{
+    //    if (_pipeline != null) return _pipeline;
 
-    private void Freeze() => _isFrozen = true;
+    //    lock (_lock)
+    //    {
+    //        if (IsFrozen)
+    //        {
+    //            if (_pipeline == null)
+    //            {
+    //                throw new InvalidOperationException("Unexpected state: null pipeline and frozen options.");
+    //            }
+
+    //            return _pipeline;
+    //        }
+
+    //        MessagePipeline.Create(this);
+
+    //        Freeze();
+
+    //        return _pipeline;
+    //    }
+    //}
 
     #region Pipeline creation options
 
@@ -71,6 +110,7 @@ public class PipelineOptions
         {
             AssertNotFrozen();
             _perCallPolicies = value;
+            _modified = true;
         }
     }
 
@@ -81,6 +121,7 @@ public class PipelineOptions
         {
             AssertNotFrozen();
             _perTryPolicies = value;
+            _modified = true;
         }
     }
 
@@ -91,6 +132,7 @@ public class PipelineOptions
         {
             AssertNotFrozen();
             _retryPolicy = value;
+            _modified = true;
         }
     }
 
@@ -101,6 +143,7 @@ public class PipelineOptions
         {
             AssertNotFrozen();
             _transport = value;
+            _modified = true;
         }
     }
 
@@ -111,6 +154,7 @@ public class PipelineOptions
         {
             AssertNotFrozen();
             _serviceVersion = value;
+            _modified = true;
         }
     }
 
@@ -119,8 +163,9 @@ public class PipelineOptions
         get => _networkTimeout;
         set
         {
-            // This one doesn't freeze with the pipeline
+            AssertNotFrozen();
             _networkTimeout = value;
+            _modified = true;
         }
     }
 
@@ -129,8 +174,9 @@ public class PipelineOptions
         get => _messageClassifier;
         set
         {
-            // This one doesn't freeze with the pipeline
+            AssertNotFrozen();
             _messageClassifier = value;
+            _modified = true;
         }
     }
 

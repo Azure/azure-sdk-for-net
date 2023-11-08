@@ -30,38 +30,63 @@ public class MapsClientTests
     }
 
     [Test]
+    public void TestCustomPipeline()
+    {
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+
+        KeyCredential credential = new KeyCredential(key);
+
+        PipelineOptions pipelineOptions = new PipelineOptions();
+        pipelineOptions.PerCallPolicies = new PipelinePolicy[1];
+        pipelineOptions.PerCallPolicies[0] = new CustomPolicy();
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential, pipelineOptions);
+
+        // ^^ In this call, pipeline is created in PO and frozen.
+        Assert.IsNotNull(pipelineOptions.Pipeline);
+
+        RequestOptions requestOptions = new RequestOptions(pipelineOptions);
+
+        IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+        Result result = client.GetCountryCode(ipAddress.ToString(), requestOptions);
+
+        Assert.IsNotNull(requestOptions.Pipeline);
+
+        // Since nothing changed in the RO pipeline, the pipelines should have reference equality.
+        Assert.AreEqual(pipelineOptions.Pipeline, requestOptions.Pipeline);
+
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(result.GetRawResponse());
+
+        Assert.AreEqual("US", value.CountryRegion.IsoCode);
+        Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), value.IpAddress);
+    }
+
+    [Test]
     public void TestCustomPipelineForMethodInvocation()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
 
         KeyCredential credential = new KeyCredential(key);
 
-        // We have to pass the pipeline options to the client constructor
-        // so that the auth policy gets added, otherwise we won't have it later.
-        PipelineOptions pipelineOptions = new PipelineOptions();
-        pipelineOptions.IsLoggingEnabled = true;
-
-        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential, pipelineOptions);
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
         // Add a custom policy to the pipeline just for the one method
         // This constructor is just a copy constructor;
         // copies *settings* from pipeline options into request options
 
-        // Note: it does *not* copy the pipeline.
-        RequestOptions requestOptions = new RequestOptions(pipelineOptions);
-        requestOptions.PipelineOptions.PerCallPolicies
-
-        requestOptions.AddPolicy(new CustomPolicy());
+        // Note: it does *not* copy the pipeline, only the options
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.AddPolicy(new CustomPolicy(), PipelinePosition.PerCall);
 
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
         Result result = client.GetCountryCode(ipAddress.ToString(), requestOptions);
 
         // ^^ In this call, pipeline is created in RO and frozen.
+        Assert.IsNotNull(requestOptions.Pipeline);
 
-        //IPAddressCountryPair value = IPAddressCountryPair.FromResponse(result.GetRawResponse());
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(result.GetRawResponse());
 
-        //Assert.AreEqual("US", value.CountryRegion.IsoCode);
-        //Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), value.IpAddress);
+        Assert.AreEqual("US", value.CountryRegion.IsoCode);
+        Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), value.IpAddress);
     }
 
     public class CustomPolicy : PipelinePolicy

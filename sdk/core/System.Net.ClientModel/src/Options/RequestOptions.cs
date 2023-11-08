@@ -13,15 +13,16 @@ namespace System.Net.ClientModel;
 /// </summary>
 public class RequestOptions
 {
-    private MessagePipeline? _requestPipeline;
-
-    public RequestOptions() : this(new PipelineOptions())
+    public RequestOptions()
     {
+        PipelineOptions = new PipelineOptions();
+        ErrorBehavior = ErrorBehavior.Default;
+        CancellationToken = CancellationToken.None;
     }
 
     public RequestOptions(PipelineOptions pipelineOptions)
     {
-        PipelineOptions = pipelineOptions;
+        PipelineOptions = new(pipelineOptions);
         ErrorBehavior = ErrorBehavior.Default;
         CancellationToken = CancellationToken.None;
     }
@@ -30,7 +31,7 @@ public class RequestOptions
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
-        message.MessageClassifier = PipelineOptions.MessageClassifier ?? MessageClassifier.Default;
+        message.MessageClassifier = GetMessageClassifier();
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why
@@ -41,22 +42,61 @@ public class RequestOptions
         }
     }
 
+    // Hard-codes precedence rules for MessageClassifier
+    private MessageClassifier GetMessageClassifier()
+    {
+        // TODO: We have a bug in this logic currently because classifiers are not chaining
+        if (MessageClassifier is not null)
+        {
+            return MessageClassifier;
+        }
+
+        if (PipelineOptions.MessageClassifier is not null)
+        {
+            return PipelineOptions.MessageClassifier;
+        }
+
+        return MessageClassifier.Default;
+    }
+
     public PipelineOptions PipelineOptions { get; }
 
     public virtual ErrorBehavior ErrorBehavior { get; set; }
 
     public virtual CancellationToken CancellationToken { get; set; }
 
-    public MessagePipeline GetPipeline()
+    public virtual MessageClassifier? MessageClassifier { get; set; }
+
+    public MessagePipeline Pipeline => PipelineOptions.Pipeline;
+
+    public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
-        if (_requestPipeline is not null)
+        switch (position)
         {
-            return _requestPipeline;
+            case PipelinePosition.PerCall:
+                PipelineOptions.PerCallPolicies = AddPolicy(policy, PipelineOptions.PerCallPolicies);
+                break;
+            case PipelinePosition.PerTry:
+                PipelineOptions.PerTryPolicies = AddPolicy(policy, PipelineOptions.PerTryPolicies);
+                break;
+            default:
+                throw new ArgumentException($"Unexpected value for position: '{position}'.");
+        }
+    }
+
+    private static PipelinePolicy[] AddPolicy(PipelinePolicy policy, PipelinePolicy[]? policies)
+    {
+        if (policies is null)
+        {
+            policies = new PipelinePolicy[1];
+        }
+        else
+        {
+            var perCallPolicies = new PipelinePolicy[policies.Length + 1];
+            policies.CopyTo(perCallPolicies.AsSpan());
         }
 
-        // TODO: what is the logic where we set _requestPipeline to cache it?
-        _requestPipeline = default;
-
-        return PipelineOptions.GetPipeline();
+        policies[policies.Length - 1] = policy;
+        return policies;
     }
 }

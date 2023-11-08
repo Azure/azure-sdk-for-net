@@ -12,30 +12,25 @@ public class OpenAIClient
 {
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
+    private readonly PipelineOptions _pipelineOptions;
+    private readonly PipelinePolicy[] _clientPolicies;
 
     public OpenAIClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
 
-        options ??= new PipelineOptions();
-
         _endpoint = endpoint;
         _credential = credential;
 
-        if (options.PerCallPolicies is null)
-        {
-            options.PerCallPolicies = new PipelinePolicy[1];
-        }
-        else
-        {
-            var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
-            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan().Slice(1));
-        }
+        options ??= new PipelineOptions();
 
-        options.PerCallPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
+        _clientPolicies = new PipelinePolicy[1];
+        _clientPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
 
-        options.GetPipeline();
+        MessagePipeline.Create(options, _clientPolicies);
+
+        _pipelineOptions = options;
     }
 
     public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
@@ -45,8 +40,10 @@ public class OpenAIClient
         if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
         Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent());
+
         MessageResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
+
         return Result.FromValue(completions, response);
     }
 
@@ -56,12 +53,11 @@ public class OpenAIClient
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
         if (content is null) throw new ArgumentNullException(nameof(content));
 
-        options ??= new RequestOptions();
+        options ??= new RequestOptions(_pipelineOptions);
 
         using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
-        MessagePipeline pipeline = options.GetPipeline();
-        pipeline.Send(message);
+        options.Pipeline.Send(message);
 
         MessageResponse response = message.Response;
 
@@ -75,12 +71,12 @@ public class OpenAIClient
 
     internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
     {
-        MessagePipeline pipeline = options.GetPipeline();
-
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.PipelineOptions.MessageClassifier = MessageClassifier200;
 
-        ClientMessage message = pipeline.CreateMessage(options);
+        MessagePipeline.Create(options.PipelineOptions, _clientPolicies);
+
+        ClientMessage message = options.Pipeline.CreateMessage(options);
 
         MessageRequest request = message.Request;
         request.Method = "POST";
