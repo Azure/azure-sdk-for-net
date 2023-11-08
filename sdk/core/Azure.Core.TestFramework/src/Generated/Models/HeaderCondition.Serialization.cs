@@ -5,20 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class HeaderCondition : IUtf8JsonSerializable, IJsonModel<HeaderCondition>
+    public partial class HeaderCondition : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HeaderCondition>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
-        void IJsonModel<HeaderCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
@@ -31,92 +25,7 @@ namespace Azure.Core.TestFramework.Models
                 writer.WritePropertyName("valueRegex"u8);
                 writer.WriteStringValue(ValueRegex);
             }
-            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
-
-        HeaderCondition IJsonModel<HeaderCondition>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHeaderCondition(document.RootElement, options);
-        }
-
-        internal static HeaderCondition DeserializeHeaderCondition(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> key = default;
-            Optional<string> valueRegex = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("key"u8))
-                {
-                    key = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("valueRegex"u8))
-                {
-                    valueRegex = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format == ModelReaderWriterFormat.Json)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HeaderCondition(key.Value, valueRegex.Value, serializedAdditionalRawData);
-        }
-
-        BinaryData IModel<HeaderCondition>.Write(ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            return ModelReaderWriter.Write(this, options);
-        }
-
-        HeaderCondition IModel<HeaderCondition>.Read(BinaryData data, ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.Parse(data);
-            return DeserializeHeaderCondition(document.RootElement, options);
-        }
-
-        ModelReaderWriterFormat IModel<HeaderCondition>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

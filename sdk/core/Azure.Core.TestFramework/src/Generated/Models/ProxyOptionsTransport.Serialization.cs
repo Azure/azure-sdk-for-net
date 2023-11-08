@@ -5,20 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class ProxyOptionsTransport : IUtf8JsonSerializable, IJsonModel<ProxyOptionsTransport>
+    public partial class ProxyOptionsTransport : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProxyOptionsTransport>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
-        void IJsonModel<ProxyOptionsTransport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowAutoRedirect))
@@ -41,111 +35,7 @@ namespace Azure.Core.TestFramework.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
-
-        ProxyOptionsTransport IJsonModel<ProxyOptionsTransport>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxyOptionsTransport(document.RootElement, options);
-        }
-
-        internal static ProxyOptionsTransport DeserializeProxyOptionsTransport(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<bool> allowAutoRedirect = default;
-            Optional<string> tlsValidationCert = default;
-            Optional<IList<ProxyOptionsTransportCertificatesItem>> certificates = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("AllowAutoRedirect"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowAutoRedirect = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("TLSValidationCert"u8))
-                {
-                    tlsValidationCert = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("Certificates"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ProxyOptionsTransportCertificatesItem> array = new List<ProxyOptionsTransportCertificatesItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ProxyOptionsTransportCertificatesItem.DeserializeProxyOptionsTransportCertificatesItem(item));
-                    }
-                    certificates = array;
-                    continue;
-                }
-                if (options.Format == ModelReaderWriterFormat.Json)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyOptionsTransport(Optional.ToNullable(allowAutoRedirect), tlsValidationCert.Value, Optional.ToList(certificates), serializedAdditionalRawData);
-        }
-
-        BinaryData IModel<ProxyOptionsTransport>.Write(ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            return ModelReaderWriter.Write(this, options);
-        }
-
-        ProxyOptionsTransport IModel<ProxyOptionsTransport>.Read(BinaryData data, ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.Parse(data);
-            return DeserializeProxyOptionsTransport(document.RootElement, options);
-        }
-
-        ModelReaderWriterFormat IModel<ProxyOptionsTransport>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

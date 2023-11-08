@@ -5,20 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class ProxyOptions : IUtf8JsonSerializable, IJsonModel<ProxyOptions>
+    public partial class ProxyOptions : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProxyOptions>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
-        void IJsonModel<ProxyOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Transport))
@@ -26,90 +20,7 @@ namespace Azure.Core.TestFramework.Models
                 writer.WritePropertyName("Transport"u8);
                 writer.WriteObjectValue(Transport);
             }
-            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
-
-        ProxyOptions IJsonModel<ProxyOptions>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxyOptions(document.RootElement, options);
-        }
-
-        internal static ProxyOptions DeserializeProxyOptions(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<ProxyOptionsTransport> transport = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("Transport"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    transport = ProxyOptionsTransport.DeserializeProxyOptionsTransport(property.Value);
-                    continue;
-                }
-                if (options.Format == ModelReaderWriterFormat.Json)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyOptions(transport.Value, serializedAdditionalRawData);
-        }
-
-        BinaryData IModel<ProxyOptions>.Write(ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            return ModelReaderWriter.Write(this, options);
-        }
-
-        ProxyOptions IModel<ProxyOptions>.Read(BinaryData data, ModelReaderWriterOptions options)
-        {
-            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
-            if (!isValid)
-            {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.Parse(data);
-            return DeserializeProxyOptions(document.RootElement, options);
-        }
-
-        ModelReaderWriterFormat IModel<ProxyOptions>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }
