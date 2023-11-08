@@ -34,16 +34,16 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _networkTimeout = networkTimeout;
     }
 
-    public override void Process(ClientMessage message, PipelineEnumerator pipeline)
+    public override void Process(ClientMessage message, PipelineProcessor pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public override async ValueTask ProcessAsync(ClientMessage message, PipelineEnumerator pipeline)
+    public override async ValueTask ProcessAsync(ClientMessage message, PipelineProcessor pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(ClientMessage message, PipelineEnumerator pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(ClientMessage message, PipelineProcessor pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);

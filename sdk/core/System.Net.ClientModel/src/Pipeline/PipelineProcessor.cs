@@ -7,7 +7,7 @@ namespace System.Net.ClientModel.Core;
 
 // TODO: perf tradeoff between a struct you only ever call methods on through
 // the interface it implements vs. an abstract class you have to allocate every time?
-public abstract class PipelineEnumerator
+public abstract class PipelineProcessor
 {
     public abstract int Length { get; }
 

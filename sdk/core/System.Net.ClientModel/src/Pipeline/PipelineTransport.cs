@@ -27,14 +27,14 @@ public abstract class PipelineTransport : PipelinePolicy
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
-    public override void Process(ClientMessage message, PipelineEnumerator pipeline)
+    public override void Process(ClientMessage message, PipelineProcessor pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 
         Process(message);
     }
 
-    public override async ValueTask ProcessAsync(ClientMessage message, PipelineEnumerator pipeline)
+    public override async ValueTask ProcessAsync(ClientMessage message, PipelineProcessor pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 

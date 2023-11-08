@@ -99,17 +99,17 @@ public class MessagePipeline
 
     public void Send(ClientMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineProcessor enumerator = new MessagePipelineExecutor(message, _policies);
         enumerator.ProcessNext();
     }
 
     public async ValueTask SendAsync(ClientMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineProcessor enumerator = new MessagePipelineExecutor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
     }
 
-    private class MessagePipelineExecutor : PipelineEnumerator
+    private class MessagePipelineExecutor : PipelineProcessor
     {
         private readonly ClientMessage _message;
         private ReadOnlyMemory<PipelinePolicy> _policies;
