@@ -679,7 +679,7 @@ namespace Azure.Communication.JobRouter
         public string Key { get { throw null; } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } }
         public Azure.Communication.JobRouter.RouterWorkerSelectorStatus? Status { get { throw null; } }
-        public Azure.Communication.JobRouter.RouterValue Value { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.RouterValue Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RouterWorkerSelectorStatus : System.IEquatable<Azure.Communication.JobRouter.RouterWorkerSelectorStatus>
@@ -787,7 +787,7 @@ namespace Azure.Communication.JobRouter
     public partial class StaticRouterRule : Azure.Communication.JobRouter.RouterRule
     {
         public StaticRouterRule(Azure.Communication.JobRouter.RouterValue value) { }
-        public Azure.Communication.JobRouter.RouterValue Value { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.RouterValue Value { get { throw null; } }
     }
     public partial class StaticWorkerSelectorAttachment : Azure.Communication.JobRouter.WorkerSelectorAttachment
     {

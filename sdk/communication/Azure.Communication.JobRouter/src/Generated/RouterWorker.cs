@@ -31,8 +31,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="state"> The current state of the worker. </param>
         /// <param name="queues"> The queue(s) that this worker can receive work from. </param>
         /// <param name="capacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
-        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
-        /// <param name="tags"> A set of non-identifying attributes attached to this worker. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="tags"> A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean. </param>
         /// <param name="channels"> The channel(s) this worker can handle and their impact on the workers capacity. </param>
         /// <param name="offers"> A list of active offers issued to this worker. </param>
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>

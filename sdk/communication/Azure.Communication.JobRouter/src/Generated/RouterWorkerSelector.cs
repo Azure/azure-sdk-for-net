@@ -28,7 +28,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of RouterWorkerSelector. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
-        /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
+        /// <param name="value"> The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean. </param>
         /// <param name="expiresAfterSeconds"> Describes how long this label selector is valid in seconds. </param>
         /// <param name="expedite"> Pushes the job to the front of the queue as long as this selector is active. </param>
         /// <param name="status"> The status of the worker selector. </param>

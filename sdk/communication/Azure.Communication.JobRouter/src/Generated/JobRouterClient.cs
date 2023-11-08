@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -299,29 +297,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> ReclassifyJobAsync(string jobId, IDictionary<string, string> options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ReclassifyJobResult>> ReclassifyJobAsync(string jobId, ReclassifyJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromDictionary(options);
+            using RequestContent content = options?.ToRequestContent();
             Response response = await ReclassifyJobAsync(jobId, content, context).ConfigureAwait(false);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(ReclassifyJobResult.FromResponse(response), response);
         }
 
         /// <summary> Reclassify a job. </summary>
@@ -330,29 +313,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> ReclassifyJob(string jobId, IDictionary<string, string> options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ReclassifyJobResult> ReclassifyJob(string jobId, ReclassifyJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromDictionary(options);
+            using RequestContent content = options?.ToRequestContent();
             Response response = ReclassifyJob(jobId, content, context);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(ReclassifyJobResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -365,7 +333,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReclassifyJobAsync(string,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReclassifyJobAsync(string,ReclassifyJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -405,7 +373,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ReclassifyJob(string,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ReclassifyJob(string,ReclassifyJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -441,29 +409,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> CancelJobAsync(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CancelJobResult>> CancelJobAsync(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = await CancelJobAsync(jobId, content, context).ConfigureAwait(false);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(CancelJobResult.FromResponse(response), response);
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
@@ -472,29 +425,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> CancelJob(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<CancelJobResult> CancelJob(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = CancelJob(jobId, content, context);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(CancelJobResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -584,7 +522,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> CompleteJobAsync(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CompleteJobResult>> CompleteJobAsync(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -592,22 +530,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = await CompleteJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(CompleteJobResult.FromResponse(response), response);
         }
 
         /// <summary> Completes an assigned job. </summary>
@@ -617,7 +540,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> CompleteJob(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<CompleteJobResult> CompleteJob(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -625,22 +548,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = CompleteJob(jobId, assignmentId, content, context);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(CompleteJobResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -734,7 +642,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> CloseJobAsync(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CloseJobResult>> CloseJobAsync(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -742,22 +650,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = await CloseJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(CloseJobResult.FromResponse(response), response);
         }
 
         /// <summary> Closes a completed job. </summary>
@@ -767,7 +660,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> CloseJob(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<CloseJobResult> CloseJob(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
@@ -775,22 +668,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = CloseJob(jobId, assignmentId, content, context);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(CloseJobResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1232,7 +1110,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> DeclineJobOfferAsync(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<DeclineJobOfferResult>> DeclineJobOfferAsync(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
@@ -1240,22 +1118,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = await DeclineJobOfferAsync(workerId, offerId, content, context).ConfigureAwait(false);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(DeclineJobOfferResult.FromResponse(response), response);
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
@@ -1265,7 +1128,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<IReadOnlyDictionary<string, BinaryData>> DeclineJobOffer(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
+        internal virtual Response<DeclineJobOfferResult> DeclineJobOffer(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
@@ -1273,22 +1136,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
             Response response = DeclineJobOffer(workerId, offerId, content, context);
-            IReadOnlyDictionary<string, BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    dictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            value = dictionary;
-            return Response.FromValue(value, response);
+            return Response.FromValue(DeclineJobOfferResult.FromResponse(response), response);
         }
 
         /// <summary>

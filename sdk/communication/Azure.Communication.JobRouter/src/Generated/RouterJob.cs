@@ -38,9 +38,9 @@ namespace Azure.Communication.JobRouter
         /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
         /// <param name="requestedWorkerSelectors"> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </param>
         /// <param name="attachedWorkerSelectors"> A collection of label selectors attached by a classification policy, which a worker must satisfy in order to process this job. </param>
-        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
         /// <param name="assignments"> A collection of the assignments of the job. Key is AssignmentId. </param>
-        /// <param name="tags"> A set of non-identifying attributes attached to this job. </param>
+        /// <param name="tags"> A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean. </param>
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
         /// <param name="matchingMode"> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </param>

@@ -736,7 +736,7 @@
                "$id": "97",
                "Name": "value",
                "SerializedName": "value",
-               "Description": "The static value this rule always returns.",
+               "Description": "The static value this rule always returns. Values must be primitive values - number, string, boolean.",
                "Type": {
                 "$id": "98",
                 "Name": "Intrinsic",
@@ -1205,7 +1205,7 @@
                "$id": "149",
                "Name": "value",
                "SerializedName": "value",
-               "Description": "The value to compare against the actual label value with the given operator",
+               "Description": "The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean.",
                "Type": {
                 "$id": "150",
                 "Name": "Intrinsic",
@@ -1508,7 +1508,7 @@
                "$id": "181",
                "Name": "value",
                "SerializedName": "value",
-               "Description": "The value to compare against the actual label value with the given operator",
+               "Description": "The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean.",
                "Type": {
                 "$id": "182",
                 "Name": "Intrinsic",
@@ -2210,7 +2210,7 @@
                "$id": "257",
                "Name": "labelsToUpsert",
                "SerializedName": "labelsToUpsert",
-               "Description": "Dictionary containing the labels to update (or add if not existing) in key-value pairs",
+               "Description": "Dictionary containing the labels to update (or add if not existing) in key-value pairs.  Values must be primitive values - number, string, boolean.",
                "Type": {
                 "$id": "258",
                 "Name": "Dictionary",
@@ -2381,7 +2381,7 @@
      "$id": "275",
      "Name": "labels",
      "SerializedName": "labels",
-     "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.",
+     "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "276",
       "Name": "Dictionary",
@@ -2639,7 +2639,7 @@
      "$id": "310",
      "Name": "labels",
      "SerializedName": "labels",
-     "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.",
+     "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "311",
       "Name": "Dictionary",
@@ -2764,7 +2764,7 @@
      "$id": "328",
      "Name": "tags",
      "SerializedName": "tags",
-     "Description": "A set of non-identifying attributes attached to this job",
+     "Description": "A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean.",
      "Type": {
       "$id": "329",
       "Name": "Dictionary",
@@ -2967,6 +2967,26 @@
   },
   {
    "$id": "350",
+   "Name": "ReclassifyJobOptions",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
+   "Description": "Request payload for reclassifying jobs",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": []
+  },
+  {
+   "$id": "351",
+   "Name": "ReclassifyJobResult",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
+   "Description": "Response payload from reclassifying a job",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": []
+  },
+  {
+   "$id": "352",
    "Name": "CancelJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -2975,24 +2995,10 @@
    "Usage": "Input",
    "Properties": [
     {
-     "$id": "351",
+     "$id": "353",
      "Name": "note",
      "SerializedName": "note",
      "Description": "A note that will be appended to the jobs' Notes collection with the current timestamp.",
-     "Type": {
-      "$id": "352",
-      "Name": "string",
-      "Kind": "String",
-      "IsNullable": false
-     },
-     "IsRequired": false,
-     "IsReadOnly": false
-    },
-    {
-     "$id": "353",
-     "Name": "dispositionCode",
-     "SerializedName": "dispositionCode",
-     "Description": "Indicates the outcome of the job, populate this field with your own custom values. If not provided, default value of \"Cancelled\" is set.",
      "Type": {
       "$id": "354",
       "Name": "string",
@@ -3001,11 +3007,35 @@
      },
      "IsRequired": false,
      "IsReadOnly": false
+    },
+    {
+     "$id": "355",
+     "Name": "dispositionCode",
+     "SerializedName": "dispositionCode",
+     "Description": "Indicates the outcome of the job, populate this field with your own custom values. If not provided, default value of \"Cancelled\" is set.",
+     "Type": {
+      "$id": "356",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
     }
    ]
   },
   {
-   "$id": "355",
+   "$id": "357",
+   "Name": "CancelJobResult",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
+   "Description": "Response payload from cancelling a job",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": []
+  },
+  {
+   "$id": "358",
    "Name": "CompleteJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -3014,35 +3044,10 @@
    "Usage": "Input",
    "Properties": [
     {
-     "$id": "356",
+     "$id": "359",
      "Name": "note",
      "SerializedName": "note",
      "Description": "A note that will be appended to the jobs' Notes collection with the current timestamp.",
-     "Type": {
-      "$id": "357",
-      "Name": "string",
-      "Kind": "String",
-      "IsNullable": false
-     },
-     "IsRequired": false,
-     "IsReadOnly": false
-    }
-   ]
-  },
-  {
-   "$id": "358",
-   "Name": "CloseJobOptions",
-   "Namespace": "AzureCommunicationRoutingService",
-   "Accessibility": "internal",
-   "Description": "Request payload for closing jobs",
-   "IsNullable": false,
-   "Usage": "Input",
-   "Properties": [
-    {
-     "$id": "359",
-     "Name": "dispositionCode",
-     "SerializedName": "dispositionCode",
-     "Description": "Indicates the outcome of the job, populate this field with your own custom values.",
      "Type": {
       "$id": "360",
       "Name": "string",
@@ -3051,14 +3056,49 @@
      },
      "IsRequired": false,
      "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "361",
+   "Name": "CompleteJobResult",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
+   "Description": "Response payload from completing a job",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": []
+  },
+  {
+   "$id": "362",
+   "Name": "CloseJobOptions",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
+   "Description": "Request payload for closing jobs",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "363",
+     "Name": "dispositionCode",
+     "SerializedName": "dispositionCode",
+     "Description": "Indicates the outcome of the job, populate this field with your own custom values.",
+     "Type": {
+      "$id": "364",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
     },
     {
-     "$id": "361",
+     "$id": "365",
      "Name": "closeAt",
      "SerializedName": "closeAt",
      "Description": "If not provided, worker capacity is released immediately along with a JobClosedEvent notification. If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC.",
      "Type": {
-      "$id": "362",
+      "$id": "366",
       "Name": "utcDateTime",
       "Kind": "DateTime",
       "IsNullable": false
@@ -3067,12 +3107,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "363",
+     "$id": "367",
      "Name": "note",
      "SerializedName": "note",
      "Description": "A note that will be appended to the jobs' Notes collection with the current timestamp.",
      "Type": {
-      "$id": "364",
+      "$id": "368",
       "Name": "string",
       "Kind": "String",
       "IsNullable": false
@@ -3083,7 +3123,17 @@
    ]
   },
   {
-   "$id": "365",
+   "$id": "369",
+   "Name": "CloseJobResult",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
+   "Description": "Response payload from closing a job",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": []
+  },
+  {
+   "$id": "370",
    "Name": "PagedRouterJob",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of RouterJob items",
@@ -3091,12 +3141,12 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "366",
+     "$id": "371",
      "Name": "value",
      "SerializedName": "value",
      "Description": "The RouterJob items on this page",
      "Type": {
-      "$id": "367",
+      "$id": "372",
       "Name": "Array",
       "ElementType": {
        "$ref": "286"
@@ -3107,12 +3157,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "368",
+     "$id": "373",
      "Name": "nextLink",
      "SerializedName": "nextLink",
      "Description": "The link to the next page of items",
      "Type": {
-      "$id": "369",
+      "$id": "374",
       "Name": "ResourceLocation",
       "Kind": "Uri",
       "IsNullable": false
@@ -3123,7 +3173,7 @@
    ]
   },
   {
-   "$id": "370",
+   "$id": "375",
    "Name": "RouterJobPositionDetails",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Position and estimated wait time for a job.",
@@ -3131,12 +3181,12 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "371",
+     "$id": "376",
      "Name": "jobId",
      "SerializedName": "jobId",
      "Description": "Id of the job these details are about.",
      "Type": {
-      "$id": "372",
+      "$id": "377",
       "Name": "string",
       "Kind": "String",
       "IsNullable": false
@@ -3145,12 +3195,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "373",
+     "$id": "378",
      "Name": "position",
      "SerializedName": "position",
      "Description": "Position of the job in question within that queue.",
      "Type": {
-      "$id": "374",
+      "$id": "379",
       "Name": "int32",
       "Kind": "Int32",
       "IsNullable": false
@@ -3159,12 +3209,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "375",
+     "$id": "380",
      "Name": "queueId",
      "SerializedName": "queueId",
      "Description": "Id of the queue this job is enqueued in.",
      "Type": {
-      "$id": "376",
+      "$id": "381",
       "Name": "string",
       "Kind": "String",
       "IsNullable": false
@@ -3173,12 +3223,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "377",
+     "$id": "382",
      "Name": "queueLength",
      "SerializedName": "queueLength",
      "Description": "Length of the queue: total number of enqueued jobs.",
      "Type": {
-      "$id": "378",
+      "$id": "383",
       "Name": "int32",
       "Kind": "Int32",
       "IsNullable": false
@@ -3187,12 +3237,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "379",
+     "$id": "384",
      "Name": "estimatedWaitTimeMinutes",
      "SerializedName": "estimatedWaitTimeMinutes",
      "Description": "Estimated wait time of the job rounded up to the nearest minute",
      "Type": {
-      "$id": "380",
+      "$id": "385",
       "Name": "float64",
       "Kind": "Float64",
       "IsNullable": false
@@ -3203,7 +3253,7 @@
    ]
   },
   {
-   "$id": "381",
+   "$id": "386",
    "Name": "UnassignJobOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -3212,12 +3262,12 @@
    "Usage": "Input",
    "Properties": [
     {
-     "$id": "382",
+     "$id": "387",
      "Name": "suspendMatching",
      "SerializedName": "suspendMatching",
      "Description": "If SuspendMatching is true, then the job is not queued for re-matching with a worker.",
      "Type": {
-      "$id": "383",
+      "$id": "388",
       "Name": "boolean",
       "Kind": "Boolean",
       "IsNullable": false
@@ -3228,7 +3278,7 @@
    ]
   },
   {
-   "$id": "384",
+   "$id": "389",
    "Name": "UnassignJobResult",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -3237,48 +3287,10 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "385",
+     "$id": "390",
      "Name": "jobId",
      "SerializedName": "jobId",
      "Description": "The Id of the job unassigned.",
-     "Type": {
-      "$id": "386",
-      "Name": "string",
-      "Kind": "String",
-      "IsNullable": false
-     },
-     "IsRequired": true,
-     "IsReadOnly": false
-    },
-    {
-     "$id": "387",
-     "Name": "unassignmentCount",
-     "SerializedName": "unassignmentCount",
-     "Description": "The number of times a job is unassigned. At a maximum 3.",
-     "Type": {
-      "$id": "388",
-      "Name": "int32",
-      "Kind": "Int32",
-      "IsNullable": false
-     },
-     "IsRequired": true,
-     "IsReadOnly": false
-    }
-   ]
-  },
-  {
-   "$id": "389",
-   "Name": "AcceptJobOfferResult",
-   "Namespace": "AzureCommunicationRoutingService",
-   "Description": "Response containing Id's for the worker, job, and assignment from an accepted offer",
-   "IsNullable": false,
-   "Usage": "Output",
-   "Properties": [
-    {
-     "$id": "390",
-     "Name": "assignmentId",
-     "SerializedName": "assignmentId",
-     "Description": "The assignment Id that assigns a worker that has accepted an offer to a job.",
      "Type": {
       "$id": "391",
       "Name": "string",
@@ -3290,11 +3302,35 @@
     },
     {
      "$id": "392",
-     "Name": "jobId",
-     "SerializedName": "jobId",
-     "Description": "The Id of the job assigned.",
+     "Name": "unassignmentCount",
+     "SerializedName": "unassignmentCount",
+     "Description": "The number of times a job is unassigned. At a maximum 3.",
      "Type": {
       "$id": "393",
+      "Name": "int32",
+      "Kind": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "394",
+   "Name": "AcceptJobOfferResult",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Description": "Response containing Id's for the worker, job, and assignment from an accepted offer",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "395",
+     "Name": "assignmentId",
+     "SerializedName": "assignmentId",
+     "Description": "The assignment Id that assigns a worker that has accepted an offer to a job.",
+     "Type": {
+      "$id": "396",
       "Name": "string",
       "Kind": "String",
       "IsNullable": false
@@ -3303,12 +3339,26 @@
      "IsReadOnly": false
     },
     {
-     "$id": "394",
+     "$id": "397",
+     "Name": "jobId",
+     "SerializedName": "jobId",
+     "Description": "The Id of the job assigned.",
+     "Type": {
+      "$id": "398",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "399",
      "Name": "workerId",
      "SerializedName": "workerId",
      "Description": "The Id of the worker that has been assigned this job.",
      "Type": {
-      "$id": "395",
+      "$id": "400",
       "Name": "string",
       "Kind": "String",
       "IsNullable": false
@@ -3319,7 +3369,7 @@
    ]
   },
   {
-   "$id": "396",
+   "$id": "401",
    "Name": "DeclineJobOfferOptions",
    "Namespace": "AzureCommunicationRoutingService",
    "Accessibility": "internal",
@@ -3328,12 +3378,12 @@
    "Usage": "Input",
    "Properties": [
     {
-     "$id": "397",
+     "$id": "402",
      "Name": "retryOfferAt",
      "SerializedName": "retryOfferAt",
      "Description": "If the RetryOfferAt is not provided, then this job will not be offered again to the worker who declined this job unless the worker is de-registered and re-registered.  If a RetryOfferAt time is provided, then the job will be re-matched to eligible workers at the retry time in UTC.  The worker that declined the job will also be eligible for the job at that time.",
      "Type": {
-      "$id": "398",
+      "$id": "403",
       "Name": "utcDateTime",
       "Kind": "DateTime",
       "IsNullable": false
@@ -3344,7 +3394,17 @@
    ]
   },
   {
-   "$id": "399",
+   "$id": "404",
+   "Name": "DeclineJobOfferResult",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Accessibility": "internal",
+   "Description": "Response payload from declining a job",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": []
+  },
+  {
+   "$id": "405",
    "Name": "RouterQueueStatistics",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Statistics for the queue",
@@ -3352,12 +3412,12 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "400",
+     "$id": "406",
      "Name": "queueId",
      "SerializedName": "queueId",
      "Description": "Id of the queue these details are about.",
      "Type": {
-      "$id": "401",
+      "$id": "407",
       "Name": "string",
       "Kind": "String",
       "IsNullable": false
@@ -3366,12 +3426,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "402",
+     "$id": "408",
      "Name": "length",
      "SerializedName": "length",
      "Description": "Length of the queue: total number of enqueued jobs.",
      "Type": {
-      "$id": "403",
+      "$id": "409",
       "Name": "int32",
       "Kind": "Int32",
       "IsNullable": false
@@ -3380,21 +3440,21 @@
      "IsReadOnly": false
     },
     {
-     "$id": "404",
+     "$id": "410",
      "Name": "estimatedWaitTimeMinutes",
      "SerializedName": "estimatedWaitTimeMinutes",
      "Description": "The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority",
      "Type": {
-      "$id": "405",
+      "$id": "411",
       "Name": "Dictionary",
       "KeyType": {
-       "$id": "406",
+       "$id": "412",
        "Name": "string",
        "Kind": "String",
        "IsNullable": false
       },
       "ValueType": {
-       "$id": "407",
+       "$id": "413",
        "Name": "float64",
        "Kind": "Float64",
        "IsNullable": false
@@ -3405,12 +3465,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "408",
+     "$id": "414",
      "Name": "longestJobWaitTimeMinutes",
      "SerializedName": "longestJobWaitTimeMinutes",
      "Description": "The wait time of the job that has been enqueued in this queue for the longest.",
      "Type": {
-      "$id": "409",
+      "$id": "415",
       "Name": "float64",
       "Kind": "Float64",
       "IsNullable": false
@@ -3421,7 +3481,7 @@
    ]
   },
   {
-   "$id": "410",
+   "$id": "416",
    "Name": "RouterWorker",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "An entity for jobs to be routed to",
@@ -3429,12 +3489,12 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "411",
+     "$id": "417",
      "Name": "etag",
      "SerializedName": "etag",
      "Description": "The entity tag for this resource.",
      "Type": {
-      "$id": "412",
+      "$id": "418",
       "Name": "eTag",
       "Kind": "String",
       "IsNullable": false
@@ -3443,12 +3503,12 @@
      "IsReadOnly": true
     },
     {
-     "$id": "413",
+     "$id": "419",
      "Name": "id",
      "SerializedName": "id",
      "Description": "Id of the worker.",
      "Type": {
-      "$id": "414",
+      "$id": "420",
       "Name": "string",
       "Kind": "String",
       "IsNullable": false
@@ -3457,7 +3517,7 @@
      "IsReadOnly": true
     },
     {
-     "$id": "415",
+     "$id": "421",
      "Name": "state",
      "SerializedName": "state",
      "Description": "The current state of the worker.",
@@ -3468,56 +3528,17 @@
      "IsReadOnly": true
     },
     {
-     "$id": "416",
+     "$id": "422",
      "Name": "queues",
      "SerializedName": "queues",
      "Description": "The queue(s) that this worker can receive work from.",
      "Type": {
-      "$id": "417",
+      "$id": "423",
       "Name": "Array",
       "ElementType": {
-       "$id": "418",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "IsNullable": false
-     },
-     "IsRequired": false,
-     "IsReadOnly": false
-    },
-    {
-     "$id": "419",
-     "Name": "capacity",
-     "SerializedName": "capacity",
-     "Description": "The total capacity score this worker has to manage multiple concurrent jobs.",
-     "Type": {
-      "$id": "420",
-      "Name": "int32",
-      "Kind": "Int32",
-      "IsNullable": false
-     },
-     "IsRequired": false,
-     "IsReadOnly": false
-    },
-    {
-     "$id": "421",
-     "Name": "labels",
-     "SerializedName": "labels",
-     "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.",
-     "Type": {
-      "$id": "422",
-      "Name": "Dictionary",
-      "KeyType": {
-       "$id": "423",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "ValueType": {
        "$id": "424",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
+       "Name": "string",
+       "Kind": "String",
        "IsNullable": false
       },
       "IsNullable": false
@@ -3527,20 +3548,34 @@
     },
     {
      "$id": "425",
-     "Name": "tags",
-     "SerializedName": "tags",
-     "Description": "A set of non-identifying attributes attached to this worker.",
+     "Name": "capacity",
+     "SerializedName": "capacity",
+     "Description": "The total capacity score this worker has to manage multiple concurrent jobs.",
      "Type": {
       "$id": "426",
+      "Name": "int32",
+      "Kind": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "427",
+     "Name": "labels",
+     "SerializedName": "labels",
+     "Description": "A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.",
+     "Type": {
+      "$id": "428",
       "Name": "Dictionary",
       "KeyType": {
-       "$id": "427",
+       "$id": "429",
        "Name": "string",
        "Kind": "String",
        "IsNullable": false
       },
       "ValueType": {
-       "$id": "428",
+       "$id": "430",
        "Name": "Intrinsic",
        "Kind": "unknown",
        "IsNullable": false
@@ -3551,15 +3586,40 @@
      "IsReadOnly": false
     },
     {
-     "$id": "429",
+     "$id": "431",
+     "Name": "tags",
+     "SerializedName": "tags",
+     "Description": "A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.",
+     "Type": {
+      "$id": "432",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "433",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "434",
+       "Name": "Intrinsic",
+       "Kind": "unknown",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "435",
      "Name": "channels",
      "SerializedName": "channels",
      "Description": "The channel(s) this worker can handle and their impact on the workers capacity.",
      "Type": {
-      "$id": "430",
+      "$id": "436",
       "Name": "Array",
       "ElementType": {
-       "$id": "431",
+       "$id": "437",
        "Name": "RouterChannel",
        "Namespace": "AzureCommunicationRoutingService",
        "Accessibility": "internal",
@@ -3568,12 +3628,12 @@
        "Usage": "Output",
        "Properties": [
         {
-         "$id": "432",
+         "$id": "438",
          "Name": "channelId",
          "SerializedName": "channelId",
          "Description": "Id of the channel.",
          "Type": {
-          "$id": "433",
+          "$id": "439",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -3582,12 +3642,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "434",
+         "$id": "440",
          "Name": "capacityCostPerJob",
          "SerializedName": "capacityCostPerJob",
          "Description": "The amount of capacity that an instance of a job of this channel will consume of the total worker capacity.",
          "Type": {
-          "$id": "435",
+          "$id": "441",
           "Name": "int32",
           "Kind": "Int32",
           "IsNullable": false
@@ -3596,12 +3656,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "436",
+         "$id": "442",
          "Name": "maxNumberOfJobs",
          "SerializedName": "maxNumberOfJobs",
          "Description": "The maximum number of jobs that can be supported concurrently for this channel.",
          "Type": {
-          "$id": "437",
+          "$id": "443",
           "Name": "int32",
           "Kind": "Int32",
           "IsNullable": false
@@ -3617,15 +3677,15 @@
      "IsReadOnly": false
     },
     {
-     "$id": "438",
+     "$id": "444",
      "Name": "offers",
      "SerializedName": "offers",
      "Description": "A list of active offers issued to this worker.",
      "Type": {
-      "$id": "439",
+      "$id": "445",
       "Name": "Array",
       "ElementType": {
-       "$id": "440",
+       "$id": "446",
        "Name": "RouterJobOffer",
        "Namespace": "AzureCommunicationRoutingService",
        "Accessibility": "internal",
@@ -3634,12 +3694,12 @@
        "Usage": "Output",
        "Properties": [
         {
-         "$id": "441",
+         "$id": "447",
          "Name": "offerId",
          "SerializedName": "offerId",
          "Description": "The Id of the offer.",
          "Type": {
-          "$id": "442",
+          "$id": "448",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -3648,12 +3708,12 @@
          "IsReadOnly": true
         },
         {
-         "$id": "443",
+         "$id": "449",
          "Name": "jobId",
          "SerializedName": "jobId",
          "Description": "The Id of the job.",
          "Type": {
-          "$id": "444",
+          "$id": "450",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -3662,12 +3722,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "445",
+         "$id": "451",
          "Name": "capacityCost",
          "SerializedName": "capacityCost",
          "Description": "The capacity cost consumed by the job offer.",
          "Type": {
-          "$id": "446",
+          "$id": "452",
           "Name": "int32",
           "Kind": "Int32",
           "IsNullable": false
@@ -3676,12 +3736,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "447",
+         "$id": "453",
          "Name": "offeredAt",
          "SerializedName": "offeredAt",
          "Description": "The time the offer was created in UTC.",
          "Type": {
-          "$id": "448",
+          "$id": "454",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -3690,12 +3750,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "449",
+         "$id": "455",
          "Name": "expiresAt",
          "SerializedName": "expiresAt",
          "Description": "The time that the offer will expire in UTC.",
          "Type": {
-          "$id": "450",
+          "$id": "456",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -3711,15 +3771,15 @@
      "IsReadOnly": true
     },
     {
-     "$id": "451",
+     "$id": "457",
      "Name": "assignedJobs",
      "SerializedName": "assignedJobs",
      "Description": "A list of assigned jobs attached to this worker.",
      "Type": {
-      "$id": "452",
+      "$id": "458",
       "Name": "Array",
       "ElementType": {
-       "$id": "453",
+       "$id": "459",
        "Name": "RouterWorkerAssignment",
        "Namespace": "AzureCommunicationRoutingService",
        "Accessibility": "internal",
@@ -3728,12 +3788,12 @@
        "Usage": "Output",
        "Properties": [
         {
-         "$id": "454",
+         "$id": "460",
          "Name": "assignmentId",
          "SerializedName": "assignmentId",
          "Description": "The Id of the assignment.",
          "Type": {
-          "$id": "455",
+          "$id": "461",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -3742,12 +3802,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "456",
+         "$id": "462",
          "Name": "jobId",
          "SerializedName": "jobId",
          "Description": "The Id of the Job assigned.",
          "Type": {
-          "$id": "457",
+          "$id": "463",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -3756,12 +3816,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "458",
+         "$id": "464",
          "Name": "capacityCost",
          "SerializedName": "capacityCost",
          "Description": "The amount of capacity this assignment has consumed on the worker.",
          "Type": {
-          "$id": "459",
+          "$id": "465",
           "Name": "int32",
           "Kind": "Int32",
           "IsNullable": false
@@ -3770,12 +3830,12 @@
          "IsReadOnly": false
         },
         {
-         "$id": "460",
+         "$id": "466",
          "Name": "assignedAt",
          "SerializedName": "assignedAt",
          "Description": "The assignment time of the job in UTC.",
          "Type": {
-          "$id": "461",
+          "$id": "467",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -3791,12 +3851,12 @@
      "IsReadOnly": true
     },
     {
-     "$id": "462",
+     "$id": "468",
      "Name": "loadRatio",
      "SerializedName": "loadRatio",
      "Description": "A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed.",
      "Type": {
-      "$id": "463",
+      "$id": "469",
       "Name": "float64",
       "Kind": "Float64",
       "IsNullable": false
@@ -3805,12 +3865,12 @@
      "IsReadOnly": true
     },
     {
-     "$id": "464",
+     "$id": "470",
      "Name": "availableForOffers",
      "SerializedName": "availableForOffers",
      "Description": "A flag indicating this worker is open to receive offers or not.",
      "Type": {
-      "$id": "465",
+      "$id": "471",
       "Name": "boolean",
       "Kind": "Boolean",
       "IsNullable": false
@@ -3821,16 +3881,16 @@
    ]
   },
   {
-   "$ref": "431"
+   "$ref": "437"
   },
   {
-   "$ref": "440"
+   "$ref": "446"
   },
   {
-   "$ref": "453"
+   "$ref": "459"
   },
   {
-   "$id": "466",
+   "$id": "472",
    "Name": "PagedRouterWorker",
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of RouterWorker items",
@@ -3838,15 +3898,15 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "467",
+     "$id": "473",
      "Name": "value",
      "SerializedName": "value",
      "Description": "The RouterWorker items on this page",
      "Type": {
-      "$id": "468",
+      "$id": "474",
       "Name": "Array",
       "ElementType": {
-       "$ref": "410"
+       "$ref": "416"
       },
       "IsNullable": false
      },
@@ -3854,12 +3914,12 @@
      "IsReadOnly": false
     },
     {
-     "$id": "469",
+     "$id": "475",
      "Name": "nextLink",
      "SerializedName": "nextLink",
      "Description": "The link to the next page of items",
      "Type": {
-      "$id": "470",
+      "$id": "476",
       "Name": "ResourceLocation",
       "Kind": "Uri",
       "IsNullable": false
@@ -3870,7 +3930,7 @@
    ]
   },
   {
-   "$id": "471",
+   "$id": "477",
    "Name": "RouterConditionalRequestHeaders",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Provides the 'If-*' headers to enable conditional (cached) responses for JobRouter.",
@@ -3879,7 +3939,7 @@
    "Properties": []
   },
   {
-   "$id": "472",
+   "$id": "478",
    "Name": "LastModifiedResponseEnvelope",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "Provides the 'Last-Modified' header to enable conditional (cached) requests",
@@ -3888,34 +3948,20 @@
    "Properties": []
   },
   {
-   "$id": "473",
-   "Name": "CancelJobResultWithOkResponse",
+   "$id": "479",
+   "Name": "ReclassifyJobResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
-   "Description": "OK Response payload from cancelling a job",
+   "Description": "OK Response payload from reclassifying a job.",
    "IsNullable": false,
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "474",
+     "$id": "480",
      "Name": "body",
      "SerializedName": "body",
-     "Description": "Response after cancelling a job.",
+     "Description": "Response payload from reclassifying a job.",
      "Type": {
-      "$id": "475",
-      "Name": "Dictionary",
-      "KeyType": {
-       "$id": "476",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "ValueType": {
-       "$id": "477",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
-       "IsNullable": false
-      },
-      "IsNullable": false
+      "$ref": "351"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -3923,34 +3969,20 @@
    ]
   },
   {
-   "$id": "478",
-   "Name": "CompleteJobResultWithOkResponse",
+   "$id": "481",
+   "Name": "CancelJobResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
-   "Description": "OK Response payload from completing a job",
+   "Description": "OK Response payload from cancelling a job",
    "IsNullable": false,
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "479",
+     "$id": "482",
      "Name": "body",
      "SerializedName": "body",
-     "Description": "Response after completing a job.",
+     "Description": "Response after cancelling a job.",
      "Type": {
-      "$id": "480",
-      "Name": "Dictionary",
-      "KeyType": {
-       "$id": "481",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "ValueType": {
-       "$id": "482",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
-       "IsNullable": false
-      },
-      "IsNullable": false
+      "$ref": "357"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -3959,9 +3991,9 @@
   },
   {
    "$id": "483",
-   "Name": "CloseJobResultWithOkResponse",
+   "Name": "CompleteJobResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
-   "Description": "Response payload from closing a job synchronously.",
+   "Description": "OK Response payload from completing a job",
    "IsNullable": false,
    "Usage": "Output",
    "Properties": [
@@ -3969,23 +4001,9 @@
      "$id": "484",
      "Name": "body",
      "SerializedName": "body",
-     "Description": "Response after closing a job.",
+     "Description": "Response after completing a job.",
      "Type": {
-      "$id": "485",
-      "Name": "Dictionary",
-      "KeyType": {
-       "$id": "486",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "ValueType": {
-       "$id": "487",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
-       "IsNullable": false
-      },
-      "IsNullable": false
+      "$ref": "361"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -3993,7 +4011,28 @@
    ]
   },
   {
-   "$id": "488",
+   "$id": "485",
+   "Name": "CloseJobResultWithOkResponse",
+   "Namespace": "AzureCommunicationRoutingService",
+   "Description": "Response payload from closing a job synchronously.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "486",
+     "Name": "body",
+     "SerializedName": "body",
+     "Description": "Response after closing a job.",
+     "Type": {
+      "$ref": "369"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "487",
    "Name": "DeclineJobOfferResultWithOkResponse",
    "Namespace": "AzureCommunicationRoutingService",
    "Description": "OK Response payload from declining a job.",
@@ -4001,26 +4040,12 @@
    "Usage": "Output",
    "Properties": [
     {
-     "$id": "489",
+     "$id": "488",
      "Name": "body",
      "SerializedName": "body",
      "Description": "Response payload from declining a job.",
      "Type": {
-      "$id": "490",
-      "Name": "Dictionary",
-      "KeyType": {
-       "$id": "491",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "ValueType": {
-       "$id": "492",
-       "Name": "Intrinsic",
-       "Kind": "unknown",
-       "IsNullable": false
-      },
-      "IsNullable": false
+      "$ref": "404"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -4030,12 +4055,12 @@
  ],
  "Clients": [
   {
-   "$id": "493",
+   "$id": "489",
    "Name": "JobRouterAdministrationClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "494",
+     "$id": "490",
      "Name": "upsertDistributionPolicy",
      "ResourceName": "DistributionPolicy",
      "Summary": "Creates or updates a distribution policy.",
@@ -4043,11 +4068,11 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$id": "495",
+       "$id": "491",
        "Name": "endpoint",
        "NameInRequest": "endpoint",
        "Type": {
-        "$id": "496",
+        "$id": "492",
         "Name": "Uri",
         "Kind": "Uri",
         "IsNullable": false
@@ -4063,12 +4088,12 @@
        "Kind": "Client"
       },
       {
-       "$id": "497",
+       "$id": "493",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "",
        "Type": {
-        "$id": "498",
+        "$id": "494",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4083,9 +4108,9 @@
        "Explode": false,
        "Kind": "Client",
        "DefaultValue": {
-        "$id": "499",
+        "$id": "495",
         "Type": {
-         "$id": "500",
+         "$id": "496",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -4094,12 +4119,12 @@
        }
       },
       {
-       "$id": "501",
+       "$id": "497",
        "Name": "distributionPolicyId",
        "NameInRequest": "distributionPolicyId",
        "Description": "The unique identifier of the policy.",
        "Type": {
-        "$id": "502",
+        "$id": "498",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4115,15 +4140,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "503",
+       "$id": "499",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "504",
+        "$id": "500",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "505",
+         "$id": "501",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -4133,9 +4158,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "506",
+        "$id": "502",
         "Type": {
-         "$ref": "504"
+         "$ref": "500"
         },
         "Value": "application/merge-patch+json"
        },
@@ -4149,12 +4174,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "507",
+       "$id": "503",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "508",
+        "$id": "504",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4170,12 +4195,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "509",
+       "$id": "505",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "510",
+        "$id": "506",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -4191,7 +4216,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "511",
+       "$id": "507",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -4209,11 +4234,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "512",
+       "$id": "508",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "513",
+        "$id": "509",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4228,9 +4253,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "514",
+        "$id": "510",
         "Type": {
-         "$ref": "513"
+         "$ref": "509"
         },
         "Value": "application/json"
        }
@@ -4238,7 +4263,7 @@
      ],
      "Responses": [
       {
-       "$id": "515",
+       "$id": "511",
        "StatusCodes": [
         201
        ],
@@ -4248,24 +4273,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "516",
+         "$id": "512",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "517",
+          "$id": "513",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "518",
+         "$id": "514",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "519",
+          "$id": "515",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -4275,7 +4300,7 @@
        "IsErrorResponse": false
       },
       {
-       "$id": "520",
+       "$id": "516",
        "StatusCodes": [
         200
        ],
@@ -4285,24 +4310,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "521",
+         "$id": "517",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "522",
+          "$id": "518",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "523",
+         "$id": "519",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "524",
+          "$id": "520",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -4324,25 +4349,25 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "525",
+     "$id": "521",
      "Name": "getDistributionPolicy",
      "ResourceName": "DistributionPolicy",
      "Summary": "Retrieves an existing distribution policy by Id.",
      "Description": "Retrieves an existing distribution policy by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "526",
+       "$id": "522",
        "Name": "distributionPolicyId",
        "NameInRequest": "distributionPolicyId",
        "Description": "The unique identifier of the policy.",
        "Type": {
-        "$id": "527",
+        "$id": "523",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4358,11 +4383,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "528",
+       "$id": "524",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "529",
+        "$id": "525",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4377,9 +4402,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "530",
+        "$id": "526",
         "Type": {
-         "$ref": "529"
+         "$ref": "525"
         },
         "Value": "application/json"
        }
@@ -4387,7 +4412,7 @@
      ],
      "Responses": [
       {
-       "$id": "531",
+       "$id": "527",
        "StatusCodes": [
         200
        ],
@@ -4397,24 +4422,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "532",
+         "$id": "528",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "533",
+          "$id": "529",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "534",
+         "$id": "530",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "535",
+          "$id": "531",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -4433,25 +4458,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "536",
+     "$id": "532",
      "Name": "listDistributionPolicies",
      "ResourceName": "DistributionPolicy",
      "Summary": "Retrieves existing distribution policies.",
      "Description": "Retrieves existing distribution policies.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "537",
+       "$id": "533",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "538",
+        "$id": "534",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -4467,11 +4492,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "539",
+       "$id": "535",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "540",
+        "$id": "536",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4486,9 +4511,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "541",
+        "$id": "537",
         "Type": {
-         "$ref": "540"
+         "$ref": "536"
         },
         "Value": "application/json"
        }
@@ -4496,7 +4521,7 @@
      ],
      "Responses": [
       {
-       "$id": "542",
+       "$id": "538",
        "StatusCodes": [
         200
        ],
@@ -4514,7 +4539,7 @@
      "Path": "/routing/distributionPolicies",
      "BufferResponse": true,
      "Paging": {
-      "$id": "543",
+      "$id": "539",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -4522,25 +4547,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "544",
+     "$id": "540",
      "Name": "deleteDistributionPolicy",
      "ResourceName": "DistributionPolicy",
      "Summary": "Delete a distribution policy by Id.",
      "Description": "Delete a distribution policy by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "545",
+       "$id": "541",
        "Name": "distributionPolicyId",
        "NameInRequest": "distributionPolicyId",
        "Description": "The unique identifier of the policy.",
        "Type": {
-        "$id": "546",
+        "$id": "542",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4556,11 +4581,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "547",
+       "$id": "543",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "548",
+        "$id": "544",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4575,9 +4600,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "549",
+        "$id": "545",
         "Type": {
-         "$ref": "548"
+         "$ref": "544"
         },
         "Value": "application/json"
        }
@@ -4585,7 +4610,7 @@
      ],
      "Responses": [
       {
-       "$id": "550",
+       "$id": "546",
        "StatusCodes": [
         204
        ],
@@ -4603,7 +4628,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "551",
+     "$id": "547",
      "Name": "upsertClassificationPolicy",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Creates or updates a classification policy.",
@@ -4611,18 +4636,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "552",
+       "$id": "548",
        "Name": "classificationPolicyId",
        "NameInRequest": "classificationPolicyId",
        "Description": "Unique identifier of this policy.",
        "Type": {
-        "$id": "553",
+        "$id": "549",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4638,15 +4663,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "554",
+       "$id": "550",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "555",
+        "$id": "551",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "556",
+         "$id": "552",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -4656,9 +4681,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "557",
+        "$id": "553",
         "Type": {
-         "$ref": "555"
+         "$ref": "551"
         },
         "Value": "application/merge-patch+json"
        },
@@ -4672,12 +4697,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "558",
+       "$id": "554",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "559",
+        "$id": "555",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4693,12 +4718,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "560",
+       "$id": "556",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "561",
+        "$id": "557",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -4714,7 +4739,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "562",
+       "$id": "558",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -4732,11 +4757,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "563",
+       "$id": "559",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "564",
+        "$id": "560",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4751,9 +4776,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "565",
+        "$id": "561",
         "Type": {
-         "$ref": "564"
+         "$ref": "560"
         },
         "Value": "application/json"
        }
@@ -4761,7 +4786,7 @@
      ],
      "Responses": [
       {
-       "$id": "566",
+       "$id": "562",
        "StatusCodes": [
         201
        ],
@@ -4771,24 +4796,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "567",
+         "$id": "563",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "568",
+          "$id": "564",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "569",
+         "$id": "565",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "570",
+          "$id": "566",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -4798,7 +4823,7 @@
        "IsErrorResponse": false
       },
       {
-       "$id": "571",
+       "$id": "567",
        "StatusCodes": [
         200
        ],
@@ -4808,24 +4833,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "572",
+         "$id": "568",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "573",
+          "$id": "569",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "574",
+         "$id": "570",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "575",
+          "$id": "571",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -4847,25 +4872,25 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "576",
+     "$id": "572",
      "Name": "getClassificationPolicy",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Retrieves an existing classification policy by Id.",
      "Description": "Retrieves an existing classification policy by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "577",
+       "$id": "573",
        "Name": "classificationPolicyId",
        "NameInRequest": "classificationPolicyId",
        "Description": "Unique identifier of this policy.",
        "Type": {
-        "$id": "578",
+        "$id": "574",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4881,11 +4906,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "579",
+       "$id": "575",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "580",
+        "$id": "576",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4900,9 +4925,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "581",
+        "$id": "577",
         "Type": {
-         "$ref": "580"
+         "$ref": "576"
         },
         "Value": "application/json"
        }
@@ -4910,7 +4935,7 @@
      ],
      "Responses": [
       {
-       "$id": "582",
+       "$id": "578",
        "StatusCodes": [
         200
        ],
@@ -4920,24 +4945,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "583",
+         "$id": "579",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "584",
+          "$id": "580",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "585",
+         "$id": "581",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "586",
+          "$id": "582",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -4956,25 +4981,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "587",
+     "$id": "583",
      "Name": "listClassificationPolicies",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Retrieves existing classification policies.",
      "Description": "Retrieves existing classification policies.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "588",
+       "$id": "584",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "589",
+        "$id": "585",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -4990,11 +5015,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "590",
+       "$id": "586",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "591",
+        "$id": "587",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5009,9 +5034,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "592",
+        "$id": "588",
         "Type": {
-         "$ref": "591"
+         "$ref": "587"
         },
         "Value": "application/json"
        }
@@ -5019,7 +5044,7 @@
      ],
      "Responses": [
       {
-       "$id": "593",
+       "$id": "589",
        "StatusCodes": [
         200
        ],
@@ -5037,7 +5062,7 @@
      "Path": "/routing/classificationPolicies",
      "BufferResponse": true,
      "Paging": {
-      "$id": "594",
+      "$id": "590",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -5045,25 +5070,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "595",
+     "$id": "591",
      "Name": "deleteClassificationPolicy",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Delete a classification policy by Id.",
      "Description": "Delete a classification policy by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "596",
+       "$id": "592",
        "Name": "classificationPolicyId",
        "NameInRequest": "classificationPolicyId",
        "Description": "Unique identifier of this policy.",
        "Type": {
-        "$id": "597",
+        "$id": "593",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5079,11 +5104,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "598",
+       "$id": "594",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "599",
+        "$id": "595",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5098,9 +5123,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "600",
+        "$id": "596",
         "Type": {
-         "$ref": "599"
+         "$ref": "595"
         },
         "Value": "application/json"
        }
@@ -5108,7 +5133,7 @@
      ],
      "Responses": [
       {
-       "$id": "601",
+       "$id": "597",
        "StatusCodes": [
         204
        ],
@@ -5126,7 +5151,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "602",
+     "$id": "598",
      "Name": "upsertExceptionPolicy",
      "ResourceName": "ExceptionPolicy",
      "Summary": "Creates or updates a exception policy.",
@@ -5134,18 +5159,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "603",
+       "$id": "599",
        "Name": "exceptionPolicyId",
        "NameInRequest": "exceptionPolicyId",
        "Description": "The Id of the exception policy",
        "Type": {
-        "$id": "604",
+        "$id": "600",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5161,15 +5186,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "605",
+       "$id": "601",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "606",
+        "$id": "602",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "607",
+         "$id": "603",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -5179,9 +5204,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "608",
+        "$id": "604",
         "Type": {
-         "$ref": "606"
+         "$ref": "602"
         },
         "Value": "application/merge-patch+json"
        },
@@ -5195,12 +5220,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "609",
+       "$id": "605",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "610",
+        "$id": "606",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5216,12 +5241,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "611",
+       "$id": "607",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "612",
+        "$id": "608",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -5237,7 +5262,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "613",
+       "$id": "609",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -5255,11 +5280,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "614",
+       "$id": "610",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "615",
+        "$id": "611",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5274,9 +5299,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "616",
+        "$id": "612",
         "Type": {
-         "$ref": "615"
+         "$ref": "611"
         },
         "Value": "application/json"
        }
@@ -5284,7 +5309,7 @@
      ],
      "Responses": [
       {
-       "$id": "617",
+       "$id": "613",
        "StatusCodes": [
         201
        ],
@@ -5294,24 +5319,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "618",
+         "$id": "614",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "619",
+          "$id": "615",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "620",
+         "$id": "616",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "621",
+          "$id": "617",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -5321,7 +5346,7 @@
        "IsErrorResponse": false
       },
       {
-       "$id": "622",
+       "$id": "618",
        "StatusCodes": [
         200
        ],
@@ -5331,24 +5356,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "623",
+         "$id": "619",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "624",
+          "$id": "620",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "625",
+         "$id": "621",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "626",
+          "$id": "622",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -5370,25 +5395,25 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "627",
+     "$id": "623",
      "Name": "getExceptionPolicy",
      "ResourceName": "ExceptionPolicy",
      "Summary": "Retrieves an existing exception policy by Id.",
      "Description": "Retrieves an existing exception policy by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "628",
+       "$id": "624",
        "Name": "exceptionPolicyId",
        "NameInRequest": "exceptionPolicyId",
        "Description": "The Id of the exception policy",
        "Type": {
-        "$id": "629",
+        "$id": "625",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5404,11 +5429,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "630",
+       "$id": "626",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "631",
+        "$id": "627",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5423,9 +5448,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "632",
+        "$id": "628",
         "Type": {
-         "$ref": "631"
+         "$ref": "627"
         },
         "Value": "application/json"
        }
@@ -5433,7 +5458,7 @@
      ],
      "Responses": [
       {
-       "$id": "633",
+       "$id": "629",
        "StatusCodes": [
         200
        ],
@@ -5443,24 +5468,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "634",
+         "$id": "630",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "635",
+          "$id": "631",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "636",
+         "$id": "632",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "637",
+          "$id": "633",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -5479,25 +5504,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "638",
+     "$id": "634",
      "Name": "listExceptionPolicies",
      "ResourceName": "ExceptionPolicy",
      "Summary": "Retrieves existing exception policies.",
      "Description": "Retrieves existing exception policies.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "639",
+       "$id": "635",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "640",
+        "$id": "636",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -5513,11 +5538,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "641",
+       "$id": "637",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "642",
+        "$id": "638",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5532,9 +5557,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "643",
+        "$id": "639",
         "Type": {
-         "$ref": "642"
+         "$ref": "638"
         },
         "Value": "application/json"
        }
@@ -5542,7 +5567,7 @@
      ],
      "Responses": [
       {
-       "$id": "644",
+       "$id": "640",
        "StatusCodes": [
         200
        ],
@@ -5560,7 +5585,7 @@
      "Path": "/routing/exceptionPolicies",
      "BufferResponse": true,
      "Paging": {
-      "$id": "645",
+      "$id": "641",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -5568,25 +5593,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "646",
+     "$id": "642",
      "Name": "deleteExceptionPolicy",
      "ResourceName": "ExceptionPolicy",
      "Summary": "Deletes a exception policy by Id.",
      "Description": "Deletes a exception policy by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "647",
+       "$id": "643",
        "Name": "exceptionPolicyId",
        "NameInRequest": "exceptionPolicyId",
        "Description": "The Id of the exception policy",
        "Type": {
-        "$id": "648",
+        "$id": "644",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5602,11 +5627,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "649",
+       "$id": "645",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "650",
+        "$id": "646",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5621,9 +5646,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "651",
+        "$id": "647",
         "Type": {
-         "$ref": "650"
+         "$ref": "646"
         },
         "Value": "application/json"
        }
@@ -5631,7 +5656,7 @@
      ],
      "Responses": [
       {
-       "$id": "652",
+       "$id": "648",
        "StatusCodes": [
         204
        ],
@@ -5649,7 +5674,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "653",
+     "$id": "649",
      "Name": "upsertQueue",
      "ResourceName": "RouterQueue",
      "Summary": "Creates or updates a queue.",
@@ -5657,18 +5682,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "654",
+       "$id": "650",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "The Id of this queue",
        "Type": {
-        "$id": "655",
+        "$id": "651",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5684,15 +5709,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "656",
+       "$id": "652",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "657",
+        "$id": "653",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "658",
+         "$id": "654",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -5702,9 +5727,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "659",
+        "$id": "655",
         "Type": {
-         "$ref": "657"
+         "$ref": "653"
         },
         "Value": "application/merge-patch+json"
        },
@@ -5718,12 +5743,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "660",
+       "$id": "656",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "661",
+        "$id": "657",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5739,12 +5764,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "662",
+       "$id": "658",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "663",
+        "$id": "659",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -5760,7 +5785,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "664",
+       "$id": "660",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -5778,11 +5803,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "665",
+       "$id": "661",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "666",
+        "$id": "662",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5797,9 +5822,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "667",
+        "$id": "663",
         "Type": {
-         "$ref": "666"
+         "$ref": "662"
         },
         "Value": "application/json"
        }
@@ -5807,7 +5832,7 @@
      ],
      "Responses": [
       {
-       "$id": "668",
+       "$id": "664",
        "StatusCodes": [
         201
        ],
@@ -5817,24 +5842,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "669",
+         "$id": "665",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "670",
+          "$id": "666",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "671",
+         "$id": "667",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "672",
+          "$id": "668",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -5844,7 +5869,7 @@
        "IsErrorResponse": false
       },
       {
-       "$id": "673",
+       "$id": "669",
        "StatusCodes": [
         200
        ],
@@ -5854,24 +5879,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "674",
+         "$id": "670",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "675",
+          "$id": "671",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "676",
+         "$id": "672",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "677",
+          "$id": "673",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -5893,25 +5918,25 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "678",
+     "$id": "674",
      "Name": "getQueue",
      "ResourceName": "RouterQueue",
      "Summary": "Retrieves an existing queue by Id.",
      "Description": "Retrieves an existing queue by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "679",
+       "$id": "675",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "The Id of this queue",
        "Type": {
-        "$id": "680",
+        "$id": "676",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5927,11 +5952,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "681",
+       "$id": "677",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "682",
+        "$id": "678",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5946,9 +5971,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "683",
+        "$id": "679",
         "Type": {
-         "$ref": "682"
+         "$ref": "678"
         },
         "Value": "application/json"
        }
@@ -5956,7 +5981,7 @@
      ],
      "Responses": [
       {
-       "$id": "684",
+       "$id": "680",
        "StatusCodes": [
         200
        ],
@@ -5966,24 +5991,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "685",
+         "$id": "681",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "686",
+          "$id": "682",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "687",
+         "$id": "683",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "688",
+          "$id": "684",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -6002,25 +6027,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "689",
+     "$id": "685",
      "Name": "listQueues",
      "ResourceName": "RouterQueue",
      "Summary": "Retrieves existing queues.",
      "Description": "Retrieves existing queues.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "690",
+       "$id": "686",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "691",
+        "$id": "687",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -6036,11 +6061,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "692",
+       "$id": "688",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "693",
+        "$id": "689",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6055,9 +6080,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "694",
+        "$id": "690",
         "Type": {
-         "$ref": "693"
+         "$ref": "689"
         },
         "Value": "application/json"
        }
@@ -6065,7 +6090,7 @@
      ],
      "Responses": [
       {
-       "$id": "695",
+       "$id": "691",
        "StatusCodes": [
         200
        ],
@@ -6083,7 +6108,7 @@
      "Path": "/routing/queues",
      "BufferResponse": true,
      "Paging": {
-      "$id": "696",
+      "$id": "692",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -6091,25 +6116,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "697",
+     "$id": "693",
      "Name": "deleteQueue",
      "ResourceName": "RouterQueue",
      "Summary": "Deletes a queue by Id.",
      "Description": "Deletes a queue by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "698",
+       "$id": "694",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "The Id of this queue",
        "Type": {
-        "$id": "699",
+        "$id": "695",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6125,11 +6150,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "700",
+       "$id": "696",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "701",
+        "$id": "697",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6144,9 +6169,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "702",
+        "$id": "698",
         "Type": {
-         "$ref": "701"
+         "$ref": "697"
         },
         "Value": "application/json"
        }
@@ -6154,7 +6179,7 @@
      ],
      "Responses": [
       {
-       "$id": "703",
+       "$id": "699",
        "StatusCodes": [
         204
        ],
@@ -6173,17 +6198,17 @@
     }
    ],
    "Protocol": {
-    "$id": "704"
+    "$id": "700"
    },
    "Creatable": true
   },
   {
-   "$id": "705",
+   "$id": "701",
    "Name": "JobRouterClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "706",
+     "$id": "702",
      "Name": "upsertJob",
      "ResourceName": "RouterJob",
      "Summary": "Creates or updates a router job.",
@@ -6191,18 +6216,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "707",
+       "$id": "703",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "The id of the job.",
        "Type": {
-        "$id": "708",
+        "$id": "704",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6218,15 +6243,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "709",
+       "$id": "705",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "710",
+        "$id": "706",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "711",
+         "$id": "707",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -6236,9 +6261,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "712",
+        "$id": "708",
         "Type": {
-         "$ref": "710"
+         "$ref": "706"
         },
         "Value": "application/merge-patch+json"
        },
@@ -6252,12 +6277,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "713",
+       "$id": "709",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "714",
+        "$id": "710",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6273,12 +6298,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "715",
+       "$id": "711",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "716",
+        "$id": "712",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -6294,7 +6319,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "717",
+       "$id": "713",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -6312,11 +6337,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "718",
+       "$id": "714",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "719",
+        "$id": "715",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6331,9 +6356,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "720",
+        "$id": "716",
         "Type": {
-         "$ref": "719"
+         "$ref": "715"
         },
         "Value": "application/json"
        }
@@ -6341,7 +6366,7 @@
      ],
      "Responses": [
       {
-       "$id": "721",
+       "$id": "717",
        "StatusCodes": [
         201
        ],
@@ -6351,24 +6376,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "722",
+         "$id": "718",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "723",
+          "$id": "719",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "724",
+         "$id": "720",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "725",
+          "$id": "721",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -6378,7 +6403,7 @@
        "IsErrorResponse": false
       },
       {
-       "$id": "726",
+       "$id": "722",
        "StatusCodes": [
         200
        ],
@@ -6388,24 +6413,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "727",
+         "$id": "723",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "728",
+          "$id": "724",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "729",
+         "$id": "725",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "730",
+          "$id": "726",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -6427,25 +6452,25 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "731",
+     "$id": "727",
      "Name": "getJob",
      "ResourceName": "RouterJob",
      "Summary": "Retrieves an existing job by Id.",
      "Description": "Retrieves an existing job by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "732",
+       "$id": "728",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "The id of the job.",
        "Type": {
-        "$id": "733",
+        "$id": "729",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6461,11 +6486,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "734",
+       "$id": "730",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "735",
+        "$id": "731",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6480,9 +6505,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "736",
+        "$id": "732",
         "Type": {
-         "$ref": "735"
+         "$ref": "731"
         },
         "Value": "application/json"
        }
@@ -6490,7 +6515,7 @@
      ],
      "Responses": [
       {
-       "$id": "737",
+       "$id": "733",
        "StatusCodes": [
         200
        ],
@@ -6500,24 +6525,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "738",
+         "$id": "734",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "739",
+          "$id": "735",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "740",
+         "$id": "736",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "741",
+          "$id": "737",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -6536,25 +6561,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "742",
+     "$id": "738",
      "Name": "deleteJob",
      "ResourceName": "RouterJob",
      "Summary": "Deletes a job and all of its traces.",
      "Description": "Deletes a job and all of its traces.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "743",
+       "$id": "739",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "The id of the job.",
        "Type": {
-        "$id": "744",
+        "$id": "740",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6570,11 +6595,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "745",
+       "$id": "741",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "746",
+        "$id": "742",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6589,9 +6614,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "747",
+        "$id": "743",
         "Type": {
-         "$ref": "746"
+         "$ref": "742"
         },
         "Value": "application/json"
        }
@@ -6599,7 +6624,7 @@
      ],
      "Responses": [
       {
-       "$id": "748",
+       "$id": "744",
        "StatusCodes": [
         204
        ],
@@ -6617,7 +6642,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "749",
+     "$id": "745",
      "Name": "reclassifyJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Reclassify a job.",
@@ -6625,18 +6650,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "750",
+       "$id": "746",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "The id of the job.",
        "Type": {
-        "$id": "751",
+        "$id": "747",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6652,26 +6677,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "752",
+       "$id": "748",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request object for reclassifying a job.",
        "Type": {
-        "$id": "753",
-        "Name": "Dictionary",
-        "KeyType": {
-         "$id": "754",
-         "Name": "string",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "ValueType": {
-         "$id": "755",
-         "Name": "string",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "IsNullable": false
+        "$ref": "350"
        },
        "Location": "Body",
        "IsRequired": false,
@@ -6684,11 +6695,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "756",
+       "$id": "749",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "757",
+        "$id": "750",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6703,19 +6714,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "758",
+        "$id": "751",
         "Type": {
-         "$ref": "757"
+         "$ref": "750"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "759",
+       "$id": "752",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "760",
+        "$id": "753",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6730,9 +6741,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "761",
+        "$id": "754",
         "Type": {
-         "$ref": "760"
+         "$ref": "753"
         },
         "Value": "application/json"
        }
@@ -6740,26 +6751,12 @@
      ],
      "Responses": [
       {
-       "$id": "762",
+       "$id": "755",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "763",
-        "Name": "Dictionary",
-        "KeyType": {
-         "$id": "764",
-         "Name": "string",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "ValueType": {
-         "$id": "765",
-         "Name": "Intrinsic",
-         "Kind": "unknown",
-         "IsNullable": false
-        },
-        "IsNullable": false
+        "$ref": "351"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -6778,7 +6775,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "766",
+     "$id": "756",
      "Name": "cancelJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Submits request to cancel an existing job by Id while supplying free-form cancellation reason.",
@@ -6786,18 +6783,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "767",
+       "$id": "757",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "The id of the job.",
        "Type": {
-        "$id": "768",
+        "$id": "758",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6813,12 +6810,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "769",
+       "$id": "759",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request model for cancelling job.",
        "Type": {
-        "$ref": "350"
+        "$ref": "352"
        },
        "Location": "Body",
        "IsRequired": false,
@@ -6831,11 +6828,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "770",
+       "$id": "760",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "771",
+        "$id": "761",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6850,19 +6847,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "772",
+        "$id": "762",
         "Type": {
-         "$ref": "771"
+         "$ref": "761"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "773",
+       "$id": "763",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "774",
+        "$id": "764",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6877,9 +6874,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "775",
+        "$id": "765",
         "Type": {
-         "$ref": "774"
+         "$ref": "764"
         },
         "Value": "application/json"
        }
@@ -6887,26 +6884,12 @@
      ],
      "Responses": [
       {
-       "$id": "776",
+       "$id": "766",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "777",
-        "Name": "Dictionary",
-        "KeyType": {
-         "$id": "778",
-         "Name": "string",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "ValueType": {
-         "$id": "779",
-         "Name": "Intrinsic",
-         "Kind": "unknown",
-         "IsNullable": false
-        },
-        "IsNullable": false
+        "$ref": "357"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -6925,7 +6908,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "780",
+     "$id": "767",
      "Name": "completeJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Completes an assigned job.",
@@ -6933,10 +6916,164 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
+      },
+      {
+       "$id": "768",
+       "Name": "jobId",
+       "NameInRequest": "jobId",
+       "Description": "The id of the job.",
+       "Type": {
+        "$id": "769",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "770",
+       "Name": "assignmentId",
+       "NameInRequest": "assignmentId",
+       "Description": "The Id of the job assignment.",
+       "Type": {
+        "$id": "771",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "772",
+       "Name": "options",
+       "NameInRequest": "options",
+       "Description": "Request model for completing job.",
+       "Type": {
+        "$ref": "358"
+       },
+       "Location": "Body",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "773",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "774",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "775",
+        "Type": {
+         "$ref": "774"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "776",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "777",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "778",
+        "Type": {
+         "$ref": "777"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "779",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "361"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:complete",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "780",
+     "Name": "closeJob",
+     "ResourceName": "JobRouterRestClient",
+     "Summary": "Closes a completed job.",
+     "Description": "Closes a completed job.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "491"
+      },
+      {
+       "$ref": "493"
       },
       {
        "$id": "781",
@@ -6984,9 +7121,9 @@
        "$id": "785",
        "Name": "options",
        "NameInRequest": "options",
-       "Description": "Request model for completing job.",
+       "Description": "Request model for closing job.",
        "Type": {
-        "$ref": "355"
+        "$ref": "362"
        },
        "Location": "Body",
        "IsRequired": false,
@@ -7060,189 +7197,7 @@
         200
        ],
        "BodyType": {
-        "$id": "793",
-        "Name": "Dictionary",
-        "KeyType": {
-         "$id": "794",
-         "Name": "string",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "ValueType": {
-         "$id": "795",
-         "Name": "Intrinsic",
-         "Kind": "unknown",
-         "IsNullable": false
-        },
-        "IsNullable": false
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:complete",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
-    },
-    {
-     "$id": "796",
-     "Name": "closeJob",
-     "ResourceName": "JobRouterRestClient",
-     "Summary": "Closes a completed job.",
-     "Description": "Closes a completed job.",
-     "Accessibility": "internal",
-     "Parameters": [
-      {
-       "$ref": "495"
-      },
-      {
-       "$ref": "497"
-      },
-      {
-       "$id": "797",
-       "Name": "jobId",
-       "NameInRequest": "jobId",
-       "Description": "The id of the job.",
-       "Type": {
-        "$id": "798",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "799",
-       "Name": "assignmentId",
-       "NameInRequest": "assignmentId",
-       "Description": "The Id of the job assignment.",
-       "Type": {
-        "$id": "800",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "801",
-       "Name": "options",
-       "NameInRequest": "options",
-       "Description": "Request model for closing job.",
-       "Type": {
-        "$ref": "358"
-       },
-       "Location": "Body",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "802",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Type": {
-        "$id": "803",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": true,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "804",
-        "Type": {
-         "$ref": "803"
-        },
-        "Value": "application/json"
-       }
-      },
-      {
-       "$id": "805",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "806",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "807",
-        "Type": {
-         "$ref": "806"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "808",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$id": "809",
-        "Name": "Dictionary",
-        "KeyType": {
-         "$id": "810",
-         "Name": "string",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "ValueType": {
-         "$id": "811",
-         "Name": "Intrinsic",
-         "Kind": "unknown",
-         "IsNullable": false
-        },
-        "IsNullable": false
+        "$ref": "369"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -7261,25 +7216,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "812",
+     "$id": "793",
      "Name": "listJobs",
      "ResourceName": "RouterJob",
      "Summary": "Retrieves list of jobs based on filter parameters.",
      "Description": "Retrieves list of jobs based on filter parameters.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "813",
+       "$id": "794",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "814",
+        "$id": "795",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -7295,7 +7250,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "815",
+       "$id": "796",
        "Name": "status",
        "NameInRequest": "status",
        "Description": "If specified, filter jobs by status.",
@@ -7313,12 +7268,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "816",
+       "$id": "797",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "If specified, filter jobs by queue.",
        "Type": {
-        "$id": "817",
+        "$id": "798",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7334,12 +7289,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "818",
+       "$id": "799",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "If specified, filter jobs by channel.",
        "Type": {
-        "$id": "819",
+        "$id": "800",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7355,12 +7310,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "820",
+       "$id": "801",
        "Name": "classificationPolicyId",
        "NameInRequest": "classificationPolicyId",
        "Description": "If specified, filter jobs by classificationPolicy.",
        "Type": {
-        "$id": "821",
+        "$id": "802",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7376,12 +7331,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "822",
+       "$id": "803",
        "Name": "scheduledBefore",
        "NameInRequest": "scheduledBefore",
        "Description": "If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore].",
        "Type": {
-        "$id": "823",
+        "$id": "804",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -7397,12 +7352,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "824",
+       "$id": "805",
        "Name": "scheduledAfter",
        "NameInRequest": "scheduledAfter",
        "Description": "If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf).",
        "Type": {
-        "$id": "825",
+        "$id": "806",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -7418,11 +7373,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "826",
+       "$id": "807",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "827",
+        "$id": "808",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7437,9 +7392,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "828",
+        "$id": "809",
         "Type": {
-         "$ref": "827"
+         "$ref": "808"
         },
         "Value": "application/json"
        }
@@ -7447,12 +7402,12 @@
      ],
      "Responses": [
       {
-       "$id": "829",
+       "$id": "810",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "365"
+        "$ref": "370"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -7465,7 +7420,7 @@
      "Path": "/routing/jobs",
      "BufferResponse": true,
      "Paging": {
-      "$id": "830",
+      "$id": "811",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -7473,25 +7428,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "831",
+     "$id": "812",
      "Name": "getQueuePosition",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Gets a job's position details.",
      "Description": "Gets a job's position details.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "832",
+       "$id": "813",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of the job.",
        "Type": {
-        "$id": "833",
+        "$id": "814",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7507,11 +7462,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "834",
+       "$id": "815",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "835",
+        "$id": "816",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7526,9 +7481,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "836",
+        "$id": "817",
         "Type": {
-         "$ref": "835"
+         "$ref": "816"
         },
         "Value": "application/json"
        }
@@ -7536,12 +7491,12 @@
      ],
      "Responses": [
       {
-       "$id": "837",
+       "$id": "818",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "370"
+        "$ref": "375"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -7557,7 +7512,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "838",
+     "$id": "819",
      "Name": "unassignJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Un-assign a job.",
@@ -7565,18 +7520,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "839",
+       "$id": "820",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "The id of the job.",
        "Type": {
-        "$id": "840",
+        "$id": "821",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7592,12 +7547,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "841",
+       "$id": "822",
        "Name": "assignmentId",
        "NameInRequest": "assignmentId",
        "Description": "The Id of the job assignment.",
        "Type": {
-        "$id": "842",
+        "$id": "823",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7613,12 +7568,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "843",
+       "$id": "824",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request body for unassign route.",
        "Type": {
-        "$ref": "381"
+        "$ref": "386"
        },
        "Location": "Body",
        "IsRequired": false,
@@ -7631,11 +7586,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "844",
+       "$id": "825",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "845",
+        "$id": "826",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7650,19 +7605,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "846",
+        "$id": "827",
         "Type": {
-         "$ref": "845"
+         "$ref": "826"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "847",
+       "$id": "828",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "848",
+        "$id": "829",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7677,9 +7632,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "849",
+        "$id": "830",
         "Type": {
-         "$ref": "848"
+         "$ref": "829"
         },
         "Value": "application/json"
        }
@@ -7687,12 +7642,12 @@
      ],
      "Responses": [
       {
-       "$id": "850",
+       "$id": "831",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "384"
+        "$ref": "389"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -7711,25 +7666,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "851",
+     "$id": "832",
      "Name": "acceptJobOffer",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already.",
      "Description": "Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "852",
+       "$id": "833",
        "Name": "workerId",
        "NameInRequest": "workerId",
        "Description": "Id of the worker.",
        "Type": {
-        "$id": "853",
+        "$id": "834",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7745,12 +7700,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "854",
+       "$id": "835",
        "Name": "offerId",
        "NameInRequest": "offerId",
        "Description": "The Id of the offer.",
        "Type": {
-        "$id": "855",
+        "$id": "836",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7766,11 +7721,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "856",
+       "$id": "837",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "857",
+        "$id": "838",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7785,9 +7740,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "858",
+        "$id": "839",
         "Type": {
-         "$ref": "857"
+         "$ref": "838"
         },
         "Value": "application/json"
        }
@@ -7795,12 +7750,12 @@
      ],
      "Responses": [
       {
-       "$id": "859",
+       "$id": "840",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "389"
+        "$ref": "394"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -7816,7 +7771,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "860",
+     "$id": "841",
      "Name": "declineJobOffer",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Declines an offer to work on a job.",
@@ -7824,18 +7779,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "861",
+       "$id": "842",
        "Name": "workerId",
        "NameInRequest": "workerId",
        "Description": "Id of the worker.",
        "Type": {
-        "$id": "862",
+        "$id": "843",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7851,12 +7806,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "863",
+       "$id": "844",
        "Name": "offerId",
        "NameInRequest": "offerId",
        "Description": "The Id of the offer.",
        "Type": {
-        "$id": "864",
+        "$id": "845",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7872,12 +7827,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "865",
+       "$id": "846",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request model for declining offer.",
        "Type": {
-        "$ref": "396"
+        "$ref": "401"
        },
        "Location": "Body",
        "IsRequired": false,
@@ -7890,11 +7845,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "866",
+       "$id": "847",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "867",
+        "$id": "848",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7909,19 +7864,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "868",
+        "$id": "849",
         "Type": {
-         "$ref": "867"
+         "$ref": "848"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "869",
+       "$id": "850",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "870",
+        "$id": "851",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7936,9 +7891,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "871",
+        "$id": "852",
         "Type": {
-         "$ref": "870"
+         "$ref": "851"
         },
         "Value": "application/json"
        }
@@ -7946,26 +7901,12 @@
      ],
      "Responses": [
       {
-       "$id": "872",
+       "$id": "853",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "873",
-        "Name": "Dictionary",
-        "KeyType": {
-         "$id": "874",
-         "Name": "string",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "ValueType": {
-         "$id": "875",
-         "Name": "Intrinsic",
-         "Kind": "unknown",
-         "IsNullable": false
-        },
-        "IsNullable": false
+        "$ref": "404"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -7984,25 +7925,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "876",
+     "$id": "854",
      "Name": "getQueueStatistics",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Retrieves a queue's statistics.",
      "Description": "Retrieves a queue's statistics.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "877",
+       "$id": "855",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "Id of the queue to retrieve statistics.",
        "Type": {
-        "$id": "878",
+        "$id": "856",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8018,11 +7959,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "879",
+       "$id": "857",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "880",
+        "$id": "858",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -8037,9 +7978,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "881",
+        "$id": "859",
         "Type": {
-         "$ref": "880"
+         "$ref": "858"
         },
         "Value": "application/json"
        }
@@ -8047,12 +7988,12 @@
      ],
      "Responses": [
       {
-       "$id": "882",
+       "$id": "860",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "399"
+        "$ref": "405"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -8068,7 +8009,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "883",
+     "$id": "861",
      "Name": "upsertWorker",
      "ResourceName": "RouterWorker",
      "Summary": "Creates or updates a worker.",
@@ -8076,18 +8017,18 @@
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "884",
+       "$id": "862",
        "Name": "workerId",
        "NameInRequest": "workerId",
        "Description": "Id of the worker.",
        "Type": {
-        "$id": "885",
+        "$id": "863",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8103,15 +8044,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "886",
+       "$id": "864",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "887",
+        "$id": "865",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "888",
+         "$id": "866",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -8121,9 +8062,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "889",
+        "$id": "867",
         "Type": {
-         "$ref": "887"
+         "$ref": "865"
         },
         "Value": "application/merge-patch+json"
        },
@@ -8137,12 +8078,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "890",
+       "$id": "868",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "891",
+        "$id": "869",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8158,12 +8099,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "892",
+       "$id": "870",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "893",
+        "$id": "871",
         "Name": "utcDateTime",
         "Kind": "DateTime",
         "IsNullable": false
@@ -8179,12 +8120,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "894",
+       "$id": "872",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
        "Type": {
-        "$ref": "410"
+        "$ref": "416"
        },
        "Location": "Body",
        "IsRequired": true,
@@ -8197,11 +8138,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "895",
+       "$id": "873",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "896",
+        "$id": "874",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -8216,9 +8157,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "897",
+        "$id": "875",
         "Type": {
-         "$ref": "896"
+         "$ref": "874"
         },
         "Value": "application/json"
        }
@@ -8226,34 +8167,34 @@
      ],
      "Responses": [
       {
-       "$id": "898",
+       "$id": "876",
        "StatusCodes": [
         201
        ],
        "BodyType": {
-        "$ref": "410"
+        "$ref": "416"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "899",
+         "$id": "877",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "900",
+          "$id": "878",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "901",
+         "$id": "879",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "902",
+          "$id": "880",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -8263,34 +8204,34 @@
        "IsErrorResponse": false
       },
       {
-       "$id": "903",
+       "$id": "881",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "410"
+        "$ref": "416"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "904",
+         "$id": "882",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "905",
+          "$id": "883",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "906",
+         "$id": "884",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "907",
+          "$id": "885",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -8312,25 +8253,25 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "908",
+     "$id": "886",
      "Name": "getWorker",
      "ResourceName": "RouterWorker",
      "Summary": "Retrieves an existing worker by Id.",
      "Description": "Retrieves an existing worker by Id.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "909",
+       "$id": "887",
        "Name": "workerId",
        "NameInRequest": "workerId",
        "Description": "Id of the worker.",
        "Type": {
-        "$id": "910",
+        "$id": "888",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8346,11 +8287,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "911",
+       "$id": "889",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "912",
+        "$id": "890",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -8365,9 +8306,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "913",
+        "$id": "891",
         "Type": {
-         "$ref": "912"
+         "$ref": "890"
         },
         "Value": "application/json"
        }
@@ -8375,34 +8316,34 @@
      ],
      "Responses": [
       {
-       "$id": "914",
+       "$id": "892",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "410"
+        "$ref": "416"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "915",
+         "$id": "893",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "916",
+          "$id": "894",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "917",
+         "$id": "895",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "918",
+          "$id": "896",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
@@ -8421,25 +8362,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "919",
+     "$id": "897",
      "Name": "deleteWorker",
      "ResourceName": "RouterWorker",
      "Summary": "Deletes a worker and all of its traces.",
      "Description": "Deletes a worker and all of its traces.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "920",
+       "$id": "898",
        "Name": "workerId",
        "NameInRequest": "workerId",
        "Description": "Id of the worker.",
        "Type": {
-        "$id": "921",
+        "$id": "899",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8455,11 +8396,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "922",
+       "$id": "900",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "923",
+        "$id": "901",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -8474,9 +8415,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "924",
+        "$id": "902",
         "Type": {
-         "$ref": "923"
+         "$ref": "901"
         },
         "Value": "application/json"
        }
@@ -8484,7 +8425,7 @@
      ],
      "Responses": [
       {
-       "$id": "925",
+       "$id": "903",
        "StatusCodes": [
         204
        ],
@@ -8502,25 +8443,25 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "926",
+     "$id": "904",
      "Name": "listWorkers",
      "ResourceName": "RouterWorker",
      "Summary": "Retrieves existing workers.",
      "Description": "Retrieves existing workers.",
      "Parameters": [
       {
-       "$ref": "495"
+       "$ref": "491"
       },
       {
-       "$ref": "497"
+       "$ref": "493"
       },
       {
-       "$id": "927",
+       "$id": "905",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "928",
+        "$id": "906",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -8536,7 +8477,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "929",
+       "$id": "907",
        "Name": "state",
        "NameInRequest": "state",
        "Description": "If specified, select workers by worker state.",
@@ -8554,12 +8495,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "930",
+       "$id": "908",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "If specified, select workers who have a channel configuration with this channel.",
        "Type": {
-        "$id": "931",
+        "$id": "909",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8575,12 +8516,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "932",
+       "$id": "910",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "If specified, select workers who are assigned to this queue.",
        "Type": {
-        "$id": "933",
+        "$id": "911",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8596,12 +8537,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "934",
+       "$id": "912",
        "Name": "hasCapacity",
        "NameInRequest": "hasCapacity",
        "Description": "If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.",
        "Type": {
-        "$id": "935",
+        "$id": "913",
         "Name": "boolean",
         "Kind": "Boolean",
         "IsNullable": false
@@ -8617,11 +8558,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "936",
+       "$id": "914",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "937",
+        "$id": "915",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -8636,9 +8577,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "938",
+        "$id": "916",
         "Type": {
-         "$ref": "937"
+         "$ref": "915"
         },
         "Value": "application/json"
        }
@@ -8646,12 +8587,12 @@
      ],
      "Responses": [
       {
-       "$id": "939",
+       "$id": "917",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$ref": "466"
+        "$ref": "472"
        },
        "BodyMediaType": "Json",
        "Headers": [],
@@ -8664,7 +8605,7 @@
      "Path": "/routing/workers",
      "BufferResponse": true,
      "Paging": {
-      "$id": "940",
+      "$id": "918",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -8673,7 +8614,7 @@
     }
    ],
    "Protocol": {
-    "$id": "941"
+    "$id": "919"
    },
    "Creatable": true
   }

@@ -518,7 +518,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
             return (await ReclassifyJobAsync(jobId: jobId,
-                options: new Dictionary<string, string>(),
+                options: new ReclassifyJobOptions(),
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false)).GetRawResponse();
         }
@@ -534,7 +534,7 @@ namespace Azure.Communication.JobRouter
 
             return (ReclassifyJob(
                 jobId: jobId,
-                options: new Dictionary<string, string>(),
+                options: new ReclassifyJobOptions(),
                 cancellationToken: cancellationToken)).GetRawResponse();
         }
 
