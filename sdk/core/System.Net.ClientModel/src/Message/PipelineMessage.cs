@@ -6,12 +6,12 @@ using System.Threading;
 
 namespace System.Net.ClientModel.Core;
 
-public class ClientMessage : IDisposable
+public class PipelineMessage : IDisposable
 {
     private MessageResponse? _response;
     private bool _disposed;
 
-    protected internal ClientMessage(MessageRequest request)
+    protected internal PipelineMessage(MessageRequest request)
     {
         Request = request;
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();

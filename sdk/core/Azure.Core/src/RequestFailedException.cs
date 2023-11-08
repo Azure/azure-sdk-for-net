@@ -20,7 +20,7 @@ namespace Azure
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
-    public class RequestFailedException : UnsuccessfulRequestException, ISerializable
+    public class RequestFailedException : ClientRequestException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -168,7 +168,7 @@ namespace Azure
         /// <summary>
         /// Gets the response, if any, that led to the exception.
         /// </summary>
-        public Response? GetRawResponse() => _response;
+        public new Response? GetRawResponse() => _response;
 
         internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {

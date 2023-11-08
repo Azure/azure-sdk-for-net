@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    internal class AzureCorePipelineEnumerator : PipelineEnumerator
+    internal class AzureCorePipelineEnumerator : PipelineProcessor
     {
         private readonly HttpMessage _message;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;

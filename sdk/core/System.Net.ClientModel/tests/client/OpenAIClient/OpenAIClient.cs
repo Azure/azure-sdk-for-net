@@ -14,7 +14,7 @@ public class OpenAIClient
 {
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
-    private readonly MessagePipeline _pipeline;
+    private readonly ClientPipeline _pipeline;
 
     public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
     {
@@ -37,7 +37,7 @@ public class OpenAIClient
 
         options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
 
-        _pipeline = MessagePipeline.Create(options);
+        _pipeline = ClientPipeline.Create(options);
     }
 
     public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
@@ -57,7 +57,7 @@ public class OpenAIClient
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
 
-        using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
+        using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.MessageClassifier = MessageClassifier200;
@@ -67,9 +67,9 @@ public class OpenAIClient
         return result;
     }
 
-    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
     {
-        ClientMessage message = _pipeline.CreateMessage();
+        PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
         MessageRequest request = message.Request;

@@ -6,12 +6,12 @@ using System.Net.ClientModel.Internal.Core;
 
 namespace System.Net.ClientModel.Core;
 
-public class MessagePipeline
+public class ClientPipeline
 {
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    public MessagePipeline(
+    public ClientPipeline(
         PipelineTransport transport,
         ReadOnlyMemory<PipelinePolicy> policies)
     {
@@ -22,13 +22,13 @@ public class MessagePipeline
         _policies = larger;
     }
 
-    private MessagePipeline(ReadOnlyMemory<PipelinePolicy> policies)
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies)
     {
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
     }
 
-    public static MessagePipeline Create(PipelineOptions options)
+    public static ClientPipeline Create(PipelineOptions options)
     {
         int pipelineLength = 0;
 
@@ -89,33 +89,33 @@ public class MessagePipeline
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new MessagePipeline(pipeline);
+        return new ClientPipeline(pipeline);
     }
 
     // TODO: note that without a common base type, nothing validates that MessagePipeline
     // and Azure.Core.HttpPipeline have the same API shape. This is something a human
     // must keep track of if we wanted to add a common base class later.
-    public ClientMessage CreateMessage() => _transport.CreateMessage();
+    public PipelineMessage CreateMessage() => _transport.CreateMessage();
 
-    public void Send(ClientMessage message)
+    public void Send(PipelineMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineProcessor enumerator = new MessagePipelineExecutor(message, _policies);
         enumerator.ProcessNext();
     }
 
-    public async ValueTask SendAsync(ClientMessage message)
+    public async ValueTask SendAsync(PipelineMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineProcessor enumerator = new MessagePipelineExecutor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
     }
 
-    private class MessagePipelineExecutor : PipelineEnumerator
+    private class MessagePipelineExecutor : PipelineProcessor
     {
-        private readonly ClientMessage _message;
+        private readonly PipelineMessage _message;
         private ReadOnlyMemory<PipelinePolicy> _policies;
 
         public MessagePipelineExecutor(
-            ClientMessage message,
+            PipelineMessage message,
             ReadOnlyMemory<PipelinePolicy> policies )
         {
             _message = message;

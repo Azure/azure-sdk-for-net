@@ -14,7 +14,7 @@ public class MapsClient
 {
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
-    private readonly MessagePipeline _pipeline;
+    private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
     public MapsClient(Uri endpoint, KeyCredential credential, MapsClientOptions options = default)
@@ -40,7 +40,7 @@ public class MapsClient
 
         options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
-        _pipeline = MessagePipeline.Create(options);
+        _pipeline = ClientPipeline.Create(options);
     }
 
     public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
@@ -66,7 +66,7 @@ public class MapsClient
         options ??= new RequestOptions();
         options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
-        using ClientMessage message = CreateGetLocationRequest(ipAddress, options);
+        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
         _pipeline.Send(message);
 
@@ -74,15 +74,15 @@ public class MapsClient
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
-            throw new UnsuccessfulRequestException(response);
+            throw new ClientRequestException(response);
         }
 
         return Result.FromResponse(response);
     }
 
-    private ClientMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
+    private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
-        ClientMessage message = _pipeline.CreateMessage();
+        PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
         MessageRequest request = message.Request;
