@@ -217,10 +217,10 @@ namespace Azure
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public void Apply(Azure.Core.HttpMessage message) { }
-        public override void Apply(System.Net.ClientModel.Core.ClientMessage message) { }
+        public override void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.Net.ClientModel.UnsuccessfulRequestException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.Net.ClientModel.PipelineRequestException, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
@@ -482,7 +482,7 @@ namespace Azure.Core
             public static string XMsRequestId { get { throw null; } }
         }
     }
-    public sealed partial class HttpMessage : System.Net.ClientModel.Core.ClientMessage
+    public sealed partial class HttpMessage : System.Net.ClientModel.Core.PipelineMessage
     {
         public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.Net.ClientModel.Core.MessageRequest)) { }
         public bool BufferResponse { get { throw null; } set { } }
@@ -683,7 +683,7 @@ namespace Azure.Core
     {
         public ResponseClassifier() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool IsError(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
+        public override bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }
