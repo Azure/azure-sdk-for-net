@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Subscription list operation response. </summary>
     internal partial class SubscriptionsResponse
     {
-        /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsResponse"/>. </summary>
         internal SubscriptionsResponse()
         {
             Value = new ChangeTrackingList<MarketplaceSubscription>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsResponse"/>. </summary>
         /// <param name="value"> An array of subscriptions. </param>
         /// <param name="skipToken"> The skip token to retrieve the next page. </param>
         /// <param name="count"> Number of subscriptions on the page. </param>
-        internal SubscriptionsResponse(IReadOnlyList<MarketplaceSubscription> value, string skipToken, long? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionsResponse(IReadOnlyList<MarketplaceSubscription> value, string skipToken, long? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             SkipToken = skipToken;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of subscriptions. </summary>

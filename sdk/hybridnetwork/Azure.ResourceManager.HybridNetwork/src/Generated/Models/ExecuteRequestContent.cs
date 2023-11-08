@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Payload for execute request post call. </summary>
     public partial class ExecuteRequestContent
     {
-        /// <summary> Initializes a new instance of ExecuteRequestContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteRequestContent"/>. </summary>
         /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
         /// <param name="requestMetadata"> The request metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="requestMetadata"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
             ServiceEndpoint = serviceEndpoint;
             RequestMetadata = requestMetadata;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteRequestContent"/>. </summary>
+        /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
+        /// <param name="requestMetadata"> The request metadata. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExecuteRequestContent(string serviceEndpoint, RequestMetadata requestMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ServiceEndpoint = serviceEndpoint;
+            RequestMetadata = requestMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteRequestContent"/> for deserialization. </summary>
+        internal ExecuteRequestContent()
+        {
         }
 
         /// <summary> The endpoint of service to call. </summary>

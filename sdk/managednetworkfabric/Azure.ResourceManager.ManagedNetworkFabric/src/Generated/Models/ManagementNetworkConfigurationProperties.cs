@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Configuration to be used to setup the management network. </summary>
     public partial class ManagementNetworkConfigurationProperties
     {
-        /// <summary> Initializes a new instance of ManagementNetworkConfigurationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationProperties"/>. </summary>
         /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
         /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="infrastructureVpnConfiguration"/> or <paramref name="workloadVpnConfiguration"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             InfrastructureVpnConfiguration = infrastructureVpnConfiguration;
             WorkloadVpnConfiguration = workloadVpnConfiguration;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationProperties"/>. </summary>
+        /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
+        /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementNetworkConfigurationProperties(VpnConfigurationProperties infrastructureVpnConfiguration, VpnConfigurationProperties workloadVpnConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InfrastructureVpnConfiguration = infrastructureVpnConfiguration;
+            WorkloadVpnConfiguration = workloadVpnConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationProperties"/> for deserialization. </summary>
+        internal ManagementNetworkConfigurationProperties()
+        {
         }
 
         /// <summary> VPN Configuration properties. </summary>

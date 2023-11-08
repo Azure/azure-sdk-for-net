@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiDeploymentParameterMetadata
+    public partial class LogicApiDeploymentParameterMetadata : IUtf8JsonSerializable, IJsonModel<LogicApiDeploymentParameterMetadata>
     {
-        internal static LogicApiDeploymentParameterMetadata DeserializeLogicApiDeploymentParameterMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiDeploymentParameterMetadata>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LogicApiDeploymentParameterMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApiDeploymentParameterMetadataType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ApiDeploymentParameterMetadataType);
+            }
+            if (Optional.IsDefined(IsRequired))
+            {
+                writer.WritePropertyName("isRequired"u8);
+                writer.WriteBooleanValue(IsRequired.Value);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Visibility))
+            {
+                writer.WritePropertyName("visibility"u8);
+                writer.WriteStringValue(Visibility.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LogicApiDeploymentParameterMetadata IJsonModel<LogicApiDeploymentParameterMetadata>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiDeploymentParameterMetadata(document.RootElement, options);
+        }
+
+        internal static LogicApiDeploymentParameterMetadata DeserializeLogicApiDeploymentParameterMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +89,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<LogicApiDeploymentParameterVisibility> visibility = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -58,8 +126,38 @@ namespace Azure.ResourceManager.Logic.Models
                     visibility = new LogicApiDeploymentParameterVisibility(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LogicApiDeploymentParameterMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogicApiDeploymentParameterMetadata IModel<LogicApiDeploymentParameterMetadata>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogicApiDeploymentParameterMetadata(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LogicApiDeploymentParameterMetadata>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

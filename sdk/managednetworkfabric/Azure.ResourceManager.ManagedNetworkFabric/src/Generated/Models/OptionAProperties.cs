@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Peering optionA properties. </summary>
     public partial class OptionAProperties
     {
-        /// <summary> Initializes a new instance of OptionAProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OptionAProperties"/>. </summary>
         public OptionAProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of OptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionAProperties"/>. </summary>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
         /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        internal OptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mtu = mtu;
             VlanId = vlanId;
             PeerAsn = peerAsn;
             BfdConfiguration = bfdConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> MTU to use for option A peering. </summary>

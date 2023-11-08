@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of network service design versions. </summary>
     internal partial class NetworkServiceDesignVersionListResult
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionListResult"/>. </summary>
         internal NetworkServiceDesignVersionListResult()
         {
             Value = new ChangeTrackingList<NetworkServiceDesignVersionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionListResult"/>. </summary>
         /// <param name="value"> A list of network service design versions. </param>
         /// <param name="nextLink"> The URI to get the next set of results. </param>
-        internal NetworkServiceDesignVersionListResult(IReadOnlyList<NetworkServiceDesignVersionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkServiceDesignVersionListResult(IReadOnlyList<NetworkServiceDesignVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of network service design versions. </summary>

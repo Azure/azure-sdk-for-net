@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -15,16 +18,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class SamplingAlgorithm
     {
-        /// <summary> Initializes a new instance of SamplingAlgorithm. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SamplingAlgorithm"/>. </summary>
         protected SamplingAlgorithm()
         {
         }
 
-        /// <summary> Initializes a new instance of SamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="SamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
-        internal SamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SamplingAlgorithmType = samplingAlgorithmType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </summary>

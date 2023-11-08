@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The LiveEvent list result. </summary>
     internal partial class LiveEventListResult
     {
-        /// <summary> Initializes a new instance of LiveEventListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventListResult"/>. </summary>
         internal LiveEventListResult()
         {
             Value = new ChangeTrackingList<MediaLiveEventData>();
         }
 
-        /// <summary> Initializes a new instance of LiveEventListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventListResult"/>. </summary>
         /// <param name="value"> The result of the List Live Event operation. </param>
         /// <param name="odataCount"> The number of result. </param>
         /// <param name="odataNextLink"> The link to the next set of results. Not empty if value contains incomplete list of live outputs. </param>
-        internal LiveEventListResult(IReadOnlyList<MediaLiveEventData> value, int? odataCount, string odataNextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveEventListResult(IReadOnlyList<MediaLiveEventData> value, int? odataCount, string odataNextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             OdataCount = odataCount;
             OdataNextLink = odataNextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The result of the List Live Event operation. </summary>

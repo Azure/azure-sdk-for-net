@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Tag filter information for the VM. </summary>
     public partial class VmTagSettings
     {
-        /// <summary> Initializes a new instance of VmTagSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmTagSettings"/>. </summary>
         public VmTagSettings()
         {
             Tags = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of VmTagSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmTagSettings"/>. </summary>
         /// <param name="tags"> Dictionary of tags with its list of values. </param>
         /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
-        internal VmTagSettings(IDictionary<string, IList<string>> tags, VmTagOperator? filterOperator)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmTagSettings(IDictionary<string, IList<string>> tags, VmTagOperator? filterOperator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             FilterOperator = filterOperator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of tags with its list of values. </summary>

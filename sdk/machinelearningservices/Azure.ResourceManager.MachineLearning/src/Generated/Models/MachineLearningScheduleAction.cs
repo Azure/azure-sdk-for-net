@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of MachineLearningScheduleAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleAction"/>. </summary>
         protected MachineLearningScheduleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
-        internal MachineLearningScheduleAction(ScheduleActionType actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningScheduleAction(ScheduleActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the action type of the schedule. </summary>

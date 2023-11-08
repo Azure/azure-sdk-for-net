@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of objects which describes offers per context. An empty GUID is a public context. </summary>
     internal partial class CollectionOffersByContextList
     {
-        /// <summary> Initializes a new instance of CollectionOffersByContextList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionOffersByContextList"/>. </summary>
         internal CollectionOffersByContextList()
         {
             Value = new ChangeTrackingList<CollectionOffersByContext>();
         }
 
-        /// <summary> Initializes a new instance of CollectionOffersByContextList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionOffersByContextList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of offer list per context results if there are any. </param>
-        internal CollectionOffersByContextList(IReadOnlyList<CollectionOffersByContext> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionOffersByContextList(IReadOnlyList<CollectionOffersByContext> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

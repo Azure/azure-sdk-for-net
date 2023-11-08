@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration service environment sku capacity. </summary>
     public partial class IntegrationServiceEnvironmentSkuCapacity
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuCapacity"/>. </summary>
         internal IntegrationServiceEnvironmentSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The sku scale type. </param>
-        internal IntegrationServiceEnvironmentSkuCapacity(int? minimum, int? maximum, int? @default, IntegrationServiceEnvironmentSkuScaleType? scaleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentSkuCapacity(int? minimum, int? maximum, int? @default, IntegrationServiceEnvironmentSkuScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
             ScaleType = scaleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum capacity. </summary>

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactFramingSettings : IUtf8JsonSerializable
+    public partial class EdifactFramingSettings : IUtf8JsonSerializable, IJsonModel<EdifactFramingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactFramingSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EdifactFramingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceCodeListDirectoryVersion))
@@ -43,11 +49,40 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
             writer.WritePropertyName("segmentTerminatorSuffix"u8);
             writer.WriteStringValue(SegmentTerminatorSuffix.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactFramingSettings DeserializeEdifactFramingSettings(JsonElement element)
+        EdifactFramingSettings IJsonModel<EdifactFramingSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactFramingSettings(document.RootElement, options);
+        }
+
+        internal static EdifactFramingSettings DeserializeEdifactFramingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +98,8 @@ namespace Azure.ResourceManager.Logic.Models
             EdifactCharacterSet characterSet = default;
             EdifactDecimalIndicator decimalPointIndicator = default;
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceCodeListDirectoryVersion"u8))
@@ -120,8 +157,38 @@ namespace Azure.ResourceManager.Logic.Models
                     segmentTerminatorSuffix = property.Value.GetString().ToSegmentTerminatorSuffix();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdifactFramingSettings(serviceCodeListDirectoryVersion.Value, characterEncoding.Value, protocolVersion, dataElementSeparator, componentSeparator, segmentTerminator, releaseIndicator, repetitionSeparator, characterSet, decimalPointIndicator, segmentTerminatorSuffix);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdifactFramingSettings(serviceCodeListDirectoryVersion.Value, characterEncoding.Value, protocolVersion, dataElementSeparator, componentSeparator, segmentTerminator, releaseIndicator, repetitionSeparator, characterSet, decimalPointIndicator, segmentTerminatorSuffix, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EdifactFramingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EdifactFramingSettings IModel<EdifactFramingSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEdifactFramingSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EdifactFramingSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

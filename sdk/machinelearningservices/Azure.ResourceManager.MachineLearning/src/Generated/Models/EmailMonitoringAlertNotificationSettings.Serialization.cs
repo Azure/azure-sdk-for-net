@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class EmailMonitoringAlertNotificationSettings : IUtf8JsonSerializable
+    public partial class EmailMonitoringAlertNotificationSettings : IUtf8JsonSerializable, IJsonModel<EmailMonitoringAlertNotificationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailMonitoringAlertNotificationSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EmailMonitoringAlertNotificationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(EmailNotificationSetting))
@@ -29,17 +35,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("alertNotificationType"u8);
             writer.WriteStringValue(AlertNotificationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EmailMonitoringAlertNotificationSettings DeserializeEmailMonitoringAlertNotificationSettings(JsonElement element)
+        EmailMonitoringAlertNotificationSettings IJsonModel<EmailMonitoringAlertNotificationSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmailMonitoringAlertNotificationSettings(document.RootElement, options);
+        }
+
+        internal static EmailMonitoringAlertNotificationSettings DeserializeEmailMonitoringAlertNotificationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<NotificationSetting> emailNotificationSetting = default;
             MonitoringAlertNotificationType alertNotificationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailNotificationSetting"u8))
@@ -57,8 +94,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     alertNotificationType = new MonitoringAlertNotificationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EmailMonitoringAlertNotificationSettings(alertNotificationType, emailNotificationSetting.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EmailMonitoringAlertNotificationSettings(alertNotificationType, serializedAdditionalRawData, emailNotificationSetting.Value);
         }
+
+        BinaryData IModel<EmailMonitoringAlertNotificationSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EmailMonitoringAlertNotificationSettings IModel<EmailMonitoringAlertNotificationSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEmailMonitoringAlertNotificationSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EmailMonitoringAlertNotificationSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

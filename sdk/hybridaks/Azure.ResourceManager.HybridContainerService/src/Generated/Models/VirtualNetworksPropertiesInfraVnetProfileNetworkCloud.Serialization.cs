@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud : IUtf8JsonSerializable
+    internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud : IUtf8JsonSerializable, IJsonModel<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkId))
@@ -20,16 +26,47 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworksPropertiesInfraVnetProfileNetworkCloud DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(JsonElement element)
+        VirtualNetworksPropertiesInfraVnetProfileNetworkCloud IJsonModel<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworksPropertiesInfraVnetProfileNetworkCloud)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(document.RootElement, options);
+        }
+
+        internal static VirtualNetworksPropertiesInfraVnetProfileNetworkCloud DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> networkId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkId"u8))
@@ -37,8 +74,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     networkId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(networkId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(networkId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworksPropertiesInfraVnetProfileNetworkCloud)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualNetworksPropertiesInfraVnetProfileNetworkCloud IModel<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworksPropertiesInfraVnetProfileNetworkCloud)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

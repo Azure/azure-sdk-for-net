@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The resource reference. </summary>
     public partial class LogicResourceReference
     {
-        /// <summary> Initializes a new instance of LogicResourceReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicResourceReference"/>. </summary>
         public LogicResourceReference()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicResourceReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
-        internal LogicResourceReference(ResourceIdentifier id, string name, ResourceType? resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicResourceReference(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id. </summary>

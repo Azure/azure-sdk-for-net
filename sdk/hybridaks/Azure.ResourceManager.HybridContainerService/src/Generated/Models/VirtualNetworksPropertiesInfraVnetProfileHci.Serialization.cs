@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksPropertiesInfraVnetProfileHci : IUtf8JsonSerializable
+    public partial class VirtualNetworksPropertiesInfraVnetProfileHci : IUtf8JsonSerializable, IJsonModel<VirtualNetworksPropertiesInfraVnetProfileHci>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworksPropertiesInfraVnetProfileHci>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VirtualNetworksPropertiesInfraVnetProfileHci>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(MocGroup))
@@ -30,11 +36,40 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("mocVnetName"u8);
                 writer.WriteStringValue(MocVnetName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworksPropertiesInfraVnetProfileHci DeserializeVirtualNetworksPropertiesInfraVnetProfileHci(JsonElement element)
+        VirtualNetworksPropertiesInfraVnetProfileHci IJsonModel<VirtualNetworksPropertiesInfraVnetProfileHci>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworksPropertiesInfraVnetProfileHci)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfileHci(document.RootElement, options);
+        }
+
+        internal static VirtualNetworksPropertiesInfraVnetProfileHci DeserializeVirtualNetworksPropertiesInfraVnetProfileHci(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> mocGroup = default;
             Optional<string> mocLocation = default;
             Optional<string> mocVnetName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mocGroup"u8))
@@ -59,8 +96,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     mocVnetName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworksPropertiesInfraVnetProfileHci(mocGroup.Value, mocLocation.Value, mocVnetName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualNetworksPropertiesInfraVnetProfileHci(mocGroup.Value, mocLocation.Value, mocVnetName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<VirtualNetworksPropertiesInfraVnetProfileHci>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworksPropertiesInfraVnetProfileHci)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualNetworksPropertiesInfraVnetProfileHci IModel<VirtualNetworksPropertiesInfraVnetProfileHci>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworksPropertiesInfraVnetProfileHci)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfileHci(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VirtualNetworksPropertiesInfraVnetProfileHci>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

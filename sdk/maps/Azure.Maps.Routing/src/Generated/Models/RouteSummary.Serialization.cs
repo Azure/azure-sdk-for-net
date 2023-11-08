@@ -6,15 +6,95 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteSummary
+    public partial class RouteSummary : IUtf8JsonSerializable, IJsonModel<RouteSummary>
     {
-        internal static RouteSummary DeserializeRouteSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteSummary>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RouteSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LengthInMeters))
+                {
+                    writer.WritePropertyName("lengthInMeters"u8);
+                    writer.WriteNumberValue(LengthInMeters.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TravelTimeInSeconds))
+                {
+                    writer.WritePropertyName("travelTimeInSeconds"u8);
+                    writer.WriteNumberValue(TravelTimeInSeconds.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TrafficDelayInSeconds))
+                {
+                    writer.WritePropertyName("trafficDelayInSeconds"u8);
+                    writer.WriteNumberValue(TrafficDelayInSeconds.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DepartureTime))
+                {
+                    writer.WritePropertyName("departureTime"u8);
+                    writer.WriteStringValue(DepartureTime.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ArrivalTime))
+                {
+                    writer.WritePropertyName("arrivalTime"u8);
+                    writer.WriteStringValue(ArrivalTime.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteSummary IJsonModel<RouteSummary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteSummary(document.RootElement, options);
+        }
+
+        internal static RouteSummary DeserializeRouteSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +104,8 @@ namespace Azure.Maps.Routing.Models
             Optional<int> trafficDelayInSeconds = default;
             Optional<DateTimeOffset> departureTime = default;
             Optional<DateTimeOffset> arrivalTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lengthInMeters"u8))
@@ -71,8 +153,38 @@ namespace Azure.Maps.Routing.Models
                     arrivalTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RouteSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RouteSummary IModel<RouteSummary>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRouteSummary(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RouteSummary>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

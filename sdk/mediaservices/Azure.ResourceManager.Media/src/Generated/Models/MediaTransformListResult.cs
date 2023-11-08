@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of Transform items. </summary>
     internal partial class MediaTransformListResult
     {
-        /// <summary> Initializes a new instance of MediaTransformListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaTransformListResult"/>. </summary>
         internal MediaTransformListResult()
         {
             Value = new ChangeTrackingList<MediaTransformData>();
         }
 
-        /// <summary> Initializes a new instance of MediaTransformListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformListResult"/>. </summary>
         /// <param name="value"> A collection of Transform items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
-        internal MediaTransformListResult(IReadOnlyList<MediaTransformData> value, string odataNextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaTransformListResult(IReadOnlyList<MediaTransformData> value, string odataNextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             OdataNextLink = odataNextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A collection of Transform items. </summary>

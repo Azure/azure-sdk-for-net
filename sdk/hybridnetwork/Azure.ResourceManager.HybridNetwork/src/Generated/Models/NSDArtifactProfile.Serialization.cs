@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class NSDArtifactProfile : IUtf8JsonSerializable
+    public partial class NSDArtifactProfile : IUtf8JsonSerializable, IJsonModel<NSDArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSDArtifactProfile>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NSDArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ArtifactStoreReference))
@@ -31,11 +37,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("artifactVersion"u8);
                 writer.WriteStringValue(ArtifactVersion);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NSDArtifactProfile DeserializeNSDArtifactProfile(JsonElement element)
+        NSDArtifactProfile IJsonModel<NSDArtifactProfile>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNSDArtifactProfile(document.RootElement, options);
+        }
+
+        internal static NSDArtifactProfile DeserializeNSDArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +78,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<WritableSubResource> artifactStoreReference = default;
             Optional<string> artifactName = default;
             Optional<string> artifactVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("artifactStoreReference"u8))
@@ -64,8 +101,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     artifactVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NSDArtifactProfile(artifactStoreReference, artifactName.Value, artifactVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NSDArtifactProfile(artifactStoreReference, artifactName.Value, artifactVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<NSDArtifactProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NSDArtifactProfile IModel<NSDArtifactProfile>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNSDArtifactProfile(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NSDArtifactProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

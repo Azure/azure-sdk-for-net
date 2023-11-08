@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableParameterSubspace : IUtf8JsonSerializable
+    public partial class TableParameterSubspace : IUtf8JsonSerializable, IJsonModel<TableParameterSubspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableParameterSubspace>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<TableParameterSubspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Booster))
@@ -255,11 +261,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("withStd");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TableParameterSubspace DeserializeTableParameterSubspace(JsonElement element)
+        TableParameterSubspace IJsonModel<TableParameterSubspace>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTableParameterSubspace(document.RootElement, options);
+        }
+
+        internal static TableParameterSubspace DeserializeTableParameterSubspace(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -284,6 +319,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> treeMethod = default;
             Optional<string> withMean = default;
             Optional<string> withStd = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("booster"u8))
@@ -486,8 +523,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     withStd = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TableParameterSubspace(booster.Value, boostingType.Value, growPolicy.Value, learningRate.Value, maxBin.Value, maxDepth.Value, maxLeaves.Value, minDataInLeaf.Value, minSplitGain.Value, modelName.Value, nEstimators.Value, numLeaves.Value, preprocessorName.Value, regAlpha.Value, regLambda.Value, subsample.Value, subsampleFreq.Value, treeMethod.Value, withMean.Value, withStd.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TableParameterSubspace(booster.Value, boostingType.Value, growPolicy.Value, learningRate.Value, maxBin.Value, maxDepth.Value, maxLeaves.Value, minDataInLeaf.Value, minSplitGain.Value, modelName.Value, nEstimators.Value, numLeaves.Value, preprocessorName.Value, regAlpha.Value, regLambda.Value, subsample.Value, subsampleFreq.Value, treeMethod.Value, withMean.Value, withStd.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<TableParameterSubspace>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TableParameterSubspace IModel<TableParameterSubspace>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTableParameterSubspace(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<TableParameterSubspace>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

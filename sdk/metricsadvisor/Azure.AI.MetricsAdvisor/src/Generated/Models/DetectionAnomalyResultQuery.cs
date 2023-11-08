@@ -6,19 +6,41 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DetectionAnomalyResultQuery. </summary>
     internal partial class DetectionAnomalyResultQuery
     {
-        /// <summary> Initializes a new instance of DetectionAnomalyResultQuery. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyResultQuery"/>. </summary>
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         public DetectionAnomalyResultQuery(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyResultQuery"/>. </summary>
+        /// <param name="startTime"> start time. </param>
+        /// <param name="endTime"> end time. </param>
+        /// <param name="filter"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectionAnomalyResultQuery(DateTimeOffset startTime, DateTimeOffset endTime, DetectionAnomalyFilterCondition filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Filter = filter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyResultQuery"/> for deserialization. </summary>
+        internal DetectionAnomalyResultQuery()
+        {
         }
 
         /// <summary> start time. </summary>

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyPlayReadyConfiguration : IUtf8JsonSerializable
+    public partial class StreamingPolicyPlayReadyConfiguration : IUtf8JsonSerializable, IJsonModel<StreamingPolicyPlayReadyConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPolicyPlayReadyConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<StreamingPolicyPlayReadyConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("playReadyCustomAttributes"u8);
                 writer.WriteStringValue(PlayReadyCustomAttributes);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingPolicyPlayReadyConfiguration DeserializeStreamingPolicyPlayReadyConfiguration(JsonElement element)
+        StreamingPolicyPlayReadyConfiguration IJsonModel<StreamingPolicyPlayReadyConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingPolicyPlayReadyConfiguration(document.RootElement, options);
+        }
+
+        internal static StreamingPolicyPlayReadyConfiguration DeserializeStreamingPolicyPlayReadyConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> customLicenseAcquisitionUriTemplate = default;
             Optional<string> playReadyCustomAttributes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))
@@ -48,8 +85,38 @@ namespace Azure.ResourceManager.Media.Models
                     playReadyCustomAttributes = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUriTemplate.Value, playReadyCustomAttributes.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUriTemplate.Value, playReadyCustomAttributes.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<StreamingPolicyPlayReadyConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamingPolicyPlayReadyConfiguration IModel<StreamingPolicyPlayReadyConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamingPolicyPlayReadyConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<StreamingPolicyPlayReadyConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

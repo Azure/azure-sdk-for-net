@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Statuses of objects deployed by the user-specified kustomizations from the git repository. </summary>
     public partial class KubernetesObjectStatus
     {
-        /// <summary> Initializes a new instance of KubernetesObjectStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatus"/>. </summary>
         internal KubernetesObjectStatus()
         {
             StatusConditions = new ChangeTrackingList<KubernetesObjectStatusCondition>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesObjectStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatus"/>. </summary>
         /// <param name="name"> Name of the applied object. </param>
         /// <param name="namespace"> Namespace of the applied object. </param>
         /// <param name="kind"> Kind of the applied object. </param>
@@ -27,7 +31,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="appliedBy"> Object reference to the Kustomization that applied this object. </param>
         /// <param name="statusConditions"> List of Kubernetes object status conditions present on the cluster. </param>
         /// <param name="helmReleaseProperties"> Additional properties that are provided from objects of the HelmRelease kind. </param>
-        internal KubernetesObjectStatus(string name, string @namespace, string kind, KubernetesFluxComplianceState? complianceState, KubernetesObjectReference appliedBy, IReadOnlyList<KubernetesObjectStatusCondition> statusConditions, HelmReleaseProperties helmReleaseProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesObjectStatus(string name, string @namespace, string kind, KubernetesFluxComplianceState? complianceState, KubernetesObjectReference appliedBy, IReadOnlyList<KubernetesObjectStatusCondition> statusConditions, HelmReleaseProperties helmReleaseProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             AppliedBy = appliedBy;
             StatusConditions = statusConditions;
             HelmReleaseProperties = helmReleaseProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the applied object. </summary>

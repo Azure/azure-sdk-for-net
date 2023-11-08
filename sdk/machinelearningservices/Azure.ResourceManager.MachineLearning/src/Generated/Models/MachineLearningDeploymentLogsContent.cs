@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningDeploymentLogsContent. </summary>
     public partial class MachineLearningDeploymentLogsContent
     {
-        /// <summary> Initializes a new instance of MachineLearningDeploymentLogsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogsContent"/>. </summary>
         public MachineLearningDeploymentLogsContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogsContent"/>. </summary>
+        /// <param name="containerType"> The type of container to retrieve logs from. </param>
+        /// <param name="tail"> The maximum number of lines to tail. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDeploymentLogsContent(MachineLearningContainerType? containerType, int? tail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContainerType = containerType;
+            Tail = tail;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of container to retrieve logs from. </summary>

@@ -5,15 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningNodeStateCounts
+    public partial class MachineLearningNodeStateCounts : IUtf8JsonSerializable, IJsonModel<MachineLearningNodeStateCounts>
     {
-        internal static MachineLearningNodeStateCounts DeserializeMachineLearningNodeStateCounts(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningNodeStateCounts>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MachineLearningNodeStateCounts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IdleNodeCount))
+                {
+                    writer.WritePropertyName("idleNodeCount"u8);
+                    writer.WriteNumberValue(IdleNodeCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RunningNodeCount))
+                {
+                    writer.WritePropertyName("runningNodeCount"u8);
+                    writer.WriteNumberValue(RunningNodeCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PreparingNodeCount))
+                {
+                    writer.WritePropertyName("preparingNodeCount"u8);
+                    writer.WriteNumberValue(PreparingNodeCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UnusableNodeCount))
+                {
+                    writer.WritePropertyName("unusableNodeCount"u8);
+                    writer.WriteNumberValue(UnusableNodeCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LeavingNodeCount))
+                {
+                    writer.WritePropertyName("leavingNodeCount"u8);
+                    writer.WriteNumberValue(LeavingNodeCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PreemptedNodeCount))
+                {
+                    writer.WritePropertyName("preemptedNodeCount"u8);
+                    writer.WriteNumberValue(PreemptedNodeCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningNodeStateCounts IJsonModel<MachineLearningNodeStateCounts>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningNodeStateCounts(document.RootElement, options);
+        }
+
+        internal static MachineLearningNodeStateCounts DeserializeMachineLearningNodeStateCounts(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +113,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> unusableNodeCount = default;
             Optional<int> leavingNodeCount = default;
             Optional<int> preemptedNodeCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("idleNodeCount"u8))
@@ -80,8 +171,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     preemptedNodeCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningNodeStateCounts(Optional.ToNullable(idleNodeCount), Optional.ToNullable(runningNodeCount), Optional.ToNullable(preparingNodeCount), Optional.ToNullable(unusableNodeCount), Optional.ToNullable(leavingNodeCount), Optional.ToNullable(preemptedNodeCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningNodeStateCounts(Optional.ToNullable(idleNodeCount), Optional.ToNullable(runningNodeCount), Optional.ToNullable(preparingNodeCount), Optional.ToNullable(unusableNodeCount), Optional.ToNullable(leavingNodeCount), Optional.ToNullable(preemptedNodeCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MachineLearningNodeStateCounts>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningNodeStateCounts IModel<MachineLearningNodeStateCounts>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningNodeStateCounts(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MachineLearningNodeStateCounts>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

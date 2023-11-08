@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Stops compute instance after user defined period of inactivity. </summary>
     public partial class IdleShutdownSetting
     {
-        /// <summary> Initializes a new instance of IdleShutdownSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdleShutdownSetting"/>. </summary>
         public IdleShutdownSetting()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IdleShutdownSetting"/>. </summary>
+        /// <param name="idleTimeBeforeShutdown"> Time is defined in ISO8601 format. Minimum is 15 min, maximum is 3 days. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdleShutdownSetting(string idleTimeBeforeShutdown, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IdleTimeBeforeShutdown = idleTimeBeforeShutdown;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time is defined in ISO8601 format. Minimum is 15 min, maximum is 3 days. </summary>

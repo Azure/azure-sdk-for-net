@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Fixed training parameters that won't be swept over during AutoML NLP training. </summary>
     public partial class NlpFixedParameters
     {
-        /// <summary> Initializes a new instance of NlpFixedParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NlpFixedParameters"/>. </summary>
         public NlpFixedParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of NlpFixedParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpFixedParameters"/>. </summary>
         /// <param name="gradientAccumulationSteps"> Number of steps to accumulate gradients over before running a backward pass. </param>
         /// <param name="learningRate"> The learning rate for the training procedure. </param>
         /// <param name="learningRateScheduler"> The type of learning rate schedule to use during the training procedure. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="validationBatchSize"> The batch size to be used during evaluation. </param>
         /// <param name="warmupRatio"> The warmup ratio, used alongside LrSchedulerType. </param>
         /// <param name="weightDecay"> The weight decay for the training procedure. </param>
-        internal NlpFixedParameters(int? gradientAccumulationSteps, float? learningRate, NlpLearningRateScheduler? learningRateScheduler, string modelName, int? numberOfEpochs, int? trainingBatchSize, int? validationBatchSize, float? warmupRatio, float? weightDecay)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NlpFixedParameters(int? gradientAccumulationSteps, float? learningRate, NlpLearningRateScheduler? learningRateScheduler, string modelName, int? numberOfEpochs, int? trainingBatchSize, int? validationBatchSize, float? warmupRatio, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GradientAccumulationSteps = gradientAccumulationSteps;
             LearningRate = learningRate;
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ValidationBatchSize = validationBatchSize;
             WarmupRatio = warmupRatio;
             WeightDecay = weightDecay;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of steps to accumulate gradients over before running a backward pass. </summary>

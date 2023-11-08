@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> NodePool configuration. </summary>
     public partial class AgentPoolProfile
     {
-        /// <summary> Initializes a new instance of AgentPoolProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProfile"/>. </summary>
         public AgentPoolProfile()
         {
             AvailabilityZones = new ChangeTrackingList<string>();
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             NodeTaints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProfile"/>. </summary>
         /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
         /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
         /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="nodeImageVersion"> The version of node image. </param>
         /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
         /// <param name="cloudProviderProfile"> The underlying cloud infra provider properties. </param>
-        internal AgentPoolProfile(int? count, IList<string> availabilityZones, int? maxCount, int? maxPods, int? minCount, Mode? mode, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, OSType? osType, string nodeImageVersion, string vmSize, CloudProviderProfile cloudProviderProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolProfile(int? count, IList<string> availabilityZones, int? maxCount, int? maxPods, int? minCount, Mode? mode, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, OSType? osType, string nodeImageVersion, string vmSize, CloudProviderProfile cloudProviderProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             AvailabilityZones = availabilityZones;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             NodeImageVersion = nodeImageVersion;
             VmSize = vmSize;
             CloudProviderProfile = cloudProviderProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </summary>

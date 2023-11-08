@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkServiceDesignVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkServiceDesignVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +36,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> network service design version properties. </param>
-        internal NetworkServiceDesignVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkServiceDesignVersionPropertiesFormat properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkServiceDesignVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkServiceDesignVersionPropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionData"/> for deserialization. </summary>
+        internal NetworkServiceDesignVersionData()
+        {
         }
 
         /// <summary> network service design version properties. </summary>

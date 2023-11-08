@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Monitoring target definition. </summary>
     public partial class MonitoringTarget
     {
-        /// <summary> Initializes a new instance of MonitoringTarget. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/>. </summary>
         /// <param name="taskType"> [Required] The machine learning task type of the model. </param>
         public MonitoringTarget(ModelTaskType taskType)
         {
             TaskType = taskType;
         }
 
-        /// <summary> Initializes a new instance of MonitoringTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/>. </summary>
         /// <param name="deploymentId"> The ARM resource ID of either the deployment targeted by this monitor. </param>
         /// <param name="modelId"> The ARM resource ID of either the model targeted by this monitor. </param>
         /// <param name="taskType"> [Required] The machine learning task type of the model. </param>
-        internal MonitoringTarget(string deploymentId, string modelId, ModelTaskType taskType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringTarget(string deploymentId, string modelId, ModelTaskType taskType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentId = deploymentId;
             ModelId = modelId;
             TaskType = taskType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringTarget"/> for deserialization. </summary>
+        internal MonitoringTarget()
+        {
         }
 
         /// <summary> The ARM resource ID of either the deployment targeted by this monitor. </summary>

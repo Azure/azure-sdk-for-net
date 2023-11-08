@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ContainerEndpoint. </summary>
     public partial class ContainerEndpoint
     {
-        /// <summary> Initializes a new instance of ContainerEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerEndpoint"/>. </summary>
         public ContainerEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEndpoint"/>. </summary>
         /// <param name="protocol"> Protocol over which communication will happen over this endpoint. </param>
         /// <param name="name"> Name of the Endpoint. </param>
         /// <param name="target"> Application port inside the container. </param>
         /// <param name="published"> Port over which the application is exposed from container. </param>
         /// <param name="hostIP"> Host IP over which the application is exposed from the container. </param>
-        internal ContainerEndpoint(ContainerCommunicationProtocol? protocol, string name, int? target, int? published, string hostIP)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerEndpoint(ContainerCommunicationProtocol? protocol, string name, int? target, int? published, string hostIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Protocol = protocol;
             Name = name;
             Target = target;
             Published = published;
             HostIP = hostIP;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Protocol over which communication will happen over this endpoint. </summary>

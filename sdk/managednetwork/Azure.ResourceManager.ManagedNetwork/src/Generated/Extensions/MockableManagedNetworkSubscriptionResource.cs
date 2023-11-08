@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "MockableManagedNetworkSubscriptionResource.GetManagedNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "MockableManagedNetworkSubscriptionResource.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "MockableManagedNetworkSubscriptionResource.GetManagedNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "MockableManagedNetworkSubscriptionResource.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

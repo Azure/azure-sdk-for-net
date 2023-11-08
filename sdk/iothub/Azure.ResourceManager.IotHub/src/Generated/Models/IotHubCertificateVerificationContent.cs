@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The JSON-serialized leaf certificate. </summary>
     public partial class IotHubCertificateVerificationContent
     {
-        /// <summary> Initializes a new instance of IotHubCertificateVerificationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateVerificationContent"/>. </summary>
         public IotHubCertificateVerificationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateVerificationContent"/>. </summary>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubCertificateVerificationContent(BinaryData certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Certificate = certificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

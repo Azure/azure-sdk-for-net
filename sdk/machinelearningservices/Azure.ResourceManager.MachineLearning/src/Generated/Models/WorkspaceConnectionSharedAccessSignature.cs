@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The WorkspaceConnectionSharedAccessSignature. </summary>
     internal partial class WorkspaceConnectionSharedAccessSignature
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionSharedAccessSignature. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionSharedAccessSignature"/>. </summary>
         public WorkspaceConnectionSharedAccessSignature()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionSharedAccessSignature. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionSharedAccessSignature"/>. </summary>
         /// <param name="sas"></param>
-        internal WorkspaceConnectionSharedAccessSignature(string sas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceConnectionSharedAccessSignature(string sas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sas = sas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the sas. </summary>

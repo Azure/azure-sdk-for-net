@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The workflow trigger recurrence for ComputeStartStop schedule type. </summary>
     public partial class ComputeStartStopRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of ComputeStartStopRecurrenceSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopRecurrenceSchedule"/>. </summary>
         public ComputeStartStopRecurrenceSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeStartStopRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopRecurrenceSchedule"/>. </summary>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         /// <param name="startTime"> The start time in yyyy-MM-ddTHH:mm:ss format. </param>
@@ -24,13 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
         /// <param name="schedule"> [Required] The recurrence schedule. </param>
-        internal ComputeStartStopRecurrenceSchedule(MachineLearningRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, MachineLearningRecurrenceSchedule schedule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeStartStopRecurrenceSchedule(MachineLearningRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, MachineLearningRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;
             StartTime = startTime;
             TimeZone = timeZone;
             Schedule = schedule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] The frequency to trigger schedule. </summary>

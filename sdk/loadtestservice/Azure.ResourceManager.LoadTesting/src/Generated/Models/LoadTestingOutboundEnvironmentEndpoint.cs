@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> A collection of related endpoints from the same service for which the Batch service requires outbound access. </summary>
     public partial class LoadTestingOutboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of LoadTestingOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingOutboundEnvironmentEndpoint"/>. </summary>
         internal LoadTestingOutboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<LoadTestingEndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of LoadTestingOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingOutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service that Azure Load Testing connects to. </param>
         /// <param name="endpoints"> The endpoints for this service to which the Batch service makes outbound calls. </param>
-        internal LoadTestingOutboundEnvironmentEndpoint(string category, IReadOnlyList<LoadTestingEndpointDependency> endpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingOutboundEnvironmentEndpoint(string category, IReadOnlyList<LoadTestingEndpointDependency> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Endpoints = endpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of service that Azure Load Testing connects to. </summary>

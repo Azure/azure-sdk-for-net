@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of ModelContainer entities. </summary>
     internal partial class ModelContainerResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelContainerResourceArmPaginatedResult"/>. </summary>
         internal ModelContainerResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningModelContainerData>();
         }
 
-        /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelContainerResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of ModelContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type ModelContainer. </param>
-        internal ModelContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningModelContainerData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningModelContainerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of ModelContainer objects. If null, there are no additional pages. </summary>

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningNotebookResourceInfo. </summary>
     public partial class MachineLearningNotebookResourceInfo
     {
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         internal MachineLearningNotebookResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         /// <param name="fqdn"></param>
         /// <param name="isPrivateLinkEnabled"></param>
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
         /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
-        internal MachineLearningNotebookResourceInfo(string fqdn, bool? isPrivateLinkEnabled, MachineLearningNotebookPreparationError notebookPreparationError, string resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningNotebookResourceInfo(string fqdn, bool? isPrivateLinkEnabled, MachineLearningNotebookPreparationError notebookPreparationError, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             IsPrivateLinkEnabled = isPrivateLinkEnabled;
             NotebookPreparationError = notebookPreparationError;
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the fqdn. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 agreement envelope settings. </summary>
     public partial class X12EnvelopeSettings
     {
-        /// <summary> Initializes a new instance of X12EnvelopeSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeSettings"/>. </summary>
         /// <param name="controlStandardsId"> The controls standards id. </param>
         /// <param name="useControlStandardsIdAsRepetitionCharacter"> The value indicating whether to use control standards id as repetition character. </param>
         /// <param name="senderApplicationId"> The sender application id. </param>
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Models
             UsageIndicator = usageIndicator;
         }
 
-        /// <summary> Initializes a new instance of X12EnvelopeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeSettings"/>. </summary>
         /// <param name="controlStandardsId"> The controls standards id. </param>
         /// <param name="useControlStandardsIdAsRepetitionCharacter"> The value indicating whether to use control standards id as repetition character. </param>
         /// <param name="senderApplicationId"> The sender application id. </param>
@@ -92,7 +96,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="groupHeaderDateFormat"> The group header date format. </param>
         /// <param name="groupHeaderTimeFormat"> The group header time format. </param>
         /// <param name="usageIndicator"> The usage indicator. </param>
-        internal X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, string functionalGroupId, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, string functionalGroupId, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ControlStandardsId = controlStandardsId;
             UseControlStandardsIdAsRepetitionCharacter = useControlStandardsIdAsRepetitionCharacter;
@@ -118,6 +123,12 @@ namespace Azure.ResourceManager.Logic.Models
             GroupHeaderDateFormat = groupHeaderDateFormat;
             GroupHeaderTimeFormat = groupHeaderTimeFormat;
             UsageIndicator = usageIndicator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeSettings"/> for deserialization. </summary>
+        internal X12EnvelopeSettings()
+        {
         }
 
         /// <summary> The controls standards id. </summary>

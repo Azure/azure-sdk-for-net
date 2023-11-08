@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Result of testing all routes. </summary>
     public partial class IotHubTestAllRoutesResult
     {
-        /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesResult"/>. </summary>
         internal IotHubTestAllRoutesResult()
         {
             Routes = new ChangeTrackingList<IotHubMatchedRoute>();
         }
 
-        /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesResult"/>. </summary>
         /// <param name="routes"> JSON-serialized array of matched routes. </param>
-        internal IotHubTestAllRoutesResult(IReadOnlyList<IotHubMatchedRoute> routes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubTestAllRoutesResult(IReadOnlyList<IotHubMatchedRoute> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Routes = routes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> JSON-serialized array of matched routes. </summary>

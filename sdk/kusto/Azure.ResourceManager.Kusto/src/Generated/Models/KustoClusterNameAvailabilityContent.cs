@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a cluster check name availability request. </summary>
     public partial class KustoClusterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoClusterNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Cluster name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoClusterNameAvailabilityContent(string name)
@@ -22,6 +26,22 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ResourceType = KustoClusterType.MicrosoftKustoClusters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Cluster name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoClusterNameAvailabilityContent(string name, KustoClusterType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterNameAvailabilityContent"/> for deserialization. </summary>
+        internal KustoClusterNameAvailabilityContent()
+        {
         }
 
         /// <summary> Cluster name. </summary>

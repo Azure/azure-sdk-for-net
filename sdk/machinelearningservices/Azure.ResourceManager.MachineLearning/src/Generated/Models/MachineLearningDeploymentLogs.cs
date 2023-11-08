@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningDeploymentLogs. </summary>
     public partial class MachineLearningDeploymentLogs
     {
-        /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogs"/>. </summary>
         internal MachineLearningDeploymentLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogs"/>. </summary>
         /// <param name="content"> The retrieved online deployment logs. </param>
-        internal MachineLearningDeploymentLogs(string content)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDeploymentLogs(string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The retrieved online deployment logs. </summary>

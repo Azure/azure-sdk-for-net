@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceConnectionManagedIdentity. </summary>
     public partial class MachineLearningWorkspaceConnectionManagedIdentity
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         public MachineLearningWorkspaceConnectionManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         /// <param name="clientId"></param>
         /// <param name="resourceId"></param>
-        internal MachineLearningWorkspaceConnectionManagedIdentity(string clientId, ResourceIdentifier resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceConnectionManagedIdentity(string clientId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the client id. </summary>

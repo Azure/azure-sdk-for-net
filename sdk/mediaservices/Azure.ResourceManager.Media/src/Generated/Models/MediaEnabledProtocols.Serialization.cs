@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaEnabledProtocols : IUtf8JsonSerializable
+    public partial class MediaEnabledProtocols : IUtf8JsonSerializable, IJsonModel<MediaEnabledProtocols>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaEnabledProtocols>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MediaEnabledProtocols>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("download"u8);
@@ -23,11 +29,40 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteBooleanValue(IsHlsEnabled);
             writer.WritePropertyName("smoothStreaming"u8);
             writer.WriteBooleanValue(IsSmoothStreamingEnabled);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaEnabledProtocols DeserializeMediaEnabledProtocols(JsonElement element)
+        MediaEnabledProtocols IJsonModel<MediaEnabledProtocols>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaEnabledProtocols)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaEnabledProtocols(document.RootElement, options);
+        }
+
+        internal static MediaEnabledProtocols DeserializeMediaEnabledProtocols(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +71,8 @@ namespace Azure.ResourceManager.Media.Models
             bool dash = default;
             bool hls = default;
             bool smoothStreaming = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("download"u8))
@@ -58,8 +95,38 @@ namespace Azure.ResourceManager.Media.Models
                     smoothStreaming = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaEnabledProtocols(download, dash, hls, smoothStreaming);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaEnabledProtocols(download, dash, hls, smoothStreaming, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MediaEnabledProtocols>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaEnabledProtocols)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaEnabledProtocols IModel<MediaEnabledProtocols>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaEnabledProtocols)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaEnabledProtocols(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MediaEnabledProtocols>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

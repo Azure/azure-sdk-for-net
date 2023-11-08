@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm DaemonSet status properties. </summary>
     public partial class KubernetesDaemonSet
     {
-        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesDaemonSet"/>. </summary>
         internal KubernetesDaemonSet()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesDaemonSet"/>. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of daemonSet. </param>
-        internal KubernetesDaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesDaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             UpToDateNumberOfPods = upToDateNumberOfPods;
             AvailableNumberOfPods = availableNumberOfPods;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the daemonSet. </summary>

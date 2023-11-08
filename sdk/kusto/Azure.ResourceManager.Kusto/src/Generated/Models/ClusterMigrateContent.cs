@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A cluster migrate request. </summary>
     public partial class ClusterMigrateContent
     {
-        /// <summary> Initializes a new instance of ClusterMigrateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterMigrateContent"/>. </summary>
         /// <param name="clusterResourceId"> Resource ID of the destination cluster or kusto pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterResourceId"/> is null. </exception>
         public ClusterMigrateContent(string clusterResourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Kusto.Models
             Argument.AssertNotNull(clusterResourceId, nameof(clusterResourceId));
 
             ClusterResourceId = clusterResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterMigrateContent"/>. </summary>
+        /// <param name="clusterResourceId"> Resource ID of the destination cluster or kusto pool. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterMigrateContent(string clusterResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClusterResourceId = clusterResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterMigrateContent"/> for deserialization. </summary>
+        internal ClusterMigrateContent()
+        {
         }
 
         /// <summary> Resource ID of the destination cluster or kusto pool. </summary>

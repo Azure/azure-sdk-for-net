@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class ContentKeyPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyConfiguration"/>. </summary>
         protected ContentKeyPolicyConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyConfiguration"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal ContentKeyPolicyConfiguration(string odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The discriminator for derived types. </summary>

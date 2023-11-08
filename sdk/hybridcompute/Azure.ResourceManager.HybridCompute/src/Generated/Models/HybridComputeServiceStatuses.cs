@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Reports the state and behavior of dependent services. </summary>
     public partial class HybridComputeServiceStatuses
     {
-        /// <summary> Initializes a new instance of HybridComputeServiceStatuses. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceStatuses"/>. </summary>
         public HybridComputeServiceStatuses()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridComputeServiceStatuses. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceStatuses"/>. </summary>
         /// <param name="extensionService"> The state of the extension service on the Arc-enabled machine. </param>
         /// <param name="guestConfigurationService"> The state of the guest configuration service on the Arc-enabled machine. </param>
-        internal HybridComputeServiceStatuses(HybridComputeServiceStatus extensionService, HybridComputeServiceStatus guestConfigurationService)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeServiceStatuses(HybridComputeServiceStatus extensionService, HybridComputeServiceStatus guestConfigurationService, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtensionService = extensionService;
             GuestConfigurationService = guestConfigurationService;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the extension service on the Arc-enabled machine. </summary>

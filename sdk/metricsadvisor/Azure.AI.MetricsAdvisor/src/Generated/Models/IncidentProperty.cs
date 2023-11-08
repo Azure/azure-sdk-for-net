@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IncidentProperty. </summary>
     internal partial class IncidentProperty
     {
-        /// <summary> Initializes a new instance of IncidentProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncidentProperty"/>. </summary>
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
         /// incident status
@@ -25,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             ValueOfRootNode = valueOfRootNode;
         }
 
-        /// <summary> Initializes a new instance of IncidentProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentProperty"/>. </summary>
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
         /// incident status
@@ -34,12 +40,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
         /// <param name="expectedValueOfRootNode"> expected value of the root node given by smart detector. </param>
-        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode, double? expectedValueOfRootNode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus, double valueOfRootNode, double? expectedValueOfRootNode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxSeverity = maxSeverity;
             IncidentStatus = incidentStatus;
             ValueOfRootNode = valueOfRootNode;
             ExpectedValueOfRootNode = expectedValueOfRootNode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IncidentProperty"/> for deserialization. </summary>
+        internal IncidentProperty()
+        {
         }
 
         /// <summary> max severity of latest anomalies in the incident. </summary>

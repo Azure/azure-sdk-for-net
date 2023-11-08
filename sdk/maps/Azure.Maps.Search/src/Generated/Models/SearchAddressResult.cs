@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful Search calls. </summary>
     public partial class SearchAddressResult
     {
-        /// <summary> Initializes a new instance of SearchAddressResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResult"/>. </summary>
         internal SearchAddressResult()
         {
             Results = new ChangeTrackingList<SearchAddressResultItem>();
         }
 
-        /// <summary> Initializes a new instance of SearchAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResult"/>. </summary>
         /// <param name="summary"> Summary object for a Search API response. </param>
         /// <param name="results"> A list of Search API results. </param>
-        internal SearchAddressResult(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchAddressResult(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Summary = summary;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> A list of Search API results. </summary>
         public IReadOnlyList<SearchAddressResultItem> Results { get; }

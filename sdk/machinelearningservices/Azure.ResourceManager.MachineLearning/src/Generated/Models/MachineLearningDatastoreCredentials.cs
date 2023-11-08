@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreCredentials"/>. </summary>
         protected MachineLearningDatastoreCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        internal MachineLearningDatastoreCredentials(CredentialsType credentialsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CredentialsType = credentialsType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Credential type used to authentication with storage. </summary>

@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningInstanceTypeSchemaResources : IUtf8JsonSerializable
+    public partial class MachineLearningInstanceTypeSchemaResources : IUtf8JsonSerializable, IJsonModel<MachineLearningInstanceTypeSchemaResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningInstanceTypeSchemaResources>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MachineLearningInstanceTypeSchemaResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Requests))
@@ -38,17 +43,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningInstanceTypeSchemaResources DeserializeMachineLearningInstanceTypeSchemaResources(JsonElement element)
+        MachineLearningInstanceTypeSchemaResources IJsonModel<MachineLearningInstanceTypeSchemaResources>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchemaResources)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningInstanceTypeSchemaResources(document.RootElement, options);
+        }
+
+        internal static MachineLearningInstanceTypeSchemaResources DeserializeMachineLearningInstanceTypeSchemaResources(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, string>> requests = default;
             Optional<IDictionary<string, string>> limits = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requests"u8))
@@ -79,8 +115,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     limits = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningInstanceTypeSchemaResources(Optional.ToDictionary(requests), Optional.ToDictionary(limits));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningInstanceTypeSchemaResources(Optional.ToDictionary(requests), Optional.ToDictionary(limits), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MachineLearningInstanceTypeSchemaResources>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchemaResources)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningInstanceTypeSchemaResources IModel<MachineLearningInstanceTypeSchemaResources>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchemaResources)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningInstanceTypeSchemaResources(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MachineLearningInstanceTypeSchemaResources>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

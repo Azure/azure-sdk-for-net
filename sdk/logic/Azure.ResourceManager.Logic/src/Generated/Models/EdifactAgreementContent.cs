@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement content. </summary>
     public partial class EdifactAgreementContent
     {
-        /// <summary> Initializes a new instance of EdifactAgreementContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactAgreementContent"/>. </summary>
         /// <param name="receiveAgreement"> The EDIFACT one-way receive agreement. </param>
         /// <param name="sendAgreement"> The EDIFACT one-way send agreement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Logic.Models
 
             ReceiveAgreement = receiveAgreement;
             SendAgreement = sendAgreement;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactAgreementContent"/>. </summary>
+        /// <param name="receiveAgreement"> The EDIFACT one-way receive agreement. </param>
+        /// <param name="sendAgreement"> The EDIFACT one-way send agreement. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactAgreementContent(EdifactOneWayAgreement receiveAgreement, EdifactOneWayAgreement sendAgreement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ReceiveAgreement = receiveAgreement;
+            SendAgreement = sendAgreement;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactAgreementContent"/> for deserialization. </summary>
+        internal EdifactAgreementContent()
+        {
         }
 
         /// <summary> The EDIFACT one-way receive agreement. </summary>

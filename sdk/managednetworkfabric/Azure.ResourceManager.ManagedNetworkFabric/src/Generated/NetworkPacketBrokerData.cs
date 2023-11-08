@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkPacketBrokerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkPacketBrokerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NeighborGroupIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkPacketBrokerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
         /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             NetworkFabricId = networkFabricId;
             NetworkDeviceIds = networkDeviceIds;
@@ -55,6 +59,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkTapIds = networkTapIds;
             NeighborGroupIds = neighborGroupIds;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerData"/> for deserialization. </summary>
+        internal NetworkPacketBrokerData()
+        {
         }
 
         /// <summary> ARM resource ID of the Network Fabric. </summary>

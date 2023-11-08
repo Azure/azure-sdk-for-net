@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Base for resource properties. </summary>
     public partial class ResourceProperties
     {
-        /// <summary> Initializes a new instance of ResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProperties"/>. </summary>
         public ResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the ManagedNetwork resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ResourceProperties(ProvisioningState? provisioningState, ETag? etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProperties(ProvisioningState? provisioningState, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the ManagedNetwork resource. </summary>

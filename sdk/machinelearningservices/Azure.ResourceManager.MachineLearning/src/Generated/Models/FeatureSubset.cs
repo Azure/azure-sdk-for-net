@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FeatureSubset. </summary>
     public partial class FeatureSubset : MonitoringFeatureFilterBase
     {
-        /// <summary> Initializes a new instance of FeatureSubset. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureSubset"/>. </summary>
         /// <param name="features"> [Required] The list of features to include. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
         public FeatureSubset(IEnumerable<string> features)
@@ -26,13 +26,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             FilterType = MonitoringFeatureFilterType.FeatureSubset;
         }
 
-        /// <summary> Initializes a new instance of FeatureSubset. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureSubset"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="features"> [Required] The list of features to include. </param>
-        internal FeatureSubset(MonitoringFeatureFilterType filterType, IList<string> features) : base(filterType)
+        internal FeatureSubset(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> features) : base(filterType, serializedAdditionalRawData)
         {
             Features = features;
             FilterType = filterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FeatureSubset"/> for deserialization. </summary>
+        internal FeatureSubset()
+        {
         }
 
         /// <summary> [Required] The list of features to include. </summary>

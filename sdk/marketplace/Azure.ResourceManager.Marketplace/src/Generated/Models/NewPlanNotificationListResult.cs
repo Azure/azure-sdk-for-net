@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of all new plans notifications for public offers. </summary>
     public partial class NewPlanNotificationListResult
     {
-        /// <summary> Initializes a new instance of NewPlanNotificationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewPlanNotificationListResult"/>. </summary>
         internal NewPlanNotificationListResult()
         {
             NewPlansNotifications = new ChangeTrackingList<NewPlanNotification>();
         }
 
-        /// <summary> Initializes a new instance of NewPlanNotificationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewPlanNotificationListResult"/>. </summary>
         /// <param name="newPlansNotifications"></param>
-        internal NewPlanNotificationListResult(IReadOnlyList<NewPlanNotification> newPlansNotifications)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewPlanNotificationListResult(IReadOnlyList<NewPlanNotification> newPlansNotifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NewPlansNotifications = newPlansNotifications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the new plans notifications. </summary>

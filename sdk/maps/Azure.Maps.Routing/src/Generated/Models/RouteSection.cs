@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Route sections contain additional information about parts of a route. Each section contains at least the elements `startPointIndex`, `endPointIndex`, and `sectionType`. </summary>
     public partial class RouteSection
     {
-        /// <summary> Initializes a new instance of RouteSection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteSection"/>. </summary>
         internal RouteSection()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteSection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteSection"/>. </summary>
         /// <param name="startPointIndex"> Index of the first point (offset 0) in the route this section applies to. </param>
         /// <param name="endPointIndex"> Index of the last point (offset 0) in the route this section applies to. </param>
         /// <param name="sectionType"> Section types of the reported route response. </param>
@@ -25,7 +31,8 @@ namespace Azure.Maps.Routing.Models
         /// <param name="delayInSeconds"> Delay in seconds caused by the incident. </param>
         /// <param name="delayMagnitude"> The magnitude of delay caused by the incident. These values correspond to the values of the response field ty of the [Get Traffic Incident Detail API](https://docs.microsoft.com/rest/api/maps/traffic/gettrafficincidentdetail). </param>
         /// <param name="tec"> Details of the traffic event, using definitions in the [TPEG2-TEC](https://www.iso.org/standard/63116.html) standard. Can contain effectCode and causes elements. </param>
-        internal RouteSection(int? startPointIndex, int? endPointIndex, ResponseSectionType? sectionType, ResponseTravelMode? travelMode, TrafficIncidentCategory? simpleCategory, int? effectiveSpeedInKmh, int? delayInSeconds, DelayMagnitude? delayMagnitude, RouteSectionTec tec)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteSection(int? startPointIndex, int? endPointIndex, ResponseSectionType? sectionType, ResponseTravelMode? travelMode, TrafficIncidentCategory? simpleCategory, int? effectiveSpeedInKmh, int? delayInSeconds, DelayMagnitude? delayMagnitude, RouteSectionTec tec, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartPointIndex = startPointIndex;
             EndPointIndex = endPointIndex;
@@ -36,6 +43,7 @@ namespace Azure.Maps.Routing.Models
             DelayInSeconds = delayInSeconds;
             DelayMagnitude = delayMagnitude;
             Tec = tec;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Index of the first point (offset 0) in the route this section applies to. </summary>

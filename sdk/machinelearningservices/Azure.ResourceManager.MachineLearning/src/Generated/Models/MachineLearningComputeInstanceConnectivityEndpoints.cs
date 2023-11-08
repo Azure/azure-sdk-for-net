@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines all connectivity endpoints and properties for an ComputeInstance. </summary>
     public partial class MachineLearningComputeInstanceConnectivityEndpoints
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceConnectivityEndpoints. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
         internal MachineLearningComputeInstanceConnectivityEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceConnectivityEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
         /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
         /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
-        internal MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress, string privateIPAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicIPAddress = publicIPAddress;
             PrivateIPAddress = privateIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public IP Address of this ComputeInstance. </summary>

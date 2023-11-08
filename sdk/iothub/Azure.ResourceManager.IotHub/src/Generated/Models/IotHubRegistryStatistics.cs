@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Identity registry statistics. </summary>
     public partial class IotHubRegistryStatistics
     {
-        /// <summary> Initializes a new instance of IotHubRegistryStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubRegistryStatistics"/>. </summary>
         internal IotHubRegistryStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubRegistryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubRegistryStatistics"/>. </summary>
         /// <param name="totalDeviceCount"> The total count of devices in the identity registry. </param>
         /// <param name="enabledDeviceCount"> The count of enabled devices in the identity registry. </param>
         /// <param name="disabledDeviceCount"> The count of disabled devices in the identity registry. </param>
-        internal IotHubRegistryStatistics(long? totalDeviceCount, long? enabledDeviceCount, long? disabledDeviceCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubRegistryStatistics(long? totalDeviceCount, long? enabledDeviceCount, long? disabledDeviceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalDeviceCount = totalDeviceCount;
             EnabledDeviceCount = enabledDeviceCount;
             DisabledDeviceCount = disabledDeviceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The total count of devices in the identity registry. </summary>

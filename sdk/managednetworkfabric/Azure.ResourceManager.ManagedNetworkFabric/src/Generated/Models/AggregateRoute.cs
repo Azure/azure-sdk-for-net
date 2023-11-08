@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> aggregateIpv4Route model. </summary>
     public partial class AggregateRoute
     {
-        /// <summary> Initializes a new instance of AggregateRoute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AggregateRoute"/>. </summary>
         /// <param name="prefix"> IPv4 Prefix of the aggregate Ipv4Route. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
         public AggregateRoute(string prefix)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Argument.AssertNotNull(prefix, nameof(prefix));
 
             Prefix = prefix;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AggregateRoute"/>. </summary>
+        /// <param name="prefix"> IPv4 Prefix of the aggregate Ipv4Route. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AggregateRoute(string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Prefix = prefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AggregateRoute"/> for deserialization. </summary>
+        internal AggregateRoute()
+        {
         }
 
         /// <summary> IPv4 Prefix of the aggregate Ipv4Route. </summary>

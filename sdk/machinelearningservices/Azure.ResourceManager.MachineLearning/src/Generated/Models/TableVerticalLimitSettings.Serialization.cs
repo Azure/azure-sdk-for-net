@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableVerticalLimitSettings : IUtf8JsonSerializable
+    public partial class TableVerticalLimitSettings : IUtf8JsonSerializable, IJsonModel<TableVerticalLimitSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableVerticalLimitSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<TableVerticalLimitSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableEarlyTermination))
@@ -73,11 +78,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TableVerticalLimitSettings DeserializeTableVerticalLimitSettings(JsonElement element)
+        TableVerticalLimitSettings IJsonModel<TableVerticalLimitSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTableVerticalLimitSettings(document.RootElement, options);
+        }
+
+        internal static TableVerticalLimitSettings DeserializeTableVerticalLimitSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +126,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> sweepTrials = default;
             Optional<TimeSpan> timeout = default;
             Optional<TimeSpan> trialTimeout = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableEarlyTermination"u8))
@@ -185,8 +221,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trialTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TableVerticalLimitSettings(Optional.ToNullable(enableEarlyTermination), Optional.ToNullable(exitScore), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxCoresPerTrial), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(sweepConcurrentTrials), Optional.ToNullable(sweepTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TableVerticalLimitSettings(Optional.ToNullable(enableEarlyTermination), Optional.ToNullable(exitScore), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxCoresPerTrial), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(sweepConcurrentTrials), Optional.ToNullable(sweepTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<TableVerticalLimitSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TableVerticalLimitSettings IModel<TableVerticalLimitSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTableVerticalLimitSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<TableVerticalLimitSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

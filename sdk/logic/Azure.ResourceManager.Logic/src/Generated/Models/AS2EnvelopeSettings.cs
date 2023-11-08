@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement envelope settings. </summary>
     public partial class AS2EnvelopeSettings
     {
-        /// <summary> Initializes a new instance of AS2EnvelopeSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AS2EnvelopeSettings"/>. </summary>
         /// <param name="messageContentType"> The message content type. </param>
         /// <param name="transmitFileNameInMimeHeader"> The value indicating whether to transmit file name in mime header. </param>
         /// <param name="fileNameTemplate"> The template for file name. </param>
@@ -29,6 +33,28 @@ namespace Azure.ResourceManager.Logic.Models
             FileNameTemplate = fileNameTemplate;
             SuspendMessageOnFileNameGenerationError = suspendMessageOnFileNameGenerationError;
             AutoGenerateFileName = autoGenerateFileName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2EnvelopeSettings"/>. </summary>
+        /// <param name="messageContentType"> The message content type. </param>
+        /// <param name="transmitFileNameInMimeHeader"> The value indicating whether to transmit file name in mime header. </param>
+        /// <param name="fileNameTemplate"> The template for file name. </param>
+        /// <param name="suspendMessageOnFileNameGenerationError"> The value indicating whether to suspend message on file name generation error. </param>
+        /// <param name="autoGenerateFileName"> The value indicating whether to auto generate file name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2EnvelopeSettings(ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autoGenerateFileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageContentType = messageContentType;
+            TransmitFileNameInMimeHeader = transmitFileNameInMimeHeader;
+            FileNameTemplate = fileNameTemplate;
+            SuspendMessageOnFileNameGenerationError = suspendMessageOnFileNameGenerationError;
+            AutoGenerateFileName = autoGenerateFileName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2EnvelopeSettings"/> for deserialization. </summary>
+        internal AS2EnvelopeSettings()
+        {
         }
 
         /// <summary> The message content type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Monitoring workspace connection definition. </summary>
     public partial class MonitoringWorkspaceConnection
     {
-        /// <summary> Initializes a new instance of MonitoringWorkspaceConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringWorkspaceConnection"/>. </summary>
         public MonitoringWorkspaceConnection()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Secrets = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MonitoringWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringWorkspaceConnection"/>. </summary>
         /// <param name="environmentVariables">
         /// The properties of a workspace service connection to store as environment variables in the submitted jobs.
         /// Key is workspace connection property path, name is environment variable key.
@@ -29,10 +33,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The properties of a workspace service connection to store as secrets in the submitted jobs.
         /// Key is workspace connection property path, name is secret key.
         /// </param>
-        internal MonitoringWorkspaceConnection(IDictionary<string, string> environmentVariables, IDictionary<string, string> secrets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringWorkspaceConnection(IDictionary<string, string> environmentVariables, IDictionary<string, string> secrets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnvironmentVariables = environmentVariables;
             Secrets = secrets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

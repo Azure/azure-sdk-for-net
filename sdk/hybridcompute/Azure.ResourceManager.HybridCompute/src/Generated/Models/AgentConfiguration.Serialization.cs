@@ -7,15 +7,138 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class AgentConfiguration
+    public partial class AgentConfiguration : IUtf8JsonSerializable, IJsonModel<AgentConfiguration>
     {
-        internal static AgentConfiguration DeserializeAgentConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AgentConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProxyUri))
+                {
+                    writer.WritePropertyName("proxyUrl"u8);
+                    writer.WriteStringValue(ProxyUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(IncomingConnectionsPorts))
+                {
+                    writer.WritePropertyName("incomingConnectionsPorts"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in IncomingConnectionsPorts)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ExtensionsAllowList))
+                {
+                    writer.WritePropertyName("extensionsAllowList"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ExtensionsAllowList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ExtensionsBlockList))
+                {
+                    writer.WritePropertyName("extensionsBlockList"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ExtensionsBlockList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ProxyBypass))
+                {
+                    writer.WritePropertyName("proxyBypass"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ProxyBypass)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExtensionsEnabled))
+                {
+                    writer.WritePropertyName("extensionsEnabled"u8);
+                    writer.WriteStringValue(ExtensionsEnabled);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(GuestConfigurationEnabled))
+                {
+                    writer.WritePropertyName("guestConfigurationEnabled"u8);
+                    writer.WriteStringValue(GuestConfigurationEnabled);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ConfigMode))
+                {
+                    writer.WritePropertyName("configMode"u8);
+                    writer.WriteStringValue(ConfigMode.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AgentConfiguration IJsonModel<AgentConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentConfiguration(document.RootElement, options);
+        }
+
+        internal static AgentConfiguration DeserializeAgentConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +151,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> extensionsEnabled = default;
             Optional<string> guestConfigurationEnabled = default;
             Optional<AgentConfigurationMode> configMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("proxyUrl"u8))
@@ -114,8 +239,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     configMode = new AgentConfigurationMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentConfiguration(proxyUrl.Value, Optional.ToList(incomingConnectionsPorts), Optional.ToList(extensionsAllowList), Optional.ToList(extensionsBlockList), Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AgentConfiguration(proxyUrl.Value, Optional.ToList(incomingConnectionsPorts), Optional.ToList(extensionsAllowList), Optional.ToList(extensionsBlockList), Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AgentConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AgentConfiguration IModel<AgentConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAgentConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AgentConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

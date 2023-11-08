@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> Open authentication access policy defined by user. </summary>
     public partial class OpenAuthenticationAccessPolicy
     {
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicy"/>. </summary>
         public OpenAuthenticationAccessPolicy()
         {
             Claims = new ChangeTrackingList<OpenAuthenticationPolicyClaim>();
         }
 
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicy"/>. </summary>
         /// <param name="providerType"> Type of provider for OAuth. </param>
         /// <param name="claims"> The access policy claims. </param>
-        internal OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? providerType, IList<OpenAuthenticationPolicyClaim> claims)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? providerType, IList<OpenAuthenticationPolicyClaim> claims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderType = providerType;
             Claims = claims;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of provider for OAuth. </summary>

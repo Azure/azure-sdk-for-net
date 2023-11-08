@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LabData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LabData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of LabData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +46,8 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="provisioningState"> Current provisioning state of the lab. </param>
         /// <param name="networkProfile"> The network profile for the lab, typically applied via a lab plan. This profile cannot be modified once a lab has been created. </param>
         /// <param name="state"> The lab state. </param>
-        internal LabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, LabAutoShutdownProfile autoShutdownProfile, LabConnectionProfile connectionProfile, LabVirtualMachineProfile virtualMachineProfile, LabSecurityProfile securityProfile, LabRosterProfile rosterProfile, ResourceIdentifier labPlanId, string title, string description, LabServicesProvisioningState? provisioningState, LabNetworkProfile networkProfile, LabState? state) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, LabAutoShutdownProfile autoShutdownProfile, LabConnectionProfile connectionProfile, LabVirtualMachineProfile virtualMachineProfile, LabSecurityProfile securityProfile, LabRosterProfile rosterProfile, ResourceIdentifier labPlanId, string title, string description, LabServicesProvisioningState? provisioningState, LabNetworkProfile networkProfile, LabState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AutoShutdownProfile = autoShutdownProfile;
             ConnectionProfile = connectionProfile;
@@ -55,6 +60,12 @@ namespace Azure.ResourceManager.LabServices
             ProvisioningState = provisioningState;
             NetworkProfile = networkProfile;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabData"/> for deserialization. </summary>
+        internal LabData()
+        {
         }
 
         /// <summary> The resource auto shutdown configuration for the lab. This controls whether actions are taken on resources that are sitting idle. </summary>

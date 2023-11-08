@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact schema reference. </summary>
     public partial class EdifactSchemaReference
     {
-        /// <summary> Initializes a new instance of EdifactSchemaReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactSchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="messageVersion"> The message version. </param>
         /// <param name="messageRelease"> The message release version. </param>
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaName = schemaName;
         }
 
-        /// <summary> Initializes a new instance of EdifactSchemaReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactSchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="messageVersion"> The message version. </param>
         /// <param name="messageRelease"> The message release version. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="senderApplicationQualifier"> The sender application qualifier. </param>
         /// <param name="associationAssignedCode"> The association assigned code. </param>
         /// <param name="schemaName"> The schema name. </param>
-        internal EdifactSchemaReference(string messageId, string messageVersion, string messageRelease, string senderApplicationId, string senderApplicationQualifier, string associationAssignedCode, string schemaName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactSchemaReference(string messageId, string messageVersion, string messageRelease, string senderApplicationId, string senderApplicationQualifier, string associationAssignedCode, string schemaName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MessageId = messageId;
             MessageVersion = messageVersion;
@@ -49,6 +54,12 @@ namespace Azure.ResourceManager.Logic.Models
             SenderApplicationQualifier = senderApplicationQualifier;
             AssociationAssignedCode = associationAssignedCode;
             SchemaName = schemaName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactSchemaReference"/> for deserialization. </summary>
+        internal EdifactSchemaReference()
+        {
         }
 
         /// <summary> The message id. </summary>

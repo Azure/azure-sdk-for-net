@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -14,24 +17,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class NetworkFunctionDefinitionVersionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
         protected NetworkFunctionDefinitionVersionPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
         /// <param name="networkFunctionType"> The network function type. </param>
-        internal NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
             Description = description;
             DeployParameters = deployParameters;
             NetworkFunctionType = networkFunctionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the network function definition version resource. </summary>

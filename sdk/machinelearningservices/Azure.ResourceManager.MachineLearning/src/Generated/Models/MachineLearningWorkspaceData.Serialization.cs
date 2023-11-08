@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
@@ -14,9 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable
+    public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MachineLearningWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -48,6 +52,29 @@ namespace Azure.ResourceManager.MachineLearning
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowPublicAccessWhenBehindVnet))
@@ -160,10 +187,55 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("managedNetwork"u8);
                 writer.WriteObjectValue(ManagedNetwork);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MlFlowTrackingUri))
+                {
+                    writer.WritePropertyName("mlFlowTrackingUri"u8);
+                    writer.WriteStringValue(MlFlowTrackingUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NotebookInfo))
+                {
+                    writer.WritePropertyName("notebookInfo"u8);
+                    writer.WriteObjectValue(NotebookInfo);
+                }
+            }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentity"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PrivateLinkCount))
+                {
+                    writer.WritePropertyName("privateLinkCount"u8);
+                    writer.WriteNumberValue(PrivateLinkCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccessType))
             {
@@ -174,6 +246,14 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
                 writer.WriteObjectValue(ServiceManagedResourcesSettings);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServiceProvisionedResourceGroup))
+                {
+                    writer.WritePropertyName("serviceProvisionedResourceGroup"u8);
+                    writer.WriteStringValue(ServiceProvisionedResourceGroup);
+                }
             }
             if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
             {
@@ -205,10 +285,26 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsStorageHnsEnabled))
+                {
+                    writer.WritePropertyName("storageHnsEnabled"u8);
+                    writer.WriteBooleanValue(IsStorageHnsEnabled.Value);
+                }
+            }
             if (Optional.IsDefined(SystemDatastoresAuthMode))
             {
                 writer.WritePropertyName("systemDatastoresAuthMode"u8);
                 writer.WriteStringValue(SystemDatastoresAuthMode);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
             }
             if (Optional.IsDefined(IsV1LegacyMode))
             {
@@ -220,12 +316,49 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("workspaceHubConfig"u8);
                 writer.WriteObjectValue(WorkspaceHubConfig);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(WorkspaceId))
+                {
+                    writer.WritePropertyName("workspaceId"u8);
+                    writer.WriteStringValue(WorkspaceId);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element)
+        MachineLearningWorkspaceData IJsonModel<MachineLearningWorkspaceData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceData(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -276,6 +409,8 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<bool> v1LegacyMode = default;
             Optional<WorkspaceHubConfig> workspaceHubConfig = default;
             Optional<string> workspaceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -681,8 +816,38 @@ namespace Azure.ResourceManager.MachineLearning
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), applicationInsights.Value, Optional.ToList(associatedWorkspaces), Optional.ToList(containerRegistries), containerRegistry.Value, description.Value, discoveryUrl.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, Optional.ToList(existingWorkspaces), featureStoreSettings.Value, friendlyName.Value, Optional.ToNullable(hbiWorkspace), hubResourceId.Value, imageBuildCompute.Value, keyVault.Value, Optional.ToList(keyVaults), managedNetwork.Value, mlFlowTrackingUri.Value, notebookInfo.Value, primaryUserAssignedIdentity.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateLinkCount), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, serviceProvisionedResourceGroup.Value, Optional.ToList(sharedPrivateLinkResources), Optional.ToNullable(softDeleteRetentionInDays), storageAccount.Value, Optional.ToList(storageAccounts), Optional.ToNullable(storageHnsEnabled), systemDatastoresAuthMode.Value, Optional.ToNullable(tenantId), Optional.ToNullable(v1LegacyMode), workspaceHubConfig.Value, workspaceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), applicationInsights.Value, Optional.ToList(associatedWorkspaces), Optional.ToList(containerRegistries), containerRegistry.Value, description.Value, discoveryUrl.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, Optional.ToList(existingWorkspaces), featureStoreSettings.Value, friendlyName.Value, Optional.ToNullable(hbiWorkspace), hubResourceId.Value, imageBuildCompute.Value, keyVault.Value, Optional.ToList(keyVaults), managedNetwork.Value, mlFlowTrackingUri.Value, notebookInfo.Value, primaryUserAssignedIdentity.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateLinkCount), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, serviceProvisionedResourceGroup.Value, Optional.ToList(sharedPrivateLinkResources), Optional.ToNullable(softDeleteRetentionInDays), storageAccount.Value, Optional.ToList(storageAccounts), Optional.ToNullable(storageHnsEnabled), systemDatastoresAuthMode.Value, Optional.ToNullable(tenantId), Optional.ToNullable(v1LegacyMode), workspaceHubConfig.Value, workspaceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MachineLearningWorkspaceData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningWorkspaceData IModel<MachineLearningWorkspaceData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MachineLearningWorkspaceData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

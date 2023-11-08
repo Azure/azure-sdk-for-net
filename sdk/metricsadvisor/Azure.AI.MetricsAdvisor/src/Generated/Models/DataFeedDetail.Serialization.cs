@@ -5,18 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataFeedDetail : IUtf8JsonSerializable
+    internal partial class DataFeedDetail : IUtf8JsonSerializable, IJsonModel<DataFeedDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFeedDetail>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataFeedDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DataFeedId))
+                {
+                    writer.WritePropertyName("dataFeedId"u8);
+                    writer.WriteStringValue(DataFeedId);
+                }
+            }
             writer.WritePropertyName("dataFeedName"u8);
             writer.WriteStringValue(DataFeedName);
             if (Optional.IsDefined(DataFeedDescription))
@@ -142,6 +155,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsAdmin))
+                {
+                    writer.WritePropertyName("isAdmin"u8);
+                    writer.WriteBooleanValue(IsAdmin.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Creator))
+                {
+                    writer.WritePropertyName("creator"u8);
+                    writer.WriteStringValue(Creator);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedTime))
+                {
+                    writer.WritePropertyName("createdTime"u8);
+                    writer.WriteStringValue(CreatedTime.Value, "O");
+                }
+            }
             if (Optional.IsDefined(ActionLinkTemplate))
             {
                 writer.WritePropertyName("actionLinkTemplate"u8);
@@ -157,11 +202,40 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("credentialId"u8);
                 writer.WriteStringValue(CredentialId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFeedDetail DeserializeDataFeedDetail(JsonElement element)
+        DataFeedDetail IJsonModel<DataFeedDetail>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFeedDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFeedDetail(document.RootElement, options);
+        }
+
+        internal static DataFeedDetail DeserializeDataFeedDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -187,5 +261,30 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return UnknownDataFeedDetail.DeserializeUnknownDataFeedDetail(element);
         }
+
+        BinaryData IModel<DataFeedDetail>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFeedDetail)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFeedDetail IModel<DataFeedDetail>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFeedDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFeedDetail(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataFeedDetail>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

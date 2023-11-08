@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Helm Pod status properties. </summary>
     public partial class KubernetesPod
     {
-        /// <summary> Initializes a new instance of KubernetesPod. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesPod"/>. </summary>
         internal KubernetesPod()
         {
             Events = new ChangeTrackingList<PodEvent>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesPod. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesPod"/>. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="status"> The status of a pod. </param>
         /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
-        internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Status = status;
             CreatedOn = createdOn;
             Events = events;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the Pod. </summary>

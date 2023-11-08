@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedServices.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.ManagedServices
     /// </summary>
     public partial class ManagedServicesRegistrationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationData"/>. </summary>
         public ManagedServicesRegistrationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a registration definition. </param>
         /// <param name="plan"> The details for the Managed Services offer’s plan in Azure Marketplace. </param>
-        internal ManagedServicesRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServicesRegistrationProperties properties, ManagedServicesPlan plan) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServicesRegistrationProperties properties, ManagedServicesPlan plan, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Plan = plan;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties of a registration definition. </summary>

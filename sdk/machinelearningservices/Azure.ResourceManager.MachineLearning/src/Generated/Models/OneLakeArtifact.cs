@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -17,7 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class OneLakeArtifact
     {
-        /// <summary> Initializes a new instance of OneLakeArtifact. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         protected OneLakeArtifact(string artifactName)
@@ -27,13 +31,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ArtifactName = artifactName;
         }
 
-        /// <summary> Initializes a new instance of OneLakeArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="artifactType"> [Required] OneLake artifact type. </param>
-        internal OneLakeArtifact(string artifactName, OneLakeArtifactType artifactType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OneLakeArtifact(string artifactName, OneLakeArtifactType artifactType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactName = artifactName;
             ArtifactType = artifactType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/> for deserialization. </summary>
+        internal OneLakeArtifact()
+        {
         }
 
         /// <summary> [Required] OneLake artifact name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Scope of a Managed Network. </summary>
     public partial class Scope
     {
-        /// <summary> Initializes a new instance of Scope. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Scope"/>. </summary>
         public Scope()
         {
             ManagementGroups = new ChangeTrackingList<WritableSubResource>();
@@ -23,17 +27,19 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of Scope. </summary>
+        /// <summary> Initializes a new instance of <see cref="Scope"/>. </summary>
         /// <param name="managementGroups"> The collection of management groups covered by the Managed Network. </param>
         /// <param name="subscriptions"> The collection of subscriptions covered by the Managed Network. </param>
         /// <param name="virtualNetworks"> The collection of virtual nets covered by the Managed Network. </param>
         /// <param name="subnets"> The collection of  subnets covered by the Managed Network. </param>
-        internal Scope(IList<WritableSubResource> managementGroups, IList<WritableSubResource> subscriptions, IList<WritableSubResource> virtualNetworks, IList<WritableSubResource> subnets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Scope(IList<WritableSubResource> managementGroups, IList<WritableSubResource> subscriptions, IList<WritableSubResource> virtualNetworks, IList<WritableSubResource> subnets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagementGroups = managementGroups;
             Subscriptions = subscriptions;
             VirtualNetworks = virtualNetworks;
             Subnets = subnets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of management groups covered by the Managed Network. </summary>

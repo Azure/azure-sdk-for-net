@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class CommonDynamicMatchConfiguration : IUtf8JsonSerializable
+    public partial class CommonDynamicMatchConfiguration : IUtf8JsonSerializable, IJsonModel<CommonDynamicMatchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDynamicMatchConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CommonDynamicMatchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPGroups))
@@ -46,11 +51,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommonDynamicMatchConfiguration DeserializeCommonDynamicMatchConfiguration(JsonElement element)
+        CommonDynamicMatchConfiguration IJsonModel<CommonDynamicMatchConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonDynamicMatchConfiguration(document.RootElement, options);
+        }
+
+        internal static CommonDynamicMatchConfiguration DeserializeCommonDynamicMatchConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +92,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
             Optional<IList<VlanGroupProperties>> vlanGroups = default;
             Optional<IList<PortGroupProperties>> portGroups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipGroups"u8))
@@ -102,8 +138,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     portGroups = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CommonDynamicMatchConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CommonDynamicMatchConfiguration IModel<CommonDynamicMatchConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCommonDynamicMatchConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CommonDynamicMatchConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

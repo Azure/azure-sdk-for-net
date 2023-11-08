@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,9 +13,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Mutable base definition for a job. </summary>
     internal partial class PartialJobBase
     {
-        /// <summary> Initializes a new instance of PartialJobBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartialJobBase"/>. </summary>
         public PartialJobBase()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartialJobBase"/>. </summary>
+        /// <param name="notificationSetting"> Mutable notification setting for the job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartialJobBase(PartialNotificationSetting notificationSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NotificationSetting = notificationSetting;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Mutable notification setting for the job. </summary>

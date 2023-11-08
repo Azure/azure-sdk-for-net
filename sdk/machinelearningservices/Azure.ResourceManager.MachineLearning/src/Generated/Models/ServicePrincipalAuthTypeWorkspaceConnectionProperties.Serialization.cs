@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ServicePrincipalAuthTypeWorkspaceConnectionProperties : IUtf8JsonSerializable
+    public partial class ServicePrincipalAuthTypeWorkspaceConnectionProperties : IUtf8JsonSerializable, IJsonModel<ServicePrincipalAuthTypeWorkspaceConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipalAuthTypeWorkspaceConnectionProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ServicePrincipalAuthTypeWorkspaceConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
@@ -50,11 +55,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalAuthTypeWorkspaceConnectionProperties DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(JsonElement element)
+        ServicePrincipalAuthTypeWorkspaceConnectionProperties IJsonModel<ServicePrincipalAuthTypeWorkspaceConnectionProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalAuthTypeWorkspaceConnectionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(document.RootElement, options);
+        }
+
+        internal static ServicePrincipalAuthTypeWorkspaceConnectionProperties DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +99,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<DateTimeOffset> expiryTime = default;
             Optional<BinaryData> metadata = default;
             Optional<string> target = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -113,8 +149,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     target = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServicePrincipalAuthTypeWorkspaceConnectionProperties(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, credentials.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServicePrincipalAuthTypeWorkspaceConnectionProperties(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData, credentials.Value);
         }
+
+        BinaryData IModel<ServicePrincipalAuthTypeWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalAuthTypeWorkspaceConnectionProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServicePrincipalAuthTypeWorkspaceConnectionProperties IModel<ServicePrincipalAuthTypeWorkspaceConnectionProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalAuthTypeWorkspaceConnectionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ServicePrincipalAuthTypeWorkspaceConnectionProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

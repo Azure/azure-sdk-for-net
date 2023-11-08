@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Summary object. </summary>
     public partial class RouteMatrixSummary
     {
-        /// <summary> Initializes a new instance of RouteMatrixSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixSummary"/>. </summary>
         internal RouteMatrixSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteMatrixSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixSummary"/>. </summary>
         /// <param name="successfulRoutes"> Number of successful routes in the response. </param>
         /// <param name="totalRoutes"> Total number of routes requested. Number of cells in the input matrix. </param>
-        internal RouteMatrixSummary(int? successfulRoutes, int? totalRoutes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMatrixSummary(int? successfulRoutes, int? totalRoutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SuccessfulRoutes = successfulRoutes;
             TotalRoutes = totalRoutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of successful routes in the response. </summary>

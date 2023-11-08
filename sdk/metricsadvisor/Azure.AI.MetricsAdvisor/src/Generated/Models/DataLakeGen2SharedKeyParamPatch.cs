@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DataLakeGen2SharedKeyParamPatch. </summary>
     internal partial class DataLakeGen2SharedKeyParamPatch
     {
-        /// <summary> Initializes a new instance of DataLakeGen2SharedKeyParamPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeGen2SharedKeyParamPatch"/>. </summary>
         public DataLakeGen2SharedKeyParamPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeGen2SharedKeyParamPatch"/>. </summary>
+        /// <param name="accountKey"> The account key to access the Azure Data Lake Storage Gen2. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeGen2SharedKeyParamPatch(string accountKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AccountKey = accountKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The account key to access the Azure Data Lake Storage Gen2. </summary>

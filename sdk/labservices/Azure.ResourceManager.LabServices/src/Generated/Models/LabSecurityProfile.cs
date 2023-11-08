@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The lab security profile. </summary>
     public partial class LabSecurityProfile
     {
-        /// <summary> Initializes a new instance of LabSecurityProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabSecurityProfile"/>. </summary>
         public LabSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabSecurityProfile"/>. </summary>
         /// <param name="registrationCode"> The registration code for the lab. </param>
         /// <param name="openAccess"> Whether any user or only specified users can register to a lab. </param>
-        internal LabSecurityProfile(string registrationCode, LabServicesEnableState? openAccess)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabSecurityProfile(string registrationCode, LabServicesEnableState? openAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistrationCode = registrationCode;
             OpenAccess = openAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The registration code for the lab. </summary>

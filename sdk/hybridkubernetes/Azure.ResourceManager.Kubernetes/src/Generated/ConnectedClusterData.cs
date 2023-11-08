@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Kubernetes
     /// </summary>
     public partial class ConnectedClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConnectedClusterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Kubernetes
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
         }
 
-        /// <summary> Initializes a new instance of ConnectedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +58,8 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="connectivityStatus"> Represents the connectivity status of the connected cluster. </param>
         /// <param name="privateLinkState"> Property which describes the state of private link on a connected cluster resource. </param>
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this connected cluster is assigned to, if any. </param>
-        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, string privateLinkScopeResourceId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, string privateLinkScopeResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
@@ -72,6 +76,12 @@ namespace Azure.ResourceManager.Kubernetes
             ConnectivityStatus = connectivityStatus;
             PrivateLinkState = privateLinkState;
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/> for deserialization. </summary>
+        internal ConnectedClusterData()
+        {
         }
 
         /// <summary> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </summary>

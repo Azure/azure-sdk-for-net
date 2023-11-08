@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Advances setting to customize StackEnsemble run. </summary>
     public partial class MachineLearningStackEnsembleSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningStackEnsembleSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
         public MachineLearningStackEnsembleSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningStackEnsembleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
         /// <param name="stackMetaLearnerKWargs"> Optional parameters to pass to the initializer of the meta-learner. </param>
         /// <param name="stackMetaLearnerTrainPercentage"> Specifies the proportion of the training set (when choosing train and validation type of training) to be reserved for training the meta-learner. Default value is 0.2. </param>
         /// <param name="stackMetaLearnerType"> The meta-learner is a model trained on the output of the individual heterogeneous models. </param>
-        internal MachineLearningStackEnsembleSettings(BinaryData stackMetaLearnerKWargs, double? stackMetaLearnerTrainPercentage, MachineLearningStackMetaLearnerType? stackMetaLearnerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningStackEnsembleSettings(BinaryData stackMetaLearnerKWargs, double? stackMetaLearnerTrainPercentage, MachineLearningStackMetaLearnerType? stackMetaLearnerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StackMetaLearnerKWargs = stackMetaLearnerKWargs;
             StackMetaLearnerTrainPercentage = stackMetaLearnerTrainPercentage;
             StackMetaLearnerType = stackMetaLearnerType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

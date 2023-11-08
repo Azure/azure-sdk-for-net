@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetContainerFeaturesetContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetContainerFeaturesetContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureSetContainerResource(Client, MachineLearningFeatureSetContainerData.DeserializeMachineLearningFeatureSetContainerData(e)), _machineLearningFeatureSetContainerFeaturesetContainersClientDiagnostics, Pipeline, "MachineLearningFeatureSetContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningFeatureSetContainerResource(Client, MachineLearningFeatureSetContainerData.DeserializeMachineLearningFeatureSetContainerData(e)), _machineLearningFeatureSetContainerFeaturesetContainersClientDiagnostics, Pipeline, "MachineLearningFeatureSetContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetContainerFeaturesetContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetContainerFeaturesetContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureSetContainerResource(Client, MachineLearningFeatureSetContainerData.DeserializeMachineLearningFeatureSetContainerData(e)), _machineLearningFeatureSetContainerFeaturesetContainersClientDiagnostics, Pipeline, "MachineLearningFeatureSetContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearningFeatureSetContainerResource(Client, MachineLearningFeatureSetContainerData.DeserializeMachineLearningFeatureSetContainerData(e)), _machineLearningFeatureSetContainerFeaturesetContainersClientDiagnostics, Pipeline, "MachineLearningFeatureSetContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

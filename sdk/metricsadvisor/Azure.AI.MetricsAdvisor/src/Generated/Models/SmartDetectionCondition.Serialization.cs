@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class SmartDetectionCondition : IUtf8JsonSerializable
+    public partial class SmartDetectionCondition : IUtf8JsonSerializable, IJsonModel<SmartDetectionCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartDetectionCondition>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SmartDetectionCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sensitivity"u8);
@@ -21,11 +27,40 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
             writer.WritePropertyName("suppressCondition"u8);
             writer.WriteObjectValue(SuppressCondition);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SmartDetectionCondition DeserializeSmartDetectionCondition(JsonElement element)
+        SmartDetectionCondition IJsonModel<SmartDetectionCondition>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmartDetectionCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmartDetectionCondition(document.RootElement, options);
+        }
+
+        internal static SmartDetectionCondition DeserializeSmartDetectionCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +68,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             double sensitivity = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sensitivity"u8))
@@ -50,8 +87,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SmartDetectionCondition(sensitivity, anomalyDetectorDirection, suppressCondition);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SmartDetectionCondition(sensitivity, anomalyDetectorDirection, suppressCondition, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SmartDetectionCondition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmartDetectionCondition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SmartDetectionCondition IModel<SmartDetectionCondition>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmartDetectionCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSmartDetectionCondition(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SmartDetectionCondition>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

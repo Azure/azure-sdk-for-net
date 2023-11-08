@@ -5,10 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The TopNGroupScope. </summary>
     public partial class TopNGroupScope
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopNGroupScope"/>. </summary>
+        /// <param name="top"> top N, value range : [1, +∞). </param>
+        /// <param name="period"> point count used to look back, value range : [1, +∞). </param>
+        /// <param name="minimumTopCount">
+        /// min count should be in top N, value range : [1, +∞)
+        ///
+        /// should be less than or equal to period
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopNGroupScope(int top, int period, int minimumTopCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Top = top;
+            Period = period;
+            MinimumTopCount = minimumTopCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopNGroupScope"/> for deserialization. </summary>
+        internal TopNGroupScope()
+        {
+        }
     }
 }

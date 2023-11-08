@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of FeaturestoreEntityVersion entities. </summary>
     internal partial class FeaturestoreEntityVersionResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeaturestoreEntityVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeaturestoreEntityVersionResourceArmPaginatedResult"/>. </summary>
         internal FeaturestoreEntityVersionResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeaturestoreEntityVersionData>();
         }
 
-        /// <summary> Initializes a new instance of FeaturestoreEntityVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturestoreEntityVersionResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturestoreEntityVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturestoreEntityVersion. </param>
-        internal FeaturestoreEntityVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeaturestoreEntityVersionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeaturestoreEntityVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeaturestoreEntityVersionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of FeaturestoreEntityVersion objects. If null, there are no additional pages. </summary>

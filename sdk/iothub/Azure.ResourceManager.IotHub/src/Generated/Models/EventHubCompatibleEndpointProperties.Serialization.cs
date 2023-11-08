@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class EventHubCompatibleEndpointProperties : IUtf8JsonSerializable
+    public partial class EventHubCompatibleEndpointProperties : IUtf8JsonSerializable, IJsonModel<EventHubCompatibleEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubCompatibleEndpointProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EventHubCompatibleEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionTimeInDays))
@@ -26,11 +31,69 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(PartitionIds))
+                {
+                    writer.WritePropertyName("partitionIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PartitionIds)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EventHubCompatibleName))
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStringValue(EventHubCompatibleName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    writer.WritePropertyName("endpoint"u8);
+                    writer.WriteStringValue(Endpoint);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubCompatibleEndpointProperties DeserializeEventHubCompatibleEndpointProperties(JsonElement element)
+        EventHubCompatibleEndpointProperties IJsonModel<EventHubCompatibleEndpointProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubCompatibleEndpointProperties(document.RootElement, options);
+        }
+
+        internal static EventHubCompatibleEndpointProperties DeserializeEventHubCompatibleEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +103,8 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IReadOnlyList<string>> partitionIds = default;
             Optional<string> path = default;
             Optional<string> endpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionTimeInDays"u8))
@@ -84,8 +149,38 @@ namespace Azure.ResourceManager.IotHub.Models
                     endpoint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubCompatibleEndpointProperties(Optional.ToNullable(retentionTimeInDays), Optional.ToNullable(partitionCount), Optional.ToList(partitionIds), path.Value, endpoint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubCompatibleEndpointProperties(Optional.ToNullable(retentionTimeInDays), Optional.ToNullable(partitionCount), Optional.ToList(partitionIds), path.Value, endpoint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EventHubCompatibleEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventHubCompatibleEndpointProperties IModel<EventHubCompatibleEndpointProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventHubCompatibleEndpointProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EventHubCompatibleEndpointProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

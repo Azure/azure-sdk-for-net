@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
@@ -13,7 +14,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> The RestoreOperationParameters. </summary>
     internal partial class RestoreOperationParameters
     {
-        /// <summary> Initializes a new instance of RestoreOperationParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"></param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folderToRestore"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Security.KeyVault.Administration.Models
 
             SasTokenParameters = sasTokenParameters;
             FolderToRestore = folderToRestore;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
+        /// <param name="sasTokenParameters"></param>
+        /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SasTokenParameters = sasTokenParameters;
+            FolderToRestore = folderToRestore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/> for deserialization. </summary>
+        internal RestoreOperationParameters()
+        {
         }
 
         /// <summary> Gets the sas token parameters. </summary>

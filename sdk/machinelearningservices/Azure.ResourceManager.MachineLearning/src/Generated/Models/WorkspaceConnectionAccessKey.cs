@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The WorkspaceConnectionAccessKey. </summary>
     public partial class WorkspaceConnectionAccessKey
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionAccessKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionAccessKey"/>. </summary>
         public WorkspaceConnectionAccessKey()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionAccessKey"/>. </summary>
         /// <param name="accessKeyId"></param>
         /// <param name="secretAccessKey"></param>
-        internal WorkspaceConnectionAccessKey(string accessKeyId, string secretAccessKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceConnectionAccessKey(string accessKeyId, string secretAccessKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the access key id. </summary>

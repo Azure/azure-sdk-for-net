@@ -5,15 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCryptoCertificateEntity
+    public partial class FirmwareCryptoCertificateEntity : IUtf8JsonSerializable, IJsonModel<FirmwareCryptoCertificateEntity>
     {
-        internal static FirmwareCryptoCertificateEntity DeserializeFirmwareCryptoCertificateEntity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareCryptoCertificateEntity>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FirmwareCryptoCertificateEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CommonName))
+            {
+                if (CommonName != null)
+                {
+                    writer.WritePropertyName("commonName"u8);
+                    writer.WriteStringValue(CommonName);
+                }
+                else
+                {
+                    writer.WriteNull("commonName");
+                }
+            }
+            if (Optional.IsDefined(Organization))
+            {
+                if (Organization != null)
+                {
+                    writer.WritePropertyName("organization"u8);
+                    writer.WriteStringValue(Organization);
+                }
+                else
+                {
+                    writer.WriteNull("organization");
+                }
+            }
+            if (Optional.IsDefined(OrganizationalUnit))
+            {
+                if (OrganizationalUnit != null)
+                {
+                    writer.WritePropertyName("organizationalUnit"u8);
+                    writer.WriteStringValue(OrganizationalUnit);
+                }
+                else
+                {
+                    writer.WriteNull("organizationalUnit");
+                }
+            }
+            if (Optional.IsDefined(State))
+            {
+                if (State != null)
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+                else
+                {
+                    writer.WriteNull("state");
+                }
+            }
+            if (Optional.IsDefined(Country))
+            {
+                if (Country != null)
+                {
+                    writer.WritePropertyName("country"u8);
+                    writer.WriteStringValue(Country);
+                }
+                else
+                {
+                    writer.WriteNull("country");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FirmwareCryptoCertificateEntity IJsonModel<FirmwareCryptoCertificateEntity>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoCertificateEntity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirmwareCryptoCertificateEntity(document.RootElement, options);
+        }
+
+        internal static FirmwareCryptoCertificateEntity DeserializeFirmwareCryptoCertificateEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +124,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> organizationalUnit = default;
             Optional<string> state = default;
             Optional<string> country = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonName"u8))
@@ -75,8 +178,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirmwareCryptoCertificateEntity(commonName.Value, organization.Value, organizationalUnit.Value, state.Value, country.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FirmwareCryptoCertificateEntity(commonName.Value, organization.Value, organizationalUnit.Value, state.Value, country.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FirmwareCryptoCertificateEntity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoCertificateEntity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FirmwareCryptoCertificateEntity IModel<FirmwareCryptoCertificateEntity>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoCertificateEntity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFirmwareCryptoCertificateEntity(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FirmwareCryptoCertificateEntity>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

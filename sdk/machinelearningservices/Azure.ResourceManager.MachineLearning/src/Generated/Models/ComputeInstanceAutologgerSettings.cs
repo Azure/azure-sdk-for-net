@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Specifies settings for autologger. </summary>
     internal partial class ComputeInstanceAutologgerSettings
     {
-        /// <summary> Initializes a new instance of ComputeInstanceAutologgerSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceAutologgerSettings"/>. </summary>
         public ComputeInstanceAutologgerSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeInstanceAutologgerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceAutologgerSettings"/>. </summary>
         /// <param name="mlflowAutologger"> Indicates whether mlflow autologger is enabled for notebooks. </param>
-        internal ComputeInstanceAutologgerSettings(MachineLearningFlowAutoLogger? mlflowAutologger)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeInstanceAutologgerSettings(MachineLearningFlowAutoLogger? mlflowAutologger, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MlflowAutologger = mlflowAutologger;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether mlflow autologger is enabled for notebooks. </summary>

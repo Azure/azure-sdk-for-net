@@ -15,7 +15,10 @@ namespace Azure.Maps.Search.Models
     /// <summary> The GeoJsonPolygonData. </summary>
     public partial class GeoJsonPolygonData
     {
-        /// <summary> Initializes a new instance of GeoJsonPolygonData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygonData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonPolygonData(IEnumerable<IList<IList<double>>> coordinates)
@@ -25,11 +28,18 @@ namespace Azure.Maps.Search.Models
             Coordinates = coordinates.ToList();
         }
 
-        /// <summary> Initializes a new instance of GeoJsonPolygonData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygonData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
-        internal GeoJsonPolygonData(IList<IList<IList<double>>> coordinates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonPolygonData(IList<IList<IList<double>>> coordinates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Coordinates = coordinates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygonData"/> for deserialization. </summary>
+        internal GeoJsonPolygonData()
+        {
         }
 
         /// <summary> Coordinates for the `GeoJson Polygon` geometry type. </summary>

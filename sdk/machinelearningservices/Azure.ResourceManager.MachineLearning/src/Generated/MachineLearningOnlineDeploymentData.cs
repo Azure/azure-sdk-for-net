@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningOnlineDeployment data model. </summary>
     public partial class MachineLearningOnlineDeploymentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,12 +49,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// The available derived classes include <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
         /// </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        internal MachineLearningOnlineDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningOnlineDeploymentProperties properties, MachineLearningSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOnlineDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningOnlineDeploymentProperties properties, MachineLearningSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
             Properties = properties;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentData"/> for deserialization. </summary>
+        internal MachineLearningOnlineDeploymentData()
+        {
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>

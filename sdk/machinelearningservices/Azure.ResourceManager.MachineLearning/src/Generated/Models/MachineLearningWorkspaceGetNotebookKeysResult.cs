@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceGetNotebookKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetNotebookKeysResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
         internal MachineLearningWorkspaceGetNotebookKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
         /// <param name="primaryAccessKey"> The primary access key of the Notebook. </param>
         /// <param name="secondaryAccessKey"> The secondary access key of the Notebook. </param>
-        internal MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryAccessKey = primaryAccessKey;
             SecondaryAccessKey = secondaryAccessKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary access key of the Notebook. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class InferencingServer
     {
-        /// <summary> Initializes a new instance of InferencingServer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InferencingServer"/>. </summary>
         protected InferencingServer()
         {
         }
 
-        /// <summary> Initializes a new instance of InferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
-        internal InferencingServer(InferencingServerType serverType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InferencingServer(InferencingServerType serverType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerType = serverType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Inferencing server type for various targets. </summary>

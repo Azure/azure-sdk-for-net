@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Configurations for provisioning the cluster with HTTP proxy servers. </summary>
     public partial class HttpProxyConfigResponse
     {
-        /// <summary> Initializes a new instance of HttpProxyConfigResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfigResponse"/>. </summary>
         public HttpProxyConfigResponse()
         {
             NoProxy = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HttpProxyConfigResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfigResponse"/>. </summary>
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
         /// <param name="trustedCa"> Alternative CA cert to use for connecting to proxy servers. </param>
         /// <param name="username"> Username to use for connecting to proxy server. </param>
-        internal HttpProxyConfigResponse(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCa, string username)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpProxyConfigResponse(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCa, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HttpProxy = httpProxy;
             HttpsProxy = httpsProxy;
             NoProxy = noProxy;
             TrustedCa = trustedCa;
             Username = username;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The HTTP proxy server endpoint to use. </summary>

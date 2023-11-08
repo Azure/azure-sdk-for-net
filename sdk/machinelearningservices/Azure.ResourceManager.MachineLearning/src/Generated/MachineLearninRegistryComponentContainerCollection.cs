@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearninRegistryComponentContainerRegistryComponentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearninRegistryComponentContainerRegistryComponentContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearninRegistryComponentContainerResource(Client, MachineLearningComponentContainerData.DeserializeMachineLearningComponentContainerData(e)), _machineLearninRegistryComponentContainerRegistryComponentContainersClientDiagnostics, Pipeline, "MachineLearninRegistryComponentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearninRegistryComponentContainerResource(Client, MachineLearningComponentContainerData.DeserializeMachineLearningComponentContainerData(e)), _machineLearninRegistryComponentContainerRegistryComponentContainersClientDiagnostics, Pipeline, "MachineLearninRegistryComponentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearninRegistryComponentContainerRegistryComponentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearninRegistryComponentContainerRegistryComponentContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearninRegistryComponentContainerResource(Client, MachineLearningComponentContainerData.DeserializeMachineLearningComponentContainerData(e)), _machineLearninRegistryComponentContainerRegistryComponentContainersClientDiagnostics, Pipeline, "MachineLearninRegistryComponentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MachineLearninRegistryComponentContainerResource(Client, MachineLearningComponentContainerData.DeserializeMachineLearningComponentContainerData(e)), _machineLearninRegistryComponentContainerRegistryComponentContainersClientDiagnostics, Pipeline, "MachineLearninRegistryComponentContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

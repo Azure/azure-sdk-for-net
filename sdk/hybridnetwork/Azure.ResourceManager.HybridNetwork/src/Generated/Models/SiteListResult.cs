@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Response for sites API service call. </summary>
     internal partial class SiteListResult
     {
-        /// <summary> Initializes a new instance of SiteListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteListResult"/>. </summary>
         internal SiteListResult()
         {
             Value = new ChangeTrackingList<SiteData>();
         }
 
-        /// <summary> Initializes a new instance of SiteListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteListResult"/>. </summary>
         /// <param name="value"> A list of sites in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SiteListResult(IReadOnlyList<SiteData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteListResult(IReadOnlyList<SiteData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of sites in a resource group. </summary>

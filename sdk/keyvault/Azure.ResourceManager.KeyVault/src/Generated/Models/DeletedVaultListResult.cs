@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> List of vaults. </summary>
     internal partial class DeletedVaultListResult
     {
-        /// <summary> Initializes a new instance of DeletedVaultListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultListResult"/>. </summary>
         internal DeletedVaultListResult()
         {
             Value = new ChangeTrackingList<DeletedKeyVaultData>();
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultListResult"/>. </summary>
         /// <param name="value"> The list of deleted vaults. </param>
         /// <param name="nextLink"> The URL to get the next set of deleted vaults. </param>
-        internal DeletedVaultListResult(IReadOnlyList<DeletedKeyVaultData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedVaultListResult(IReadOnlyList<DeletedKeyVaultData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of deleted vaults. </summary>

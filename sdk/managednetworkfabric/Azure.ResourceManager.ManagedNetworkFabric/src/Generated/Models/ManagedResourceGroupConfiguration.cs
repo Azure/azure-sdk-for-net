@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Managed Resource Group configuration properties. </summary>
     public partial class ManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         public ManagedResourceGroupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="name"> The NFC service will be hosted in a Managed resource group. </param>
         /// <param name="location"> Managed resource group location. </param>
-        internal ManagedResourceGroupConfiguration(string name, AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedResourceGroupConfiguration(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The NFC service will be hosted in a Managed resource group. </summary>

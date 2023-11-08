@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningOutboundRuleBasicData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningOutboundRuleBasicData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRuleBasicData"/>. </summary>
         /// <param name="properties">
         /// Outbound Rule for the managed network of a machine learning workspace.
         /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOutboundRuleBasicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRuleBasicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,9 +46,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </param>
-        internal MachineLearningOutboundRuleBasicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningOutboundRule properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOutboundRuleBasicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningOutboundRule properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRuleBasicData"/> for deserialization. </summary>
+        internal MachineLearningOutboundRuleBasicData()
+        {
         }
 
         /// <summary>

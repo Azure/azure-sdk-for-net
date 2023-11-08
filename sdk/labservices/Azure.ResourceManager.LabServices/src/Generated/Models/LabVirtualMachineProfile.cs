@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The base virtual machine configuration for a lab. </summary>
     public partial class LabVirtualMachineProfile
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineProfile"/>. </summary>
         /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
         /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
         /// <param name="sku"> The SKU for the lab. Defines the type of virtual machines used in the lab. </param>
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.LabServices.Models
             AdminUser = adminUser;
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineProfile"/>. </summary>
         /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
         /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
         /// <param name="osType"> The OS type of the image. </param>
@@ -43,7 +47,8 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="useSharedPassword"> Enabling this option will use the same password for all user VMs. </param>
         /// <param name="adminUser"> Credentials for the admin user on the VM. </param>
         /// <param name="nonAdminUser"> Credentials for the non-admin user on the VM, if one exists. </param>
-        internal LabVirtualMachineProfile(LabVirtualMachineCreateOption createOption, LabVirtualMachineImageReference imageReference, LabVirtualMachineImageOSType? osType, LabServicesSku sku, LabVirtualMachineAdditionalCapability additionalCapabilities, TimeSpan usageQuota, LabServicesEnableState? useSharedPassword, LabVirtualMachineCredential adminUser, LabVirtualMachineCredential nonAdminUser)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineProfile(LabVirtualMachineCreateOption createOption, LabVirtualMachineImageReference imageReference, LabVirtualMachineImageOSType? osType, LabServicesSku sku, LabVirtualMachineAdditionalCapability additionalCapabilities, TimeSpan usageQuota, LabServicesEnableState? useSharedPassword, LabVirtualMachineCredential adminUser, LabVirtualMachineCredential nonAdminUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateOption = createOption;
             ImageReference = imageReference;
@@ -54,6 +59,12 @@ namespace Azure.ResourceManager.LabServices.Models
             UseSharedPassword = useSharedPassword;
             AdminUser = adminUser;
             NonAdminUser = nonAdminUser;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineProfile"/> for deserialization. </summary>
+        internal LabVirtualMachineProfile()
+        {
         }
 
         /// <summary> Indicates what lab virtual machines are created from. </summary>

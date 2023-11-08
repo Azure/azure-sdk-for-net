@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Online deployment scoring requests configuration. </summary>
     public partial class MachineLearningOnlineRequestSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineRequestSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineRequestSettings"/>. </summary>
         public MachineLearningOnlineRequestSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineRequestSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineRequestSettings"/>. </summary>
         /// <param name="maxConcurrentRequestsPerInstance"> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </param>
         /// <param name="maxQueueWait">
         /// The maximum amount of time a request will stay in the queue in ISO 8601 format.
@@ -27,11 +31,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The scoring timeout in ISO 8601 format.
         /// Defaults to 5000ms.
         /// </param>
-        internal MachineLearningOnlineRequestSettings(int? maxConcurrentRequestsPerInstance, TimeSpan? maxQueueWait, TimeSpan? requestTimeout)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOnlineRequestSettings(int? maxConcurrentRequestsPerInstance, TimeSpan? maxQueueWait, TimeSpan? requestTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxConcurrentRequestsPerInstance = maxConcurrentRequestsPerInstance;
             MaxQueueWait = maxQueueWait;
             RequestTimeout = requestTimeout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </summary>

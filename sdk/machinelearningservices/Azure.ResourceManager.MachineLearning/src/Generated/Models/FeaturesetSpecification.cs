@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Dto object representing specification. </summary>
     internal partial class FeaturesetSpecification
     {
-        /// <summary> Initializes a new instance of FeaturesetSpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeaturesetSpecification"/>. </summary>
         public FeaturesetSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of FeaturesetSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetSpecification"/>. </summary>
         /// <param name="path"> Specifies the spec path. </param>
-        internal FeaturesetSpecification(string path)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeaturesetSpecification(string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the spec path. </summary>

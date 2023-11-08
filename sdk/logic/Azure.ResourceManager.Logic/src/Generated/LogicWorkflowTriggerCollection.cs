@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowTriggerResource(Client, LogicWorkflowTriggerData.DeserializeLogicWorkflowTriggerData(e)), _logicWorkflowTriggerWorkflowTriggersClientDiagnostics, Pipeline, "LogicWorkflowTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowTriggerResource(Client, LogicWorkflowTriggerData.DeserializeLogicWorkflowTriggerData(e)), _logicWorkflowTriggerWorkflowTriggersClientDiagnostics, Pipeline, "LogicWorkflowTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowTriggerWorkflowTriggersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowTriggerResource(Client, LogicWorkflowTriggerData.DeserializeLogicWorkflowTriggerData(e)), _logicWorkflowTriggerWorkflowTriggersClientDiagnostics, Pipeline, "LogicWorkflowTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LogicWorkflowTriggerResource(Client, LogicWorkflowTriggerData.DeserializeLogicWorkflowTriggerData(e)), _logicWorkflowTriggerWorkflowTriggersClientDiagnostics, Pipeline, "LogicWorkflowTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

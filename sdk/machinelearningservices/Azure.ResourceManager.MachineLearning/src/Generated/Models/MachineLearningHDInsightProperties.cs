@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> HDInsight compute properties. </summary>
     public partial class MachineLearningHDInsightProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningHDInsightProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningHDInsightProperties"/>. </summary>
         public MachineLearningHDInsightProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningHDInsightProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningHDInsightProperties"/>. </summary>
         /// <param name="sshPort"> Port open for ssh connections on the master node of the cluster. </param>
         /// <param name="address"> Public IP address of the master node of the cluster. </param>
         /// <param name="administratorAccount"> Admin credentials for master node of the cluster. </param>
-        internal MachineLearningHDInsightProperties(int? sshPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningHDInsightProperties(int? sshPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SshPort = sshPort;
             Address = address;
             AdministratorAccount = administratorAccount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Port open for ssh connections on the master node of the cluster. </summary>

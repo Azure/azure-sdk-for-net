@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabUserData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/>. </summary>
         /// <param name="email"> Email address of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public LabUserData(string email)
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.LabServices
             Email = email;
         }
 
-        /// <summary> Initializes a new instance of LabUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="invitationState"> State of the invitation message for the user. </param>
         /// <param name="invitationSentOn"> Date and time when the invitation message was sent to the user. </param>
         /// <param name="totalUsage"> How long the user has used their virtual machines in this lab. </param>
-        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, LabServicesProvisioningState? provisioningState, string displayName, string email, LabUserRegistrationState? registrationState, LabUserInvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, LabServicesProvisioningState? provisioningState, string displayName, string email, LabUserRegistrationState? registrationState, LabUserInvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AdditionalUsageQuota = additionalUsageQuota;
             ProvisioningState = provisioningState;
@@ -51,6 +56,12 @@ namespace Azure.ResourceManager.LabServices
             InvitationState = invitationState;
             InvitationSentOn = invitationSentOn;
             TotalUsage = totalUsage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/> for deserialization. </summary>
+        internal LabUserData()
+        {
         }
 
         /// <summary> The amount of usage quota time the user gets in addition to the lab usage quota. </summary>

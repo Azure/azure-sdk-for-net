@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.LoadTesting
     /// </summary>
     public partial class LoadTestingQuotaData : ResourceData
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaData"/>. </summary>
         public LoadTestingQuotaData()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +35,13 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="limit"> Current quota limit of the quota bucket. </param>
         /// <param name="usage"> Current quota usage of the quota bucket. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        internal LoadTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? limit, int? usage, LoadTestingProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? limit, int? usage, LoadTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Limit = limit;
             Usage = usage;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current quota limit of the quota bucket. </summary>

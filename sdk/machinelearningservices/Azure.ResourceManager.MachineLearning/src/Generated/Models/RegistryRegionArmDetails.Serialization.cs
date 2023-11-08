@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class RegistryRegionArmDetails : IUtf8JsonSerializable
+    public partial class RegistryRegionArmDetails : IUtf8JsonSerializable, IJsonModel<RegistryRegionArmDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistryRegionArmDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RegistryRegionArmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AcrDetails))
@@ -62,11 +67,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storageAccountDetails");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegistryRegionArmDetails DeserializeRegistryRegionArmDetails(JsonElement element)
+        RegistryRegionArmDetails IJsonModel<RegistryRegionArmDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegistryRegionArmDetails(document.RootElement, options);
+        }
+
+        internal static RegistryRegionArmDetails DeserializeRegistryRegionArmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +108,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IList<RegistryAcrDetails>> acrDetails = default;
             Optional<AzureLocation?> location = default;
             Optional<IList<StorageAccountDetails>> storageAccountDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("acrDetails"u8))
@@ -116,8 +152,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storageAccountDetails = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegistryRegionArmDetails(Optional.ToList(acrDetails), Optional.ToNullable(location), Optional.ToList(storageAccountDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RegistryRegionArmDetails(Optional.ToList(acrDetails), Optional.ToNullable(location), Optional.ToList(storageAccountDetails), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RegistryRegionArmDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RegistryRegionArmDetails IModel<RegistryRegionArmDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRegistryRegionArmDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RegistryRegionArmDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

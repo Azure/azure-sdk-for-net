@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Summarization of patches available for installation on the machine by classification. </summary>
     public partial class AvailablePatchCountByClassification
     {
-        /// <summary> Initializes a new instance of AvailablePatchCountByClassification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailablePatchCountByClassification"/>. </summary>
         internal AvailablePatchCountByClassification()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailablePatchCountByClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailablePatchCountByClassification"/>. </summary>
         /// <param name="security"> Number of security patches available for installation. </param>
         /// <param name="critical"> Number of critical patches available for installation. </param>
         /// <param name="definition"> Number of definition patches available for installation. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tools"> Number of tools patches available for installation. </param>
         /// <param name="updates"> Number of updates category patches available for installation. </param>
         /// <param name="other"> Number of other patches available for installation. </param>
-        internal AvailablePatchCountByClassification(int? security, int? critical, int? definition, int? updateRollup, int? featurePack, int? servicePack, int? tools, int? updates, int? other)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailablePatchCountByClassification(int? security, int? critical, int? definition, int? updateRollup, int? featurePack, int? servicePack, int? tools, int? updates, int? other, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Security = security;
             Critical = critical;
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Tools = tools;
             Updates = updates;
             Other = other;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of security patches available for installation. </summary>

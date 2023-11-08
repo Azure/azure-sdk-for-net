@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The ProxyArtifactOverviewPropertiesValue. </summary>
     public partial class ProxyArtifactOverviewPropertiesValue
     {
-        /// <summary> Initializes a new instance of ProxyArtifactOverviewPropertiesValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactOverviewPropertiesValue"/>. </summary>
         internal ProxyArtifactOverviewPropertiesValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactOverviewPropertiesValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactOverviewPropertiesValue"/>. </summary>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
         /// <param name="artifactState"> The artifact state. </param>
-        internal ProxyArtifactOverviewPropertiesValue(ArtifactType? artifactType, string artifactVersion, ArtifactState? artifactState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProxyArtifactOverviewPropertiesValue(ArtifactType? artifactType, string artifactVersion, ArtifactState? artifactState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactType = artifactType;
             ArtifactVersion = artifactVersion;
             ArtifactState = artifactState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The artifact type. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridConnectivity.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// </summary>
     public partial class EndpointResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of EndpointResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointResourceData"/>. </summary>
         public EndpointResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointType? endpointType, string resourceId, string provisioningState, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointType? endpointType, string resourceId, string provisioningState, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EndpointType = endpointType;
             ResourceId = resourceId;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             LastModifiedOn = lastModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of endpoint. </summary>

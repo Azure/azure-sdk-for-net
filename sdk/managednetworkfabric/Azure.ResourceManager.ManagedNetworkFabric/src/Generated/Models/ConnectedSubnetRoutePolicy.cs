@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Connected Subnet Route Policy properties. </summary>
     public partial class ConnectedSubnetRoutePolicy
     {
-        /// <summary> Initializes a new instance of ConnectedSubnetRoutePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnetRoutePolicy"/>. </summary>
         public ConnectedSubnetRoutePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedSubnetRoutePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnetRoutePolicy"/>. </summary>
         /// <param name="exportRoutePolicyId"> ARM Resource ID of the Route Policy. This is used for the backward compatibility. </param>
         /// <param name="exportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
-        internal ConnectedSubnetRoutePolicy(ResourceIdentifier exportRoutePolicyId, L3ExportRoutePolicy exportRoutePolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedSubnetRoutePolicy(ResourceIdentifier exportRoutePolicyId, L3ExportRoutePolicy exportRoutePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExportRoutePolicyId = exportRoutePolicyId;
             ExportRoutePolicy = exportRoutePolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM Resource ID of the Route Policy. This is used for the backward compatibility. </summary>

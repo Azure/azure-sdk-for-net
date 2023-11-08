@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2ValidationSettings : IUtf8JsonSerializable
+    public partial class AS2ValidationSettings : IUtf8JsonSerializable, IJsonModel<AS2ValidationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2ValidationSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AS2ValidationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("overrideMessageProperties"u8);
@@ -38,11 +44,40 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("signingAlgorithm"u8);
                 writer.WriteStringValue(SigningAlgorithm.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AS2ValidationSettings DeserializeAS2ValidationSettings(JsonElement element)
+        AS2ValidationSettings IJsonModel<AS2ValidationSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAS2ValidationSettings(document.RootElement, options);
+        }
+
+        internal static AS2ValidationSettings DeserializeAS2ValidationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +92,8 @@ namespace Azure.ResourceManager.Logic.Models
             bool checkCertificateRevocationListOnReceive = default;
             AS2EncryptionAlgorithm encryptionAlgorithm = default;
             Optional<AS2SigningAlgorithm> signingAlgorithm = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overrideMessageProperties"u8))
@@ -113,8 +150,38 @@ namespace Azure.ResourceManager.Logic.Models
                     signingAlgorithm = new AS2SigningAlgorithm(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AS2ValidationSettings(overrideMessageProperties, encryptMessage, signMessage, compressMessage, checkDuplicateMessage, interchangeDuplicatesValidityDays, checkCertificateRevocationListOnSend, checkCertificateRevocationListOnReceive, encryptionAlgorithm, Optional.ToNullable(signingAlgorithm));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AS2ValidationSettings(overrideMessageProperties, encryptMessage, signMessage, compressMessage, checkDuplicateMessage, interchangeDuplicatesValidityDays, checkCertificateRevocationListOnSend, checkCertificateRevocationListOnReceive, encryptionAlgorithm, Optional.ToNullable(signingAlgorithm), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AS2ValidationSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AS2ValidationSettings IModel<AS2ValidationSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAS2ValidationSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AS2ValidationSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

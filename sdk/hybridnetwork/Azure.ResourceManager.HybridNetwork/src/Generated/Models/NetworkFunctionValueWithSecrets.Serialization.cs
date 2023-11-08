@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class NetworkFunctionValueWithSecrets : IUtf8JsonSerializable
+    public partial class NetworkFunctionValueWithSecrets : IUtf8JsonSerializable, IJsonModel<NetworkFunctionValueWithSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionValueWithSecrets>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NetworkFunctionValueWithSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretDeploymentValues))
             {
                 writer.WritePropertyName("secretDeploymentValues"u8);
                 writer.WriteStringValue(SecretDeploymentValues);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PublisherName))
+                {
+                    writer.WritePropertyName("publisherName"u8);
+                    writer.WriteStringValue(PublisherName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PublisherScope))
+                {
+                    writer.WritePropertyName("publisherScope"u8);
+                    writer.WriteStringValue(PublisherScope.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NetworkFunctionDefinitionGroupName))
+                {
+                    writer.WritePropertyName("networkFunctionDefinitionGroupName"u8);
+                    writer.WriteStringValue(NetworkFunctionDefinitionGroupName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NetworkFunctionDefinitionVersion))
+                {
+                    writer.WritePropertyName("networkFunctionDefinitionVersion"u8);
+                    writer.WriteStringValue(NetworkFunctionDefinitionVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
+                {
+                    writer.WritePropertyName("networkFunctionDefinitionOfferingLocation"u8);
+                    writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation);
+                }
             }
             if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {
@@ -53,11 +106,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFunctionValueWithSecrets DeserializeNetworkFunctionValueWithSecrets(JsonElement element)
+        NetworkFunctionValueWithSecrets IJsonModel<NetworkFunctionValueWithSecrets>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFunctionValueWithSecrets)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFunctionValueWithSecrets(document.RootElement, options);
+        }
+
+        internal static NetworkFunctionValueWithSecrets DeserializeNetworkFunctionValueWithSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +157,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<bool> allowSoftwareUpdate = default;
             NetworkFunctionConfigurationType configurationType = default;
             Optional<IList<string>> roleOverrideValues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretDeploymentValues"u8))
@@ -175,8 +259,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     roleOverrideValues = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkFunctionValueWithSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, Optional.ToList(roleOverrideValues), secretDeploymentValues.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkFunctionValueWithSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, Optional.ToList(roleOverrideValues), serializedAdditionalRawData, secretDeploymentValues.Value);
         }
+
+        BinaryData IModel<NetworkFunctionValueWithSecrets>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFunctionValueWithSecrets)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkFunctionValueWithSecrets IModel<NetworkFunctionValueWithSecrets>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFunctionValueWithSecrets)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkFunctionValueWithSecrets(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NetworkFunctionValueWithSecrets>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

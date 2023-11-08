@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningAssetReferenceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningAssetReferenceBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssetReferenceBase"/>. </summary>
         protected MachineLearningAssetReferenceBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssetReferenceBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssetReferenceBase"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        internal MachineLearningAssetReferenceBase(ReferenceType referenceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAssetReferenceBase(ReferenceType referenceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceType = referenceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the type of asset reference. </summary>

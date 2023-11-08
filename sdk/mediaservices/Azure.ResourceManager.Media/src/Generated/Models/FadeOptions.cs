@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes the properties of a Fade effect applied to the input media. </summary>
     public partial class FadeOptions
     {
-        /// <summary> Initializes a new instance of FadeOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FadeOptions"/>. </summary>
         /// <param name="duration"> The Duration of the fade effect in the video. The value can be in ISO 8601 format (For example, PT05S to fade In/Out a color during 5 seconds), or a frame count (For example, 10 to fade 10 frames from the start time), or a relative value to stream duration (For example, 10% to fade 10% of stream duration). </param>
         /// <param name="fadeColor"> The Color for the fade In/Out. it can be on the CSS Level1 colors https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color_keywords or an RGB/hex value: e.g: rgb(255,0,0), 0xFF0000 or #FF0000. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fadeColor"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.ResourceManager.Media.Models
             FadeColor = fadeColor;
         }
 
-        /// <summary> Initializes a new instance of FadeOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FadeOptions"/>. </summary>
         /// <param name="duration"> The Duration of the fade effect in the video. The value can be in ISO 8601 format (For example, PT05S to fade In/Out a color during 5 seconds), or a frame count (For example, 10 to fade 10 frames from the start time), or a relative value to stream duration (For example, 10% to fade 10% of stream duration). </param>
         /// <param name="fadeColor"> The Color for the fade In/Out. it can be on the CSS Level1 colors https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color_keywords or an RGB/hex value: e.g: rgb(255,0,0), 0xFF0000 or #FF0000. </param>
         /// <param name="start"> The position in the input video from where to start fade. The value can be in ISO 8601 format (For example, PT05S to start at 5 seconds), or a frame count (For example, 10 to start at the 10th frame), or a relative value to stream duration (For example, 10% to start at 10% of stream duration). Default is 0. </param>
-        internal FadeOptions(TimeSpan duration, string fadeColor, string start)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FadeOptions(TimeSpan duration, string fadeColor, string start, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Duration = duration;
             FadeColor = fadeColor;
             Start = start;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FadeOptions"/> for deserialization. </summary>
+        internal FadeOptions()
+        {
         }
 
         /// <summary> The Duration of the fade effect in the video. The value can be in ISO 8601 format (For example, PT05S to fade In/Out a color during 5 seconds), or a frame count (For example, 10 to fade 10 frames from the start time), or a relative value to stream duration (For example, 10% to fade 10% of stream duration). </summary>

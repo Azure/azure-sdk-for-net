@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowAccessControlIPAddressRange : IUtf8JsonSerializable
+    public partial class FlowAccessControlIPAddressRange : IUtf8JsonSerializable, IJsonModel<FlowAccessControlIPAddressRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowAccessControlIPAddressRange>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FlowAccessControlIPAddressRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressRange))
@@ -20,16 +26,47 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("addressRange"u8);
                 writer.WriteStringValue(AddressRange);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FlowAccessControlIPAddressRange DeserializeFlowAccessControlIPAddressRange(JsonElement element)
+        FlowAccessControlIPAddressRange IJsonModel<FlowAccessControlIPAddressRange>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FlowAccessControlIPAddressRange)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowAccessControlIPAddressRange(document.RootElement, options);
+        }
+
+        internal static FlowAccessControlIPAddressRange DeserializeFlowAccessControlIPAddressRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> addressRange = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressRange"u8))
@@ -37,8 +74,38 @@ namespace Azure.ResourceManager.Logic.Models
                     addressRange = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FlowAccessControlIPAddressRange(addressRange.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FlowAccessControlIPAddressRange(addressRange.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FlowAccessControlIPAddressRange>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FlowAccessControlIPAddressRange)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FlowAccessControlIPAddressRange IModel<FlowAccessControlIPAddressRange>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FlowAccessControlIPAddressRange)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFlowAccessControlIPAddressRange(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FlowAccessControlIPAddressRange>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

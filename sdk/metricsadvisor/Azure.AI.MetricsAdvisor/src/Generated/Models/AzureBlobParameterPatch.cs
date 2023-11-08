@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureBlobParameterPatch. </summary>
     internal partial class AzureBlobParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureBlobParameterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureBlobParameterPatch"/>. </summary>
         public AzureBlobParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureBlobParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Blob. </param>
+        /// <param name="container"> The container name in this Azure Blob. </param>
+        /// <param name="blobTemplate"> The path template in this container. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureBlobParameterPatch(string connectionString, string container, string blobTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConnectionString = connectionString;
+            Container = container;
+            BlobTemplate = blobTemplate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connection string of this Azure Blob. </summary>

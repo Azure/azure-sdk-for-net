@@ -5,22 +5,85 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingOutboundEnvironmentEndpoint
+    public partial class LoadTestingOutboundEnvironmentEndpoint : IUtf8JsonSerializable, IJsonModel<LoadTestingOutboundEnvironmentEndpoint>
     {
-        internal static LoadTestingOutboundEnvironmentEndpoint DeserializeLoadTestingOutboundEnvironmentEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingOutboundEnvironmentEndpoint>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LoadTestingOutboundEnvironmentEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Category))
+                {
+                    writer.WritePropertyName("category"u8);
+                    writer.WriteStringValue(Category);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Endpoints))
+                {
+                    writer.WritePropertyName("endpoints"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Endpoints)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LoadTestingOutboundEnvironmentEndpoint IJsonModel<LoadTestingOutboundEnvironmentEndpoint>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadTestingOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadTestingOutboundEnvironmentEndpoint(document.RootElement, options);
+        }
+
+        internal static LoadTestingOutboundEnvironmentEndpoint DeserializeLoadTestingOutboundEnvironmentEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> category = default;
             Optional<IReadOnlyList<LoadTestingEndpointDependency>> endpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -42,8 +105,38 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     endpoints = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LoadTestingOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadTestingOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LoadTestingOutboundEnvironmentEndpoint IModel<LoadTestingOutboundEnvironmentEndpoint>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadTestingOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLoadTestingOutboundEnvironmentEndpoint(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LoadTestingOutboundEnvironmentEndpoint>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

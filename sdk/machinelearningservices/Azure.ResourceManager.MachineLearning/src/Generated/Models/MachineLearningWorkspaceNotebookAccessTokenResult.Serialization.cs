@@ -5,15 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceNotebookAccessTokenResult
+    public partial class MachineLearningWorkspaceNotebookAccessTokenResult : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>
     {
-        internal static MachineLearningWorkspaceNotebookAccessTokenResult DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AccessToken))
+                {
+                    writer.WritePropertyName("accessToken"u8);
+                    writer.WriteStringValue(AccessToken);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExpiresIn))
+                {
+                    writer.WritePropertyName("expiresIn"u8);
+                    writer.WriteNumberValue(ExpiresIn.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(HostName))
+                {
+                    writer.WritePropertyName("hostName"u8);
+                    writer.WriteStringValue(HostName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NotebookResourceId))
+                {
+                    writer.WritePropertyName("notebookResourceId"u8);
+                    writer.WriteStringValue(NotebookResourceId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PublicDns))
+                {
+                    writer.WritePropertyName("publicDns"u8);
+                    writer.WriteStringValue(PublicDns);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RefreshToken))
+                {
+                    writer.WritePropertyName("refreshToken"u8);
+                    writer.WriteStringValue(RefreshToken);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Scope))
+                {
+                    writer.WritePropertyName("scope"u8);
+                    writer.WriteStringValue(Scope);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TokenType))
+                {
+                    writer.WritePropertyName("tokenType"u8);
+                    writer.WriteStringValue(TokenType);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningWorkspaceNotebookAccessTokenResult IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceNotebookAccessTokenResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceNotebookAccessTokenResult DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +131,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> refreshToken = default;
             Optional<string> scope = default;
             Optional<string> tokenType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessToken"u8))
@@ -72,8 +179,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tokenType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken.Value, Optional.ToNullable(expiresIn), hostName.Value, notebookResourceId.Value, publicDns.Value, refreshToken.Value, scope.Value, tokenType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken.Value, Optional.ToNullable(expiresIn), hostName.Value, notebookResourceId.Value, publicDns.Value, refreshToken.Value, scope.Value, tokenType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceNotebookAccessTokenResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningWorkspaceNotebookAccessTokenResult IModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceNotebookAccessTokenResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MachineLearningWorkspaceNotebookAccessTokenResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

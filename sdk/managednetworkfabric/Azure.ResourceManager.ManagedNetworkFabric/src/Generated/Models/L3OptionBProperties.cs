@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Option B configuration. </summary>
     public partial class L3OptionBProperties
     {
-        /// <summary> Initializes a new instance of L3OptionBProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="L3OptionBProperties"/>. </summary>
         public L3OptionBProperties()
         {
             ImportRouteTargets = new ChangeTrackingList<string>();
             ExportRouteTargets = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of L3OptionBProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3OptionBProperties"/>. </summary>
         /// <param name="importRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="exportRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="routeTargets"> RouteTargets to be applied. </param>
-        internal L3OptionBProperties(IList<string> importRouteTargets, IList<string> exportRouteTargets, RouteTargetInformation routeTargets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal L3OptionBProperties(IList<string> importRouteTargets, IList<string> exportRouteTargets, RouteTargetInformation routeTargets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImportRouteTargets = importRouteTargets;
             ExportRouteTargets = exportRouteTargets;
             RouteTargets = routeTargets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> RouteTargets to be applied. This is used for the backward compatibility. </summary>

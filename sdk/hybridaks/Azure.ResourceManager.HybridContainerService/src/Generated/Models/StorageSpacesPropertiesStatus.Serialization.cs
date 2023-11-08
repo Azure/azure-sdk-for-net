@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class StorageSpacesPropertiesStatus : IUtf8JsonSerializable
+    internal partial class StorageSpacesPropertiesStatus : IUtf8JsonSerializable, IJsonModel<StorageSpacesPropertiesStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSpacesPropertiesStatus>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<StorageSpacesPropertiesStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningStatus))
@@ -20,16 +26,47 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSpacesPropertiesStatus DeserializeStorageSpacesPropertiesStatus(JsonElement element)
+        StorageSpacesPropertiesStatus IJsonModel<StorageSpacesPropertiesStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageSpacesPropertiesStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSpacesPropertiesStatus(document.RootElement, options);
+        }
+
+        internal static StorageSpacesPropertiesStatus DeserializeStorageSpacesPropertiesStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<StorageSpacesPropertiesStatusProvisioningStatus> provisioningStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatus"u8))
@@ -41,8 +78,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     provisioningStatus = StorageSpacesPropertiesStatusProvisioningStatus.DeserializeStorageSpacesPropertiesStatusProvisioningStatus(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageSpacesPropertiesStatus(provisioningStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageSpacesPropertiesStatus(provisioningStatus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<StorageSpacesPropertiesStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageSpacesPropertiesStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StorageSpacesPropertiesStatus IModel<StorageSpacesPropertiesStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageSpacesPropertiesStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStorageSpacesPropertiesStatus(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<StorageSpacesPropertiesStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }
