@@ -291,6 +291,7 @@ rename-mapping:
   SelectorKind: ResourceSelectorKind
   Location: LocationExpanded
   ResourcesMoveContent.targetResourceGroup: targetResourceGroupId|arm-id
+  LocationMetadata.pairedRegion: PairedRegions
 
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.

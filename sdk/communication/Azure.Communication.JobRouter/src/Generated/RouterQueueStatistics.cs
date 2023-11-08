@@ -30,10 +30,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
-        /// <param name="estimatedWaitTimeMinutes">
-        /// The estimated wait time of this queue rounded up to the nearest minute, grouped
-        /// by job priority
-        /// </param>
+        /// <param name="estimatedWaitTimeMinutes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
         /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
         internal RouterQueueStatistics(string queueId, int length, IDictionary<string, double> estimatedWaitTimeMinutes, double? longestJobWaitTimeMinutes)
         {

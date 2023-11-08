@@ -15,10 +15,7 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of RouterChannel. </summary>
         /// <param name="channelId"> Id of the channel. </param>
-        /// <param name="capacityCostPerJob">
-        /// The amount of capacity that an instance of a job of this channel will consume
-        /// of the total worker capacity.
-        /// </param>
+        /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
         internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs)
         {
@@ -29,10 +26,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Id of the channel. </summary>
         public string ChannelId { get; }
-        /// <summary>
-        /// The amount of capacity that an instance of a job of this channel will consume
-        /// of the total worker capacity.
-        /// </summary>
+        /// <summary> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </summary>
         public int CapacityCostPerJob { get; }
     }
 }

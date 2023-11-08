@@ -41,12 +41,12 @@ namespace Azure.Communication.JobRouter
         public bool AvailableForOffers { get; set; }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
         public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary>
-        /// A set of non-identifying attributes attached to this worker.
+        /// A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.
         /// </summary>
         public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
