@@ -47,6 +47,8 @@ namespace Azure.Communication.PhoneNumbers
             {
                 message.Request.Headers.Add("x-ms-useragent", useragent);
             }
+
+            message.Request.Headers.Add("x-ms-useragent", "acs-test");
         }
     }
 }
