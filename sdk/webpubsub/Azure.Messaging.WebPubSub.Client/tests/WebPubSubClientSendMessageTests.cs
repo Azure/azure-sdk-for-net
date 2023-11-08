@@ -129,5 +129,14 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
             Assert.Null(msg.AckId);
         }
+
+        [Test]
+        public void OperationWithInvalidAckIdTest()
+        {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.JoinGroupAsync("group", -1));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.LeaveGroupAsync("group", -1));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.SendToGroupAsync("group", BinaryData.FromString("test"), WebPubSubDataType.Text, -1));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.SendEventAsync("event", BinaryData.FromString("test"), WebPubSubDataType.Text, -1));
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         {
             if (number < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(number));
+                throw new ArgumentOutOfRangeException(nameof(number), "Value must be non-negative");
             }
         }
     }
