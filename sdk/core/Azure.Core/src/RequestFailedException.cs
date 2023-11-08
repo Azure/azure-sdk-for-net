@@ -168,7 +168,7 @@ namespace Azure
         /// <summary>
         /// Gets the response, if any, that led to the exception.
         /// </summary>
-        public Response? GetRawResponse() => _response;
+        public new Response? GetRawResponse() => _response;
 
         internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {

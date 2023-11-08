@@ -31,6 +31,13 @@ namespace System.Net.ClientModel
             // TODO: What is the experience if someone tries to access this.Response?
         }
 
+        public virtual MessageResponse? GetRawResponse()
+        {
+            // Stubbed out for API review
+            // TODO: pull over implementation from Azure.Core
+            throw new NotImplementedException();
+        }
+
         private static string GetMessageFromResponse(MessageResponse response)
         {
             // TODO: implement for real

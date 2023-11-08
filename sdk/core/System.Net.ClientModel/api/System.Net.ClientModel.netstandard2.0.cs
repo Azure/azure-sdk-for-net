@@ -1,5 +1,13 @@
 namespace System.Net.ClientModel
 {
+    public partial class ClientRequestException : System.Exception
+    {
+        public ClientRequestException(System.Net.ClientModel.Core.MessageResponse response) { }
+        protected ClientRequestException(System.Net.ClientModel.Core.MessageResponse response, string message, System.Exception? innerException) { }
+        protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public int Status { get { throw null; } }
+        public virtual System.Net.ClientModel.Core.MessageResponse? GetRawResponse() { throw null; }
+    }
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
@@ -49,13 +57,6 @@ namespace System.Net.ClientModel
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
         public override System.Net.ClientModel.Core.MessageResponse GetRawResponse() { throw null; }
-    }
-    public partial class PipelineRequestException : System.Exception
-    {
-        public PipelineRequestException(System.Net.ClientModel.Core.MessageResponse response) { }
-        protected PipelineRequestException(System.Net.ClientModel.Core.MessageResponse response, string message, System.Exception? innerException) { }
-        protected PipelineRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public int Status { get { throw null; } }
     }
     public partial class RequestOptions : System.Net.ClientModel.Core.PipelineOptions
     {

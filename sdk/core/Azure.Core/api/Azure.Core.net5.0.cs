@@ -220,7 +220,7 @@ namespace Azure
         public override void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.Net.ClientModel.PipelineRequestException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.Net.ClientModel.ClientRequestException, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
@@ -236,7 +236,7 @@ namespace Azure
         public RequestFailedException(string message, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
         public string? ErrorCode { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public Azure.Response? GetRawResponse() { throw null; }
+        public new Azure.Response? GetRawResponse() { throw null; }
     }
     public abstract partial class Response : System.IDisposable
     {
