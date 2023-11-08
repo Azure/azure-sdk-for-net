@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2023-10-26)
 
 ### Features Added
 
+- Add `/workflows/{id}/validate` API.
+- Add admin query options to workflow / workflow run APIs.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Split `PurviewWorkflowServiceClient` into multiple clients by model.
 
 ### Other Changes
+
+- Update descriptions of some APIs.
 
 ## 1.0.0-beta.1 (2023-03-07)
 
