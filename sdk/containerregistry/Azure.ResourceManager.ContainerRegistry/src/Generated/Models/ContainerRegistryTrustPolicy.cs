@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The content trust policy for a container registry. </summary>
     public partial class ContainerRegistryTrustPolicy
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTrustPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTrustPolicy"/>. </summary>
         public ContainerRegistryTrustPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTrustPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTrustPolicy"/>. </summary>
         /// <param name="policyType"> The type of trust policy. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
-        internal ContainerRegistryTrustPolicy(ContainerRegistryTrustPolicyType? policyType, ContainerRegistryPolicyStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTrustPolicy(ContainerRegistryTrustPolicyType? policyType, ContainerRegistryPolicyStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyType = policyType;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of trust policy. </summary>

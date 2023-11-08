@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The set of run properties that can be updated. </summary>
     public partial class ContainerRegistryRunPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunPatch"/>. </summary>
         public ContainerRegistryRunPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunPatch"/>. </summary>
+        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryRunPatch(bool? isArchiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsArchiveEnabled = isArchiveEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value that indicates whether archiving is enabled or not. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Collection of runs. </summary>
     internal partial class ContainerRegistryRunListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunListResult"/>. </summary>
         internal ContainerRegistryRunListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryRunData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
-        internal ContainerRegistryRunListResult(IReadOnlyList<ContainerRegistryRunData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryRunListResult(IReadOnlyList<ContainerRegistryRunData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection value. </summary>

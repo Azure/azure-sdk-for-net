@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Reflection;
 
 namespace Azure.Core.Pipeline
@@ -18,7 +19,7 @@ namespace Azure.Core.Pipeline
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
-        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
+        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.23.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
 
         private readonly ActivityAdapter? _activityAdapter;
@@ -140,9 +141,28 @@ namespace Azure.Core.Pipeline
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has public properties preserved on the inner method MarkFailed." +
             "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when preserving all public properties. Since we do not use this property, and" +
             "neither does Application Insights, we can suppress the warning coming from the inner method.")]
-        public void Failed(Exception? exception = default)
+        public void Failed(Exception exception)
         {
-            _activityAdapter?.MarkFailed(exception);
+            if (exception is RequestFailedException requestFailedException)
+            {
+                // TODO (limolkova) when we start targeting .NET 8 we should put
+                // requestFailedException.InnerException.HttpRequestError into error.type
+
+                _activityAdapter?.MarkFailed(exception, requestFailedException.ErrorCode);
+            }
+            else
+            {
+                _activityAdapter?.MarkFailed(exception, null);
+            }
+        }
+
+        /// <summary>
+        /// Marks the scope as failed with low-cardinality error.type attribute.
+        /// </summary>
+        /// <param name="errorCode">Error code to associate with the failed scope.</param>
+        public void Failed(string errorCode)
+        {
+            _activityAdapter?.MarkFailed((Exception?)null, errorCode);
         }
 
 #if NETCOREAPP2_1
@@ -500,7 +520,7 @@ namespace Azure.Core.Pipeline
             }
 
             [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicallyAccessedMemberTypes.")]
-            public void MarkFailed<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T exception)
+            public void MarkFailed<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T? exception, string? errorCode)
             {
                 if (exception != null)
                 {
@@ -514,6 +534,12 @@ namespace Azure.Core.Pipeline
                 }
 #endif
 #if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
+                if (errorCode == null && exception != null)
+                {
+                    errorCode = exception.GetType().FullName;
+                }
+
+                _currentActivity?.AddTag("error.type", errorCode ?? "_OTHER");
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
 #endif
             }

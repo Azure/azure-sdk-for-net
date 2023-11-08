@@ -246,30 +246,25 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidateAddressContent"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         /// <returns> A new <see cref="Models.DataBoxValidateAddressContent"/> instance for mocking. </returns>
-        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxShippingAddress shippingAddress = null, DataBoxSkuName deviceType = default, TransportPreferences transportPreferences = null)
+        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress = null, DataBoxSkuName deviceType = default, TransportPreferences transportPreferences = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator.ValidateAddress, serializedAdditionalRawData, shippingAddress, deviceType, transportPreferences);
+            return new DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator.ValidateAddress, new Dictionary<string, BinaryData>(), shippingAddress, deviceType, transportPreferences);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddressValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
         /// <returns> A new <see cref="Models.AddressValidationResult"/> instance for mocking. </returns>
-        public static AddressValidationResult AddressValidationResult(ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, AddressValidationStatus? validationStatus = null, IEnumerable<DataBoxShippingAddress> alternateAddresses = null)
+        public static AddressValidationResult AddressValidationResult(ResponseError error = null, AddressValidationStatus? validationStatus = null, IEnumerable<DataBoxShippingAddress> alternateAddresses = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             alternateAddresses ??= new List<DataBoxShippingAddress>();
 
-            return new AddressValidationResult(DataBoxValidationInputDiscriminator.ValidateAddress, error, serializedAdditionalRawData, validationStatus, alternateAddresses?.ToList());
+            return new AddressValidationResult(DataBoxValidationInputDiscriminator.ValidateAddress, error, new Dictionary<string, BinaryData>(), validationStatus, alternateAddresses?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationInputResult"/>. </summary>
@@ -426,16 +421,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </param>
         /// <param name="error"> Error, if any, in the stage. </param>
         /// <param name="actions"> Available actions on the job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="copyStatus"> The Status of the copy. </param>
         /// <returns> A new <see cref="Models.DataBoxCustomerDiskCopyProgress"/> instance for mocking. </returns>
-        public static DataBoxCustomerDiskCopyProgress DataBoxCustomerDiskCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string serialNumber = null, DataBoxCopyStatus? copyStatus = null)
+        public static DataBoxCustomerDiskCopyProgress DataBoxCustomerDiskCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null, string serialNumber = null, DataBoxCopyStatus? copyStatus = null)
         {
             actions ??= new List<CustomerResolutionCode>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new DataBoxCustomerDiskCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serializedAdditionalRawData, serialNumber, copyStatus);
+            return new DataBoxCustomerDiskCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), new Dictionary<string, BinaryData>(), serialNumber, copyStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxCopyProgress"/>. </summary>
@@ -497,26 +490,20 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
-        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxSkuName deviceType = default)
+        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, serializedAdditionalRawData, deviceType);
+            return new CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, new Dictionary<string, BinaryData>(), deviceType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> Create order limit validation status. </param>
         /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/> instance for mocking. </returns>
-        public static CreateOrderLimitForSubscriptionValidationResult CreateOrderLimitForSubscriptionValidationResult(ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxValidationStatus? status = null)
+        public static CreateOrderLimitForSubscriptionValidationResult CreateOrderLimitForSubscriptionValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, error, serializedAdditionalRawData, status);
+            return new CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, error, new Dictionary<string, BinaryData>(), status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskJobDetails"/>. </summary>
@@ -547,7 +534,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="importDiskDetails"> Contains the map of disk serial number to the disk details for import jobs. </param>
         /// <param name="exportDiskDetails"> Contains the map of disk serial number to the disk details for export jobs. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
@@ -555,19 +541,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
         /// <param name="enableManifestBackup"> Flag to indicate if disk manifest should be backed-up in the Storage Account. </param>
         /// <returns> A new <see cref="Models.DataBoxCustomerDiskJobDetails"/> instance for mocking. </returns>
-        public static DataBoxCustomerDiskJobDetails DataBoxCustomerDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IDictionary<string, ImportDiskDetails> importDiskDetails = null, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails = null, IEnumerable<DataBoxCustomerDiskCopyProgress> copyProgress = null, PackageCarrierInfo deliverToDataCenterPackageDetails = null, PackageCarrierDetails returnToCustomerPackageDetails = null, bool? enableManifestBackup = null)
+        public static DataBoxCustomerDiskJobDetails DataBoxCustomerDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, ImportDiskDetails> importDiskDetails = null, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails = null, IEnumerable<DataBoxCustomerDiskCopyProgress> copyProgress = null, PackageCarrierInfo deliverToDataCenterPackageDetails = null, PackageCarrierDetails returnToCustomerPackageDetails = null, bool? enableManifestBackup = null)
         {
             jobStages ??= new List<DataBoxJobStage>();
             dataImportDetails ??= new List<DataImportDetails>();
             dataExportDetails ??= new List<DataExportDetails>();
             copyLogDetails ??= new List<CopyLogDetails>();
             actions ??= new List<CustomerResolutionCode>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             importDiskDetails ??= new Dictionary<string, ImportDiskDetails>();
             exportDiskDetails ??= new Dictionary<string, ExportDiskDetails>();
             copyProgress ??= new List<DataBoxCustomerDiskCopyProgress>();
 
-            return new DataBoxCustomerDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxCustomerDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData, importDiskDetails, exportDiskDetails, copyProgress?.ToList(), deliverToDataCenterPackageDetails, returnToCustomerPackageDetails, enableManifestBackup);
+            return new DataBoxCustomerDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxCustomerDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, new Dictionary<string, BinaryData>(), importDiskDetails, exportDiskDetails, copyProgress?.ToList(), deliverToDataCenterPackageDetails, returnToCustomerPackageDetails, enableManifestBackup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImportDiskDetails"/>. </summary>
@@ -594,16 +579,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="Models.CustomerDiskJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="carrierAccountNumber"> Carrier Account Number of the customer. </param>
         /// <returns> A new <see cref="Models.CustomerDiskJobSecrets"/> instance for mocking. </returns>
-        public static CustomerDiskJobSecrets CustomerDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<DataBoxDiskSecret> diskSecrets = null, string carrierAccountNumber = null)
+        public static CustomerDiskJobSecrets CustomerDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxDiskSecret> diskSecrets = null, string carrierAccountNumber = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             diskSecrets ??= new List<DataBoxDiskSecret>();
 
-            return new CustomerDiskJobSecrets(DataBoxOrderType.DataBoxCustomerDisk, dataCenterAccessSecurityCode, error, serializedAdditionalRawData, diskSecrets?.ToList(), carrierAccountNumber);
+            return new CustomerDiskJobSecrets(DataBoxOrderType.DataBoxCustomerDisk, dataCenterAccessSecurityCode, error, new Dictionary<string, BinaryData>(), diskSecrets?.ToList(), carrierAccountNumber);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskSecret"/>. </summary>
@@ -618,21 +601,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressInstructionResult"/>. </summary>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="communicationInstruction"> Data center communication instruction. </param>
         /// <returns> A new <see cref="Models.DataCenterAddressInstructionResult"/> instance for mocking. </returns>
-        public static DataCenterAddressInstructionResult DataCenterAddressInstructionResult(IEnumerable<string> supportedCarriersForReturnShipment = null, AzureLocation? dataCenterAzureLocation = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string communicationInstruction = null)
+        public static DataCenterAddressInstructionResult DataCenterAddressInstructionResult(IEnumerable<string> supportedCarriersForReturnShipment = null, AzureLocation? dataCenterAzureLocation = null, string communicationInstruction = null)
         {
             supportedCarriersForReturnShipment ??= new List<string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new DataCenterAddressInstructionResult(DataCenterAddressType.DataCenterAddressInstruction, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, serializedAdditionalRawData, communicationInstruction);
+            return new DataCenterAddressInstructionResult(DataCenterAddressType.DataCenterAddressInstruction, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, new Dictionary<string, BinaryData>(), communicationInstruction);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressLocationResult"/>. </summary>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="contactPersonName"> Contact person name. </param>
         /// <param name="company"> Company name. </param>
         /// <param name="street1"> Street address line 1. </param>
@@ -647,65 +627,52 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="addressType"> Address type. </param>
         /// <param name="additionalShippingInformation"> Special instruction for shipping. </param>
         /// <returns> A new <see cref="Models.DataCenterAddressLocationResult"/> instance for mocking. </returns>
-        public static DataCenterAddressLocationResult DataCenterAddressLocationResult(IEnumerable<string> supportedCarriersForReturnShipment = null, AzureLocation? dataCenterAzureLocation = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string contactPersonName = null, string company = null, string street1 = null, string street2 = null, string street3 = null, string city = null, string state = null, string zip = null, string country = null, string phone = null, string phoneExtension = null, string addressType = null, string additionalShippingInformation = null)
+        public static DataCenterAddressLocationResult DataCenterAddressLocationResult(IEnumerable<string> supportedCarriersForReturnShipment = null, AzureLocation? dataCenterAzureLocation = null, string contactPersonName = null, string company = null, string street1 = null, string street2 = null, string street3 = null, string city = null, string state = null, string zip = null, string country = null, string phone = null, string phoneExtension = null, string addressType = null, string additionalShippingInformation = null)
         {
             supportedCarriersForReturnShipment ??= new List<string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new DataCenterAddressLocationResult(DataCenterAddressType.DataCenterAddressLocation, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, serializedAdditionalRawData, contactPersonName, company, street1, street2, street3, city, state, zip, country, phone, phoneExtension, addressType, additionalShippingInformation);
+            return new DataCenterAddressLocationResult(DataCenterAddressType.DataCenterAddressLocation, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, new Dictionary<string, BinaryData>(), contactPersonName, company, street1, street2, street3, city, state, zip, country, phone, phoneExtension, addressType, additionalShippingInformation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxAccountCopyLogDetails"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
         /// <returns> A new <see cref="Models.DataBoxAccountCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxAccountCopyLogDetails DataBoxAccountCopyLogDetails(IDictionary<string, BinaryData> serializedAdditionalRawData = null, string accountName = null, string copyLogLink = null, string copyVerboseLogLink = null)
+        public static DataBoxAccountCopyLogDetails DataBoxAccountCopyLogDetails(string accountName = null, string copyLogLink = null, string copyVerboseLogLink = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DataBoxAccountCopyLogDetails(DataBoxOrderType.DataBox, serializedAdditionalRawData, accountName, copyLogLink, copyVerboseLogLink);
+            return new DataBoxAccountCopyLogDetails(DataBoxOrderType.DataBox, new Dictionary<string, BinaryData>(), accountName, copyLogLink, copyVerboseLogLink);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
         /// <returns> A new <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxCustomerDiskCopyLogDetails DataBoxCustomerDiskCopyLogDetails(IDictionary<string, BinaryData> serializedAdditionalRawData = null, string serialNumber = null, string errorLogLink = null, string verboseLogLink = null)
+        public static DataBoxCustomerDiskCopyLogDetails DataBoxCustomerDiskCopyLogDetails(string serialNumber = null, string errorLogLink = null, string verboseLogLink = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DataBoxCustomerDiskCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, serializedAdditionalRawData, serialNumber, errorLogLink, verboseLogLink);
+            return new DataBoxCustomerDiskCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, new Dictionary<string, BinaryData>(), serialNumber, errorLogLink, verboseLogLink);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskCopyLogDetails"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxDiskCopyLogDetails DataBoxDiskCopyLogDetails(IDictionary<string, BinaryData> serializedAdditionalRawData = null, string diskSerialNumber = null, string errorLogLink = null, string verboseLogLink = null)
+        public static DataBoxDiskCopyLogDetails DataBoxDiskCopyLogDetails(string diskSerialNumber = null, string errorLogLink = null, string verboseLogLink = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DataBoxDiskCopyLogDetails(DataBoxOrderType.DataBoxDisk, serializedAdditionalRawData, diskSerialNumber, errorLogLink, verboseLogLink);
+            return new DataBoxDiskCopyLogDetails(DataBoxOrderType.DataBoxDisk, new Dictionary<string, BinaryData>(), diskSerialNumber, errorLogLink, verboseLogLink);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskGranularCopyLogDetails"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="accountId"> Account id. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskGranularCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxDiskGranularCopyLogDetails DataBoxDiskGranularCopyLogDetails(IDictionary<string, BinaryData> serializedAdditionalRawData = null, string serialNumber = null, ResourceIdentifier accountId = null, string errorLogLink = null, string verboseLogLink = null)
+        public static DataBoxDiskGranularCopyLogDetails DataBoxDiskGranularCopyLogDetails(string serialNumber = null, ResourceIdentifier accountId = null, string errorLogLink = null, string verboseLogLink = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DataBoxDiskGranularCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, serializedAdditionalRawData, serialNumber, accountId, errorLogLink, verboseLogLink);
+            return new DataBoxDiskGranularCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, new Dictionary<string, BinaryData>(), serialNumber, accountId, errorLogLink, verboseLogLink);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskCopyProgress"/>. </summary>
@@ -744,16 +711,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </param>
         /// <param name="error"> Error, if any, in the stage. </param>
         /// <param name="actions"> Available actions on the job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="copyStatus"> The Status of the copy. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskGranularCopyProgress"/> instance for mocking. </returns>
-        public static DataBoxDiskGranularCopyProgress DataBoxDiskGranularCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string serialNumber = null, DataBoxCopyStatus? copyStatus = null)
+        public static DataBoxDiskGranularCopyProgress DataBoxDiskGranularCopyProgress(string storageAccountName = null, DataBoxJobTransferType? transferType = null, DataAccountType? dataAccountType = null, ResourceIdentifier accountId = null, long? bytesProcessed = null, long? totalBytesToProcess = null, long? filesProcessed = null, long? totalFilesToProcess = null, long? invalidFilesProcessed = null, long? invalidFileBytesUploaded = null, long? renamedContainerCount = null, long? filesErroredOut = null, long? directoriesErroredOut = null, long? invalidDirectoriesProcessed = null, bool? isEnumerationInProgress = null, ResponseError error = null, IEnumerable<CustomerResolutionCode> actions = null, string serialNumber = null, DataBoxCopyStatus? copyStatus = null)
         {
             actions ??= new List<CustomerResolutionCode>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new DataBoxDiskGranularCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serializedAdditionalRawData, serialNumber, copyStatus);
+            return new DataBoxDiskGranularCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), new Dictionary<string, BinaryData>(), serialNumber, copyStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobDetails"/>. </summary>
@@ -784,7 +749,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preferredDisks"> User preference on what size disks are needed for the job. The map is from the disk size in TB to the count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will be checked against an int. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
         /// <param name="granularCopyProgress"> Copy progress per disk. </param>
@@ -792,52 +756,47 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="disksAndSizeDetails"> Contains the map of disk serial number to the disk size being used for the job. Is returned only after the disks are shipped to the customer. </param>
         /// <param name="passkey"> User entered passkey for DataBox Disk job. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskJobDetails"/> instance for mocking. </returns>
-        public static DataBoxDiskJobDetails DataBoxDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IDictionary<string, int> preferredDisks = null, IEnumerable<DataBoxDiskCopyProgress> copyProgress = null, IEnumerable<DataBoxDiskGranularCopyProgress> granularCopyProgress = null, IEnumerable<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = null, IReadOnlyDictionary<string, int> disksAndSizeDetails = null, string passkey = null)
+        public static DataBoxDiskJobDetails DataBoxDiskJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, int> preferredDisks = null, IEnumerable<DataBoxDiskCopyProgress> copyProgress = null, IEnumerable<DataBoxDiskGranularCopyProgress> granularCopyProgress = null, IEnumerable<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = null, IReadOnlyDictionary<string, int> disksAndSizeDetails = null, string passkey = null)
         {
             jobStages ??= new List<DataBoxJobStage>();
             dataImportDetails ??= new List<DataImportDetails>();
             dataExportDetails ??= new List<DataExportDetails>();
             copyLogDetails ??= new List<CopyLogDetails>();
             actions ??= new List<CustomerResolutionCode>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             preferredDisks ??= new Dictionary<string, int>();
             copyProgress ??= new List<DataBoxDiskCopyProgress>();
             granularCopyProgress ??= new List<DataBoxDiskGranularCopyProgress>();
             granularCopyLogDetails ??= new List<DataBoxDiskGranularCopyLogDetails>();
             disksAndSizeDetails ??= new Dictionary<string, int>();
 
-            return new DataBoxDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData, preferredDisks, copyProgress?.ToList(), granularCopyProgress?.ToList(), granularCopyLogDetails?.ToList(), disksAndSizeDetails, passkey);
+            return new DataBoxDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, new Dictionary<string, BinaryData>(), preferredDisks, copyProgress?.ToList(), granularCopyProgress?.ToList(), granularCopyLogDetails?.ToList(), disksAndSizeDetails, passkey);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="passkey"> PassKey for the disk Job. </param>
         /// <param name="isPasskeyUserDefined"> Whether passkey was provided by user. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskJobSecrets"/> instance for mocking. </returns>
-        public static DataBoxDiskJobSecrets DataBoxDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<DataBoxDiskSecret> diskSecrets = null, string passkey = null, bool? isPasskeyUserDefined = null)
+        public static DataBoxDiskJobSecrets DataBoxDiskJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxDiskSecret> diskSecrets = null, string passkey = null, bool? isPasskeyUserDefined = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             diskSecrets ??= new List<DataBoxDiskSecret>();
 
-            return new DataBoxDiskJobSecrets(DataBoxOrderType.DataBoxDisk, dataCenterAccessSecurityCode, error, serializedAdditionalRawData, diskSecrets?.ToList(), passkey, isPasskeyUserDefined);
+            return new DataBoxDiskJobSecrets(DataBoxOrderType.DataBoxDisk, dataCenterAccessSecurityCode, error, new Dictionary<string, BinaryData>(), diskSecrets?.ToList(), passkey, isPasskeyUserDefined);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
         /// <returns> A new <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/> instance for mocking. </returns>
-        public static DataBoxHeavyAccountCopyLogDetails DataBoxHeavyAccountCopyLogDetails(IDictionary<string, BinaryData> serializedAdditionalRawData = null, string accountName = null, IEnumerable<string> copyLogLink = null, IEnumerable<string> copyVerboseLogLink = null)
+        public static DataBoxHeavyAccountCopyLogDetails DataBoxHeavyAccountCopyLogDetails(string accountName = null, IEnumerable<string> copyLogLink = null, IEnumerable<string> copyVerboseLogLink = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             copyLogLink ??= new List<string>();
             copyVerboseLogLink ??= new List<string>();
 
-            return new DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType.DataBoxHeavy, serializedAdditionalRawData, accountName, copyLogLink?.ToList(), copyVerboseLogLink?.ToList());
+            return new DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType.DataBoxHeavy, new Dictionary<string, BinaryData>(), accountName, copyLogLink?.ToList(), copyVerboseLogLink?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyJobDetails"/>. </summary>
@@ -868,35 +827,31 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="copyProgress"> Copy progress per account. </param>
         /// <param name="devicePassword"> Set Device password for unlocking Databox Heavy. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         /// <returns> A new <see cref="Models.DataBoxHeavyJobDetails"/> instance for mocking. </returns>
-        public static DataBoxHeavyJobDetails DataBoxHeavyJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<DataBoxCopyProgress> copyProgress = null, string devicePassword = null)
+        public static DataBoxHeavyJobDetails DataBoxHeavyJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IEnumerable<DataBoxCopyProgress> copyProgress = null, string devicePassword = null)
         {
             jobStages ??= new List<DataBoxJobStage>();
             dataImportDetails ??= new List<DataImportDetails>();
             dataExportDetails ??= new List<DataExportDetails>();
             copyLogDetails ??= new List<CopyLogDetails>();
             actions ??= new List<CustomerResolutionCode>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             copyProgress ??= new List<DataBoxCopyProgress>();
 
-            return new DataBoxHeavyJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxHeavy, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData, copyProgress?.ToList(), devicePassword);
+            return new DataBoxHeavyJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxHeavy, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, new Dictionary<string, BinaryData>(), copyProgress?.ToList(), devicePassword);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
         /// <returns> A new <see cref="Models.DataBoxHeavyJobSecrets"/> instance for mocking. </returns>
-        public static DataBoxHeavyJobSecrets DataBoxHeavyJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<DataBoxHeavySecret> cabinetPodSecrets = null)
+        public static DataBoxHeavyJobSecrets DataBoxHeavyJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxHeavySecret> cabinetPodSecrets = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             cabinetPodSecrets ??= new List<DataBoxHeavySecret>();
 
-            return new DataBoxHeavyJobSecrets(DataBoxOrderType.DataBoxHeavy, dataCenterAccessSecurityCode, error, serializedAdditionalRawData, cabinetPodSecrets?.ToList());
+            return new DataBoxHeavyJobSecrets(DataBoxOrderType.DataBoxHeavy, dataCenterAccessSecurityCode, error, new Dictionary<string, BinaryData>(), cabinetPodSecrets?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavySecret"/>. </summary>
@@ -942,35 +897,31 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="copyProgress"> Copy progress per storage account. </param>
         /// <param name="devicePassword"> Set Device password for unlocking Databox. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         /// <returns> A new <see cref="Models.DataBoxJobDetails"/> instance for mocking. </returns>
-        public static DataBoxJobDetails DataBoxJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<DataBoxCopyProgress> copyProgress = null, string devicePassword = null)
+        public static DataBoxJobDetails DataBoxJobDetails(IEnumerable<DataBoxJobStage> jobStages = null, DataBoxContactDetails contactDetails = null, DataBoxShippingAddress shippingAddress = null, PackageShippingDetails deliveryPackage = null, PackageShippingDetails returnPackage = null, IEnumerable<DataImportDetails> dataImportDetails = null, IEnumerable<DataExportDetails> dataExportDetails = null, DataBoxOrderPreferences preferences = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, DeviceErasureDetails deviceErasureDetails = null, DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = null, IEnumerable<CustomerResolutionCode> actions = null, LastMitigationActionOnJob lastMitigationActionOnJob = null, DataCenterAddressResult dataCenterAddress = null, DataCenterCode? dataCenterCode = null, IEnumerable<DataBoxCopyProgress> copyProgress = null, string devicePassword = null)
         {
             jobStages ??= new List<DataBoxJobStage>();
             dataImportDetails ??= new List<DataImportDetails>();
             dataExportDetails ??= new List<DataExportDetails>();
             copyLogDetails ??= new List<CopyLogDetails>();
             actions ??= new List<CustomerResolutionCode>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             copyProgress ??= new List<DataBoxCopyProgress>();
 
-            return new DataBoxJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBox, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData, copyProgress?.ToList(), devicePassword);
+            return new DataBoxJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBox, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, new Dictionary<string, BinaryData>(), copyProgress?.ToList(), devicePassword);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataboxJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
         /// <returns> A new <see cref="Models.DataboxJobSecrets"/> instance for mocking. </returns>
-        public static DataboxJobSecrets DataboxJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<DataBoxSecret> podSecrets = null)
+        public static DataboxJobSecrets DataboxJobSecrets(DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, ResponseError error = null, IEnumerable<DataBoxSecret> podSecrets = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             podSecrets ??= new List<DataBoxSecret>();
 
-            return new DataboxJobSecrets(DataBoxOrderType.DataBox, dataCenterAccessSecurityCode, error, serializedAdditionalRawData, podSecrets?.ToList());
+            return new DataboxJobSecrets(DataBoxOrderType.DataBox, dataCenterAccessSecurityCode, error, new Dictionary<string, BinaryData>(), podSecrets?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxSecret"/>. </summary>
@@ -991,128 +942,99 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <returns> A new <see cref="Models.DataBoxScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DataBoxScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBox, country, serializedAdditionalRawData);
+            return new DataBoxScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBox, country, new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferDetailsValidationContent"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
         /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
         /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <returns> A new <see cref="Models.DataTransferDetailsValidationContent"/> instance for mocking. </returns>
-        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<DataExportDetails> dataExportDetails = null, IEnumerable<DataImportDetails> dataImportDetails = null, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default)
+        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails = null, IEnumerable<DataImportDetails> dataImportDetails = null, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             dataExportDetails ??= new List<DataExportDetails>();
             dataImportDetails ??= new List<DataImportDetails>();
 
-            return new DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, serializedAdditionalRawData, dataExportDetails?.ToList(), dataImportDetails?.ToList(), deviceType, transferType);
+            return new DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, new Dictionary<string, BinaryData>(), dataExportDetails?.ToList(), dataImportDetails?.ToList(), deviceType, transferType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferDetailsValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> Data transfer details validation status. </param>
         /// <returns> A new <see cref="Models.DataTransferDetailsValidationResult"/> instance for mocking. </returns>
-        public static DataTransferDetailsValidationResult DataTransferDetailsValidationResult(ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxValidationStatus? status = null)
+        public static DataTransferDetailsValidationResult DataTransferDetailsValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, error, serializedAdditionalRawData, status);
+            return new DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, error, new Dictionary<string, BinaryData>(), status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <returns> A new <see cref="Models.DiskScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, int expectedDataSizeInTerabytes = default)
+        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, int expectedDataSizeInTerabytes = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DiskScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxDisk, country, serializedAdditionalRawData, expectedDataSizeInTerabytes);
+            return new DiskScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxDisk, country, new Dictionary<string, BinaryData>(), expectedDataSizeInTerabytes);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HeavyScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <returns> A new <see cref="Models.HeavyScheduleAvailabilityContent"/> instance for mocking. </returns>
-        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new HeavyScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxHeavy, country, serializedAdditionalRawData);
+            return new HeavyScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxHeavy, country, new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PreferencesValidationContent"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="preference"> Preference of transport and data center. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <returns> A new <see cref="Models.PreferencesValidationContent"/> instance for mocking. </returns>
-        public static PreferencesValidationContent PreferencesValidationContent(IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxOrderPreferences preference = null, DataBoxSkuName deviceType = default)
+        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference = null, DataBoxSkuName deviceType = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new PreferencesValidationContent(DataBoxValidationInputDiscriminator.ValidatePreferences, serializedAdditionalRawData, preference, deviceType);
+            return new PreferencesValidationContent(DataBoxValidationInputDiscriminator.ValidatePreferences, new Dictionary<string, BinaryData>(), preference, deviceType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PreferencesValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> Validation status of requested data center and transport. </param>
         /// <returns> A new <see cref="Models.PreferencesValidationResult"/> instance for mocking. </returns>
-        public static PreferencesValidationResult PreferencesValidationResult(ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxValidationStatus? status = null)
+        public static PreferencesValidationResult PreferencesValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new PreferencesValidationResult(DataBoxValidationInputDiscriminator.ValidatePreferences, error, serializedAdditionalRawData, status);
+            return new PreferencesValidationResult(DataBoxValidationInputDiscriminator.ValidatePreferences, error, new Dictionary<string, BinaryData>(), status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkuAvailabilityValidationContent"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationContent"/> instance for mocking. </returns>
-        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default)
+        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SkuAvailabilityValidationContent(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, serializedAdditionalRawData, deviceType, transferType, country, location);
+            return new SkuAvailabilityValidationContent(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, new Dictionary<string, BinaryData>(), deviceType, transferType, country, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkuAvailabilityValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> Sku availability validation status. </param>
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationResult"/> instance for mocking. </returns>
-        public static SkuAvailabilityValidationResult SkuAvailabilityValidationResult(ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxValidationStatus? status = null)
+        public static SkuAvailabilityValidationResult SkuAvailabilityValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SkuAvailabilityValidationResult(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, error, serializedAdditionalRawData, status);
+            return new SkuAvailabilityValidationResult(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, error, new Dictionary<string, BinaryData>(), status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> Validation status of subscription permission to create job. </param>
         /// <returns> A new <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/> instance for mocking. </returns>
-        public static SubscriptionIsAllowedToCreateJobValidationResult SubscriptionIsAllowedToCreateJobValidationResult(ResponseError error = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, DataBoxValidationStatus? status = null)
+        public static SubscriptionIsAllowedToCreateJobValidationResult SubscriptionIsAllowedToCreateJobValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SubscriptionIsAllowedToCreateJobValidationResult(DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob, error, serializedAdditionalRawData, status);
+            return new SubscriptionIsAllowedToCreateJobValidationResult(DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob, error, new Dictionary<string, BinaryData>(), status);
         }
     }
 }

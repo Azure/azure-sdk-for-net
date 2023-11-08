@@ -1,6 +1,6 @@
 # Release History
 
-## 11.5.0-beta.6 (Unreleased)
+## 11.5.0 (Unreleased)
 
 ### Features Added
 

@@ -228,7 +228,6 @@ namespace Azure.ResourceManager.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> Resource extended location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="plan"> The plan of the resource. </param>
         /// <param name="properties"> The resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
@@ -239,12 +238,11 @@ namespace Azure.ResourceManager.Models
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <returns> A new <see cref="Resources.GenericResourceData"/> instance for mocking. </returns>
-        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
+        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new GenericResourceData(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData, plan, properties, kind, managedBy, sku, identity, createdOn, changedOn, provisioningState);
+            return new GenericResourceData(id, name, resourceType, systemData, tags, location, extendedLocation, new Dictionary<string, BinaryData>(), plan, properties, kind, managedBy, sku, identity, createdOn, changedOn, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.TrackedResourceExtendedData"/>. </summary>

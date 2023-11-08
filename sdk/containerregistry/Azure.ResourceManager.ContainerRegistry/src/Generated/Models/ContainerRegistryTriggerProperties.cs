@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a trigger. </summary>
     public partial class ContainerRegistryTriggerProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTriggerProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerProperties"/>. </summary>
         public ContainerRegistryTriggerProperties()
         {
             TimerTriggers = new ChangeTrackingList<ContainerRegistryTimerTrigger>();
             SourceTriggers = new ChangeTrackingList<ContainerRegistrySourceTrigger>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTriggerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerProperties"/>. </summary>
         /// <param name="timerTriggers"> The collection of timer triggers. </param>
         /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
         /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
-        internal ContainerRegistryTriggerProperties(IList<ContainerRegistryTimerTrigger> timerTriggers, IList<ContainerRegistrySourceTrigger> sourceTriggers, ContainerRegistryBaseImageTrigger baseImageTrigger)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTriggerProperties(IList<ContainerRegistryTimerTrigger> timerTriggers, IList<ContainerRegistrySourceTrigger> sourceTriggers, ContainerRegistryBaseImageTrigger baseImageTrigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimerTriggers = timerTriggers;
             SourceTriggers = sourceTriggers;
             BaseImageTrigger = baseImageTrigger;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of timer triggers. </summary>
