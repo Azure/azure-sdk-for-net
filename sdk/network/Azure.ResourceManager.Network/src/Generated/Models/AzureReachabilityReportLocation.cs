@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define a geographic location. </summary>
     public partial class AzureReachabilityReportLocation
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLocation"/>. </summary>
         /// <param name="country"> The name of the country. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public AzureReachabilityReportLocation(string country)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             Country = country;
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReportLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLocation"/>. </summary>
         /// <param name="country"> The name of the country. </param>
         /// <param name="state"> The name of the state. </param>
         /// <param name="city"> The name of the city or town. </param>
-        internal AzureReachabilityReportLocation(string country, string state, string city)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureReachabilityReportLocation(string country, string state, string city, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Country = country;
             State = state;
             City = city;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLocation"/> for deserialization. </summary>
+        internal AzureReachabilityReportLocation()
+        {
         }
 
         /// <summary> The name of the country. </summary>

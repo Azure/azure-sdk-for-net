@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Certificate provisioning state. </summary>
     public partial class MobileNetworkCertificateProvisioning
     {
-        /// <summary> Initializes a new instance of MobileNetworkCertificateProvisioning. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkCertificateProvisioning"/>. </summary>
         internal MobileNetworkCertificateProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkCertificateProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkCertificateProvisioning"/>. </summary>
         /// <param name="state"> The certificate's provisioning state. </param>
         /// <param name="reason"> Reason for certificate provisioning failure. </param>
-        internal MobileNetworkCertificateProvisioning(CertificateProvisioningState? state, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkCertificateProvisioning(CertificateProvisioningState? state, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate's provisioning state. </summary>

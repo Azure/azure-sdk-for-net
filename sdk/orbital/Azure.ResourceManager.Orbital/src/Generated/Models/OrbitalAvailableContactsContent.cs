@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Parameters that define the contact resource. </summary>
     public partial class OrbitalAvailableContactsContent
     {
-        /// <summary> Initializes a new instance of OrbitalAvailableContactsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsContent"/>. </summary>
         /// <param name="contactProfile"> The reference to the contact profile resource. </param>
         /// <param name="groundStationName"> Name of Azure Ground Station. </param>
         /// <param name="startOn"> Start time of a contact (ISO 8601 UTC standard). </param>
@@ -29,6 +33,26 @@ namespace Azure.ResourceManager.Orbital.Models
             GroundStationName = groundStationName;
             StartOn = startOn;
             EndOn = endOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsContent"/>. </summary>
+        /// <param name="contactProfile"> The reference to the contact profile resource. </param>
+        /// <param name="groundStationName"> Name of Azure Ground Station. </param>
+        /// <param name="startOn"> Start time of a contact (ISO 8601 UTC standard). </param>
+        /// <param name="endOn"> End time of a contact (ISO 8601 UTC standard). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalAvailableContactsContent(WritableSubResource contactProfile, string groundStationName, DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContactProfile = contactProfile;
+            GroundStationName = groundStationName;
+            StartOn = startOn;
+            EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsContent"/> for deserialization. </summary>
+        internal OrbitalAvailableContactsContent()
+        {
         }
 
         /// <summary> The reference to the contact profile resource. </summary>

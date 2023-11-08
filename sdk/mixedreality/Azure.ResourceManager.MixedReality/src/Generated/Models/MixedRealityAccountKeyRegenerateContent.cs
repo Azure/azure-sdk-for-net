@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MixedReality.Models
 {
     /// <summary> Request for account key regeneration. </summary>
     public partial class MixedRealityAccountKeyRegenerateContent
     {
-        /// <summary> Initializes a new instance of MixedRealityAccountKeyRegenerateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MixedRealityAccountKeyRegenerateContent"/>. </summary>
         public MixedRealityAccountKeyRegenerateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MixedRealityAccountKeyRegenerateContent"/>. </summary>
+        /// <param name="serial"> serial of key to be regenerated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MixedRealityAccountKeyRegenerateContent(MixedRealityAccountKeySerial? serial, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Serial = serial;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> serial of key to be regenerated. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Changelog list. </summary>
     public partial class RulestackChangelog
     {
-        /// <summary> Initializes a new instance of RulestackChangelog. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulestackChangelog"/>. </summary>
         /// <param name="changes"> list of changes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="changes"/> is null. </exception>
         internal RulestackChangelog(IEnumerable<string> changes)
@@ -25,15 +28,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Changes = changes.ToList();
         }
 
-        /// <summary> Initializes a new instance of RulestackChangelog. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackChangelog"/>. </summary>
         /// <param name="changes"> list of changes. </param>
         /// <param name="lastCommittedOn"> lastCommitted timestamp. </param>
         /// <param name="lastModifiedOn"> lastModified timestamp. </param>
-        internal RulestackChangelog(IReadOnlyList<string> changes, DateTimeOffset? lastCommittedOn, DateTimeOffset? lastModifiedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackChangelog(IReadOnlyList<string> changes, DateTimeOffset? lastCommittedOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Changes = changes;
             LastCommittedOn = lastCommittedOn;
             LastModifiedOn = lastModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulestackChangelog"/> for deserialization. </summary>
+        internal RulestackChangelog()
+        {
         }
 
         /// <summary> list of changes. </summary>

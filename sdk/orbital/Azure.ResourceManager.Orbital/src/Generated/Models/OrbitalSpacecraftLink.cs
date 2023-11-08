@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> List of authorized spacecraft links per ground station and the expiration date of the authorization. </summary>
     public partial class OrbitalSpacecraftLink
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftLink. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
@@ -33,14 +36,15 @@ namespace Azure.ResourceManager.Orbital.Models
             Authorizations = new ChangeTrackingList<AuthorizedGroundStation>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalSpacecraftLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
         /// <param name="direction"> Direction (uplink or downlink). </param>
         /// <param name="polarization"> Polarization. e.g. (RHCP, LHCP). </param>
         /// <param name="authorizations"> Authorized Ground Stations. </param>
-        internal OrbitalSpacecraftLink(string name, float centerFrequencyMHz, float bandwidthMHz, OrbitalLinkDirection direction, OrbitalLinkPolarization polarization, IReadOnlyList<AuthorizedGroundStation> authorizations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalSpacecraftLink(string name, float centerFrequencyMHz, float bandwidthMHz, OrbitalLinkDirection direction, OrbitalLinkPolarization polarization, IReadOnlyList<AuthorizedGroundStation> authorizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             CenterFrequencyMHz = centerFrequencyMHz;
@@ -48,6 +52,12 @@ namespace Azure.ResourceManager.Orbital.Models
             Direction = direction;
             Polarization = polarization;
             Authorizations = authorizations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftLink"/> for deserialization. </summary>
+        internal OrbitalSpacecraftLink()
+        {
         }
 
         /// <summary> Link name. </summary>

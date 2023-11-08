@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxNetworkInterfaceConfiguration. </summary>
     internal partial class NginxNetworkInterfaceConfiguration
     {
-        /// <summary> Initializes a new instance of NginxNetworkInterfaceConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkInterfaceConfiguration"/>. </summary>
         public NginxNetworkInterfaceConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="subnetId"></param>
-        internal NginxNetworkInterfaceConfiguration(string subnetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxNetworkInterfaceConfiguration(string subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetId = subnetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the subnet id. </summary>

@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> User Info of NewRelic Monitor resource. </summary>
     public partial class NewRelicObservabilityUserInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityUserInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
         public NewRelicObservabilityUserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="emailAddress"> User Email. </param>
         /// <param name="phoneNumber"> Contact phone number. </param>
         /// <param name="country"> country if user. </param>
-        internal NewRelicObservabilityUserInfo(string firstName, string lastName, string emailAddress, string phoneNumber, string country)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityUserInfo(string firstName, string lastName, string emailAddress, string phoneNumber, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
             PhoneNumber = phoneNumber;
             Country = country;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> First name. </summary>

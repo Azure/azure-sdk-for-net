@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains bgp community information offered in Service Community resources. </summary>
     public partial class BgpCommunity
     {
-        /// <summary> Initializes a new instance of BgpCommunity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
         public BgpCommunity()
         {
             CommunityPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BgpCommunity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
         /// <param name="serviceSupportedRegion"> The region which the service support. e.g. For O365, region is Global. </param>
         /// <param name="communityName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="communityValue"> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </param>
         /// <param name="communityPrefixes"> The prefixes that the bgp community contains. </param>
         /// <param name="isAuthorizedToUse"> Customer is authorized to use bgp community or not. </param>
         /// <param name="serviceGroup"> The service group of the bgp community contains. </param>
-        internal BgpCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BgpCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceSupportedRegion = serviceSupportedRegion;
             CommunityName = communityName;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             CommunityPrefixes = communityPrefixes;
             IsAuthorizedToUse = isAuthorizedToUse;
             ServiceGroup = serviceGroup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The region which the service support. e.g. For O365, region is Global. </summary>

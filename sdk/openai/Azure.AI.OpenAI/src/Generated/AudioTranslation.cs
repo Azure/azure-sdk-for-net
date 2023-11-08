@@ -14,7 +14,10 @@ namespace Azure.AI.OpenAI
     /// <summary> Result information for an operation that translated spoken audio into written text. </summary>
     public partial class AudioTranslation
     {
-        /// <summary> Initializes a new instance of AudioTranslation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranslation"/>. </summary>
         /// <param name="text"> The translated text for the provided audio data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal AudioTranslation(string text)
@@ -23,9 +26,10 @@ namespace Azure.AI.OpenAI
 
             Text = text;
             Segments = new ChangeTrackingList<AudioTranslationSegment>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AudioTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranslation"/>. </summary>
         /// <param name="text"> The translated text for the provided audio data. </param>
         /// <param name="internalAudioTaskLabel"> The label that describes which operation type generated the accompanying response data. </param>
         /// <param name="language">
@@ -34,13 +38,20 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="duration"> The total duration of the audio processed to produce accompanying translation information. </param>
         /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
-        internal AudioTranslation(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranslationSegment> segments)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AudioTranslation(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranslationSegment> segments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             InternalAudioTaskLabel = internalAudioTaskLabel;
             Language = language;
             Duration = duration;
             Segments = segments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranslation"/> for deserialization. </summary>
+        internal AudioTranslation()
+        {
         }
 
         /// <summary> The translated text for the provided audio data. </summary>

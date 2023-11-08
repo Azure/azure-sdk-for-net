@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Resource identifiers for a policy. </summary>
     public partial class PolicyReference
     {
-        /// <summary> Initializes a new instance of PolicyReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyReference"/>. </summary>
         internal PolicyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyReference"/>. </summary>
         /// <param name="policyDefinitionId"> The resource identifier of the policy definition. </param>
         /// <param name="policySetDefinitionId"> The resource identifier of the policy set definition. </param>
         /// <param name="policyDefinitionReferenceId"> The reference identifier of a specific policy definition within a policy set definition. </param>
         /// <param name="policyAssignmentId"> The resource identifier of the policy assignment. </param>
-        internal PolicyReference(ResourceIdentifier policyDefinitionId, ResourceIdentifier policySetDefinitionId, string policyDefinitionReferenceId, ResourceIdentifier policyAssignmentId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyReference(ResourceIdentifier policyDefinitionId, ResourceIdentifier policySetDefinitionId, string policyDefinitionReferenceId, ResourceIdentifier policyAssignmentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyDefinitionId = policyDefinitionId;
             PolicySetDefinitionId = policySetDefinitionId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
             PolicyAssignmentId = policyAssignmentId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource identifier of the policy definition. </summary>

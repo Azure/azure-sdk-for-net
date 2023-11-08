@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> DNS Proxy Settings in Firewall Policy. </summary>
     public partial class DnsSettings
     {
-        /// <summary> Initializes a new instance of DnsSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsSettings"/>. </summary>
         public DnsSettings()
         {
             Servers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSettings"/>. </summary>
         /// <param name="servers"> List of Custom DNS Servers. </param>
         /// <param name="enableProxy"> Enable DNS Proxy on Firewalls attached to the Firewall Policy. </param>
         /// <param name="requireProxyForNetworkRules"> FQDNs in Network Rules are supported when set to true. </param>
-        internal DnsSettings(IList<string> servers, bool? enableProxy, bool? requireProxyForNetworkRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsSettings(IList<string> servers, bool? enableProxy, bool? requireProxyForNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Servers = servers;
             EnableProxy = enableProxy;
             RequireProxyForNetworkRules = requireProxyForNetworkRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Custom DNS Servers. </summary>

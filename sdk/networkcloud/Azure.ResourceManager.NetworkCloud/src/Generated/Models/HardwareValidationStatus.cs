@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> HardwareValidationStatus represents the latest hardware validation details performed for this bare metal machine. </summary>
     public partial class HardwareValidationStatus
     {
-        /// <summary> Initializes a new instance of HardwareValidationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareValidationStatus"/>. </summary>
         internal HardwareValidationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareValidationStatus"/>. </summary>
         /// <param name="lastValidationOn"> The timestamp of the hardware validation execution. </param>
         /// <param name="result"> The outcome of the hardware validation. </param>
-        internal HardwareValidationStatus(DateTimeOffset? lastValidationOn, BareMetalMachineHardwareValidationResult? result)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareValidationStatus(DateTimeOffset? lastValidationOn, BareMetalMachineHardwareValidationResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastValidationOn = lastValidationOn;
             Result = result;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The timestamp of the hardware validation execution. </summary>

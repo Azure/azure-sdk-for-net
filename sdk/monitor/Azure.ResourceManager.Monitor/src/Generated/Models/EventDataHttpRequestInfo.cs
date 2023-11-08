@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Http request info. </summary>
     public partial class EventDataHttpRequestInfo
     {
-        /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventDataHttpRequestInfo"/>. </summary>
         internal EventDataHttpRequestInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventDataHttpRequestInfo"/>. </summary>
         /// <param name="clientRequestId"> the client request id. </param>
         /// <param name="clientIPAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
         /// <param name="uri"> the Uri. </param>
-        internal EventDataHttpRequestInfo(string clientRequestId, IPAddress clientIPAddress, string method, Uri uri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventDataHttpRequestInfo(string clientRequestId, IPAddress clientIPAddress, string method, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientRequestId = clientRequestId;
             ClientIPAddress = clientIPAddress;
             Method = method;
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the client request id. </summary>

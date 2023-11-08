@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class HardwareInventoryNetworkInterface
+    public partial class HardwareInventoryNetworkInterface : IUtf8JsonSerializable, IJsonModel<HardwareInventoryNetworkInterface>
     {
-        internal static HardwareInventoryNetworkInterface DeserializeHardwareInventoryNetworkInterface(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareInventoryNetworkInterface>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HardwareInventoryNetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LinkStatus))
+                {
+                    writer.WritePropertyName("linkStatus"u8);
+                    writer.WriteStringValue(LinkStatus);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MacAddress))
+                {
+                    writer.WritePropertyName("macAddress"u8);
+                    writer.WriteStringValue(MacAddress);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NetworkInterfaceId))
+                {
+                    writer.WritePropertyName("networkInterfaceId"u8);
+                    writer.WriteStringValue(NetworkInterfaceId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HardwareInventoryNetworkInterface IJsonModel<HardwareInventoryNetworkInterface>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardwareInventoryNetworkInterface(document.RootElement, options);
+        }
+
+        internal static HardwareInventoryNetworkInterface DeserializeHardwareInventoryNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +95,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> macAddress = default;
             Optional<string> name = default;
             Optional<string> networkInterfaceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkStatus"u8))
@@ -44,8 +119,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     networkInterfaceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HardwareInventoryNetworkInterface(linkStatus.Value, macAddress.Value, name.Value, networkInterfaceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HardwareInventoryNetworkInterface(linkStatus.Value, macAddress.Value, name.Value, networkInterfaceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HardwareInventoryNetworkInterface>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HardwareInventoryNetworkInterface IModel<HardwareInventoryNetworkInterface>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHardwareInventoryNetworkInterface(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HardwareInventoryNetworkInterface>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

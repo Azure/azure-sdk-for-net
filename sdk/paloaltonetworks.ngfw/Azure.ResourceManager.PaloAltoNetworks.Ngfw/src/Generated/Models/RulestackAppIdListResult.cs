@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The RulestackAppIdListResult. </summary>
     internal partial class RulestackAppIdListResult
     {
-        /// <summary> Initializes a new instance of RulestackAppIdListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulestackAppIdListResult"/>. </summary>
         /// <param name="value"> List of AppIds. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackAppIdListResult(IEnumerable<string> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RulestackAppIdListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackAppIdListResult"/>. </summary>
         /// <param name="value"> List of AppIds. </param>
         /// <param name="nextLink"> next Link. </param>
-        internal RulestackAppIdListResult(IReadOnlyList<string> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackAppIdListResult(IReadOnlyList<string> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulestackAppIdListResult"/> for deserialization. </summary>
+        internal RulestackAppIdListResult()
+        {
         }
 
         /// <summary> List of AppIds. </summary>

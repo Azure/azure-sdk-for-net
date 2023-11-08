@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.NotificationHubs
     /// </summary>
     public partial class NotificationHubNamespaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubNamespaceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubNamespaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="dataCenter"> Data center for the namespace. </param>
         /// <param name="namespaceType"> The namespace type. </param>
         /// <param name="sku"> The sku of the created namespace. </param>
-        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namespaceName, string provisioningState, string region, string metricId, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, Uri serviceBusEndpoint, string subscriptionId, string scaleUnit, bool? isEnabled, bool? isCritical, string dataCenter, NotificationHubNamespaceType? namespaceType, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namespaceName, string provisioningState, string region, string metricId, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, Uri serviceBusEndpoint, string subscriptionId, string scaleUnit, bool? isEnabled, bool? isCritical, string dataCenter, NotificationHubNamespaceType? namespaceType, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             NamespaceName = namespaceName;
             ProvisioningState = provisioningState;
@@ -64,6 +68,12 @@ namespace Azure.ResourceManager.NotificationHubs
             DataCenter = dataCenter;
             NamespaceType = namespaceType;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/> for deserialization. </summary>
+        internal NotificationHubNamespaceData()
+        {
         }
 
         /// <summary> The name of the namespace. </summary>

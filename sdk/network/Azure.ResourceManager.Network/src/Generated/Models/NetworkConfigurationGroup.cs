@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The network configuration group resource. </summary>
     public partial class NetworkConfigurationGroup
     {
-        /// <summary> Initializes a new instance of NetworkConfigurationGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationGroup"/>. </summary>
         internal NetworkConfigurationGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkConfigurationGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationGroup"/>. </summary>
         /// <param name="id"> Network group ID. </param>
         /// <param name="description"> A description of the network group. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkConfigurationGroup(string id, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkConfigurationGroup(string id, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Description = description;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Network group ID. </summary>

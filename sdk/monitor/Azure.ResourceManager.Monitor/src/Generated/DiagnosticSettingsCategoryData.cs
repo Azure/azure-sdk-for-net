@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,23 +19,28 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class DiagnosticSettingsCategoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>. </summary>
         public DiagnosticSettingsCategoryData()
         {
             CategoryGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="categoryType"> The type of the diagnostic settings category. </param>
         /// <param name="categoryGroups"> the collection of what category groups are supported. </param>
-        internal DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorCategoryType? categoryType, IList<string> categoryGroups) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorCategoryType? categoryType, IList<string> categoryGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CategoryType = categoryType;
             CategoryGroups = categoryGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the diagnostic settings category. </summary>

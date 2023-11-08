@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNginxModelFactory
     {
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NginxCertificateData(id, name, resourceType, systemData, tags, location, properties);
+            return new NginxCertificateData(id, name, resourceType, systemData, tags, location, properties, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxCertificateProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxCertificateProperties"/> instance for mocking. </returns>
         public static NginxCertificateProperties NginxCertificateProperties(ProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null)
         {
-            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId);
+            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NginxConfigurationData(id, name, resourceType, systemData, tags, location, properties);
+            return new NginxConfigurationData(id, name, resourceType, systemData, tags, location, properties, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Nginx.Models
             files ??= new List<NginxConfigurationFile>();
             protectedFiles ??= new List<NginxConfigurationFile>();
 
-            return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), packageData != null ? new NginxConfigurationPackage(packageData) : null, rootFile);
+            return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), packageData != null ? new NginxConfigurationPackage(packageData, new Dictionary<string, BinaryData>()) : null, rootFile, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new ResourceSku(skuName) : null);
+            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new ResourceSku(skuName, new Dictionary<string, BinaryData>()) : null, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="nginxVersion"></param>
         /// <param name="managedResourceGroup"> The managed resource group to deploy VNet injection related network resources. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
         public static NginxDeploymentProperties NginxDeploymentProperties(ProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null)
         {
-            return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount) : null);
+            return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount, new Dictionary<string, BinaryData>()) : null, new Dictionary<string, BinaryData>());
         }
     }
 }

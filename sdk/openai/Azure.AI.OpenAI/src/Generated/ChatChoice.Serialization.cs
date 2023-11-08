@@ -5,16 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatChoice
+    public partial class ChatChoice : IUtf8JsonSerializable, IJsonModel<ChatChoice>
     {
-        internal static ChatChoice DeserializeChatChoice(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatChoice>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ChatChoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteObjectValue(Message);
+            }
+            writer.WritePropertyName("index"u8);
+            writer.WriteNumberValue(Index);
+            if (FinishReason != null)
+            {
+                writer.WritePropertyName("finish_reason"u8);
+                writer.WriteStringValue(FinishReason.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("finish_reason");
+            }
+            if (Optional.IsDefined(InternalStreamingDeltaMessage))
+            {
+                writer.WritePropertyName("delta"u8);
+                writer.WriteObjectValue(InternalStreamingDeltaMessage);
+            }
+            if (Optional.IsDefined(ContentFilterResults))
+            {
+                writer.WritePropertyName("content_filter_results"u8);
+                writer.WriteObjectValue(ContentFilterResults);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ChatChoice IJsonModel<ChatChoice>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatChoice)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatChoice(document.RootElement, options);
+        }
+
+        internal static ChatChoice DeserializeChatChoice(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +91,8 @@ namespace Azure.AI.OpenAI
             CompletionsFinishReason? finishReason = default;
             Optional<ChatMessage> delta = default;
             Optional<ContentFilterResults> contentFilterResults = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -68,16 +137,54 @@ namespace Azure.AI.OpenAI
                     contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ChatChoice(message.Value, index, finishReason, delta.Value, contentFilterResults.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ChatChoice(message.Value, index, finishReason, delta.Value, contentFilterResults.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ChatChoice>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatChoice)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ChatChoice IModel<ChatChoice>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatChoice)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeChatChoice(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ChatChoice>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatChoice FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChatChoice(document.RootElement);
+            return DeserializeChatChoice(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

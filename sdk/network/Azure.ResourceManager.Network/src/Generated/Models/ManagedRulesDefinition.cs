@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Allow to exclude some variable satisfy the condition for the WAF check. </summary>
     public partial class ManagedRulesDefinition
     {
-        /// <summary> Initializes a new instance of ManagedRulesDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRulesDefinition"/>. </summary>
         /// <param name="managedRuleSets"> The managed rule sets that are associated with the policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedRuleSets"/> is null. </exception>
         public ManagedRulesDefinition(IEnumerable<ManagedRuleSet> managedRuleSets)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Network.Models
             ManagedRuleSets = managedRuleSets.ToList();
         }
 
-        /// <summary> Initializes a new instance of ManagedRulesDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRulesDefinition"/>. </summary>
         /// <param name="exclusions"> The Exclusions that are applied on the policy. </param>
         /// <param name="managedRuleSets"> The managed rule sets that are associated with the policy. </param>
-        internal ManagedRulesDefinition(IList<OwaspCrsExclusionEntry> exclusions, IList<ManagedRuleSet> managedRuleSets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRulesDefinition(IList<OwaspCrsExclusionEntry> exclusions, IList<ManagedRuleSet> managedRuleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Exclusions = exclusions;
             ManagedRuleSets = managedRuleSets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRulesDefinition"/> for deserialization. </summary>
+        internal ManagedRulesDefinition()
+        {
         }
 
         /// <summary> The Exclusions that are applied on the policy. </summary>

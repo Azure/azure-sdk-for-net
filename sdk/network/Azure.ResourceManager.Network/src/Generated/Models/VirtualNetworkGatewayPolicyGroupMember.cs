@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Client Connection configuration PolicyGroup member. </summary>
     public partial class VirtualNetworkGatewayPolicyGroupMember
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroupMember. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroupMember"/>. </summary>
         public VirtualNetworkGatewayPolicyGroupMember()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroupMember. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroupMember"/>. </summary>
         /// <param name="name"> Name of the VirtualNetworkGatewayPolicyGroupMember. </param>
         /// <param name="attributeType"> The Vpn Policy member attribute type. </param>
         /// <param name="attributeValue"> The value of Attribute used for this VirtualNetworkGatewayPolicyGroupMember. </param>
-        internal VirtualNetworkGatewayPolicyGroupMember(string name, VpnPolicyMemberAttributeType? attributeType, string attributeValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkGatewayPolicyGroupMember(string name, VpnPolicyMemberAttributeType? attributeType, string attributeValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AttributeType = attributeType;
             AttributeValue = attributeValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the VirtualNetworkGatewayPolicyGroupMember. </summary>

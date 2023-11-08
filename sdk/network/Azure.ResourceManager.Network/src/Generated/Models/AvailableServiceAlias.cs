@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The available service alias. </summary>
     public partial class AvailableServiceAlias : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailableServiceAlias. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceAlias"/>. </summary>
         internal AvailableServiceAlias()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceAlias"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceName"> The resource name of the service alias. </param>
-        internal AvailableServiceAlias(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableServiceAlias(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceName = resourceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource name of the service alias. </summary>

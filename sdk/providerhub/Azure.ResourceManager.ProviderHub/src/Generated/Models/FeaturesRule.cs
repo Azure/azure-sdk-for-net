@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The FeaturesRule. </summary>
     internal partial class FeaturesRule
     {
-        /// <summary> Initializes a new instance of FeaturesRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeaturesRule"/>. </summary>
         /// <param name="requiredFeaturesPolicy"></param>
         public FeaturesRule(FeaturesPolicy requiredFeaturesPolicy)
         {
             RequiredFeaturesPolicy = requiredFeaturesPolicy;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FeaturesRule"/>. </summary>
+        /// <param name="requiredFeaturesPolicy"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeaturesRule(FeaturesPolicy requiredFeaturesPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RequiredFeaturesPolicy = requiredFeaturesPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FeaturesRule"/> for deserialization. </summary>
+        internal FeaturesRule()
+        {
         }
 
         /// <summary> Gets or sets the required features policy. </summary>

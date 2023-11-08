@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Configuration for sending packet core events to Azure Event Hub. </summary>
     public partial class MobileNetworkEventHubConfiguration
     {
-        /// <summary> Initializes a new instance of MobileNetworkEventHubConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkEventHubConfiguration"/>. </summary>
         /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public MobileNetworkEventHubConfiguration(ResourceIdentifier id)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkEventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkEventHubConfiguration"/>. </summary>
         /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
         /// <param name="reportingInterval"> The duration (in seconds) between UE usage reports. </param>
-        internal MobileNetworkEventHubConfiguration(ResourceIdentifier id, int? reportingInterval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkEventHubConfiguration(ResourceIdentifier id, int? reportingInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ReportingInterval = reportingInterval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkEventHubConfiguration"/> for deserialization. </summary>
+        internal MobileNetworkEventHubConfiguration()
+        {
         }
 
         /// <summary> Resource ID  of Azure Event Hub to send packet core events to. </summary>

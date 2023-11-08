@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Intrusion detection signatures specification states. </summary>
     public partial class FirewallPolicyIntrusionDetectionSignatureSpecification
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionSignatureSpecification"/>. </summary>
         public FirewallPolicyIntrusionDetectionSignatureSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionSignatureSpecification"/>. </summary>
         /// <param name="id"> Signature id. </param>
         /// <param name="mode"> The signature state. </param>
-        internal FirewallPolicyIntrusionDetectionSignatureSpecification(string id, FirewallPolicyIntrusionDetectionStateType? mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyIntrusionDetectionSignatureSpecification(string id, FirewallPolicyIntrusionDetectionStateType? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Mode = mode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Signature id. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The BatchQueryResponse. </summary>
     internal partial class BatchQueryResponse
     {
-        /// <summary> Initializes a new instance of BatchQueryResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchQueryResponse"/>. </summary>
         internal BatchQueryResponse()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BatchQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchQueryResponse"/>. </summary>
         /// <param name="id"></param>
         /// <param name="status"></param>
         /// <param name="body"> Contains the tables, columns &amp; rows resulting from a query. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
-        internal BatchQueryResponse(string id, int? status, LogsBatchQueryResult body, IReadOnlyDictionary<string, string> headers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchQueryResponse(string id, int? status, LogsBatchQueryResult body, IReadOnlyDictionary<string, string> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Status = status;
             Body = body;
             Headers = headers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the id. </summary>

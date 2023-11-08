@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
@@ -13,5 +14,21 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <summary> Represents an upload location for model ingestion. </summary>
     public partial class AssetUploadUriResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssetUploadUriResult"/>. </summary>
+        /// <param name="uploadUriString"> The blob upload URI where a model should be uploaded to the service for ingestion. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetUploadUriResult(string uploadUriString, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            UploadUriString = uploadUriString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssetUploadUriResult"/> for deserialization. </summary>
+        internal AssetUploadUriResult()
+        {
+        }
     }
 }

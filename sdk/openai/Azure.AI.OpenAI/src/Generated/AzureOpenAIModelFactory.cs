@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Model factory for models. </summary>
     public static partial class AzureOpenAIModelFactory
     {
-        /// <summary> Initializes a new instance of Embeddings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         /// <returns> A new <see cref="OpenAI.Embeddings"/> instance for mocking. </returns>
@@ -23,10 +23,10 @@ namespace Azure.AI.OpenAI
         {
             data ??= new List<EmbeddingItem>();
 
-            return new Embeddings(data?.ToList(), usage);
+            return new Embeddings(data?.ToList(), usage, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of EmbeddingItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingItem"/>. </summary>
         /// <param name="embedding">
         /// List of embeddings value for the input prompt. These represent a measurement of the
         /// vector-based relatedness of the provided input.
@@ -35,19 +35,19 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
         public static EmbeddingItem EmbeddingItem(ReadOnlyMemory<float> embedding = default, int index = default)
         {
-            return new EmbeddingItem(embedding, index);
+            return new EmbeddingItem(embedding, index, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsUsage"/>. </summary>
         /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
         /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
         /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
-            return new EmbeddingsUsage(promptTokens, totalTokens);
+            return new EmbeddingsUsage(promptTokens, totalTokens, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of Completions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Completions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -69,19 +69,19 @@ namespace Azure.AI.OpenAI
             promptFilterResults ??= new List<PromptFilterResult>();
             choices ??= new List<Choice>();
 
-            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of PromptFilterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.PromptFilterResult"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
         /// <returns> A new <see cref="OpenAI.PromptFilterResult"/> instance for mocking. </returns>
         public static PromptFilterResult PromptFilterResult(int promptIndex = default, ContentFilterResults contentFilterResults = null)
         {
-            return new PromptFilterResult(promptIndex, contentFilterResults);
+            return new PromptFilterResult(promptIndex, contentFilterResults, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResults"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
@@ -110,19 +110,19 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterResults"/> instance for mocking. </returns>
         public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ResponseError error = null)
         {
-            return new ContentFilterResults(sexual, violence, hate, selfHarm, error);
+            return new ContentFilterResults(sexual, violence, hate, selfHarm, error, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResult"/>. </summary>
         /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
         public static ContentFilterResult ContentFilterResult(ContentFilterSeverity severity = default, bool filtered = default)
         {
-            return new ContentFilterResult(severity, filtered);
+            return new ContentFilterResult(severity, filtered, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Choice"/>. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="contentFilterResults">
@@ -135,10 +135,10 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
         public static Choice Choice(string text = null, int index = default, ContentFilterResults contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
-            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
+            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsLogProbabilityModel"/>. </summary>
         /// <param name="tokens"> The textual forms of tokens evaluated in this probability model. </param>
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
@@ -151,20 +151,20 @@ namespace Azure.AI.OpenAI
             topLogProbabilities ??= new List<IDictionary<string, float?>>();
             textOffsets ??= new List<int>();
 
-            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList());
+            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of CompletionsUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
         /// <returns> A new <see cref="OpenAI.CompletionsUsage"/> instance for mocking. </returns>
         public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -186,10 +186,10 @@ namespace Azure.AI.OpenAI
             choices ??= new List<ChatChoice>();
             promptFilterResults ??= new List<PromptFilterResult>();
 
-            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage);
+            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ImageGenerations. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerations"/>. </summary>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="data"> The images generated by the operator. </param>
         /// <returns> A new <see cref="OpenAI.ImageGenerations"/> instance for mocking. </returns>
@@ -197,24 +197,18 @@ namespace Azure.AI.OpenAI
         {
             data ??= new List<ImageLocation>();
 
-            return new ImageGenerations(created, data?.ToList());
+            return new ImageGenerations(created, data?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of ImageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageLocation"/>. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ImageLocation"/> instance for mocking. </returns>
         public static ImageLocation ImageLocation(Uri url = null)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            return new ImageLocation(url);
+            return new ImageLocation(url, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
@@ -236,10 +230,10 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of AudioTranslationSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a translation. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the translated audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the translated audio. </param>
@@ -261,7 +255,7 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
+            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, new Dictionary<string, BinaryData>());
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,9 +15,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The type used for update operations of the GlobalRulestackResource. </summary>
     public partial class GlobalRulestackPatch
     {
-        /// <summary> Initializes a new instance of GlobalRulestackPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackPatch"/>. </summary>
         public GlobalRulestackPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackPatch"/>. </summary>
+        /// <param name="location"> Global Location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="properties"> The updatable properties of the GlobalRulestackResource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalRulestackPatch(AzureLocation? location, ManagedServiceIdentity identity, GlobalRulestackUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Location = location;
+            Identity = identity;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Global Location. </summary>

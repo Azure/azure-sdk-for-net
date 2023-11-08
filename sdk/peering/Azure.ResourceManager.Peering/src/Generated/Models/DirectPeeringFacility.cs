@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct peering facility. </summary>
     public partial class DirectPeeringFacility
     {
-        /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringFacility"/>. </summary>
         public DirectPeeringFacility()
         {
         }
 
-        /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringFacility"/>. </summary>
         /// <param name="address"> The address of the direct peering facility. </param>
         /// <param name="directPeeringType"> The type of the direct peering. </param>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
         /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        internal DirectPeeringFacility(string address, DirectPeeringType? directPeeringType, int? peeringDBFacilityId, string peeringDBFacilityLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DirectPeeringFacility(string address, DirectPeeringType? directPeeringType, int? peeringDBFacilityId, string peeringDBFacilityLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             DirectPeeringType = directPeeringType;
             PeeringDBFacilityId = peeringDBFacilityId;
             PeeringDBFacilityLink = peeringDBFacilityLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The address of the direct peering facility. </summary>

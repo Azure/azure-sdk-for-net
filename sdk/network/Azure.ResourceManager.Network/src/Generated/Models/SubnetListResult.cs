@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListSubnets API service callRetrieves all subnet that belongs to a virtual network. </summary>
     internal partial class SubnetListResult
     {
-        /// <summary> Initializes a new instance of SubnetListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubnetListResult"/>. </summary>
         internal SubnetListResult()
         {
             Value = new ChangeTrackingList<SubnetData>();
         }
 
-        /// <summary> Initializes a new instance of SubnetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetListResult"/>. </summary>
         /// <param name="value"> The subnets in a virtual network. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SubnetListResult(IReadOnlyList<SubnetData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubnetListResult(IReadOnlyList<SubnetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subnets in a virtual network. </summary>

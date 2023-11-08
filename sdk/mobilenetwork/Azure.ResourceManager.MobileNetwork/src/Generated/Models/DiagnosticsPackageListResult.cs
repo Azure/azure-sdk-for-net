@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for diagnostics package API service call. </summary>
     internal partial class DiagnosticsPackageListResult
     {
-        /// <summary> Initializes a new instance of DiagnosticsPackageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsPackageListResult"/>. </summary>
         internal DiagnosticsPackageListResult()
         {
             Value = new ChangeTrackingList<MobileNetworkDiagnosticsPackageData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticsPackageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsPackageListResult"/>. </summary>
         /// <param name="value"> A list of diagnostics packages under a packet core control plane. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal DiagnosticsPackageListResult(IReadOnlyList<MobileNetworkDiagnosticsPackageData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticsPackageListResult(IReadOnlyList<MobileNetworkDiagnosticsPackageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of diagnostics packages under a packet core control plane. </summary>

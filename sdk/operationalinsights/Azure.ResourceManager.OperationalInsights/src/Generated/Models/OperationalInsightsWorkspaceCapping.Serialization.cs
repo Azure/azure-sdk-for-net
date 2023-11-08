@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceCapping : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceCapping : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspaceCapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspaceCapping>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<OperationalInsightsWorkspaceCapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(DailyQuotaInGB))
@@ -20,11 +26,56 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("dailyQuotaGb"u8);
                 writer.WriteNumberValue(DailyQuotaInGB.Value);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(QuotaNextResetTime))
+                {
+                    writer.WritePropertyName("quotaNextResetTime"u8);
+                    writer.WriteStringValue(QuotaNextResetTime);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DataIngestionStatus))
+                {
+                    writer.WritePropertyName("dataIngestionStatus"u8);
+                    writer.WriteStringValue(DataIngestionStatus.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspaceCapping DeserializeOperationalInsightsWorkspaceCapping(JsonElement element)
+        OperationalInsightsWorkspaceCapping IJsonModel<OperationalInsightsWorkspaceCapping>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspaceCapping(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsWorkspaceCapping DeserializeOperationalInsightsWorkspaceCapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +83,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<double> dailyQuotaGb = default;
             Optional<string> quotaNextResetTime = default;
             Optional<OperationalInsightsDataIngestionStatus> dataIngestionStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dailyQuotaGb"u8))
@@ -57,8 +110,38 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     dataIngestionStatus = new OperationalInsightsDataIngestionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsWorkspaceCapping(Optional.ToNullable(dailyQuotaGb), quotaNextResetTime.Value, Optional.ToNullable(dataIngestionStatus));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsWorkspaceCapping(Optional.ToNullable(dailyQuotaGb), quotaNextResetTime.Value, Optional.ToNullable(dataIngestionStatus), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<OperationalInsightsWorkspaceCapping>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperationalInsightsWorkspaceCapping IModel<OperationalInsightsWorkspaceCapping>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsWorkspaceCapping(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<OperationalInsightsWorkspaceCapping>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Office365 breakout categories. </summary>
     public partial class O365BreakOutCategoryPolicies
     {
-        /// <summary> Initializes a new instance of O365BreakOutCategoryPolicies. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="O365BreakOutCategoryPolicies"/>. </summary>
         public O365BreakOutCategoryPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of O365BreakOutCategoryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="O365BreakOutCategoryPolicies"/>. </summary>
         /// <param name="allow"> Flag to control allow category. </param>
         /// <param name="optimize"> Flag to control optimize category. </param>
         /// <param name="default"> Flag to control default category. </param>
-        internal O365BreakOutCategoryPolicies(bool? allow, bool? optimize, bool? @default)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal O365BreakOutCategoryPolicies(bool? allow, bool? optimize, bool? @default, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Allow = allow;
             Optimize = optimize;
             Default = @default;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag to control allow category. </summary>

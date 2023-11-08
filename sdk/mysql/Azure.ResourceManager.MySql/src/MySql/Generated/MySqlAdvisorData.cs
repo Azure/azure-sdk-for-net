@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,20 +18,25 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlAdvisorData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlAdvisorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlAdvisorData"/>. </summary>
         public MySqlAdvisorData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlAdvisorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlAdvisorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a recommendation action advisor. </param>
-        internal MySqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

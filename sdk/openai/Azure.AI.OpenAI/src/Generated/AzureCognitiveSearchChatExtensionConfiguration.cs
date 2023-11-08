@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,7 +17,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureCognitiveSearchChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
         /// default value for Azure Cognitive Search.
@@ -35,9 +39,10 @@ namespace Azure.AI.OpenAI
             SearchEndpoint = searchEndpoint;
             SearchKey = searchKey;
             IndexName = indexName;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
         /// default value for Azure Cognitive Search.
@@ -52,7 +57,8 @@ namespace Azure.AI.OpenAI
         /// <param name="semanticConfiguration"> The additional semantic configuration for the query. </param>
         /// <param name="embeddingEndpoint"> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </param>
         /// <param name="embeddingKey"> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </param>
-        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string searchKey, string indexName, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, int? documentCount, AzureCognitiveSearchQueryType? queryType, bool? shouldRestrictResultScope, string semanticConfiguration, Uri embeddingEndpoint, string embeddingKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string searchKey, string indexName, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, int? documentCount, AzureCognitiveSearchQueryType? queryType, bool? shouldRestrictResultScope, string semanticConfiguration, Uri embeddingEndpoint, string embeddingKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             SearchEndpoint = searchEndpoint;
@@ -65,6 +71,7 @@ namespace Azure.AI.OpenAI
             SemanticConfiguration = semanticConfiguration;
             EmbeddingEndpoint = embeddingEndpoint;
             EmbeddingKey = embeddingKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
     public partial class AvailableDelegation : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailableDelegation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegation"/>. </summary>
         internal AvailableDelegation()
         {
             Actions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvailableDelegation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="serviceName"> The name of the service and resource. </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
-        internal AvailableDelegation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceName, IReadOnlyList<string> actions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableDelegation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceName, IReadOnlyList<string> actions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServiceName = serviceName;
             Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the service and resource. </summary>

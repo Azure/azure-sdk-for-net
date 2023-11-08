@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> AAD Vpn authentication type related parameters. </summary>
     public partial class AadAuthenticationParameters
     {
-        /// <summary> Initializes a new instance of AadAuthenticationParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AadAuthenticationParameters"/>. </summary>
         public AadAuthenticationParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of AadAuthenticationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadAuthenticationParameters"/>. </summary>
         /// <param name="aadTenant"> AAD Vpn authentication parameter AAD tenant. </param>
         /// <param name="aadAudience"> AAD Vpn authentication parameter AAD audience. </param>
         /// <param name="aadIssuer"> AAD Vpn authentication parameter AAD issuer. </param>
-        internal AadAuthenticationParameters(string aadTenant, string aadAudience, string aadIssuer)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AadAuthenticationParameters(string aadTenant, string aadAudience, string aadIssuer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AadTenant = aadTenant;
             AadAudience = aadAudience;
             AadIssuer = aadIssuer;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AAD Vpn authentication parameter AAD tenant. </summary>

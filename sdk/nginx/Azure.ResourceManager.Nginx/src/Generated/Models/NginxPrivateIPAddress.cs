@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxPrivateIPAddress. </summary>
     public partial class NginxPrivateIPAddress
     {
-        /// <summary> Initializes a new instance of NginxPrivateIPAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         public NginxPrivateIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxPrivateIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         /// <param name="privateIPAddress"></param>
         /// <param name="privateIPAllocationMethod"></param>
         /// <param name="subnetId"></param>
-        internal NginxPrivateIPAddress(string privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, string subnetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxPrivateIPAddress(string privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, string subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             SubnetId = subnetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the private ip address. </summary>

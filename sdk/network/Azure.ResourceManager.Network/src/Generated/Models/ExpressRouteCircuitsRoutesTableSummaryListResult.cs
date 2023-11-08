@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListRoutesTable associated with the Express Route Circuits API. </summary>
     public partial class ExpressRouteCircuitsRoutesTableSummaryListResult
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitsRoutesTableSummaryListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitsRoutesTableSummaryListResult"/>. </summary>
         internal ExpressRouteCircuitsRoutesTableSummaryListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteCircuitRoutesTableSummary>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitsRoutesTableSummaryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitsRoutesTableSummaryListResult"/>. </summary>
         /// <param name="value"> A list of the routes table. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ExpressRouteCircuitsRoutesTableSummaryListResult(IReadOnlyList<ExpressRouteCircuitRoutesTableSummary> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitsRoutesTableSummaryListResult(IReadOnlyList<ExpressRouteCircuitRoutesTableSummary> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of the routes table. </summary>

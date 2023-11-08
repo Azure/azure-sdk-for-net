@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the application rule protocol. </summary>
     public partial class FirewallPolicyRuleApplicationProtocol
     {
-        /// <summary> Initializes a new instance of FirewallPolicyRuleApplicationProtocol. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleApplicationProtocol"/>. </summary>
         public FirewallPolicyRuleApplicationProtocol()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRuleApplicationProtocol. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleApplicationProtocol"/>. </summary>
         /// <param name="protocolType"> Protocol type. </param>
         /// <param name="port"> Port number for the protocol, cannot be greater than 64000. </param>
-        internal FirewallPolicyRuleApplicationProtocol(FirewallPolicyRuleApplicationProtocolType? protocolType, int? port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyRuleApplicationProtocol(FirewallPolicyRuleApplicationProtocolType? protocolType, int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtocolType = protocolType;
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Protocol type. </summary>

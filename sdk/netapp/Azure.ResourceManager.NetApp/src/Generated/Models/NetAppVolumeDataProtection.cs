@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
     public partial class NetAppVolumeDataProtection
     {
-        /// <summary> Initializes a new instance of NetAppVolumeDataProtection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeDataProtection"/>. </summary>
         public NetAppVolumeDataProtection()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeDataProtection. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeDataProtection"/>. </summary>
         /// <param name="replication"> Replication properties. </param>
         /// <param name="snapshot"> Snapshot properties. </param>
         /// <param name="volumeRelocation"> VolumeRelocation properties. </param>
-        internal NetAppVolumeDataProtection(NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeDataProtection(NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Replication = replication;
             Snapshot = snapshot;
             VolumeRelocation = volumeRelocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Replication properties. </summary>

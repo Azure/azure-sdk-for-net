@@ -5,15 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorSingleBaseline
+    public partial class MonitorSingleBaseline : IUtf8JsonSerializable, IJsonModel<MonitorSingleBaseline>
     {
-        internal static MonitorSingleBaseline DeserializeMonitorSingleBaseline(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorSingleBaseline>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MonitorSingleBaseline>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("sensitivity"u8);
+            writer.WriteStringValue(Sensitivity.ToString());
+            writer.WritePropertyName("lowThresholds"u8);
+            writer.WriteStartArray();
+            foreach (var item in LowThresholds)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("highThresholds"u8);
+            writer.WriteStartArray();
+            foreach (var item in HighThresholds)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MonitorSingleBaseline IJsonModel<MonitorSingleBaseline>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorSingleBaseline)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorSingleBaseline(document.RootElement, options);
+        }
+
+        internal static MonitorSingleBaseline DeserializeMonitorSingleBaseline(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +78,8 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorBaselineSensitivity sensitivity = default;
             IReadOnlyList<double> lowThresholds = default;
             IReadOnlyList<double> highThresholds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sensitivity"u8))
@@ -48,8 +107,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     highThresholds = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorSingleBaseline(sensitivity, lowThresholds, highThresholds);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitorSingleBaseline(sensitivity, lowThresholds, highThresholds, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MonitorSingleBaseline>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorSingleBaseline)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitorSingleBaseline IModel<MonitorSingleBaseline>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorSingleBaseline)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitorSingleBaseline(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MonitorSingleBaseline>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

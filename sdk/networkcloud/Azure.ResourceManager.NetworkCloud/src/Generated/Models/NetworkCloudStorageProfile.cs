@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> StorageProfile represents information about a disk. </summary>
     public partial class NetworkCloudStorageProfile
     {
-        /// <summary> Initializes a new instance of NetworkCloudStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageProfile"/>. </summary>
         /// <param name="osDisk"> The disk to use with this virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osDisk"/> is null. </exception>
         public NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             VolumeAttachments = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageProfile"/>. </summary>
         /// <param name="osDisk"> The disk to use with this virtual machine. </param>
         /// <param name="volumeAttachments"> The resource IDs of volumes that are requested to be attached to the virtual machine. </param>
-        internal NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk, IList<ResourceIdentifier> volumeAttachments)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk, IList<ResourceIdentifier> volumeAttachments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSDisk = osDisk;
             VolumeAttachments = volumeAttachments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageProfile"/> for deserialization. </summary>
+        internal NetworkCloudStorageProfile()
+        {
         }
 
         /// <summary> The disk to use with this virtual machine. </summary>

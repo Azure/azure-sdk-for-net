@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Performance tier properties. </summary>
     public partial class MySqlPerformanceTier
     {
-        /// <summary> Initializes a new instance of MySqlPerformanceTier. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTier"/>. </summary>
         internal MySqlPerformanceTier()
         {
             ServiceLevelObjectives = new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>();
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTier"/>. </summary>
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="maxLargeStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="serviceLevelObjectives"> Service level objectives associated with the performance tier. </param>
-        internal MySqlPerformanceTier(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlPerformanceTier(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             MaxBackupRetentionDays = maxBackupRetentionDays;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.MySql.Models
             MaxLargeStorageInMB = maxLargeStorageInMB;
             MinStorageInMB = minStorageInMB;
             ServiceLevelObjectives = serviceLevelObjectives;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the performance tier. </summary>

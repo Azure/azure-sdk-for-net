@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Sku capability. </summary>
     public partial class MySqlFlexibleServerSkuCapability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerSkuCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerSkuCapability"/>. </summary>
         internal MySqlFlexibleServerSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerSkuCapability"/>. </summary>
         /// <param name="name"> vCore name. </param>
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>
         /// <param name="supportedMemoryPerVCoreInMB"> supported memory per vCore in MB. </param>
-        internal MySqlFlexibleServerSkuCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreInMB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerSkuCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             VCores = vCores;
             SupportedIops = supportedIops;
             SupportedMemoryPerVCoreInMB = supportedMemoryPerVCoreInMB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> vCore name. </summary>

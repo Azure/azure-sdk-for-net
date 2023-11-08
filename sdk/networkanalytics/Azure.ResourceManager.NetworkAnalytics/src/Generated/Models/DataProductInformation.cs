@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Data Product Information. </summary>
     public partial class DataProductInformation
     {
-        /// <summary> Initializes a new instance of DataProductInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProductInformation"/>. </summary>
         /// <param name="dataProductName"> Name of data product. </param>
         /// <param name="description"> Description about data product. </param>
         /// <param name="dataProductVersions"> Version information of data product. </param>
@@ -31,15 +34,22 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             DataProductVersions = dataProductVersions.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProductInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductInformation"/>. </summary>
         /// <param name="dataProductName"> Name of data product. </param>
         /// <param name="description"> Description about data product. </param>
         /// <param name="dataProductVersions"> Version information of data product. </param>
-        internal DataProductInformation(string dataProductName, string description, IList<DataProductVersion> dataProductVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductInformation(string dataProductName, string description, IList<DataProductVersion> dataProductVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataProductName = dataProductName;
             Description = description;
             DataProductVersions = dataProductVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductInformation"/> for deserialization. </summary>
+        internal DataProductInformation()
+        {
         }
 
         /// <summary> Name of data product. </summary>

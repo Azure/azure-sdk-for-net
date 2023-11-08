@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A List of databases. </summary>
     internal partial class PostgreSqlDatabaseListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlDatabaseListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlDatabaseListResult"/>. </summary>
         internal PostgreSqlDatabaseListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlDatabaseListResult"/>. </summary>
         /// <param name="value"> The list of databases housed in a server. </param>
-        internal PostgreSqlDatabaseListResult(IReadOnlyList<PostgreSqlDatabaseData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlDatabaseListResult(IReadOnlyList<PostgreSqlDatabaseData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of databases housed in a server. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results. </summary>
     internal partial class ListP2SVpnGatewaysResult
     {
-        /// <summary> Initializes a new instance of ListP2SVpnGatewaysResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListP2SVpnGatewaysResult"/>. </summary>
         internal ListP2SVpnGatewaysResult()
         {
             Value = new ChangeTrackingList<P2SVpnGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of ListP2SVpnGatewaysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListP2SVpnGatewaysResult"/>. </summary>
         /// <param name="value"> List of P2SVpnGateways. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListP2SVpnGatewaysResult(IReadOnlyList<P2SVpnGatewayData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListP2SVpnGatewaysResult(IReadOnlyList<P2SVpnGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of P2SVpnGateways. </summary>

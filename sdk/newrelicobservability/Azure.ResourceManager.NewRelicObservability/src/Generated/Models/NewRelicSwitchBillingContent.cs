@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a switch billing Operation. </summary>
     public partial class NewRelicSwitchBillingContent
     {
-        /// <summary> Initializes a new instance of NewRelicSwitchBillingContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicSwitchBillingContent(string userEmail)
@@ -21,6 +25,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/>. </summary>
+        /// <param name="azureResourceId"> Azure resource Id. </param>
+        /// <param name="organizationId"> Organization id. </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicSwitchBillingContent(ResourceIdentifier azureResourceId, string organizationId, NewRelicPlanDetails planData, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AzureResourceId = azureResourceId;
+            OrganizationId = organizationId;
+            PlanData = planData;
+            UserEmail = userEmail;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/> for deserialization. </summary>
+        internal NewRelicSwitchBillingContent()
+        {
         }
 
         /// <summary> Azure resource Id. </summary>

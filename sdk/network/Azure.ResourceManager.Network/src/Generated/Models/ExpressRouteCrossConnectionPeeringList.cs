@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCrossConnection. </summary>
     internal partial class ExpressRouteCrossConnectionPeeringList
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringList"/>. </summary>
         internal ExpressRouteCrossConnectionPeeringList()
         {
             Value = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringList"/>. </summary>
         /// <param name="value"> The peerings in an express route cross connection. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ExpressRouteCrossConnectionPeeringList(IReadOnlyList<ExpressRouteCrossConnectionPeeringData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCrossConnectionPeeringList(IReadOnlyList<ExpressRouteCrossConnectionPeeringData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The peerings in an express route cross connection. </summary>

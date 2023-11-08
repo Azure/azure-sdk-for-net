@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Connectivity group item. </summary>
     public partial class ConnectivityGroupItem
     {
-        /// <summary> Initializes a new instance of ConnectivityGroupItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityGroupItem"/>. </summary>
         /// <param name="networkGroupId"> Network group Id. </param>
         /// <param name="groupConnectivity"> Group connectivity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
@@ -25,17 +29,24 @@ namespace Azure.ResourceManager.Network.Models
             GroupConnectivity = groupConnectivity;
         }
 
-        /// <summary> Initializes a new instance of ConnectivityGroupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityGroupItem"/>. </summary>
         /// <param name="networkGroupId"> Network group Id. </param>
         /// <param name="useHubGateway"> Flag if need to use hub gateway. </param>
         /// <param name="isGlobal"> Flag if global is supported. </param>
         /// <param name="groupConnectivity"> Group connectivity type. </param>
-        internal ConnectivityGroupItem(string networkGroupId, HubGatewayUsageFlag? useHubGateway, GlobalMeshSupportFlag? isGlobal, GroupConnectivity groupConnectivity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityGroupItem(string networkGroupId, HubGatewayUsageFlag? useHubGateway, GlobalMeshSupportFlag? isGlobal, GroupConnectivity groupConnectivity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkGroupId = networkGroupId;
             UseHubGateway = useHubGateway;
             IsGlobal = isGlobal;
             GroupConnectivity = groupConnectivity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityGroupItem"/> for deserialization. </summary>
+        internal ConnectivityGroupItem()
+        {
         }
 
         /// <summary> Network group Id. </summary>

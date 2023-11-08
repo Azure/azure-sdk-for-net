@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Autoscale notification. </summary>
     public partial class AutoscaleNotification
     {
-        /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleNotification"/>. </summary>
         public AutoscaleNotification()
         {
             Operation = MonitorOperationType.Scale;
             Webhooks = new ChangeTrackingList<WebhookNotification>();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleNotification"/>. </summary>
         /// <param name="operation"> the operation associated with the notification and its value must be "scale". </param>
         /// <param name="email"> the email notification. </param>
         /// <param name="webhooks"> the collection of webhook notifications. </param>
-        internal AutoscaleNotification(MonitorOperationType operation, EmailNotification email, IList<WebhookNotification> webhooks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleNotification(MonitorOperationType operation, EmailNotification email, IList<WebhookNotification> webhooks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Operation = operation;
             Email = email;
             Webhooks = webhooks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> the email notification. </summary>
         public EmailNotification Email { get; set; }

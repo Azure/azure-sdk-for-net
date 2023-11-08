@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderAuthentication. </summary>
     internal partial class ResourceProviderAuthentication
     {
-        /// <summary> Initializes a new instance of ResourceProviderAuthentication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthentication"/>. </summary>
         /// <param name="allowedAudiences"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ResourceProviderAuthentication(IEnumerable<string> allowedAudiences)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
             AllowedAudiences = allowedAudiences.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthentication"/>. </summary>
         /// <param name="allowedAudiences"></param>
-        internal ResourceProviderAuthentication(IList<string> allowedAudiences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderAuthentication(IList<string> allowedAudiences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedAudiences = allowedAudiences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthentication"/> for deserialization. </summary>
+        internal ResourceProviderAuthentication()
+        {
         }
 
         /// <summary> Gets the allowed audiences. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The peering service location. </summary>
     public partial class PeeringServiceLocation : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringServiceLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceLocation"/>. </summary>
         public PeeringServiceLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceLocation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +31,13 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="country"> Country of the customer. </param>
         /// <param name="state"> State of the customer. </param>
         /// <param name="azureRegion"> Azure region for the location. </param>
-        internal PeeringServiceLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string country, string state, AzureLocation? azureRegion) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServiceLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string country, string state, AzureLocation? azureRegion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Country = country;
             State = state;
             AzureRegion = azureRegion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Country of the customer. </summary>

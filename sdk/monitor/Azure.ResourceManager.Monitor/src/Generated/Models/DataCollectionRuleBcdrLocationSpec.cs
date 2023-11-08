@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleBcdrLocationSpec. </summary>
     public partial class DataCollectionRuleBcdrLocationSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrLocationSpec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrLocationSpec"/>. </summary>
         internal DataCollectionRuleBcdrLocationSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrLocationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrLocationSpec"/>. </summary>
         /// <param name="location"> Name of location. </param>
         /// <param name="provisioningStatus"> The resource provisioning state in this location. </param>
-        internal DataCollectionRuleBcdrLocationSpec(AzureLocation? location, DataCollectionRuleBcdrLocationSpecProvisioningStatus? provisioningStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleBcdrLocationSpec(AzureLocation? location, DataCollectionRuleBcdrLocationSpecProvisioningStatus? provisioningStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             ProvisioningStatus = provisioningStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of location. </summary>

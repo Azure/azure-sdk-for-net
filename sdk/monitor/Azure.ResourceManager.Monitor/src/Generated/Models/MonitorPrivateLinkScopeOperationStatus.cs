@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The status of operation. </summary>
     public partial class MonitorPrivateLinkScopeOperationStatus
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeOperationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeOperationStatus"/>. </summary>
         internal MonitorPrivateLinkScopeOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeOperationStatus"/>. </summary>
         /// <param name="id"> The operation Id. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="startOn"> Start time of the job in standard ISO8601 format. </param>
         /// <param name="endOn"> End time of the job in standard ISO8601 format. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error detail of the operation if any. </param>
-        internal MonitorPrivateLinkScopeOperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorPrivateLinkScopeOperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             EndOn = endOn;
             Status = status;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation Id. </summary>

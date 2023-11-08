@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> BackupRequestBase is the base for all backup request. </summary>
     public partial class MySqlFlexibleServerBackupContentBase
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupContentBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupContentBase"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public MySqlFlexibleServerBackupContentBase(MySqlFlexibleServerBackupSettings backupSettings)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
 
             BackupSettings = backupSettings;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupContentBase"/>. </summary>
+        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerBackupContentBase(MySqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BackupSettings = backupSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupContentBase"/> for deserialization. </summary>
+        internal MySqlFlexibleServerBackupContentBase()
+        {
         }
 
         /// <summary> Backup Settings. </summary>

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteServiceProviderBandwidthsOffered : IUtf8JsonSerializable
+    public partial class ExpressRouteServiceProviderBandwidthsOffered : IUtf8JsonSerializable, IJsonModel<ExpressRouteServiceProviderBandwidthsOffered>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteServiceProviderBandwidthsOffered>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ExpressRouteServiceProviderBandwidthsOffered>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferName))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("valueInMbps"u8);
                 writer.WriteNumberValue(ValueInMbps.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteServiceProviderBandwidthsOffered DeserializeExpressRouteServiceProviderBandwidthsOffered(JsonElement element)
+        ExpressRouteServiceProviderBandwidthsOffered IJsonModel<ExpressRouteServiceProviderBandwidthsOffered>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteServiceProviderBandwidthsOffered)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteServiceProviderBandwidthsOffered(document.RootElement, options);
+        }
+
+        internal static ExpressRouteServiceProviderBandwidthsOffered DeserializeExpressRouteServiceProviderBandwidthsOffered(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> offerName = default;
             Optional<int> valueInMbps = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerName"u8))
@@ -52,8 +89,38 @@ namespace Azure.ResourceManager.Network.Models
                     valueInMbps = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExpressRouteServiceProviderBandwidthsOffered(offerName.Value, Optional.ToNullable(valueInMbps));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExpressRouteServiceProviderBandwidthsOffered(offerName.Value, Optional.ToNullable(valueInMbps), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ExpressRouteServiceProviderBandwidthsOffered>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteServiceProviderBandwidthsOffered)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExpressRouteServiceProviderBandwidthsOffered IModel<ExpressRouteServiceProviderBandwidthsOffered>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteServiceProviderBandwidthsOffered)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExpressRouteServiceProviderBandwidthsOffered(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ExpressRouteServiceProviderBandwidthsOffered>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

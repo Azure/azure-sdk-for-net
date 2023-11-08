@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
     public partial class MonitorMetricDefinition
     {
-        /// <summary> Initializes a new instance of MonitorMetricDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricDefinition"/>. </summary>
         internal MonitorMetricDefinition()
         {
             SupportedAggregationTypes = new ChangeTrackingList<MonitorAggregationType>();
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = new ChangeTrackingList<MonitorLocalizableString>();
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricDefinition"/>. </summary>
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
         /// <param name="resourceId"> the resource identifier of the resource that emitted the metric. </param>
         /// <param name="namespace"> the namespace the metric belongs to. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricAvailabilities"> the collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> the resource identifier of the metric definition. </param>
         /// <param name="dimensions"> the name and the display name of the dimension, i.e. it is a localizable string. </param>
-        internal MonitorMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, MonitorLocalizableString name, string displayDescription, string category, MonitorMetricClass? metricClass, MonitorMetricUnit? unit, MonitorAggregationType? primaryAggregationType, IReadOnlyList<MonitorAggregationType> supportedAggregationTypes, IReadOnlyList<MonitorMetricAvailability> metricAvailabilities, string id, IReadOnlyList<MonitorLocalizableString> dimensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, MonitorLocalizableString name, string displayDescription, string category, MonitorMetricClass? metricClass, MonitorMetricUnit? unit, MonitorAggregationType? primaryAggregationType, IReadOnlyList<MonitorAggregationType> supportedAggregationTypes, IReadOnlyList<MonitorMetricAvailability> metricAvailabilities, string id, IReadOnlyList<MonitorLocalizableString> dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MetricAvailabilities = metricAvailabilities;
             Id = id;
             Dimensions = dimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag to indicate whether the dimension is required. </summary>

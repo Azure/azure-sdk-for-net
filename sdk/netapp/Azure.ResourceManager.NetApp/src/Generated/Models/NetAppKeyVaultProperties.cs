@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Properties of key vault. </summary>
     public partial class NetAppKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
@@ -29,19 +33,26 @@ namespace Azure.ResourceManager.NetApp.Models
             KeyVaultResourceId = keyVaultResourceId;
         }
 
-        /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <param name="status"> Status of the KeyVault connection. </param>
-        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, NetAppKeyVaultStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, NetAppKeyVaultStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
             KeyVaultResourceId = keyVaultResourceId;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/> for deserialization. </summary>
+        internal NetAppKeyVaultProperties()
+        {
         }
 
         /// <summary> UUID v4 used to identify the Azure Key Vault configuration. </summary>

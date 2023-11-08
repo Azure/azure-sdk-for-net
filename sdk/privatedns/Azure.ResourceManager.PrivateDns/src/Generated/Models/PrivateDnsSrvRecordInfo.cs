@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> An SRV record. </summary>
     public partial class PrivateDnsSrvRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsSrvRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsSrvRecordInfo"/>. </summary>
         public PrivateDnsSrvRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsSrvRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsSrvRecordInfo"/>. </summary>
         /// <param name="priority"> The priority value for this SRV record. </param>
         /// <param name="weight"> The weight value for this SRV record. </param>
         /// <param name="port"> The port value for this SRV record. </param>
         /// <param name="target"> The target domain name for this SRV record. </param>
-        internal PrivateDnsSrvRecordInfo(int? priority, int? weight, int? port, string target)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsSrvRecordInfo(int? priority, int? weight, int? port, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Priority = priority;
             Weight = weight;
             Port = port;
             Target = target;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The priority value for this SRV record. </summary>

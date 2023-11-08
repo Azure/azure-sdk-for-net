@@ -5,29 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log. </summary>
     public partial class LogSettings
     {
-        /// <summary> Initializes a new instance of LogSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
         /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
         public LogSettings(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of LogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
         /// <param name="category"> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
         /// <param name="categoryGroup"> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
         /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
         /// <param name="retentionPolicy"> the retention policy for this log. </param>
-        internal LogSettings(string category, string categoryGroup, bool isEnabled, RetentionPolicy retentionPolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogSettings(string category, string categoryGroup, bool isEnabled, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             CategoryGroup = categoryGroup;
             IsEnabled = isEnabled;
             RetentionPolicy = retentionPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/> for deserialization. </summary>
+        internal LogSettings()
+        {
         }
 
         /// <summary> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxStorageAccount. </summary>
     public partial class NginxStorageAccount
     {
-        /// <summary> Initializes a new instance of NginxStorageAccount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxStorageAccount"/>. </summary>
         public NginxStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxStorageAccount"/>. </summary>
         /// <param name="accountName"></param>
         /// <param name="containerName"></param>
-        internal NginxStorageAccount(string accountName, string containerName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxStorageAccount(string accountName, string containerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountName = accountName;
             ContainerName = containerName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the account name. </summary>

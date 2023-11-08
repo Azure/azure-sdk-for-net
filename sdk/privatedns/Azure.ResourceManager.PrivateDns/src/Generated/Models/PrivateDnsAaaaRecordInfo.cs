@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.PrivateDns.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> An AAAA record. </summary>
     public partial class PrivateDnsAaaaRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsAaaaRecordInfo"/>. </summary>
         public PrivateDnsAaaaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsAaaaRecordInfo"/>. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        internal PrivateDnsAaaaRecordInfo(IPAddress ipv6Address)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsAaaaRecordInfo(IPAddress ipv6Address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPv6Address = ipv6Address;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IPv6 address of this AAAA record. </summary>

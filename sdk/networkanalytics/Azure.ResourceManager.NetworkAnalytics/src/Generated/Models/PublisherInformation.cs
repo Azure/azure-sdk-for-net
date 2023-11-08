@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details for Publisher Information. </summary>
     public partial class PublisherInformation
     {
-        /// <summary> Initializes a new instance of PublisherInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublisherInformation"/>. </summary>
         /// <param name="publisherName"> Name of the publisher. </param>
         /// <param name="dataProducts"> Data product information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="dataProducts"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             DataProducts = dataProducts.ToList();
         }
 
-        /// <summary> Initializes a new instance of PublisherInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherInformation"/>. </summary>
         /// <param name="publisherName"> Name of the publisher. </param>
         /// <param name="dataProducts"> Data product information. </param>
-        internal PublisherInformation(string publisherName, IList<DataProductInformation> dataProducts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublisherInformation(string publisherName, IList<DataProductInformation> dataProducts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublisherName = publisherName;
             DataProducts = dataProducts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PublisherInformation"/> for deserialization. </summary>
+        internal PublisherInformation()
+        {
         }
 
         /// <summary> Name of the publisher. </summary>

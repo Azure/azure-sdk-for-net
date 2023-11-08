@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP Configuration of a VPN Gateway Resource. </summary>
     public partial class VpnGatewayIPConfiguration
     {
-        /// <summary> Initializes a new instance of VpnGatewayIPConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayIPConfiguration"/>. </summary>
         internal VpnGatewayIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnGatewayIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> The identifier of the IP configuration for a VPN Gateway. </param>
         /// <param name="publicIPAddress"> The public IP address of this IP configuration. </param>
         /// <param name="privateIPAddress"> The private IP address of this IP configuration. </param>
-        internal VpnGatewayIPConfiguration(ResourceIdentifier id, string publicIPAddress, string privateIPAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnGatewayIPConfiguration(ResourceIdentifier id, string publicIPAddress, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PublicIPAddress = publicIPAddress;
             PrivateIPAddress = privateIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identifier of the IP configuration for a VPN Gateway. </summary>

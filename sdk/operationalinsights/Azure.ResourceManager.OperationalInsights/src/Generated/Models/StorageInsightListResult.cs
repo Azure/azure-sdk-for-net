@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list storage insights operation response. </summary>
     internal partial class StorageInsightListResult
     {
-        /// <summary> Initializes a new instance of StorageInsightListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageInsightListResult"/>. </summary>
         internal StorageInsightListResult()
         {
             Value = new ChangeTrackingList<StorageInsightData>();
         }
 
-        /// <summary> Initializes a new instance of StorageInsightListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageInsightListResult"/>. </summary>
         /// <param name="value"> A list of storage insight items. </param>
         /// <param name="odataNextLink"> The link (url) to the next page of results. </param>
-        internal StorageInsightListResult(IReadOnlyList<StorageInsightData> value, string odataNextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageInsightListResult(IReadOnlyList<StorageInsightData> value, string odataNextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             OdataNextLink = odataNextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of storage insight items. </summary>

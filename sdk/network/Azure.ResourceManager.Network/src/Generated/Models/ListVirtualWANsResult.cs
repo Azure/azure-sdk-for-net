@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVirtualWANsResult
     {
-        /// <summary> Initializes a new instance of ListVirtualWANsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListVirtualWANsResult"/>. </summary>
         internal ListVirtualWANsResult()
         {
             Value = new ChangeTrackingList<VirtualWanData>();
         }
 
-        /// <summary> Initializes a new instance of ListVirtualWANsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualWANsResult"/>. </summary>
         /// <param name="value"> List of VirtualWANs. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListVirtualWANsResult(IReadOnlyList<VirtualWanData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListVirtualWANsResult(IReadOnlyList<VirtualWanData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of VirtualWANs. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class PostgreSqlPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
         internal PostgreSqlPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal PostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<PostgreSqlPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<PostgreSqlPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of results. </summary>

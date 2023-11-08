@@ -5,15 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class StorageApplianceSkuSlot
+    public partial class StorageApplianceSkuSlot : IUtf8JsonSerializable, IJsonModel<StorageApplianceSkuSlot>
     {
-        internal static StorageApplianceSkuSlot DeserializeStorageApplianceSkuSlot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageApplianceSkuSlot>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<StorageApplianceSkuSlot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RackSlot))
+                {
+                    writer.WritePropertyName("rackSlot"u8);
+                    writer.WriteNumberValue(RackSlot.Value);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CapacityGB))
+                {
+                    writer.WritePropertyName("capacityGB"u8);
+                    writer.WriteNumberValue(CapacityGB.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Model))
+                {
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(Model);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageApplianceSkuSlot IJsonModel<StorageApplianceSkuSlot>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageApplianceSkuSlot(document.RootElement, options);
+        }
+
+        internal static StorageApplianceSkuSlot DeserializeStorageApplianceSkuSlot(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +89,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<long> rackSlot = default;
             Optional<long> capacityGB = default;
             Optional<string> model = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rackSlot"u8))
@@ -58,8 +128,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageApplianceSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(capacityGB), model.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageApplianceSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(capacityGB), model.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<StorageApplianceSkuSlot>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StorageApplianceSkuSlot IModel<StorageApplianceSkuSlot>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStorageApplianceSkuSlot(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<StorageApplianceSkuSlot>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

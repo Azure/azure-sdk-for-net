@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ExpressRouteLink Mac Security Configuration. </summary>
     public partial class ExpressRouteLinkMacSecConfig
     {
-        /// <summary> Initializes a new instance of ExpressRouteLinkMacSecConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkMacSecConfig"/>. </summary>
         public ExpressRouteLinkMacSecConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteLinkMacSecConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkMacSecConfig"/>. </summary>
         /// <param name="cknSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CKN key. </param>
         /// <param name="cakSecretIdentifier"> Keyvault Secret Identifier URL containing Mac security CAK key. </param>
         /// <param name="cipher"> Mac security cipher. </param>
         /// <param name="sciState"> Sci mode enabled/disabled. </param>
-        internal ExpressRouteLinkMacSecConfig(string cknSecretIdentifier, string cakSecretIdentifier, ExpressRouteLinkMacSecCipher? cipher, ExpressRouteLinkMacSecSciState? sciState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteLinkMacSecConfig(string cknSecretIdentifier, string cakSecretIdentifier, ExpressRouteLinkMacSecCipher? cipher, ExpressRouteLinkMacSecSciState? sciState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CknSecretIdentifier = cknSecretIdentifier;
             CakSecretIdentifier = cakSecretIdentifier;
             Cipher = cipher;
             SciState = sciState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Keyvault Secret Identifier URL containing Mac security CKN key. </summary>

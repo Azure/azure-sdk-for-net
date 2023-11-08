@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Group Id list for Ldap user. </summary>
     public partial class GetGroupIdListForLdapUserResult
     {
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserResult"/>. </summary>
         internal GetGroupIdListForLdapUserResult()
         {
             GroupIdsForLdapUser = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserResult"/>. </summary>
         /// <param name="groupIdsForLdapUser"> Group Id list. </param>
-        internal GetGroupIdListForLdapUserResult(IReadOnlyList<string> groupIdsForLdapUser)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetGroupIdListForLdapUserResult(IReadOnlyList<string> groupIdsForLdapUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupIdsForLdapUser = groupIdsForLdapUser;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Group Id list. </summary>

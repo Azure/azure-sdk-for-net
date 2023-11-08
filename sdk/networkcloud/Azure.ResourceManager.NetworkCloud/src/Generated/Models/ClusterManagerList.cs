@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterManagerList represents a list of cluster manager objects. </summary>
     internal partial class ClusterManagerList
     {
-        /// <summary> Initializes a new instance of ClusterManagerList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterManagerList"/>. </summary>
         internal ClusterManagerList()
         {
             Value = new ChangeTrackingList<NetworkCloudClusterManagerData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterManagerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterManagerList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of cluster managers. </param>
-        internal ClusterManagerList(string nextLink, IReadOnlyList<NetworkCloudClusterManagerData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterManagerList(string nextLink, IReadOnlyList<NetworkCloudClusterManagerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of operations. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Declaration of a custom stream. </summary>
     public partial class DataStreamDeclaration
     {
-        /// <summary> Initializes a new instance of DataStreamDeclaration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataStreamDeclaration"/>. </summary>
         public DataStreamDeclaration()
         {
             Columns = new ChangeTrackingList<DataColumnDefinition>();
         }
 
-        /// <summary> Initializes a new instance of DataStreamDeclaration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStreamDeclaration"/>. </summary>
         /// <param name="columns"> List of columns used by data in this stream. </param>
-        internal DataStreamDeclaration(IList<DataColumnDefinition> columns)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataStreamDeclaration(IList<DataColumnDefinition> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Columns = columns;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of columns used by data in this stream. </summary>

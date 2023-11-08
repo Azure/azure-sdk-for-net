@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Describes the list of Log Analytics QueryPack resources. </summary>
     internal partial class LogAnalyticsQueryPackListResult
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackListResult"/>. </summary>
         /// <param name="value"> List of Log Analytics QueryPack definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LogAnalyticsQueryPackListResult(IEnumerable<LogAnalyticsQueryPackData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackListResult"/>. </summary>
         /// <param name="value"> List of Log Analytics QueryPack definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Log Analytics QueryPack definitions if too many QueryPacks where returned in the result set. </param>
-        internal LogAnalyticsQueryPackListResult(IReadOnlyList<LogAnalyticsQueryPackData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogAnalyticsQueryPackListResult(IReadOnlyList<LogAnalyticsQueryPackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackListResult"/> for deserialization. </summary>
+        internal LogAnalyticsQueryPackListResult()
+        {
         }
 
         /// <summary> List of Log Analytics QueryPack definitions. </summary>

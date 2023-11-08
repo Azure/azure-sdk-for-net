@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.Monitor.Query.Models
     /// <summary> A time series result type. The discriminator value is always TimeSeries in this case. </summary>
     public partial class QueryBatchTimeSeriesElement
     {
-        /// <summary> Initializes a new instance of QueryBatchTimeSeriesElement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryBatchTimeSeriesElement"/>. </summary>
         internal QueryBatchTimeSeriesElement()
         {
             Metadatavalues = new ChangeTrackingList<QueryBatchMetadataValue>();
             Data = new ChangeTrackingList<QueryBatchMetricValue>();
         }
 
-        /// <summary> Initializes a new instance of QueryBatchTimeSeriesElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchTimeSeriesElement"/>. </summary>
         /// <param name="metadatavalues"> The metadata values returned if filter was specified in the call. </param>
         /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
-        internal QueryBatchTimeSeriesElement(IReadOnlyList<QueryBatchMetadataValue> metadatavalues, IReadOnlyList<QueryBatchMetricValue> data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryBatchTimeSeriesElement(IReadOnlyList<QueryBatchMetadataValue> metadatavalues, IReadOnlyList<QueryBatchMetricValue> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metadatavalues = metadatavalues;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The metadata values returned if filter was specified in the call. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,11 +15,48 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Backup policy Details for create and update. </summary>
     public partial class NetAppBackupPolicyPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppBackupPolicyPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyPatch(AzureLocation location) : base(location)
         {
             VolumeBackups = new ChangeTrackingList<NetAppVolumeBackupDetail>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
+        /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
+        /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
+        /// <param name="volumesAssigned"> Volumes using current backup policy. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppBackupPolicyPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        {
+            BackupPolicyId = backupPolicyId;
+            ProvisioningState = provisioningState;
+            DailyBackupsToKeep = dailyBackupsToKeep;
+            WeeklyBackupsToKeep = weeklyBackupsToKeep;
+            MonthlyBackupsToKeep = monthlyBackupsToKeep;
+            VolumesAssigned = volumesAssigned;
+            IsEnabled = isEnabled;
+            VolumeBackups = volumeBackups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/> for deserialization. </summary>
+        internal NetAppBackupPolicyPatch()
+        {
         }
 
         /// <summary> Backup Policy Resource ID. </summary>

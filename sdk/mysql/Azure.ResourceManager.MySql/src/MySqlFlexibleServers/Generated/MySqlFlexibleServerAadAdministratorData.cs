@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerAadAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorData"/>. </summary>
         public MySqlFlexibleServerAadAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,13 +37,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="sid"> SID (object ID) of the server administrator. </param>
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
-        internal MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerAdministratorType? administratorType, string login, string sid, Guid? tenantId, ResourceIdentifier identityResourceId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerAdministratorType? administratorType, string login, string sid, Guid? tenantId, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             Login = login;
             Sid = sid;
             TenantId = tenantId;
             IdentityResourceId = identityResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the sever administrator. </summary>

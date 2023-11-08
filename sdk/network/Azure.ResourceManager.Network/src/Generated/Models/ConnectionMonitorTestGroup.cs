@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the connection monitor test group. </summary>
     public partial class ConnectionMonitorTestGroup
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTestGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestGroup"/>. </summary>
         /// <param name="name"> The name of the connection monitor test group. </param>
         /// <param name="testConfigurations"> List of test configuration names. </param>
         /// <param name="sources"> List of source endpoint names. </param>
@@ -34,19 +37,26 @@ namespace Azure.ResourceManager.Network.Models
             Destinations = destinations.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTestGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestGroup"/>. </summary>
         /// <param name="name"> The name of the connection monitor test group. </param>
         /// <param name="disable"> Value indicating whether test group is disabled. </param>
         /// <param name="testConfigurations"> List of test configuration names. </param>
         /// <param name="sources"> List of source endpoint names. </param>
         /// <param name="destinations"> List of destination endpoint names. </param>
-        internal ConnectionMonitorTestGroup(string name, bool? disable, IList<string> testConfigurations, IList<string> sources, IList<string> destinations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorTestGroup(string name, bool? disable, IList<string> testConfigurations, IList<string> sources, IList<string> destinations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Disable = disable;
             TestConfigurations = testConfigurations;
             Sources = sources;
             Destinations = destinations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestGroup"/> for deserialization. </summary>
+        internal ConnectionMonitorTestGroup()
+        {
         }
 
         /// <summary> The name of the connection monitor test group. </summary>

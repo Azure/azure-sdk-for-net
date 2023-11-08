@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Application Insights key. </summary>
     public partial class FirewallApplicationInsights
     {
-        /// <summary> Initializes a new instance of FirewallApplicationInsights. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallApplicationInsights"/>. </summary>
         public FirewallApplicationInsights()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallApplicationInsights. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallApplicationInsights"/>. </summary>
         /// <param name="id"> Resource id for Application Insights. </param>
         /// <param name="key"> Application Insights key. </param>
-        internal FirewallApplicationInsights(string id, string key)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallApplicationInsights(string id, string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Key = key;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource id for Application Insights. </summary>

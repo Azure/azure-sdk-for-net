@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of connection states snapshots. </summary>
     public partial class ConnectionMonitorQueryResult
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorQueryResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorQueryResult"/>. </summary>
         internal ConnectionMonitorQueryResult()
         {
             States = new ChangeTrackingList<ConnectionStateSnapshot>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorQueryResult"/>. </summary>
         /// <param name="sourceStatus"> Status of connection monitor source. </param>
         /// <param name="states"> Information about connection states. </param>
-        internal ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus, IReadOnlyList<ConnectionStateSnapshot> states)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus, IReadOnlyList<ConnectionStateSnapshot> states, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceStatus = sourceStatus;
             States = states;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status of connection monitor source. </summary>

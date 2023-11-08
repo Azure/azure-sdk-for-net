@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the resource to troubleshoot. </summary>
     public partial class TroubleshootingContent
     {
-        /// <summary> Initializes a new instance of TroubleshootingContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
         /// <param name="storageId"> The ID for the storage account to save the troubleshoot result. </param>
         /// <param name="storageUri"> The path to the blob to save the troubleshoot result in. </param>
@@ -27,6 +31,24 @@ namespace Azure.ResourceManager.Network.Models
             TargetResourceId = targetResourceId;
             StorageId = storageId;
             StorageUri = storageUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/>. </summary>
+        /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
+        /// <param name="storageId"> The ID for the storage account to save the troubleshoot result. </param>
+        /// <param name="storageUri"> The path to the blob to save the troubleshoot result in. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetResourceId = targetResourceId;
+            StorageId = storageId;
+            StorageUri = storageUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingContent"/> for deserialization. </summary>
+        internal TroubleshootingContent()
+        {
         }
 
         /// <summary> The target resource to troubleshoot. </summary>

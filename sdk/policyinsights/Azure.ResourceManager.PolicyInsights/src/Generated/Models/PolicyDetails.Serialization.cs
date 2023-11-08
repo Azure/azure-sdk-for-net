@@ -5,15 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyDetails
+    public partial class PolicyDetails : IUtf8JsonSerializable, IJsonModel<PolicyDetails>
     {
-        internal static PolicyDetails DeserializePolicyDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PolicyDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicyDefinitionId))
+                {
+                    writer.WritePropertyName("policyDefinitionId"u8);
+                    writer.WriteStringValue(PolicyDefinitionId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicyAssignmentId))
+                {
+                    writer.WritePropertyName("policyAssignmentId"u8);
+                    writer.WriteStringValue(PolicyAssignmentId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicyAssignmentDisplayName))
+                {
+                    writer.WritePropertyName("policyAssignmentDisplayName"u8);
+                    writer.WriteStringValue(PolicyAssignmentDisplayName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicyAssignmentScope))
+                {
+                    writer.WritePropertyName("policyAssignmentScope"u8);
+                    writer.WriteStringValue(PolicyAssignmentScope);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicySetDefinitionId))
+                {
+                    writer.WritePropertyName("policySetDefinitionId"u8);
+                    writer.WriteStringValue(PolicySetDefinitionId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicyDefinitionReferenceId))
+                {
+                    writer.WritePropertyName("policyDefinitionReferenceId"u8);
+                    writer.WriteStringValue(PolicyDefinitionReferenceId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyDetails IJsonModel<PolicyDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyDetails(document.RootElement, options);
+        }
+
+        internal static PolicyDetails DeserializePolicyDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +113,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> policyAssignmentScope = default;
             Optional<ResourceIdentifier> policySetDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"u8))
@@ -68,8 +159,38 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyDetails(policyDefinitionId.Value, policyAssignmentId.Value, policyAssignmentDisplayName.Value, policyAssignmentScope.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyDetails(policyDefinitionId.Value, policyAssignmentId.Value, policyAssignmentDisplayName.Value, policyAssignmentScope.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<PolicyDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PolicyDetails IModel<PolicyDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePolicyDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PolicyDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

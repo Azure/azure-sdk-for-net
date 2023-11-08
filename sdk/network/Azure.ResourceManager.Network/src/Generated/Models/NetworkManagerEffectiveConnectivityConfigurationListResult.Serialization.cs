@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class NetworkManagerEffectiveConnectivityConfigurationListResult
+    internal partial class NetworkManagerEffectiveConnectivityConfigurationListResult : IUtf8JsonSerializable, IJsonModel<NetworkManagerEffectiveConnectivityConfigurationListResult>
     {
-        internal static NetworkManagerEffectiveConnectivityConfigurationListResult DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerEffectiveConnectivityConfigurationListResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NetworkManagerEffectiveConnectivityConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SkipToken))
+            {
+                writer.WritePropertyName("skipToken"u8);
+                writer.WriteStringValue(SkipToken);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NetworkManagerEffectiveConnectivityConfigurationListResult IJsonModel<NetworkManagerEffectiveConnectivityConfigurationListResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(document.RootElement, options);
+        }
+
+        internal static NetworkManagerEffectiveConnectivityConfigurationListResult DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<EffectiveConnectivityConfiguration>> value = default;
             Optional<string> skipToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +99,38 @@ namespace Azure.ResourceManager.Network.Models
                     skipToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkManagerEffectiveConnectivityConfigurationListResult(Optional.ToList(value), skipToken.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkManagerEffectiveConnectivityConfigurationListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<NetworkManagerEffectiveConnectivityConfigurationListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkManagerEffectiveConnectivityConfigurationListResult IModel<NetworkManagerEffectiveConnectivityConfigurationListResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NetworkManagerEffectiveConnectivityConfigurationListResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

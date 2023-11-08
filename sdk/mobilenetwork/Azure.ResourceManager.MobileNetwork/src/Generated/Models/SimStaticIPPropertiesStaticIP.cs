@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> The static IP configuration for the SIM to use at the defined network scope. </summary>
     internal partial class SimStaticIPPropertiesStaticIP
     {
-        /// <summary> Initializes a new instance of SimStaticIPPropertiesStaticIP. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SimStaticIPPropertiesStaticIP"/>. </summary>
         public SimStaticIPPropertiesStaticIP()
         {
         }
 
-        /// <summary> Initializes a new instance of SimStaticIPPropertiesStaticIP. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimStaticIPPropertiesStaticIP"/>. </summary>
         /// <param name="ipv4Address"> The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network. </param>
-        internal SimStaticIPPropertiesStaticIP(string ipv4Address)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimStaticIPPropertiesStaticIP(string ipv4Address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPv4Address = ipv4Address;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network. </summary>

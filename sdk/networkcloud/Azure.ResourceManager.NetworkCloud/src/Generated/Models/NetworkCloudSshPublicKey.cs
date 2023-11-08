@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
     public partial class NetworkCloudSshPublicKey
     {
-        /// <summary> Initializes a new instance of NetworkCloudSshPublicKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudSshPublicKey"/>. </summary>
         /// <param name="keyData"> The SSH public key data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> is null. </exception>
         public NetworkCloudSshPublicKey(string keyData)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(keyData, nameof(keyData));
 
             KeyData = keyData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudSshPublicKey"/>. </summary>
+        /// <param name="keyData"> The SSH public key data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudSshPublicKey(string keyData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyData = keyData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudSshPublicKey"/> for deserialization. </summary>
+        internal NetworkCloudSshPublicKey()
+        {
         }
 
         /// <summary> The SSH public key data. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The List incidents operation response. </summary>
     internal partial class IncidentListResult
     {
-        /// <summary> Initializes a new instance of IncidentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncidentListResult"/>. </summary>
         internal IncidentListResult()
         {
             Value = new ChangeTrackingList<MonitorIncident>();
         }
 
-        /// <summary> Initializes a new instance of IncidentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentListResult"/>. </summary>
         /// <param name="value"> the incident collection. </param>
-        internal IncidentListResult(IReadOnlyList<MonitorIncident> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncidentListResult(IReadOnlyList<MonitorIncident> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the incident collection. </summary>

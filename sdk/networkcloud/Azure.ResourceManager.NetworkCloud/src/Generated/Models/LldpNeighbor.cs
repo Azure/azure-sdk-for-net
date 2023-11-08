@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> Type Deprecated. Will be removed in an upcoming version. LldpNeighbor represents the details about the device connected to the NIC. </summary>
     public partial class LldpNeighbor
     {
-        /// <summary> Initializes a new instance of LldpNeighbor. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LldpNeighbor"/>. </summary>
         internal LldpNeighbor()
         {
         }
 
-        /// <summary> Initializes a new instance of LldpNeighbor. </summary>
+        /// <summary> Initializes a new instance of <see cref="LldpNeighbor"/>. </summary>
         /// <param name="portDescription"> The descriptive information about the port on the connected device. </param>
         /// <param name="portName"> The system-assigned name of the port on the connected device. </param>
         /// <param name="systemDescription"> The descriptive information about the connected device. </param>
         /// <param name="systemName"> The system-assigned name of the connected device. </param>
-        internal LldpNeighbor(string portDescription, string portName, string systemDescription, string systemName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LldpNeighbor(string portDescription, string portName, string systemDescription, string systemName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PortDescription = portDescription;
             PortName = portName;
             SystemDescription = systemDescription;
             SystemName = systemName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The descriptive information about the port on the connected device. </summary>

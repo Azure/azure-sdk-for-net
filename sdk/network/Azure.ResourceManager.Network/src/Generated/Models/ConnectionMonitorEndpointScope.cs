@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the connection monitor endpoint scope. </summary>
     public partial class ConnectionMonitorEndpointScope
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScope. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointScope"/>. </summary>
         public ConnectionMonitorEndpointScope()
         {
             Include = new ChangeTrackingList<ConnectionMonitorEndpointScopeItem>();
             Exclude = new ChangeTrackingList<ConnectionMonitorEndpointScopeItem>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointScope"/>. </summary>
         /// <param name="include"> List of items which needs to be included to the endpoint scope. </param>
         /// <param name="exclude"> List of items which needs to be excluded from the endpoint scope. </param>
-        internal ConnectionMonitorEndpointScope(IList<ConnectionMonitorEndpointScopeItem> include, IList<ConnectionMonitorEndpointScopeItem> exclude)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorEndpointScope(IList<ConnectionMonitorEndpointScopeItem> include, IList<ConnectionMonitorEndpointScopeItem> exclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Include = include;
             Exclude = exclude;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of items which needs to be included to the endpoint scope. </summary>

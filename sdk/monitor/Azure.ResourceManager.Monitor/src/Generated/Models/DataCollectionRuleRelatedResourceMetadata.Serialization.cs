@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleRelatedResourceMetadata
+    public partial class DataCollectionRuleRelatedResourceMetadata : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleRelatedResourceMetadata>
     {
-        internal static DataCollectionRuleRelatedResourceMetadata DeserializeDataCollectionRuleRelatedResourceMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleRelatedResourceMetadata>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataCollectionRuleRelatedResourceMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisionedBy))
+                {
+                    writer.WritePropertyName("provisionedBy"u8);
+                    writer.WriteStringValue(ProvisionedBy);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisionedByResourceId))
+                {
+                    writer.WritePropertyName("provisionedByResourceId"u8);
+                    writer.WriteStringValue(ProvisionedByResourceId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataCollectionRuleRelatedResourceMetadata IJsonModel<DataCollectionRuleRelatedResourceMetadata>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataCollectionRuleRelatedResourceMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionRuleRelatedResourceMetadata(document.RootElement, options);
+        }
+
+        internal static DataCollectionRuleRelatedResourceMetadata DeserializeDataCollectionRuleRelatedResourceMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> provisionedBy = default;
             Optional<string> provisionedByResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionedBy"u8))
@@ -32,8 +91,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     provisionedByResourceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataCollectionRuleRelatedResourceMetadata(provisionedBy.Value, provisionedByResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataCollectionRuleRelatedResourceMetadata(provisionedBy.Value, provisionedByResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataCollectionRuleRelatedResourceMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataCollectionRuleRelatedResourceMetadata)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataCollectionRuleRelatedResourceMetadata IModel<DataCollectionRuleRelatedResourceMetadata>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataCollectionRuleRelatedResourceMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataCollectionRuleRelatedResourceMetadata(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataCollectionRuleRelatedResourceMetadata>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

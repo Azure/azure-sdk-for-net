@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of platform telemetry data source configuration. </summary>
     public partial class PlatformTelemetryDataSource
     {
-        /// <summary> Initializes a new instance of PlatformTelemetryDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlatformTelemetryDataSource"/>. </summary>
         /// <param name="streams"> List of platform telemetry streams to collect. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public PlatformTelemetryDataSource(IEnumerable<string> streams)
@@ -25,16 +28,23 @@ namespace Azure.ResourceManager.Monitor.Models
             Streams = streams.ToList();
         }
 
-        /// <summary> Initializes a new instance of PlatformTelemetryDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlatformTelemetryDataSource"/>. </summary>
         /// <param name="streams"> List of platform telemetry streams to collect. </param>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal PlatformTelemetryDataSource(IList<string> streams, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlatformTelemetryDataSource(IList<string> streams, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Streams = streams;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlatformTelemetryDataSource"/> for deserialization. </summary>
+        internal PlatformTelemetryDataSource()
+        {
         }
 
         /// <summary> List of platform telemetry streams to collect. </summary>

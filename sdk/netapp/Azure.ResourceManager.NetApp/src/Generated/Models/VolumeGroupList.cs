@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of volume group resources. </summary>
     internal partial class VolumeGroupList
     {
-        /// <summary> Initializes a new instance of VolumeGroupList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
         internal VolumeGroupList()
         {
             Value = new ChangeTrackingList<NetAppVolumeGroupResult>();
         }
 
-        /// <summary> Initializes a new instance of VolumeGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
         /// <param name="value"> List of volume Groups. </param>
-        internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupResult> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of volume Groups. </summary>

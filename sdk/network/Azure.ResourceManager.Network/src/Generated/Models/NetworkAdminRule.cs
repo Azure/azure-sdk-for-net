@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network admin rule. </summary>
     public partial class NetworkAdminRule : BaseAdminRuleData
     {
-        /// <summary> Initializes a new instance of NetworkAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
         public NetworkAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -27,13 +27,14 @@ namespace Azure.ResourceManager.Network.Models
             Kind = AdminRuleKind.Custom;
         }
 
-        /// <summary> Initializes a new instance of NetworkAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="sources"> The CIDR or source IP ranges. </param>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, string description, SecurityConfigurationRuleProtocol? protocol, IList<AddressPrefixItem> sources, IList<AddressPrefixItem> destinations, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, kind, etag)
+        internal NetworkAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, SecurityConfigurationRuleProtocol? protocol, IList<AddressPrefixItem> sources, IList<AddressPrefixItem> destinations, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Description = description;
             Protocol = protocol;

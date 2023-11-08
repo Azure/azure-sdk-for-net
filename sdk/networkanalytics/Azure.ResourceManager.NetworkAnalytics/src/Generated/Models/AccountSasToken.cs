@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details of storage account sas token . </summary>
     public partial class AccountSasToken
     {
-        /// <summary> Initializes a new instance of AccountSasToken. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasToken"/>. </summary>
         /// <param name="storageAccountSasToken"> Field to specify storage account sas token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountSasToken"/> is null. </exception>
         internal AccountSasToken(string storageAccountSasToken)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Argument.AssertNotNull(storageAccountSasToken, nameof(storageAccountSasToken));
 
             StorageAccountSasToken = storageAccountSasToken;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasToken"/>. </summary>
+        /// <param name="storageAccountSasToken"> Field to specify storage account sas token. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountSasToken(string storageAccountSasToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageAccountSasToken = storageAccountSasToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasToken"/> for deserialization. </summary>
+        internal AccountSasToken()
+        {
         }
 
         /// <summary> Field to specify storage account sas token. </summary>

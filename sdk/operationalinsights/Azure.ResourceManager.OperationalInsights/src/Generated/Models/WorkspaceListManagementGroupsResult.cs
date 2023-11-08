@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list workspace management groups operation response. </summary>
     internal partial class WorkspaceListManagementGroupsResult
     {
-        /// <summary> Initializes a new instance of WorkspaceListManagementGroupsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListManagementGroupsResult"/>. </summary>
         internal WorkspaceListManagementGroupsResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsManagementGroup>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceListManagementGroupsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListManagementGroupsResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of management groups attached to the workspace. </param>
-        internal WorkspaceListManagementGroupsResult(IReadOnlyList<OperationalInsightsManagementGroup> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceListManagementGroupsResult(IReadOnlyList<OperationalInsightsManagementGroup> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of management groups attached to the workspace. </summary>

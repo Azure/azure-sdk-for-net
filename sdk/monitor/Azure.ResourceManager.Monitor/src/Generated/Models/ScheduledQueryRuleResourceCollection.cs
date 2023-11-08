@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Monitor;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of scheduled query rule resources. </summary>
     internal partial class ScheduledQueryRuleResourceCollection
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleResourceCollection"/>. </summary>
         internal ScheduledQueryRuleResourceCollection()
         {
             Value = new ChangeTrackingList<ScheduledQueryRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleResourceCollection"/>. </summary>
         /// <param name="value"> The values for the scheduled query rule resources. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
-        internal ScheduledQueryRuleResourceCollection(IReadOnlyList<ScheduledQueryRuleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledQueryRuleResourceCollection(IReadOnlyList<ScheduledQueryRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The values for the scheduled query rule resources. </summary>

@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Profile Response for package generation. </summary>
     public partial class VpnProfileResponse
     {
-        /// <summary> Initializes a new instance of VpnProfileResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnProfileResponse"/>. </summary>
         internal VpnProfileResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnProfileResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnProfileResponse"/>. </summary>
         /// <param name="profileUri"> URL to the VPN profile. </param>
-        internal VpnProfileResponse(Uri profileUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnProfileResponse(Uri profileUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProfileUri = profileUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URL to the VPN profile. </summary>

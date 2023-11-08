@@ -6,12 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> Representation of a single embeddings relatedness comparison. </summary>
     public partial class EmbeddingItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingItem"/>. </summary>
+        /// <param name="embedding">
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
+        /// </param>
+        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmbeddingItem(ReadOnlyMemory<float> embedding, int index, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Embedding = embedding;
+            Index = index;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingItem"/> for deserialization. </summary>
+        internal EmbeddingItem()
+        {
+        }
         /// <summary> Index of the prompt to which the EmbeddingItem corresponds. </summary>
         public int Index { get; }
     }

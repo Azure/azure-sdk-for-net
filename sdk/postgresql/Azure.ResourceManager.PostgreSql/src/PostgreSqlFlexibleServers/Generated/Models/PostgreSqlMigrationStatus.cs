@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration status. </summary>
     public partial class PostgreSqlMigrationStatus
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStatus"/>. </summary>
         internal PostgreSqlMigrationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStatus"/>. </summary>
         /// <param name="state"> State of migration. </param>
         /// <param name="error"> Error message, if any, for the migration state. </param>
         /// <param name="currentSubStateDetails"> Current Migration sub state details. </param>
-        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, PostgreSqlMigrationSubStateDetails currentSubStateDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, PostgreSqlMigrationSubStateDetails currentSubStateDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Error = error;
             CurrentSubStateDetails = currentSubStateDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of migration. </summary>

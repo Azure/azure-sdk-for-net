@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.Authentication
@@ -13,7 +14,10 @@ namespace Azure.MixedReality.Authentication
     /// <summary> Represents a token response message from the STS service. </summary>
     internal partial class StsTokenResponseMessage
     {
-        /// <summary> Initializes a new instance of StsTokenResponseMessage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StsTokenResponseMessage"/>. </summary>
         /// <param name="accessToken"> An access token for the account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessToken"/> is null. </exception>
         internal StsTokenResponseMessage(string accessToken)
@@ -21,6 +25,20 @@ namespace Azure.MixedReality.Authentication
             Argument.AssertNotNull(accessToken, nameof(accessToken));
 
             AccessToken = accessToken;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StsTokenResponseMessage"/>. </summary>
+        /// <param name="accessToken"> An access token for the account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StsTokenResponseMessage(string accessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AccessToken = accessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StsTokenResponseMessage"/> for deserialization. </summary>
+        internal StsTokenResponseMessage()
+        {
         }
 
         /// <summary> An access token for the account. </summary>
