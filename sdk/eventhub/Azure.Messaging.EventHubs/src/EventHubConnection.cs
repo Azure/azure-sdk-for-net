@@ -497,6 +497,7 @@ namespace Azure.Messaging.EventHubs
             {
                 case EventHubsTransportType.AmqpTcp:
                 case EventHubsTransportType.AmqpWebSockets:
+                case EventHubsTransportType.AmqpTcpNonTls:
                     return new AmqpClient(fullyQualifiedNamespace, eventHubName, operationTimeout, credential, options);
 
                 default:
