@@ -1,12 +1,11 @@
 # Release History
 
-## 4.4.0-beta.1 (Unreleased)
+## 4.4.0-beta.1 (2023-11-08)
 
 ### Features Added
 
-- TODO: sasToken vs. useManagedIdentity.
-
-### Breaking Changes
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartBackup` and `StartBackupAsync`. Managed Identity will be used instead of `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead of `sasToken` is null.
 
 ### Bugs Fixed
 
