@@ -31,7 +31,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
             _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
             _model = ModelReaderWriter.Read<T>(_data);
-            _options = ModelReaderWriterOptions.GetWireOptions();
+            _options = ModelReaderWriterOptions.Wire;
             _jsonSerializerResult = BinaryData.FromString(JsonSerializer.Serialize(_model));
         }
 
@@ -58,7 +58,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public string Write_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterOptions.GetWireOptions()));
+            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterOptions.Wire));
             return JsonSerializer.Serialize(_model, options);
         }
 
@@ -119,7 +119,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public T Read_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterOptions.GetWireOptions()));
+            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterOptions.Wire));
             return JsonSerializer.Deserialize<T>(_json, options);
         }
 

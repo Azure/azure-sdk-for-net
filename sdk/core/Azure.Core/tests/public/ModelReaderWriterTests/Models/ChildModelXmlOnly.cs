@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
+            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -46,7 +46,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStartElement("ChildValue");
             writer.WriteValue(ChildValue);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "X")
             {
                 writer.WriteStartElement("ChildReadOnlyProperty");
                 writer.WriteValue(ChildReadOnlyProperty);
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static ChildModelXmlOnly DeserializeChildModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (options.Format != "W")
                 throw new NotSupportedException($"{nameof(ChildModelXmlOnly)} does not support '{options.Format}' format");
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IModel<ChildModelXmlOnly>.Write(ModelReaderWriterOptions options)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream);
             Serialize(writer, options, null);
@@ -95,9 +95,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
         }
 
-        Type IModel<ChildModelXmlOnly>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            return typeof(IModel<CatReadOnlyProperty>);
-        }
+        string IModel<ChildModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

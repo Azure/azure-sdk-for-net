@@ -10,27 +10,19 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void MapAndStaticPropertySameObject()
         {
-            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.GetWireOptions(), ModelReaderWriterOptions.GetOptions("W")));
-        }
-
-        [Test]
-        public void MapShouldReturnSingletons()
-        {
-            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.GetOptions("W"), ModelReaderWriterOptions.GetOptions("W")));
-            Assert.IsFalse(ReferenceEquals(ModelReaderWriterOptions.GetOptions(ModelReaderWriterFormat.Json), ModelReaderWriterOptions.GetOptions(ModelReaderWriterFormat.Json)));
-            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.GetDataOptions(ModelReaderWriterFormat.Json), ModelReaderWriterOptions.GetDataOptions(ModelReaderWriterFormat.Json)));
+            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Wire, ModelReaderWriterOptions.Wire));
+            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Json, ModelReaderWriterOptions.Json));
+            Assert.IsTrue(ReferenceEquals(ModelReaderWriterOptions.Xml, ModelReaderWriterOptions.Xml));
         }
 
         [Test]
         public void MapShouldHaveRightValues()
         {
-            var options = ModelReaderWriterOptions.GetWireOptions();
+            var options = ModelReaderWriterOptions.Wire;
             Assert.AreEqual("W", options.Format);
-            //Assert.IsNull(options.ObjectSerializerResolver);
 
-            options = ModelReaderWriterOptions.GetOptions(ModelReaderWriterFormat.Json);
-            Assert.AreEqual(ModelReaderWriterFormat.Json.ToString(), options.Format);
-            //Assert.IsNull(options.ObjectSerializerResolver);
+            options = ModelReaderWriterOptions.Json;
+            Assert.AreEqual("J", options.Format);
         }
     }
 }

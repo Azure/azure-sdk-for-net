@@ -21,10 +21,10 @@ namespace System.Net.ClientModel.Core
         public ModelReaderWriterOptions ModelReaderWriterOptions { get; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default format of <see cref="ModelReaderWriterFormat.Json"/>.
+        /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
         /// </summary>
         public ModelJsonConverter()
-            : this(ModelReaderWriterOptions.GetDataOptions(ModelReaderWriterFormat.Json)) { }
+            : this(ModelReaderWriterOptions.Json) { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelJsonConverter"/>.

@@ -25,7 +25,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Name = name;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 SerializeRawData(writer);
             }

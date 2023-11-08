@@ -48,7 +48,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,16 +166,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<InstanceViewStatus>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<InstanceViewStatus>);
-            }
-            else
-            {
-                return typeof(IModel<InstanceViewStatus>);
-            }
-        }
+        string IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

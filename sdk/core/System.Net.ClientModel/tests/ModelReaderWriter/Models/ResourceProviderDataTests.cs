@@ -14,14 +14,14 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-Collapsed.json")).TrimEnd();
 
-        protected override void CompareModels(ResourceProviderData model, ResourceProviderData model2, ModelReaderWriterFormat format)
+        protected override void CompareModels(ResourceProviderData model, ResourceProviderData model2, string format)
         {
             Assert.AreEqual(model.Id, model2.Id);
         }
 
-        protected override string GetExpectedResult(ModelReaderWriterFormat format) => WirePayload;
+        protected override string GetExpectedResult(string format) => WirePayload;
 
-        protected override void VerifyModel(ResourceProviderData model, ModelReaderWriterFormat format)
+        protected override void VerifyModel(ResourceProviderData model, string format)
         {
             Assert.IsNotNull(model);
             Assert.IsNotNull(model.Id);

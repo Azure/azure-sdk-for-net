@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModel<AvailabilitySetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetData>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetData>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.ToString());
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.ToString());
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -280,16 +280,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<AvailabilitySetData>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<AvailabilitySetData>);
-            }
-            else
-            {
-                return typeof(IModel<AvailabilitySetData>);
-            }
-        }
+        string IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

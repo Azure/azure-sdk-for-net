@@ -39,7 +39,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 SerializeRawData(writer);
             }

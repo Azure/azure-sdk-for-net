@@ -34,7 +34,7 @@ namespace System.Net.ClientModel.Core
         /// </summary>
         /// <param name="model">The model to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelReaderWriterFormat"/>.</exception>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         public ModelWriter(IJsonModel<T> model, ModelReaderWriterOptions options)
         {
             _model = model;

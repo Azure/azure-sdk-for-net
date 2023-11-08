@@ -15,11 +15,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ResourceTypeAliasPattern : IUtf8JsonSerializable, IJsonModel<ResourceTypeAliasPattern>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPattern>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPattern>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         internal static ResourceTypeAliasPattern DeserializeResourceTypeAliasPattern(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,16 +128,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<ResourceTypeAliasPattern>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<ResourceTypeAliasPattern>);
-            }
-            else
-            {
-                return typeof(IModel<ResourceTypeAliasPattern>);
-            }
-        }
+        string IModel<ResourceTypeAliasPattern>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

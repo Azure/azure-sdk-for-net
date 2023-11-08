@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IJsonModel<ProviderExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderExtendedLocation>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderExtendedLocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,16 +117,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<ProviderExtendedLocation>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<ProviderExtendedLocation>);
-            }
-            else
-            {
-                return typeof(IModel<ProviderExtendedLocation>);
-            }
-        }
+        string IModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

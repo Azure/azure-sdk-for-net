@@ -28,10 +28,10 @@ namespace System.Net.ClientModel.Core
         T Read(BinaryData data, ModelReaderWriterOptions options);
 
         /// <summary>
-        /// Gets the data interchange format (JSON, Xml, etc) that the model uses for its wire format.
+        /// Gets the data interchange format (JSON, Xml, etc) that the model uses when communicating with the service.
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// </summary>
-        /// <returns>The <see cref="ModelReaderWriterFormat"/> that the model uses for its wire format.</returns>
-        Type GetInterfaceType(ModelReaderWriterOptions options);
+        /// <returns>The format that the model uses when communicating with the serivce.</returns>
+        string GetWireFormat(ModelReaderWriterOptions options);
     }
 }

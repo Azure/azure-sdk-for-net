@@ -42,7 +42,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             string id = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.GetWireOptions());
+                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.Wire);
             }
         }
 
@@ -109,16 +109,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<WritableSubResource>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<WritableSubResource>);
-            }
-            else
-            {
-                return typeof(IModel<WritableSubResource>);
-            }
-        }
+        string IModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

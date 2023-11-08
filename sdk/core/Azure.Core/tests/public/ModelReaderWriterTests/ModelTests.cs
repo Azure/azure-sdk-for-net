@@ -24,13 +24,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             return (T)Activator.CreateInstance(typeof(T), true);
         }
 
-        protected abstract string GetExpectedResult(ModelReaderWriterFormat format);
-        protected abstract void VerifyModel(T model, ModelReaderWriterFormat format);
-        protected abstract void CompareModels(T model, T model2, ModelReaderWriterFormat format);
+        protected abstract string GetExpectedResult(string format);
+        protected abstract void VerifyModel(T model, string format);
+        protected abstract void CompareModels(T model, T model2, string format);
         protected abstract string JsonPayload { get; }
         protected abstract string WirePayload { get; }
 
-        protected virtual Func<Type, ObjectSerializer> GetObjectSerializerFactory(ModelReaderWriterFormat format) => null;
+        protected virtual Func<Type, ObjectSerializer> GetObjectSerializerFactory(string format) => null;
 
         [TestCase("J")]
         [TestCase("W")]
@@ -52,11 +52,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         public void RoundTripWithModelInterfaceNonGeneric(string format)
             => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
 
-        protected void RoundTripTest(ModelReaderWriterFormat format, RoundTripStrategy<T> strategy)
+        protected void RoundTripTest(string format, RoundTripStrategy<T> strategy)
         {
-            string serviceResponse = format == ModelReaderWriterFormat.Json ? JsonPayload : WirePayload;
+            string serviceResponse = format == "J" ? JsonPayload : WirePayload;
 
-            ModelReaderWriterOptions options = ModelReaderWriterOptions.GetOptions(format);
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
             //options.ObjectSerializerResolver = GetObjectSerializerFactory(format);
 
             var expectedSerializedString = GetExpectedResult(format);
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             CompareModels(model, model2, format);
         }
 
-        private bool AssertFailures(RoundTripStrategy<T> strategy, ModelReaderWriterFormat format, string serviceResponse, ModelReaderWriterOptions options)
+        private bool AssertFailures(RoundTripStrategy<T> strategy, string format, string serviceResponse, ModelReaderWriterOptions options)
         {
             bool result = false;
             if (IsXmlWireFormat && (strategy.IsExplicitJsonRead || strategy.IsExplicitJsonWrite) && format == "W")
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
                     result = true;
                 }
             }
-            else if (ModelInstance is not IJsonModel<T> && format == ModelReaderWriterFormat.Json)
+            else if (ModelInstance is not IJsonModel<T> && format == "J")
             {
                 Assert.Throws<FormatException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
                 Assert.Throws<FormatException>(() => { var data = strategy.Write(ModelInstance, options); });
@@ -125,7 +125,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [Test]
         public void ThrowsIfUnknownFormat()
         {
-            ModelReaderWriterOptions options = ModelReaderWriterOptions.GetOptions("x");
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
             Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
@@ -172,12 +172,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         {
             if (ModelInstance is IJsonModel<T> jsonModel && IsXmlWireFormat)
             {
-                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterOptions.GetWireOptions()));
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterOptions.Wire));
                 Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Read(ref reader, ModelReaderWriterOptions.GetWireOptions());
+                    jsonModel.Read(ref reader, ModelReaderWriterOptions.Wire);
                 }
                 catch (InvalidOperationException)
                 {

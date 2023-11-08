@@ -30,14 +30,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<CatReadOnlyProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             double weight = default;
             string name = "";
@@ -107,7 +107,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                     hasWhiskers = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -134,17 +134,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<CatReadOnlyProperty>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<CatReadOnlyProperty>);
-            }
-            else
-            {
-                return typeof(IModel<CatReadOnlyProperty>);
-            }
-        }
+        string IModel<CatReadOnlyProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         #endregion
     }

@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<ModelX>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,12 +86,12 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 writer.WriteEndObject();
             }
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("xProperty"u8);
                 writer.WriteNumberValue(XProperty);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 SerializeRawData(writer);
             }
@@ -100,7 +100,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                     xProperty = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -192,16 +192,6 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<ModelX>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<ModelX>);
-            }
-            else
-            {
-                return typeof(IModel<ModelX>);
-            }
-        }
+        string IModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

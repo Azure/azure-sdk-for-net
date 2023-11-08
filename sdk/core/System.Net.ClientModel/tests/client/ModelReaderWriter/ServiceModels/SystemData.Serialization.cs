@@ -25,7 +25,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
 
         internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.GetWireOptions());
+                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.Wire);
             }
         }
 
@@ -178,16 +178,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<SystemData>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<SystemData>);
-            }
-            else
-            {
-                return typeof(IModel<SystemData>);
-            }
-        }
+        string IModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

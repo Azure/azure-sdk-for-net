@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,16 +112,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<ProviderExtendedLocation>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<ProviderExtendedLocation>);
-            }
-            else
-            {
-                return typeof(IModel<ProviderExtendedLocation>);
-            }
-        }
+        string IModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

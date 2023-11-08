@@ -15,11 +15,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ApiProfile : IUtf8JsonSerializable, IJsonModel<ApiProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiProfile>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,16 +105,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<ApiProfile>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<ApiProfile>);
-            }
-            else
-            {
-                return typeof(IModel<ApiProfile>);
-            }
-        }
+        string IModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

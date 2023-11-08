@@ -38,7 +38,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<Envelope<T>>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
@@ -61,7 +61,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -79,7 +79,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -104,7 +104,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                     continue;
                 }
 
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -164,17 +164,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<Envelope<T>>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<Envelope<T>>);
-            }
-            else
-            {
-                return typeof(IModel<Envelope<T>>);
-            }
-        }
+        string IModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => "J";
         #endregion
     }
 }

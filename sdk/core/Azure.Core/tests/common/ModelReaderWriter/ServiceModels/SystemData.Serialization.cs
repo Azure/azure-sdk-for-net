@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.Models.ResourceManager
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IUtf8JsonSerializable, IJsonModel<SystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<SystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Models.ResourceManager
 
         internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.Core.Tests.Models.ResourceManager
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.GetWireOptions());
+                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.Wire);
             }
         }
 
@@ -183,16 +183,6 @@ namespace Azure.Core.Tests.Models.ResourceManager
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<SystemData>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<SystemData>);
-            }
-            else
-            {
-                return typeof(IModel<SystemData>);
-            }
-        }
+        string IModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

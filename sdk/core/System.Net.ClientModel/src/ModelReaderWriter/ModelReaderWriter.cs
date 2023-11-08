@@ -17,7 +17,7 @@ namespace System.Net.ClientModel
         /// <typeparam name="T">The type of the value to write.</typeparam>
         /// <param name="model">The model to convert.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterFormat"/> specified by the <paramref name="options"/>.</returns>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
         public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default) where T : IModel<T>
@@ -25,12 +25,13 @@ namespace System.Net.ClientModel
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
 
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Json;
 
-            Type interfaceToUse = model.GetInterfaceType(options);
-
-            if (interfaceToUse.Equals(typeof(IJsonModel<T>)))
+            if (options.Format == "J" || (options.Format == "W" && model.GetWireFormat(options) == "J"))
             {
+                if (model is not IJsonModel<T> jsonModel)
+                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
+
                 using (ModelWriter<T> writer = new ModelWriter<T>((IJsonModel<T>)model, options))
                 {
                     return writer.ToBinaryData();
@@ -47,7 +48,7 @@ namespace System.Net.ClientModel
         /// </summary>
         /// <param name="model">The model to convert.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterFormat"/> specified by the <paramref name="options"/>.</returns>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModel{T}"/>.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
@@ -56,7 +57,7 @@ namespace System.Net.ClientModel
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
 
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Json;
 
             var iModel = model as IModel<object>;
             if (iModel is null)
@@ -64,10 +65,11 @@ namespace System.Net.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModel<object>)}");
             }
 
-            Type interfaceToUse = iModel.GetInterfaceType(options);
-
-            if (typeof(IJsonModel<object>).IsAssignableFrom(interfaceToUse))
+            if (options.Format == "J" || (options.Format == "W" && iModel.GetWireFormat(options) == "J"))
             {
+                if (iModel is not IJsonModel<object> jsonModel)
+                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
+
                 using (ModelWriter<object> writer = new ModelWriter<object>((IJsonModel<object>)model, options))
                 {
                     return writer.ToBinaryData();
@@ -93,7 +95,7 @@ namespace System.Net.ClientModel
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Json;
 
             return GetInstance<T>().Read(data, options);
         }
@@ -116,7 +118,7 @@ namespace System.Net.ClientModel
             if (returnType is null)
                 throw new ArgumentNullException(nameof(returnType));
 
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Json;
 
             return GetInstance(returnType).Read(data, options);
         }

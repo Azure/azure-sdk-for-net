@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [TestCase("W")]
         public void CanDeserializeModelX(string format)
         {
-            ModelReaderWriterOptions options = ModelReaderWriterOptions.GetOptions(format);
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
             BinaryData data = new BinaryData(Encoding.UTF8.GetBytes("{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}"));
             object modelX = System.Net.ClientModel.ModelReaderWriter.Read(data, typeof(ModelXDeserializationProxy), options);
             Assert.IsNotNull(modelX);
@@ -23,7 +23,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             Assert.AreEqual("X", ((ModelX)modelX).Kind);
             Assert.AreEqual("xmodel", ((ModelX)modelX).Name);
             Assert.AreEqual(100, ((ModelX)modelX).XProperty);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 var rawData = ModelTests<ModelX>.GetRawData((ModelX)modelX);
                 Assert.IsNotNull(rawData);

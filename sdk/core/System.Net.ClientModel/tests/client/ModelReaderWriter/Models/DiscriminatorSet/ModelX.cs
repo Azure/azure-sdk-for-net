@@ -81,12 +81,12 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 writer.WriteEndObject();
             }
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("xProperty"u8);
                 writer.WriteNumberValue(XProperty);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 SerializeRawData(writer);
             }
@@ -95,7 +95,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     xProperty = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -181,16 +181,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        Type IModel<ModelX>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<ModelX>);
-            }
-            else
-            {
-                return typeof(IModel<ModelX>);
-            }
-        }
+        string IModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

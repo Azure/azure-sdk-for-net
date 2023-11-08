@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         /// <summary> Gets the id. </summary>
         public int Id { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.GetWireOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<ModelAsStruct>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -42,7 +42,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteNumberValue(Id);
-            if (_rawData is not null && options.Format == ModelReaderWriterFormat.Json)
+            if (_rawData is not null && options.Format == "J")
             {
                 foreach (var property in _rawData)
                 {
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             int id = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -85,7 +85,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                     id = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                     continue;
@@ -127,28 +127,8 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        Type IModel<ModelAsStruct>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<ModelAsStruct>);
-            }
-            else
-            {
-                return typeof(IModel<ModelAsStruct>);
-            }
-        }
+        string IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
-        Type IModel<object>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            if (options.Format == ModelReaderWriterFormat.Json || options.Format == "W")
-            {
-                return typeof(IJsonModel<object>);
-            }
-            else
-            {
-                return typeof(IModel<object>);
-            }
-        }
+        string IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

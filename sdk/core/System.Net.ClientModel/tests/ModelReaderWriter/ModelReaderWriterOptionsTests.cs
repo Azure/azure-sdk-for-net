@@ -1,40 +1,36 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Reflection;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 {
     internal class ModelReaderWriterOptionsTests
     {
         [Test]
-        public void ValidatePropertyIsFrozen() => ValidateFrozenInstance(ModelReaderWriterOptions.GetWireOptions());
-
-        [Test]
         public void AllInstancesInMapShouldBeFrozen()
         {
-            Dictionary<ModelReaderWriterFormat, ModelReaderWriterOptions>? optionsDictionary = typeof(ModelReaderWriterOptions)
-                .GetField("_singletonMap", BindingFlags.NonPublic | BindingFlags.Static)
-                ?.GetValue(null) as Dictionary<ModelReaderWriterFormat, ModelReaderWriterOptions>;
-            Assert.IsNotNull(optionsDictionary);
-            foreach (var frozen in optionsDictionary!.Values)
-            {
-                ValidateFrozenInstance(frozen);
-            }
+            ValidateFrozenInstance(ModelReaderWriterOptions.Wire, true);
+            ValidateFrozenInstance(ModelReaderWriterOptions.Json, true);
+            ValidateFrozenInstance(ModelReaderWriterOptions.Xml, true);
         }
 
-        public void ValidateFrozenInstance(ModelReaderWriterOptions frozen)
+        public void ValidateFrozenInstance(ModelReaderWriterOptions frozen, bool expected)
         {
-            //Assert.Throws<InvalidOperationException>(() => frozen.ObjectSerializerResolver = type => null);
+            var field = frozen.GetType().GetField("_isFrozen", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.IsNotNull(field);
+            var value = field!.GetValue(frozen);
+            Assert.IsNotNull(value);
+            bool isFrozen = (bool)value!;
+            Assert.AreEqual(expected, isFrozen);
         }
 
         [Test]
         public void NewInstanceShouldNotBeFrozen()
         {
-            ModelReaderWriterOptions nonFrozen = ModelReaderWriterOptions.GetOptions();
-            //Assert.DoesNotThrow(() => nonFrozen.ObjectSerializerResolver = type => null);
+            ModelReaderWriterOptions nonFrozen = new ModelReaderWriterOptions("J");
+            ValidateFrozenInstance(nonFrozen, false);
         }
     }
 }

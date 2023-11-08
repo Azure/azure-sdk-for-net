@@ -43,9 +43,9 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         [XmlElement("RenamedChildModelXml")]
         public ChildModelXmlOnly RenamedChildModelXml { get; set; }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.GetWireOptions(), nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static ModelXmlOnly DeserializeModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.GetWireOptions();
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -118,9 +118,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeModelXmlOnly(XElement.Load(data.ToStream()), options);
         }
 
-        Type IModel<ModelXmlOnly>.GetInterfaceType(ModelReaderWriterOptions options)
-        {
-            return typeof(IModel<JsonModelForCombinedInterface>);
-        }
+        string IModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }
