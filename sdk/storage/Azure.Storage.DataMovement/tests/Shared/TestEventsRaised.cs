@@ -186,14 +186,17 @@ namespace Azure.Storage.DataMovement.Tests
         /// This asserts that the expected events occurred during a single transfer that is expected
         /// to have a <see cref="DataTransferState.CompletedWithFailedTransfers"/> at the end without any skips.
         /// </summary>
-        public async Task AssertSingleFailedCheck()
+        public async Task AssertSingleFailedCheck(int failureCount)
         {
             Assert.IsEmpty(SkippedEvents);
             Assert.IsEmpty(SingleCompletedEvents);
-            Assert.AreEqual(1, FailedEvents.Count);
-            Assert.NotNull(FailedEvents.First().Exception);
-            Assert.NotNull(FailedEvents.First().SourceResource.Uri);
-            Assert.NotNull(FailedEvents.First().DestinationResource.Uri);
+            Assert.AreEqual(failureCount, FailedEvents.Count);
+            foreach (TransferItemFailedEventArgs args in FailedEvents)
+            {
+                Assert.NotNull(args.Exception);
+                Assert.NotNull(args.SourceResource.Uri);
+                Assert.NotNull(args.DestinationResource.Uri);
+            }
 
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             AssertTransferStatusCollection(
