@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics;
 /// <summary>
 /// Options that allow users to configure the Live Metrics.
 /// </summary>
-public class LiveMetricsExporterOptions : ClientOptions
+internal class LiveMetricsExporterOptions : ClientOptions
 {
     /// <summary>
     /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.

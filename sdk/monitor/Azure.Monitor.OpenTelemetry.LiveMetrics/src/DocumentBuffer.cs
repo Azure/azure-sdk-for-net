@@ -16,7 +16,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         private readonly ConcurrentQueue<DocumentIngress> _documents = new();
         private readonly int _capacity = 20;
         // ConcurrentQueue<T>.Count is not used because it is not an O(1) operation. Instead, we use a separate counter.
-        private int _count = 0; // Atomic counter for the number of documents in the queue
+        // Atomic counter for the number of documents in the queue.
+        private int _count = 0;
 
         public void Add(DocumentIngress document)
         {
@@ -24,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             if (Interlocked.CompareExchange(ref _count, 0, 0) < _capacity)
             {
                 _documents.Enqueue(document);
-                Interlocked.Increment(ref _count); // Safely increment the count
+                Interlocked.Increment(ref _count);
             }
         }
 
