@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SignalR
     public partial class SignalRSharedPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SignalRSharedPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The sharedPrivateLinkResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string sharedPrivateLinkResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}";

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SubscriptionSecurityApplicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionSecurityApplicationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="applicationId"> The applicationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string applicationId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}";

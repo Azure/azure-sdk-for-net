@@ -25,6 +25,12 @@ function Log($Message) {
 
 Log 'Starting sdk\communication\test-resources\test-resources-post.ps1'
 
+if($DeploymentOutputs.ContainsKey('COMMUNICATION_SERVICE_ENDPOINT')){
+  Write-Host "COMMUNICATION_SERVICE_ENDPOINT exists, proceeding."
+}else{
+  Write-Host "COMMUNICATION_SERVICE_ENDPOINT does not exist, ending."
+exit
+}
 $communicationServiceEndpoint = $DeploymentOutputs["COMMUNICATION_SERVICE_ENDPOINT"]
 
 if ($communicationServiceEndpoint -notmatch '\/$') {
@@ -32,7 +38,20 @@ if ($communicationServiceEndpoint -notmatch '\/$') {
   $communicationServiceEndpoint = $communicationServiceEndpoint + "/"
 }
 
+if($DeploymentOutputs.ContainsKey('COMMUNICATION_SERVICE_ACCESS_KEY')){
+  Write-Host "COMMUNICATION_SERVICE_ACCESS_KEY exists, proceeding."
+}else{
+  Write-Host "COMMUNICATION_SERVICE_ACCESS_KEY does not exist, ending."
+exit
+}
 $communicationServiceApiKey = $DeploymentOutputs["COMMUNICATION_SERVICE_ACCESS_KEY"]
+
+if($DeploymentOutputs.ContainsKey('AZURE_TEST_DOMAIN')){
+  Write-Host "AZURE_TEST_DOMAIN exists, proceeding."
+}else{
+  Write-Host "AZURE_TEST_DOMAIN does not exist, ending."
+exit
+}
 $testDomain = $DeploymentOutputs["AZURE_TEST_DOMAIN"]
 
 $payload = @"

@@ -8,7 +8,7 @@ This sample shows how to call GetOAuthConnectionLinkAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",
@@ -24,7 +24,7 @@ This sample shows how to call GetOAuthConnectionLinkAsync with all request conte
 TokenCredential credential = new DefaultAzureCredential();
 FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",
@@ -44,7 +44,7 @@ This sample shows how to call GetOAuthConnectionLink and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",
@@ -60,7 +60,7 @@ This sample shows how to call GetOAuthConnectionLink with all request content an
 TokenCredential credential = new DefaultAzureCredential();
 FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",

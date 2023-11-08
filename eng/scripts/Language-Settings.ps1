@@ -588,42 +588,80 @@ function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
 }
 
 function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
-  $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
-  $summaryArgs = $showSummary ? "/v:n /ds" : ""
+  Push-Location $RepoRoot
+  try {
+    Write-Host "`n`n======================================================================"
+    Write-Host "Generating projects" -ForegroundColor Yellow
+    Write-Host "======================================================================`n"
 
-  $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
+    $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
 
-  $directoriesWithErrors = @()
+    # Build the project list override file
 
-  Invoke-LoggedCommand "npm install -g autorest"
+    $lines = @('<Project>', '  <ItemGroup>')
 
-  foreach ($directory in $packageDirectories) {
-    Push-Location $RepoRoot
-    try {
-      Write-Host "`n`n======================================================================"
-      Write-Host "Generating projects under directory '$directory'" -ForegroundColor Yellow
-      Write-Host "======================================================================`n"
-
-      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$directory`" $summaryArgs eng\service.proj" -GroupOutput
+    foreach ($directory in $packageDirectories) {
+      $projects = Get-ChildItem -Path "$RepoRoot/sdk/$directory" -Filter "*.csproj" -Recurse
+      foreach ($project in $projects) {
+        $lines += "    <ProjectReference Include=`"$($project.FullName)`" />"
+      }
     }
-    catch {
-      Write-Host "##[error]Error generating project under directory $directory"
-      Write-Host $_.Exception.Message
-      $directoriesWithErrors += $directory
+
+    $lines += '  </ItemGroup>', '</Project>'
+    $artifactsPath = Join-Path $RepoRoot "artifacts"
+    $projectListOverrideFile = Join-Path $artifactsPath "GeneratedSdks.proj"
+
+    Write-Host "Creating project list override file $projectListOverrideFile`:"
+    $lines | ForEach-Object { "  $_" } | Out-Host
+
+    New-Item $artifactsPath -ItemType Directory -Force | Out-Null
+    $lines | Out-File $projectListOverrideFile -Encoding UTF8
+    Write-Host "`n"
+
+    # Initialize npm and npx cache
+    Write-Host "##[group]Initializing npm and npx cache"
+
+    ## Generate code in sdk/template to prime the npx and npm cache
+    Push-Location "$RepoRoot/sdk/template/Azure.Template/src"
+    try {
+      Write-Host "Building then resetting sdk/template/Azure.Template/src"
+      Invoke-LoggedCommand "dotnet build /t:GenerateCode"
+      Invoke-LoggedCommand "git restore ."
+      Invoke-LoggedCommand "git clean . --force"
     }
     finally {
       Pop-Location
     }
-  }
 
-  if($directoriesWithErrors.Count -gt 0) {
-    Write-Host "##[error]Generation errors found in $($directoriesWithErrors.Count) directories:"
+    ## Run npm install over emitter-package.json in a temp folder to prime the npm cache
+    $tempFolder = New-TemporaryFile
+    $tempFolder | Remove-Item -Force
+    New-Item $tempFolder -ItemType Directory -Force | Out-Null
 
-    foreach ($directory in $directoriesWithErrors) {
-      Write-Host "  $directory"
+    Push-Location $tempFolder
+    try {
+        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+            Invoke-LoggedCommand "npm ci"
+        } else {
+          Invoke-LoggedCommand "npm install"
+        }
+    }
+    finally {
+      Pop-Location
+      $tempFolder | Remove-Item -Force -Recurse
     }
 
-    exit 1
-  }
+    Write-Host "##[endgroup]"
 
+    # Generate projects
+    $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
+    $summaryArgs = $showSummary ? "/v:n /ds" : ""
+
+    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj" -GroupOutput
+  }
+  finally {
+    Pop-Location
+  }
 }

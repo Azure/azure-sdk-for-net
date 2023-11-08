@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -145,7 +146,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateGlossary(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -160,7 +161,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateGlossaryAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -175,7 +176,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 categories = new object[]
             {
@@ -285,7 +286,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 categories = new object[]
             {
@@ -395,7 +396,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -413,7 +414,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -431,7 +432,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -554,7 +555,7 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -677,7 +678,7 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateGlossaryCategory(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -692,7 +693,7 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateGlossaryCategoryAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -707,7 +708,7 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 anchor = new
                 {
@@ -827,7 +828,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 anchor = new
                 {
@@ -1077,7 +1078,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateGlossaryCategory("<categoryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1092,7 +1093,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1107,7 +1108,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 anchor = new
                 {
@@ -1227,7 +1228,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 anchor = new
                 {
@@ -1399,7 +1400,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -1417,7 +1418,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -1435,7 +1436,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -1490,7 +1491,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -1679,7 +1680,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateGlossaryTerm(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1694,7 +1695,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateGlossaryTermAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1709,7 +1710,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
                 templateName = new object[]
@@ -2060,7 +2061,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
                 templateName = new object[]
@@ -2773,7 +2774,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateGlossaryTerm("<termGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2788,7 +2789,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateGlossaryTermAsync("<termGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2803,7 +2804,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
                 templateName = new object[]
@@ -3154,7 +3155,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
                 templateName = new object[]
@@ -3557,7 +3558,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -3575,7 +3576,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -3593,7 +3594,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -3764,7 +3765,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -3935,7 +3936,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -3953,7 +3954,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -3971,7 +3972,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -4325,7 +4326,7 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -4755,7 +4756,7 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -4772,7 +4773,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -4789,7 +4790,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -4828,7 +4829,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -4867,7 +4868,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -4884,7 +4885,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -4901,7 +4902,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -4940,7 +4941,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -4979,7 +4980,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -4996,7 +4997,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -5013,7 +5014,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -5052,7 +5053,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -5279,7 +5280,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateGlossary("<glossaryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -5294,7 +5295,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -5309,7 +5310,7 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 categories = new object[]
             {
@@ -5419,7 +5420,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 categories = new object[]
             {
@@ -6277,7 +6278,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -6295,7 +6296,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -6313,7 +6314,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -6362,7 +6363,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 key = "<partialUpdates>",
             });
@@ -6913,7 +6914,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<termGuids>"
             });
@@ -6931,7 +6932,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<termGuids>"
             });
@@ -6949,7 +6950,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<termGuids>"
             });
@@ -6967,7 +6968,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 "<termGuids>"
             });
@@ -7347,7 +7348,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content);
             BinaryData responseData = operation.Value;
 
@@ -7363,7 +7364,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content);
             BinaryData responseData = operation.Value;
 
@@ -7379,7 +7380,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 
@@ -7402,7 +7403,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 
@@ -7425,7 +7426,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content);
             BinaryData responseData = operation.Value;
 
@@ -7441,7 +7442,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content);
             BinaryData responseData = operation.Value;
 
@@ -7457,7 +7458,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 
@@ -7480,7 +7481,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
+            using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
             Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 

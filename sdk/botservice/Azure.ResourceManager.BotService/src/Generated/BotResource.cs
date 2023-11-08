@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.BotService
     public partial class BotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BotResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}";
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An object representing collection of BotChannelResources and their operations over a BotChannelResource. </returns>
         public virtual BotChannelCollection GetBotChannels()
         {
-            return GetCachedClient(Client => new BotChannelCollection(Client, Id));
+            return GetCachedClient(client => new BotChannelCollection(client, Id));
         }
 
         /// <summary>
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An object representing collection of BotConnectionSettingResources and their operations over a BotConnectionSettingResource. </returns>
         public virtual BotConnectionSettingCollection GetBotConnectionSettings()
         {
-            return GetCachedClient(Client => new BotConnectionSettingCollection(Client, Id));
+            return GetCachedClient(client => new BotConnectionSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +176,8 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BotConnectionSettingResource>> GetBotConnectionSettingAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +199,8 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BotConnectionSettingResource> GetBotConnectionSetting(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -208,7 +211,7 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An object representing collection of BotServicePrivateEndpointConnectionResources and their operations over a BotServicePrivateEndpointConnectionResource. </returns>
         public virtual BotServicePrivateEndpointConnectionCollection GetBotServicePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new BotServicePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new BotServicePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -226,8 +229,8 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BotServicePrivateEndpointConnectionResource>> GetBotServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -249,8 +252,8 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BotServicePrivateEndpointConnectionResource> GetBotServicePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

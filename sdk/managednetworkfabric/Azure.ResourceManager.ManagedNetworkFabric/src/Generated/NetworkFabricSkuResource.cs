@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="networkFabricSkuName"> The networkFabricSkuName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string networkFabricSkuName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkFabricSkus/{networkFabricSkuName}";

@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Sql
     public partial class LogicalDatabaseTransparentDataEncryptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="tdeName"> The tdeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionName tdeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/transparentDataEncryption/{tdeName}";

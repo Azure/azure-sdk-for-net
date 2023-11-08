@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ArcScVmm
     public partial class ScVmmVirtualMachineTemplateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScVmmVirtualMachineTemplateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineTemplateName"> The virtualMachineTemplateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineTemplateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualMachineTemplates/{virtualMachineTemplateName}";

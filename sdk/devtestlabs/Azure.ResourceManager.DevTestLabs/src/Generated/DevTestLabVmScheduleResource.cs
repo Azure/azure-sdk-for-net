@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabVmScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabVmScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="vmName"> The vmName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string vmName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{vmName}/schedules/{name}";

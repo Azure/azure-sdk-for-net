@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class RouteFilterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RouteFilterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="routeFilterName"> The routeFilterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string routeFilterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}";
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteFilterRuleResources and their operations over a RouteFilterRuleResource. </returns>
         public virtual RouteFilterRuleCollection GetRouteFilterRules()
         {
-            return GetCachedClient(Client => new RouteFilterRuleCollection(Client, Id));
+            return GetCachedClient(client => new RouteFilterRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RouteFilterRuleResource>> GetRouteFilterRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RouteFilterRuleResource> GetRouteFilterRule(string ruleName, CancellationToken cancellationToken = default)
         {

@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlServerJobVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerJobVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="jobAgentName"> The jobAgentName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="jobVersion"> The jobVersion. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}";
@@ -90,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobVersionStepResources and their operations over a SqlServerJobVersionStepResource. </returns>
         public virtual SqlServerJobVersionStepCollection GetSqlServerJobVersionSteps()
         {
-            return GetCachedClient(Client => new SqlServerJobVersionStepCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobVersionStepCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +114,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobVersionStepResource>> GetSqlServerJobVersionStepAsync(string stepName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +137,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="stepName"> The name of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobVersionStepResource> GetSqlServerJobVersionStep(string stepName, CancellationToken cancellationToken = default)
         {

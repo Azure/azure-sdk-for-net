@@ -120,6 +120,25 @@ namespace Azure.ResourceManager.ManagedServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagedServices.Mocking
+{
+    public partial class MockableManagedServicesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServicesArmClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(Azure.Core.ResourceIdentifier scope, string marketplaceIdentifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource>> GetManagedServicesMarketplaceRegistrationAsync(Azure.Core.ResourceIdentifier scope, string marketplaceIdentifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource> GetManagedServicesRegistration(Azure.Core.ResourceIdentifier scope, string registrationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource> GetManagedServicesRegistrationAssignment(Azure.Core.ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource>> GetManagedServicesRegistrationAssignmentAsync(Azure.Core.ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource>> GetManagedServicesRegistrationAsync(Azure.Core.ResourceIdentifier scope, string registrationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationCollection GetManagedServicesRegistrations(Azure.Core.ResourceIdentifier scope) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagedServices.Models
 {
     public static partial class ArmManagedServicesModelFactory

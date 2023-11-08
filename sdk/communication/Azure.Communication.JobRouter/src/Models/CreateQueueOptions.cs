@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -45,8 +44,13 @@ namespace Azure.Communication.JobRouter
         public string ExceptionPolicyId { get; set; }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

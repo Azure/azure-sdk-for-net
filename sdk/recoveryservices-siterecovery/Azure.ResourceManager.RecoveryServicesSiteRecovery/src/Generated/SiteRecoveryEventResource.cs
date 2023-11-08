@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     public partial class SiteRecoveryEventResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryEventResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="eventName"> The eventName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string eventName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}";

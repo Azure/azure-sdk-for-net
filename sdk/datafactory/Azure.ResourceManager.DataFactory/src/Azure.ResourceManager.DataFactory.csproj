@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.DataFactory</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DataFactory.</Description>
     <PackageTags>azure;management;arm;resource manager;datafactory</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

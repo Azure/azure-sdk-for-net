@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ProviderHub
     public partial class ResourceTypeSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceTypeSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="sku"> The sku. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string resourceType, string sku)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}";

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Server gtid set parameters. </summary>
+    /// <summary> Server Gtid set parameters. </summary>
     public partial class MySqlFlexibleServerGtidSetContent
     {
         /// <summary> Initializes a new instance of MySqlFlexibleServerGtidSetContent. </summary>
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
         }
 
-        /// <summary> The gtid set of server. </summary>
+        /// <summary> The Gtid set of server. </summary>
         public string GtidSet { get; set; }
     }
 }

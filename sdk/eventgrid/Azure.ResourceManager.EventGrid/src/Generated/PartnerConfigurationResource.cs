@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.EventGrid
     public partial class PartnerConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PartnerConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerConfigurations/default";

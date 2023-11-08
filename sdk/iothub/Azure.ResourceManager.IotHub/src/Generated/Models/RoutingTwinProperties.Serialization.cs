@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.IotHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Desired);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Desired.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Desired))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Reported))
@@ -30,7 +33,10 @@ namespace Azure.ResourceManager.IotHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Reported);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Reported.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Reported))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
