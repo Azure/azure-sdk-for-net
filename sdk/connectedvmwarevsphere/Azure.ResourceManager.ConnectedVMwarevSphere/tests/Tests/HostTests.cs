@@ -9,11 +9,22 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using System;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
-    public class HostTests
+    public class HostTests : ConnectedVMwareTestBase
     {
+        public HostTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        private async Task<VMwareHostCollection> GetVMwareHostCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetVMwareHosts();
+        }
+
         // CreateHost
         [TestCase]
         [RecordedTest]

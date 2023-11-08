@@ -9,11 +9,16 @@ using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
-    public partial class Test_VirtualMachineInstanceResource
+    public partial class Test_VirtualMachineInstanceResourceTests : ConnectedVMwareTestBase
     {
+        public Test_VirtualMachineInstanceResourceTests(bool isAsync) : base(isAsync)
+        {
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task CreateDelete()

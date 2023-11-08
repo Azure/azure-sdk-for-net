@@ -9,11 +9,16 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using System;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
-    public class ResourcePoolTests
+    public class ResourcePoolTests: ConnectedVMwareTestBase
     {
+        public ResourcePoolTests(bool isAsync) : base(isAsync)
+        {
+        }
+
         // CreateResourcePool
         [TestCase]
         [RecordedTest]

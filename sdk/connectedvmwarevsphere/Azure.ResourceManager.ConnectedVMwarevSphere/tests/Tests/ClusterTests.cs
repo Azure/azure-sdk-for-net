@@ -9,11 +9,22 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using System;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
-    public class ClusterTests
+    public class ClusterTests : ConnectedVMwareTestBase
     {
+        public ClusterTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        private async Task<VMwareClusterCollection> GetVMwareClusterCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetVMwareClusters();
+        }
+
         // CreateCluster
         [TestCase]
         [RecordedTest]
