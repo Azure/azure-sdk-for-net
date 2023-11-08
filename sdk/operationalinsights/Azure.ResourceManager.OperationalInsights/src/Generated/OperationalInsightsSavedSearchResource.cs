@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.OperationalInsights
     public partial class OperationalInsightsSavedSearchResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsSavedSearchResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="savedSearchId"> The savedSearchId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/savedSearches/{savedSearchId}";

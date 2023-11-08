@@ -26,6 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     public partial class SiteRecoveryNetworkMappingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryNetworkMappingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="networkName"> The networkName. </param>
+        /// <param name="networkMappingName"> The networkMappingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationNetworks/{networkName}/replicationNetworkMappings/{networkMappingName}";

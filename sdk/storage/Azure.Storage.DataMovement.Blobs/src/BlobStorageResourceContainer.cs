@@ -29,6 +29,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         public override Uri Uri => _uri;
 
+        public override string ProviderId => "blob";
+
         /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
         /// </summary>
@@ -127,9 +129,40 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            // Source blob type does not matter for container
+            return new BlobSourceCheckpointData(BlobType.Block);
+        }
+
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new BlobDestinationCheckpointData(
+                _options?.BlobType ?? BlobType.Block,
+                _options?.BlobOptions?.HttpHeaders,
+                _options?.BlobOptions?.AccessTier,
+                _options?.BlobOptions?.Metadata,
+                _options?.BlobOptions?.Tags,
+                default); // TODO: Update when we support encryption scopes
+        }
+
         private string ApplyOptionalPrefix(string path)
             => IsDirectory
                 ? string.Join("/", DirectoryPrefix, path)
                 : path;
+
+        // We will require containers to be created before the transfer starts
+        // Since blobs is a flat namespace, we do not need to create directories (as they are virtual).
+        protected override Task CreateIfNotExistsAsync(CancellationToken cancellationToken)
+            => Task.CompletedTask;
+
+        protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
+        {
+            BlobStorageResourceContainerOptions options = _options.DeepCopy();
+            options.BlobDirectoryPrefix = string.Join("/", DirectoryPrefix, path);
+            return new BlobStorageResourceContainer(
+                BlobContainerClient,
+                options);
+        }
     }
 }

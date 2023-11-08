@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Search
     public partial class SearchServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SearchServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="searchServiceName"> The searchServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string searchServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}";
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> An object representing collection of SearchPrivateEndpointConnectionResources and their operations over a SearchPrivateEndpointConnectionResource. </returns>
         public virtual SearchPrivateEndpointConnectionCollection GetSearchPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new SearchPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new SearchPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -125,8 +128,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure Cognitive Search service with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetSearchPrivateEndpointConnectionAsync(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
@@ -149,8 +152,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure Cognitive Search service with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SearchPrivateEndpointConnectionResource> GetSearchPrivateEndpointConnection(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
@@ -161,7 +164,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> An object representing collection of SharedSearchServicePrivateLinkResources and their operations over a SharedSearchServicePrivateLinkResource. </returns>
         public virtual SharedSearchServicePrivateLinkResourceCollection GetSharedSearchServicePrivateLinkResources()
         {
-            return GetCachedClient(Client => new SharedSearchServicePrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new SharedSearchServicePrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -180,8 +183,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetSharedSearchServicePrivateLinkResourceAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
@@ -204,8 +207,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SharedSearchServicePrivateLinkResource> GetSharedSearchServicePrivateLinkResource(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {

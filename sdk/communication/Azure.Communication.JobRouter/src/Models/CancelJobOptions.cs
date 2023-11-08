@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -11,16 +10,19 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Options for cancelling a job.
     /// </summary>
-    public class CancelJobOptions
+    public partial class CancelJobOptions
     {
-        /// <summary>
-        /// Public constructor.
-        /// </summary>
+        /// <summary> Initializes a new instance of CancelJobOptions. </summary>
+        internal CancelJobOptions()
+        {
+        }
+
         /// <param name="jobId"> Id of the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public CancelJobOptions(string jobId)
         {
-            Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             JobId = jobId;
         }

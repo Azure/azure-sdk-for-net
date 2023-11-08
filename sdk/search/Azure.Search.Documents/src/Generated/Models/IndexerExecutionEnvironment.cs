@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string StandardValue = "standard";
         private const string PrivateValue = "private";
 
-        /// <summary> Indicates that Azure Cognitive Search can determine where the indexer should execute. This is the default environment when nothing is specified and is the recommended value. </summary>
+        /// <summary> Indicates that the search service can determine where the indexer should execute. This is the default environment when nothing is specified and is the recommended value. </summary>
         public static IndexerExecutionEnvironment Standard { get; } = new IndexerExecutionEnvironment(StandardValue);
         /// <summary> Indicates that the indexer should run with the environment provisioned specifically for the search service. This should only be specified as the execution environment if the indexer needs to access resources securely over shared private link resources. </summary>
         public static IndexerExecutionEnvironment Private { get; } = new IndexerExecutionEnvironment(PrivateValue);

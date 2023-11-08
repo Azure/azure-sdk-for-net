@@ -651,7 +651,7 @@ namespace Azure.Core
         public static bool operator <=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static Azure.Core.ResourceIdentifier Parse(string input) { throw null; }
         public override string ToString() { throw null; }
-        public static bool TryParse(string input, out Azure.Core.ResourceIdentifier? result) { throw null; }
+        public static bool TryParse(string? input, out Azure.Core.ResourceIdentifier? result) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>

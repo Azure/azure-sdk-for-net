@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -32,7 +31,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
-        /// <summary> The fallback queue to select if the queue selector does not find a match. </summary>
+
+        /// <summary> The fallback queue to select if the queue selector attachments fail to resolve a queue for a given job. </summary>
         public string FallbackQueueId { get; set; }
 
         /// <summary>
@@ -45,10 +45,15 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public RouterRule PrioritizationRule { get; set; }
 
-        /// <summary> The queue selectors to resolve a queue for a given job. </summary>
-        public List<QueueSelectorAttachment> QueueSelectors { get; } = new List<QueueSelectorAttachment>();
+        /// <summary> The queue selector attachments used to resolve a queue for a given job. </summary>
+        public IList<QueueSelectorAttachment> QueueSelectorAttachments { get; } = new List<QueueSelectorAttachment>();
 
-        /// <summary> The worker label selectors to attach to a given job. </summary>
-        public List<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
+        /// <summary> The worker selector attachments used to attach worker selectors to a given job. </summary>
+        public IList<WorkerSelectorAttachment> WorkerSelectorAttachments { get; } = new List<WorkerSelectorAttachment>();
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

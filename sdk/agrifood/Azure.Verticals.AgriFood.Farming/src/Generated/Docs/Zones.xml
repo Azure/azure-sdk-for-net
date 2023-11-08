@@ -80,7 +80,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<zoneId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -91,7 +91,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 TokenCredential credential = new DefaultAzureCredential();
 Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     type = "<type>",
     managementZoneId = "<managementZoneId>",
@@ -130,7 +130,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<zoneId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -141,7 +141,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 TokenCredential credential = new DefaultAzureCredential();
 Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     type = "<type>",
     managementZoneId = "<managementZoneId>",

@@ -79,7 +79,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeTextAsync(body.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = body.ToRequestContent();
+            Response response = await AnalyzeTextAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
         }
 
@@ -94,7 +95,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeText(body.ToRequestContent(), context);
+            using RequestContent content = body.ToRequestContent();
+            Response response = AnalyzeText(content, context);
             return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
         }
 
@@ -187,7 +189,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeImageAsync(body.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = body.ToRequestContent();
+            Response response = await AnalyzeImageAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AnalyzeImageResult.FromResponse(response), response);
         }
 
@@ -202,7 +205,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeImage(body.ToRequestContent(), context);
+            using RequestContent content = body.ToRequestContent();
+            Response response = AnalyzeImage(content, context);
             return Response.FromValue(AnalyzeImageResult.FromResponse(response), response);
         }
 
@@ -556,7 +560,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(addBlockItemsOptions, nameof(addBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddBlockItemsAsync(blocklistName, addBlockItemsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = addBlockItemsOptions.ToRequestContent();
+            Response response = await AddBlockItemsAsync(blocklistName, content, context).ConfigureAwait(false);
             return Response.FromValue(AddBlockItemsResult.FromResponse(response), response);
         }
 
@@ -574,7 +579,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(addBlockItemsOptions, nameof(addBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddBlockItems(blocklistName, addBlockItemsOptions.ToRequestContent(), context);
+            using RequestContent content = addBlockItemsOptions.ToRequestContent();
+            Response response = AddBlockItems(blocklistName, content, context);
             return Response.FromValue(AddBlockItemsResult.FromResponse(response), response);
         }
 
@@ -676,7 +682,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(removeBlockItemsOptions, nameof(removeBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RemoveBlockItemsAsync(blocklistName, removeBlockItemsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = removeBlockItemsOptions.ToRequestContent();
+            Response response = await RemoveBlockItemsAsync(blocklistName, content, context).ConfigureAwait(false);
             return response;
         }
 
@@ -694,7 +701,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(removeBlockItemsOptions, nameof(removeBlockItemsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RemoveBlockItems(blocklistName, removeBlockItemsOptions.ToRequestContent(), context);
+            using RequestContent content = removeBlockItemsOptions.ToRequestContent();
+            Response response = RemoveBlockItems(blocklistName, content, context);
             return response;
         }
 

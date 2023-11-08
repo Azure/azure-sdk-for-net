@@ -24,9 +24,9 @@ namespace Azure.Analytics.Purview.Administration.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.UpdateMetadataPolicy("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -39,9 +39,9 @@ namespace Azure.Analytics.Purview.Administration.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -54,9 +54,9 @@ namespace Azure.Analytics.Purview.Administration.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 id = "<id>",
@@ -108,6 +108,7 @@ null
             },
                     collection = new
                     {
+                        type = "<type>",
                         referenceName = "<referenceName>",
                     },
                     parentCollectionName = "<parentCollectionName>",
@@ -146,9 +147,9 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 id = "<id>",
@@ -200,6 +201,7 @@ null
             },
                     collection = new
                     {
+                        type = "<type>",
                         referenceName = "<referenceName>",
                     },
                     parentCollectionName = "<parentCollectionName>",
@@ -238,7 +240,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = client.GetMetadataPolicy("<policyId>", null);
 
@@ -252,7 +254,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
 
@@ -266,7 +268,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = client.GetMetadataPolicy("<policyId>", null);
 
@@ -301,7 +303,7 @@ null
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
+            PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
             Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
 
@@ -340,6 +342,8 @@ null
 
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -353,6 +357,8 @@ null
 
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -366,6 +372,29 @@ null
 
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
             }
         }
 
@@ -379,6 +408,29 @@ null
 
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
             }
         }
     }

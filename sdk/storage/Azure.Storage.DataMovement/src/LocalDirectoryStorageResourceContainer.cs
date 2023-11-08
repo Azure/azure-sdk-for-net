@@ -18,10 +18,9 @@ namespace Azure.Storage.DataMovement
     {
         private Uri _uri;
 
-        /// <summary>
-        /// Gets the path
-        /// </summary>
         public override Uri Uri => _uri;
+
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Constructor
@@ -37,6 +36,17 @@ namespace Azure.Storage.DataMovement
                 Path = path,
             };
             _uri = uriBuilder.Uri;
+        }
+
+        /// <summary>
+        /// Internal Constructor for uri
+        /// </summary>
+        /// <param name="uri"></param>
+        internal LocalDirectoryStorageResourceContainer(Uri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
+            _uri = uri;
         }
 
         /// <summary>
@@ -63,12 +73,40 @@ namespace Azure.Storage.DataMovement
             PathScanner scanner = new PathScanner(_uri.LocalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                // Skip over directories for now since directory creation is unnecessary.
-                if (!fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
+                if (fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
                 {
+                    // Directory - but check for the case where it returns the directory you're currently listing
+                    if (fileSystemInfo.FullName != _uri.LocalPath)
+                    {
+                        yield return new LocalDirectoryStorageResourceContainer(fileSystemInfo.FullName);
+                    }
+                }
+                else
+                {
+                    // File
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }
             }
+        }
+
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new LocalSourceCheckpointData();
+        }
+
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new LocalDestinationCheckpointData();
+        }
+
+        protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
+
+        protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
+        {
+            UriBuilder uri = new UriBuilder(_uri);
+            uri.Path = Path.Combine(uri.Path, path);
+            return new LocalDirectoryStorageResourceContainer(uri.Uri);
         }
     }
 }

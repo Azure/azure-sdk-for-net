@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskAccessResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskAccessResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="diskAccessName"> The diskAccessName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}";
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of ComputePrivateEndpointConnectionResources and their operations over a ComputePrivateEndpointConnectionResource. </returns>
         public virtual ComputePrivateEndpointConnectionCollection GetComputePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new ComputePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ComputePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ComputePrivateEndpointConnectionResource>> GetComputePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ComputePrivateEndpointConnectionResource> GetComputePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

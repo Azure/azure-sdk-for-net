@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppContainers
     public partial class ContainerAppAuthConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppAuthConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="authConfigName"> The authConfigName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}";

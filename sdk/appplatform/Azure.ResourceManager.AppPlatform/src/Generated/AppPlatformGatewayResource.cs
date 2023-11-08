@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppPlatform
     public partial class AppPlatformGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string gatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}";
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformGatewayRouteConfigResources and their operations over a AppPlatformGatewayRouteConfigResource. </returns>
         public virtual AppPlatformGatewayRouteConfigCollection GetAppPlatformGatewayRouteConfigs()
         {
-            return GetCachedClient(Client => new AppPlatformGatewayRouteConfigCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformGatewayRouteConfigCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +113,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="routeConfigName"> The name of the Spring Cloud Gateway route config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformGatewayRouteConfigResource>> GetAppPlatformGatewayRouteConfigAsync(string routeConfigName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +136,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="routeConfigName"> The name of the Spring Cloud Gateway route config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformGatewayRouteConfigResource> GetAppPlatformGatewayRouteConfig(string routeConfigName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformGatewayCustomDomainResources and their operations over a AppPlatformGatewayCustomDomainResource. </returns>
         public virtual AppPlatformGatewayCustomDomainCollection GetAppPlatformGatewayCustomDomains()
         {
-            return GetCachedClient(Client => new AppPlatformGatewayCustomDomainCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformGatewayCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -162,8 +166,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="domainName"> The name of the Spring Cloud Gateway custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformGatewayCustomDomainResource>> GetAppPlatformGatewayCustomDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +189,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="domainName"> The name of the Spring Cloud Gateway custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformGatewayCustomDomainResource> GetAppPlatformGatewayCustomDomain(string domainName, CancellationToken cancellationToken = default)
         {

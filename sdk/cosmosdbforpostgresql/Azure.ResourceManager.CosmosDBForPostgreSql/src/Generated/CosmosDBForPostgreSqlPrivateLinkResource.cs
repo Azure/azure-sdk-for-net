@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     public partial class CosmosDBForPostgreSqlPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="privateLinkResourceName"> The privateLinkResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string privateLinkResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/privateLinkResources/{privateLinkResourceName}";

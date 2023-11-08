@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
 #endif
 
-        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities = true)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
@@ -99,12 +99,9 @@ namespace Azure.Core.Pipeline
                 return null;
             }
 
-            string clientName = ns;
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot != -1)
-            {
-                clientName += "." + name.Substring(0, indexOfDot);
-            }
+            string clientName = ns + "." + ((indexOfDot < 0) ? name : name.Substring(0, indexOfDot));
+
 #if NETCOREAPP2_1
             return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
 #else

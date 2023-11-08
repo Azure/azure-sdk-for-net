@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SoftwareInventoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SoftwareInventoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceNamespace"> The resourceNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="softwareName"> The softwareName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string softwareName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}";

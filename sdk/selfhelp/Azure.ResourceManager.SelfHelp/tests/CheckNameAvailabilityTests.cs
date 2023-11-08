@@ -6,7 +6,6 @@ namespace Azure.ResourceManager.SelfHelp.Tests
     using Azure.Core.TestFramework;
     using Azure.Core;
     using System.Threading.Tasks;
-    using Azure.ResourceManager.SelfHelp.Tests;
     using NUnit.Framework;
     using System;
     using Azure.ResourceManager.SelfHelp.Models;
