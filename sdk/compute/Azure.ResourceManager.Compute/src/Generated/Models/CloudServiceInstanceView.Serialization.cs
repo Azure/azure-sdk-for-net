@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
             if (!isValid)
             {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceInstanceView)} does not support '{options.Format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
             if (!isValid)
             {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceInstanceView)} does not support '{options.Format}' format.");
             }
 
             return ModelReaderWriter.Write(this, options);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
             if (!isValid)
             {
-                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceInstanceView)} does not support '{options.Format}' format.");
             }
 
             using JsonDocument document = JsonDocument.Parse(data);

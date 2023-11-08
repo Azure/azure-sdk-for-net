@@ -126,7 +126,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ImageReference"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
         /// <param name="sku"> The image SKU. </param>
@@ -135,11 +134,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sharedGalleryImageUniqueId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
         /// <returns> A new <see cref="Models.ImageReference"/> instance for mocking. </returns>
-        public static ImageReference ImageReference(ResourceIdentifier id = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, string sharedGalleryImageUniqueId = null, string communityGalleryImageId = null)
+        public static ImageReference ImageReference(ResourceIdentifier id = null, string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, string sharedGalleryImageUniqueId = null, string communityGalleryImageId = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new ImageReference(id, serializedAdditionalRawData, publisher, offer, sku, version, exactVersion, sharedGalleryImageUniqueId, communityGalleryImageId);
+            return new ImageReference(id, new Dictionary<string, BinaryData>(), publisher, offer, sku, version, exactVersion, sharedGalleryImageUniqueId, communityGalleryImageId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetExtensionData"/>. </summary>
@@ -718,23 +715,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineCaptureResult"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schema"> the schema of the captured virtual machine. </param>
         /// <param name="contentVersion"> the version of the content. </param>
         /// <param name="parameters"> parameters of the captured virtual machine. </param>
         /// <param name="resources"> a list of resource items of the captured virtual machine. </param>
         /// <returns> A new <see cref="Models.VirtualMachineCaptureResult"/> instance for mocking. </returns>
-        public static VirtualMachineCaptureResult VirtualMachineCaptureResult(ResourceIdentifier id = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string schema = null, string contentVersion = null, BinaryData parameters = null, IEnumerable<BinaryData> resources = null)
+        public static VirtualMachineCaptureResult VirtualMachineCaptureResult(ResourceIdentifier id = null, string schema = null, string contentVersion = null, BinaryData parameters = null, IEnumerable<BinaryData> resources = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             resources ??= new List<BinaryData>();
 
-            return new VirtualMachineCaptureResult(id, serializedAdditionalRawData, schema, contentVersion, parameters, resources?.ToList());
+            return new VirtualMachineCaptureResult(id, new Dictionary<string, BinaryData>(), schema, contentVersion, parameters, resources?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachinePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="zones"> The virtual machine zones. </param>
@@ -765,14 +759,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
-        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, ComputePlan plan = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, VirtualMachineHardwareProfile hardwareProfile = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, VirtualMachineNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null)
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = null, ComputePlan plan = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, VirtualMachineHardwareProfile hardwareProfile = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, VirtualMachineNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             zones ??= new List<string>();
             galleryApplications ??= new List<VirtualMachineGalleryApplication>();
 
-            return new VirtualMachinePatch(tags, serializedAdditionalRawData, plan, identity, zones?.ToList(), hardwareProfile, storageProfile, additionalCapabilities, osProfile, networkProfile, securityProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics, new Dictionary<string, BinaryData>()) : null, availabilitySetId != null ? ResourceManagerModelFactory.WritableSubResource(availabilitySetId) : null, virtualMachineScaleSetId != null ? ResourceManagerModelFactory.WritableSubResource(virtualMachineScaleSetId) : null, proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, priority, evictionPolicy, billingMaxPrice != null ? new BillingProfile(billingMaxPrice, new Dictionary<string, BinaryData>()) : null, hostId != null ? ResourceManagerModelFactory.WritableSubResource(hostId) : null, hostGroupId != null ? ResourceManagerModelFactory.WritableSubResource(hostGroupId) : null, provisioningState, instanceView, licenseType, vmId, extensionsTimeBudget, platformFaultDomain, scheduledEventsProfile, userData, capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId), new Dictionary<string, BinaryData>()) : null, galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList(), new Dictionary<string, BinaryData>()) : null, timeCreated);
+            return new VirtualMachinePatch(tags, new Dictionary<string, BinaryData>(), plan, identity, zones?.ToList(), hardwareProfile, storageProfile, additionalCapabilities, osProfile, networkProfile, securityProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics, new Dictionary<string, BinaryData>()) : null, availabilitySetId != null ? ResourceManagerModelFactory.WritableSubResource(availabilitySetId) : null, virtualMachineScaleSetId != null ? ResourceManagerModelFactory.WritableSubResource(virtualMachineScaleSetId) : null, proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, priority, evictionPolicy, billingMaxPrice != null ? new BillingProfile(billingMaxPrice, new Dictionary<string, BinaryData>()) : null, hostId != null ? ResourceManagerModelFactory.WritableSubResource(hostId) : null, hostGroupId != null ? ResourceManagerModelFactory.WritableSubResource(hostGroupId) : null, provisioningState, instanceView, licenseType, vmId, extensionsTimeBudget, platformFaultDomain, scheduledEventsProfile, userData, capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId), new Dictionary<string, BinaryData>()) : null, galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList(), new Dictionary<string, BinaryData>()) : null, timeCreated);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineAssessPatchesResult"/>. </summary>
@@ -911,7 +904,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilitySetPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> Sku of the availability set. </param>
         /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
         /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
@@ -919,14 +911,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <returns> A new <see cref="Models.AvailabilitySetPatch"/> instance for mocking. </returns>
-        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, ComputeSku sku = null, int? platformUpdateDomainCount = null, int? platformFaultDomainCount = null, IEnumerable<WritableSubResource> virtualMachines = null, ResourceIdentifier proximityPlacementGroupId = null, IEnumerable<InstanceViewStatus> statuses = null)
+        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, int? platformUpdateDomainCount = null, int? platformFaultDomainCount = null, IEnumerable<WritableSubResource> virtualMachines = null, ResourceIdentifier proximityPlacementGroupId = null, IEnumerable<InstanceViewStatus> statuses = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             virtualMachines ??= new List<WritableSubResource>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new AvailabilitySetPatch(tags, serializedAdditionalRawData, sku, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines?.ToList(), proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, statuses?.ToList());
+            return new AvailabilitySetPatch(tags, new Dictionary<string, BinaryData>(), sku, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines?.ToList(), proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, statuses?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.ProximityPlacementGroupData"/>. </summary>
@@ -984,16 +975,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assetId"> Specifies the unique id of the dedicated physical machine on which the dedicated host resides. </param>
         /// <param name="availableCapacityAllocatableVms"> Unutilized capacity of the dedicated host. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the dedicated host. </param>
         /// <returns> A new <see cref="Models.DedicatedHostInstanceViewWithName"/> instance for mocking. </returns>
-        public static DedicatedHostInstanceViewWithName DedicatedHostInstanceViewWithName(string assetId = null, IEnumerable<DedicatedHostAllocatableVm> availableCapacityAllocatableVms = null, IEnumerable<InstanceViewStatus> statuses = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string name = null)
+        public static DedicatedHostInstanceViewWithName DedicatedHostInstanceViewWithName(string assetId = null, IEnumerable<DedicatedHostAllocatableVm> availableCapacityAllocatableVms = null, IEnumerable<InstanceViewStatus> statuses = null, string name = null)
         {
             availableCapacityAllocatableVms ??= new List<DedicatedHostAllocatableVm>();
             statuses ??= new List<InstanceViewStatus>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new DedicatedHostInstanceViewWithName(assetId, availableCapacityAllocatableVms != null ? new DedicatedHostAvailableCapacity(availableCapacityAllocatableVms?.ToList(), new Dictionary<string, BinaryData>()) : null, statuses?.ToList(), serializedAdditionalRawData, name);
+            return new DedicatedHostInstanceViewWithName(assetId, availableCapacityAllocatableVms != null ? new DedicatedHostAvailableCapacity(availableCapacityAllocatableVms?.ToList(), new Dictionary<string, BinaryData>()) : null, statuses?.ToList(), new Dictionary<string, BinaryData>(), name);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DedicatedHostInstanceView"/>. </summary>
@@ -1020,7 +1009,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DedicatedHostGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="zones"> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </param>
         /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
         /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
@@ -1028,15 +1016,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </param>
         /// <param name="ultraSsdEnabled"> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </param>
         /// <returns> A new <see cref="Models.DedicatedHostGroupPatch"/> instance for mocking. </returns>
-        public static DedicatedHostGroupPatch DedicatedHostGroupPatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<string> zones = null, int? platformFaultDomainCount = null, IEnumerable<SubResource> hosts = null, IEnumerable<DedicatedHostInstanceViewWithName> instanceViewHosts = null, bool? supportAutomaticPlacement = null, bool? ultraSsdEnabled = null)
+        public static DedicatedHostGroupPatch DedicatedHostGroupPatch(IDictionary<string, string> tags = null, IEnumerable<string> zones = null, int? platformFaultDomainCount = null, IEnumerable<SubResource> hosts = null, IEnumerable<DedicatedHostInstanceViewWithName> instanceViewHosts = null, bool? supportAutomaticPlacement = null, bool? ultraSsdEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             zones ??= new List<string>();
             hosts ??= new List<SubResource>();
             instanceViewHosts ??= new List<DedicatedHostInstanceViewWithName>();
 
-            return new DedicatedHostGroupPatch(tags, serializedAdditionalRawData, zones?.ToList(), platformFaultDomainCount, hosts?.ToList(), instanceViewHosts != null ? new DedicatedHostGroupInstanceView(instanceViewHosts?.ToList(), new Dictionary<string, BinaryData>()) : null, supportAutomaticPlacement, ultraSsdEnabled != null ? new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSsdEnabled, new Dictionary<string, BinaryData>()) : null);
+            return new DedicatedHostGroupPatch(tags, new Dictionary<string, BinaryData>(), zones?.ToList(), platformFaultDomainCount, hosts?.ToList(), instanceViewHosts != null ? new DedicatedHostGroupInstanceView(instanceViewHosts?.ToList(), new Dictionary<string, BinaryData>()) : null, supportAutomaticPlacement, ultraSsdEnabled != null ? new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSsdEnabled, new Dictionary<string, BinaryData>()) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.DedicatedHostData"/>. </summary>
@@ -1067,7 +1054,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DedicatedHostPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </param>
         /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
         /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
@@ -1079,13 +1065,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The dedicated host instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Models.DedicatedHostPatch"/> instance for mocking. </returns>
-        public static DedicatedHostPatch DedicatedHostPatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, ComputeSku sku = null, int? platformFaultDomain = null, bool? autoReplaceOnFailure = null, string hostId = null, IEnumerable<SubResource> virtualMachines = null, DedicatedHostLicenseType? licenseType = null, DateTimeOffset? provisioningOn = null, string provisioningState = null, DedicatedHostInstanceView instanceView = null, DateTimeOffset? timeCreated = null)
+        public static DedicatedHostPatch DedicatedHostPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, int? platformFaultDomain = null, bool? autoReplaceOnFailure = null, string hostId = null, IEnumerable<SubResource> virtualMachines = null, DedicatedHostLicenseType? licenseType = null, DateTimeOffset? provisioningOn = null, string provisioningState = null, DedicatedHostInstanceView instanceView = null, DateTimeOffset? timeCreated = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             virtualMachines ??= new List<SubResource>();
 
-            return new DedicatedHostPatch(tags, serializedAdditionalRawData, sku, platformFaultDomain, autoReplaceOnFailure, hostId, virtualMachines?.ToList(), licenseType, provisioningOn, provisioningState, instanceView, timeCreated);
+            return new DedicatedHostPatch(tags, new Dictionary<string, BinaryData>(), sku, platformFaultDomain, autoReplaceOnFailure, hostId, virtualMachines?.ToList(), licenseType, provisioningOn, provisioningState, instanceView, timeCreated);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.SshPublicKeyData"/>. </summary>
@@ -1136,18 +1121,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskImagePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceVirtualMachineId"> The source virtual machine from which Image is created. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
         /// <returns> A new <see cref="Models.DiskImagePatch"/> instance for mocking. </returns>
-        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, ResourceIdentifier sourceVirtualMachineId = null, ImageStorageProfile storageProfile = null, string provisioningState = null, HyperVGeneration? hyperVGeneration = null)
+        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = null, ResourceIdentifier sourceVirtualMachineId = null, ImageStorageProfile storageProfile = null, string provisioningState = null, HyperVGeneration? hyperVGeneration = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new DiskImagePatch(tags, serializedAdditionalRawData, sourceVirtualMachineId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualMachineId) : null, storageProfile, provisioningState, hyperVGeneration);
+            return new DiskImagePatch(tags, new Dictionary<string, BinaryData>(), sourceVirtualMachineId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualMachineId) : null, storageProfile, provisioningState, hyperVGeneration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.RestorePointGroupData"/>. </summary>
@@ -1233,15 +1216,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskRestorePointAttributes"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
         /// <param name="sourceDiskRestorePointId"> Resource Id of the source disk restore point. </param>
         /// <returns> A new <see cref="Models.DiskRestorePointAttributes"/> instance for mocking. </returns>
-        public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, RestorePointEncryption encryption = null, ResourceIdentifier sourceDiskRestorePointId = null)
+        public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id = null, RestorePointEncryption encryption = null, ResourceIdentifier sourceDiskRestorePointId = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new DiskRestorePointAttributes(id, serializedAdditionalRawData, encryption, sourceDiskRestorePointId != null ? ResourceManagerModelFactory.WritableSubResource(sourceDiskRestorePointId) : null);
+            return new DiskRestorePointAttributes(id, new Dictionary<string, BinaryData>(), encryption, sourceDiskRestorePointId != null ? ResourceManagerModelFactory.WritableSubResource(sourceDiskRestorePointId) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorePointSourceVmDataDisk"/>. </summary>
@@ -1290,19 +1270,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorePointGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
         /// <returns> A new <see cref="Models.RestorePointGroupPatch"/> instance for mocking. </returns>
-        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, RestorePointGroupSource source = null, string provisioningState = null, string restorePointGroupId = null, IEnumerable<RestorePointData> restorePoints = null)
+        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags = null, RestorePointGroupSource source = null, string provisioningState = null, string restorePointGroupId = null, IEnumerable<RestorePointData> restorePoints = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             restorePoints ??= new List<RestorePointData>();
 
-            return new RestorePointGroupPatch(tags, serializedAdditionalRawData, source, provisioningState, restorePointGroupId, restorePoints?.ToList());
+            return new RestorePointGroupPatch(tags, new Dictionary<string, BinaryData>(), source, provisioningState, restorePointGroupId, restorePoints?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CapacityReservationGroupData"/>. </summary>
@@ -1331,15 +1309,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationInstanceViewWithName"/>. </summary>
         /// <param name="utilizationInfo"> Unutilized capacity of the capacity reservation. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the capacity reservation. </param>
         /// <returns> A new <see cref="Models.CapacityReservationInstanceViewWithName"/> instance for mocking. </returns>
-        public static CapacityReservationInstanceViewWithName CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo = null, IEnumerable<InstanceViewStatus> statuses = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string name = null)
+        public static CapacityReservationInstanceViewWithName CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo = null, IEnumerable<InstanceViewStatus> statuses = null, string name = null)
         {
             statuses ??= new List<InstanceViewStatus>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new CapacityReservationInstanceViewWithName(utilizationInfo, statuses?.ToList(), serializedAdditionalRawData, name);
+            return new CapacityReservationInstanceViewWithName(utilizationInfo, statuses?.ToList(), new Dictionary<string, BinaryData>(), name);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationInstanceView"/>. </summary>
@@ -1366,20 +1342,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
         /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
         /// <param name="instanceViewCapacityReservations"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
         /// <returns> A new <see cref="Models.CapacityReservationGroupPatch"/> instance for mocking. </returns>
-        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<SubResource> capacityReservations = null, IEnumerable<SubResource> virtualMachinesAssociated = null, IEnumerable<CapacityReservationInstanceViewWithName> instanceViewCapacityReservations = null)
+        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = null, IEnumerable<SubResource> capacityReservations = null, IEnumerable<SubResource> virtualMachinesAssociated = null, IEnumerable<CapacityReservationInstanceViewWithName> instanceViewCapacityReservations = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             capacityReservations ??= new List<SubResource>();
             virtualMachinesAssociated ??= new List<SubResource>();
             instanceViewCapacityReservations ??= new List<CapacityReservationInstanceViewWithName>();
 
-            return new CapacityReservationGroupPatch(tags, serializedAdditionalRawData, capacityReservations?.ToList(), virtualMachinesAssociated?.ToList(), instanceViewCapacityReservations != null ? new CapacityReservationGroupInstanceView(instanceViewCapacityReservations?.ToList(), new Dictionary<string, BinaryData>()) : null);
+            return new CapacityReservationGroupPatch(tags, new Dictionary<string, BinaryData>(), capacityReservations?.ToList(), virtualMachinesAssociated?.ToList(), instanceViewCapacityReservations != null ? new CapacityReservationGroupInstanceView(instanceViewCapacityReservations?.ToList(), new Dictionary<string, BinaryData>()) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CapacityReservationData"/>. </summary>
@@ -1410,7 +1384,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
         /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
         /// <param name="platformFaultDomainCount"> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. **Note:** The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </param>
@@ -1420,13 +1393,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The Capacity reservation instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Models.CapacityReservationPatch"/> instance for mocking. </returns>
-        public static CapacityReservationPatch CapacityReservationPatch(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, ComputeSku sku = null, string reservationId = null, int? platformFaultDomainCount = null, IEnumerable<SubResource> virtualMachinesAssociated = null, DateTimeOffset? provisioningOn = null, string provisioningState = null, CapacityReservationInstanceView instanceView = null, DateTimeOffset? timeCreated = null)
+        public static CapacityReservationPatch CapacityReservationPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, string reservationId = null, int? platformFaultDomainCount = null, IEnumerable<SubResource> virtualMachinesAssociated = null, DateTimeOffset? provisioningOn = null, string provisioningState = null, CapacityReservationInstanceView instanceView = null, DateTimeOffset? timeCreated = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             virtualMachinesAssociated ??= new List<SubResource>();
 
-            return new CapacityReservationPatch(tags, serializedAdditionalRawData, sku, reservationId, platformFaultDomainCount, virtualMachinesAssociated?.ToList(), provisioningOn, provisioningState, instanceView, timeCreated);
+            return new CapacityReservationPatch(tags, new Dictionary<string, BinaryData>(), sku, reservationId, platformFaultDomainCount, virtualMachinesAssociated?.ToList(), provisioningOn, provisioningState, instanceView, timeCreated);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RequestRateByIntervalContent"/>. </summary>
@@ -1438,14 +1410,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
         /// <returns> A new <see cref="Models.RequestRateByIntervalContent"/> instance for mocking. </returns>
-        public static RequestRateByIntervalContent RequestRateByIntervalContent(Uri blobContainerSasUri = null, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = null, bool? groupByOperationName = null, bool? groupByResourceName = null, bool? groupByClientApplicationId = null, bool? groupByUserAgent = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IntervalInMins intervalLength = default)
+        public static RequestRateByIntervalContent RequestRateByIntervalContent(Uri blobContainerSasUri = null, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = null, bool? groupByOperationName = null, bool? groupByResourceName = null, bool? groupByClientApplicationId = null, bool? groupByUserAgent = null, IntervalInMins intervalLength = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new RequestRateByIntervalContent(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, serializedAdditionalRawData, intervalLength);
+            return new RequestRateByIntervalContent(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, new Dictionary<string, BinaryData>(), intervalLength);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogAnalyticsInputBase"/>. </summary>
@@ -1480,13 +1449,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <returns> A new <see cref="Models.ThrottledRequestsContent"/> instance for mocking. </returns>
-        public static ThrottledRequestsContent ThrottledRequestsContent(Uri blobContainerSasUri = null, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = null, bool? groupByOperationName = null, bool? groupByResourceName = null, bool? groupByClientApplicationId = null, bool? groupByUserAgent = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        public static ThrottledRequestsContent ThrottledRequestsContent(Uri blobContainerSasUri = null, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = null, bool? groupByOperationName = null, bool? groupByResourceName = null, bool? groupByClientApplicationId = null, bool? groupByUserAgent = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new ThrottledRequestsContent(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, serializedAdditionalRawData);
+            return new ThrottledRequestsContent(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunCommandDocumentBase"/>. </summary>
@@ -1507,17 +1473,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <returns> A new <see cref="Models.RunCommandDocument"/> instance for mocking. </returns>
-        public static RunCommandDocument RunCommandDocument(string schema = null, string id = null, SupportedOperatingSystemType osType = default, string label = null, string description = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, IEnumerable<string> script = null, IEnumerable<RunCommandParameterDefinition> parameters = null)
+        public static RunCommandDocument RunCommandDocument(string schema = null, string id = null, SupportedOperatingSystemType osType = default, string label = null, string description = null, IEnumerable<string> script = null, IEnumerable<RunCommandParameterDefinition> parameters = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             script ??= new List<string>();
             parameters ??= new List<RunCommandParameterDefinition>();
 
-            return new RunCommandDocument(schema, id, osType, label, description, serializedAdditionalRawData, script?.ToList(), parameters?.ToList());
+            return new RunCommandDocument(schema, id, osType, label, description, new Dictionary<string, BinaryData>(), script?.ToList(), parameters?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunCommandParameterDefinition"/>. </summary>
@@ -1604,7 +1568,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineRunCommandUpdate"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> The source of the run command script. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <param name="protectedParameters"> The parameters used by the script. </param>
@@ -1620,14 +1583,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The virtual machine run command instance view. </param>
         /// <param name="treatFailureAsDeploymentFailure"> Optional. If set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </param>
         /// <returns> A new <see cref="Models.VirtualMachineRunCommandUpdate"/> instance for mocking. </returns>
-        public static VirtualMachineRunCommandUpdate VirtualMachineRunCommandUpdate(IDictionary<string, string> tags = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, VirtualMachineRunCommandScriptSource source = null, IEnumerable<RunCommandInputParameter> parameters = null, IEnumerable<RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = null, string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = null, Uri outputBlobUri = null, Uri errorBlobUri = null, RunCommandManagedIdentity outputBlobManagedIdentity = null, RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, VirtualMachineRunCommandInstanceView instanceView = null, bool? treatFailureAsDeploymentFailure = null)
+        public static VirtualMachineRunCommandUpdate VirtualMachineRunCommandUpdate(IDictionary<string, string> tags = null, VirtualMachineRunCommandScriptSource source = null, IEnumerable<RunCommandInputParameter> parameters = null, IEnumerable<RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = null, string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = null, Uri outputBlobUri = null, Uri errorBlobUri = null, RunCommandManagedIdentity outputBlobManagedIdentity = null, RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, VirtualMachineRunCommandInstanceView instanceView = null, bool? treatFailureAsDeploymentFailure = null)
         {
             tags ??= new Dictionary<string, string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             parameters ??= new List<RunCommandInputParameter>();
             protectedParameters ??= new List<RunCommandInputParameter>();
 
-            return new VirtualMachineRunCommandUpdate(tags, serializedAdditionalRawData, source, parameters?.ToList(), protectedParameters?.ToList(), asyncExecution, runAsUser, runAsPassword, timeoutInSeconds, outputBlobUri, errorBlobUri, outputBlobManagedIdentity, errorBlobManagedIdentity, provisioningState, instanceView, treatFailureAsDeploymentFailure);
+            return new VirtualMachineRunCommandUpdate(tags, new Dictionary<string, BinaryData>(), source, parameters?.ToList(), protectedParameters?.ToList(), asyncExecution, runAsUser, runAsPassword, timeoutInSeconds, outputBlobUri, errorBlobUri, outputBlobManagedIdentity, errorBlobManagedIdentity, provisioningState, instanceView, treatFailureAsDeploymentFailure);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.ManagedDiskData"/>. </summary>
@@ -2217,15 +2179,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPublishingProfile"/> instance for mocking. </returns>
-        public static GalleryImageVersionPublishingProfile GalleryImageVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = null, int? replicaCount = null, bool? isExcludedFromLatest = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, ImageStorageAccountType? storageAccountType = null, GalleryReplicationMode? replicationMode = null, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        public static GalleryImageVersionPublishingProfile GalleryImageVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = null, int? replicaCount = null, bool? isExcludedFromLatest = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, ImageStorageAccountType? storageAccountType = null, GalleryReplicationMode? replicationMode = null, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = null)
         {
             targetRegions ??= new List<TargetRegion>();
             targetExtendedLocations ??= new List<GalleryTargetExtendedLocation>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new GalleryImageVersionPublishingProfile(targetRegions?.ToList(), replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations?.ToList(), serializedAdditionalRawData);
+            return new GalleryImageVersionPublishingProfile(targetRegions?.ToList(), replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations?.ToList(), new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryArtifactPublishingProfileBase"/>. </summary>
@@ -2250,13 +2210,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         /// <param name="gallerySource"> The source for the disk image. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <returns> A new <see cref="Models.GalleryOSDiskImage"/> instance for mocking. </returns>
-        public static GalleryOSDiskImage GalleryOSDiskImage(int? sizeInGB = null, HostCaching? hostCaching = null, GalleryDiskImageSource gallerySource = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        public static GalleryOSDiskImage GalleryOSDiskImage(int? sizeInGB = null, HostCaching? hostCaching = null, GalleryDiskImageSource gallerySource = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new GalleryOSDiskImage(sizeInGB, hostCaching, gallerySource, serializedAdditionalRawData);
+            return new GalleryOSDiskImage(sizeInGB, hostCaching, gallerySource, new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryDiskImage"/>. </summary>
@@ -2273,28 +2230,23 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         /// <param name="gallerySource"> The source for the disk image. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         /// <returns> A new <see cref="Models.GalleryDataDiskImage"/> instance for mocking. </returns>
-        public static GalleryDataDiskImage GalleryDataDiskImage(int? sizeInGB = null, HostCaching? hostCaching = null, GalleryDiskImageSource gallerySource = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, int lun = default)
+        public static GalleryDataDiskImage GalleryDataDiskImage(int? sizeInGB = null, HostCaching? hostCaching = null, GalleryDiskImageSource gallerySource = null, int lun = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new GalleryDataDiskImage(sizeInGB, hostCaching, gallerySource, serializedAdditionalRawData, lun);
+            return new GalleryDataDiskImage(sizeInGB, hostCaching, gallerySource, new Dictionary<string, BinaryData>(), lun);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageVersionSafetyProfile"/>. </summary>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionSafetyProfile"/> instance for mocking. </returns>
-        public static GalleryImageVersionSafetyProfile GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, bool? isReportedForPolicyViolation = null, IEnumerable<GalleryImageVersionPolicyViolation> policyViolations = null)
+        public static GalleryImageVersionSafetyProfile GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations = null, bool? isReportedForPolicyViolation = null, IEnumerable<GalleryImageVersionPolicyViolation> policyViolations = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             policyViolations ??= new List<GalleryImageVersionPolicyViolation>();
 
-            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData, isReportedForPolicyViolation, policyViolations?.ToList());
+            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, new Dictionary<string, BinaryData>(), isReportedForPolicyViolation, policyViolations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageVersionPolicyViolation"/>. </summary>
@@ -2420,7 +2372,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> The source image from which the Image Version is going to be created. </param>
         /// <param name="manageActions"></param>
         /// <param name="settings"> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </param>
@@ -2428,15 +2379,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
         /// <param name="customActions"> A list of custom actions that can be performed with this Gallery Application Version. </param>
         /// <returns> A new <see cref="Models.GalleryApplicationVersionPublishingProfile"/> instance for mocking. </returns>
-        public static GalleryApplicationVersionPublishingProfile GalleryApplicationVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = null, int? replicaCount = null, bool? isExcludedFromLatest = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, ImageStorageAccountType? storageAccountType = null, GalleryReplicationMode? replicationMode = null, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, UserArtifactSource source = null, UserArtifactManagement manageActions = null, UserArtifactSettings settings = null, IDictionary<string, string> advancedSettings = null, bool? enableHealthCheck = null, IEnumerable<GalleryApplicationCustomAction> customActions = null)
+        public static GalleryApplicationVersionPublishingProfile GalleryApplicationVersionPublishingProfile(IEnumerable<TargetRegion> targetRegions = null, int? replicaCount = null, bool? isExcludedFromLatest = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, ImageStorageAccountType? storageAccountType = null, GalleryReplicationMode? replicationMode = null, IEnumerable<GalleryTargetExtendedLocation> targetExtendedLocations = null, UserArtifactSource source = null, UserArtifactManagement manageActions = null, UserArtifactSettings settings = null, IDictionary<string, string> advancedSettings = null, bool? enableHealthCheck = null, IEnumerable<GalleryApplicationCustomAction> customActions = null)
         {
             targetRegions ??= new List<TargetRegion>();
             targetExtendedLocations ??= new List<GalleryTargetExtendedLocation>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             advancedSettings ??= new Dictionary<string, string>();
             customActions ??= new List<GalleryApplicationCustomAction>();
 
-            return new GalleryApplicationVersionPublishingProfile(targetRegions?.ToList(), replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations?.ToList(), serializedAdditionalRawData, source, manageActions, settings, advancedSettings, enableHealthCheck, customActions?.ToList());
+            return new GalleryApplicationVersionPublishingProfile(targetRegions?.ToList(), replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations?.ToList(), new Dictionary<string, BinaryData>(), source, manageActions, settings, advancedSettings, enableHealthCheck, customActions?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryApplicationVersionPatch"/>. </summary>
@@ -2460,27 +2410,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryData"/> instance for mocking. </returns>
-        public static SharedGalleryData SharedGalleryData(string name = null, AzureLocation? location = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string uniqueId = null)
+        public static SharedGalleryData SharedGalleryData(string name = null, AzureLocation? location = null, string uniqueId = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SharedGalleryData(name, location, serializedAdditionalRawData, uniqueId);
+            return new SharedGalleryData(name, location, new Dictionary<string, BinaryData>(), uniqueId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PirSharedGalleryResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <returns> A new <see cref="Models.PirSharedGalleryResourceData"/> instance for mocking. </returns>
-        public static PirSharedGalleryResourceData PirSharedGalleryResourceData(string name = null, AzureLocation? location = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string uniqueId = null)
+        public static PirSharedGalleryResourceData PirSharedGalleryResourceData(string name = null, AzureLocation? location = null, string uniqueId = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new PirSharedGalleryResourceData(name, location, serializedAdditionalRawData, uniqueId);
+            return new PirSharedGalleryResourceData(name, location, new Dictionary<string, BinaryData>(), uniqueId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PirResourceData"/>. </summary>
@@ -2495,7 +2439,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
@@ -2510,30 +2453,26 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageData"/> instance for mocking. </returns>
-        public static SharedGalleryImageData SharedGalleryImageData(string name = null, AzureLocation? location = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string uniqueId = null, SupportedOperatingSystemType? osType = null, OperatingSystemStateType? osState = null, DateTimeOffset? endOfLifeOn = null, GalleryImageIdentifier identifier = null, RecommendedMachineConfiguration recommended = null, IEnumerable<string> disallowedDiskTypes = null, HyperVGeneration? hyperVGeneration = null, IEnumerable<GalleryImageFeature> features = null, ImagePurchasePlan purchasePlan = null, ArchitectureType? architecture = null, Uri privacyStatementUri = null, string eula = null)
+        public static SharedGalleryImageData SharedGalleryImageData(string name = null, AzureLocation? location = null, string uniqueId = null, SupportedOperatingSystemType? osType = null, OperatingSystemStateType? osState = null, DateTimeOffset? endOfLifeOn = null, GalleryImageIdentifier identifier = null, RecommendedMachineConfiguration recommended = null, IEnumerable<string> disallowedDiskTypes = null, HyperVGeneration? hyperVGeneration = null, IEnumerable<GalleryImageFeature> features = null, ImagePurchasePlan purchasePlan = null, ArchitectureType? architecture = null, Uri privacyStatementUri = null, string eula = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             disallowedDiskTypes ??= new List<string>();
             features ??= new List<GalleryImageFeature>();
 
-            return new SharedGalleryImageData(name, location, serializedAdditionalRawData, uniqueId, osType, osState, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList(), new Dictionary<string, BinaryData>()) : null, hyperVGeneration, features?.ToList(), purchasePlan, architecture, privacyStatementUri, eula);
+            return new SharedGalleryImageData(name, location, new Dictionary<string, BinaryData>(), uniqueId, osType, osState, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList(), new Dictionary<string, BinaryData>()) : null, hyperVGeneration, features?.ToList(), purchasePlan, architecture, privacyStatementUri, eula);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageVersionData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = null, AzureLocation? location = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, string uniqueId = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, bool? isExcludedFromLatest = null, SharedGalleryImageVersionStorageProfile storageProfile = null)
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = null, AzureLocation? location = null, string uniqueId = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, bool? isExcludedFromLatest = null, SharedGalleryImageVersionStorageProfile storageProfile = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SharedGalleryImageVersionData(name, location, serializedAdditionalRawData, uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile);
+            return new SharedGalleryImageVersionData(name, location, new Dictionary<string, BinaryData>(), uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharedGalleryImageVersionStorageProfile"/>. </summary>
@@ -2550,13 +2489,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="Models.SharedGalleryOSDiskImage"/>. </summary>
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <returns> A new <see cref="Models.SharedGalleryOSDiskImage"/> instance for mocking. </returns>
-        public static SharedGalleryOSDiskImage SharedGalleryOSDiskImage(int? diskSizeGB = null, SharedGalleryHostCaching? hostCaching = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        public static SharedGalleryOSDiskImage SharedGalleryOSDiskImage(int? diskSizeGB = null, SharedGalleryHostCaching? hostCaching = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SharedGalleryOSDiskImage(diskSizeGB, hostCaching, serializedAdditionalRawData);
+            return new SharedGalleryOSDiskImage(diskSizeGB, hostCaching, new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharedGalleryDiskImage"/>. </summary>
@@ -2571,14 +2507,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="Models.SharedGalleryDataDiskImage"/>. </summary>
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         /// <returns> A new <see cref="Models.SharedGalleryDataDiskImage"/> instance for mocking. </returns>
-        public static SharedGalleryDataDiskImage SharedGalleryDataDiskImage(int? diskSizeGB = null, SharedGalleryHostCaching? hostCaching = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, int lun = default)
+        public static SharedGalleryDataDiskImage SharedGalleryDataDiskImage(int? diskSizeGB = null, SharedGalleryHostCaching? hostCaching = null, int lun = default)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SharedGalleryDataDiskImage(diskSizeGB, hostCaching, serializedAdditionalRawData, lun);
+            return new SharedGalleryDataDiskImage(diskSizeGB, hostCaching, new Dictionary<string, BinaryData>(), lun);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryData"/>. </summary>
@@ -2586,13 +2519,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryData"/> instance for mocking. </returns>
-        public static CommunityGalleryData CommunityGalleryData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        public static CommunityGalleryData CommunityGalleryData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new CommunityGalleryData(name, location, resourceType, uniqueId, serializedAdditionalRawData);
+            return new CommunityGalleryData(name, location, resourceType, uniqueId, new Dictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PirCommunityGalleryResourceData"/>. </summary>
@@ -2611,7 +2541,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
@@ -2625,13 +2554,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageData CommunityGalleryImageData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, SupportedOperatingSystemType? osType = null, OperatingSystemStateType? osState = null, DateTimeOffset? endOfLifeOn = null, CommunityGalleryImageIdentifier imageIdentifier = null, RecommendedMachineConfiguration recommended = null, IEnumerable<string> disallowedDiskTypes = null, HyperVGeneration? hyperVGeneration = null, IEnumerable<GalleryImageFeature> features = null, ImagePurchasePlan purchasePlan = null, ArchitectureType? architecture = null, Uri privacyStatementUri = null, string eula = null)
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null, SupportedOperatingSystemType? osType = null, OperatingSystemStateType? osState = null, DateTimeOffset? endOfLifeOn = null, CommunityGalleryImageIdentifier imageIdentifier = null, RecommendedMachineConfiguration recommended = null, IEnumerable<string> disallowedDiskTypes = null, HyperVGeneration? hyperVGeneration = null, IEnumerable<GalleryImageFeature> features = null, ImagePurchasePlan purchasePlan = null, ArchitectureType? architecture = null, Uri privacyStatementUri = null, string eula = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
             disallowedDiskTypes ??= new List<string>();
             features ??= new List<GalleryImageFeature>();
 
-            return new CommunityGalleryImageData(name, location, resourceType, uniqueId, serializedAdditionalRawData, osType, osState, endOfLifeOn, imageIdentifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList(), new Dictionary<string, BinaryData>()) : null, hyperVGeneration, features?.ToList(), purchasePlan, architecture, privacyStatementUri, eula);
+            return new CommunityGalleryImageData(name, location, resourceType, uniqueId, new Dictionary<string, BinaryData>(), osType, osState, endOfLifeOn, imageIdentifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList(), new Dictionary<string, BinaryData>()) : null, hyperVGeneration, features?.ToList(), purchasePlan, architecture, privacyStatementUri, eula);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommunityGalleryImageIdentifier"/>. </summary>
@@ -2649,17 +2577,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, bool? isExcludedFromLatest = null, SharedGalleryImageVersionStorageProfile storageProfile = null)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, bool? isExcludedFromLatest = null, SharedGalleryImageVersionStorageProfile storageProfile = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new CommunityGalleryImageVersionData(name, location, resourceType, uniqueId, serializedAdditionalRawData, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile);
+            return new CommunityGalleryImageVersionData(name, location, resourceType, uniqueId, new Dictionary<string, BinaryData>(), publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CloudServiceRoleInstanceData"/>. </summary>
