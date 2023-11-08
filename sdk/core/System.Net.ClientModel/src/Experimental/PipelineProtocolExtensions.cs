@@ -23,7 +23,7 @@ public static class PipelineProtocolExtensions
             return message.Response;
         }
 
-        throw new PipelineRequestException(message.Response);
+        throw new ClientRequestException(message.Response);
     }
 
     public static MessageResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
@@ -40,7 +40,7 @@ public static class PipelineProtocolExtensions
             return message.Response;
         }
 
-        throw new PipelineRequestException(message.Response);
+        throw new ClientRequestException(message.Response);
     }
 
     public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
@@ -53,7 +53,7 @@ public static class PipelineProtocolExtensions
             case >= 400 and < 500:
                 return Result.FromValue(false, response);
             default:
-                return new ErrorResult<bool>(response, new PipelineRequestException(response));
+                return new ErrorResult<bool>(response, new ClientRequestException(response));
         }
     }
 
@@ -67,16 +67,16 @@ public static class PipelineProtocolExtensions
             case >= 400 and < 500:
                 return Result.FromValue(false, response);
             default:
-                return new ErrorResult<bool>(response, new PipelineRequestException(response));
+                return new ErrorResult<bool>(response, new ClientRequestException(response));
         }
     }
 
     internal class ErrorResult<T> : NullableResult<T>
     {
         private readonly MessageResponse _response;
-        private readonly PipelineRequestException _exception;
+        private readonly ClientRequestException _exception;
 
-        public ErrorResult(MessageResponse response, PipelineRequestException exception)
+        public ErrorResult(MessageResponse response, ClientRequestException exception)
             : base(default, response)
         {
             _response = response;

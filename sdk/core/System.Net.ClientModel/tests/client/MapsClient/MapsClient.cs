@@ -74,7 +74,7 @@ public class MapsClient
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
-            throw new PipelineRequestException(response);
+            throw new ClientRequestException(response);
         }
 
         return Result.FromResponse(response);

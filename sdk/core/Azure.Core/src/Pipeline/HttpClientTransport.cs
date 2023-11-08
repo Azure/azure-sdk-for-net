@@ -74,7 +74,7 @@ namespace Azure.Core.Pipeline
             {
                 _transport.Process(message);
             }
-            catch (PipelineRequestException e)
+            catch (ClientRequestException e)
             {
                 if (message.HasResponse)
                 {
@@ -94,7 +94,7 @@ namespace Azure.Core.Pipeline
             {
                 await _transport.ProcessAsync(message).ConfigureAwait(false);
             }
-            catch (PipelineRequestException e)
+            catch (ClientRequestException e)
             {
                 if (message.HasResponse)
                 {

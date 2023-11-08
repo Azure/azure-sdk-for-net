@@ -151,7 +151,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         }
         catch (HttpRequestException e)
         {
-            throw new PipelineRequestException(e.Message, e);
+            throw new ClientRequestException(e.Message, e);
         }
 
         // This extensibility point lets derived types do the following:
