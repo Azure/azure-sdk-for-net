@@ -7,34 +7,13 @@ namespace System.Net.ClientModel
         public static System.BinaryData Write(object model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.BinaryData Write<T>(T model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ModelReaderWriterFormat : System.IEquatable<string>, System.IEquatable<System.Net.ClientModel.ModelReaderWriterFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ModelReaderWriterFormat(string value) { throw null; }
-        public static System.Net.ClientModel.ModelReaderWriterFormat Json { get { throw null; } }
-        public static System.Net.ClientModel.ModelReaderWriterFormat Xml { get { throw null; } }
-        public bool Equals(System.Net.ClientModel.ModelReaderWriterFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) { throw null; }
-        public bool Equals(string? other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(System.Net.ClientModel.ModelReaderWriterFormat left, System.Net.ClientModel.ModelReaderWriterFormat right) { throw null; }
-        public static implicit operator System.Net.ClientModel.ModelReaderWriterFormat (string value) { throw null; }
-        public static bool operator !=(System.Net.ClientModel.ModelReaderWriterFormat left, System.Net.ClientModel.ModelReaderWriterFormat right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ModelReaderWriterOptions
     {
-        internal ModelReaderWriterOptions() { }
+        public ModelReaderWriterOptions(string format) { }
         public string Format { get { throw null; } }
-        public bool IncludeAdditionalProperties { get { throw null; } set { } }
-        public bool IncludeReadOnlyProperties { get { throw null; } set { } }
-        public static System.Net.ClientModel.ModelReaderWriterOptions GetDataOptions(System.Net.ClientModel.ModelReaderWriterFormat format = default(System.Net.ClientModel.ModelReaderWriterFormat)) { throw null; }
-        public static System.Net.ClientModel.ModelReaderWriterOptions GetOptions(System.Net.ClientModel.ModelReaderWriterFormat format = default(System.Net.ClientModel.ModelReaderWriterFormat)) { throw null; }
-        public static System.Net.ClientModel.ModelReaderWriterOptions GetWireOptions() { throw null; }
+        public static System.Net.ClientModel.ModelReaderWriterOptions Json { get { throw null; } }
+        public static System.Net.ClientModel.ModelReaderWriterOptions Wire { get { throw null; } }
+        public static System.Net.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
 }
 namespace System.Net.ClientModel.Core
@@ -46,7 +25,7 @@ namespace System.Net.ClientModel.Core
     }
     public partial interface IModel<out T>
     {
-        System.Type GetInterfaceType(System.Net.ClientModel.ModelReaderWriterOptions options);
+        string GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options);
         T Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options);
         System.BinaryData Write(System.Net.ClientModel.ModelReaderWriterOptions options);
     }
