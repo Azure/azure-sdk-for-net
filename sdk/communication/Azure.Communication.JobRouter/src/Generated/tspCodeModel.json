@@ -6769,7 +6769,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}:reclassifyJob",
+     "Path": "/routing/jobs/{jobId}:reclassify",
      "RequestMediaTypes": [
       "application/json"
      ],
@@ -6916,7 +6916,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}:cancelJob",
+     "Path": "/routing/jobs/{jobId}:cancel",
      "RequestMediaTypes": [
       "application/json"
      ],
@@ -7084,7 +7084,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:completeJob",
+     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:complete",
      "RequestMediaTypes": [
       "application/json"
      ],
@@ -7252,7 +7252,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:closeJob",
+     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:close",
      "RequestMediaTypes": [
       "application/json"
      ],
@@ -7702,7 +7702,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:unassignJob",
+     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:unassign",
      "RequestMediaTypes": [
       "application/json"
      ],
@@ -7810,7 +7810,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "None",
      "Uri": "{endpoint}",
-     "Path": "/routing/workers/{workerId}/offers/{offerId}:acceptJobOffer",
+     "Path": "/routing/workers/{workerId}/offers/{offerId}:accept",
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true
@@ -7975,7 +7975,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/routing/workers/{workerId}/offers/{offerId}:declineJobOffer",
+     "Path": "/routing/workers/{workerId}/offers/{offerId}:decline",
      "RequestMediaTypes": [
       "application/json"
      ],

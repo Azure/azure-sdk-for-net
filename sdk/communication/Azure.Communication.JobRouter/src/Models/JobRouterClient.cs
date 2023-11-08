@@ -517,20 +517,10 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(ReclassifyJob)}");
-            scope.Start();
-            try
-            {
-                return (await ReclassifyJobAsync(jobId: jobId,
-                    options: new Dictionary<string, string>(),
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (await ReclassifyJobAsync(jobId: jobId,
+                options: new Dictionary<string, string>(),
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false)).GetRawResponse();
         }
 
         /// <summary> Reclassify a job. </summary>
@@ -542,20 +532,10 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(ReclassifyJob)}");
-            scope.Start();
-            try
-            {
-                return (ReclassifyJob(
-                    jobId: jobId,
-                    options: new Dictionary<string, string>(),
-                    cancellationToken: cancellationToken)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (ReclassifyJob(
+                jobId: jobId,
+                options: new Dictionary<string, string>(),
+                cancellationToken: cancellationToken)).GetRawResponse();
         }
 
         /// <summary> Closes a completed job. </summary>
@@ -566,22 +546,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
-            scope.Start();
-
-            try
-            {
-                return (await CloseJobAsync(
-                    jobId: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    options: options,
-                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (await CloseJobAsync(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
 
         /// <summary> Closes a completed job. </summary>
@@ -592,22 +561,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
-            scope.Start();
-
-            try
-            {
-                return CloseJob(
-                    jobId: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    options: options,
-                    cancellationToken: cancellationToken).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return CloseJob(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
@@ -618,21 +576,10 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
-            scope.Start();
-
-            try
-            {
-                return (await CancelJobAsync(
-                    jobId: options.JobId,
-                    options: options,
-                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (await CancelJobAsync(
+                jobId: options.JobId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
@@ -643,21 +590,10 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
-            scope.Start();
-
-            try
-            {
-                return CancelJob(
-                    jobId: options.JobId,
-                    options: options,
-                    cancellationToken: cancellationToken).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return CancelJob(
+                jobId: options.JobId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
         }
 
         /// <summary> Completes an assigned job. </summary>
@@ -668,22 +604,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CompleteJob)}");
-            scope.Start();
-
-            try
-            {
-                return (await CompleteJobAsync(
-                    jobId: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    options: options,
-                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (await CompleteJobAsync(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
 
         /// <summary> Completes an assigned job. </summary>
@@ -694,22 +619,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(CloseJob)}");
-            scope.Start();
-
-            try
-            {
-                return CompleteJob(
-                    jobId: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    options: options,
-                    cancellationToken: cancellationToken).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return CompleteJob(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
@@ -720,22 +634,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
-            scope.Start();
-
-            try
-            {
-                return (await DeclineJobOfferAsync(
-                    workerId: options.WorkerId,
-                    offerId: options.OfferId,
-                    options: options,
-                    cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (await DeclineJobOfferAsync(
+                workerId: options.WorkerId,
+                offerId: options.OfferId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
@@ -746,22 +649,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
-            scope.Start();
-
-            try
-            {
-                return DeclineJobOffer(
-                    workerId: options.WorkerId,
-                    offerId: options.OfferId,
-                    options: options,
-                    cancellationToken: cancellationToken).GetRawResponse();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return DeclineJobOffer(
+                workerId: options.WorkerId,
+                offerId: options.OfferId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
         }
 
         /// <summary> Un-assign a job. </summary>
@@ -772,22 +664,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UnassignJob)}");
-            scope.Start();
-
-            try
-            {
-                return (await UnassignJobAsync(
-                    jobId: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    options: options,
-                    cancellationToken: cancellationToken).ConfigureAwait(false));
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (await UnassignJobAsync(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false));
         }
 
         /// <summary> Un-assign a job. </summary>
@@ -798,22 +679,11 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UnassignJob)}");
-            scope.Start();
-
-            try
-            {
-                return UnassignJob(
-                    jobId: options.JobId,
-                    assignmentId: options.AssignmentId,
-                    options: options,
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return UnassignJob(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken);
         }
 
         #endregion Job

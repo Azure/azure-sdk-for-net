@@ -2003,7 +2003,7 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendPath(":reclassifyJob", false);
+            uri.AppendPath(":reclassify", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2021,7 +2021,7 @@ namespace Azure.Communication.JobRouter
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendPath(":cancelJob", false);
+            uri.AppendPath(":cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2041,7 +2041,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(jobId, true);
             uri.AppendPath("/assignments/", false);
             uri.AppendPath(assignmentId, true);
-            uri.AppendPath(":completeJob", false);
+            uri.AppendPath(":complete", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2061,7 +2061,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(jobId, true);
             uri.AppendPath("/assignments/", false);
             uri.AppendPath(assignmentId, true);
-            uri.AppendPath(":closeJob", false);
+            uri.AppendPath(":close", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2139,7 +2139,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(jobId, true);
             uri.AppendPath("/assignments/", false);
             uri.AppendPath(assignmentId, true);
-            uri.AppendPath(":unassignJob", false);
+            uri.AppendPath(":unassign", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2159,7 +2159,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(workerId, true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
-            uri.AppendPath(":acceptJobOffer", false);
+            uri.AppendPath(":accept", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2177,7 +2177,7 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath(workerId, true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
-            uri.AppendPath(":declineJobOffer", false);
+            uri.AppendPath(":decline", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
