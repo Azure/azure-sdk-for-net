@@ -65,9 +65,9 @@ public class RequestOptions
 
     public virtual CancellationToken CancellationToken { get; set; }
 
+    // TODO: Should RequestOptions be freezable too, to prevent client-authors from
+    // modifying client-user-passed options values?
     public virtual MessageClassifier? MessageClassifier { get; set; }
-
-    public MessagePipeline Pipeline => PipelineOptions.Pipeline;
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {

@@ -58,7 +58,7 @@ public class PipelineOptions
         Freeze();
     }
 
-    public MessagePipeline Pipeline
+    internal MessagePipeline Pipeline
     {
         get
         {

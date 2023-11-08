@@ -22,17 +22,30 @@ public class MessagePipeline
         _policies = policies;
     }
 
-    internal static MessagePipeline Create(ReadOnlyMemory<PipelinePolicy> policies)
-        => new MessagePipeline(policies);
+    public static MessagePipeline GetPipeline(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
+        => GetPipeline(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    public static void Create(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
+    public static MessagePipeline GetPipeline(PipelineOptions options,
+        ReadOnlySpan<PipelinePolicy> perCallPolicies,
+        ReadOnlySpan<PipelinePolicy> perTryPolicies)
+    {
+        if (options.IsFrozen)
+        {
+            return options.Pipeline;
+        }
 
-    public static void Create(RequestOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
+        MessagePipeline pipeline = Create(options, perCallPolicies, perTryPolicies);
 
-    public static void Create(
-        RequestOptions options,
+        // Set and freeze the pipeline.
+        options.SetPipeline(pipeline);
+
+        return pipeline;
+    }
+
+    public static MessagePipeline GetPipeline(RequestOptions options, params PipelinePolicy[] perCallPolicies)
+        => GetPipeline(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
+
+    public static MessagePipeline GetPipeline(RequestOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
@@ -40,23 +53,23 @@ public class MessagePipeline
         if (!options.PipelineOptions.Modified)
         {
             options.PipelineOptions.Freeze();
-            return;
+            return options.PipelineOptions.Pipeline;
         }
 
-        Create(options.PipelineOptions, perCallPolicies, perTryPolicies);
+        return GetPipeline(options.PipelineOptions, perCallPolicies, perTryPolicies);
     }
 
-    public static void Create(
+    // Simplest factory method: construct a pipeline from a list of policies
+    internal static MessagePipeline Create(ReadOnlyMemory<PipelinePolicy> policies)
+        => new MessagePipeline(policies);
+
+    // Builder from options: lets a client-author specify policies without modifying
+    // client-user's passed-in options.
+    internal static MessagePipeline Create(
         PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
-        if (options.IsFrozen)
-        {
-            // Pipeline is already set on options.
-            return;
-        }
-
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
         if (options.PerTryPolicies != null)
@@ -116,8 +129,7 @@ public class MessagePipeline
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        // Set and freeze the pipeline.
-        options.SetPipeline(new MessagePipeline(pipeline));
+        return new MessagePipeline(pipeline);
     }
 
     // TODO: note that without a common base type, nothing validates that MessagePipeline

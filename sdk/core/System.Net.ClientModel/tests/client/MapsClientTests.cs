@@ -42,17 +42,19 @@ public class MapsClientTests
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential, pipelineOptions);
 
         // ^^ In this call, pipeline is created in PO and frozen.
-        Assert.IsNotNull(pipelineOptions.Pipeline);
+        MessagePipeline pipeline = MessagePipeline.GetPipeline(pipelineOptions);
+        Assert.IsNotNull(pipeline);
 
         RequestOptions requestOptions = new RequestOptions(pipelineOptions);
 
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
         Result result = client.GetCountryCode(ipAddress.ToString(), requestOptions);
 
-        Assert.IsNotNull(requestOptions.Pipeline);
+        MessagePipeline requestPipeline = MessagePipeline.GetPipeline(requestOptions);
+        Assert.IsNotNull(requestPipeline);
 
         // Since nothing changed in the RO pipeline, the pipelines should have reference equality.
-        Assert.AreEqual(pipelineOptions.Pipeline, requestOptions.Pipeline);
+        Assert.AreEqual(pipeline, requestPipeline);
 
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(result.GetRawResponse());
 
@@ -81,7 +83,8 @@ public class MapsClientTests
         Result result = client.GetCountryCode(ipAddress.ToString(), requestOptions);
 
         // ^^ In this call, pipeline is created in RO and frozen.
-        Assert.IsNotNull(requestOptions.Pipeline);
+        MessagePipeline requestPipeline = MessagePipeline.GetPipeline(requestOptions);
+        Assert.IsNotNull(requestPipeline);
 
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(result.GetRawResponse());
 

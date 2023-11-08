@@ -57,7 +57,6 @@ namespace System.Net.ClientModel
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.MessagePipeline Pipeline { get { throw null; } }
         public System.Net.ClientModel.Core.PipelineOptions PipelineOptions { get { throw null; } }
         public void AddPolicy(System.Net.ClientModel.Core.PipelinePolicy policy, System.Net.ClientModel.Core.PipelinePosition position) { }
         protected internal virtual void Apply(System.Net.ClientModel.Core.ClientMessage message) { }
@@ -143,11 +142,11 @@ namespace System.Net.ClientModel.Core
     public partial class MessagePipeline
     {
         internal MessagePipeline() { }
-        public static void Create(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { }
-        public static void Create(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { }
-        public static void Create(System.Net.ClientModel.RequestOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { }
-        public static void Create(System.Net.ClientModel.RequestOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { }
         public System.Net.ClientModel.Core.ClientMessage CreateMessage(System.Net.ClientModel.RequestOptions options) { throw null; }
+        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.RequestOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.RequestOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
         public void Send(System.Net.ClientModel.Core.ClientMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
     }
@@ -202,7 +201,6 @@ namespace System.Net.ClientModel.Core
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.MessagePipeline Pipeline { get { throw null; } }
         public System.Net.ClientModel.Core.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public string? ServiceVersion { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelineTransport? Transport { get { throw null; } set { } }
