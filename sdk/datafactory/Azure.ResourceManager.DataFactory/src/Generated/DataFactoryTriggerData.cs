@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryTriggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerData"/>. </summary>
         /// <param name="properties">
         /// Properties of the trigger.
         /// Please note <see cref="DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -33,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,10 +48,17 @@ namespace Azure.ResourceManager.DataFactory
         /// The available derived classes include <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="DataFactoryScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryTriggerProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryTriggerProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerData"/> for deserialization. </summary>
+        internal DataFactoryTriggerData()
+        {
         }
 
         /// <summary>

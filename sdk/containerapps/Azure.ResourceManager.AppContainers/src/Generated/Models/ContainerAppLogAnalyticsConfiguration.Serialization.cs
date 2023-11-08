@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppLogAnalyticsConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppLogAnalyticsConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppLogAnalyticsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppLogAnalyticsConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContainerAppLogAnalyticsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomerId))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppLogAnalyticsConfiguration DeserializeContainerAppLogAnalyticsConfiguration(JsonElement element)
+        ContainerAppLogAnalyticsConfiguration IJsonModel<ContainerAppLogAnalyticsConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppLogAnalyticsConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppLogAnalyticsConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppLogAnalyticsConfiguration DeserializeContainerAppLogAnalyticsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> customerId = default;
             Optional<string> sharedKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerId"u8))
@@ -48,8 +85,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     sharedKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppLogAnalyticsConfiguration(customerId.Value, sharedKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppLogAnalyticsConfiguration(customerId.Value, sharedKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContainerAppLogAnalyticsConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppLogAnalyticsConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppLogAnalyticsConfiguration IModel<ContainerAppLogAnalyticsConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppLogAnalyticsConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppLogAnalyticsConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContainerAppLogAnalyticsConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

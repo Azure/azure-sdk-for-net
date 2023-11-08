@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -26,16 +30,22 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class RouterRule
     {
-        /// <summary> Initializes a new instance of RouterRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterRule"/>. </summary>
         protected RouterRule()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
-        internal RouterRule(string kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterRule(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

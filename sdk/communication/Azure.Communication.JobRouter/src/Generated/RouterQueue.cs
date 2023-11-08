@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class RouterQueue
     {
-        /// <summary> Initializes a new instance of RouterQueue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueue"/>. </summary>
         /// <param name="etag"> Concurrency Token. </param>
         /// <param name="id"> The Id of this queue. </param>
         /// <param name="name"> The name of this queue. </param>
@@ -29,7 +33,8 @@ namespace Azure.Communication.JobRouter
         /// (Optional) The ID of the exception policy that determines various job
         /// escalation rules.
         /// </param>
-        internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _etag = etag;
             Id = id;
@@ -37,6 +42,7 @@ namespace Azure.Communication.JobRouter
             DistributionPolicyId = distributionPolicyId;
             _labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The Id of this queue. </summary>
         public string Id { get; }

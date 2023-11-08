@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Details about the pod identity assigned to the Managed Cluster. </summary>
     public partial class ManagedClusterPodIdentity
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentity"/>. </summary>
         /// <param name="name"> The name of the pod identity. </param>
         /// <param name="namespace"> The namespace of the pod identity. </param>
         /// <param name="identity"> The user assigned identity details. </param>
@@ -30,14 +34,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentity"/>. </summary>
         /// <param name="name"> The name of the pod identity. </param>
         /// <param name="namespace"> The namespace of the pod identity. </param>
         /// <param name="bindingSelector"> The binding selector to use for the AzureIdentityBinding resource. </param>
         /// <param name="identity"> The user assigned identity details. </param>
         /// <param name="provisioningState"> The current provisioning state of the pod identity. </param>
         /// <param name="provisioningInfo"></param>
-        internal ManagedClusterPodIdentity(string name, string @namespace, string bindingSelector, ContainerServiceUserAssignedIdentity identity, ManagedClusterPodIdentityProvisioningState? provisioningState, ManagedClusterPodIdentityProvisioningInfo provisioningInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPodIdentity(string name, string @namespace, string bindingSelector, ContainerServiceUserAssignedIdentity identity, ManagedClusterPodIdentityProvisioningState? provisioningState, ManagedClusterPodIdentityProvisioningInfo provisioningInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
@@ -45,6 +50,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             Identity = identity;
             ProvisioningState = provisioningState;
             ProvisioningInfo = provisioningInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentity"/> for deserialization. </summary>
+        internal ManagedClusterPodIdentity()
+        {
         }
 
         /// <summary> The name of the pod identity. </summary>

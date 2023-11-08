@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> This activity verifies that an external resource exists. </summary>
     public partial class ValidationActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of ValidationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Validation activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Validation";
         }
 
-        /// <summary> Initializes a new instance of ValidationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ChildItems = childItems;
             Dataset = dataset;
             ActivityType = activityType ?? "Validation";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/> for deserialization. </summary>
+        internal ValidationActivity()
+        {
         }
 
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>

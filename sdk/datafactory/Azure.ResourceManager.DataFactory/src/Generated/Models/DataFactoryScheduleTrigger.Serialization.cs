@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryScheduleTrigger : IUtf8JsonSerializable
+    public partial class DataFactoryScheduleTrigger : IUtf8JsonSerializable, IJsonModel<DataFactoryScheduleTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryScheduleTrigger>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataFactoryScheduleTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pipelines))
@@ -33,6 +37,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RuntimeState))
+                {
+                    writer.WritePropertyName("runtimeState"u8);
+                    writer.WriteStringValue(RuntimeState.Value.ToString());
+                }
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -76,8 +88,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryScheduleTrigger DeserializeDataFactoryScheduleTrigger(JsonElement element)
+        DataFactoryScheduleTrigger IJsonModel<DataFactoryScheduleTrigger>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryScheduleTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryScheduleTrigger(document.RootElement, options);
+        }
+
+        internal static DataFactoryScheduleTrigger DeserializeDataFactoryScheduleTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,5 +194,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryScheduleTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), recurrence);
         }
+
+        BinaryData IModel<DataFactoryScheduleTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryScheduleTrigger)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryScheduleTrigger IModel<DataFactoryScheduleTrigger>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryScheduleTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryScheduleTrigger(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataFactoryScheduleTrigger>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

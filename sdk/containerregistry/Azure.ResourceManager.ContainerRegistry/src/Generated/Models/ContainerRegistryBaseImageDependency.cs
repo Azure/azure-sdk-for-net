@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Properties that describe a base image dependency. </summary>
     public partial class ContainerRegistryBaseImageDependency
     {
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageDependency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageDependency"/>. </summary>
         internal ContainerRegistryBaseImageDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageDependency"/>. </summary>
         /// <param name="dependencyType"> The type of the base image dependency. </param>
         /// <param name="registry"> The registry login server. </param>
         /// <param name="repository"> The repository name. </param>
         /// <param name="tag"> The tag name. </param>
         /// <param name="digest"> The sha256-based digest of the image manifest. </param>
-        internal ContainerRegistryBaseImageDependency(ContainerRegistryBaseImageDependencyType? dependencyType, string registry, string repository, string tag, string digest)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryBaseImageDependency(ContainerRegistryBaseImageDependencyType? dependencyType, string registry, string repository, string tag, string digest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DependencyType = dependencyType;
             Registry = registry;
             Repository = repository;
             Tag = tag;
             Digest = digest;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the base image dependency. </summary>

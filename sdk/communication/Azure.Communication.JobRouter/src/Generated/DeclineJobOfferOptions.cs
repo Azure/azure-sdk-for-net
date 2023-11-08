@@ -6,18 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for declining offers. </summary>
     public partial class DeclineJobOfferOptions
     {
-        /// <summary> Initializes a new instance of DeclineJobOfferOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeclineJobOfferOptions"/>. </summary>
         public DeclineJobOfferOptions()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DeclineJobOfferOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeclineJobOfferOptions"/>. </summary>
         /// <param name="retryOfferAt">
         /// If the RetryOfferAt is not provided, then this job will not be offered again to
         /// the worker who declined this job unless
@@ -27,9 +33,11 @@ namespace Azure.Communication.JobRouter
         /// eligible workers at the retry time in UTC.  The worker that
         /// declined the job will also be eligible for the job at that time.
         /// </param>
-        internal DeclineJobOfferOptions(DateTimeOffset? retryOfferAt)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeclineJobOfferOptions(DateTimeOffset? retryOfferAt, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RetryOfferAt = retryOfferAt;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

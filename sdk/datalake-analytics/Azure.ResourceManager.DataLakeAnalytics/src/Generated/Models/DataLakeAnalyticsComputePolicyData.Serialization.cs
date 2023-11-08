@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
@@ -13,10 +16,105 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class DataLakeAnalyticsComputePolicyData
+    public partial class DataLakeAnalyticsComputePolicyData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsComputePolicyData>
     {
-        internal static DataLakeAnalyticsComputePolicyData DeserializeDataLakeAnalyticsComputePolicyData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsComputePolicyData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataLakeAnalyticsComputePolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ObjectId))
+                {
+                    writer.WritePropertyName("objectId"u8);
+                    writer.WriteStringValue(ObjectId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ObjectType))
+                {
+                    writer.WritePropertyName("objectType"u8);
+                    writer.WriteStringValue(ObjectType.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
+                {
+                    writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
+                    writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MinPriorityPerJob))
+                {
+                    writer.WritePropertyName("minPriorityPerJob"u8);
+                    writer.WriteNumberValue(MinPriorityPerJob.Value);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataLakeAnalyticsComputePolicyData IJsonModel<DataLakeAnalyticsComputePolicyData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement, options);
+        }
+
+        internal static DataLakeAnalyticsComputePolicyData DeserializeDataLakeAnalyticsComputePolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +127,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Optional<AadObjectIdentifierType> objectType = default;
             Optional<int> maxDegreeOfParallelismPerJob = default;
             Optional<int> minPriorityPerJob = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -103,8 +203,38 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeAnalyticsComputePolicyData(id, name, type, systemData.Value, Optional.ToNullable(objectId), Optional.ToNullable(objectType), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataLakeAnalyticsComputePolicyData(id, name, type, systemData.Value, Optional.ToNullable(objectId), Optional.ToNullable(objectType), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataLakeAnalyticsComputePolicyData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataLakeAnalyticsComputePolicyData IModel<DataLakeAnalyticsComputePolicyData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataLakeAnalyticsComputePolicyData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

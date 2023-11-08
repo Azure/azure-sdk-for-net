@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Rendering details of a diagnostics table. </summary>
     public partial class ContainerAppDiagnosticRendering
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticRendering. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticRendering"/>. </summary>
         public ContainerAppDiagnosticRendering()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticRendering. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticRendering"/>. </summary>
         /// <param name="diagnosticRenderingType"> Rendering type. </param>
         /// <param name="title"> Title of the table. </param>
         /// <param name="description"> Description of the table. </param>
         /// <param name="isVisible"> Flag if the table should be rendered. </param>
-        internal ContainerAppDiagnosticRendering(int? diagnosticRenderingType, string title, string description, bool? isVisible)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticRendering(int? diagnosticRenderingType, string title, string description, bool? isVisible, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiagnosticRenderingType = diagnosticRenderingType;
             Title = title;
             Description = description;
             IsVisible = isVisible;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Rendering type. </summary>

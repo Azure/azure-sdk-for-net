@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </summary>
     public partial class JobConfigurationScheduleTriggerConfig
     {
-        /// <summary> Initializes a new instance of JobConfigurationScheduleTriggerConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobConfigurationScheduleTriggerConfig"/>. </summary>
         /// <param name="cronExpression"> Cron formatted repeating schedule ("* * * * *") of a Cron Job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> is null. </exception>
         public JobConfigurationScheduleTriggerConfig(string cronExpression)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             CronExpression = cronExpression;
         }
 
-        /// <summary> Initializes a new instance of JobConfigurationScheduleTriggerConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobConfigurationScheduleTriggerConfig"/>. </summary>
         /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
         /// <param name="cronExpression"> Cron formatted repeating schedule ("* * * * *") of a Cron Job. </param>
         /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>
-        internal JobConfigurationScheduleTriggerConfig(int? replicaCompletionCount, string cronExpression, int? parallelism)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobConfigurationScheduleTriggerConfig(int? replicaCompletionCount, string cronExpression, int? parallelism, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicaCompletionCount = replicaCompletionCount;
             CronExpression = cronExpression;
             Parallelism = parallelism;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobConfigurationScheduleTriggerConfig"/> for deserialization. </summary>
+        internal JobConfigurationScheduleTriggerConfig()
+        {
         }
 
         /// <summary> Minimum number of successful replica completions before overall job completion. </summary>

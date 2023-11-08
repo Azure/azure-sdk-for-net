@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Subscription details for the Edge Profile. </summary>
     public partial class EdgeProfileSubscription
     {
-        /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeProfileSubscription"/>. </summary>
         internal EdgeProfileSubscription()
         {
             RegisteredFeatures = new ChangeTrackingList<SubscriptionRegisteredFeatures>();
         }
 
-        /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeProfileSubscription"/>. </summary>
         /// <param name="registrationId"> Edge Subscription Registration ID. </param>
         /// <param name="id"> ARM ID of the subscription. </param>
         /// <param name="state"></param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="quotaId"></param>
         /// <param name="serializedDetails"></param>
         /// <param name="registeredFeatures"></param>
-        internal EdgeProfileSubscription(Guid? registrationId, ResourceIdentifier id, DataBoxEdgeSubscriptionState? state, string registrationDate, string subscriptionId, Guid? tenantId, string locationPlacementId, string quotaId, string serializedDetails, IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeProfileSubscription(Guid? registrationId, ResourceIdentifier id, DataBoxEdgeSubscriptionState? state, string registrationDate, string subscriptionId, Guid? tenantId, string locationPlacementId, string quotaId, string serializedDetails, IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistrationId = registrationId;
             Id = id;
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             QuotaId = quotaId;
             SerializedDetails = serializedDetails;
             RegisteredFeatures = registeredFeatures;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Edge Subscription Registration ID. </summary>

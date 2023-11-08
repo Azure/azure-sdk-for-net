@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The response from the GenerateCredentials operation. </summary>
     public partial class ContainerRegistryGenerateCredentialsResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryGenerateCredentialsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsResult"/>. </summary>
         internal ContainerRegistryGenerateCredentialsResult()
         {
             Passwords = new ChangeTrackingList<ContainerRegistryTokenPassword>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryGenerateCredentialsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsResult"/>. </summary>
         /// <param name="username"> The username for a container registry. </param>
         /// <param name="passwords"> The list of passwords for a container registry. </param>
-        internal ContainerRegistryGenerateCredentialsResult(string username, IReadOnlyList<ContainerRegistryTokenPassword> passwords)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryGenerateCredentialsResult(string username, IReadOnlyList<ContainerRegistryTokenPassword> passwords, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Passwords = passwords;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The username for a container registry. </summary>

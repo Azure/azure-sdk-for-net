@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ParticipantProfilePropertyReference : IUtf8JsonSerializable
+    public partial class ParticipantProfilePropertyReference : IUtf8JsonSerializable, IJsonModel<ParticipantProfilePropertyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParticipantProfilePropertyReference>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ParticipantProfilePropertyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("interactionPropertyName"u8);
             writer.WriteStringValue(InteractionPropertyName);
             writer.WritePropertyName("profilePropertyName"u8);
             writer.WriteStringValue(ProfilePropertyName);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ParticipantProfilePropertyReference DeserializeParticipantProfilePropertyReference(JsonElement element)
+        ParticipantProfilePropertyReference IJsonModel<ParticipantProfilePropertyReference>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParticipantProfilePropertyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParticipantProfilePropertyReference(document.RootElement, options);
+        }
+
+        internal static ParticipantProfilePropertyReference DeserializeParticipantProfilePropertyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string interactionPropertyName = default;
             string profilePropertyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interactionPropertyName"u8))
@@ -42,8 +79,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     profilePropertyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ParticipantProfilePropertyReference(interactionPropertyName, profilePropertyName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ParticipantProfilePropertyReference(interactionPropertyName, profilePropertyName, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ParticipantProfilePropertyReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParticipantProfilePropertyReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ParticipantProfilePropertyReference IModel<ParticipantProfilePropertyReference>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParticipantProfilePropertyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeParticipantProfilePropertyReference(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ParticipantProfilePropertyReference>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table resource object. </summary>
     public partial class CassandraTableResourceInfo
     {
-        /// <summary> Initializes a new instance of CassandraTableResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CassandraTableResourceInfo(string tableName)
@@ -23,17 +27,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of CassandraTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
         /// <param name="defaultTtl"> Time to live of the Cosmos DB Cassandra table. </param>
         /// <param name="schema"> Schema of the Cosmos DB Cassandra table. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        internal CassandraTableResourceInfo(string tableName, int? defaultTtl, CassandraSchema schema, int? analyticalStorageTtl)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraTableResourceInfo(string tableName, int? defaultTtl, CassandraSchema schema, int? analyticalStorageTtl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
             DefaultTtl = defaultTtl;
             Schema = schema;
             AnalyticalStorageTtl = analyticalStorageTtl;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CassandraTableResourceInfo"/> for deserialization. </summary>
+        internal CassandraTableResourceInfo()
+        {
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table. </summary>

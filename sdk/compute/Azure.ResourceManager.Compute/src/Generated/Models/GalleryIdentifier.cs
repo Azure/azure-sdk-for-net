@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the gallery unique name. </summary>
     internal partial class GalleryIdentifier
     {
-        /// <summary> Initializes a new instance of GalleryIdentifier. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryIdentifier"/>. </summary>
         public GalleryIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryIdentifier"/>. </summary>
         /// <param name="uniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
-        internal GalleryIdentifier(string uniqueName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryIdentifier(string uniqueName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UniqueName = uniqueName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </summary>

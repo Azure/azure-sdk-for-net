@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse
     {
-        /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/>. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal CommunicationErrorResponse(CommunicationError error)
@@ -21,6 +25,20 @@ namespace Azure.Communication.ShortCodes.Models
             Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/>. </summary>
+        /// <param name="error"> The Communication Services error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationErrorResponse(CommunicationError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/> for deserialization. </summary>
+        internal CommunicationErrorResponse()
+        {
         }
 
         /// <summary> The Communication Services error. </summary>

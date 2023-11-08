@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DatabaseMigrationSqlDBData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlDBData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlDBData"/>. </summary>
         public DatabaseMigrationSqlDBData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlDBData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlDBData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Database Migration Resource properties for SQL database. </param>
-        internal DatabaseMigrationSqlDBData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationSqlDBProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseMigrationSqlDBData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationSqlDBProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database Migration Resource properties for SQL database. </summary>

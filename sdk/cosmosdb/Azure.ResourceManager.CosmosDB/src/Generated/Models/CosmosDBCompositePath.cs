@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CosmosDBCompositePath. </summary>
     public partial class CosmosDBCompositePath
     {
-        /// <summary> Initializes a new instance of CosmosDBCompositePath. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBCompositePath"/>. </summary>
         public CosmosDBCompositePath()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBCompositePath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBCompositePath"/>. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         /// <param name="order"> Sort order for composite paths. </param>
-        internal CosmosDBCompositePath(string path, CompositePathSortOrder? order)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBCompositePath(string path, CompositePathSortOrder? order, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Order = order;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </summary>

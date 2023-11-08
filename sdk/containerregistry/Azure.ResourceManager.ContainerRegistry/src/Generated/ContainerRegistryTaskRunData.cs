@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +20,15 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryTaskRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunData"/>. </summary>
         public ContainerRegistryTaskRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +43,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </param>
         /// <param name="runResult"> The result of this task run. </param>
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
-        internal ContainerRegistryTaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryRunContent runRequest, ContainerRegistryRunData runResult, string forceUpdateTag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryRunContent runRequest, ContainerRegistryRunData runResult, string forceUpdateTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -46,6 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             RunRequest = runRequest;
             RunResult = runResult;
             ForceUpdateTag = forceUpdateTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identity for the resource. </summary>

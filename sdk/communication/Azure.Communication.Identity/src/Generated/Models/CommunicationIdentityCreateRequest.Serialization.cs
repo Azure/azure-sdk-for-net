@@ -5,14 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Communication.Identity;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    internal partial class CommunicationIdentityCreateRequest : IUtf8JsonSerializable
+    internal partial class CommunicationIdentityCreateRequest : IUtf8JsonSerializable, IJsonModel<CommunicationIdentityCreateRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationIdentityCreateRequest>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CommunicationIdentityCreateRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CreateTokenWithScopes))
@@ -30,7 +37,105 @@ namespace Azure.Communication.Identity.Models
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CommunicationIdentityCreateRequest IJsonModel<CommunicationIdentityCreateRequest>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommunicationIdentityCreateRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationIdentityCreateRequest(document.RootElement, options);
+        }
+
+        internal static CommunicationIdentityCreateRequest DeserializeCommunicationIdentityCreateRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<CommunicationTokenScope>> createTokenWithScopes = default;
+            Optional<int> expiresInMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("createTokenWithScopes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CommunicationTokenScope> array = new List<CommunicationTokenScope>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new CommunicationTokenScope(item.GetString()));
+                    }
+                    createTokenWithScopes = array;
+                    continue;
+                }
+                if (property.NameEquals("expiresInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiresInMinutes = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommunicationIdentityCreateRequest(Optional.ToList(createTokenWithScopes), Optional.ToNullable(expiresInMinutes), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<CommunicationIdentityCreateRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommunicationIdentityCreateRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CommunicationIdentityCreateRequest IModel<CommunicationIdentityCreateRequest>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommunicationIdentityCreateRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCommunicationIdentityCreateRequest(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CommunicationIdentityCreateRequest>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

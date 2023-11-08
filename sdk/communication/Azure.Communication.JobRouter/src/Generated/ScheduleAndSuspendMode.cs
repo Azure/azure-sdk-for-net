@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
@@ -17,12 +18,18 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class ScheduleAndSuspendMode : JobMatchingMode
     {
-        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduleAt"> Scheduled time. </param>
-        internal ScheduleAndSuspendMode(string kind, DateTimeOffset scheduleAt) : base(kind)
+        internal ScheduleAndSuspendMode(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset scheduleAt) : base(kind, serializedAdditionalRawData)
         {
             ScheduleAt = scheduleAt;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/> for deserialization. </summary>
+        internal ScheduleAndSuspendMode()
+        {
         }
 
         /// <summary> Scheduled time. </summary>

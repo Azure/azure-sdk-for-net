@@ -5,26 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class MachineExtensionPropertiesInstanceView : IUtf8JsonSerializable
+    public partial class MachineExtensionPropertiesInstanceView : IUtf8JsonSerializable, IJsonModel<MachineExtensionPropertiesInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionPropertiesInstanceView>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MachineExtensionPropertiesInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MachineExtensionInstanceViewType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(MachineExtensionInstanceViewType);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TypeHandlerVersion))
+                {
+                    writer.WritePropertyName("typeHandlerVersion"u8);
+                    writer.WriteStringValue(TypeHandlerVersion);
+                }
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineExtensionPropertiesInstanceView DeserializeMachineExtensionPropertiesInstanceView(JsonElement element)
+        MachineExtensionPropertiesInstanceView IJsonModel<MachineExtensionPropertiesInstanceView>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineExtensionPropertiesInstanceView)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineExtensionPropertiesInstanceView(document.RootElement, options);
+        }
+
+        internal static MachineExtensionPropertiesInstanceView DeserializeMachineExtensionPropertiesInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +92,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> type = default;
             Optional<string> typeHandlerVersion = default;
             Optional<MachineExtensionInstanceViewStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,8 +120,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     status = MachineExtensionInstanceViewStatus.DeserializeMachineExtensionInstanceViewStatus(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineExtensionPropertiesInstanceView(name.Value, type.Value, typeHandlerVersion.Value, status.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineExtensionPropertiesInstanceView(name.Value, type.Value, typeHandlerVersion.Value, status.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MachineExtensionPropertiesInstanceView>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineExtensionPropertiesInstanceView)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineExtensionPropertiesInstanceView IModel<MachineExtensionPropertiesInstanceView>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineExtensionPropertiesInstanceView)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineExtensionPropertiesInstanceView(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MachineExtensionPropertiesInstanceView>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested manifest file. </summary>
     internal partial class Manifest
     {
-        /// <summary> Initializes a new instance of Manifest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Manifest"/>. </summary>
         internal Manifest()
         {
         }
 
-        /// <summary> Initializes a new instance of Manifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="Manifest"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal Manifest(int? schemaVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Manifest(int? schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SchemaVersion = schemaVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Schema version. </summary>

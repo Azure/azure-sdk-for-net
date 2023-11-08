@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppProbe : IUtf8JsonSerializable
+    public partial class ContainerAppProbe : IUtf8JsonSerializable, IJsonModel<ContainerAppProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppProbe>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContainerAppProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(FailureThreshold))
@@ -60,11 +66,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProbeType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppProbe DeserializeContainerAppProbe(JsonElement element)
+        ContainerAppProbe IJsonModel<ContainerAppProbe>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppProbe(document.RootElement, options);
+        }
+
+        internal static ContainerAppProbe DeserializeContainerAppProbe(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +113,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<long> terminationGracePeriodSeconds = default;
             Optional<int> timeoutSeconds = default;
             Optional<ContainerAppProbeType> type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"u8))
@@ -161,8 +198,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     type = new ContainerAppProbeType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppProbe(Optional.ToNullable(failureThreshold), httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(successThreshold), tcpSocket.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(type));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppProbe(Optional.ToNullable(failureThreshold), httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(successThreshold), tcpSocket.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(type), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContainerAppProbe>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppProbe IModel<ContainerAppProbe>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppProbe(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContainerAppProbe>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

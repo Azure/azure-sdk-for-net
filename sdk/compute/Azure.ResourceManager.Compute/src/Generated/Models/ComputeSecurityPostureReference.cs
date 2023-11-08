@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01. </summary>
     public partial class ComputeSecurityPostureReference
     {
-        /// <summary> Initializes a new instance of ComputeSecurityPostureReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeSecurityPostureReference"/>. </summary>
         public ComputeSecurityPostureReference()
         {
             ExcludeExtensions = new ChangeTrackingList<VirtualMachineExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of ComputeSecurityPostureReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSecurityPostureReference"/>. </summary>
         /// <param name="id"> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest. </param>
         /// <param name="excludeExtensions"> List of virtual machine extensions to exclude when applying the Security Posture. </param>
-        internal ComputeSecurityPostureReference(ResourceIdentifier id, IList<VirtualMachineExtensionData> excludeExtensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeSecurityPostureReference(ResourceIdentifier id, IList<VirtualMachineExtensionData> excludeExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ExcludeExtensions = excludeExtensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest. </summary>

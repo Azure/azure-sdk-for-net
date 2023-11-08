@@ -5,14 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutput
+    [ModelReaderProxy(typeof(UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput))]
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>
     {
-        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutput DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateMySqlAzureDBForMySqlOfflineTaskOutput IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
+        }
+
+        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutput DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,5 +81,30 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             return UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(element);
         }
+
+        BinaryData IModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateMySqlAzureDBForMySqlOfflineTaskOutput IModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

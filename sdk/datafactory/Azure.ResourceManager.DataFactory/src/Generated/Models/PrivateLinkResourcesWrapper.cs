@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Wrapper for a collection of private link resources. </summary>
     internal partial class PrivateLinkResourcesWrapper
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateLinkResourcesWrapper(IEnumerable<DataFactoryPrivateLinkResource> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IReadOnlyList<DataFactoryPrivateLinkResource> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkResourcesWrapper(IReadOnlyList<DataFactoryPrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/> for deserialization. </summary>
+        internal PrivateLinkResourcesWrapper()
+        {
         }
 
         /// <summary> Gets the value. </summary>

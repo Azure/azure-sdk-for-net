@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableCosmosDBAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

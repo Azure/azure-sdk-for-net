@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The set of properties that can be update in a PATCH request to a monitor resource. </summary>
     internal partial class MonitorUpdateProperties
     {
-        /// <summary> Initializes a new instance of MonitorUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorUpdateProperties"/>. </summary>
         public MonitorUpdateProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorUpdateProperties"/>. </summary>
+        /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorUpdateProperties(MonitoringStatus? monitoringStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MonitoringStatus = monitoringStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>

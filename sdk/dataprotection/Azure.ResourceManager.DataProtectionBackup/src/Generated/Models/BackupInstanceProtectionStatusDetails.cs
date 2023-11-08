@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Protection status details. </summary>
     public partial class BackupInstanceProtectionStatusDetails
     {
-        /// <summary> Initializes a new instance of BackupInstanceProtectionStatusDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatusDetails"/>. </summary>
         internal BackupInstanceProtectionStatusDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupInstanceProtectionStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatusDetails"/>. </summary>
         /// <param name="errorDetails"> Specifies the protection status error of the resource. </param>
         /// <param name="status"> Specifies the protection status of the resource. </param>
-        internal BackupInstanceProtectionStatusDetails(ResponseError errorDetails, BackupInstanceProtectionStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupInstanceProtectionStatusDetails(ResponseError errorDetails, BackupInstanceProtectionStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorDetails = errorDetails;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the protection status error of the resource. </summary>

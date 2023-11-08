@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingErrorManagement : IUtf8JsonSerializable
+    public partial class ConnectorMappingErrorManagement : IUtf8JsonSerializable, IJsonModel<ConnectorMappingErrorManagement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorMappingErrorManagement>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ConnectorMappingErrorManagement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("errorManagementType"u8);
@@ -22,17 +28,48 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("errorLimit"u8);
                 writer.WriteNumberValue(ErrorLimit.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectorMappingErrorManagement DeserializeConnectorMappingErrorManagement(JsonElement element)
+        ConnectorMappingErrorManagement IJsonModel<ConnectorMappingErrorManagement>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectorMappingErrorManagement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectorMappingErrorManagement(document.RootElement, options);
+        }
+
+        internal static ConnectorMappingErrorManagement DeserializeConnectorMappingErrorManagement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ErrorManagementType errorManagementType = default;
             Optional<int> errorLimit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorManagementType"u8))
@@ -49,8 +86,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     errorLimit = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectorMappingErrorManagement(errorManagementType, Optional.ToNullable(errorLimit));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectorMappingErrorManagement(errorManagementType, Optional.ToNullable(errorLimit), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ConnectorMappingErrorManagement>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectorMappingErrorManagement)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectorMappingErrorManagement IModel<ConnectorMappingErrorManagement>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectorMappingErrorManagement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectorMappingErrorManagement(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ConnectorMappingErrorManagement>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

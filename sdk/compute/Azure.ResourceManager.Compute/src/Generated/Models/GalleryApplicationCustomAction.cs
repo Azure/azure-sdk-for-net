@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A custom action that can be performed with a Gallery Application Version. </summary>
     public partial class GalleryApplicationCustomAction
     {
-        /// <summary> Initializes a new instance of GalleryApplicationCustomAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomAction"/>. </summary>
         /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
         /// <param name="script"> The script to run when executing this custom action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="script"/> is null. </exception>
@@ -28,17 +31,24 @@ namespace Azure.ResourceManager.Compute.Models
             Parameters = new ChangeTrackingList<GalleryApplicationCustomActionParameter>();
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationCustomAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomAction"/>. </summary>
         /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
         /// <param name="script"> The script to run when executing this custom action. </param>
         /// <param name="description"> Description to help the users understand what this custom action does. </param>
         /// <param name="parameters"> The parameters that this custom action uses. </param>
-        internal GalleryApplicationCustomAction(string name, string script, string description, IList<GalleryApplicationCustomActionParameter> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationCustomAction(string name, string script, string description, IList<GalleryApplicationCustomActionParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Script = script;
             Description = description;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomAction"/> for deserialization. </summary>
+        internal GalleryApplicationCustomAction()
+        {
         }
 
         /// <summary> The name of the custom action.  Must be unique within the Gallery Application Version. </summary>

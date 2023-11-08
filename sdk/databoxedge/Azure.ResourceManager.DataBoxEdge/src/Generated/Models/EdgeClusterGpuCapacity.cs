@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Cluster GPU Data. </summary>
     public partial class EdgeClusterGpuCapacity
     {
-        /// <summary> Initializes a new instance of EdgeClusterGpuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterGpuCapacity"/>. </summary>
         public EdgeClusterGpuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterGpuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterGpuCapacity"/>. </summary>
         /// <param name="gpuType"> The cluster GPU Type. </param>
         /// <param name="gpuUsedUnitsCount"> The used GPU units count in the cluster. </param>
         /// <param name="gpuFreeUnitsCount"> The free GPU units count in the cluster. </param>
         /// <param name="gpuReservedForFailoverUnitsCount"> The GPU units count reserved for failover in the cluster. </param>
         /// <param name="gpuTotalUnitsCount"> The total GPU units count in the cluster. </param>
-        internal EdgeClusterGpuCapacity(string gpuType, int? gpuUsedUnitsCount, int? gpuFreeUnitsCount, int? gpuReservedForFailoverUnitsCount, int? gpuTotalUnitsCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeClusterGpuCapacity(string gpuType, int? gpuUsedUnitsCount, int? gpuFreeUnitsCount, int? gpuReservedForFailoverUnitsCount, int? gpuTotalUnitsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GpuType = gpuType;
             GpuUsedUnitsCount = gpuUsedUnitsCount;
             GpuFreeUnitsCount = gpuFreeUnitsCount;
             GpuReservedForFailoverUnitsCount = gpuReservedForFailoverUnitsCount;
             GpuTotalUnitsCount = gpuTotalUnitsCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cluster GPU Type. </summary>

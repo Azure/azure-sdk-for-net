@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppHttpSettings
     {
-        /// <summary> Initializes a new instance of ContainerAppHttpSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpSettings"/>. </summary>
         public ContainerAppHttpSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppHttpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpSettings"/>. </summary>
         /// <param name="requireHttps"> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="routes"> The configuration settings of the paths HTTP requests. </param>
         /// <param name="forwardProxy"> The configuration settings of a forward proxy used to make the requests. </param>
-        internal ContainerAppHttpSettings(bool? requireHttps, HttpSettingsRoutes routes, ContainerAppForwardProxy forwardProxy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpSettings(bool? requireHttps, HttpSettingsRoutes routes, ContainerAppForwardProxy forwardProxy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RequireHttps = requireHttps;
             Routes = routes;
             ForwardProxy = forwardProxy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

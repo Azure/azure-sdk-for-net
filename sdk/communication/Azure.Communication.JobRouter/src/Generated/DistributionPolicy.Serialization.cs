@@ -5,16 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class DistributionPolicy
+    public partial class DistributionPolicy : IUtf8JsonSerializable, IJsonModel<DistributionPolicy>
     {
-        internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionPolicy>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DistributionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(_etag);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(_offerExpiresAfterSeconds))
+            {
+                writer.WritePropertyName("offerExpiresAfterSeconds"u8);
+                writer.WriteNumberValue(_offerExpiresAfterSeconds.Value);
+            }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteObjectValue(Mode);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DistributionPolicy IJsonModel<DistributionPolicy>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDistributionPolicy(document.RootElement, options);
+        }
+
+        internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +90,8 @@ namespace Azure.Communication.JobRouter
             Optional<string> name = default;
             Optional<double> offerExpiresAfterSeconds = default;
             Optional<DistributionMode> mode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -59,16 +127,46 @@ namespace Azure.Communication.JobRouter
                     mode = DistributionMode.DeserializeDistributionMode(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DistributionPolicy(etag, id, name.Value, Optional.ToNullable(offerExpiresAfterSeconds), mode.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DistributionPolicy(etag, id, name.Value, Optional.ToNullable(offerExpiresAfterSeconds), mode.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DistributionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DistributionPolicy IModel<DistributionPolicy>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DistributionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDistributionPolicy(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DistributionPolicy>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DistributionPolicy FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDistributionPolicy(document.RootElement);
+            return DeserializeDistributionPolicy(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
     }
 }

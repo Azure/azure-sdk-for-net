@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Usages operation response. </summary>
     internal partial class ListUsagesResult
     {
-        /// <summary> Initializes a new instance of ListUsagesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ListUsagesResult(IEnumerable<ComputeUsage> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListUsagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
         /// <param name="nextLink"> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </param>
-        internal ListUsagesResult(IReadOnlyList<ComputeUsage> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListUsagesResult(IReadOnlyList<ComputeUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/> for deserialization. </summary>
+        internal ListUsagesResult()
+        {
         }
 
         /// <summary> The list of compute resource usages. </summary>

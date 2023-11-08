@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The DataProtectionIdentityDetails. </summary>
     public partial class DataProtectionIdentityDetails
     {
-        /// <summary> Initializes a new instance of DataProtectionIdentityDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionIdentityDetails"/>. </summary>
         public DataProtectionIdentityDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionIdentityDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionIdentityDetails"/>. </summary>
         /// <param name="useSystemAssignedIdentity"> Specifies if the BI is protected by System Identity. </param>
         /// <param name="userAssignedIdentityArmUri"> ARM URL for User Assigned Identity. </param>
-        internal DataProtectionIdentityDetails(bool? useSystemAssignedIdentity, Uri userAssignedIdentityArmUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionIdentityDetails(bool? useSystemAssignedIdentity, Uri userAssignedIdentityArmUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
             UserAssignedIdentityArmUri = userAssignedIdentityArmUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies if the BI is protected by System Identity. </summary>

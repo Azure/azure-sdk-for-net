@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of exposure control feature values. </summary>
     public partial class ExposureControlBatchResult
     {
-        /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchResult"/>. </summary>
         /// <param name="exposureControlResults"> List of exposure control feature values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResults"/> is null. </exception>
         internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             ExposureControlResults = exposureControlResults.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchResult"/>. </summary>
         /// <param name="exposureControlResults"> List of exposure control feature values. </param>
-        internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResults)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExposureControlResults = exposureControlResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchResult"/> for deserialization. </summary>
+        internal ExposureControlBatchResult()
+        {
         }
 
         /// <summary> List of exposure control feature values. </summary>

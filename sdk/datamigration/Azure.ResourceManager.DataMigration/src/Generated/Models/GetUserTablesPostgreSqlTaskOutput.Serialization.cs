@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesPostgreSqlTaskOutput
+    public partial class GetUserTablesPostgreSqlTaskOutput : IUtf8JsonSerializable, IJsonModel<GetUserTablesPostgreSqlTaskOutput>
     {
-        internal static GetUserTablesPostgreSqlTaskOutput DeserializeGetUserTablesPostgreSqlTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesPostgreSqlTaskOutput>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GetUserTablesPostgreSqlTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DatabaseName))
+                {
+                    writer.WritePropertyName("databaseName"u8);
+                    writer.WriteStringValue(DatabaseName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Tables))
+                {
+                    writer.WritePropertyName("tables"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Tables)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ValidationErrors))
+                {
+                    writer.WritePropertyName("validationErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ValidationErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GetUserTablesPostgreSqlTaskOutput IJsonModel<GetUserTablesPostgreSqlTaskOutput>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesPostgreSqlTaskOutput(document.RootElement, options);
+        }
+
+        internal static GetUserTablesPostgreSqlTaskOutput DeserializeGetUserTablesPostgreSqlTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +96,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> databaseName = default;
             Optional<IReadOnlyList<DatabaseTable>> tables = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -57,8 +133,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, Optional.ToList(tables), Optional.ToList(validationErrors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, Optional.ToList(tables), Optional.ToList(validationErrors), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GetUserTablesPostgreSqlTaskOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GetUserTablesPostgreSqlTaskOutput IModel<GetUserTablesPostgreSqlTaskOutput>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGetUserTablesPostgreSqlTaskOutput(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GetUserTablesPostgreSqlTaskOutput>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

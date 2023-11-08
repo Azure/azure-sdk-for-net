@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportSchedule : IUtf8JsonSerializable
+    public partial class ExportSchedule : IUtf8JsonSerializable, IJsonModel<ExportSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSchedule>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ExportSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
@@ -30,11 +36,40 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("recurrencePeriod"u8);
                 writer.WriteObjectValue(RecurrencePeriod);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExportSchedule DeserializeExportSchedule(JsonElement element)
+        ExportSchedule IJsonModel<ExportSchedule>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportSchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportSchedule(document.RootElement, options);
+        }
+
+        internal static ExportSchedule DeserializeExportSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<ExportScheduleStatusType> status = default;
             Optional<ExportScheduleRecurrenceType> recurrence = default;
             Optional<ExportRecurrencePeriod> recurrencePeriod = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -71,8 +108,38 @@ namespace Azure.ResourceManager.CostManagement.Models
                     recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExportSchedule(Optional.ToNullable(status), Optional.ToNullable(recurrence), recurrencePeriod.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExportSchedule(Optional.ToNullable(status), Optional.ToNullable(recurrence), recurrencePeriod.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ExportSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportSchedule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExportSchedule IModel<ExportSchedule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportSchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExportSchedule(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ExportSchedule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

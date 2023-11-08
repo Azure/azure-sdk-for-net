@@ -5,15 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    public partial class SmsSendResult
+    public partial class SmsSendResult : IUtf8JsonSerializable, IJsonModel<SmsSendResult>
     {
-        internal static SmsSendResult DeserializeSmsSendResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmsSendResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SmsSendResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("to"u8);
+            writer.WriteStringValue(To);
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            writer.WritePropertyName("httpStatusCode"u8);
+            writer.WriteNumberValue(HttpStatusCode);
+            if (Optional.IsDefined(RepeatabilityResult))
+            {
+                writer.WritePropertyName("repeatabilityResult"u8);
+                writer.WriteStringValue(RepeatabilityResult.Value.ToString());
+            }
+            writer.WritePropertyName("successful"u8);
+            writer.WriteBooleanValue(Successful);
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SmsSendResult IJsonModel<SmsSendResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmsSendResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmsSendResult(document.RootElement, options);
+        }
+
+        internal static SmsSendResult DeserializeSmsSendResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +86,8 @@ namespace Azure.Communication.Sms
             Optional<SmsSendResponseItemRepeatabilityResult> repeatabilityResult = default;
             bool successful = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("to"u8))
@@ -60,8 +124,38 @@ namespace Azure.Communication.Sms
                     errorMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SmsSendResult(to, messageId.Value, httpStatusCode, Optional.ToNullable(repeatabilityResult), successful, errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SmsSendResult(to, messageId.Value, httpStatusCode, Optional.ToNullable(repeatabilityResult), successful, errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SmsSendResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmsSendResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SmsSendResult IModel<SmsSendResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmsSendResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSmsSendResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SmsSendResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

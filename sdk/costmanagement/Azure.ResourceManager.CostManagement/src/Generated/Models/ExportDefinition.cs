@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The definition of an export. </summary>
     public partial class ExportDefinition
     {
-        /// <summary> Initializes a new instance of ExportDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportDefinition"/>. </summary>
         /// <param name="exportType"> The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not yet provide data for charges or amortization for service reservations. </param>
         /// <param name="timeframe"> The time frame for pulling data for the export. If custom, then a specific time period must be provided. </param>
         public ExportDefinition(ExportType exportType, TimeframeType timeframe)
@@ -19,17 +25,24 @@ namespace Azure.ResourceManager.CostManagement.Models
             Timeframe = timeframe;
         }
 
-        /// <summary> Initializes a new instance of ExportDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDefinition"/>. </summary>
         /// <param name="exportType"> The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not yet provide data for charges or amortization for service reservations. </param>
         /// <param name="timeframe"> The time frame for pulling data for the export. If custom, then a specific time period must be provided. </param>
         /// <param name="timePeriod"> Has time period for pulling data for the export. </param>
         /// <param name="dataSet"> The definition for data in the export. </param>
-        internal ExportDefinition(ExportType exportType, TimeframeType timeframe, ExportTimePeriod timePeriod, ExportDataset dataSet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDefinition(ExportType exportType, TimeframeType timeframe, ExportTimePeriod timePeriod, ExportDataset dataSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExportType = exportType;
             Timeframe = timeframe;
             TimePeriod = timePeriod;
             DataSet = dataSet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportDefinition"/> for deserialization. </summary>
+        internal ExportDefinition()
+        {
         }
 
         /// <summary> The type of the export. Note that 'Usage' is equivalent to 'ActualCost' and is applicable to exports that do not yet provide data for charges or amortization for service reservations. </summary>

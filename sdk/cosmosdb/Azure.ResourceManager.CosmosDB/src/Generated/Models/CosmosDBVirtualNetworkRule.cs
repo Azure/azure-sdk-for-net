@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Virtual Network ACL Rule object. </summary>
     public partial class CosmosDBVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of CosmosDBVirtualNetworkRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVirtualNetworkRule"/>. </summary>
         public CosmosDBVirtualNetworkRule()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
-        internal CosmosDBVirtualNetworkRule(ResourceIdentifier id, bool? ignoreMissingVnetServiceEndpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBVirtualNetworkRule(ResourceIdentifier id, bool? ignoreMissingVnetServiceEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>

@@ -6,22 +6,68 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ScheduleAndSuspendMode
+    public partial class ScheduleAndSuspendMode : IUtf8JsonSerializable, IJsonModel<ScheduleAndSuspendMode>
     {
-        internal static ScheduleAndSuspendMode DeserializeScheduleAndSuspendMode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleAndSuspendMode>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ScheduleAndSuspendMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("scheduleAt"u8);
+            writer.WriteStringValue(ScheduleAt, "O");
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ScheduleAndSuspendMode IJsonModel<ScheduleAndSuspendMode>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScheduleAndSuspendMode)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduleAndSuspendMode(document.RootElement, options);
+        }
+
+        internal static ScheduleAndSuspendMode DeserializeScheduleAndSuspendMode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset scheduleAt = default;
             string kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleAt"u8))
@@ -34,16 +80,54 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScheduleAndSuspendMode(kind, scheduleAt);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScheduleAndSuspendMode(kind, serializedAdditionalRawData, scheduleAt);
         }
+
+        BinaryData IModel<ScheduleAndSuspendMode>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScheduleAndSuspendMode)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScheduleAndSuspendMode IModel<ScheduleAndSuspendMode>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScheduleAndSuspendMode)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScheduleAndSuspendMode(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ScheduleAndSuspendMode>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ScheduleAndSuspendMode FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeScheduleAndSuspendMode(document.RootElement);
+            return DeserializeScheduleAndSuspendMode(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

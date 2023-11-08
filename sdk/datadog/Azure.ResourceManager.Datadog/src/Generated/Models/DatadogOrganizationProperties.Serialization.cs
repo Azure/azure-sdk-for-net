@@ -6,16 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogOrganizationProperties : IUtf8JsonSerializable
+    public partial class DatadogOrganizationProperties : IUtf8JsonSerializable, IJsonModel<DatadogOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogOrganizationProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DatadogOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
             if (Optional.IsDefined(LinkingAuthCode))
             {
                 writer.WritePropertyName("linkingAuthCode"u8);
@@ -46,11 +67,40 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DatadogOrganizationProperties DeserializeDatadogOrganizationProperties(JsonElement element)
+        DatadogOrganizationProperties IJsonModel<DatadogOrganizationProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatadogOrganizationProperties(document.RootElement, options);
+        }
+
+        internal static DatadogOrganizationProperties DeserializeDatadogOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +113,8 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<string> apiKey = default;
             Optional<string> applicationKey = default;
             Optional<string> enterpriseAppId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,8 +161,38 @@ namespace Azure.ResourceManager.Datadog.Models
                     enterpriseAppId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatadogOrganizationProperties(name.Value, id.Value, linkingAuthCode.Value, linkingClientId.Value, redirectUri.Value, apiKey.Value, applicationKey.Value, enterpriseAppId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatadogOrganizationProperties(name.Value, id.Value, linkingAuthCode.Value, linkingClientId.Value, redirectUri.Value, apiKey.Value, applicationKey.Value, enterpriseAppId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DatadogOrganizationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatadogOrganizationProperties IModel<DatadogOrganizationProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatadogOrganizationProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DatadogOrganizationProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

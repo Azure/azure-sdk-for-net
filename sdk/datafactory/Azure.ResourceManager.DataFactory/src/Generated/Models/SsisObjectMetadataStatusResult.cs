@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The status of the operation. </summary>
     public partial class SsisObjectMetadataStatusResult
     {
-        /// <summary> Initializes a new instance of SsisObjectMetadataStatusResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadataStatusResult"/>. </summary>
         internal SsisObjectMetadataStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisObjectMetadataStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadataStatusResult"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="properties"> The operation properties. </param>
         /// <param name="error"> The operation error message. </param>
-        internal SsisObjectMetadataStatusResult(string status, string name, string properties, string error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisObjectMetadataStatusResult(string status, string name, string properties, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Name = name;
             Properties = properties;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the operation. </summary>

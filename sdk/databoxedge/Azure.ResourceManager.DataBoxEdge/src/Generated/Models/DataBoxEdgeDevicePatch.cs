@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Data Box Edge/Gateway device patch. </summary>
     public partial class DataBoxEdgeDevicePatch
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDevicePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePatch"/>. </summary>
         public DataBoxEdgeDevicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePatch"/>. </summary>
+        /// <param name="tags"> The tags attached to the Data Box Edge/Gateway resource. </param>
+        /// <param name="identity"> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="edgeProfile"> Edge Profile property of the Data Box Edge/Gateway device. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDevicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, EdgeProfilePatch edgeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            EdgeProfile = edgeProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The tags attached to the Data Box Edge/Gateway resource. </summary>

@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfileForSnapshot
+    public partial class ContainerServiceNetworkProfileForSnapshot : IUtf8JsonSerializable, IJsonModel<ContainerServiceNetworkProfileForSnapshot>
     {
-        internal static ContainerServiceNetworkProfileForSnapshot DeserializeContainerServiceNetworkProfileForSnapshot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNetworkProfileForSnapshot>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContainerServiceNetworkProfileForSnapshot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkPlugin))
+            {
+                writer.WritePropertyName("networkPlugin"u8);
+                writer.WriteStringValue(NetworkPlugin.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkPluginMode))
+            {
+                writer.WritePropertyName("networkPluginMode"u8);
+                writer.WriteStringValue(NetworkPluginMode.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkPolicy))
+            {
+                writer.WritePropertyName("networkPolicy"u8);
+                writer.WriteStringValue(NetworkPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkMode))
+            {
+                writer.WritePropertyName("networkMode"u8);
+                writer.WriteStringValue(NetworkMode.Value.ToString());
+            }
+            if (Optional.IsDefined(LoadBalancerSku))
+            {
+                writer.WritePropertyName("loadBalancerSku"u8);
+                writer.WriteStringValue(LoadBalancerSku.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerServiceNetworkProfileForSnapshot IJsonModel<ContainerServiceNetworkProfileForSnapshot>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileForSnapshot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceNetworkProfileForSnapshot(document.RootElement, options);
+        }
+
+        internal static ContainerServiceNetworkProfileForSnapshot DeserializeContainerServiceNetworkProfileForSnapshot(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +89,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
             Optional<ContainerServiceNetworkMode> networkMode = default;
             Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkPlugin"u8))
@@ -70,8 +138,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     loadBalancerSku = new ContainerServiceLoadBalancerSku(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceNetworkProfileForSnapshot(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(loadBalancerSku));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceNetworkProfileForSnapshot(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(loadBalancerSku), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContainerServiceNetworkProfileForSnapshot>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileForSnapshot)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerServiceNetworkProfileForSnapshot IModel<ContainerServiceNetworkProfileForSnapshot>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileForSnapshot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerServiceNetworkProfileForSnapshot(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContainerServiceNetworkProfileForSnapshot>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsStorageAccountInformationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationData"/>. </summary>
         internal DataLakeAnalyticsStorageAccountInformationData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,9 +36,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The optional suffix for the storage account.
         /// Serialized Name: StorageAccountInformation.properties.suffix
         /// </param>
-        internal DataLakeAnalyticsStorageAccountInformationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string suffix) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsStorageAccountInformationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string suffix, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Suffix = suffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container group list response that contains the container group properties. </summary>
     internal partial class ContainerGroupListResult
     {
-        /// <summary> Initializes a new instance of ContainerGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupListResult"/>. </summary>
         internal ContainerGroupListResult()
         {
             Value = new ChangeTrackingList<ContainerGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupListResult"/>. </summary>
         /// <param name="value"> The list of container groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of container groups. </param>
-        internal ContainerGroupListResult(IReadOnlyList<ContainerGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupListResult(IReadOnlyList<ContainerGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of container groups. </summary>

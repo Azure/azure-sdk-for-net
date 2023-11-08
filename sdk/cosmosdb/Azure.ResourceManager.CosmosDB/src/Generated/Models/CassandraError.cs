@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraError. </summary>
     public partial class CassandraError
     {
-        /// <summary> Initializes a new instance of CassandraError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraError"/>. </summary>
         public CassandraError()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraError"/>. </summary>
         /// <param name="code"> The code of error that occurred. </param>
         /// <param name="message"> The message of the error. </param>
         /// <param name="target"> The target resource of the error. </param>
         /// <param name="additionalErrorInfo"> Additional information about the error. </param>
-        internal CassandraError(string code, string message, string target, string additionalErrorInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraError(string code, string message, string target, string additionalErrorInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             AdditionalErrorInfo = additionalErrorInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The code of error that occurred. </summary>

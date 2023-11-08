@@ -15,7 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> List of tag details. </summary>
     internal partial class TagList
     {
-        /// <summary> Initializes a new instance of TagList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagList"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
@@ -31,17 +34,24 @@ namespace Azure.Containers.ContainerRegistry
             TagAttributeBases = tagAttributeBases.ToList();
         }
 
-        /// <summary> Initializes a new instance of TagList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagList"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
         /// <param name="link"></param>
-        internal TagList(string registryLoginServer, string repository, IReadOnlyList<TagAttributesBase> tagAttributeBases, string link)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagList(string registryLoginServer, string repository, IReadOnlyList<TagAttributesBase> tagAttributeBases, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryLoginServer = registryLoginServer;
             Repository = repository;
             TagAttributeBases = tagAttributeBases;
             Link = link;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagList"/> for deserialization. </summary>
+        internal TagList()
+        {
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>

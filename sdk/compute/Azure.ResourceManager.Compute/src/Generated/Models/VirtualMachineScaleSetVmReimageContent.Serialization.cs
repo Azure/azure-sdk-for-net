@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVmReimageContent : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVmReimageContent : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmReimageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmReimageContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VirtualMachineScaleSetVmReimageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(TempDisk))
@@ -30,7 +36,106 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VirtualMachineScaleSetVmReimageContent IJsonModel<VirtualMachineScaleSetVmReimageContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmReimageContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetVmReimageContent(document.RootElement, options);
+        }
+
+        internal static VirtualMachineScaleSetVmReimageContent DeserializeVirtualMachineScaleSetVmReimageContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> tempDisk = default;
+            Optional<string> exactVersion = default;
+            Optional<OSProfileProvisioningData> osProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tempDisk"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tempDisk = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("exactVersion"u8))
+                {
+                    exactVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("osProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osProfile = OSProfileProvisioningData.DeserializeOSProfileProvisioningData(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineScaleSetVmReimageContent(Optional.ToNullable(tempDisk), exactVersion.Value, osProfile.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<VirtualMachineScaleSetVmReimageContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmReimageContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualMachineScaleSetVmReimageContent IModel<VirtualMachineScaleSetVmReimageContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmReimageContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineScaleSetVmReimageContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VirtualMachineScaleSetVmReimageContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

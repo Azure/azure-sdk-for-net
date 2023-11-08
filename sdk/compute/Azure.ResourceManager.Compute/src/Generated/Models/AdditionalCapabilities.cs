@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Enables or disables a capability on the virtual machine or virtual machine scale set. </summary>
     public partial class AdditionalCapabilities
     {
-        /// <summary> Initializes a new instance of AdditionalCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalCapabilities"/>. </summary>
         public AdditionalCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of AdditionalCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalCapabilities"/>. </summary>
         /// <param name="ultraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
         /// <param name="hibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
-        internal AdditionalCapabilities(bool? ultraSsdEnabled, bool? hibernationEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdditionalCapabilities(bool? ultraSsdEnabled, bool? hibernationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UltraSsdEnabled = ultraSsdEnabled;
             HibernationEnabled = hibernationEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The resource requirements. </summary>
     public partial class ContainerResourceRequirements
     {
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequirements"/>. </summary>
         /// <param name="requests"> The resource requests of this container instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public ContainerResourceRequirements(ContainerResourceRequestsContent requests)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Requests = requests;
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequirements"/>. </summary>
         /// <param name="requests"> The resource requests of this container instance. </param>
         /// <param name="limits"> The resource limits of this container instance. </param>
-        internal ContainerResourceRequirements(ContainerResourceRequestsContent requests, ContainerResourceLimits limits)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerResourceRequirements(ContainerResourceRequestsContent requests, ContainerResourceLimits limits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Requests = requests;
             Limits = limits;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequirements"/> for deserialization. </summary>
+        internal ContainerResourceRequirements()
+        {
         }
 
         /// <summary> The resource requests of this container instance. </summary>

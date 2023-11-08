@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Etcd configuration. </summary>
     public partial class DataBoxEdgeEtcdInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeEtcdInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeEtcdInfo"/>. </summary>
         internal DataBoxEdgeEtcdInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeEtcdInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeEtcdInfo"/>. </summary>
         /// <param name="etcdInfoType"> Etcd type. </param>
         /// <param name="version"> Etcd version. </param>
-        internal DataBoxEdgeEtcdInfo(string etcdInfoType, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeEtcdInfo(string etcdInfoType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EtcdInfoType = etcdInfoType;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Etcd type. </summary>

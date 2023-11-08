@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureActiveDirectoryLoginConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppAzureActiveDirectoryLoginConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppAzureActiveDirectoryLoginConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAzureActiveDirectoryLoginConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContainerAppAzureActiveDirectoryLoginConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LoginParameters))
@@ -31,17 +36,48 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticationDisabled.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppAzureActiveDirectoryLoginConfiguration DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(JsonElement element)
+        ContainerAppAzureActiveDirectoryLoginConfiguration IJsonModel<ContainerAppAzureActiveDirectoryLoginConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryLoginConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppAzureActiveDirectoryLoginConfiguration DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> loginParameters = default;
             Optional<bool> disableWWWAuthenticate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginParameters"u8))
@@ -67,8 +103,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     disableWWWAuthenticate = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppAzureActiveDirectoryLoginConfiguration(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppAzureActiveDirectoryLoginConfiguration(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContainerAppAzureActiveDirectoryLoginConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryLoginConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppAzureActiveDirectoryLoginConfiguration IModel<ContainerAppAzureActiveDirectoryLoginConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryLoginConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContainerAppAzureActiveDirectoryLoginConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,32 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DiagnosticProactiveLogCollectionSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticProactiveLogCollectionSettingData"/>. </summary>
         /// <param name="userConsent"> Proactive diagnostic collection consent flag. </param>
         public DiagnosticProactiveLogCollectionSettingData(ProactiveDiagnosticsConsent userConsent)
         {
             UserConsent = userConsent;
         }
 
-        /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticProactiveLogCollectionSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="userConsent"> Proactive diagnostic collection consent flag. </param>
-        internal DiagnosticProactiveLogCollectionSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProactiveDiagnosticsConsent userConsent) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticProactiveLogCollectionSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProactiveDiagnosticsConsent userConsent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UserConsent = userConsent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticProactiveLogCollectionSettingData"/> for deserialization. </summary>
+        internal DiagnosticProactiveLogCollectionSettingData()
+        {
         }
 
         /// <summary> Proactive diagnostic collection consent flag. </summary>

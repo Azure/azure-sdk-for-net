@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information about the current running state of the overall upgrade. </summary>
     public partial class RollingUpgradeRunningStatus
     {
-        /// <summary> Initializes a new instance of RollingUpgradeRunningStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradeRunningStatus"/>. </summary>
         internal RollingUpgradeRunningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of RollingUpgradeRunningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradeRunningStatus"/>. </summary>
         /// <param name="code"> Code indicating the current status of the upgrade. </param>
         /// <param name="startOn"> Start time of the upgrade. </param>
         /// <param name="lastAction"> The last action performed on the rolling upgrade. </param>
         /// <param name="lastActionOn"> Last action time of the upgrade. </param>
-        internal RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code, DateTimeOffset? startOn, RollingUpgradeActionType? lastAction, DateTimeOffset? lastActionOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code, DateTimeOffset? startOn, RollingUpgradeActionType? lastAction, DateTimeOffset? lastActionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             StartOn = startOn;
             LastAction = lastAction;
             LastActionOn = lastActionOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Code indicating the current status of the upgrade. </summary>

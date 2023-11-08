@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
     public partial class RestorePointSourceVmOSDisk
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmOSDisk"/>. </summary>
         public RestorePointSourceVmOSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmOSDisk"/>. </summary>
         /// <param name="osType"> Gets the Operating System type. </param>
         /// <param name="encryptionSettings"> Gets the disk encryption settings. </param>
         /// <param name="name"> Gets the disk name. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
-        internal RestorePointSourceVmOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointSourceVmOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             ManagedDisk = managedDisk;
             DiskRestorePoint = diskRestorePoint;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the Operating System type. </summary>

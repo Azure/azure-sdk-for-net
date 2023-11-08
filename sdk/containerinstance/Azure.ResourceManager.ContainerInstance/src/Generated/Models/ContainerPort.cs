@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The port exposed on the container instance. </summary>
     public partial class ContainerPort
     {
-        /// <summary> Initializes a new instance of ContainerPort. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerPort"/>. </summary>
         /// <param name="port"> The port number exposed within the container group. </param>
         public ContainerPort(int port)
         {
             Port = port;
         }
 
-        /// <summary> Initializes a new instance of ContainerPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerPort"/>. </summary>
         /// <param name="protocol"> The protocol associated with the port. </param>
         /// <param name="port"> The port number exposed within the container group. </param>
-        internal ContainerPort(ContainerNetworkProtocol? protocol, int port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerPort(ContainerNetworkProtocol? protocol, int port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Protocol = protocol;
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerPort"/> for deserialization. </summary>
+        internal ContainerPort()
+        {
         }
 
         /// <summary> The protocol associated with the port. </summary>

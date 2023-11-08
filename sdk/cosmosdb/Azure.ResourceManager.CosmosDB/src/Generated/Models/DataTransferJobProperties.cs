@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The properties of a DataTransfer Job. </summary>
     public partial class DataTransferJobProperties
     {
-        /// <summary> Initializes a new instance of DataTransferJobProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobProperties"/>. </summary>
         /// <param name="source">
         /// Source DataStore details
         /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Destination = destination;
         }
 
-        /// <summary> Initializes a new instance of DataTransferJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobProperties"/>. </summary>
         /// <param name="jobName"> Job Name. </param>
         /// <param name="source">
         /// Source DataStore details
@@ -52,7 +56,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="lastUpdatedUtcOn"> Last Updated Time (ISO-8601 format). </param>
         /// <param name="workerCount"> Worker count. </param>
         /// <param name="error"> Error response for Faulted job. </param>
-        internal DataTransferJobProperties(string jobName, DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, ErrorResponse error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTransferJobProperties(string jobName, DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, ErrorResponse error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobName = jobName;
             Source = source;
@@ -63,6 +68,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             LastUpdatedUtcOn = lastUpdatedUtcOn;
             WorkerCount = workerCount;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobProperties"/> for deserialization. </summary>
+        internal DataTransferJobProperties()
+        {
         }
 
         /// <summary> Job Name. </summary>

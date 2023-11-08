@@ -5,16 +5,148 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestWrapper
+    internal partial class ManifestWrapper : IUtf8JsonSerializable, IJsonModel<ManifestWrapper>
     {
-        internal static ManifestWrapper DeserializeManifestWrapper(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManifestWrapper>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManifestWrapper>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MediaType))
+            {
+                writer.WritePropertyName("mediaType"u8);
+                writer.WriteStringValue(MediaType);
+            }
+            if (Optional.IsCollectionDefined(Manifests))
+            {
+                writer.WritePropertyName("manifests"u8);
+                writer.WriteStartArray();
+                foreach (var item in Manifests)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Config))
+            {
+                writer.WritePropertyName("config"u8);
+                writer.WriteObjectValue(Config);
+            }
+            if (Optional.IsCollectionDefined(Layers))
+            {
+                writer.WritePropertyName("layers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Layers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Annotations))
+            {
+                if (Annotations != null)
+                {
+                    writer.WritePropertyName("annotations"u8);
+                    writer.WriteObjectValue(Annotations);
+                }
+                else
+                {
+                    writer.WriteNull("annotations");
+                }
+            }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture"u8);
+                writer.WriteStringValue(Architecture);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Tag))
+            {
+                writer.WritePropertyName("tag"u8);
+                writer.WriteStringValue(Tag);
+            }
+            if (Optional.IsCollectionDefined(FsLayers))
+            {
+                writer.WritePropertyName("fsLayers"u8);
+                writer.WriteStartArray();
+                foreach (var item in FsLayers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(History))
+            {
+                writer.WritePropertyName("history"u8);
+                writer.WriteStartArray();
+                foreach (var item in History)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Signatures))
+            {
+                writer.WritePropertyName("signatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in Signatures)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                writer.WritePropertyName("schemaVersion"u8);
+                writer.WriteNumberValue(SchemaVersion.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManifestWrapper IJsonModel<ManifestWrapper>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManifestWrapper)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManifestWrapper(document.RootElement, options);
+        }
+
+        internal static ManifestWrapper DeserializeManifestWrapper(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +163,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<IReadOnlyList<History>> history = default;
             Optional<IReadOnlyList<ImageSignature>> signatures = default;
             Optional<int> schemaVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -151,8 +285,38 @@ namespace Azure.Containers.ContainerRegistry
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManifestWrapper(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManifestWrapper(Optional.ToNullable(schemaVersion), serializedAdditionalRawData, mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
+
+        BinaryData IModel<ManifestWrapper>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManifestWrapper)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManifestWrapper IModel<ManifestWrapper>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManifestWrapper)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManifestWrapper(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManifestWrapper>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

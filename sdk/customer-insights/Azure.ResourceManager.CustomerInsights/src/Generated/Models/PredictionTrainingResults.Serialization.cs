@@ -7,15 +7,99 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionTrainingResults
+    public partial class PredictionTrainingResults : IUtf8JsonSerializable, IJsonModel<PredictionTrainingResults>
     {
-        internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionTrainingResults>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PredictionTrainingResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ScoreName))
+                {
+                    writer.WritePropertyName("scoreName"u8);
+                    writer.WriteStringValue(ScoreName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PredictionDistribution))
+                {
+                    writer.WritePropertyName("predictionDistribution"u8);
+                    writer.WriteObjectValue(PredictionDistribution);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(CanonicalProfiles))
+                {
+                    writer.WritePropertyName("canonicalProfiles"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in CanonicalProfiles)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PrimaryProfileInstanceCount))
+                {
+                    writer.WritePropertyName("primaryProfileInstanceCount"u8);
+                    writer.WriteNumberValue(PrimaryProfileInstanceCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PredictionTrainingResults IJsonModel<PredictionTrainingResults>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictionTrainingResults(document.RootElement, options);
+        }
+
+        internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +109,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<PredictionDistributionDefinition> predictionDistribution = default;
             Optional<IReadOnlyList<CanonicalProfileDefinition>> canonicalProfiles = default;
             Optional<long> primaryProfileInstanceCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -73,8 +159,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     primaryProfileInstanceCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<PredictionTrainingResults>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PredictionTrainingResults IModel<PredictionTrainingResults>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePredictionTrainingResults(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PredictionTrainingResults>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

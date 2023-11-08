@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlClusterServerData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerData"/>. </summary>
         public CosmosDBForPostgreSqlClusterServerData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +46,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="availabilityZone"> Availability Zone information of the server. </param>
         /// <param name="postgresqlVersion"> The major PostgreSQL version of server. </param>
         /// <param name="citusVersion"> The Citus extension version of server. </param>
-        internal CosmosDBForPostgreSqlClusterServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverEdition, int? storageQuotaInMb, int? vCores, bool? isHAEnabled, bool? isPublicIPAccessEnabled, bool? isReadOnly, string administratorLogin, string fullyQualifiedDomainName, CosmosDBForPostgreSqlServerRole? role, string state, string haState, string availabilityZone, string postgresqlVersion, string citusVersion) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverEdition, int? storageQuotaInMb, int? vCores, bool? isHAEnabled, bool? isPublicIPAccessEnabled, bool? isReadOnly, string administratorLogin, string fullyQualifiedDomainName, CosmosDBForPostgreSqlServerRole? role, string state, string haState, string availabilityZone, string postgresqlVersion, string citusVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerEdition = serverEdition;
             StorageQuotaInMb = storageQuotaInMb;
@@ -57,6 +63,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             AvailabilityZone = availabilityZone;
             PostgresqlVersion = postgresqlVersion;
             CitusVersion = citusVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The edition of a server. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> The TrafficDetails. </summary>
     public partial class TrafficDetails
     {
-        /// <summary> Initializes a new instance of TrafficDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficDetails"/>. </summary>
         public TrafficDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficDetails"/>. </summary>
         /// <param name="totalMonthlyVolume"> Estimated total messages per month. </param>
         /// <param name="monthlyAverageMessagesFromUser"> Estimated number of Mobile-Originated messages likely to be received from a user per month. </param>
         /// <param name="monthlyAverageMessagesToUser"> Estimated number of Mobile-Terminated messages likely to be sent per user per month. </param>
@@ -25,7 +31,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// e.g. 'Higher traffic expected during holiday season and Black Friday.'.
         /// </param>
         /// <param name="estimatedRampUpTimeInDays"> Numbers of days in which is expected to start sending messages from the short code. </param>
-        internal TrafficDetails(int? totalMonthlyVolume, int? monthlyAverageMessagesFromUser, int? monthlyAverageMessagesToUser, bool? isSpiky, string spikeDetails, int? estimatedRampUpTimeInDays)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficDetails(int? totalMonthlyVolume, int? monthlyAverageMessagesFromUser, int? monthlyAverageMessagesToUser, bool? isSpiky, string spikeDetails, int? estimatedRampUpTimeInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalMonthlyVolume = totalMonthlyVolume;
             MonthlyAverageMessagesFromUser = monthlyAverageMessagesFromUser;
@@ -33,6 +40,7 @@ namespace Azure.Communication.ShortCodes.Models
             IsSpiky = isSpiky;
             SpikeDetails = spikeDetails;
             EstimatedRampUpTimeInDays = estimatedRampUpTimeInDays;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Estimated total messages per month. </summary>

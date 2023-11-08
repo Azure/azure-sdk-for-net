@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ShareInfoElement. </summary>
     public partial class ShareInfoElement
     {
-        /// <summary> Initializes a new instance of ShareInfoElement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareInfoElement"/>. </summary>
         internal ShareInfoElement()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareInfoElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareInfoElement"/>. </summary>
         /// <param name="vmUri"> A relative URI containing the ID of the VM that has the disk attached. </param>
-        internal ShareInfoElement(Uri vmUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareInfoElement(Uri vmUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmUri = vmUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A relative URI containing the ID of the VM that has the disk attached. </summary>

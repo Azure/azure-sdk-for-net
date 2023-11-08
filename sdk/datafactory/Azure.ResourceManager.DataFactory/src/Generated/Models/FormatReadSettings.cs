@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class FormatReadSettings
     {
-        /// <summary> Initializes a new instance of FormatReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
         public FormatReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FormatReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties)

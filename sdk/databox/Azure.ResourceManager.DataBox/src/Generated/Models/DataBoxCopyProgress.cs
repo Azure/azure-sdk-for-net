@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Copy progress. </summary>
     public partial class DataBoxCopyProgress
     {
-        /// <summary> Initializes a new instance of DataBoxCopyProgress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxCopyProgress"/>. </summary>
         internal DataBoxCopyProgress()
         {
             Actions = new ChangeTrackingList<CustomerResolutionCode>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxCopyProgress"/>. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// </param>
         /// <param name="error"> Error, if any, in the stage. </param>
         /// <param name="actions"> Available actions on the job. </param>
-        internal DataBoxCopyProgress(string storageAccountName, DataBoxJobTransferType? transferType, DataAccountType? dataAccountType, ResourceIdentifier accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress, ResponseError error, IReadOnlyList<CustomerResolutionCode> actions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxCopyProgress(string storageAccountName, DataBoxJobTransferType? transferType, DataAccountType? dataAccountType, ResourceIdentifier accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress, ResponseError error, IReadOnlyList<CustomerResolutionCode> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountName = storageAccountName;
             TransferType = transferType;
@@ -60,6 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
             IsEnumerationInProgress = isEnumerationInProgress;
             Error = error;
             Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the storage account. This will be empty for data account types other than storage account. </summary>

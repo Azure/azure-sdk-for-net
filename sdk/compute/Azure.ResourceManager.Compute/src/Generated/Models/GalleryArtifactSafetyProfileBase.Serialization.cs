@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryArtifactSafetyProfileBase : IUtf8JsonSerializable
+    public partial class GalleryArtifactSafetyProfileBase : IUtf8JsonSerializable, IJsonModel<GalleryArtifactSafetyProfileBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryArtifactSafetyProfileBase>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GalleryArtifactSafetyProfileBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
@@ -20,16 +26,47 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GalleryArtifactSafetyProfileBase DeserializeGalleryArtifactSafetyProfileBase(JsonElement element)
+        GalleryArtifactSafetyProfileBase IJsonModel<GalleryArtifactSafetyProfileBase>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryArtifactSafetyProfileBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryArtifactSafetyProfileBase(document.RootElement, options);
+        }
+
+        internal static GalleryArtifactSafetyProfileBase DeserializeGalleryArtifactSafetyProfileBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> allowDeletionOfReplicatedLocations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowDeletionOfReplicatedLocations"u8))
@@ -41,8 +78,38 @@ namespace Azure.ResourceManager.Compute.Models
                     allowDeletionOfReplicatedLocations = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GalleryArtifactSafetyProfileBase(Optional.ToNullable(allowDeletionOfReplicatedLocations));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GalleryArtifactSafetyProfileBase(Optional.ToNullable(allowDeletionOfReplicatedLocations), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GalleryArtifactSafetyProfileBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryArtifactSafetyProfileBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GalleryArtifactSafetyProfileBase IModel<GalleryArtifactSafetyProfileBase>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryArtifactSafetyProfileBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGalleryArtifactSafetyProfileBase(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GalleryArtifactSafetyProfileBase>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

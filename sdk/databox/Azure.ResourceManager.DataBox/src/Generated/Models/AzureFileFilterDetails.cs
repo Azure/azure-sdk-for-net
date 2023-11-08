@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Filter details to transfer Azure files. </summary>
     public partial class AzureFileFilterDetails
     {
-        /// <summary> Initializes a new instance of AzureFileFilterDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFileFilterDetails"/>. </summary>
         public AzureFileFilterDetails()
         {
             FilePrefixList = new ChangeTrackingList<string>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.DataBox.Models
             FileShareList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFileFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileFilterDetails"/>. </summary>
         /// <param name="filePrefixList"> Prefix list of the Azure files to be transferred. </param>
         /// <param name="filePathList"> List of full path of the files to be transferred. </param>
         /// <param name="fileShareList"> List of file shares to be transferred. </param>
-        internal AzureFileFilterDetails(IList<string> filePrefixList, IList<string> filePathList, IList<string> fileShareList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFileFilterDetails(IList<string> filePrefixList, IList<string> filePathList, IList<string> fileShareList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilePrefixList = filePrefixList;
             FilePathList = filePathList;
             FileShareList = fileShareList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Prefix list of the Azure files to be transferred. </summary>

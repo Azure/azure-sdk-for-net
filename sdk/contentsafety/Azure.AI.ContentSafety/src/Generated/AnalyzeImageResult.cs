@@ -5,27 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis response of the image. </summary>
     public partial class AnalyzeImageResult
     {
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
         internal AnalyzeImageResult()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
         /// <param name="hateResult"> Analysis result for Hate category. </param>
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
         /// <param name="sexualResult"> Analysis result for Sexual category. </param>
         /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        internal AnalyzeImageResult(ImageAnalyzeSeverityResult hateResult, ImageAnalyzeSeverityResult selfHarmResult, ImageAnalyzeSeverityResult sexualResult, ImageAnalyzeSeverityResult violenceResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeImageResult(ImageAnalyzeSeverityResult hateResult, ImageAnalyzeSeverityResult selfHarmResult, ImageAnalyzeSeverityResult sexualResult, ImageAnalyzeSeverityResult violenceResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HateResult = hateResult;
             SelfHarmResult = selfHarmResult;
             SexualResult = sexualResult;
             ViolenceResult = violenceResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Analysis result for Hate category. </summary>

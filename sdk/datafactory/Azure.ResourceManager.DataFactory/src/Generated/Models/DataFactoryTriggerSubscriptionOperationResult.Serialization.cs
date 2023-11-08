@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryTriggerSubscriptionOperationResult
+    public partial class DataFactoryTriggerSubscriptionOperationResult : IUtf8JsonSerializable, IJsonModel<DataFactoryTriggerSubscriptionOperationResult>
     {
-        internal static DataFactoryTriggerSubscriptionOperationResult DeserializeDataFactoryTriggerSubscriptionOperationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryTriggerSubscriptionOperationResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataFactoryTriggerSubscriptionOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TriggerName))
+                {
+                    writer.WritePropertyName("triggerName"u8);
+                    writer.WriteStringValue(TriggerName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataFactoryTriggerSubscriptionOperationResult IJsonModel<DataFactoryTriggerSubscriptionOperationResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryTriggerSubscriptionOperationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryTriggerSubscriptionOperationResult(document.RootElement, options);
+        }
+
+        internal static DataFactoryTriggerSubscriptionOperationResult DeserializeDataFactoryTriggerSubscriptionOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> triggerName = default;
             Optional<EventSubscriptionStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerName"u8))
@@ -36,8 +95,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     status = new EventSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFactoryTriggerSubscriptionOperationResult(triggerName.Value, Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFactoryTriggerSubscriptionOperationResult(triggerName.Value, Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataFactoryTriggerSubscriptionOperationResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryTriggerSubscriptionOperationResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryTriggerSubscriptionOperationResult IModel<DataFactoryTriggerSubscriptionOperationResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryTriggerSubscriptionOperationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryTriggerSubscriptionOperationResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataFactoryTriggerSubscriptionOperationResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

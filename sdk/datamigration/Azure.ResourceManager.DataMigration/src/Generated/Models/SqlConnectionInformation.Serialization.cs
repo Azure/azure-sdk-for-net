@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SqlConnectionInformation : IUtf8JsonSerializable
+    public partial class SqlConnectionInformation : IUtf8JsonSerializable, IJsonModel<SqlConnectionInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlConnectionInformation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SqlConnectionInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(DataSource))
@@ -45,11 +51,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlConnectionInformation DeserializeSqlConnectionInformation(JsonElement element)
+        SqlConnectionInformation IJsonModel<SqlConnectionInformation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlConnectionInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlConnectionInformation(document.RootElement, options);
+        }
+
+        internal static SqlConnectionInformation DeserializeSqlConnectionInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +95,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> password = default;
             Optional<bool> encryptConnection = default;
             Optional<bool> trustServerCertificate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
@@ -100,8 +137,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     trustServerCertificate = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlConnectionInformation(dataSource.Value, authentication.Value, userName.Value, password.Value, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlConnectionInformation(dataSource.Value, authentication.Value, userName.Value, password.Value, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SqlConnectionInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlConnectionInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlConnectionInformation IModel<SqlConnectionInformation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlConnectionInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlConnectionInformation(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SqlConnectionInformation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

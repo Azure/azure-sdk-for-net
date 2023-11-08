@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Messages
 {
     /// <summary> The TemplateResponse. </summary>
     internal partial class TemplateResponseInternal
     {
-        /// <summary> Initializes a new instance of TemplateResponseInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateResponseInternal"/>. </summary>
         internal TemplateResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateResponseInternal"/>. </summary>
         /// <param name="name"> Get the template's Name. </param>
         /// <param name="language"> Get the template's language. </param>
         /// <param name="channelType"></param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="whatsApp"> The WhatsApp-specific template response contract. </param>
-        internal TemplateResponseInternal(string name, string language, CommunicationMessagesChannelType? channelType, TemplateStatus? status, TemplateResponseWhatsAppInternal whatsApp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateResponseInternal(string name, string language, CommunicationMessagesChannelType? channelType, TemplateStatus? status, TemplateResponseWhatsAppInternal whatsApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Language = language;
             ChannelType = channelType;
             Status = status;
             WhatsApp = whatsApp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Get the template's Name. </summary>

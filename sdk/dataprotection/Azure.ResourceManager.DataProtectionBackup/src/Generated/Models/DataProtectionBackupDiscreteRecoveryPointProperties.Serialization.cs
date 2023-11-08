@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupDiscreteRecoveryPointProperties : IUtf8JsonSerializable
+    public partial class DataProtectionBackupDiscreteRecoveryPointProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
@@ -64,13 +68,50 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("retentionTagVersion"u8);
                 writer.WriteStringValue(RetentionTagVersion);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExpireOn))
+                {
+                    writer.WritePropertyName("expiryTime"u8);
+                    writer.WriteStringValue(ExpireOn.Value, "O");
+                }
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupDiscreteRecoveryPointProperties DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(JsonElement element)
+        DataProtectionBackupDiscreteRecoveryPointProperties IJsonModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupDiscreteRecoveryPointProperties DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +127,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> retentionTagVersion = default;
             Optional<DateTimeOffset> expiryTime = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -156,8 +199,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, serializedAdditionalRawData, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime));
         }
+
+        BinaryData IModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataProtectionBackupDiscreteRecoveryPointProperties IModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataProtectionBackupDiscreteRecoveryPointProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

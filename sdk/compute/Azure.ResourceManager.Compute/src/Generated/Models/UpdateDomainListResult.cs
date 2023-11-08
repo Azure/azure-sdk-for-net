@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The list operation result. </summary>
     internal partial class UpdateDomainListResult
     {
-        /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainListResult"/>. </summary>
         /// <param name="value"> The list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal UpdateDomainListResult(IEnumerable<UpdateDomainIdentifier> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainListResult"/>. </summary>
         /// <param name="value"> The list of resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </param>
-        internal UpdateDomainListResult(IReadOnlyList<UpdateDomainIdentifier> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateDomainListResult(IReadOnlyList<UpdateDomainIdentifier> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainListResult"/> for deserialization. </summary>
+        internal UpdateDomainListResult()
+        {
         }
 
         /// <summary> The list of resources. </summary>

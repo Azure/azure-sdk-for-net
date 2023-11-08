@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Get Data Plane read only token response definition. </summary>
     public partial class DataFactoryDataPlaneAccessPolicyResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDataPlaneAccessPolicyResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataPlaneAccessPolicyResult"/>. </summary>
         internal DataFactoryDataPlaneAccessPolicyResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataPlaneAccessPolicyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataPlaneAccessPolicyResult"/>. </summary>
         /// <param name="policy"> The user access policy. </param>
         /// <param name="accessToken"> Data Plane read only access token. </param>
         /// <param name="dataPlaneUri"> Data Plane service base URL. </param>
-        internal DataFactoryDataPlaneAccessPolicyResult(DataFactoryDataPlaneUserAccessPolicy policy, string accessToken, Uri dataPlaneUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataPlaneAccessPolicyResult(DataFactoryDataPlaneUserAccessPolicy policy, string accessToken, Uri dataPlaneUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Policy = policy;
             AccessToken = accessToken;
             DataPlaneUri = dataPlaneUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The user access policy. </summary>

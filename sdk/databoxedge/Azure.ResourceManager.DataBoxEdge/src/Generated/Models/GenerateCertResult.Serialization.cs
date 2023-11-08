@@ -6,15 +6,70 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class GenerateCertResult
+    public partial class GenerateCertResult : IUtf8JsonSerializable, IJsonModel<GenerateCertResult>
     {
-        internal static GenerateCertResult DeserializeGenerateCertResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerateCertResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GenerateCertResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PublicKey))
+            {
+                writer.WritePropertyName("publicKey"u8);
+                writer.WriteStringValue(PublicKey);
+            }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteStringValue(PrivateKey);
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryTimeInUTC"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GenerateCertResult IJsonModel<GenerateCertResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GenerateCertResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenerateCertResult(document.RootElement, options);
+        }
+
+        internal static GenerateCertResult DeserializeGenerateCertResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +77,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> publicKey = default;
             Optional<string> privateKey = default;
             Optional<DateTimeOffset> expiryTimeInUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKey"u8))
@@ -43,8 +100,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     expiryTimeInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GenerateCertResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GenerateCertResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GenerateCertResult IModel<GenerateCertResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GenerateCertResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGenerateCertResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GenerateCertResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

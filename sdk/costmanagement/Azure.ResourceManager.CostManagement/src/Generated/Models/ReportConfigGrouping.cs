@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The group by expression to be used in the report. </summary>
     public partial class ReportConfigGrouping
     {
-        /// <summary> Initializes a new instance of ReportConfigGrouping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReportConfigGrouping"/>. </summary>
         /// <param name="queryColumnType"> Has type of the column to group. </param>
         /// <param name="name"> The name of the column to group. This version supports subscription lowest possible grain. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             QueryColumnType = queryColumnType;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReportConfigGrouping"/>. </summary>
+        /// <param name="queryColumnType"> Has type of the column to group. </param>
+        /// <param name="name"> The name of the column to group. This version supports subscription lowest possible grain. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportConfigGrouping(QueryColumnType queryColumnType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            QueryColumnType = queryColumnType;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReportConfigGrouping"/> for deserialization. </summary>
+        internal ReportConfigGrouping()
+        {
         }
 
         /// <summary> Has type of the column to group. </summary>

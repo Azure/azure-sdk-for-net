@@ -6,16 +6,73 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class WebhookRouterRule
+    public partial class WebhookRouterRule : IUtf8JsonSerializable, IJsonModel<WebhookRouterRule>
     {
-        internal static WebhookRouterRule DeserializeWebhookRouterRule(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebhookRouterRule>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<WebhookRouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AuthorizationServerUri))
+            {
+                writer.WritePropertyName("authorizationServerUri"u8);
+                writer.WriteStringValue(AuthorizationServerUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ClientCredential))
+            {
+                writer.WritePropertyName("clientCredential"u8);
+                writer.WriteObjectValue(ClientCredential);
+            }
+            if (Optional.IsDefined(WebhookUri))
+            {
+                writer.WritePropertyName("webhookUri"u8);
+                writer.WriteStringValue(WebhookUri.AbsoluteUri);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WebhookRouterRule IJsonModel<WebhookRouterRule>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebhookRouterRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebhookRouterRule(document.RootElement, options);
+        }
+
+        internal static WebhookRouterRule DeserializeWebhookRouterRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +81,8 @@ namespace Azure.Communication.JobRouter
             Optional<OAuth2WebhookClientCredential> clientCredential = default;
             Optional<Uri> webhookUri = default;
             string kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationServerUri"u8))
@@ -58,16 +117,54 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebhookRouterRule(kind, authorizationServerUri.Value, clientCredential.Value, webhookUri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebhookRouterRule(kind, serializedAdditionalRawData, authorizationServerUri.Value, clientCredential.Value, webhookUri.Value);
         }
+
+        BinaryData IModel<WebhookRouterRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebhookRouterRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WebhookRouterRule IModel<WebhookRouterRule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebhookRouterRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWebhookRouterRule(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<WebhookRouterRule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new WebhookRouterRule FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeWebhookRouterRule(document.RootElement);
+            return DeserializeWebhookRouterRule(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

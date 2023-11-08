@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Node Restriction settings for the security profile. </summary>
     internal partial class ManagedClusterSecurityProfileNodeRestriction
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileNodeRestriction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileNodeRestriction"/>. </summary>
         public ManagedClusterSecurityProfileNodeRestriction()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileNodeRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileNodeRestriction"/>. </summary>
         /// <param name="enabled"> Whether to enable Node Restriction. </param>
-        internal ManagedClusterSecurityProfileNodeRestriction(bool? enabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileNodeRestriction(bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable Node Restriction. </summary>

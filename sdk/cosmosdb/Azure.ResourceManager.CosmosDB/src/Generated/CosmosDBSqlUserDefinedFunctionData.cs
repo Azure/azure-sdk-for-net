@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBSqlUserDefinedFunctionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CosmosDBSqlUserDefinedFunctionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionData"/> for deserialization. </summary>
+        internal CosmosDBSqlUserDefinedFunctionData()
+        {
         }
 
         /// <summary> Gets or sets the resource. </summary>

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -14,9 +18,24 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class OAuth2WebhookClientCredential
     {
-        /// <summary> Initializes a new instance of OAuth2WebhookClientCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OAuth2WebhookClientCredential"/>. </summary>
         internal OAuth2WebhookClientCredential()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OAuth2WebhookClientCredential"/>. </summary>
+        /// <param name="clientId"> ClientId for Contoso Authorization server. </param>
+        /// <param name="clientSecret"> Client secret for Contoso Authorization server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OAuth2WebhookClientCredential(string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

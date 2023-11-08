@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
     internal partial class ContainerRegistryWebhookEventActor
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventActor. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventActor"/>. </summary>
         internal ContainerRegistryWebhookEventActor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventActor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventActor"/>. </summary>
         /// <param name="name"> The subject or username associated with the request context that generated the event. </param>
-        internal ContainerRegistryWebhookEventActor(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryWebhookEventActor(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subject or username associated with the request context that generated the event. </summary>

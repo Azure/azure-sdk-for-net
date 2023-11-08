@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,23 +18,28 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// </summary>
     public abstract partial class ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         protected ContainerRegistryTaskStepProperties()
         {
             BaseImageDependencies = new ChangeTrackingList<ContainerRegistryBaseImageDependency>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
-        internal ContainerRegistryTaskStepProperties(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTaskStepProperties(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerRegistryTaskStepType = containerRegistryTaskStepType;
             BaseImageDependencies = baseImageDependencies;
             ContextPath = contextPath;
             ContextAccessToken = contextAccessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the step. </summary>

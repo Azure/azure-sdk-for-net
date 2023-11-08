@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -14,16 +18,22 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkerSelectorAttachment"/>. </summary>
         protected WorkerSelectorAttachment()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
-        internal WorkerSelectorAttachment(string kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkerSelectorAttachment(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

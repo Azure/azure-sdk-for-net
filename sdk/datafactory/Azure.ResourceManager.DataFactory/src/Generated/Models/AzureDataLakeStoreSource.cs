@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Azure Data Lake source. </summary>
     public partial class AzureDataLakeStoreSource : CopyActivitySource
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStoreSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreSource"/>. </summary>
         public AzureDataLakeStoreSource()
         {
             CopySourceType = "AzureDataLakeStoreSource";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStoreSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

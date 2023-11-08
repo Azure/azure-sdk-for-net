@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class GetSsisObjectMetadataContent
     {
-        /// <summary> Initializes a new instance of GetSsisObjectMetadataContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataContent"/>. </summary>
         public GetSsisObjectMetadataContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataContent"/>. </summary>
+        /// <param name="metadataPath"> Metadata path. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetSsisObjectMetadataContent(string metadataPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MetadataPath = metadataPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata path. </summary>

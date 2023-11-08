@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Represents a volume that is populated with the contents of a git repository. </summary>
     public partial class ContainerInstanceGitRepoVolume
     {
-        /// <summary> Initializes a new instance of ContainerInstanceGitRepoVolume. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceGitRepoVolume"/>. </summary>
         /// <param name="repository"> Repository URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
         public ContainerInstanceGitRepoVolume(string repository)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Repository = repository;
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceGitRepoVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceGitRepoVolume"/>. </summary>
         /// <param name="directory"> Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </param>
         /// <param name="repository"> Repository URL. </param>
         /// <param name="revision"> Commit hash for the specified revision. </param>
-        internal ContainerInstanceGitRepoVolume(string directory, string repository, string revision)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInstanceGitRepoVolume(string directory, string repository, string revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Directory = directory;
             Repository = repository;
             Revision = revision;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceGitRepoVolume"/> for deserialization. </summary>
+        internal ContainerInstanceGitRepoVolume()
+        {
         }
 
         /// <summary> Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </summary>

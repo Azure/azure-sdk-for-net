@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes metadata for retrieving price info. </summary>
     public partial class ResourceSkuCosts
     {
-        /// <summary> Initializes a new instance of ResourceSkuCosts. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCosts"/>. </summary>
         internal ResourceSkuCosts()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCosts. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCosts"/>. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
-        internal ResourceSkuCosts(string meterId, long? quantity, string extendedUnit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSkuCosts(string meterId, long? quantity, string extendedUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MeterId = meterId;
             Quantity = quantity;
             ExtendedUnit = extendedUnit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Used for querying price from commerce. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Diagnostics data returned from a detector. </summary>
     public partial class ContainerAppDiagnosticsDataApiResult
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsDataApiResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsDataApiResult"/>. </summary>
         public ContainerAppDiagnosticsDataApiResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsDataApiResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsDataApiResult"/>. </summary>
         /// <param name="table"> Table response. </param>
         /// <param name="renderingProperties"> Details of the table response. </param>
-        internal ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table, ContainerAppDiagnosticRendering renderingProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table, ContainerAppDiagnosticRendering renderingProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Table = table;
             RenderingProperties = renderingProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Table response. </summary>

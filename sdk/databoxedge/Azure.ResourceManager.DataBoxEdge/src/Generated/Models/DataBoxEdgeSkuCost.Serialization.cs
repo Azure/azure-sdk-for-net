@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeSkuCost
+    public partial class DataBoxEdgeSkuCost : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeSkuCost>
     {
-        internal static DataBoxEdgeSkuCost DeserializeDataBoxEdgeSkuCost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeSkuCost>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataBoxEdgeSkuCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MeterId))
+                {
+                    writer.WritePropertyName("meterId"u8);
+                    writer.WriteStringValue(MeterId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Quantity))
+                {
+                    writer.WritePropertyName("quantity"u8);
+                    writer.WriteNumberValue(Quantity.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExtendedUnit))
+                {
+                    writer.WritePropertyName("extendedUnit"u8);
+                    writer.WriteStringValue(ExtendedUnit);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxEdgeSkuCost IJsonModel<DataBoxEdgeSkuCost>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeSkuCost)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeSkuCost(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeSkuCost DeserializeDataBoxEdgeSkuCost(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +86,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> meterId = default;
             Optional<long> quantity = default;
             Optional<string> extendedUnit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"u8))
@@ -42,8 +109,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     extendedUnit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeSkuCost(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeSkuCost(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataBoxEdgeSkuCost>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeSkuCost)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxEdgeSkuCost IModel<DataBoxEdgeSkuCost>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeSkuCost)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeSkuCost(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataBoxEdgeSkuCost>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

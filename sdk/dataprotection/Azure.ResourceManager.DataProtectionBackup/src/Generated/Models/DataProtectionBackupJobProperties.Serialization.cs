@@ -7,21 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupJobProperties : IUtf8JsonSerializable
+    public partial class DataProtectionBackupJobProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupJobProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupJobProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataProtectionBackupJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("activityID"u8);
             writer.WriteStringValue(ActivityId);
             writer.WritePropertyName("backupInstanceFriendlyName"u8);
             writer.WriteStringValue(BackupInstanceFriendlyName);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(BackupInstanceId))
+                {
+                    writer.WritePropertyName("backupInstanceId"u8);
+                    writer.WriteStringValue(BackupInstanceId);
+                }
+            }
             writer.WritePropertyName("dataSourceId"u8);
             writer.WriteStringValue(DataSourceId);
             writer.WritePropertyName("dataSourceLocation"u8);
@@ -40,14 +52,83 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ErrorDetails))
+                {
+                    writer.WritePropertyName("errorDetails"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ErrorDetails)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExtendedInfo))
+                {
+                    writer.WritePropertyName("extendedInfo"u8);
+                    writer.WriteObjectValue(ExtendedInfo);
+                }
+            }
             writer.WritePropertyName("isUserTriggered"u8);
             writer.WriteBooleanValue(IsUserTriggered);
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation);
             writer.WritePropertyName("operationCategory"u8);
             writer.WriteStringValue(OperationCategory);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicyId))
+                {
+                    writer.WritePropertyName("policyId"u8);
+                    writer.WriteStringValue(PolicyId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PolicyName))
+                {
+                    writer.WritePropertyName("policyName"u8);
+                    writer.WriteStringValue(PolicyName);
+                }
+            }
             writer.WritePropertyName("progressEnabled"u8);
             writer.WriteBooleanValue(IsProgressEnabled);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProgressUri))
+                {
+                    writer.WritePropertyName("progressUrl"u8);
+                    writer.WriteStringValue(ProgressUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RehydrationPriority))
+                {
+                    writer.WritePropertyName("rehydrationPriority"u8);
+                    writer.WriteStringValue(RehydrationPriority);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RestoreType))
+                {
+                    writer.WritePropertyName("restoreType"u8);
+                    writer.WriteStringValue(RestoreType);
+                }
+            }
             writer.WritePropertyName("sourceResourceGroup"u8);
             writer.WriteStringValue(SourceResourceGroup);
             writer.WritePropertyName("sourceSubscriptionID"u8);
@@ -82,11 +163,40 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("destinationDataStoreName"u8);
                 writer.WriteStringValue(DestinationDataStoreName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupJobProperties DeserializeDataProtectionBackupJobProperties(JsonElement element)
+        DataProtectionBackupJobProperties IJsonModel<DataProtectionBackupJobProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupJobProperties(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupJobProperties DeserializeDataProtectionBackupJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -122,6 +232,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<ETag> etag = default;
             Optional<string> sourceDataStoreName = default;
             Optional<string> destinationDataStoreName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activityID"u8))
@@ -321,8 +433,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     destinationDataStoreName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Optional.ToNullable(duration), Optional.ToNullable(endTime), Optional.ToList(errorDetails), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, rehydrationPriority.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Optional.ToNullable(duration), Optional.ToNullable(endTime), Optional.ToList(errorDetails), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, rehydrationPriority.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataProtectionBackupJobProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataProtectionBackupJobProperties IModel<DataProtectionBackupJobProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupJobProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataProtectionBackupJobProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

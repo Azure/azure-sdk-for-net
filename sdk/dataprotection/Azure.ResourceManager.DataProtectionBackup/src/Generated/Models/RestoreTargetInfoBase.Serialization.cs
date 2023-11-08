@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreTargetInfoBase : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownRestoreTargetInfoBase))]
+    public partial class RestoreTargetInfoBase : IUtf8JsonSerializable, IJsonModel<RestoreTargetInfoBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreTargetInfoBase>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RestoreTargetInfoBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
@@ -24,7 +30,79 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RestoreTargetInfoBase IJsonModel<RestoreTargetInfoBase>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreTargetInfoBase(document.RootElement, options);
+        }
+
+        internal static RestoreTargetInfoBase DeserializeRestoreTargetInfoBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "ItemLevelRestoreTargetInfo": return ItemLevelRestoreTargetInfo.DeserializeItemLevelRestoreTargetInfo(element);
+                    case "RestoreFilesTargetInfo": return RestoreFilesTargetInfo.DeserializeRestoreFilesTargetInfo(element);
+                    case "RestoreTargetInfo": return RestoreTargetInfo.DeserializeRestoreTargetInfo(element);
+                }
+            }
+            return UnknownRestoreTargetInfoBase.DeserializeUnknownRestoreTargetInfoBase(element);
+        }
+
+        BinaryData IModel<RestoreTargetInfoBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RestoreTargetInfoBase IModel<RestoreTargetInfoBase>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRestoreTargetInfoBase(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RestoreTargetInfoBase>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

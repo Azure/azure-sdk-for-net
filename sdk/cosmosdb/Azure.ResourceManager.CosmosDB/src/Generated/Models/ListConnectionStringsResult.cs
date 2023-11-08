@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The connection strings for the given mongo cluster. </summary>
     public partial class ListConnectionStringsResult
     {
-        /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
         internal ListConnectionStringsResult()
         {
             ConnectionStrings = new ChangeTrackingList<CosmosDBConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<CosmosDBConnectionString> connectionStrings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListConnectionStringsResult(IReadOnlyList<CosmosDBConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionStrings = connectionStrings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array that contains the connection strings for a mongo cluster. </summary>

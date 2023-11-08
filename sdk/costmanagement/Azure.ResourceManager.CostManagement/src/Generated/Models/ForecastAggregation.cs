@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The aggregation expression to be used in the forecast. </summary>
     public partial class ForecastAggregation
     {
-        /// <summary> Initializes a new instance of ForecastAggregation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastAggregation"/>. </summary>
         /// <param name="name"> The name of the column to aggregate. </param>
         /// <param name="function"> The name of the aggregation function to use. </param>
         public ForecastAggregation(FunctionName name, FunctionType function)
         {
             Name = name;
             Function = function;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForecastAggregation"/>. </summary>
+        /// <param name="name"> The name of the column to aggregate. </param>
+        /// <param name="function"> The name of the aggregation function to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastAggregation(FunctionName name, FunctionType function, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Function = function;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForecastAggregation"/> for deserialization. </summary>
+        internal ForecastAggregation()
+        {
         }
 
         /// <summary> The name of the column to aggregate. </summary>

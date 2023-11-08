@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Connection string for the Cosmos DB account. </summary>
     public partial class CosmosDBAccountConnectionString
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountConnectionString. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountConnectionString"/>. </summary>
         internal CosmosDBAccountConnectionString()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountConnectionString"/>. </summary>
         /// <param name="connectionString"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         /// <param name="keyKind"> Kind of the connection string key. </param>
         /// <param name="keyType"> Type of the connection string. </param>
-        internal CosmosDBAccountConnectionString(string connectionString, string description, CosmosDBKind? keyKind, CosmosDBType? keyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountConnectionString(string connectionString, string description, CosmosDBKind? keyKind, CosmosDBType? keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             Description = description;
             KeyKind = keyKind;
             KeyType = keyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the connection string. </summary>

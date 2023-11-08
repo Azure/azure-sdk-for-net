@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to Azure SQL Database Managed Instance online scenario. </summary>
     public partial class ConnectToTargetSqlMISyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMISyncTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
         /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> or <paramref name="azureApp"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             TargetConnectionInfo = targetConnectionInfo;
             AzureApp = azureApp;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskInput"/>. </summary>
+        /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
+        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToTargetSqlMISyncTaskInput(MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetConnectionInfo = targetConnectionInfo;
+            AzureApp = azureApp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskInput"/> for deserialization. </summary>
+        internal ConnectToTargetSqlMISyncTaskInput()
+        {
         }
 
         /// <summary> Connection information for Azure SQL Database Managed Instance. </summary>

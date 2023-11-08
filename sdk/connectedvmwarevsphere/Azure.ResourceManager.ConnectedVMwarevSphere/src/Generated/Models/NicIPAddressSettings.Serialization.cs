@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class NicIPAddressSettings
+    public partial class NicIPAddressSettings : IUtf8JsonSerializable, IJsonModel<NicIPAddressSettings>
     {
-        internal static NicIPAddressSettings DeserializeNicIPAddressSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicIPAddressSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NicIPAddressSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AllocationMethod))
+                {
+                    writer.WritePropertyName("allocationMethod"u8);
+                    writer.WriteStringValue(AllocationMethod);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IPAddress))
+                {
+                    writer.WritePropertyName("ipAddress"u8);
+                    writer.WriteStringValue(IPAddress);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SubnetMask))
+                {
+                    writer.WritePropertyName("subnetMask"u8);
+                    writer.WriteStringValue(SubnetMask);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NicIPAddressSettings IJsonModel<NicIPAddressSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NicIPAddressSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNicIPAddressSettings(document.RootElement, options);
+        }
+
+        internal static NicIPAddressSettings DeserializeNicIPAddressSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +86,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> allocationMethod = default;
             Optional<string> ipAddress = default;
             Optional<string> subnetMask = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocationMethod"u8))
@@ -38,8 +105,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     subnetMask = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NicIPAddressSettings(allocationMethod.Value, ipAddress.Value, subnetMask.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NicIPAddressSettings(allocationMethod.Value, ipAddress.Value, subnetMask.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<NicIPAddressSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NicIPAddressSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NicIPAddressSettings IModel<NicIPAddressSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NicIPAddressSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNicIPAddressSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NicIPAddressSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

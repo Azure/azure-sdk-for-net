@@ -14,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
         internal RouterJob()
         {
             RequestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
@@ -23,9 +26,10 @@ namespace Azure.Communication.JobRouter
             Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
             _tags = new ChangeTrackingDictionary<string, BinaryData>();
             Notes = new ChangeTrackingList<RouterJobNote>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
         /// <param name="etag"> Concurrency Token. </param>
         /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
@@ -69,7 +73,8 @@ namespace Azure.Communication.JobRouter
         /// SuspendMode: Used when matching workers
         /// to a job needs to be suspended.
         /// </param>
-        internal RouterJob(string etag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJob(string etag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _etag = etag;
             Id = id;
@@ -89,6 +94,7 @@ namespace Azure.Communication.JobRouter
             Notes = notes;
             ScheduledAt = scheduledAt;
             MatchingMode = matchingMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The id of the job. </summary>
         public string Id { get; }

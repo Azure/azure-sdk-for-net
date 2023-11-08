@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         protected MigrateSqlServerSqlMISyncTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        internal MigrateSqlServerSqlMISyncTaskOutput(string id, string resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMISyncTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResultType = resultType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result identifier. </summary>

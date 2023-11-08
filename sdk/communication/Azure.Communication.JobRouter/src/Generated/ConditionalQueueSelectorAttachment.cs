@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class ConditionalQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
         /// <param name="condition">
         /// A rule of one of the following types:
         ///
@@ -46,8 +46,9 @@ namespace Azure.Communication.JobRouter
             QueueSelectors = queueSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="condition">
         /// A rule of one of the following types:
         ///
@@ -64,10 +65,15 @@ namespace Azure.Communication.JobRouter
         /// OAuth2.0 authentication protocol.
         /// </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        internal ConditionalQueueSelectorAttachment(string kind, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind)
+        internal ConditionalQueueSelectorAttachment(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind, serializedAdditionalRawData)
         {
             Condition = condition;
             QueueSelectors = queueSelectors;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConditionalQueueSelectorAttachment"/> for deserialization. </summary>
+        internal ConditionalQueueSelectorAttachment()
+        {
         }
 
         /// <summary>

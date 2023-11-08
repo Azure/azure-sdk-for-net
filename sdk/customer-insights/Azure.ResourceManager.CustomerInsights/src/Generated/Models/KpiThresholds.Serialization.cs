@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class KpiThresholds : IUtf8JsonSerializable
+    public partial class KpiThresholds : IUtf8JsonSerializable, IJsonModel<KpiThresholds>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiThresholds>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<KpiThresholds>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("lowerLimit"u8);
@@ -21,11 +27,40 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteNumberValue(UpperLimit);
             writer.WritePropertyName("increasingKpi"u8);
             writer.WriteBooleanValue(IncreasingKpi);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KpiThresholds DeserializeKpiThresholds(JsonElement element)
+        KpiThresholds IJsonModel<KpiThresholds>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KpiThresholds)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKpiThresholds(document.RootElement, options);
+        }
+
+        internal static KpiThresholds DeserializeKpiThresholds(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +68,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             decimal lowerLimit = default;
             decimal upperLimit = default;
             bool increasingKpi = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lowerLimit"u8))
@@ -50,8 +87,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     increasingKpi = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KpiThresholds(lowerLimit, upperLimit, increasingKpi);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KpiThresholds(lowerLimit, upperLimit, increasingKpi, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<KpiThresholds>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KpiThresholds)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KpiThresholds IModel<KpiThresholds>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KpiThresholds)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKpiThresholds(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<KpiThresholds>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

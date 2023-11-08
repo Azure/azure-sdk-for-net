@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Request payload for closing jobs. </summary>
     public partial class CloseJobOptions
     {
-        /// <summary> Initializes a new instance of CloseJobOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloseJobOptions"/>. </summary>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         public CloseJobOptions(string assignmentId)
@@ -21,9 +25,10 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(assignmentId, nameof(assignmentId));
 
             AssignmentId = assignmentId;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CloseJobOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloseJobOptions"/>. </summary>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
         /// <param name="dispositionCode">
         /// Indicates the outcome of the job, populate this field with your own custom
@@ -39,12 +44,19 @@ namespace Azure.Communication.JobRouter
         /// (Optional) A note that will be appended to the jobs' Notes collection with the
         /// current timestamp.
         /// </param>
-        internal CloseJobOptions(string assignmentId, string dispositionCode, DateTimeOffset closeAt, string note)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloseJobOptions(string assignmentId, string dispositionCode, DateTimeOffset closeAt, string note, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssignmentId = assignmentId;
             DispositionCode = dispositionCode;
             CloseAt = closeAt;
             Note = note;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloseJobOptions"/> for deserialization. </summary>
+        internal CloseJobOptions()
+        {
         }
 
         /// <summary> The assignment within which the job is to be closed. </summary>

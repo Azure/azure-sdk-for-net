@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB Cassandra table partition key. </summary>
     public partial class CassandraPartitionKey
     {
-        /// <summary> Initializes a new instance of CassandraPartitionKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraPartitionKey"/>. </summary>
         public CassandraPartitionKey()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraPartitionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraPartitionKey"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table partition key. </param>
-        internal CassandraPartitionKey(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraPartitionKey(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table partition key. </summary>

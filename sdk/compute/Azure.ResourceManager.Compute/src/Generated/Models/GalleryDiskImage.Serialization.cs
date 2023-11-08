@@ -5,16 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryDiskImage : IUtf8JsonSerializable
+    public partial class GalleryDiskImage : IUtf8JsonSerializable, IJsonModel<GalleryDiskImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryDiskImage>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GalleryDiskImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SizeInGB))
+                {
+                    writer.WritePropertyName("sizeInGB"u8);
+                    writer.WriteNumberValue(SizeInGB.Value);
+                }
+            }
             if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
@@ -25,11 +39,40 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GalleryDiskImage DeserializeGalleryDiskImage(JsonElement element)
+        GalleryDiskImage IJsonModel<GalleryDiskImage>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryDiskImage(document.RootElement, options);
+        }
+
+        internal static GalleryDiskImage DeserializeGalleryDiskImage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> sizeInGB = default;
             Optional<HostCaching> hostCaching = default;
             Optional<GalleryDiskImageSource> source = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sizeInGB"u8))
@@ -66,8 +111,38 @@ namespace Azure.ResourceManager.Compute.Models
                     source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GalleryDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GalleryDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GalleryDiskImage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GalleryDiskImage IModel<GalleryDiskImage>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGalleryDiskImage(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GalleryDiskImage>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

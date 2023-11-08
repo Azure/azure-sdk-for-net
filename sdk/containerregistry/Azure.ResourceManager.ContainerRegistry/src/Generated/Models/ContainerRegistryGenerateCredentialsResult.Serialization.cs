@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryGenerateCredentialsResult
+    public partial class ContainerRegistryGenerateCredentialsResult : IUtf8JsonSerializable, IJsonModel<ContainerRegistryGenerateCredentialsResult>
     {
-        internal static ContainerRegistryGenerateCredentialsResult DeserializeContainerRegistryGenerateCredentialsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryGenerateCredentialsResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContainerRegistryGenerateCredentialsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteStringValue(Username);
+            }
+            if (Optional.IsCollectionDefined(Passwords))
+            {
+                writer.WritePropertyName("passwords"u8);
+                writer.WriteStartArray();
+                foreach (var item in Passwords)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerRegistryGenerateCredentialsResult IJsonModel<ContainerRegistryGenerateCredentialsResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryGenerateCredentialsResult DeserializeContainerRegistryGenerateCredentialsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> username = default;
             Optional<IReadOnlyList<ContainerRegistryTokenPassword>> passwords = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -42,8 +99,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     passwords = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryGenerateCredentialsResult(username.Value, Optional.ToList(passwords));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryGenerateCredentialsResult(username.Value, Optional.ToList(passwords), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContainerRegistryGenerateCredentialsResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerRegistryGenerateCredentialsResult IModel<ContainerRegistryGenerateCredentialsResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContainerRegistryGenerateCredentialsResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

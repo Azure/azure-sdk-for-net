@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Response payload after a job has been successfully unassigned. </summary>
     public partial class UnassignJobResult
     {
-        /// <summary> Initializes a new instance of UnassignJobResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/>. </summary>
         /// <param name="jobId"> The Id of the job unassigned. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -23,6 +27,23 @@ namespace Azure.Communication.JobRouter
 
             JobId = jobId;
             UnassignmentCount = unassignmentCount;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/>. </summary>
+        /// <param name="jobId"> The Id of the job unassigned. </param>
+        /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnassignJobResult(string jobId, int unassignmentCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            JobId = jobId;
+            UnassignmentCount = unassignmentCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/> for deserialization. </summary>
+        internal UnassignJobResult()
+        {
         }
 
         /// <summary> The Id of the job unassigned. </summary>

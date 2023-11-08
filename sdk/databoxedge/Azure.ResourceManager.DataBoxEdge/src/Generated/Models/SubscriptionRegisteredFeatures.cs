@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The SubscriptionRegisteredFeatures. </summary>
     public partial class SubscriptionRegisteredFeatures
     {
-        /// <summary> Initializes a new instance of SubscriptionRegisteredFeatures. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionRegisteredFeatures"/>. </summary>
         internal SubscriptionRegisteredFeatures()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionRegisteredFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionRegisteredFeatures"/>. </summary>
         /// <param name="name"></param>
         /// <param name="state"></param>
-        internal SubscriptionRegisteredFeatures(string name, string state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionRegisteredFeatures(string name, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

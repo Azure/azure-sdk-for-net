@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class EventTriggerConfiguration : IUtf8JsonSerializable
+    public partial class EventTriggerConfiguration : IUtf8JsonSerializable, IJsonModel<EventTriggerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventTriggerConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EventTriggerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaCompletionCount))
@@ -30,11 +36,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventTriggerConfiguration DeserializeEventTriggerConfiguration(JsonElement element)
+        EventTriggerConfiguration IJsonModel<EventTriggerConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventTriggerConfiguration(document.RootElement, options);
+        }
+
+        internal static EventTriggerConfiguration DeserializeEventTriggerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> replicaCompletionCount = default;
             Optional<int> parallelism = default;
             Optional<ContainerAppJobScale> scale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -71,8 +108,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EventTriggerConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventTriggerConfiguration IModel<EventTriggerConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventTriggerConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EventTriggerConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

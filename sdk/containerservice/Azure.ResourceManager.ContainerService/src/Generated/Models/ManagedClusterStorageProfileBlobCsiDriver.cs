@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
     internal partial class ManagedClusterStorageProfileBlobCsiDriver
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileBlobCsiDriver. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileBlobCsiDriver"/>. </summary>
         public ManagedClusterStorageProfileBlobCsiDriver()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileBlobCsiDriver. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileBlobCsiDriver"/>. </summary>
         /// <param name="isEnabled"> Whether to enable AzureBlob CSI Driver. The default value is false. </param>
-        internal ManagedClusterStorageProfileBlobCsiDriver(bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterStorageProfileBlobCsiDriver(bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>

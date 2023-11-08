@@ -5,15 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogInstallMethod
+    public partial class DatadogInstallMethod : IUtf8JsonSerializable, IJsonModel<DatadogInstallMethod>
     {
-        internal static DatadogInstallMethod DeserializeDatadogInstallMethod(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogInstallMethod>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DatadogInstallMethod>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Tool))
+            {
+                writer.WritePropertyName("tool"u8);
+                writer.WriteStringValue(Tool);
+            }
+            if (Optional.IsDefined(ToolVersion))
+            {
+                writer.WritePropertyName("toolVersion"u8);
+                writer.WriteStringValue(ToolVersion);
+            }
+            if (Optional.IsDefined(InstallerVersion))
+            {
+                writer.WritePropertyName("installerVersion"u8);
+                writer.WriteStringValue(InstallerVersion);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DatadogInstallMethod IJsonModel<DatadogInstallMethod>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatadogInstallMethod(document.RootElement, options);
+        }
+
+        internal static DatadogInstallMethod DeserializeDatadogInstallMethod(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +77,8 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<string> tool = default;
             Optional<string> toolVersion = default;
             Optional<string> installerVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tool"u8))
@@ -38,8 +96,38 @@ namespace Azure.ResourceManager.Datadog.Models
                     installerVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatadogInstallMethod(tool.Value, toolVersion.Value, installerVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatadogInstallMethod(tool.Value, toolVersion.Value, installerVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DatadogInstallMethod>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatadogInstallMethod IModel<DatadogInstallMethod>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatadogInstallMethod(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DatadogInstallMethod>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

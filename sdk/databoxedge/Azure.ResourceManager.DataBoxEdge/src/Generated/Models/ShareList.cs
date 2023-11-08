@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of all the shares on the Data Box Edge/Gateway device. </summary>
     internal partial class ShareList
     {
-        /// <summary> Initializes a new instance of ShareList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareList"/>. </summary>
         internal ShareList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeShareData>();
         }
 
-        /// <summary> Initializes a new instance of ShareList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareList"/>. </summary>
         /// <param name="value"> The list of shares. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ShareList(IReadOnlyList<DataBoxEdgeShareData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareList(IReadOnlyList<DataBoxEdgeShareData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of shares. </summary>

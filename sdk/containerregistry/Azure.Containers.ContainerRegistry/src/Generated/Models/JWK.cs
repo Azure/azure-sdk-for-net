@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> A JSON web signature. </summary>
     internal partial class JWK
     {
-        /// <summary> Initializes a new instance of JWK. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JWK"/>. </summary>
         internal JWK()
         {
         }
 
-        /// <summary> Initializes a new instance of JWK. </summary>
+        /// <summary> Initializes a new instance of <see cref="JWK"/>. </summary>
         /// <param name="jwk"> JSON web key parameter. </param>
         /// <param name="alg"> The algorithm used to sign or encrypt the JWT. </param>
-        internal JWK(JWKHeader jwk, string alg)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JWK(JWKHeader jwk, string alg, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Jwk = jwk;
             Alg = alg;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> JSON web key parameter. </summary>

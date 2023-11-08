@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupRestoreWithRehydrationContent : IUtf8JsonSerializable
+    public partial class BackupRestoreWithRehydrationContent : IUtf8JsonSerializable, IJsonModel<BackupRestoreWithRehydrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRestoreWithRehydrationContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BackupRestoreWithRehydrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rehydrationPriority"u8);
@@ -37,7 +43,136 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("identityDetails"u8);
                 writer.WriteObjectValue(IdentityDetails);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        BackupRestoreWithRehydrationContent IJsonModel<BackupRestoreWithRehydrationContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupRestoreWithRehydrationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupRestoreWithRehydrationContent(document.RootElement, options);
+        }
+
+        internal static BackupRestoreWithRehydrationContent DeserializeBackupRestoreWithRehydrationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            BackupRehydrationPriority rehydrationPriority = default;
+            TimeSpan rehydrationRetentionDuration = default;
+            string recoveryPointId = default;
+            string objectType = default;
+            RestoreTargetInfoBase restoreTargetInfo = default;
+            SourceDataStoreType sourceDataStoreType = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("rehydrationPriority"u8))
+                {
+                    rehydrationPriority = new BackupRehydrationPriority(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rehydrationRetentionDuration"u8))
+                {
+                    rehydrationRetentionDuration = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("recoveryPointId"u8))
+                {
+                    recoveryPointId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreTargetInfo"u8))
+                {
+                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sourceDataStoreType"u8))
+                {
+                    sourceDataStoreType = new SourceDataStoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sourceResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identityDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupRestoreWithRehydrationContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, identityDetails.Value, serializedAdditionalRawData, recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+        }
+
+        BinaryData IModel<BackupRestoreWithRehydrationContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupRestoreWithRehydrationContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackupRestoreWithRehydrationContent IModel<BackupRestoreWithRehydrationContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupRestoreWithRehydrationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackupRestoreWithRehydrationContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BackupRestoreWithRehydrationContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

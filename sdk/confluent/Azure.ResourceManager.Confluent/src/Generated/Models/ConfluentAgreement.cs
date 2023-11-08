@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Agreement Terms definition. </summary>
     public partial class ConfluentAgreement : ResourceData
     {
-        /// <summary> Initializes a new instance of ConfluentAgreement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentAgreement"/>. </summary>
         public ConfluentAgreement()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfluentAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAgreement"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="retrieveOn"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
         /// <param name="signature"> Terms signature. </param>
         /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
-        internal ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveOn, string signature, bool? isAccepted) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveOn, string signature, bool? isAccepted, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             Product = product;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.Confluent.Models
             RetrieveOn = retrieveOn;
             Signature = signature;
             IsAccepted = isAccepted;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Publisher identifier string. </summary>

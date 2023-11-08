@@ -1125,7 +1125,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1152,7 +1152,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
@@ -1203,7 +1203,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1230,7 +1230,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
@@ -1281,7 +1281,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1308,7 +1308,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing queues. </summary>
@@ -1359,7 +1359,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1386,7 +1386,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateUpsertDistributionPolicyRequest(string distributionPolicyId, RequestContent content, RequestConditions requestConditions, RequestContext context)

@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Revision resource specific properties. </summary>
     public partial class ContainerAppAvailableWorkloadProfileProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfileProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfileProperties"/>. </summary>
         public ContainerAppAvailableWorkloadProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAvailableWorkloadProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfileProperties"/>. </summary>
         /// <param name="category"> Used to categorize workload profiles. </param>
         /// <param name="applicability"> indicates whether the profile is default for the location. </param>
         /// <param name="cores"> Number of cores in CPU. </param>
         /// <param name="memoryInGiB"> Memory in GiB. </param>
         /// <param name="displayName"> The everyday name of the workload profile. </param>
-        internal ContainerAppAvailableWorkloadProfileProperties(string category, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, string displayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppAvailableWorkloadProfileProperties(string category, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Applicability = applicability;
             Cores = cores;
             MemoryInGiB = memoryInGiB;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Used to categorize workload profiles. </summary>

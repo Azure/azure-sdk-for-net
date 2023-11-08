@@ -5,16 +5,206 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class AvailableDataBoxEdgeSku
+    public partial class AvailableDataBoxEdgeSku : IUtf8JsonSerializable, IJsonModel<AvailableDataBoxEdgeSku>
     {
-        internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableDataBoxEdgeSku>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AvailableDataBoxEdgeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    writer.WritePropertyName("resourceType"u8);
+                    writer.WriteStringValue(ResourceType);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    writer.WritePropertyName("kind"u8);
+                    writer.WriteStringValue(Kind);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Tier))
+                {
+                    writer.WritePropertyName("tier"u8);
+                    writer.WriteStringValue(Tier.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Size))
+                {
+                    writer.WritePropertyName("size"u8);
+                    writer.WriteStringValue(Size);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Family))
+                {
+                    writer.WritePropertyName("family"u8);
+                    writer.WriteStringValue(Family);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Locations))
+                {
+                    writer.WritePropertyName("locations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Locations)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ApiVersions))
+                {
+                    writer.WritePropertyName("apiVersions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ApiVersions)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(LocationInfo))
+                {
+                    writer.WritePropertyName("locationInfo"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in LocationInfo)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Costs))
+                {
+                    writer.WritePropertyName("costs"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Costs)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SignupOption))
+                {
+                    writer.WritePropertyName("signupOption"u8);
+                    writer.WriteStringValue(SignupOption.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Availability))
+                {
+                    writer.WritePropertyName("availability"u8);
+                    writer.WriteStringValue(Availability.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ShipmentTypes))
+                {
+                    writer.WritePropertyName("shipmentTypes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ShipmentTypes)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Capabilities))
+                {
+                    writer.WritePropertyName("capabilities"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Capabilities)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AvailableDataBoxEdgeSku IJsonModel<AvailableDataBoxEdgeSku>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableDataBoxEdgeSku(document.RootElement, options);
+        }
+
+        internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +224,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeSkuAvailability> availability = default;
             Optional<IReadOnlyList<DataBoxEdgeShipmentType>> shipmentTypes = default;
             Optional<IReadOnlyList<DataBoxEdgeSkuCapability>> capabilities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -185,8 +377,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     capabilities = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailableDataBoxEdgeSku(resourceType.Value, Optional.ToNullable(name), kind.Value, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(locationInfo), Optional.ToList(costs), Optional.ToNullable(signupOption), Optional.ToNullable(version), Optional.ToNullable(availability), Optional.ToList(shipmentTypes), Optional.ToList(capabilities));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AvailableDataBoxEdgeSku(resourceType.Value, Optional.ToNullable(name), kind.Value, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(locationInfo), Optional.ToList(costs), Optional.ToNullable(signupOption), Optional.ToNullable(version), Optional.ToNullable(availability), Optional.ToList(shipmentTypes), Optional.ToList(capabilities), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AvailableDataBoxEdgeSku>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AvailableDataBoxEdgeSku IModel<AvailableDataBoxEdgeSku>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAvailableDataBoxEdgeSku(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AvailableDataBoxEdgeSku>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

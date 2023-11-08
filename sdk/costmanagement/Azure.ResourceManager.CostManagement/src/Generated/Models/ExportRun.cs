@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> An export run. </summary>
     public partial class ExportRun : ResourceData
     {
-        /// <summary> Initializes a new instance of ExportRun. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
         public ExportRun()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="runSettings"> The export settings that were in effect for this run. </param>
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExecutionType = executionType;
             Status = status;
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             RunSettings = runSettings;
             Error = error;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the export run. </summary>

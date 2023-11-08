@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The ContainerRegistryEncryption. </summary>
     public partial class ContainerRegistryEncryption
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncryption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncryption"/>. </summary>
         public ContainerRegistryEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncryption"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
-        internal ContainerRegistryEncryption(ContainerRegistryEncryptionStatus? status, ContainerRegistryKeyVaultProperties keyVaultProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEncryption(ContainerRegistryEncryptionStatus? status, ContainerRegistryKeyVaultProperties keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             KeyVaultProperties = keyVaultProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>

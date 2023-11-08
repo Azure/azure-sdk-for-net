@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class DiskImageData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskImageData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DiskImageData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DiskImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,13 +41,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
-        internal DiskImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, WritableSubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, WritableSubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SourceVirtualMachine = sourceVirtualMachine;
             StorageProfile = storageProfile;
             ProvisioningState = provisioningState;
             HyperVGeneration = hyperVGeneration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskImageData"/> for deserialization. </summary>
+        internal DiskImageData()
+        {
         }
 
         /// <summary> The extended location of the Image. </summary>

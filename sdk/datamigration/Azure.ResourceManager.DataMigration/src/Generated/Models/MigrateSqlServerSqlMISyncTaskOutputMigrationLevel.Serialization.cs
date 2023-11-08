@@ -6,15 +6,153 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskOutputMigrationLevel
+    public partial class MigrateSqlServerSqlMISyncTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>
     {
-        internal static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DatabaseCount))
+                {
+                    writer.WritePropertyName("databaseCount"u8);
+                    writer.WriteNumberValue(DatabaseCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartedOn))
+                {
+                    writer.WritePropertyName("startedOn"u8);
+                    writer.WriteStringValue(StartedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndedOn))
+                {
+                    writer.WritePropertyName("endedOn"u8);
+                    writer.WriteStringValue(EndedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SourceServerName))
+                {
+                    writer.WritePropertyName("sourceServerName"u8);
+                    writer.WriteStringValue(SourceServerName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SourceServerVersion))
+                {
+                    writer.WritePropertyName("sourceServerVersion"u8);
+                    writer.WriteStringValue(SourceServerVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SourceServerBrandVersion))
+                {
+                    writer.WritePropertyName("sourceServerBrandVersion"u8);
+                    writer.WriteStringValue(SourceServerBrandVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TargetServerName))
+                {
+                    writer.WritePropertyName("targetServerName"u8);
+                    writer.WriteStringValue(TargetServerName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TargetServerVersion))
+                {
+                    writer.WritePropertyName("targetServerVersion"u8);
+                    writer.WriteStringValue(TargetServerVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TargetServerBrandVersion))
+                {
+                    writer.WritePropertyName("targetServerBrandVersion"u8);
+                    writer.WriteStringValue(TargetServerBrandVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DatabaseErrorCount))
+                {
+                    writer.WritePropertyName("databaseErrorCount"u8);
+                    writer.WriteNumberValue(DatabaseErrorCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateSqlServerSqlMISyncTaskOutputMigrationLevel IJsonModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(document.RootElement, options);
+        }
+
+        internal static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +170,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> databaseErrorCount = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseCount"u8))
@@ -119,8 +259,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(databaseCount), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToNullable(databaseErrorCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(databaseCount), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToNullable(databaseErrorCount));
         }
+
+        BinaryData IModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateSqlServerSqlMISyncTaskOutputMigrationLevel IModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

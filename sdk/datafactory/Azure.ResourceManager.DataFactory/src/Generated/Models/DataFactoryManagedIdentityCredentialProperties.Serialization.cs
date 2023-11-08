@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryManagedIdentityCredentialProperties : IUtf8JsonSerializable
+    public partial class DataFactoryManagedIdentityCredentialProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryManagedIdentityCredentialProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryManagedIdentityCredentialProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataFactoryManagedIdentityCredentialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -69,8 +73,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryManagedIdentityCredentialProperties DeserializeDataFactoryManagedIdentityCredentialProperties(JsonElement element)
+        DataFactoryManagedIdentityCredentialProperties IJsonModel<DataFactoryManagedIdentityCredentialProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryManagedIdentityCredentialProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryManagedIdentityCredentialProperties DeserializeDataFactoryManagedIdentityCredentialProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,5 +158,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryManagedIdentityCredentialProperties(type, description.Value, Optional.ToList(annotations), additionalProperties, resourceId.Value);
         }
+
+        BinaryData IModel<DataFactoryManagedIdentityCredentialProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryManagedIdentityCredentialProperties IModel<DataFactoryManagedIdentityCredentialProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryManagedIdentityCredentialProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataFactoryManagedIdentityCredentialProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

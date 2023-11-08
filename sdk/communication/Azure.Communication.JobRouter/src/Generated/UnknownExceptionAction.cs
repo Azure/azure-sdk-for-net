@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Unknown version of ExceptionAction. </summary>
     internal partial class UnknownExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of UnknownExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownExceptionAction"/>. </summary>
         internal UnknownExceptionAction()
         {
         }
 
-        /// <summary> Initializes a new instance of UnknownExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownExceptionAction"/>. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        internal UnknownExceptionAction(string id, string kind) : base(id, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownExceptionAction(string id, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, kind, serializedAdditionalRawData)
         {
         }
     }

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App Dapr configuration. </summary>
     public partial class ContainerAppDaprConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppDaprConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprConfiguration"/>. </summary>
         public ContainerAppDaprConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprConfiguration"/>. </summary>
         /// <param name="isEnabled"> Boolean indicating if the Dapr side car is enabled. </param>
         /// <param name="appId"> Dapr application identifier. </param>
         /// <param name="appProtocol"> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="httpMaxRequestSize"> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
         /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
         /// <param name="isApiLoggingEnabled"> Enables API logging for the Dapr sidecar. </param>
-        internal ContainerAppDaprConfiguration(bool? isEnabled, string appId, ContainerAppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, ContainerAppDaprLogLevel? logLevel, bool? isApiLoggingEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDaprConfiguration(bool? isEnabled, string appId, ContainerAppProtocol? appProtocol, int? appPort, int? httpReadBufferSize, int? httpMaxRequestSize, ContainerAppDaprLogLevel? logLevel, bool? isApiLoggingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             AppId = appId;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             HttpMaxRequestSize = httpMaxRequestSize;
             LogLevel = logLevel;
             IsApiLoggingEnabled = isApiLoggingEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>

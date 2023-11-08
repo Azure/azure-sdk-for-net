@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PowerQuerySink : IUtf8JsonSerializable
+    public partial class PowerQuerySink : IUtf8JsonSerializable, IJsonModel<PowerQuerySink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PowerQuerySink>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PowerQuerySink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Script))
@@ -53,11 +59,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PowerQuerySink DeserializePowerQuerySink(JsonElement element)
+        PowerQuerySink IJsonModel<PowerQuerySink>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PowerQuerySink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePowerQuerySink(document.RootElement, options);
+        }
+
+        internal static PowerQuerySink DeserializePowerQuerySink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +105,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DatasetReference> dataset = default;
             Optional<DataFactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("script"u8))
@@ -132,8 +169,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PowerQuerySink(name, description.Value, dataset.Value, linkedService, flowlet.Value, schemaLinkedService, rejectedDataLinkedService, script.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PowerQuerySink(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData, schemaLinkedService, rejectedDataLinkedService, script.Value);
         }
+
+        BinaryData IModel<PowerQuerySink>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PowerQuerySink)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PowerQuerySink IModel<PowerQuerySink>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PowerQuerySink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePowerQuerySink(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PowerQuerySink>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

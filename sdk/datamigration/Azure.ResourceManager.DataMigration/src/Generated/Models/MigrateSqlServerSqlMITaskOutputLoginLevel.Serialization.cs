@@ -7,15 +7,125 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMITaskOutputLoginLevel
+    public partial class MigrateSqlServerSqlMITaskOutputLoginLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>
     {
-        internal static MigrateSqlServerSqlMITaskOutputLoginLevel DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LoginName))
+                {
+                    writer.WritePropertyName("loginName"u8);
+                    writer.WriteStringValue(LoginName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Stage))
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartedOn))
+                {
+                    writer.WritePropertyName("startedOn"u8);
+                    writer.WriteStringValue(StartedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndedOn))
+                {
+                    writer.WritePropertyName("endedOn"u8);
+                    writer.WriteStringValue(EndedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ExceptionsAndWarnings))
+                {
+                    writer.WritePropertyName("exceptionsAndWarnings"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ExceptionsAndWarnings)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateSqlServerSqlMITaskOutputLoginLevel IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(document.RootElement, options);
+        }
+
+        internal static MigrateSqlServerSqlMITaskOutputLoginLevel DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +139,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginName"u8))
@@ -101,8 +213,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSqlServerSqlMITaskOutputLoginLevel(id.Value, resultType, loginName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateSqlServerSqlMITaskOutputLoginLevel(id.Value, resultType, serializedAdditionalRawData, loginName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
         }
+
+        BinaryData IModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateSqlServerSqlMITaskOutputLoginLevel IModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

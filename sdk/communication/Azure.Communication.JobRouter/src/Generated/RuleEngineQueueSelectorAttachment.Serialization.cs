@@ -5,21 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RuleEngineQueueSelectorAttachment
+    public partial class RuleEngineQueueSelectorAttachment : IUtf8JsonSerializable, IJsonModel<RuleEngineQueueSelectorAttachment>
     {
-        internal static RuleEngineQueueSelectorAttachment DeserializeRuleEngineQueueSelectorAttachment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleEngineQueueSelectorAttachment>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RuleEngineQueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("rule"u8);
+            writer.WriteObjectValue(Rule);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RuleEngineQueueSelectorAttachment IJsonModel<RuleEngineQueueSelectorAttachment>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuleEngineQueueSelectorAttachment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleEngineQueueSelectorAttachment(document.RootElement, options);
+        }
+
+        internal static RuleEngineQueueSelectorAttachment DeserializeRuleEngineQueueSelectorAttachment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RouterRule rule = default;
             string kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rule"u8))
@@ -32,16 +80,54 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RuleEngineQueueSelectorAttachment(kind, rule);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RuleEngineQueueSelectorAttachment(kind, serializedAdditionalRawData, rule);
         }
+
+        BinaryData IModel<RuleEngineQueueSelectorAttachment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuleEngineQueueSelectorAttachment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RuleEngineQueueSelectorAttachment IModel<RuleEngineQueueSelectorAttachment>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RuleEngineQueueSelectorAttachment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRuleEngineQueueSelectorAttachment(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RuleEngineQueueSelectorAttachment>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new RuleEngineQueueSelectorAttachment FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRuleEngineQueueSelectorAttachment(document.RootElement);
+            return DeserializeRuleEngineQueueSelectorAttachment(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

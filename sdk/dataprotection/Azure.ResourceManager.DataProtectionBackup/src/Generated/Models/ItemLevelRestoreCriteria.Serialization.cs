@@ -5,19 +5,99 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ItemLevelRestoreCriteria : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownItemLevelRestoreCriteria))]
+    public partial class ItemLevelRestoreCriteria : IUtf8JsonSerializable, IJsonModel<ItemLevelRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreCriteria>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ItemLevelRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ItemLevelRestoreCriteria IJsonModel<ItemLevelRestoreCriteria>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeItemLevelRestoreCriteria(document.RootElement, options);
+        }
+
+        internal static ItemLevelRestoreCriteria DeserializeItemLevelRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "ItemPathBasedRestoreCriteria": return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element);
+                    case "KubernetesClusterRestoreCriteria": return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element);
+                    case "KubernetesPVRestoreCriteria": return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element);
+                    case "KubernetesStorageClassRestoreCriteria": return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element);
+                    case "RangeBasedItemLevelRestoreCriteria": return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element);
+                }
+            }
+            return UnknownItemLevelRestoreCriteria.DeserializeUnknownItemLevelRestoreCriteria(element);
+        }
+
+        BinaryData IModel<ItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ItemLevelRestoreCriteria IModel<ItemLevelRestoreCriteria>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeItemLevelRestoreCriteria(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ItemLevelRestoreCriteria>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

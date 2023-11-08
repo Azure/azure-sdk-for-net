@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The reseller properties. </summary>
     public partial class ConsumptionReseller
     {
-        /// <summary> Initializes a new instance of ConsumptionReseller. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReseller"/>. </summary>
         internal ConsumptionReseller()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReseller. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReseller"/>. </summary>
         /// <param name="resellerId"> The reseller property ID. </param>
         /// <param name="resellerDescription"> The reseller property description. </param>
-        internal ConsumptionReseller(ResourceIdentifier resellerId, string resellerDescription)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionReseller(ResourceIdentifier resellerId, string resellerDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResellerId = resellerId;
             ResellerDescription = resellerDescription;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The reseller property ID. </summary>

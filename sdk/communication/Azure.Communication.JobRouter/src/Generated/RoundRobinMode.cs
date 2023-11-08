@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -13,7 +16,7 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class RoundRobinMode : DistributionMode
     {
-        /// <summary> Initializes a new instance of RoundRobinMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoundRobinMode"/>. </summary>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
         /// <param name="bypassSelectors">
@@ -27,7 +30,8 @@ namespace Azure.Communication.JobRouter
         /// By default, set to false.
         /// </param>
         /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
-        internal RoundRobinMode(int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, string kind) : base(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoundRobinMode(int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind, serializedAdditionalRawData)
         {
         }
     }

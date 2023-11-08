@@ -6,15 +6,71 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PurchasedPhoneNumber
+    public partial class PurchasedPhoneNumber : IUtf8JsonSerializable, IJsonModel<PurchasedPhoneNumber>
     {
-        internal static PurchasedPhoneNumber DeserializePurchasedPhoneNumber(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurchasedPhoneNumber>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PurchasedPhoneNumber>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("phoneNumber"u8);
+            writer.WriteStringValue(PhoneNumber);
+            writer.WritePropertyName("countryCode"u8);
+            writer.WriteStringValue(CountryCode);
+            writer.WritePropertyName("phoneNumberType"u8);
+            writer.WriteStringValue(PhoneNumberType.ToString());
+            writer.WritePropertyName("capabilities"u8);
+            writer.WriteObjectValue(Capabilities);
+            writer.WritePropertyName("assignmentType"u8);
+            writer.WriteStringValue(AssignmentType.ToString());
+            writer.WritePropertyName("purchaseDate"u8);
+            writer.WriteStringValue(PurchaseDate, "O");
+            writer.WritePropertyName("cost"u8);
+            writer.WriteObjectValue(Cost);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PurchasedPhoneNumber IJsonModel<PurchasedPhoneNumber>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PurchasedPhoneNumber)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePurchasedPhoneNumber(document.RootElement, options);
+        }
+
+        internal static PurchasedPhoneNumber DeserializePurchasedPhoneNumber(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +83,8 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberAssignmentType assignmentType = default;
             DateTimeOffset purchaseDate = default;
             PhoneNumberCost cost = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -69,8 +127,38 @@ namespace Azure.Communication.PhoneNumbers
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<PurchasedPhoneNumber>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PurchasedPhoneNumber)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PurchasedPhoneNumber IModel<PurchasedPhoneNumber>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PurchasedPhoneNumber)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePurchasedPhoneNumber(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PurchasedPhoneNumber>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

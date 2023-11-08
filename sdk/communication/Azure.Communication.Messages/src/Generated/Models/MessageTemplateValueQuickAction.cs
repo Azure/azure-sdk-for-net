@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Messages
 {
     /// <summary> The message template's quick action value information. </summary>
     internal partial class MessageTemplateValueQuickAction
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueQuickAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueQuickAction"/>. </summary>
         public MessageTemplateValueQuickAction()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueQuickAction"/>. </summary>
+        /// <param name="text"> The [Optional] quick action text. </param>
+        /// <param name="payload"> The [Optional] quick action payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateValueQuickAction(string text, string payload, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            Payload = payload;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The [Optional] quick action text. </summary>

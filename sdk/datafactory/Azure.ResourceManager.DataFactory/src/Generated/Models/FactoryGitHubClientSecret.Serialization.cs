@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryGitHubClientSecret : IUtf8JsonSerializable
+    public partial class FactoryGitHubClientSecret : IUtf8JsonSerializable, IJsonModel<FactoryGitHubClientSecret>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FactoryGitHubClientSecret>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FactoryGitHubClientSecret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ByoaSecretAkvUri))
@@ -26,17 +31,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FactoryGitHubClientSecret DeserializeFactoryGitHubClientSecret(JsonElement element)
+        FactoryGitHubClientSecret IJsonModel<FactoryGitHubClientSecret>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFactoryGitHubClientSecret(document.RootElement, options);
+        }
+
+        internal static FactoryGitHubClientSecret DeserializeFactoryGitHubClientSecret(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Uri> byoaSecretAkvUrl = default;
             Optional<string> byoaSecretName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("byoaSecretAkvUrl"u8))
@@ -53,8 +89,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     byoaSecretName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FactoryGitHubClientSecret(byoaSecretAkvUrl.Value, byoaSecretName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FactoryGitHubClientSecret(byoaSecretAkvUrl.Value, byoaSecretName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FactoryGitHubClientSecret>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FactoryGitHubClientSecret IModel<FactoryGitHubClientSecret>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFactoryGitHubClientSecret(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FactoryGitHubClientSecret>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

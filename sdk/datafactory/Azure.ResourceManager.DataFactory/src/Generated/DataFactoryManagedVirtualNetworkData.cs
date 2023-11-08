@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryManagedVirtualNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkData"/>. </summary>
         /// <param name="properties"> Managed Virtual Network properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryManagedVirtualNetworkData(DataFactoryManagedVirtualNetworkProperties properties)
@@ -29,17 +33,24 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed Virtual Network properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryManagedVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryManagedVirtualNetworkProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryManagedVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryManagedVirtualNetworkProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkData"/> for deserialization. </summary>
+        internal DataFactoryManagedVirtualNetworkData()
+        {
         }
 
         /// <summary> Managed Virtual Network properties. </summary>

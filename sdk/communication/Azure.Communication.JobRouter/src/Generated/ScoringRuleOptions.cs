@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,13 +17,17 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class ScoringRuleOptions
     {
-        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScoringRuleOptions"/>. </summary>
         internal ScoringRuleOptions()
         {
             ScoringParameters = new ChangeTrackingList<ScoringRuleParameterSelector>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScoringRuleOptions"/>. </summary>
         /// <param name="batchSize">
         /// (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true.
         /// Defaults to 20 if not configured.
@@ -51,12 +56,14 @@ namespace Azure.Communication.JobRouter
         /// If false, will sort scores by ascending order. By default, set to
         /// true.
         /// </param>
-        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? isBatchScoringEnabled, bool? descendingOrder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? isBatchScoringEnabled, bool? descendingOrder, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BatchSize = batchSize;
             ScoringParameters = scoringParameters;
             IsBatchScoringEnabled = isBatchScoringEnabled;
             DescendingOrder = descendingOrder;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

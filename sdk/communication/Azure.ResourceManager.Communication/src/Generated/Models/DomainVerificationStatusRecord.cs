@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class that represents a VerificationStatus record. </summary>
     public partial class DomainVerificationStatusRecord
     {
-        /// <summary> Initializes a new instance of DomainVerificationStatusRecord. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainVerificationStatusRecord"/>. </summary>
         internal DomainVerificationStatusRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainVerificationStatusRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainVerificationStatusRecord"/>. </summary>
         /// <param name="status"> Status of the verification operation. </param>
         /// <param name="errorCode"> Error code. This property will only be present if the status is UnableToVerify. </param>
-        internal DomainVerificationStatusRecord(DomainRecordVerificationStatus? status, string errorCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainVerificationStatusRecord(DomainRecordVerificationStatus? status, string errorCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             ErrorCode = errorCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status of the verification operation. </summary>

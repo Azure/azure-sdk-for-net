@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The metadata to describe the capability. </summary>
     public partial class DataBoxEdgeSkuCapability
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuCapability"/>. </summary>
         internal DataBoxEdgeSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuCapability"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
-        internal DataBoxEdgeSkuCapability(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeSkuCapability(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An invariant to describe the feature. </summary>

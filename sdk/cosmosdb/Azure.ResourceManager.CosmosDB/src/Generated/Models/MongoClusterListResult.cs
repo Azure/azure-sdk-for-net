@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A list of mongo clusters. </summary>
     internal partial class MongoClusterListResult
     {
-        /// <summary> Initializes a new instance of MongoClusterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoClusterListResult"/>. </summary>
         internal MongoClusterListResult()
         {
             Value = new ChangeTrackingList<MongoClusterData>();
         }
 
-        /// <summary> Initializes a new instance of MongoClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterListResult"/>. </summary>
         /// <param name="value"> The list of mongo clusters. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
-        internal MongoClusterListResult(IReadOnlyList<MongoClusterData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoClusterListResult(IReadOnlyList<MongoClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of mongo clusters. </summary>

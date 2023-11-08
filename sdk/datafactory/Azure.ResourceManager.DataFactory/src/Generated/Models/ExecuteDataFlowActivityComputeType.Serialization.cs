@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteDataFlowActivityComputeType : IUtf8JsonSerializable
+    public partial class ExecuteDataFlowActivityComputeType : IUtf8JsonSerializable, IJsonModel<ExecuteDataFlowActivityComputeType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteDataFlowActivityComputeType>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ExecuteDataFlowActivityComputeType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
@@ -26,17 +32,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("coreCount"u8);
                 JsonSerializer.Serialize(writer, CoreCount);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExecuteDataFlowActivityComputeType DeserializeExecuteDataFlowActivityComputeType(JsonElement element)
+        ExecuteDataFlowActivityComputeType IJsonModel<ExecuteDataFlowActivityComputeType>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecuteDataFlowActivityComputeType(document.RootElement, options);
+        }
+
+        internal static ExecuteDataFlowActivityComputeType DeserializeExecuteDataFlowActivityComputeType(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataFactoryElement<string>> computeType = default;
             Optional<DataFactoryElement<int>> coreCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -57,8 +94,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     coreCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExecuteDataFlowActivityComputeType(computeType.Value, coreCount.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExecuteDataFlowActivityComputeType(computeType.Value, coreCount.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ExecuteDataFlowActivityComputeType>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExecuteDataFlowActivityComputeType IModel<ExecuteDataFlowActivityComputeType>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExecuteDataFlowActivityComputeType(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ExecuteDataFlowActivityComputeType>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Error details for the alert. </summary>
     public partial class DataBoxEdgeAlertErrorDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeAlertErrorDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertErrorDetails"/>. </summary>
         internal DataBoxEdgeAlertErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeAlertErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertErrorDetails"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorMessage"> Error Message. </param>
         /// <param name="occurrences"> Number of occurrences. </param>
-        internal DataBoxEdgeAlertErrorDetails(string errorCode, string errorMessage, int? occurrences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeAlertErrorDetails(string errorCode, string errorMessage, int? occurrences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             Occurrences = occurrences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code. </summary>

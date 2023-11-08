@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSsisTaskInput : IUtf8JsonSerializable
+    public partial class MigrateSsisTaskInput : IUtf8JsonSerializable, IJsonModel<MigrateSsisTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskInput>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MigrateSsisTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ssisMigrationInfo"u8);
@@ -21,11 +27,40 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(SourceConnectionInfo);
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateSsisTaskInput DeserializeMigrateSsisTaskInput(JsonElement element)
+        MigrateSsisTaskInput IJsonModel<MigrateSsisTaskInput>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSsisTaskInput(document.RootElement, options);
+        }
+
+        internal static MigrateSsisTaskInput DeserializeMigrateSsisTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +68,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             SsisMigrationInfo ssisMigrationInfo = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ssisMigrationInfo"u8))
@@ -50,8 +87,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSsisTaskInput(sourceConnectionInfo, targetConnectionInfo, ssisMigrationInfo);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateSsisTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, ssisMigrationInfo);
         }
+
+        BinaryData IModel<MigrateSsisTaskInput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateSsisTaskInput IModel<MigrateSsisTaskInput>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateSsisTaskInput(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MigrateSsisTaskInput>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

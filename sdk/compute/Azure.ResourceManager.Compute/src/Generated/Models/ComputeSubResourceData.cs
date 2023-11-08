@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ComputeSubResourceData. </summary>
     public partial class ComputeSubResourceData
     {
-        /// <summary> Initializes a new instance of ComputeSubResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeSubResourceData"/>. </summary>
         public ComputeSubResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeSubResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSubResourceData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        internal ComputeSubResourceData(ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeSubResourceData(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Id. </summary>

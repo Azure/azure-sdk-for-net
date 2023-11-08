@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SchemaMigrationSetting : IUtf8JsonSerializable
+    public partial class SchemaMigrationSetting : IUtf8JsonSerializable, IJsonModel<SchemaMigrationSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchemaMigrationSetting>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SchemaMigrationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaOption))
@@ -30,11 +36,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SchemaMigrationSetting DeserializeSchemaMigrationSetting(JsonElement element)
+        SchemaMigrationSetting IJsonModel<SchemaMigrationSetting>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSchemaMigrationSetting(document.RootElement, options);
+        }
+
+        internal static SchemaMigrationSetting DeserializeSchemaMigrationSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<SchemaMigrationOption> schemaOption = default;
             Optional<string> fileId = default;
             Optional<string> fileName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaOption"u8))
@@ -63,8 +100,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     fileName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SchemaMigrationSetting(Optional.ToNullable(schemaOption), fileId.Value, fileName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SchemaMigrationSetting(Optional.ToNullable(schemaOption), fileId.Value, fileName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SchemaMigrationSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SchemaMigrationSetting IModel<SchemaMigrationSetting>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSchemaMigrationSetting(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SchemaMigrationSetting>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

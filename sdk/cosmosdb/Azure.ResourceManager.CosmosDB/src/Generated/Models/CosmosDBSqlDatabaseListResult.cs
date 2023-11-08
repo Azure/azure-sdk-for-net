@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the SQL databases and their properties. </summary>
     internal partial class CosmosDBSqlDatabaseListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlDatabaseListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlDatabaseListResult"/>. </summary>
         internal CosmosDBSqlDatabaseListResult()
         {
             Value = new ChangeTrackingList<CosmosDBSqlDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlDatabaseListResult"/>. </summary>
         /// <param name="value"> List of SQL databases and their properties. </param>
-        internal CosmosDBSqlDatabaseListResult(IReadOnlyList<CosmosDBSqlDatabaseData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlDatabaseListResult(IReadOnlyList<CosmosDBSqlDatabaseData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of SQL databases and their properties. </summary>

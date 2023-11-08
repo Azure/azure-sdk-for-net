@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CosmosDBForPostgreSqlClusterData(AzureLocation location) : base(location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             PrivateEndpointConnections = new ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +64,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="readReplicas"> The array of read replica clusters. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections for a cluster. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -89,6 +93,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ReadReplicas = readReplicas;
             EarliestRestoreOn = earliestRestoreOn;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlClusterData()
+        {
         }
 
         /// <summary> The administrator's login name of the servers in the cluster. </summary>

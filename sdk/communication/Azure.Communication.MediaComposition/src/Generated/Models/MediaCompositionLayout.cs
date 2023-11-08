@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -16,17 +18,22 @@ namespace Azure.Communication.MediaComposition.Models
     /// </summary>
     public abstract partial class MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaCompositionLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
-        internal MediaCompositionLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaCompositionLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Resolution = resolution;
             PlaceholderImageUri = placeholderImageUri;
             ScalingMode = scalingMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of layout. </summary>

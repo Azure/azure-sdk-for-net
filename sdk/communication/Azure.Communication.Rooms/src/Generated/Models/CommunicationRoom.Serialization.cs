@@ -6,15 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
-    public partial class CommunicationRoom
+    public partial class CommunicationRoom : IUtf8JsonSerializable, IJsonModel<CommunicationRoom>
     {
-        internal static CommunicationRoom DeserializeCommunicationRoom(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationRoom>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CommunicationRoom>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("createdAt"u8);
+            writer.WriteStringValue(CreatedAt, "O");
+            writer.WritePropertyName("validFrom"u8);
+            writer.WriteStringValue(ValidFrom, "O");
+            writer.WritePropertyName("validUntil"u8);
+            writer.WriteStringValue(ValidUntil, "O");
+            writer.WritePropertyName("pstnDialOutEnabled"u8);
+            writer.WriteBooleanValue(PstnDialOutEnabled);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CommunicationRoom IJsonModel<CommunicationRoom>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommunicationRoom)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationRoom(document.RootElement, options);
+        }
+
+        internal static CommunicationRoom DeserializeCommunicationRoom(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +74,8 @@ namespace Azure.Communication.Rooms
             DateTimeOffset validFrom = default;
             DateTimeOffset validUntil = default;
             bool pstnDialOutEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -51,8 +103,38 @@ namespace Azure.Communication.Rooms
                     pstnDialOutEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommunicationRoom(id, createdAt, validFrom, validUntil, pstnDialOutEnabled);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommunicationRoom(id, createdAt, validFrom, validUntil, pstnDialOutEnabled, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CommunicationRoom>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommunicationRoom)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CommunicationRoom IModel<CommunicationRoom>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommunicationRoom)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCommunicationRoom(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CommunicationRoom>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

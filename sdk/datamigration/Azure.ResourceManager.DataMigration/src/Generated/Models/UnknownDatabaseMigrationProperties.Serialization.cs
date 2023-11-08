@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownDatabaseMigrationProperties : IUtf8JsonSerializable
+    internal partial class UnknownDatabaseMigrationProperties : IUtf8JsonSerializable, IJsonModel<DatabaseMigrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseMigrationProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DatabaseMigrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -22,6 +27,38 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MigrationStatus))
+                {
+                    writer.WritePropertyName("migrationStatus"u8);
+                    writer.WriteStringValue(MigrationStatus);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartedOn))
+                {
+                    writer.WritePropertyName("startedOn"u8);
+                    writer.WriteStringValue(StartedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndedOn))
+                {
+                    writer.WritePropertyName("endedOn"u8);
+                    writer.WriteStringValue(EndedOn.Value, "O");
+                }
             }
             if (Optional.IsDefined(SourceSqlConnection))
             {
@@ -33,6 +70,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SourceServerName))
+                {
+                    writer.WritePropertyName("sourceServerName"u8);
+                    writer.WriteStringValue(SourceServerName);
+                }
+            }
             if (Optional.IsDefined(MigrationService))
             {
                 writer.WritePropertyName("migrationService"u8);
@@ -42,6 +87,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MigrationFailureError))
+                {
+                    writer.WritePropertyName("migrationFailureError"u8);
+                    writer.WriteObjectValue(MigrationFailureError);
+                }
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {
@@ -53,11 +106,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDatabaseMigrationProperties DeserializeUnknownDatabaseMigrationProperties(JsonElement element)
+        DatabaseMigrationProperties IJsonModel<DatabaseMigrationProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDatabaseMigrationProperties(document.RootElement, options);
+        }
+
+        internal static UnknownDatabaseMigrationProperties DeserializeUnknownDatabaseMigrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +158,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ErrorInfo> migrationFailureError = default;
             Optional<string> targetDatabaseCollation = default;
             Optional<string> provisioningError = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -164,8 +248,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     provisioningError = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownDatabaseMigrationProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownDatabaseMigrationProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DatabaseMigrationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatabaseMigrationProperties IModel<DatabaseMigrationProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownDatabaseMigrationProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DatabaseMigrationProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

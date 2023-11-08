@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,6 +14,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Adhoc backup rules. </summary>
     public partial class AdhocBackupRules
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupRules"/>. </summary>
+        /// <param name="ruleName"></param>
+        /// <param name="backupTrigger"> Adhoc backup trigger option. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdhocBackupRules(string ruleName, AdhocBackupTriggerSetting backupTrigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RuleName = ruleName;
+            BackupTrigger = backupTrigger;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupRules"/> for deserialization. </summary>
+        internal AdhocBackupRules()
+        {
+        }
+
         /// <summary> Gets the rule name. </summary>
         public string RuleName { get; }
         /// <summary> Adhoc backup trigger option. </summary>

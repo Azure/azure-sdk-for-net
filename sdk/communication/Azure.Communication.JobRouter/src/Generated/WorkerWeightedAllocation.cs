@@ -18,16 +18,26 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class WorkerWeightedAllocation
     {
-        /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="workerSelectors">
         /// A collection of worker selectors that will be applied if this allocation is
         /// selected.
         /// </param>
-        internal WorkerWeightedAllocation(double weight, IReadOnlyList<RouterWorkerSelector> workerSelectors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkerWeightedAllocation(double weight, IReadOnlyList<RouterWorkerSelector> workerSelectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Weight = weight;
             WorkerSelectors = workerSelectors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/> for deserialization. </summary>
+        internal WorkerWeightedAllocation()
+        {
         }
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>

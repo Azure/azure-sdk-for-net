@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
@@ -15,16 +16,17 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class StaticRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of StaticRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRouterRule"/>. </summary>
         internal StaticRouterRule()
         {
             Kind = "static-rule";
         }
 
-        /// <summary> Initializes a new instance of StaticRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The static value this rule always returns. </param>
-        internal StaticRouterRule(string kind, BinaryData value) : base(kind)
+        internal StaticRouterRule(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData value) : base(kind, serializedAdditionalRawData)
         {
             _value = value;
         }

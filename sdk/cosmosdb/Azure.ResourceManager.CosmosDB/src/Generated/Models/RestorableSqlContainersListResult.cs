@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the SQL container events and their properties. </summary>
     internal partial class RestorableSqlContainersListResult
     {
-        /// <summary> Initializes a new instance of RestorableSqlContainersListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainersListResult"/>. </summary>
         internal RestorableSqlContainersListResult()
         {
             Value = new ChangeTrackingList<RestorableSqlContainer>();
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlContainersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainersListResult"/>. </summary>
         /// <param name="value"> List of SQL container events and their properties. </param>
-        internal RestorableSqlContainersListResult(IReadOnlyList<RestorableSqlContainer> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableSqlContainersListResult(IReadOnlyList<RestorableSqlContainer> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of SQL container events and their properties. </summary>

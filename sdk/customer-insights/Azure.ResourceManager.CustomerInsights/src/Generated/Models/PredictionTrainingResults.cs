@@ -14,25 +14,30 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The training results of the prediction. </summary>
     public partial class PredictionTrainingResults
     {
-        /// <summary> Initializes a new instance of PredictionTrainingResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionTrainingResults"/>. </summary>
         internal PredictionTrainingResults()
         {
             CanonicalProfiles = new ChangeTrackingList<CanonicalProfileDefinition>();
         }
 
-        /// <summary> Initializes a new instance of PredictionTrainingResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionTrainingResults"/>. </summary>
         /// <param name="tenantId"> The hub name. </param>
         /// <param name="scoreName"> Score name. </param>
         /// <param name="predictionDistribution"> Prediction distribution. </param>
         /// <param name="canonicalProfiles"> Canonical profiles. </param>
         /// <param name="primaryProfileInstanceCount"> Instance count of the primary profile. </param>
-        internal PredictionTrainingResults(Guid? tenantId, string scoreName, PredictionDistributionDefinition predictionDistribution, IReadOnlyList<CanonicalProfileDefinition> canonicalProfiles, long? primaryProfileInstanceCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionTrainingResults(Guid? tenantId, string scoreName, PredictionDistributionDefinition predictionDistribution, IReadOnlyList<CanonicalProfileDefinition> canonicalProfiles, long? primaryProfileInstanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             ScoreName = scoreName;
             PredictionDistribution = predictionDistribution;
             CanonicalProfiles = canonicalProfiles;
             PrimaryProfileInstanceCount = primaryProfileInstanceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The hub name. </summary>

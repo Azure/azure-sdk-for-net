@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Snapshot Controller settings for the storage profile. </summary>
     internal partial class ManagedClusterStorageProfileSnapshotController
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileSnapshotController. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileSnapshotController"/>. </summary>
         public ManagedClusterStorageProfileSnapshotController()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileSnapshotController. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileSnapshotController"/>. </summary>
         /// <param name="isEnabled"> Whether to enable Snapshot Controller. The default value is true. </param>
-        internal ManagedClusterStorageProfileSnapshotController(bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterStorageProfileSnapshotController(bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>

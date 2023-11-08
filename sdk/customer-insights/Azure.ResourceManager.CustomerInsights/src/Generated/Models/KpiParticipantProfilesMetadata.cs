@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI participant profile metadata. </summary>
     public partial class KpiParticipantProfilesMetadata
     {
-        /// <summary> Initializes a new instance of KpiParticipantProfilesMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KpiParticipantProfilesMetadata"/>. </summary>
         /// <param name="typeName"> Name of the type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         internal KpiParticipantProfilesMetadata(string typeName)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Argument.AssertNotNull(typeName, nameof(typeName));
 
             TypeName = typeName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KpiParticipantProfilesMetadata"/>. </summary>
+        /// <param name="typeName"> Name of the type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KpiParticipantProfilesMetadata(string typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TypeName = typeName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KpiParticipantProfilesMetadata"/> for deserialization. </summary>
+        internal KpiParticipantProfilesMetadata()
+        {
         }
 
         /// <summary> Name of the type. </summary>

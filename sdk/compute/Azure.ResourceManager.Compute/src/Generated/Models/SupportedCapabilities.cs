@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> List of supported capabilities persisted on the disk resource for VM use. </summary>
     public partial class SupportedCapabilities
     {
-        /// <summary> Initializes a new instance of SupportedCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportedCapabilities"/>. </summary>
         public SupportedCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedCapabilities"/>. </summary>
         /// <param name="diskControllerTypes"> The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. </param>
         /// <param name="acceleratedNetwork"> True if the image from which the OS disk is created supports accelerated networking. </param>
         /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
-        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, ArchitectureType? architecture)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, ArchitectureType? architecture, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskControllerTypes = diskControllerTypes;
             AcceleratedNetwork = acceleratedNetwork;
             Architecture = architecture;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. </summary>

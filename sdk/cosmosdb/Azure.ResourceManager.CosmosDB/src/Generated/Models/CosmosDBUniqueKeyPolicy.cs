@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
     internal partial class CosmosDBUniqueKeyPolicy
     {
-        /// <summary> Initializes a new instance of CosmosDBUniqueKeyPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUniqueKeyPolicy"/>. </summary>
         public CosmosDBUniqueKeyPolicy()
         {
             UniqueKeys = new ChangeTrackingList<CosmosDBUniqueKey>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBUniqueKeyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUniqueKeyPolicy"/>. </summary>
         /// <param name="uniqueKeys"> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </param>
-        internal CosmosDBUniqueKeyPolicy(IList<CosmosDBUniqueKey> uniqueKeys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBUniqueKeyPolicy(IList<CosmosDBUniqueKey> uniqueKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UniqueKeys = uniqueKeys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>

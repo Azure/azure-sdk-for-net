@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The response to a list partition level usage request. </summary>
     internal partial class PartitionUsagesResult
     {
-        /// <summary> Initializes a new instance of PartitionUsagesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartitionUsagesResult"/>. </summary>
         internal PartitionUsagesResult()
         {
             Value = new ChangeTrackingList<PartitionUsage>();
         }
 
-        /// <summary> Initializes a new instance of PartitionUsagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionUsagesResult"/>. </summary>
         /// <param name="value"> The list of partition-level usages for the database. A usage is a point in time metric. </param>
-        internal PartitionUsagesResult(IReadOnlyList<PartitionUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartitionUsagesResult(IReadOnlyList<PartitionUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of partition-level usages for the database. A usage is a point in time metric. </summary>

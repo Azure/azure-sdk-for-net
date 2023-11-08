@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Raw failure information if DNS verification fails. </summary>
     public partial class ContainerAppCustomDomainVerificationFailureInfo
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfo"/>. </summary>
         internal ContainerAppCustomDomainVerificationFailureInfo()
         {
             Details = new ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfo"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
         /// <param name="details"> Details or the error. </param>
-        internal ContainerAppCustomDomainVerificationFailureInfo(string code, string message, string target, IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCustomDomainVerificationFailureInfo(string code, string message, string target, IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Standardized string to programmatically identify the error. </summary>

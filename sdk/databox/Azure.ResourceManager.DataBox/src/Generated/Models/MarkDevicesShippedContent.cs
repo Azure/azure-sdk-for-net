@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The request body to provide the delivery package details of job. </summary>
     public partial class MarkDevicesShippedContent
     {
-        /// <summary> Initializes a new instance of MarkDevicesShippedContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarkDevicesShippedContent"/>. </summary>
         /// <param name="deliverToDataCenterPackageDetails"> Delivery package details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deliverToDataCenterPackageDetails"/> is null. </exception>
         public MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DataBox.Models
             Argument.AssertNotNull(deliverToDataCenterPackageDetails, nameof(deliverToDataCenterPackageDetails));
 
             DeliverToDataCenterPackageDetails = deliverToDataCenterPackageDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MarkDevicesShippedContent"/>. </summary>
+        /// <param name="deliverToDataCenterPackageDetails"> Delivery package details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DeliverToDataCenterPackageDetails = deliverToDataCenterPackageDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MarkDevicesShippedContent"/> for deserialization. </summary>
+        internal MarkDevicesShippedContent()
+        {
         }
 
         /// <summary> Delivery package details. </summary>

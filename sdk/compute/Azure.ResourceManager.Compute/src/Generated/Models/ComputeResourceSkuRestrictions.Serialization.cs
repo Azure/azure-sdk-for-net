@@ -5,16 +5,93 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeResourceSkuRestrictions
+    public partial class ComputeResourceSkuRestrictions : IUtf8JsonSerializable, IJsonModel<ComputeResourceSkuRestrictions>
     {
-        internal static ComputeResourceSkuRestrictions DeserializeComputeResourceSkuRestrictions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeResourceSkuRestrictions>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ComputeResourceSkuRestrictions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RestrictionsType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Values))
+                {
+                    writer.WritePropertyName("values"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Values)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RestrictionInfo))
+                {
+                    writer.WritePropertyName("restrictionInfo"u8);
+                    writer.WriteObjectValue(RestrictionInfo);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ReasonCode))
+                {
+                    writer.WritePropertyName("reasonCode"u8);
+                    writer.WriteStringValue(ReasonCode.Value.ToSerialString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ComputeResourceSkuRestrictions IJsonModel<ComputeResourceSkuRestrictions>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeResourceSkuRestrictions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeResourceSkuRestrictions(document.RootElement, options);
+        }
+
+        internal static ComputeResourceSkuRestrictions DeserializeComputeResourceSkuRestrictions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +100,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<string>> values = default;
             Optional<ComputeResourceSkuRestrictionInfo> restrictionInfo = default;
             Optional<ComputeResourceSkuRestrictionsReasonCode> reasonCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -66,8 +145,38 @@ namespace Azure.ResourceManager.Compute.Models
                     reasonCode = property.Value.GetString().ToComputeResourceSkuRestrictionsReasonCode();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComputeResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ComputeResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ComputeResourceSkuRestrictions>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeResourceSkuRestrictions)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ComputeResourceSkuRestrictions IModel<ComputeResourceSkuRestrictions>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeResourceSkuRestrictions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeComputeResourceSkuRestrictions(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ComputeResourceSkuRestrictions>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

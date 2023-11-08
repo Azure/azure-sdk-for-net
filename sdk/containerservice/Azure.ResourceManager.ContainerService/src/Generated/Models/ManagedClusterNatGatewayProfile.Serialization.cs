@@ -5,16 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterNatGatewayProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterNatGatewayProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterNatGatewayProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterNatGatewayProfile>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagedClusterNatGatewayProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedOutboundIPProfile))
@@ -37,11 +42,40 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterNatGatewayProfile DeserializeManagedClusterNatGatewayProfile(JsonElement element)
+        ManagedClusterNatGatewayProfile IJsonModel<ManagedClusterNatGatewayProfile>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterNatGatewayProfile(document.RootElement, options);
+        }
+
+        internal static ManagedClusterNatGatewayProfile DeserializeManagedClusterNatGatewayProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +83,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
             Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
             Optional<int> idleTimeoutInMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedOutboundIPProfile"u8))
@@ -83,8 +119,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     idleTimeoutInMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagedClusterNatGatewayProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedClusterNatGatewayProfile IModel<ManagedClusterNatGatewayProfile>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedClusterNatGatewayProfile(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagedClusterNatGatewayProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

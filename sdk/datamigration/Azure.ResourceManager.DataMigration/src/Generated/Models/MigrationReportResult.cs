@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Migration validation report result, contains the url for downloading the generated report. </summary>
     public partial class MigrationReportResult
     {
-        /// <summary> Initializes a new instance of MigrationReportResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationReportResult"/>. </summary>
         internal MigrationReportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationReportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationReportResult"/>. </summary>
         /// <param name="id"> Migration validation result identifier. </param>
         /// <param name="reportUri"> The url of the report. </param>
-        internal MigrationReportResult(string id, Uri reportUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationReportResult(string id, Uri reportUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ReportUri = reportUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Migration validation result identifier. </summary>

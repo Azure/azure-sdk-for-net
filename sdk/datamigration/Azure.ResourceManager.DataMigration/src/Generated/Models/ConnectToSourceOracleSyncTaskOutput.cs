@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates Oracle database connection. </summary>
     public partial class ConnectToSourceOracleSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskOutput"/>. </summary>
         internal ConnectToSourceOracleSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskOutput"/>. </summary>
         /// <param name="sourceServerVersion"> Version of the source server. </param>
         /// <param name="databases"> List of schemas on source server. </param>
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
-        internal ConnectToSourceOracleSyncTaskOutput(string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceOracleSyncTaskOutput(string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceServerVersion = sourceServerVersion;
             Databases = databases;
             SourceServerBrandVersion = sourceServerBrandVersion;
             ValidationErrors = validationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Version of the source server. </summary>

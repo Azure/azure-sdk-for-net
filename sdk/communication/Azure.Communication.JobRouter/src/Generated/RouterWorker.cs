@@ -14,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         internal RouterWorker()
         {
             Queues = new ChangeTrackingList<string>();
@@ -23,9 +26,10 @@ namespace Azure.Communication.JobRouter
             Channels = new ChangeTrackingList<RouterChannel>();
             Offers = new ChangeTrackingList<RouterJobOffer>();
             AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         /// <param name="etag"> Concurrency Token. </param>
         /// <param name="id"> Id of the worker. </param>
         /// <param name="state"> The current state of the worker. </param>
@@ -44,7 +48,8 @@ namespace Azure.Communication.JobRouter
         /// consumed. A value of '0' means no capacity is currently consumed.
         /// </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
-        internal RouterWorker(string etag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterWorker(string etag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _etag = etag;
             Id = id;
@@ -58,6 +63,7 @@ namespace Azure.Communication.JobRouter
             AssignedJobs = assignedJobs;
             LoadRatio = loadRatio;
             AvailableForOffers = availableForOffers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id of the worker. </summary>
         public string Id { get; }

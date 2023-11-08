@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The upload certificate request. </summary>
     public partial class UploadCertificateContent
     {
-        /// <summary> Initializes a new instance of UploadCertificateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/>. </summary>
         /// <param name="certificate"> The base64 encoded certificate raw data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
         public UploadCertificateContent(string certificate)
@@ -21,6 +25,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Argument.AssertNotNull(certificate, nameof(certificate));
 
             Certificate = certificate;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/>. </summary>
+        /// <param name="authenticationType"> The authentication type. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType, string certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AuthenticationType = authenticationType;
+            Certificate = certificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/> for deserialization. </summary>
+        internal UploadCertificateContent()
+        {
         }
 
         /// <summary> The authentication type. </summary>

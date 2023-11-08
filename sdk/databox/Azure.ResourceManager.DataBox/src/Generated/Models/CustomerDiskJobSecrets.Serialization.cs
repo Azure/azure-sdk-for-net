@@ -5,17 +5,96 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class CustomerDiskJobSecrets
+    public partial class CustomerDiskJobSecrets : IUtf8JsonSerializable, IJsonModel<CustomerDiskJobSecrets>
     {
-        internal static CustomerDiskJobSecrets DeserializeCustomerDiskJobSecrets(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomerDiskJobSecrets>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CustomerDiskJobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(DiskSecrets))
+                {
+                    writer.WritePropertyName("diskSecrets"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DiskSecrets)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CarrierAccountNumber))
+                {
+                    writer.WritePropertyName("carrierAccountNumber"u8);
+                    writer.WriteStringValue(CarrierAccountNumber);
+                }
+            }
+            writer.WritePropertyName("jobSecretsType"u8);
+            writer.WriteStringValue(JobSecretsType.ToSerialString());
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DataCenterAccessSecurityCode))
+                {
+                    writer.WritePropertyName("dcAccessSecurityCode"u8);
+                    writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CustomerDiskJobSecrets IJsonModel<CustomerDiskJobSecrets>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomerDiskJobSecrets(document.RootElement, options);
+        }
+
+        internal static CustomerDiskJobSecrets DeserializeCustomerDiskJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +104,8 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxOrderType jobSecretsType = default;
             Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
             Optional<ResponseError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSecrets"u8))
@@ -69,8 +150,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomerDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, Optional.ToList(diskSecrets), carrierAccountNumber.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomerDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, Optional.ToList(diskSecrets), carrierAccountNumber.Value);
         }
+
+        BinaryData IModel<CustomerDiskJobSecrets>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomerDiskJobSecrets IModel<CustomerDiskJobSecrets>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomerDiskJobSecrets(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CustomerDiskJobSecrets>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

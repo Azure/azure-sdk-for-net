@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI alias. </summary>
     public partial class KpiAlias
     {
-        /// <summary> Initializes a new instance of KpiAlias. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KpiAlias"/>. </summary>
         /// <param name="aliasName"> KPI alias name. </param>
         /// <param name="expression"> The expression. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="expression"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
             AliasName = aliasName;
             Expression = expression;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KpiAlias"/>. </summary>
+        /// <param name="aliasName"> KPI alias name. </param>
+        /// <param name="expression"> The expression. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KpiAlias(string aliasName, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AliasName = aliasName;
+            Expression = expression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KpiAlias"/> for deserialization. </summary>
+        internal KpiAlias()
+        {
         }
 
         /// <summary> KPI alias name. </summary>

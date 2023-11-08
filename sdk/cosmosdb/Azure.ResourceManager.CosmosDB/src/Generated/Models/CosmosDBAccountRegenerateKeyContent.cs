@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to regenerate the keys within the database account. </summary>
     public partial class CosmosDBAccountRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountRegenerateKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountRegenerateKeyContent"/>. </summary>
         /// <param name="keyKind"> The access key to regenerate. </param>
         public CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind keyKind)
         {
             KeyKind = keyKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountRegenerateKeyContent"/>. </summary>
+        /// <param name="keyKind"> The access key to regenerate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind keyKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyKind = keyKind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountRegenerateKeyContent"/> for deserialization. </summary>
+        internal CosmosDBAccountRegenerateKeyContent()
+        {
         }
 
         /// <summary> The access key to regenerate. </summary>

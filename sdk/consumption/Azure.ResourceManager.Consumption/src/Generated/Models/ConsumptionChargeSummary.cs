@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,22 +20,27 @@ namespace Azure.ResourceManager.Consumption.Models
     /// </summary>
     public partial class ConsumptionChargeSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionChargeSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionChargeSummary"/>. </summary>
         public ConsumptionChargeSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the kind of charge summary. </summary>

@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Metrics profile for the prometheus service addon. </summary>
     public partial class ManagedClusterMonitorProfileMetrics
     {
-        /// <summary> Initializes a new instance of ManagedClusterMonitorProfileMetrics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileMetrics"/>. </summary>
         /// <param name="isEnabled"> Whether to enable the Prometheus collector. </param>
         public ManagedClusterMonitorProfileMetrics(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterMonitorProfileMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileMetrics"/>. </summary>
         /// <param name="isEnabled"> Whether to enable the Prometheus collector. </param>
         /// <param name="kubeStateMetrics"> Kube State Metrics for prometheus addon profile for the container service cluster. </param>
-        internal ManagedClusterMonitorProfileMetrics(bool isEnabled, ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterMonitorProfileMetrics(bool isEnabled, ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             KubeStateMetrics = kubeStateMetrics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileMetrics"/> for deserialization. </summary>
+        internal ManagedClusterMonitorProfileMetrics()
+        {
         }
 
         /// <summary> Whether to enable the Prometheus collector. </summary>

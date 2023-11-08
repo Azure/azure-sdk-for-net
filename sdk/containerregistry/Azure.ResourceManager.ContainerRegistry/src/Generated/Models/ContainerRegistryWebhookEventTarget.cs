@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryWebhookEventTarget
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventTarget. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventTarget"/>. </summary>
         internal ContainerRegistryWebhookEventTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="size"> The number of bytes of the content. Same as Length field. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>
@@ -27,7 +31,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="tag"> The tag name. </param>
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="version"> The version of the artifact. </param>
-        internal ContainerRegistryWebhookEventTarget(string mediaType, long? size, string digest, long? length, string repository, Uri uri, string tag, string name, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryWebhookEventTarget(string mediaType, long? size, string digest, long? length, string repository, Uri uri, string tag, string name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MediaType = mediaType;
             Size = size;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Tag = tag;
             Name = name;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The MIME type of the referenced object. </summary>

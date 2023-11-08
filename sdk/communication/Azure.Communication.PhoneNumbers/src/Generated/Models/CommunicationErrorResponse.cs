@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,5 +14,21 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/>. </summary>
+        /// <param name="error"> The Communication Services error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationErrorResponse(CommunicationError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/> for deserialization. </summary>
+        internal CommunicationErrorResponse()
+        {
+        }
     }
 }

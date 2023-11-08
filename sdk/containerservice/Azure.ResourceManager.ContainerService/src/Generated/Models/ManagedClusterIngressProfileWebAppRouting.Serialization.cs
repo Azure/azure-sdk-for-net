@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterIngressProfileWebAppRouting : IUtf8JsonSerializable
+    public partial class ManagedClusterIngressProfileWebAppRouting : IUtf8JsonSerializable, IJsonModel<ManagedClusterIngressProfileWebAppRouting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterIngressProfileWebAppRouting>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagedClusterIngressProfileWebAppRouting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("dnsZoneResourceId"u8);
                 writer.WriteStringValue(DnsZoneResourceId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterIngressProfileWebAppRouting DeserializeManagedClusterIngressProfileWebAppRouting(JsonElement element)
+        ManagedClusterIngressProfileWebAppRouting IJsonModel<ManagedClusterIngressProfileWebAppRouting>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterIngressProfileWebAppRouting(document.RootElement, options);
+        }
+
+        internal static ManagedClusterIngressProfileWebAppRouting DeserializeManagedClusterIngressProfileWebAppRouting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
             Optional<ResourceIdentifier> dnsZoneResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -56,8 +93,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     dnsZoneResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterIngressProfileWebAppRouting(Optional.ToNullable(enabled), dnsZoneResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterIngressProfileWebAppRouting(Optional.ToNullable(enabled), dnsZoneResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagedClusterIngressProfileWebAppRouting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedClusterIngressProfileWebAppRouting IModel<ManagedClusterIngressProfileWebAppRouting>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedClusterIngressProfileWebAppRouting(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagedClusterIngressProfileWebAppRouting>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Configuration of application logs. </summary>
     public partial class ContainerAppLogsConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppLogsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogsConfiguration"/>. </summary>
         public ContainerAppLogsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLogsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogsConfiguration"/>. </summary>
         /// <param name="destination"> Logs destination, can be 'log-analytics', 'azure-monitor' or 'none'. </param>
         /// <param name="logAnalyticsConfiguration"> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </param>
-        internal ContainerAppLogsConfiguration(string destination, ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppLogsConfiguration(string destination, ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Destination = destination;
             LogAnalyticsConfiguration = logAnalyticsConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Logs destination, can be 'log-analytics', 'azure-monitor' or 'none'. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// </summary>
     public abstract partial class DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of DataTransferDataSourceSink. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTransferDataSourceSink"/>. </summary>
         protected DataTransferDataSourceSink()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        internal DataTransferDataSourceSink(DataTransferComponent component)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Component = component;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the component. </summary>

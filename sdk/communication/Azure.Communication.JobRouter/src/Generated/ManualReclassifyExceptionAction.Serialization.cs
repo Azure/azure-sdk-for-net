@@ -5,17 +5,87 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ManualReclassifyExceptionAction
+    public partial class ManualReclassifyExceptionAction : IUtf8JsonSerializable, IJsonModel<ManualReclassifyExceptionAction>
     {
-        internal static ManualReclassifyExceptionAction DeserializeManualReclassifyExceptionAction(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManualReclassifyExceptionAction>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManualReclassifyExceptionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(QueueId))
+            {
+                writer.WritePropertyName("queueId"u8);
+                writer.WriteStringValue(QueueId);
+            }
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (Optional.IsCollectionDefined(WorkerSelectors))
+            {
+                writer.WritePropertyName("workerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in WorkerSelectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManualReclassifyExceptionAction IJsonModel<ManualReclassifyExceptionAction>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManualReclassifyExceptionAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManualReclassifyExceptionAction(document.RootElement, options);
+        }
+
+        internal static ManualReclassifyExceptionAction DeserializeManualReclassifyExceptionAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +95,8 @@ namespace Azure.Communication.JobRouter
             Optional<IList<RouterWorkerSelector>> workerSelectors = default;
             Optional<string> id = default;
             string kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -65,16 +137,54 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManualReclassifyExceptionAction(id.Value, kind, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManualReclassifyExceptionAction(id.Value, kind, serializedAdditionalRawData, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
         }
+
+        BinaryData IModel<ManualReclassifyExceptionAction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManualReclassifyExceptionAction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManualReclassifyExceptionAction IModel<ManualReclassifyExceptionAction>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManualReclassifyExceptionAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManualReclassifyExceptionAction(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManualReclassifyExceptionAction>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ManualReclassifyExceptionAction FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeManualReclassifyExceptionAction(document.RootElement);
+            return DeserializeManualReclassifyExceptionAction(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportSourceCredentials. </summary>
     public partial class ContainerRegistryImportSourceCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImportSourceCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSourceCredentials"/>. </summary>
         /// <param name="password"> The password used to authenticate with the source registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public ContainerRegistryImportSourceCredentials(string password)
@@ -21,6 +25,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(password, nameof(password));
 
             Password = password;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSourceCredentials"/>. </summary>
+        /// <param name="username"> The username to authenticate with the source registry. </param>
+        /// <param name="password"> The password used to authenticate with the source registry. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryImportSourceCredentials(string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Username = username;
+            Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSourceCredentials"/> for deserialization. </summary>
+        internal ContainerRegistryImportSourceCredentials()
+        {
         }
 
         /// <summary> The username to authenticate with the source registry. </summary>

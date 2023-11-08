@@ -5,17 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Rid))
+                {
+                    writer.WritePropertyName("_rid"u8);
+                    writer.WriteStringValue(Rid);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("_ts"u8);
+                    writer.WriteNumberValue(Timestamp.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("_etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(StoredProcedureName);
             if (Optional.IsDefined(Body))
@@ -23,11 +53,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedCosmosDBSqlStoredProcedureResourceInfo DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(JsonElement element)
+        ExtendedCosmosDBSqlStoredProcedureResourceInfo IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlStoredProcedureResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(document.RootElement, options);
+        }
+
+        internal static ExtendedCosmosDBSqlStoredProcedureResourceInfo DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +96,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ETag> etag = default;
             string id = default;
             Optional<string> body = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -72,8 +133,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     body = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(id, body.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(id, body.Value, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
+
+        BinaryData IModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlStoredProcedureResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExtendedCosmosDBSqlStoredProcedureResourceInfo IModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlStoredProcedureResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

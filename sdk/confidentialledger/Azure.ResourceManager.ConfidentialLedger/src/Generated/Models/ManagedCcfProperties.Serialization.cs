@@ -7,16 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ManagedCcfProperties : IUtf8JsonSerializable
+    public partial class ManagedCcfProperties : IUtf8JsonSerializable, IJsonModel<ManagedCcfProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCcfProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagedCcfProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AppName))
+                {
+                    writer.WritePropertyName("appName"u8);
+                    writer.WriteStringValue(AppName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AppUri))
+                {
+                    writer.WritePropertyName("appUri"u8);
+                    writer.WriteStringValue(AppUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IdentityServiceUri))
+                {
+                    writer.WritePropertyName("identityServiceUri"u8);
+                    writer.WriteStringValue(IdentityServiceUri.AbsoluteUri);
+                }
+            }
             if (Optional.IsCollectionDefined(MemberIdentityCertificates))
             {
                 writer.WritePropertyName("memberIdentityCertificates"u8);
@@ -32,16 +60,53 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteObjectValue(DeploymentType);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedCcfProperties DeserializeManagedCcfProperties(JsonElement element)
+        ManagedCcfProperties IJsonModel<ManagedCcfProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedCcfProperties(document.RootElement, options);
+        }
+
+        internal static ManagedCcfProperties DeserializeManagedCcfProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +118,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<int> nodeCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appName"u8))
@@ -119,8 +186,38 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagedCcfProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedCcfProperties IModel<ManagedCcfProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedCcfProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagedCcfProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

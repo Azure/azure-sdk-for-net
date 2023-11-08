@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Azure container mapping of the endpoint. </summary>
     public partial class DataBoxEdgeStorageContainerInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerInfo"/>. </summary>
         /// <param name="storageAccountCredentialId"> ID of the storage account credential used to access storage. </param>
         /// <param name="containerName"> Container name (Based on the data format specified, this represents the name of Azure Files/Page blob/Block blob). </param>
         /// <param name="dataFormat"> Storage format used for the file represented by the share. </param>
@@ -26,6 +30,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             StorageAccountCredentialId = storageAccountCredentialId;
             ContainerName = containerName;
             DataFormat = dataFormat;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerInfo"/>. </summary>
+        /// <param name="storageAccountCredentialId"> ID of the storage account credential used to access storage. </param>
+        /// <param name="containerName"> Container name (Based on the data format specified, this represents the name of Azure Files/Page blob/Block blob). </param>
+        /// <param name="dataFormat"> Storage format used for the file represented by the share. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeStorageContainerInfo(ResourceIdentifier storageAccountCredentialId, string containerName, DataBoxEdgeStorageContainerDataFormat dataFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageAccountCredentialId = storageAccountCredentialId;
+            ContainerName = containerName;
+            DataFormat = dataFormat;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerInfo"/> for deserialization. </summary>
+        internal DataBoxEdgeStorageContainerInfo()
+        {
         }
 
         /// <summary> ID of the storage account credential used to access storage. </summary>

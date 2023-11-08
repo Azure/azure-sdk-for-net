@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary>
@@ -14,9 +17,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// </summary>
     public abstract partial class ContainerRegistryTaskStepUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepUpdateContent"/>. </summary>
         protected ContainerRegistryTaskStepUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepUpdateContent"/>. </summary>
+        /// <param name="stepType"> The type of the step. </param>
+        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
+        /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StepType = stepType;
+            ContextPath = contextPath;
+            ContextAccessToken = contextAccessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the step. </summary>

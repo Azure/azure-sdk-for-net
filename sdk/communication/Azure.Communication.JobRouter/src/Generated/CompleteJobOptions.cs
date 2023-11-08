@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Request payload for completing jobs. </summary>
     public partial class CompleteJobOptions
     {
-        /// <summary> Initializes a new instance of CompleteJobOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompleteJobOptions"/>. </summary>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         public CompleteJobOptions(string assignmentId)
@@ -21,18 +25,26 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(assignmentId, nameof(assignmentId));
 
             AssignmentId = assignmentId;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CompleteJobOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompleteJobOptions"/>. </summary>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
         /// <param name="note">
         /// (Optional) A note that will be appended to the jobs' Notes collection with the
         /// current timestamp.
         /// </param>
-        internal CompleteJobOptions(string assignmentId, string note)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompleteJobOptions(string assignmentId, string note, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssignmentId = assignmentId;
             Note = note;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompleteJobOptions"/> for deserialization. </summary>
+        internal CompleteJobOptions()
+        {
         }
 
         /// <summary> The assignment within the job to complete. </summary>

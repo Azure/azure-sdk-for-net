@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> See [disable AAD Pod Identity for a specific Pod/Application](https://azure.github.io/aad-pod-identity/docs/configure/application_exception/) for more details. </summary>
     public partial class ManagedClusterPodIdentityException
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentityException. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityException"/>. </summary>
         /// <param name="name"> The name of the pod identity exception. </param>
         /// <param name="namespace"> The namespace of the pod identity exception. </param>
         /// <param name="podLabels"> The pod labels to match. </param>
@@ -28,6 +31,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             Name = name;
             Namespace = @namespace;
             PodLabels = podLabels;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityException"/>. </summary>
+        /// <param name="name"> The name of the pod identity exception. </param>
+        /// <param name="namespace"> The namespace of the pod identity exception. </param>
+        /// <param name="podLabels"> The pod labels to match. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPodIdentityException(string name, string @namespace, IDictionary<string, string> podLabels, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Namespace = @namespace;
+            PodLabels = podLabels;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityException"/> for deserialization. </summary>
+        internal ManagedClusterPodIdentityException()
+        {
         }
 
         /// <summary> The name of the pod identity exception. </summary>

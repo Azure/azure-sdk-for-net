@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlClientEncryptionKeyResourceInfo : IUtf8JsonSerializable
+    public partial class CosmosDBSqlClientEncryptionKeyResourceInfo : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -36,11 +41,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("keyWrapMetadata"u8);
                 writer.WriteObjectValue(KeyWrapMetadata);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBSqlClientEncryptionKeyResourceInfo DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(JsonElement element)
+        CosmosDBSqlClientEncryptionKeyResourceInfo IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(document.RootElement, options);
+        }
+
+        internal static CosmosDBSqlClientEncryptionKeyResourceInfo DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +83,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> encryptionAlgorithm = default;
             Optional<byte[]> wrappedDataEncryptionKey = default;
             Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -79,8 +115,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBSqlClientEncryptionKeyResourceInfo(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBSqlClientEncryptionKeyResourceInfo(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDBSqlClientEncryptionKeyResourceInfo IModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

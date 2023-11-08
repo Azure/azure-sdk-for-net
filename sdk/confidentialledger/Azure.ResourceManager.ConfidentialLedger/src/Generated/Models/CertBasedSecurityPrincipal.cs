@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Cert based security principal with Ledger RoleName. </summary>
     public partial class CertBasedSecurityPrincipal
     {
-        /// <summary> Initializes a new instance of CertBasedSecurityPrincipal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertBasedSecurityPrincipal"/>. </summary>
         public CertBasedSecurityPrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of CertBasedSecurityPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertBasedSecurityPrincipal"/>. </summary>
         /// <param name="cert"> Public key of the user cert (.pem or .cer). </param>
         /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        internal CertBasedSecurityPrincipal(string cert, ConfidentialLedgerRoleName? ledgerRoleName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertBasedSecurityPrincipal(string cert, ConfidentialLedgerRoleName? ledgerRoleName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cert = cert;
             LedgerRoleName = ledgerRoleName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public key of the user cert (.pem or .cer). </summary>

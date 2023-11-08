@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies additional settings to be applied when patch mode AutomaticByPlatform is selected in Linux patch settings. </summary>
     public partial class LinuxVmGuestPatchAutomaticByPlatformSettings
     {
-        /// <summary> Initializes a new instance of LinuxVmGuestPatchAutomaticByPlatformSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
         public LinuxVmGuestPatchAutomaticByPlatformSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxVmGuestPatchAutomaticByPlatformSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchAutomaticByPlatformSettings"/>. </summary>
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
         /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
-        internal LinuxVmGuestPatchAutomaticByPlatformSettings(LinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxVmGuestPatchAutomaticByPlatformSettings(LinuxVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RebootSetting = rebootSetting;
             BypassPlatformSafetyChecksOnUserSchedule = bypassPlatformSafetyChecksOnUserSchedule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>

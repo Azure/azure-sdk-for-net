@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Certificate resource specific properties. </summary>
     public partial class ManagedCertificateProperties
     {
-        /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         public ManagedCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="error"> Any error occurred during the certificate provision. </param>
         /// <param name="domainControlValidation"> Selected type of domain control validation for managed certificates. </param>
         /// <param name="validationToken"> A TXT token used for DNS TXT domain control validation when issuing this type of managed certificates. </param>
-        internal ManagedCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string subjectName, string error, ManagedCertificateDomainControlValidation? domainControlValidation, string validationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string subjectName, string error, ManagedCertificateDomainControlValidation? domainControlValidation, string validationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SubjectName = subjectName;
             Error = error;
             DomainControlValidation = domainControlValidation;
             ValidationToken = validationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the certificate. </summary>

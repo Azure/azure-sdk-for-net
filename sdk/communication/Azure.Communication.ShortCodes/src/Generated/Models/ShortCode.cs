@@ -14,25 +14,30 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Represents a number, ShortCode or AlphaId, acquired in a given country. </summary>
     public partial class ShortCode
     {
-        /// <summary> Initializes a new instance of ShortCode. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShortCode"/>. </summary>
         internal ShortCode()
         {
             ProgramBriefIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ShortCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCode"/>. </summary>
         /// <param name="number"> The value of the ShortCode or the alpha numeric e.g. '555555', 'CONTOSO', etc. </param>
         /// <param name="numberType"> The type of number e.g. 'ShortCode', 'AlphaId'. </param>
         /// <param name="countryCode"> ISO 3166 2-char code representing the country e.g. 'US'. </param>
         /// <param name="programBriefIds"> Program Brief Name. </param>
         /// <param name="purchaseDate"> Date in which number was purchased. </param>
-        internal ShortCode(string number, NumberType? numberType, string countryCode, IReadOnlyList<string> programBriefIds, DateTimeOffset? purchaseDate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShortCode(string number, NumberType? numberType, string countryCode, IReadOnlyList<string> programBriefIds, DateTimeOffset? purchaseDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Number = number;
             NumberType = numberType;
             CountryCode = countryCode;
             ProgramBriefIds = programBriefIds;
             PurchaseDate = purchaseDate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value of the ShortCode or the alpha numeric e.g. '555555', 'CONTOSO', etc. </summary>

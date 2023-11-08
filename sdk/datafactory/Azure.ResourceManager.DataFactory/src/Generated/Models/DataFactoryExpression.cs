@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Data Factory expression definition. </summary>
     public partial class DataFactoryExpression
     {
-        /// <summary> Initializes a new instance of DataFactoryExpression. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryExpression"/>. </summary>
         /// <param name="expressionType"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ExpressionType = expressionType;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryExpression"/>. </summary>
+        /// <param name="expressionType"> Expression type. </param>
+        /// <param name="value"> Expression value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryExpression(DataFactoryExpressionType expressionType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExpressionType = expressionType;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryExpression"/> for deserialization. </summary>
+        internal DataFactoryExpression()
+        {
         }
 
         /// <summary> Expression type. </summary>

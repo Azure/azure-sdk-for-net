@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -16,7 +17,10 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class AcceptJobOfferResult
     {
-        /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
@@ -30,6 +34,25 @@ namespace Azure.Communication.JobRouter
             AssignmentId = assignmentId;
             JobId = jobId;
             WorkerId = workerId;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
+        /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
+        /// <param name="jobId"> The Id of the job assigned. </param>
+        /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AssignmentId = assignmentId;
+            JobId = jobId;
+            WorkerId = workerId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/> for deserialization. </summary>
+        internal AcceptJobOfferResult()
+        {
         }
 
         /// <summary> The assignment Id that assigns a worker that has accepted an offer to a job. </summary>

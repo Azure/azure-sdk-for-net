@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The ApiProperties. </summary>
     internal partial class ApiProperties
     {
-        /// <summary> Initializes a new instance of ApiProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiProperties"/>. </summary>
         public ApiProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiProperties"/>. </summary>
         /// <param name="serverVersion"> Describes the ServerVersion of an a MongoDB account. </param>
-        internal ApiProperties(CosmosDBServerVersion? serverVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiProperties(CosmosDBServerVersion? serverVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerVersion = serverVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>

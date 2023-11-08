@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The source trigger that caused a run. </summary>
     public partial class ContainerRegistrySourceTriggerDescriptor
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerDescriptor. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerDescriptor"/>. </summary>
         public ContainerRegistrySourceTriggerDescriptor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerDescriptor"/>. </summary>
         /// <param name="id"> The unique ID of the trigger. </param>
         /// <param name="eventType"> The event type of the trigger. </param>
         /// <param name="commitId"> The unique ID that identifies a commit. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="repositoryUri"> The repository URL. </param>
         /// <param name="branchName"> The branch name in the repository. </param>
         /// <param name="providerType"> The source control provider type. </param>
-        internal ContainerRegistrySourceTriggerDescriptor(Guid? id, string eventType, string commitId, string pullRequestId, Uri repositoryUri, string branchName, string providerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistrySourceTriggerDescriptor(Guid? id, string eventType, string commitId, string pullRequestId, Uri repositoryUri, string branchName, string providerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             EventType = eventType;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RepositoryUri = repositoryUri;
             BranchName = branchName;
             ProviderType = providerType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique ID of the trigger. </summary>

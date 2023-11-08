@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SourceLifeCycle : IUtf8JsonSerializable
+    public partial class SourceLifeCycle : IUtf8JsonSerializable, IJsonModel<SourceLifeCycle>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceLifeCycle>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SourceLifeCycle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
@@ -30,11 +35,40 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element)
+        SourceLifeCycle IJsonModel<SourceLifeCycle>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSourceLifeCycle(document.RootElement, options);
+        }
+
+        internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +76,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
             Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deleteAfter"u8))
@@ -68,8 +104,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     targetDataStoreCopySettings = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SourceLifeCycle>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SourceLifeCycle IModel<SourceLifeCycle>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSourceLifeCycle(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SourceLifeCycle>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

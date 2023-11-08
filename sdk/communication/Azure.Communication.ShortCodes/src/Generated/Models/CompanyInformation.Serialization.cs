@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class CompanyInformation : IUtf8JsonSerializable
+    public partial class CompanyInformation : IUtf8JsonSerializable, IJsonModel<CompanyInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CompanyInformation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CompanyInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -41,11 +46,40 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("customerCareInformation"u8);
                 writer.WriteObjectValue(CustomerCareInformation);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CompanyInformation DeserializeCompanyInformation(JsonElement element)
+        CompanyInformation IJsonModel<CompanyInformation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CompanyInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCompanyInformation(document.RootElement, options);
+        }
+
+        internal static CompanyInformation DeserializeCompanyInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +89,8 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> address = default;
             Optional<ContactInformation> contactInformation = default;
             Optional<CustomerCareInformation> customerCareInformation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -94,8 +130,38 @@ namespace Azure.Communication.ShortCodes.Models
                     customerCareInformation = CustomerCareInformation.DeserializeCustomerCareInformation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CompanyInformation(name.Value, url.Value, address.Value, contactInformation.Value, customerCareInformation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CompanyInformation(name.Value, url.Value, address.Value, contactInformation.Value, customerCareInformation.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CompanyInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CompanyInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CompanyInformation IModel<CompanyInformation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CompanyInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCompanyInformation(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CompanyInformation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

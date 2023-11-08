@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -13,7 +14,10 @@ namespace Azure.AI.ContentSafety
     /// <summary> The result of blocklist match. </summary>
     public partial class TextBlocklistMatchResult
     {
-        /// <summary> Initializes a new instance of TextBlocklistMatchResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatchResult"/>. </summary>
         /// <param name="blocklistName"> The name of matched blocklist. </param>
         /// <param name="blockItemId"> The id of matched item. </param>
         /// <param name="blockItemText"> The content of matched item. </param>
@@ -31,6 +35,29 @@ namespace Azure.AI.ContentSafety
             BlockItemText = blockItemText;
             Offset = offset;
             Length = length;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatchResult"/>. </summary>
+        /// <param name="blocklistName"> The name of matched blocklist. </param>
+        /// <param name="blockItemId"> The id of matched item. </param>
+        /// <param name="blockItemText"> The content of matched item. </param>
+        /// <param name="offset"> The character offset of matched text in original input. </param>
+        /// <param name="length"> The length of matched text in original input. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextBlocklistMatchResult(string blocklistName, string blockItemId, string blockItemText, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BlocklistName = blocklistName;
+            BlockItemId = blockItemId;
+            BlockItemText = blockItemText;
+            Offset = offset;
+            Length = length;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklistMatchResult"/> for deserialization. </summary>
+        internal TextBlocklistMatchResult()
+        {
         }
 
         /// <summary> The name of matched blocklist. </summary>

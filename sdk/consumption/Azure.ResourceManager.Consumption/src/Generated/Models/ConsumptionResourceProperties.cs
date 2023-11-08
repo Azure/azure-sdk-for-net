@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Details of the resource. </summary>
     public partial class ConsumptionResourceProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionResourceProperties"/>. </summary>
         internal ConsumptionResourceProperties()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionResourceProperties"/>. </summary>
         /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
         /// <param name="onDemandRate"> On demand rate of the resource. </param>
         /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>
         /// <param name="region"> Azure resource region ex:EastUS, WestUS etc. </param>
         /// <param name="reservationRate"> Reservation rate of the resource. </param>
         /// <param name="resourceType"> The azure resource type. </param>
-        internal ConsumptionResourceProperties(IReadOnlyList<string> appliedScopes, float? onDemandRate, string product, string region, float? reservationRate, string resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionResourceProperties(IReadOnlyList<string> appliedScopes, float? onDemandRate, string product, string region, float? reservationRate, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppliedScopes = appliedScopes;
             OnDemandRate = onDemandRate;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Region = region;
             ReservationRate = reservationRate;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of subscriptions for which the reservation is applied. </summary>

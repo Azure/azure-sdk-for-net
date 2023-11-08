@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The set of roles permitted through this Role Definition. </summary>
     public partial class MongoDBRole
     {
-        /// <summary> Initializes a new instance of MongoDBRole. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBRole"/>. </summary>
         public MongoDBRole()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRole"/>. </summary>
         /// <param name="dbName"> The database name the role is applied. </param>
         /// <param name="role"> The role name. </param>
-        internal MongoDBRole(string dbName, string role)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBRole(string dbName, string role, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DBName = dbName;
             Role = role;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The database name the role is applied. </summary>
