@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketChatTranscriptChatTranscriptsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketChatTranscriptChatTranscriptsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketChatTranscriptResource(Client, ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(e)), _supportTicketChatTranscriptChatTranscriptsClientDiagnostics, Pipeline, "SupportTicketChatTranscriptCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketChatTranscriptResource(Client, ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(e)), _supportTicketChatTranscriptChatTranscriptsClientDiagnostics, Pipeline, "SupportTicketChatTranscriptCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketChatTranscriptChatTranscriptsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketChatTranscriptChatTranscriptsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketChatTranscriptResource(Client, ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(e)), _supportTicketChatTranscriptChatTranscriptsClientDiagnostics, Pipeline, "SupportTicketChatTranscriptCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketChatTranscriptResource(Client, ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(e)), _supportTicketChatTranscriptChatTranscriptsClientDiagnostics, Pipeline, "SupportTicketChatTranscriptCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

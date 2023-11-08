@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkRequest. </summary>
     public partial class SparkRequest
     {
-        /// <summary> Initializes a new instance of SparkRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkRequest"/>. </summary>
         internal SparkRequest()
         {
             Arguments = new ChangeTrackingList<string>();
@@ -24,7 +28,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SparkRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkRequest"/>. </summary>
         /// <param name="name"></param>
         /// <param name="file"></param>
         /// <param name="className"></param>
@@ -39,7 +43,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="executorMemory"></param>
         /// <param name="executorCores"></param>
         /// <param name="executorCount"></param>
-        internal SparkRequest(string name, string file, string className, IReadOnlyList<string> arguments, IReadOnlyList<string> jars, IReadOnlyList<string> pythonFiles, IReadOnlyList<string> files, IReadOnlyList<string> archives, IReadOnlyDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkRequest(string name, string file, string className, IReadOnlyList<string> arguments, IReadOnlyList<string> jars, IReadOnlyList<string> pythonFiles, IReadOnlyList<string> files, IReadOnlyList<string> archives, IReadOnlyDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             File = file;
@@ -55,6 +60,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             ExecutorMemory = executorMemory;
             ExecutorCores = executorCores;
             ExecutorCount = executorCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

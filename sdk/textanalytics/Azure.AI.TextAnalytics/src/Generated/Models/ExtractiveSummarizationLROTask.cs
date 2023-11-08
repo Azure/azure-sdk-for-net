@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> An object representing the task definition for an Extractive Summarization task. </summary>
     internal partial class ExtractiveSummarizationLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationLROTask"/>. </summary>
         public ExtractiveSummarizationLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.ExtractiveSummarization;
         }
 
-        /// <summary> Initializes a new instance of ExtractiveSummarizationLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationLROTask"/>. </summary>
         /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for an Extractive Summarization task. </param>
-        internal ExtractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, ExtractiveSummarizationTaskParameters parameters) : base(taskName, kind)
+        internal ExtractiveSummarizationLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, ExtractiveSummarizationTaskParameters parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
             Kind = kind;

@@ -6,15 +6,115 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class Path
+    internal partial class Path : IUtf8JsonSerializable, IJsonModel<Path>
     {
-        internal static Path DeserializePath(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Path>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<Path>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(LastModified))
+            {
+                writer.WritePropertyName("lastModified"u8);
+                writer.WriteStringValue(LastModified.Value, "R");
+            }
+            if (Optional.IsDefined(Owner))
+            {
+                writer.WritePropertyName("owner"u8);
+                writer.WriteStringValue(Owner);
+            }
+            if (Optional.IsDefined(Group))
+            {
+                writer.WritePropertyName("group"u8);
+                writer.WriteStringValue(Group);
+            }
+            if (Optional.IsDefined(Permissions))
+            {
+                writer.WritePropertyName("permissions"u8);
+                writer.WriteStringValue(Permissions);
+            }
+            if (Optional.IsDefined(EncryptionScope))
+            {
+                writer.WritePropertyName("EncryptionScope"u8);
+                writer.WriteStringValue(EncryptionScope);
+            }
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreationTime);
+            }
+            if (Optional.IsDefined(ExpiryTime))
+            {
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpiryTime);
+            }
+            if (Optional.IsDefined(EncryptionContext))
+            {
+                writer.WritePropertyName("EncryptionContext"u8);
+                writer.WriteStringValue(EncryptionContext);
+            }
+            if (Optional.IsDefined(ContentLength))
+            {
+                writer.WritePropertyName("contentLength"u8);
+                writer.WriteStringValue(ContentLength);
+            }
+            if (Optional.IsDefined(IsDirectory))
+            {
+                writer.WritePropertyName("isDirectory"u8);
+                writer.WriteStringValue(IsDirectory);
+            }
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(Etag);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        Path IJsonModel<Path>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Path)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePath(document.RootElement, options);
+        }
+
+        internal static Path DeserializePath(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +131,8 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<string> contentLength = default;
             Optional<string> isDirectory = default;
             Optional<string> etag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -97,8 +199,38 @@ namespace Azure.Storage.Files.DataLake.Models
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<Path>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Path)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Path IModel<Path>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Path)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePath(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<Path>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of top-level domain legal agreements. </summary>
     internal partial class TldLegalAgreementListResult
     {
-        /// <summary> Initializes a new instance of TldLegalAgreementListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreementListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TldLegalAgreementListResult(IEnumerable<TldLegalAgreement> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TldLegalAgreementListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreementListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal TldLegalAgreementListResult(IReadOnlyList<TldLegalAgreement> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TldLegalAgreementListResult(IReadOnlyList<TldLegalAgreement> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreementListResult"/> for deserialization. </summary>
+        internal TldLegalAgreementListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class GetSsisObjectMetadataRequest
     {
-        /// <summary> Initializes a new instance of GetSsisObjectMetadataRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataRequest"/>. </summary>
         public GetSsisObjectMetadataRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of GetSsisObjectMetadataRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataRequest"/>. </summary>
         /// <param name="metadataPath"> Metadata path. </param>
-        internal GetSsisObjectMetadataRequest(string metadataPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetSsisObjectMetadataRequest(string metadataPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetadataPath = metadataPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata path. </summary>

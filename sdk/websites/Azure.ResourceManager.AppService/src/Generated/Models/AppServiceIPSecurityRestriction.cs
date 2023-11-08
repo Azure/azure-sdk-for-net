@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> IP security restriction on an app. </summary>
     public partial class AppServiceIPSecurityRestriction
     {
-        /// <summary> Initializes a new instance of AppServiceIPSecurityRestriction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceIPSecurityRestriction"/>. </summary>
         public AppServiceIPSecurityRestriction()
         {
             Headers = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceIPSecurityRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIPSecurityRestriction"/>. </summary>
         /// <param name="ipAddressOrCidr">
         /// IP address the security restriction is valid for.
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
@@ -53,7 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </param>
-        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddressOrCidr = ipAddressOrCidr;
             SubnetMask = subnetMask;
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             Name = name;
             Description = description;
             Headers = headers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

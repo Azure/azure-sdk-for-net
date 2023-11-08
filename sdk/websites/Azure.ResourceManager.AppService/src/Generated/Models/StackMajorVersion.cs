@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application stack major version. </summary>
     public partial class StackMajorVersion
     {
-        /// <summary> Initializes a new instance of StackMajorVersion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StackMajorVersion"/>. </summary>
         public StackMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<StackMinorVersion>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             SiteConfigPropertiesDictionary = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of StackMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackMajorVersion"/>. </summary>
         /// <param name="displayVersion"> Application stack major version (display only). </param>
         /// <param name="runtimeVersion"> Application stack major version (runtime only). </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// </param>
-        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? isApplicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? isApplicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
@@ -55,6 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsHidden = isHidden;
             AppSettingsDictionary = appSettingsDictionary;
             SiteConfigPropertiesDictionary = siteConfigPropertiesDictionary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application stack major version (display only). </summary>

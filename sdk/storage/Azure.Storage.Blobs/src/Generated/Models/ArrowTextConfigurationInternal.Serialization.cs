@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowTextConfigurationInternal : IXmlSerializable
+    internal partial class ArrowTextConfigurationInternal : IXmlSerializable, IModel<ArrowTextConfigurationInternal>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -23,5 +29,56 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
+
+        internal static ArrowTextConfigurationInternal DeserializeArrowTextConfigurationInternal(XElement element, ModelReaderWriterOptions options = null)
+        {
+            IList<ArrowFieldInternal> schema = default;
+            if (element.Element("Schema") is XElement schemaElement)
+            {
+                var array = new List<ArrowFieldInternal>();
+                foreach (var e in schemaElement.Elements("Field"))
+                {
+                    array.Add(ArrowFieldInternal.DeserializeArrowFieldInternal(e));
+                }
+                schema = array;
+            }
+            return new ArrowTextConfigurationInternal(schema, default);
+        }
+
+        BinaryData IModel<ArrowTextConfigurationInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ArrowTextConfigurationInternal>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ArrowTextConfigurationInternal IModel<ArrowTextConfigurationInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArrowTextConfigurationInternal)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeArrowTextConfigurationInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<ArrowTextConfigurationInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

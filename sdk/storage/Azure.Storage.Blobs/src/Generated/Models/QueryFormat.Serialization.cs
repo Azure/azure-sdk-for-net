@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryFormat : IXmlSerializable
+    internal partial class QueryFormat : IXmlSerializable, IModel<QueryFormat>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -36,5 +41,71 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        internal static QueryFormat DeserializeQueryFormat(XElement element, ModelReaderWriterOptions options = null)
+        {
+            QueryFormatType type = default;
+            DelimitedTextConfigurationInternal delimitedTextConfiguration = default;
+            JsonTextConfigurationInternal jsonTextConfiguration = default;
+            ArrowTextConfigurationInternal arrowConfiguration = default;
+            object parquetTextConfiguration = default;
+            if (element.Element("Type") is XElement typeElement)
+            {
+                type = typeElement.Value.ToQueryFormatType();
+            }
+            if (element.Element("DelimitedTextConfiguration") is XElement delimitedTextConfigurationElement)
+            {
+                delimitedTextConfiguration = DelimitedTextConfigurationInternal.DeserializeDelimitedTextConfigurationInternal(delimitedTextConfigurationElement);
+            }
+            if (element.Element("JsonTextConfiguration") is XElement jsonTextConfigurationElement)
+            {
+                jsonTextConfiguration = JsonTextConfigurationInternal.DeserializeJsonTextConfigurationInternal(jsonTextConfigurationElement);
+            }
+            if (element.Element("ArrowConfiguration") is XElement arrowConfigurationElement)
+            {
+                arrowConfiguration = ArrowTextConfigurationInternal.DeserializeArrowTextConfigurationInternal(arrowConfigurationElement);
+            }
+            if (element.Element("ParquetTextConfiguration") is XElement parquetTextConfigurationElement)
+            {
+                parquetTextConfiguration = parquetTextConfigurationElement.GetObjectValue(null);
+            }
+            return new QueryFormat(type, delimitedTextConfiguration, jsonTextConfiguration, arrowConfiguration, parquetTextConfiguration, default);
+        }
+
+        BinaryData IModel<QueryFormat>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<QueryFormat>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueryFormat IModel<QueryFormat>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryFormat)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeQueryFormat(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<QueryFormat>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> Represents the confidence scores across all sentiment classes: positive, neutral, negative. </summary>
     internal partial class TargetConfidenceScoreLabel
     {
-        /// <summary> Initializes a new instance of TargetConfidenceScoreLabel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetConfidenceScoreLabel"/>. </summary>
         /// <param name="positive"></param>
         /// <param name="negative"></param>
         internal TargetConfidenceScoreLabel(double positive, double negative)
         {
             Positive = positive;
             Negative = negative;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetConfidenceScoreLabel"/>. </summary>
+        /// <param name="positive"></param>
+        /// <param name="negative"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetConfidenceScoreLabel(double positive, double negative, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Positive = positive;
+            Negative = negative;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetConfidenceScoreLabel"/> for deserialization. </summary>
+        internal TargetConfidenceScoreLabel()
+        {
         }
 
         /// <summary> Gets the positive. </summary>

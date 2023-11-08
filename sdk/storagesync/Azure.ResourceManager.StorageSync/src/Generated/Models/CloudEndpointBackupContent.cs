@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Backup request. </summary>
     public partial class CloudEndpointBackupContent
     {
-        /// <summary> Initializes a new instance of CloudEndpointBackupContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointBackupContent"/>. </summary>
         public CloudEndpointBackupContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointBackupContent"/>. </summary>
+        /// <param name="azureFileShare"> Azure File Share. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudEndpointBackupContent(string azureFileShare, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AzureFileShare = azureFileShare;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure File Share. </summary>

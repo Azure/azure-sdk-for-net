@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerCpuStatistics. </summary>
     public partial class ContainerCpuStatistics
     {
-        /// <summary> Initializes a new instance of ContainerCpuStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerCpuStatistics"/>. </summary>
         public ContainerCpuStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerCpuStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCpuStatistics"/>. </summary>
         /// <param name="cpuUsage"></param>
         /// <param name="systemCpuUsage"></param>
         /// <param name="onlineCpuCount"></param>
         /// <param name="throttlingData"></param>
-        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingInfo throttlingData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingInfo throttlingData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CpuUsage = cpuUsage;
             SystemCpuUsage = systemCpuUsage;
             OnlineCpuCount = onlineCpuCount;
             ThrottlingData = throttlingData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the cpu usage. </summary>

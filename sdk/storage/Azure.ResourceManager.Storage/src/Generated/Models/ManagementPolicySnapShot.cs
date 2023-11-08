@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Management policy action for snapshot. </summary>
     public partial class ManagementPolicySnapShot
     {
-        /// <summary> Initializes a new instance of ManagementPolicySnapShot. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicySnapShot"/>. </summary>
         public ManagementPolicySnapShot()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicySnapShot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicySnapShot"/>. </summary>
         /// <param name="tierToCool"> The function to tier blob snapshot to cool storage. </param>
         /// <param name="tierToArchive"> The function to tier blob snapshot to archive storage. </param>
         /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>
         /// <param name="tierToHot"> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </param>
         /// <param name="delete"> The function to delete the blob snapshot. </param>
-        internal ManagementPolicySnapShot(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation tierToCold, DateAfterCreation tierToHot, DateAfterCreation delete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicySnapShot(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation tierToCold, DateAfterCreation tierToHot, DateAfterCreation delete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
             TierToCold = tierToCold;
             TierToHot = tierToHot;
             Delete = delete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The function to tier blob snapshot to cool storage. </summary>

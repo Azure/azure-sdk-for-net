@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an update to a Kusto kusto pool. </summary>
     public partial class SynapseKustoPoolPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseKustoPoolPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPatch"/>. </summary>
         public SynapseKustoPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="enablePurge"> A boolean value that indicates if the purge operations are enabled. </param>
         /// <param name="languageExtensions"> List of the Kusto Pool's language extensions. </param>
         /// <param name="workspaceUid"> The workspace unique identifier. </param>
-        internal SynapseKustoPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, SynapseDataSourceSku sku, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, Guid? workspaceUid) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseKustoPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, SynapseDataSourceSku sku, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, Guid? workspaceUid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             Sku = sku;
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
             EnablePurge = enablePurge;
             LanguageExtensions = languageExtensions;
             WorkspaceUid = workspaceUid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

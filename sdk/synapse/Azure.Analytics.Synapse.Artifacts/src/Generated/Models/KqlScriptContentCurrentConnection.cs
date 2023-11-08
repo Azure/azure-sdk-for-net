@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The KqlScriptContentCurrentConnection. </summary>
     public partial class KqlScriptContentCurrentConnection
     {
-        /// <summary> Initializes a new instance of KqlScriptContentCurrentConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContentCurrentConnection"/>. </summary>
         public KqlScriptContentCurrentConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of KqlScriptContentCurrentConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContentCurrentConnection"/>. </summary>
         /// <param name="name"></param>
         /// <param name="poolName"></param>
         /// <param name="databaseName"></param>
         /// <param name="type"></param>
-        internal KqlScriptContentCurrentConnection(string name, string poolName, string databaseName, string type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KqlScriptContentCurrentConnection(string name, string poolName, string databaseName, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PoolName = poolName;
             DatabaseName = databaseName;
             Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name. </summary>

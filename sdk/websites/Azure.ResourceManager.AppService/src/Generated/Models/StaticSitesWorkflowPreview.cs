@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Preview for the Static Site Workflow to be generated. </summary>
     public partial class StaticSitesWorkflowPreview : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreview. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreview"/>. </summary>
         public StaticSitesWorkflowPreview()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreview. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="path"> The path for the workflow file to be generated. </param>
         /// <param name="contents"> The contents for the workflow file to be generated. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSitesWorkflowPreview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string contents, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSitesWorkflowPreview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string contents, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             Contents = contents;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The path for the workflow file to be generated. </summary>

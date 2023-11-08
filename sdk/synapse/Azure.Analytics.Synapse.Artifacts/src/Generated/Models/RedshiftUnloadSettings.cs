@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </summary>
     public partial class RedshiftUnloadSettings
     {
-        /// <summary> Initializes a new instance of RedshiftUnloadSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedshiftUnloadSettings"/>. </summary>
         /// <param name="s3LinkedServiceName"> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </param>
         /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedshiftUnloadSettings"/>. </summary>
+        /// <param name="s3LinkedServiceName"> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </param>
+        /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedshiftUnloadSettings(LinkedServiceReference s3LinkedServiceName, object bucketName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            S3LinkedServiceName = s3LinkedServiceName;
+            BucketName = bucketName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedshiftUnloadSettings"/> for deserialization. </summary>
+        internal RedshiftUnloadSettings()
+        {
         }
 
         /// <summary> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </summary>

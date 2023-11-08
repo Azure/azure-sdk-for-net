@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class MultiSubnetIPConfiguration : IUtf8JsonSerializable
+    public partial class MultiSubnetIPConfiguration : IUtf8JsonSerializable, IJsonModel<MultiSubnetIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiSubnetIPConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MultiSubnetIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("privateIpAddress"u8);
             writer.WriteObjectValue(PrivateIPAddress);
             writer.WritePropertyName("sqlVirtualMachineInstance"u8);
             writer.WriteStringValue(SqlVmInstance);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MultiSubnetIPConfiguration DeserializeMultiSubnetIPConfiguration(JsonElement element)
+        MultiSubnetIPConfiguration IJsonModel<MultiSubnetIPConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMultiSubnetIPConfiguration(document.RootElement, options);
+        }
+
+        internal static MultiSubnetIPConfiguration DeserializeMultiSubnetIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default;
             string sqlVmInstance = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIpAddress"u8))
@@ -42,8 +79,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlVmInstance = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MultiSubnetIPConfiguration(privateIPAddress, sqlVmInstance);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MultiSubnetIPConfiguration(privateIPAddress, sqlVmInstance, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MultiSubnetIPConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MultiSubnetIPConfiguration IModel<MultiSubnetIPConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMultiSubnetIPConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MultiSubnetIPConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

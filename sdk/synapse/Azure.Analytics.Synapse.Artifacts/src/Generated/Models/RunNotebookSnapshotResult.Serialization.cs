@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,73 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunNotebookSnapshotResultConverter))]
-    public partial class RunNotebookSnapshotResult
+    public partial class RunNotebookSnapshotResult : IUtf8JsonSerializable, IJsonModel<RunNotebookSnapshotResult>
     {
-        internal static RunNotebookSnapshotResult DeserializeRunNotebookSnapshotResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunNotebookSnapshotResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RunNotebookSnapshotResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("snapshot"u8);
+            writer.WriteObjectValue(Snapshot);
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            writer.WritePropertyName("runId"u8);
+            writer.WriteStringValue(RunId);
+            writer.WritePropertyName("runStatus"u8);
+            writer.WriteStringValue(RunStatus);
+            if (Optional.IsDefined(LastCheckedOn))
+            {
+                writer.WritePropertyName("lastCheckedOn"u8);
+                writer.WriteStringValue(LastCheckedOn);
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId);
+            }
+            if (Optional.IsDefined(SparkPool))
+            {
+                writer.WritePropertyName("sparkPool"u8);
+                writer.WriteStringValue(SparkPool);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RunNotebookSnapshotResult IJsonModel<RunNotebookSnapshotResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunNotebookSnapshotResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunNotebookSnapshotResult(document.RootElement, options);
+        }
+
+        internal static RunNotebookSnapshotResult DeserializeRunNotebookSnapshotResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +94,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> lastCheckedOn = default;
             Optional<string> sessionId = default;
             Optional<string> sparkPool = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshot"u8))
@@ -69,15 +137,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sparkPool = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RunNotebookSnapshotResult(snapshot, error.Value, runId, runStatus, lastCheckedOn.Value, sessionId.Value, sparkPool.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RunNotebookSnapshotResult(snapshot, error.Value, runId, runStatus, lastCheckedOn.Value, sessionId.Value, sparkPool.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RunNotebookSnapshotResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunNotebookSnapshotResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RunNotebookSnapshotResult IModel<RunNotebookSnapshotResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunNotebookSnapshotResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRunNotebookSnapshotResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RunNotebookSnapshotResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class RunNotebookSnapshotResultConverter : JsonConverter<RunNotebookSnapshotResult>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookSnapshotResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override RunNotebookSnapshotResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

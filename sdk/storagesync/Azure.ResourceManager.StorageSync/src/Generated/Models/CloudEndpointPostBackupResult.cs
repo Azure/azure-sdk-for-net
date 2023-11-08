@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Post Backup Response. </summary>
     public partial class CloudEndpointPostBackupResult
     {
-        /// <summary> Initializes a new instance of CloudEndpointPostBackupResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointPostBackupResult"/>. </summary>
         internal CloudEndpointPostBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointPostBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointPostBackupResult"/>. </summary>
         /// <param name="cloudEndpointName"> cloud endpoint Name. </param>
-        internal CloudEndpointPostBackupResult(string cloudEndpointName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudEndpointPostBackupResult(string cloudEndpointName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CloudEndpointName = cloudEndpointName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> cloud endpoint Name. </summary>

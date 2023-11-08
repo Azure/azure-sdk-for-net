@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Naming information for this resource type. </summary>
     public partial class StorageCacheUsageName
     {
-        /// <summary> Initializes a new instance of StorageCacheUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageName"/>. </summary>
         internal StorageCacheUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageName"/>. </summary>
         /// <param name="value"> Canonical name for this resource type. </param>
         /// <param name="localizedValue"> Localized name for this resource type. </param>
-        internal StorageCacheUsageName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsageName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Canonical name for this resource type. </summary>

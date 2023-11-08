@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Workloads;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the collection of SAP Database Instances. </summary>
     internal partial class SapDatabaseInstanceList
     {
-        /// <summary> Initializes a new instance of SapDatabaseInstanceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceList"/>. </summary>
         internal SapDatabaseInstanceList()
         {
             Value = new ChangeTrackingList<SapDatabaseInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of SapDatabaseInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceList"/>. </summary>
         /// <param name="value"> Gets the list of SAP Database instances. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
-        internal SapDatabaseInstanceList(IReadOnlyList<SapDatabaseInstanceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapDatabaseInstanceList(IReadOnlyList<SapDatabaseInstanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of SAP Database instances. </summary>

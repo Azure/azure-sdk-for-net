@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Files not syncing error object. </summary>
     public partial class ServerEndpointFilesNotSyncingError
     {
-        /// <summary> Initializes a new instance of ServerEndpointFilesNotSyncingError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointFilesNotSyncingError"/>. </summary>
         internal ServerEndpointFilesNotSyncingError()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointFilesNotSyncingError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointFilesNotSyncingError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="persistentCount"> Count of persistent files not syncing with the specified error code. </param>
         /// <param name="transientCount"> Count of transient files not syncing with the specified error code. </param>
-        internal ServerEndpointFilesNotSyncingError(int? errorCode, long? persistentCount, long? transientCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEndpointFilesNotSyncingError(int? errorCode, long? persistentCount, long? transientCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             PersistentCount = persistentCount;
             TransientCount = transientCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code (HResult). </summary>

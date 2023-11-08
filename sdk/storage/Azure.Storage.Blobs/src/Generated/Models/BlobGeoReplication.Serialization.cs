@@ -6,14 +6,33 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobGeoReplication
+    public partial class BlobGeoReplication : IXmlSerializable, IModel<BlobGeoReplication>
     {
-        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "GeoReplication");
+            writer.WriteStartElement("Status");
+            writer.WriteValue(Status.ToSerialString());
+            writer.WriteEndElement();
+            if (LastSyncedOn != null)
+            {
+                writer.WriteStartElement("LastSyncTime");
+                writer.WriteValue(LastSyncedOn.Value, "R");
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element, ModelReaderWriterOptions options = null)
         {
             BlobGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;
@@ -25,7 +44,43 @@ namespace Azure.Storage.Blobs.Models
             {
                 lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new BlobGeoReplication(status, lastSyncedOn);
+            return new BlobGeoReplication(status, lastSyncedOn, default);
         }
+
+        BinaryData IModel<BlobGeoReplication>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<BlobGeoReplication>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobGeoReplication IModel<BlobGeoReplication>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobGeoReplication)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeBlobGeoReplication(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<BlobGeoReplication>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

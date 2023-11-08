@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Kudu function information elements. </summary>
     internal partial class FunctionEnvelopeListResult
     {
-        /// <summary> Initializes a new instance of FunctionEnvelopeListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionEnvelopeListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FunctionEnvelopeListResult(IEnumerable<FunctionEnvelopeData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FunctionEnvelopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionEnvelopeListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal FunctionEnvelopeListResult(IReadOnlyList<FunctionEnvelopeData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionEnvelopeListResult(IReadOnlyList<FunctionEnvelopeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FunctionEnvelopeListResult"/> for deserialization. </summary>
+        internal FunctionEnvelopeListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

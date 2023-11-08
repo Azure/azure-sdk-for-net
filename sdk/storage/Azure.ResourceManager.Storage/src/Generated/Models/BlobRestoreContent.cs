@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Blob restore parameters. </summary>
     public partial class BlobRestoreContent
     {
-        /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreContent"/>. </summary>
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobRanges"/> is null. </exception>
@@ -27,13 +30,20 @@ namespace Azure.ResourceManager.Storage.Models
             BlobRanges = blobRanges.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreContent"/>. </summary>
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
-        internal BlobRestoreContent(DateTimeOffset timeToRestore, IList<BlobRestoreRange> blobRanges)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobRestoreContent(DateTimeOffset timeToRestore, IList<BlobRestoreRange> blobRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeToRestore = timeToRestore;
             BlobRanges = blobRanges;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreContent"/> for deserialization. </summary>
+        internal BlobRestoreContent()
+        {
         }
 
         /// <summary> Restore blob to the specified time. </summary>

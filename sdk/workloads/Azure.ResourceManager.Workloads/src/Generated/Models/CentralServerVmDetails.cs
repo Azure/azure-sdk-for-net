@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Central Services Instance VM details. </summary>
     public partial class CentralServerVmDetails
     {
-        /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CentralServerVmDetails"/>. </summary>
         internal CentralServerVmDetails()
         {
             StorageDetails = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CentralServerVmDetails"/>. </summary>
         /// <param name="virtualMachineType"> Defines the type of central server VM. </param>
         /// <param name="virtualMachineId"></param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the ASCS Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
-        internal CentralServerVmDetails(CentralServerVirtualMachineType? virtualMachineType, ResourceIdentifier virtualMachineId, IReadOnlyList<SubResource> storageDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CentralServerVmDetails(CentralServerVirtualMachineType? virtualMachineType, ResourceIdentifier virtualMachineId, IReadOnlyList<SubResource> storageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachineType = virtualMachineType;
             VirtualMachineId = virtualMachineId;
             StorageDetails = storageDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the type of central server VM. </summary>

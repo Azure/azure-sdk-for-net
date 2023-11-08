@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> String dictionary resource. </summary>
     public partial class AppServiceConfigurationDictionary : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceConfigurationDictionary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceConfigurationDictionary"/>. </summary>
         public AppServiceConfigurationDictionary()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceConfigurationDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceConfigurationDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Settings. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceConfigurationDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceConfigurationDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Settings. </summary>

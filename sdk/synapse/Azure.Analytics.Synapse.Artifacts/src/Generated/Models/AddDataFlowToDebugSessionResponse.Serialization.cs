@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,15 +16,59 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AddDataFlowToDebugSessionResponseConverter))]
-    public partial class AddDataFlowToDebugSessionResponse
+    public partial class AddDataFlowToDebugSessionResponse : IUtf8JsonSerializable, IJsonModel<AddDataFlowToDebugSessionResponse>
     {
-        internal static AddDataFlowToDebugSessionResponse DeserializeAddDataFlowToDebugSessionResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddDataFlowToDebugSessionResponse>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AddDataFlowToDebugSessionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(JobVersion))
+            {
+                writer.WritePropertyName("jobVersion"u8);
+                writer.WriteStringValue(JobVersion);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AddDataFlowToDebugSessionResponse IJsonModel<AddDataFlowToDebugSessionResponse>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddDataFlowToDebugSessionResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddDataFlowToDebugSessionResponse(document.RootElement, options);
+        }
+
+        internal static AddDataFlowToDebugSessionResponse DeserializeAddDataFlowToDebugSessionResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> jobVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobVersion"u8))
@@ -29,15 +76,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     jobVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AddDataFlowToDebugSessionResponse(jobVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AddDataFlowToDebugSessionResponse(jobVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AddDataFlowToDebugSessionResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddDataFlowToDebugSessionResponse)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AddDataFlowToDebugSessionResponse IModel<AddDataFlowToDebugSessionResponse>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddDataFlowToDebugSessionResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAddDataFlowToDebugSessionResponse(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AddDataFlowToDebugSessionResponse>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class AddDataFlowToDebugSessionResponseConverter : JsonConverter<AddDataFlowToDebugSessionResponse>
         {
             public override void Write(Utf8JsonWriter writer, AddDataFlowToDebugSessionResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AddDataFlowToDebugSessionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

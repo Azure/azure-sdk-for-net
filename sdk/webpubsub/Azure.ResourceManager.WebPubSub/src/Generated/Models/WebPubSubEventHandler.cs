@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Properties of event handler. </summary>
     public partial class WebPubSubEventHandler
     {
-        /// <summary> Initializes a new instance of WebPubSubEventHandler. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHandler"/>. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can't contains parameters.
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             SystemEvents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubEventHandler. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHandler"/>. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can't contains parameters.
@@ -42,12 +45,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </param>
         /// <param name="systemEvents"> Gets ot sets the list of system events. </param>
         /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
-        internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UrlTemplate = urlTemplate;
             UserEventPattern = userEventPattern;
             SystemEvents = systemEvents;
             Auth = auth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHandler"/> for deserialization. </summary>
+        internal WebPubSubEventHandler()
+        {
         }
 
         /// <summary>

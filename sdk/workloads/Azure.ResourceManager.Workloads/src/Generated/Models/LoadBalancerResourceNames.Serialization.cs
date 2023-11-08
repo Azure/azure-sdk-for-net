@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class LoadBalancerResourceNames : IUtf8JsonSerializable
+    public partial class LoadBalancerResourceNames : IUtf8JsonSerializable, IJsonModel<LoadBalancerResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerResourceNames>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LoadBalancerResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(LoadBalancerName))
@@ -51,11 +56,40 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerResourceNames DeserializeLoadBalancerResourceNames(JsonElement element)
+        LoadBalancerResourceNames IJsonModel<LoadBalancerResourceNames>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerResourceNames(document.RootElement, options);
+        }
+
+        internal static LoadBalancerResourceNames DeserializeLoadBalancerResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +98,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<IList<string>> frontendIPConfigurationNames = default;
             Optional<IList<string>> backendPoolNames = default;
             Optional<IList<string>> healthProbeNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerName"u8))
@@ -113,8 +149,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     healthProbeNames = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancerResourceNames(loadBalancerName.Value, Optional.ToList(frontendIPConfigurationNames), Optional.ToList(backendPoolNames), Optional.ToList(healthProbeNames));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LoadBalancerResourceNames(loadBalancerName.Value, Optional.ToList(frontendIPConfigurationNames), Optional.ToList(backendPoolNames), Optional.ToList(healthProbeNames), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LoadBalancerResourceNames>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LoadBalancerResourceNames IModel<LoadBalancerResourceNames>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLoadBalancerResourceNames(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LoadBalancerResourceNames>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

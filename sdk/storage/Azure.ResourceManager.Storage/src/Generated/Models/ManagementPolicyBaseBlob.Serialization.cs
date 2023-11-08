@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyBaseBlob : IUtf8JsonSerializable
+    public partial class ManagementPolicyBaseBlob : IUtf8JsonSerializable, IJsonModel<ManagementPolicyBaseBlob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyBaseBlob>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagementPolicyBaseBlob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(TierToCool))
@@ -45,11 +51,40 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("enableAutoTierToHotFromCool"u8);
                 writer.WriteBooleanValue(EnableAutoTierToHotFromCool.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagementPolicyBaseBlob DeserializeManagementPolicyBaseBlob(JsonElement element)
+        ManagementPolicyBaseBlob IJsonModel<ManagementPolicyBaseBlob>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementPolicyBaseBlob(document.RootElement, options);
+        }
+
+        internal static ManagementPolicyBaseBlob DeserializeManagementPolicyBaseBlob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +95,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<DateAfterModification> tierToHot = default;
             Optional<DateAfterModification> delete = default;
             Optional<bool> enableAutoTierToHotFromCool = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"u8))
@@ -116,8 +153,38 @@ namespace Azure.ResourceManager.Storage.Models
                     enableAutoTierToHotFromCool = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, Optional.ToNullable(enableAutoTierToHotFromCool));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagementPolicyBaseBlob(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, Optional.ToNullable(enableAutoTierToHotFromCool), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagementPolicyBaseBlob>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagementPolicyBaseBlob IModel<ManagementPolicyBaseBlob>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagementPolicyBaseBlob(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagementPolicyBaseBlob>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

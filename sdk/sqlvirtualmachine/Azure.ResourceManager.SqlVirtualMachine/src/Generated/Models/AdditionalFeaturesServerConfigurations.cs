@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Additional SQL Server feature settings. </summary>
     internal partial class AdditionalFeaturesServerConfigurations
     {
-        /// <summary> Initializes a new instance of AdditionalFeaturesServerConfigurations. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalFeaturesServerConfigurations"/>. </summary>
         public AdditionalFeaturesServerConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of AdditionalFeaturesServerConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalFeaturesServerConfigurations"/>. </summary>
         /// <param name="isRServicesEnabled"> Enable or disable R services (SQL 2016 onwards). </param>
-        internal AdditionalFeaturesServerConfigurations(bool? isRServicesEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdditionalFeaturesServerConfigurations(bool? isRServicesEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsRServicesEnabled = isRServicesEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable or disable R services (SQL 2016 onwards). </summary>

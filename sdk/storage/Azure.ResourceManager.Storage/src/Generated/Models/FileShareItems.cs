@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Response schema. Contains list of shares returned, and if paging is requested or required, a URL to next page of shares. </summary>
     internal partial class FileShareItems
     {
-        /// <summary> Initializes a new instance of FileShareItems. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileShareItems"/>. </summary>
         internal FileShareItems()
         {
             Value = new ChangeTrackingList<FileShareData>();
         }
 
-        /// <summary> Initializes a new instance of FileShareItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareItems"/>. </summary>
         /// <param name="value"> List of file shares returned. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of shares. Returned when total number of requested shares exceed maximum page size. </param>
-        internal FileShareItems(IReadOnlyList<FileShareData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileShareItems(IReadOnlyList<FileShareData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of file shares returned. </summary>

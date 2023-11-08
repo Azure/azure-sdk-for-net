@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -12,7 +16,7 @@ using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableMetrics : IXmlSerializable
+    public partial class TableMetrics : IXmlSerializable, IModel<TableMetrics>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -39,7 +43,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableMetrics DeserializeTableMetrics(XElement element)
+        internal static TableMetrics DeserializeTableMetrics(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool enabled = default;
@@ -61,7 +65,43 @@ namespace Azure.Data.Tables.Models
             {
                 retentionPolicy = TableRetentionPolicy.DeserializeTableRetentionPolicy(retentionPolicyElement);
             }
-            return new TableMetrics(version, enabled, includeApis, retentionPolicy);
+            return new TableMetrics(version, enabled, includeApis, retentionPolicy, default);
         }
+
+        BinaryData IModel<TableMetrics>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableMetrics>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableMetrics IModel<TableMetrics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableMetrics)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableMetrics(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<TableMetrics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

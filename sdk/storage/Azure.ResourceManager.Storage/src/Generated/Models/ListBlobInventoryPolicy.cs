@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> List of blob inventory policies returned. </summary>
     internal partial class ListBlobInventoryPolicy
     {
-        /// <summary> Initializes a new instance of ListBlobInventoryPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListBlobInventoryPolicy"/>. </summary>
         internal ListBlobInventoryPolicy()
         {
             Value = new ChangeTrackingList<BlobInventoryPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ListBlobInventoryPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobInventoryPolicy"/>. </summary>
         /// <param name="value"> List of blob inventory policies. </param>
-        internal ListBlobInventoryPolicy(IReadOnlyList<BlobInventoryPolicyData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListBlobInventoryPolicy(IReadOnlyList<BlobInventoryPolicyData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of blob inventory policies. </summary>

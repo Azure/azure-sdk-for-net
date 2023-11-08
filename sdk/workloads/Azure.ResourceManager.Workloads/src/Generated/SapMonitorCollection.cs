@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapMonitormonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapMonitormonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

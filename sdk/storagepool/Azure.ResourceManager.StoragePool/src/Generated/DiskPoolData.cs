@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.StoragePool
     /// </summary>
     public partial class DiskPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskPoolData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.StoragePool
             AdditionalCapabilities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +61,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
-        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StoragePoolSku sku, string managedBy, IReadOnlyList<string> managedByExtended, DiskPoolIscsiTargetProvisioningState provisioningState, IList<string> availabilityZones, StoragePoolOperationalStatus status, IList<WritableSubResource> disks, ResourceIdentifier subnetId, IList<string> additionalCapabilities) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StoragePoolSku sku, string managedBy, IReadOnlyList<string> managedByExtended, DiskPoolIscsiTargetProvisioningState provisioningState, IList<string> availabilityZones, StoragePoolOperationalStatus status, IList<WritableSubResource> disks, ResourceIdentifier subnetId, IList<string> additionalCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ManagedBy = managedBy;
@@ -69,6 +73,12 @@ namespace Azure.ResourceManager.StoragePool
             Disks = disks;
             SubnetId = subnetId;
             AdditionalCapabilities = additionalCapabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolData"/> for deserialization. </summary>
+        internal DiskPoolData()
+        {
         }
 
         /// <summary> Determines the SKU of the Disk pool. </summary>

@@ -5,11 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareStatistics
+    public partial class ShareStatistics : IXmlSerializable, IModel<ShareStatistics>
     {
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "ShareStats");
+            writer.WriteStartElement("ShareUsageBytes");
+            writer.WriteValue(ShareUsageBytes);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static ShareStatistics DeserializeShareStatistics(XElement element, ModelReaderWriterOptions options = null)
+        {
+            int shareUsageBytes = default;
+            if (element.Element("ShareUsageBytes") is XElement shareUsageBytesElement)
+            {
+                shareUsageBytes = (int)shareUsageBytesElement;
+            }
+            return new ShareStatistics(shareUsageBytes, default);
+        }
+
+        BinaryData IModel<ShareStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ShareStatistics>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareStatistics IModel<ShareStatistics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeShareStatistics(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<ShareStatistics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

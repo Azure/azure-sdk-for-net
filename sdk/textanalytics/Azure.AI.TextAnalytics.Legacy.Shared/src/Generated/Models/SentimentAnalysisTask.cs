@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -12,9 +14,23 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The SentimentAnalysisTask. </summary>
     internal partial class SentimentAnalysisTask
     {
-        /// <summary> Initializes a new instance of SentimentAnalysisTask. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTask"/>. </summary>
         public SentimentAnalysisTask()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentimentAnalysisTask(SentimentAnalysisTaskParameters parameters, string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

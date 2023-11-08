@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The response from the List Deleted Accounts operation. </summary>
     internal partial class DeletedAccountListResult
     {
-        /// <summary> Initializes a new instance of DeletedAccountListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountListResult"/>. </summary>
         internal DeletedAccountListResult()
         {
             Value = new ChangeTrackingList<DeletedAccountData>();
         }
 
-        /// <summary> Initializes a new instance of DeletedAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountListResult"/>. </summary>
         /// <param name="value"> Gets the list of deleted accounts and their properties. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of deleted accounts. Returned when total number of requested deleted accounts exceed maximum page size. </param>
-        internal DeletedAccountListResult(IReadOnlyList<DeletedAccountData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedAccountListResult(IReadOnlyList<DeletedAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of deleted accounts and their properties. </summary>

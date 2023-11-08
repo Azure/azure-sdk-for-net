@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App stack major version. </summary>
     public partial class WebAppMajorVersion
     {
-        /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
         internal WebAppMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<WebAppMinorVersion>();
         }
 
-        /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
         /// <param name="displayText"> Web App stack major version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
-        internal WebAppMajorVersion(string displayText, string value, IReadOnlyList<WebAppMinorVersion> minorVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppMajorVersion(string displayText, string value, IReadOnlyList<WebAppMinorVersion> minorVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayText = displayText;
             Value = value;
             MinorVersions = minorVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Web App stack major version (display only). </summary>

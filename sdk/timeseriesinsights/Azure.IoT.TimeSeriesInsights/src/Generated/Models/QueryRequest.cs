@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to execute a time series query over events. Exactly one of "getEvents", "getSeries" or "aggregateSeries" must be set. </summary>
     internal partial class QueryRequest
     {
-        /// <summary> Initializes a new instance of QueryRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         public QueryRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
+        /// <param name="getEvents"> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </param>
+        /// <param name="getSeries"> Get Series query. Allows to retrieve time series of calculated variable values from events for a given Time Series ID and search span. </param>
+        /// <param name="aggregateSeries"> Aggregate Series query. Allows to calculate an aggregated time series from events for a given Time Series ID and search span. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryRequest(GetEvents getEvents, GetSeries getSeries, AggregateSeries aggregateSeries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            GetEvents = getEvents;
+            GetSeries = getSeries;
+            AggregateSeries = aggregateSeries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </summary>

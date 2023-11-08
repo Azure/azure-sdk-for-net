@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook snapshot result. </summary>
     public partial class RunNotebookSnapshotResult
     {
-        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshotResult"/>. </summary>
         /// <param name="snapshot"> Run notebook snapshot. </param>
         /// <param name="runId"> Run id. </param>
         /// <param name="runStatus"> Status of the run notebook. </param>
@@ -29,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RunStatus = runStatus;
         }
 
-        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshotResult"/>. </summary>
         /// <param name="snapshot"> Run notebook snapshot. </param>
         /// <param name="error"> Run notebook error. </param>
         /// <param name="runId"> Run id. </param>
@@ -37,7 +41,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="lastCheckedOn"> Timestamp of last update. </param>
         /// <param name="sessionId"> Livy session id. </param>
         /// <param name="sparkPool"> SparkPool name. </param>
-        internal RunNotebookSnapshotResult(RunNotebookSnapshot snapshot, RunNotebookError error, string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookSnapshotResult(RunNotebookSnapshot snapshot, RunNotebookError error, string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Snapshot = snapshot;
             Error = error;
@@ -46,6 +51,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LastCheckedOn = lastCheckedOn;
             SessionId = sessionId;
             SparkPool = sparkPool;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshotResult"/> for deserialization. </summary>
+        internal RunNotebookSnapshotResult()
+        {
         }
 
         /// <summary> Run notebook snapshot. </summary>

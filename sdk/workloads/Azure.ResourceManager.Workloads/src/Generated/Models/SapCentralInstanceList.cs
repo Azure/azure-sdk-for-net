@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Workloads;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the collection of SAP Central Services Instance resources. </summary>
     internal partial class SapCentralInstanceList
     {
-        /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapCentralInstanceList"/>. </summary>
         internal SapCentralInstanceList()
         {
             Value = new ChangeTrackingList<SapCentralServerInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of SapCentralInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCentralInstanceList"/>. </summary>
         /// <param name="value"> Gets the list of SAP central services instance resources. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
-        internal SapCentralInstanceList(IReadOnlyList<SapCentralServerInstanceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapCentralInstanceList(IReadOnlyList<SapCentralServerInstanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of SAP central services instance resources. </summary>

@@ -14,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Azure Storage container. </summary>
     internal partial class ContainerItemInternal
     {
-        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
@@ -28,19 +31,26 @@ namespace Azure.Storage.Blobs.Models
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="version"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Deleted = deleted;
             Version = version;
             Properties = properties;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/> for deserialization. </summary>
+        internal ContainerItemInternal()
+        {
         }
 
         /// <summary> Gets the name. </summary>

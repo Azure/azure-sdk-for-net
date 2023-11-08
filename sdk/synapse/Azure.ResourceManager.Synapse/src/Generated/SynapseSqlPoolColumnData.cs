@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseSqlPoolColumnData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSqlPoolColumnData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolColumnData"/>. </summary>
         public SynapseSqlPoolColumnData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolColumnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolColumnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="columnType"> The column data type. </param>
         /// <param name="isComputed"> Indicates whether column value is computed or not. </param>
-        internal SynapseSqlPoolColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlPoolColumnDataType? columnType, bool? isComputed) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSqlPoolColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlPoolColumnDataType? columnType, bool? isComputed, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ColumnType = columnType;
             IsComputed = isComputed;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The column data type. </summary>

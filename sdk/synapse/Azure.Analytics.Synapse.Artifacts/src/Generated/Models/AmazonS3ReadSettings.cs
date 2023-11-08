@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure data lake store read settings. </summary>
     public partial class AmazonS3ReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of AmazonS3ReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3ReadSettings"/>. </summary>
         public AmazonS3ReadSettings()
         {
             Type = "AmazonS3ReadSettings";
         }
 
-        /// <summary> Initializes a new instance of AmazonS3ReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3ReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Support;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Collection of Communication resources. </summary>
     internal partial class CommunicationsListResult
     {
-        /// <summary> Initializes a new instance of CommunicationsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationsListResult"/>. </summary>
         internal CommunicationsListResult()
         {
             Value = new ChangeTrackingList<SupportTicketCommunicationData>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationsListResult"/>. </summary>
         /// <param name="value"> List of Communication resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Communication resources. </param>
-        internal CommunicationsListResult(IReadOnlyList<SupportTicketCommunicationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationsListResult(IReadOnlyList<SupportTicketCommunicationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Communication resources. </summary>

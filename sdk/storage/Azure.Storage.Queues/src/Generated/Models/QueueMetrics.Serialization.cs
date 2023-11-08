@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueMetrics : IXmlSerializable
+    public partial class QueueMetrics : IXmlSerializable, IModel<QueueMetrics>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -38,7 +42,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueMetrics DeserializeQueueMetrics(XElement element)
+        internal static QueueMetrics DeserializeQueueMetrics(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool enabled = default;
@@ -60,7 +64,43 @@ namespace Azure.Storage.Queues.Models
             {
                 retentionPolicy = QueueRetentionPolicy.DeserializeQueueRetentionPolicy(retentionPolicyElement);
             }
-            return new QueueMetrics(version, enabled, includeApis, retentionPolicy);
+            return new QueueMetrics(version, enabled, includeApis, retentionPolicy, default);
         }
+
+        BinaryData IModel<QueueMetrics>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<QueueMetrics>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueMetrics IModel<QueueMetrics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueueMetrics)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeQueueMetrics(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<QueueMetrics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

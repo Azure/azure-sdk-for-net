@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Request entity for previewing the Static Site workflow. </summary>
     public partial class StaticSitesWorkflowPreviewContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreviewContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreviewContent"/>. </summary>
         public StaticSitesWorkflowPreviewContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreviewContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreviewContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,12 +32,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSitesWorkflowPreviewContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repositoryUri, string branch, StaticSiteBuildProperties buildProperties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSitesWorkflowPreviewContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repositoryUri, string branch, StaticSiteBuildProperties buildProperties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RepositoryUri = repositoryUri;
             Branch = branch;
             BuildProperties = buildProperties;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URL for the repository of the static site. </summary>

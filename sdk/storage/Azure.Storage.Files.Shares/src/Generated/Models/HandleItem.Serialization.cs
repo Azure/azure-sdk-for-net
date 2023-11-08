@@ -7,14 +7,63 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class HandleItem
+    internal partial class HandleItem : IXmlSerializable, IModel<HandleItem>
     {
-        internal static HandleItem DeserializeHandleItem(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Handle");
+            writer.WriteStartElement("HandleId");
+            writer.WriteValue(HandleId);
+            writer.WriteEndElement();
+            writer.WriteObjectValue(Path, "Path");
+            writer.WriteStartElement("FileId");
+            writer.WriteValue(FileId);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(ParentId))
+            {
+                writer.WriteStartElement("ParentId");
+                writer.WriteValue(ParentId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("SessionId");
+            writer.WriteValue(SessionId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ClientIp");
+            writer.WriteValue(ClientIp);
+            writer.WriteEndElement();
+            writer.WriteStartElement("OpenTime");
+            writer.WriteValue(OpenTime, "R");
+            writer.WriteEndElement();
+            if (Optional.IsDefined(LastReconnectTime))
+            {
+                writer.WriteStartElement("LastReconnectTime");
+                writer.WriteValue(LastReconnectTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(AccessRightList))
+            {
+                writer.WriteStartElement("AccessRightList");
+                foreach (var item in AccessRightList)
+                {
+                    writer.WriteStartElement("AccessRight");
+                    writer.WriteValue(item.ToSerialString());
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static HandleItem DeserializeHandleItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string handleId = default;
             StringEncoded path = default;
@@ -66,7 +115,43 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 accessRightList = array;
             }
-            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime, accessRightList);
+            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime, accessRightList, default);
         }
+
+        BinaryData IModel<HandleItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<HandleItem>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        HandleItem IModel<HandleItem>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HandleItem)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeHandleItem(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<HandleItem>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

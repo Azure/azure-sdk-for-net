@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.IoT.TimeSeriesInsights
     /// </summary>
     public abstract partial class TimeSeriesVariable
     {
-        /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesVariable"/>. </summary>
         protected TimeSeriesVariable()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
-        internal TimeSeriesVariable(string kind, TimeSeriesExpression filter)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesVariable(string kind, TimeSeriesExpression filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Filter = filter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> Custom header name and value. </summary>
     public partial class TrafficManagerMonitorConfigCustomHeaderInfo
     {
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfigCustomHeaderInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfigCustomHeaderInfo"/>. </summary>
         public TrafficManagerMonitorConfigCustomHeaderInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfigCustomHeaderInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfigCustomHeaderInfo"/>. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
-        internal TrafficManagerMonitorConfigCustomHeaderInfo(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficManagerMonitorConfigCustomHeaderInfo(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Header name. </summary>

@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteConfigPropertiesDictionary
+    public partial class SiteConfigPropertiesDictionary : IUtf8JsonSerializable, IJsonModel<SiteConfigPropertiesDictionary>
     {
-        internal static SiteConfigPropertiesDictionary DeserializeSiteConfigPropertiesDictionary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteConfigPropertiesDictionary>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SiteConfigPropertiesDictionary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Use32BitWorkerProcess))
+                {
+                    writer.WritePropertyName("use32BitWorkerProcess"u8);
+                    writer.WriteBooleanValue(Use32BitWorkerProcess.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LinuxFxVersion))
+                {
+                    writer.WritePropertyName("linuxFxVersion"u8);
+                    writer.WriteStringValue(LinuxFxVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(JavaVersion))
+                {
+                    writer.WritePropertyName("javaVersion"u8);
+                    writer.WriteStringValue(JavaVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PowerShellVersion))
+                {
+                    writer.WritePropertyName("powerShellVersion"u8);
+                    writer.WriteStringValue(PowerShellVersion);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteConfigPropertiesDictionary IJsonModel<SiteConfigPropertiesDictionary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteConfigPropertiesDictionary(document.RootElement, options);
+        }
+
+        internal static SiteConfigPropertiesDictionary DeserializeSiteConfigPropertiesDictionary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +95,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> linuxFxVersion = default;
             Optional<string> javaVersion = default;
             Optional<string> powerShellVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("use32BitWorkerProcess"u8))
@@ -48,8 +123,38 @@ namespace Azure.ResourceManager.AppService.Models
                     powerShellVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteConfigPropertiesDictionary(Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteConfigPropertiesDictionary(Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SiteConfigPropertiesDictionary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteConfigPropertiesDictionary IModel<SiteConfigPropertiesDictionary>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteConfigPropertiesDictionary(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SiteConfigPropertiesDictionary>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

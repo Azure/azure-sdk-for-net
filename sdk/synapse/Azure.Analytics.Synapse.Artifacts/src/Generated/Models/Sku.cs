@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> SQL pool SKU. </summary>
     public partial class Sku
     {
-        /// <summary> Initializes a new instance of Sku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Sku"/>. </summary>
         public Sku()
         {
         }
 
-        /// <summary> Initializes a new instance of Sku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sku"/>. </summary>
         /// <param name="tier"> The service tier. </param>
         /// <param name="name"> The SKU name. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        internal Sku(string tier, string name, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Sku(string tier, string name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tier = tier;
             Name = name;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The service tier. </summary>

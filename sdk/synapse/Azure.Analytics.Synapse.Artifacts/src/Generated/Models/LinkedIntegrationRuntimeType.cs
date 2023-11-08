@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/>. </summary>
         public LinkedIntegrationRuntimeType()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
-        internal LinkedIntegrationRuntimeType(string authorizationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedIntegrationRuntimeType(string authorizationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizationType = authorizationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The authorization type for integration runtime sharing. </summary>

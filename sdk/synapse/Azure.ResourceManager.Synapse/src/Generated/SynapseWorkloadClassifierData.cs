@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseWorkloadClassifierData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseWorkloadClassifierData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkloadClassifierData"/>. </summary>
         public SynapseWorkloadClassifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkloadClassifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +37,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="startTime"> The workload classifier start time for classification. </param>
         /// <param name="endTime"> The workload classifier end time for classification. </param>
         /// <param name="importance"> The workload classifier importance. </param>
-        internal SynapseWorkloadClassifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string memberName, string label, string context, string startTime, string endTime, string importance) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkloadClassifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string memberName, string label, string context, string startTime, string endTime, string importance, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MemberName = memberName;
             Label = label;
@@ -40,6 +46,7 @@ namespace Azure.ResourceManager.Synapse
             StartTime = startTime;
             EndTime = endTime;
             Importance = importance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The workload classifier member name. </summary>

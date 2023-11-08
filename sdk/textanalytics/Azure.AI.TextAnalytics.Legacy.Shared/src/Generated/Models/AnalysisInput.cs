@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The AnalysisInput. </summary>
     internal partial class AnalysisInput
     {
-        /// <summary> Initializes a new instance of AnalysisInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
         /// <param name="analysisInputValue"> Contains a set of input documents to be analyzed by the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInputValue"/> is null. </exception>
         public AnalysisInput(MultiLanguageBatchInput analysisInputValue)
@@ -21,6 +25,20 @@ namespace Azure.AI.TextAnalytics.Legacy
             Argument.AssertNotNull(analysisInputValue, nameof(analysisInputValue));
 
             AnalysisInputValue = analysisInputValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
+        /// <param name="analysisInputValue"> Contains a set of input documents to be analyzed by the service. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisInput(MultiLanguageBatchInput analysisInputValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AnalysisInputValue = analysisInputValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/> for deserialization. </summary>
+        internal AnalysisInput()
+        {
         }
 
         /// <summary> Contains a set of input documents to be analyzed by the service. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> json text configuration. </summary>
     internal partial class JsonTextConfigurationInternal
     {
-        /// <summary> Initializes a new instance of JsonTextConfigurationInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JsonTextConfigurationInternal"/>. </summary>
         public JsonTextConfigurationInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JsonTextConfigurationInternal"/>. </summary>
+        /// <param name="recordSeparator"> The string used to separate records. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JsonTextConfigurationInternal(string recordSeparator, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RecordSeparator = recordSeparator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The string used to separate records. </summary>

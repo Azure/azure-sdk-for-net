@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class KeyInfo : IXmlSerializable
+    internal partial class KeyInfo : IXmlSerializable, IModel<KeyInfo>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -26,5 +31,56 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
             writer.WriteEndElement();
         }
+
+        internal static KeyInfo DeserializeKeyInfo(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string start = default;
+            string expiry = default;
+            if (element.Element("Start") is XElement startElement)
+            {
+                start = (string)startElement;
+            }
+            if (element.Element("Expiry") is XElement expiryElement)
+            {
+                expiry = (string)expiryElement;
+            }
+            return new KeyInfo(start, expiry, default);
+        }
+
+        BinaryData IModel<KeyInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<KeyInfo>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        KeyInfo IModel<KeyInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyInfo)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeKeyInfo(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<KeyInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

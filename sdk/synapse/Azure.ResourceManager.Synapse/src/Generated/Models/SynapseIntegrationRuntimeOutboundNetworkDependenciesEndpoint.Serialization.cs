@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint
+    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>
     {
-        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DomainName))
+            {
+                writer.WritePropertyName("domainName"u8);
+                writer.WriteStringValue(DomainName);
+            }
+            if (Optional.IsCollectionDefined(EndpointDetails))
+            {
+                writer.WritePropertyName("endpointDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in EndpointDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> domainName = default;
             Optional<IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -42,8 +99,38 @@ namespace Azure.ResourceManager.Synapse.Models
                     endpointDetails = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Optional.ToList(endpointDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint IModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

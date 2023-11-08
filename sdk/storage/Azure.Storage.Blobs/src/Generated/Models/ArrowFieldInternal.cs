@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Groups settings regarding specific field of an arrow schema. </summary>
     internal partial class ArrowFieldInternal
     {
-        /// <summary> Initializes a new instance of ArrowFieldInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
         /// <param name="type"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public ArrowFieldInternal(string type)
@@ -21,6 +25,26 @@ namespace Azure.Storage.Blobs.Models
             Argument.AssertNotNull(type, nameof(type));
 
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <param name="precision"></param>
+        /// <param name="scale"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArrowFieldInternal(string type, string name, int? precision, int? scale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Type = type;
+            Name = name;
+            Precision = precision;
+            Scale = scale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/> for deserialization. </summary>
+        internal ArrowFieldInternal()
+        {
         }
 
         /// <summary> Gets the type. </summary>

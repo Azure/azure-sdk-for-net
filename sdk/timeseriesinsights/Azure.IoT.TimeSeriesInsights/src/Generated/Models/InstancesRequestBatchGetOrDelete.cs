@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,19 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to get or delete instances by time series IDs or time series names. Exactly one of "timeSeriesIds" or "names" must be set. </summary>
     internal partial class InstancesRequestBatchGetOrDelete
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstancesRequestBatchGetOrDelete"/>. </summary>
+        /// <param name="timeSeriesIdsInternal"> List of time series IDs of the time series instances to return or delete. </param>
+        /// <param name="names"> List of names of the time series instances to return or delete. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancesRequestBatchGetOrDelete(IList<IList<object>> timeSeriesIdsInternal, IList<string> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TimeSeriesIdsInternal = timeSeriesIdsInternal;
+            Names = names;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
         /// <summary> List of names of the time series instances to return or delete. </summary>
         public IList<string> Names { get; }
     }

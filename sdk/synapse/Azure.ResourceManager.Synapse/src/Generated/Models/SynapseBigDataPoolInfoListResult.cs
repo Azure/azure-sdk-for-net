@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Collection of Big Data pool information. </summary>
     internal partial class SynapseBigDataPoolInfoListResult
     {
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoListResult"/>. </summary>
         internal SynapseBigDataPoolInfoListResult()
         {
             Value = new ChangeTrackingList<SynapseBigDataPoolInfoData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of Big Data pools. </param>
-        internal SynapseBigDataPoolInfoListResult(string nextLink, IReadOnlyList<SynapseBigDataPoolInfoData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseBigDataPoolInfoListResult(string nextLink, IReadOnlyList<SynapseBigDataPoolInfoData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Link to the next page of results. </summary>

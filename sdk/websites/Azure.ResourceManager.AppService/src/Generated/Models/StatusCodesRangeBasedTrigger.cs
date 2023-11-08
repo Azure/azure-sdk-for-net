@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Trigger based on range of status codes. </summary>
     public partial class StatusCodesRangeBasedTrigger
     {
-        /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StatusCodesRangeBasedTrigger"/>. </summary>
         public StatusCodesRangeBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of StatusCodesRangeBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodesRangeBasedTrigger"/>. </summary>
         /// <param name="statusCodes"> HTTP status code. </param>
         /// <param name="path"></param>
         /// <param name="count"> Request Count. </param>
         /// <param name="timeInterval"> Time interval. </param>
-        internal StatusCodesRangeBasedTrigger(string statusCodes, string path, int? count, string timeInterval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StatusCodesRangeBasedTrigger(string statusCodes, string path, int? count, string timeInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StatusCodes = statusCodes;
             Path = path;
             Count = count;
             TimeInterval = timeInterval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> HTTP status code. </summary>

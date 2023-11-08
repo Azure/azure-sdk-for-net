@@ -14,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook snapshot. </summary>
     public partial class RunNotebookSnapshot
     {
-        /// <summary> Initializes a new instance of RunNotebookSnapshot. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshot"/>. </summary>
         /// <param name="id"> Run notebook runId. </param>
         /// <param name="notebook"> Notebook name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="notebook"/> is null. </exception>
@@ -28,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, RunNotebookParameter>();
         }
 
-        /// <summary> Initializes a new instance of RunNotebookSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshot"/>. </summary>
         /// <param name="exitValue"> Output of exit command. </param>
         /// <param name="id"> Run notebook runId. </param>
         /// <param name="notebook"> Notebook name. </param>
@@ -38,7 +41,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sparkPool"> SparkPool name. </param>
         /// <param name="parameters"> Run notebook parameters. </param>
         /// <param name="notebookContent"> Notebook resource type. </param>
-        internal RunNotebookSnapshot(string exitValue, string id, string notebook, RunNotebookSparkSessionOptions sessionOptions, bool? honorSessionTimeToLive, string sessionId, string sparkPool, IReadOnlyDictionary<string, RunNotebookParameter> parameters, NotebookResource notebookContent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookSnapshot(string exitValue, string id, string notebook, RunNotebookSparkSessionOptions sessionOptions, bool? honorSessionTimeToLive, string sessionId, string sparkPool, IReadOnlyDictionary<string, RunNotebookParameter> parameters, NotebookResource notebookContent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExitValue = exitValue;
             Id = id;
@@ -49,6 +53,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SparkPool = sparkPool;
             Parameters = parameters;
             NotebookContent = notebookContent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshot"/> for deserialization. </summary>
+        internal RunNotebookSnapshot()
+        {
         }
 
         /// <summary> Output of exit command. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Purview Configuration. </summary>
     public partial class PurviewConfiguration
     {
-        /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewConfiguration"/>. </summary>
         public PurviewConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewConfiguration"/>. </summary>
         /// <param name="purviewResourceId"> Purview Resource ID. </param>
-        internal PurviewConfiguration(string purviewResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewConfiguration(string purviewResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PurviewResourceId = purviewResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Purview Resource ID. </summary>

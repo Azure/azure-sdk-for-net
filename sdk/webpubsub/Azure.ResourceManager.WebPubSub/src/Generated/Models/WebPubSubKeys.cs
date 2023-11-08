@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> A class represents the access keys of the resource. </summary>
     public partial class WebPubSubKeys
     {
-        /// <summary> Initializes a new instance of WebPubSubKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubKeys"/>. </summary>
         internal WebPubSubKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>
         /// <param name="secondaryConnectionString"> Connection string constructed via the secondaryKey. </param>
-        internal WebPubSubKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary access key. </summary>

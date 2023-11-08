@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Ssis environment reference. </summary>
     public partial class SynapseSsisEnvironmentReference
     {
-        /// <summary> Initializes a new instance of SynapseSsisEnvironmentReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisEnvironmentReference"/>. </summary>
         internal SynapseSsisEnvironmentReference()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisEnvironmentReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisEnvironmentReference"/>. </summary>
         /// <param name="id"> Environment reference id. </param>
         /// <param name="environmentFolderName"> Environment folder name. </param>
         /// <param name="environmentName"> Environment name. </param>
         /// <param name="referenceType"> Reference type. </param>
-        internal SynapseSsisEnvironmentReference(long? id, string environmentFolderName, string environmentName, string referenceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSsisEnvironmentReference(long? id, string environmentFolderName, string environmentName, string referenceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             EnvironmentFolderName = environmentFolderName;
             EnvironmentName = environmentName;
             ReferenceType = referenceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Environment reference id. </summary>

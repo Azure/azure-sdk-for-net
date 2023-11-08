@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site Function Overview ARM resource. </summary>
     public partial class StaticSiteFunctionOverview : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteFunctionOverview. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverview"/>. </summary>
         public StaticSiteFunctionOverview()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteFunctionOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionName"> The name for the function. </param>
         /// <param name="triggerType"> The trigger type of the function. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteFunctionOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionName, FunctionTriggerType? triggerType, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteFunctionOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionName, FunctionTriggerType? triggerType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             FunctionName = functionName;
             TriggerType = triggerType;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name for the function. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Azure resource SKU definition. </summary>
     public partial class SynapseDataSourceResourceSku
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSku"/>. </summary>
         internal SynapseDataSourceResourceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSku"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>
-        internal SynapseDataSourceResourceSku(string resourceType, SynapseDataSourceSku sku, SynapseDataSourceCapacity capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataSourceResourceSku(string resourceType, SynapseDataSourceSku sku, SynapseDataSourceCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Namespace and Type. </summary>

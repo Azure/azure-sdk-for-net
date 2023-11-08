@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
     /// <summary> The SqlQueryStringDataModel. </summary>
     public partial class SqlQueryStringDataModel
     {
-        /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlQueryStringDataModel"/>. </summary>
         internal SqlQueryStringDataModel()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlQueryStringDataModel"/>. </summary>
         /// <param name="query"></param>
-        internal SqlQueryStringDataModel(string query)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlQueryStringDataModel(string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Query = query;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the query. </summary>

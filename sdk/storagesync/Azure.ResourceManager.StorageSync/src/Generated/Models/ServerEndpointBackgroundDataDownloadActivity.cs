@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Background data download activity object. </summary>
     public partial class ServerEndpointBackgroundDataDownloadActivity
     {
-        /// <summary> Initializes a new instance of ServerEndpointBackgroundDataDownloadActivity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointBackgroundDataDownloadActivity"/>. </summary>
         internal ServerEndpointBackgroundDataDownloadActivity()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointBackgroundDataDownloadActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointBackgroundDataDownloadActivity"/>. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="startedOn"> Timestamp when the operation started. </param>
         /// <param name="percentProgress"> Progress percentage. </param>
         /// <param name="downloadedBytes"> Running count of bytes downloaded. </param>
-        internal ServerEndpointBackgroundDataDownloadActivity(DateTimeOffset? timestamp, DateTimeOffset? startedOn, int? percentProgress, long? downloadedBytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEndpointBackgroundDataDownloadActivity(DateTimeOffset? timestamp, DateTimeOffset? startedOn, int? percentProgress, long? downloadedBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             StartedOn = startedOn;
             PercentProgress = percentProgress;
             DownloadedBytes = downloadedBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Timestamp when properties were updated. </summary>

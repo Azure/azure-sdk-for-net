@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Library/package properties. </summary>
     public partial class LibraryResourceProperties
     {
-        /// <summary> Initializes a new instance of LibraryResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceProperties"/>. </summary>
         public LibraryResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LibraryResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceProperties"/>. </summary>
         /// <param name="name"> Name of the library/package. </param>
         /// <param name="path"> Location of library/package in storage account. </param>
         /// <param name="containerName"> Container name of the library/package. </param>
@@ -23,7 +29,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of the library/package. </param>
         /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
         /// <param name="creatorId"> Creator Id of the library/package. </param>
-        internal LibraryResourceProperties(string name, string path, string containerName, string uploadedTimestamp, string type, string provisioningStatus, string creatorId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LibraryResourceProperties(string name, string path, string containerName, string uploadedTimestamp, string type, string provisioningStatus, string creatorId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Path = path;
@@ -32,6 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type;
             ProvisioningStatus = provisioningStatus;
             CreatorId = creatorId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the library/package. </summary>

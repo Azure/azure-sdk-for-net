@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A resource SKU. </summary>
     public partial class StorageCacheSku
     {
-        /// <summary> Initializes a new instance of StorageCacheSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSku"/>. </summary>
         internal StorageCacheSku()
         {
             Capabilities = new ChangeTrackingList<StorageCacheSkuCapability>();
@@ -22,14 +26,15 @@ namespace Azure.ResourceManager.StorageCache.Models
             Restrictions = new ChangeTrackingList<StorageCacheRestriction>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="capabilities"> A list of capabilities of this SKU, such as throughput or ops/sec. </param>
         /// <param name="locations"> The set of locations where the SKU is available. This is the supported and registered Azure Geo Regions (e.g., West US, East US, Southeast Asia, etc.). </param>
         /// <param name="locationInfo"> The set of locations where the SKU is available. </param>
         /// <param name="name"> The name of this SKU. </param>
         /// <param name="restrictions"> The restrictions preventing this SKU from being used. This is empty if there are no restrictions. </param>
-        internal StorageCacheSku(string resourceType, IReadOnlyList<StorageCacheSkuCapability> capabilities, IReadOnlyList<string> locations, IReadOnlyList<StorageCacheSkuLocationInfo> locationInfo, string name, IReadOnlyList<StorageCacheRestriction> restrictions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheSku(string resourceType, IReadOnlyList<StorageCacheSkuCapability> capabilities, IReadOnlyList<string> locations, IReadOnlyList<StorageCacheSkuLocationInfo> locationInfo, string name, IReadOnlyList<StorageCacheRestriction> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Capabilities = capabilities;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             LocationInfo = locationInfo;
             Name = name;
             Restrictions = restrictions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>

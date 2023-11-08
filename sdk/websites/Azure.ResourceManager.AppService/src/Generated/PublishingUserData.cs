@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class PublishingUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of PublishingUserData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublishingUserData"/>. </summary>
         public PublishingUserData()
         {
         }
 
-        /// <summary> Initializes a new instance of PublishingUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishingUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +37,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
         /// <param name="scmUri"> Url of SCM site. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.AppService
             PublishingPasswordHashSalt = publishingPasswordHashSalt;
             ScmUri = scmUri;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Username used for publishing. </summary>

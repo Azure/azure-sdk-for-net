@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Settings for SMB protocol. </summary>
     public partial class ShareSmbSettings
     {
-        /// <summary> Initializes a new instance of ShareSmbSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareSmbSettings"/>. </summary>
         /// <param name="multichannel"> Settings for SMB Multichannel. </param>
-        internal ShareSmbSettings(SmbMultichannel multichannel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareSmbSettings(SmbMultichannel multichannel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Multichannel = multichannel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Settings for SMB Multichannel. </summary>

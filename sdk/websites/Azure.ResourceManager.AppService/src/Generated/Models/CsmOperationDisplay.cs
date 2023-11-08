@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Meta data about operation used for display in portal. </summary>
     public partial class CsmOperationDisplay
     {
-        /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDisplay"/>. </summary>
         internal CsmOperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDisplay"/>. </summary>
         /// <param name="provider"></param>
         /// <param name="resource"></param>
         /// <param name="operation"></param>
         /// <param name="description"></param>
-        internal CsmOperationDisplay(string provider, string resource, string operation, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CsmOperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the provider. </summary>

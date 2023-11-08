@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The GitHubAccessTokenResponse. </summary>
     public partial class GitHubAccessTokenResponse
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenResponse"/>. </summary>
         internal GitHubAccessTokenResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenResponse"/>. </summary>
         /// <param name="gitHubAccessToken"></param>
-        internal GitHubAccessTokenResponse(string gitHubAccessToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubAccessTokenResponse(string gitHubAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GitHubAccessToken = gitHubAccessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the git hub access token. </summary>

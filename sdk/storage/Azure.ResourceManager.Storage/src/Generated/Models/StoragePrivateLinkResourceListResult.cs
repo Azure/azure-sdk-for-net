@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class StoragePrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of StoragePrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceListResult"/>. </summary>
         internal StoragePrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<StoragePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of StoragePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal StoragePrivateLinkResourceListResult(IReadOnlyList<StoragePrivateLinkResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePrivateLinkResourceListResult(IReadOnlyList<StoragePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

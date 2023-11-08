@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseClusterPrincipalAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseClusterPrincipalAssignmentData"/>. </summary>
         public SynapseClusterPrincipalAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseClusterPrincipalAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="principalName"> The principal name. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
-        internal SynapseClusterPrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string principalId, SynapseClusterPrincipalRole? role, Guid? tenantId, SynapsePrincipalType? principalType, string tenantName, string principalName, ResourceProvisioningState? provisioningState, Guid? aadObjectId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseClusterPrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string principalId, SynapseClusterPrincipalRole? role, Guid? tenantId, SynapsePrincipalType? principalType, string tenantName, string principalName, ResourceProvisioningState? provisioningState, Guid? aadObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrincipalId = principalId;
             Role = role;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.Synapse
             PrincipalName = principalName;
             ProvisioningState = provisioningState;
             AadObjectId = aadObjectId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The principal ID assigned to the cluster principal. It can be a user email, application ID, or security group name. </summary>

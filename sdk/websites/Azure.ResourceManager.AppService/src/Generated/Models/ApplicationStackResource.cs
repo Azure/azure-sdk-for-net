@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a ApplicationStack. </summary>
     public partial class ApplicationStackResource : ResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationStackResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationStackResource"/>. </summary>
         public ApplicationStackResource()
         {
             MajorVersions = new ChangeTrackingList<StackMajorVersion>();
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsDeprecated = new ChangeTrackingList<ApplicationStack>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationStackResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationStackResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="frameworks"> List of frameworks associated with application stack. </param>
         /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ApplicationStackResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string stackName, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationStackResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string stackName, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StackName = stackName;
             Display = display;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             Frameworks = frameworks;
             IsDeprecated = isDeprecated;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application stack name. </summary>

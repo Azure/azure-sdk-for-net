@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -12,9 +14,23 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The KeyPhrasesTask. </summary>
     internal partial class KeyPhrasesTask
     {
-        /// <summary> Initializes a new instance of KeyPhrasesTask. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTask"/>. </summary>
         public KeyPhrasesTask()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyPhrasesTask(KeyPhrasesTaskParameters parameters, string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

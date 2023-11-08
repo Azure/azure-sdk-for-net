@@ -6,12 +6,78 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableGeoReplicationInfo
+    public partial class TableGeoReplicationInfo : IXmlSerializable, IModel<TableGeoReplicationInfo>
     {
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "GeoReplication");
+            writer.WriteStartElement("Status");
+            writer.WriteValue(Status.ToString());
+            writer.WriteEndElement();
+            writer.WriteStartElement("LastSyncTime");
+            writer.WriteValue(LastSyncedOn, "R");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static TableGeoReplicationInfo DeserializeTableGeoReplicationInfo(XElement element, ModelReaderWriterOptions options = null)
+        {
+            TableGeoReplicationStatus status = default;
+            DateTimeOffset lastSyncedOn = default;
+            if (element.Element("Status") is XElement statusElement)
+            {
+                status = new TableGeoReplicationStatus(statusElement.Value);
+            }
+            if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
+            {
+                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
+            }
+            return new TableGeoReplicationInfo(status, lastSyncedOn, default);
+        }
+
+        BinaryData IModel<TableGeoReplicationInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableGeoReplicationInfo>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableGeoReplicationInfo IModel<TableGeoReplicationInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableGeoReplicationInfo)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableGeoReplicationInfo(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<TableGeoReplicationInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

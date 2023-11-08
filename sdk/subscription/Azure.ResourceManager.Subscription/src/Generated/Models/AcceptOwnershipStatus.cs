@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Subscription Accept Ownership Response. </summary>
     public partial class AcceptOwnershipStatus
     {
-        /// <summary> Initializes a new instance of AcceptOwnershipStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipStatus"/>. </summary>
         internal AcceptOwnershipStatus()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcceptOwnershipStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipStatus"/>. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
-        internal AcceptOwnershipStatus(string subscriptionId, AcceptOwnershipState? acceptOwnershipState, AcceptOwnershipProvisioningState? provisioningState, string billingOwner, Guid? subscriptionTenantId, string displayName, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptOwnershipStatus(string subscriptionId, AcceptOwnershipState? acceptOwnershipState, AcceptOwnershipProvisioningState? provisioningState, string billingOwner, Guid? subscriptionTenantId, string displayName, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             AcceptOwnershipState = acceptOwnershipState;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.Subscription.Models
             SubscriptionTenantId = subscriptionTenantId;
             DisplayName = displayName;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Newly created subscription Id. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Diagnostics for an App Service Environment. </summary>
     public partial class HostingEnvironmentDiagnostics
     {
-        /// <summary> Initializes a new instance of HostingEnvironmentDiagnostics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDiagnostics"/>. </summary>
         internal HostingEnvironmentDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentDiagnostics. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDiagnostics"/>. </summary>
         /// <param name="name"> Name/identifier of the diagnostics. </param>
         /// <param name="diagnosticsOutput"> Diagnostics output. </param>
-        internal HostingEnvironmentDiagnostics(string name, string diagnosticsOutput)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostingEnvironmentDiagnostics(string name, string diagnosticsOutput, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DiagnosticsOutput = diagnosticsOutput;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name/identifier of the diagnostics. </summary>

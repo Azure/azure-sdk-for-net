@@ -7,15 +7,123 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointSyncSessionStatus
+    public partial class ServerEndpointSyncSessionStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointSyncSessionStatus>
     {
-        internal static ServerEndpointSyncSessionStatus DeserializeServerEndpointSyncSessionStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncSessionStatus>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ServerEndpointSyncSessionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastSyncResult))
+                {
+                    writer.WritePropertyName("lastSyncResult"u8);
+                    writer.WriteNumberValue(LastSyncResult.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastSyncTimestamp))
+                {
+                    writer.WritePropertyName("lastSyncTimestamp"u8);
+                    writer.WriteStringValue(LastSyncTimestamp.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastSyncSuccessTimestamp))
+                {
+                    writer.WritePropertyName("lastSyncSuccessTimestamp"u8);
+                    writer.WriteStringValue(LastSyncSuccessTimestamp.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastSyncPerItemErrorCount))
+                {
+                    writer.WritePropertyName("lastSyncPerItemErrorCount"u8);
+                    writer.WriteNumberValue(LastSyncPerItemErrorCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PersistentFilesNotSyncingCount))
+                {
+                    writer.WritePropertyName("persistentFilesNotSyncingCount"u8);
+                    writer.WriteNumberValue(PersistentFilesNotSyncingCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TransientFilesNotSyncingCount))
+                {
+                    writer.WritePropertyName("transientFilesNotSyncingCount"u8);
+                    writer.WriteNumberValue(TransientFilesNotSyncingCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(FilesNotSyncingErrors))
+                {
+                    writer.WritePropertyName("filesNotSyncingErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FilesNotSyncingErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastSyncMode))
+                {
+                    writer.WritePropertyName("lastSyncMode"u8);
+                    writer.WriteStringValue(LastSyncMode.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServerEndpointSyncSessionStatus IJsonModel<ServerEndpointSyncSessionStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerEndpointSyncSessionStatus(document.RootElement, options);
+        }
+
+        internal static ServerEndpointSyncSessionStatus DeserializeServerEndpointSyncSessionStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +136,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<long> transientFilesNotSyncingCount = default;
             Optional<IReadOnlyList<ServerEndpointFilesNotSyncingError>> filesNotSyncingErrors = default;
             Optional<ServerEndpointSyncMode> lastSyncMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastSyncResult"u8))
@@ -107,8 +217,38 @@ namespace Azure.ResourceManager.StorageSync.Models
                     lastSyncMode = new ServerEndpointSyncMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ServerEndpointSyncSessionStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServerEndpointSyncSessionStatus IModel<ServerEndpointSyncSessionStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServerEndpointSyncSessionStatus(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ServerEndpointSyncSessionStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

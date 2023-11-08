@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,20 +18,25 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseDataWarehouseUserActivityData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseDataWarehouseUserActivityData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataWarehouseUserActivityData"/>. </summary>
         public SynapseDataWarehouseUserActivityData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataWarehouseUserActivityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataWarehouseUserActivityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="activeQueriesCount"> Count of running and suspended queries. </param>
-        internal SynapseDataWarehouseUserActivityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? activeQueriesCount) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataWarehouseUserActivityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? activeQueriesCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ActiveQueriesCount = activeQueriesCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Count of running and suspended queries. </summary>

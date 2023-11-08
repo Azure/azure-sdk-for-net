@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseKustoPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseKustoPoolData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the kusto pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.Synapse
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +53,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="enablePurge"> A boolean value that indicates if the purge operations are enabled. </param>
         /// <param name="languageExtensions"> List of the Kusto Pool's language extensions. </param>
         /// <param name="workspaceUid"> The workspace unique identifier. </param>
-        internal SynapseKustoPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseDataSourceSku sku, ETag? etag, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, Guid? workspaceUid) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseKustoPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseDataSourceSku sku, ETag? etag, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, Guid? workspaceUid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -64,6 +68,12 @@ namespace Azure.ResourceManager.Synapse
             EnablePurge = enablePurge;
             LanguageExtensions = languageExtensions;
             WorkspaceUid = workspaceUid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolData"/> for deserialization. </summary>
+        internal SynapseKustoPoolData()
+        {
         }
 
         /// <summary> The SKU of the kusto pool. </summary>

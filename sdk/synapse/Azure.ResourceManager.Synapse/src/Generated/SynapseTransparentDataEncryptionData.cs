@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseTransparentDataEncryptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseTransparentDataEncryptionData"/>. </summary>
         public SynapseTransparentDataEncryptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseTransparentDataEncryptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="status"> The status of the database transparent data encryption. </param>
-        internal SynapseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseTransparentDataEncryptionStatus? status) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseTransparentDataEncryptionStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>

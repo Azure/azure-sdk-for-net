@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Parameter of how to return time series instance hierarchies by search instances call. </summary>
     internal partial class SearchInstancesHierarchiesParameters
     {
-        /// <summary> Initializes a new instance of SearchInstancesHierarchiesParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchInstancesHierarchiesParameters"/>. </summary>
         public SearchInstancesHierarchiesParameters()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchInstancesHierarchiesParameters"/>. </summary>
+        /// <param name="expand"> Definition of whether to expand hierarchy nodes in the same search instances call. Optional, default is 'UntilChildren'. </param>
+        /// <param name="sort"> Definition of sorting of hierarchy nodes. Optional, default is 'CumulativeInstanceCount'. </param>
+        /// <param name="pageSize"> Maximum number of hierarchies in the same level to return in the same page. Optional, default is 10 when not set. Range is from 1 to 100. If there are results beyond the page size, the continuation token can be used to fetch the next page. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchInstancesHierarchiesParameters(HierarchiesExpandParameter expand, HierarchiesSortParameter sort, int? pageSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Expand = expand;
+            Sort = sort;
+            PageSize = pageSize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Definition of whether to expand hierarchy nodes in the same search instances call. Optional, default is 'UntilChildren'. </summary>

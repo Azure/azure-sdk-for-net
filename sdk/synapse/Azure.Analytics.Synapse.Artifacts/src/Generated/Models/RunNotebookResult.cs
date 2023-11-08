@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Result of run notebook. </summary>
     public partial class RunNotebookResult
     {
-        /// <summary> Initializes a new instance of RunNotebookResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResult"/>. </summary>
         internal RunNotebookResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RunNotebookResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookResult"/>. </summary>
         /// <param name="runId"> Run id. </param>
         /// <param name="runStatus"> Status of the run notebook. </param>
         /// <param name="lastCheckedOn"> Timestamp of last update. </param>
@@ -24,7 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sessionDetail"> Run notebook session details. </param>
         /// <param name="exitValue"> Output of exit command. </param>
         /// <param name="error"> Run notebook error. </param>
-        internal RunNotebookResult(string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool, object sessionDetail, string exitValue, RunNotebookError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookResult(string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool, object sessionDetail, string exitValue, RunNotebookError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RunId = runId;
             RunStatus = runStatus;
@@ -34,6 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SessionDetail = sessionDetail;
             ExitValue = exitValue;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Run id. </summary>

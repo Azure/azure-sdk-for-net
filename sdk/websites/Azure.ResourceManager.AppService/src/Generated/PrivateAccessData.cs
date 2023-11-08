@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class PrivateAccessData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateAccessData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessData"/>. </summary>
         public PrivateAccessData()
         {
             VirtualNetworks = new ChangeTrackingList<PrivateAccessVirtualNetwork>();
         }
 
-        /// <summary> Initializes a new instance of PrivateAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,11 +36,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isEnabled"> Whether private access is enabled or not. </param>
         /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateAccessData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             VirtualNetworks = virtualNetworks;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether private access is enabled or not. </summary>

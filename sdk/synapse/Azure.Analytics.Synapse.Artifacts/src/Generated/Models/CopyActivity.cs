@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Copy activity. </summary>
     public partial class CopyActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of CopyActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="source">
         /// Copy activity source.
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Copy";
         }
 
-        /// <summary> Initializes a new instance of CopyActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -98,6 +98,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ValidateDataConsistency = validateDataConsistency;
             SkipErrorFile = skipErrorFile;
             Type = type ?? "Copy";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/> for deserialization. </summary>
+        internal CopyActivity()
+        {
         }
 
         /// <summary> List of inputs for the activity. </summary>

@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapDiskConfiguration
+    public partial class SapDiskConfiguration : IUtf8JsonSerializable, IJsonModel<SapDiskConfiguration>
     {
-        internal static SapDiskConfiguration DeserializeSapDiskConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiskConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SapDiskConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecommendedConfiguration))
+            {
+                writer.WritePropertyName("recommendedConfiguration"u8);
+                writer.WriteObjectValue(RecommendedConfiguration);
+            }
+            if (Optional.IsCollectionDefined(SupportedConfigurations))
+            {
+                writer.WritePropertyName("supportedConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SapDiskConfiguration IJsonModel<SapDiskConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapDiskConfiguration(document.RootElement, options);
+        }
+
+        internal static SapDiskConfiguration DeserializeSapDiskConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DiskVolumeConfiguration> recommendedConfiguration = default;
             Optional<IReadOnlyList<SupportedConfigurationsDiskDetails>> supportedConfigurations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recommendedConfiguration"u8))
@@ -46,8 +103,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     supportedConfigurations = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SapDiskConfiguration(recommendedConfiguration.Value, Optional.ToList(supportedConfigurations));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SapDiskConfiguration(recommendedConfiguration.Value, Optional.ToList(supportedConfigurations), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SapDiskConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SapDiskConfiguration IModel<SapDiskConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSapDiskConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SapDiskConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

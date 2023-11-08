@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderSpecificProperties"/>. </summary>
         protected ProviderSpecificProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSpecificProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
-        internal ProviderSpecificProperties(string providerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderSpecificProperties(string providerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderType = providerType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provider type. For example, the value can be SapHana. </summary>

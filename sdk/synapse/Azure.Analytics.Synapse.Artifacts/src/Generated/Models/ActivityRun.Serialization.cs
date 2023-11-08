@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,141 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ActivityRunConverter))]
-    public partial class ActivityRun
+    public partial class ActivityRun : IUtf8JsonSerializable, IJsonModel<ActivityRun>
     {
-        internal static ActivityRun DeserializeActivityRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActivityRun>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ActivityRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PipelineName))
+                {
+                    writer.WritePropertyName("pipelineName"u8);
+                    writer.WriteStringValue(PipelineName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PipelineRunId))
+                {
+                    writer.WritePropertyName("pipelineRunId"u8);
+                    writer.WriteStringValue(PipelineRunId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ActivityName))
+                {
+                    writer.WritePropertyName("activityName"u8);
+                    writer.WriteStringValue(ActivityName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ActivityType))
+                {
+                    writer.WritePropertyName("activityType"u8);
+                    writer.WriteStringValue(ActivityType);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ActivityRunId))
+                {
+                    writer.WritePropertyName("activityRunId"u8);
+                    writer.WriteStringValue(ActivityRunId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LinkedServiceName))
+                {
+                    writer.WritePropertyName("linkedServiceName"u8);
+                    writer.WriteStringValue(LinkedServiceName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ActivityRunStart))
+                {
+                    writer.WritePropertyName("activityRunStart"u8);
+                    writer.WriteStringValue(ActivityRunStart.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ActivityRunEnd))
+                {
+                    writer.WritePropertyName("activityRunEnd"u8);
+                    writer.WriteStringValue(ActivityRunEnd.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DurationInMs))
+                {
+                    writer.WritePropertyName("durationInMs"u8);
+                    writer.WriteNumberValue(DurationInMs.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Input))
+                {
+                    writer.WritePropertyName("input"u8);
+                    writer.WriteObjectValue(Input);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Output))
+                {
+                    writer.WritePropertyName("output"u8);
+                    writer.WriteObjectValue(Output);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error);
+                }
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        ActivityRun IJsonModel<ActivityRun>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ActivityRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeActivityRun(document.RootElement, options);
+        }
+
+        internal static ActivityRun DeserializeActivityRun(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,11 +267,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
         }
 
+        BinaryData IModel<ActivityRun>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ActivityRun)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ActivityRun IModel<ActivityRun>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ActivityRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeActivityRun(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ActivityRun>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+
         internal partial class ActivityRunConverter : JsonConverter<ActivityRun>
         {
             public override void Write(Utf8JsonWriter writer, ActivityRun model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ActivityRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

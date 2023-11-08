@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The storage account where the custom code artifacts are located. </summary>
     public partial class StreamingJobExternal
     {
-        /// <summary> Initializes a new instance of StreamingJobExternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobExternal"/>. </summary>
         public StreamingJobExternal()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobExternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobExternal"/>. </summary>
         /// <param name="storageAccount"> The properties that are associated with an Azure Storage account. </param>
         /// <param name="container"> The UserCustomCode container. </param>
         /// <param name="path"> The UserCustomCode path. </param>
         /// <param name="refreshConfiguration"> The refresh parameters for any/all updatable user defined functions present in the job config. </param>
-        internal StreamingJobExternal(StreamAnalyticsStorageAccount storageAccount, string container, string path, StreamingJobRefreshConfiguration refreshConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobExternal(StreamAnalyticsStorageAccount storageAccount, string container, string path, StreamingJobRefreshConfiguration refreshConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccount = storageAccount;
             Container = container;
             Path = path;
             RefreshConfiguration = refreshConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties that are associated with an Azure Storage account. </summary>

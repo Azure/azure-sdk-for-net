@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Initial workspace AAD admin properties for a CSP subscription. </summary>
     internal partial class CspWorkspaceAdminProperties
     {
-        /// <summary> Initializes a new instance of CspWorkspaceAdminProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CspWorkspaceAdminProperties"/>. </summary>
         public CspWorkspaceAdminProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CspWorkspaceAdminProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspWorkspaceAdminProperties"/>. </summary>
         /// <param name="initialWorkspaceAdminObjectId"> AAD object ID of initial workspace admin. </param>
-        internal CspWorkspaceAdminProperties(Guid? initialWorkspaceAdminObjectId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CspWorkspaceAdminProperties(Guid? initialWorkspaceAdminObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InitialWorkspaceAdminObjectId = initialWorkspaceAdminObjectId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AAD object ID of initial workspace admin. </summary>

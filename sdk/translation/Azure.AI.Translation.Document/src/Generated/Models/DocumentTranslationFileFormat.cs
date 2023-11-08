@@ -15,7 +15,10 @@ namespace Azure.AI.Translation.Document
     /// <summary> The FileFormat. </summary>
     public partial class DocumentTranslationFileFormat
     {
-        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
@@ -32,19 +35,26 @@ namespace Azure.AI.Translation.Document
             FormatVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
         /// <param name="defaultFormatVersion"> Default version if none is specified. </param>
         /// <param name="formatVersions"> Supported Version. </param>
-        internal DocumentTranslationFileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTranslationFileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Format = format;
             FileExtensions = fileExtensions;
             ContentTypes = contentTypes;
             DefaultFormatVersion = defaultFormatVersion;
             FormatVersions = formatVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/> for deserialization. </summary>
+        internal DocumentTranslationFileFormat()
+        {
         }
 
         /// <summary> Name of the format. </summary>

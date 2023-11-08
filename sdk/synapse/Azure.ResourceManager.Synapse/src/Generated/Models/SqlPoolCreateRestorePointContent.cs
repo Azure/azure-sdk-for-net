@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Contains the information necessary to perform a create Sql pool restore point operation. </summary>
     public partial class SqlPoolCreateRestorePointContent
     {
-        /// <summary> Initializes a new instance of SqlPoolCreateRestorePointContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolCreateRestorePointContent"/>. </summary>
         /// <param name="restorePointLabel"> The restore point label to apply. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public SqlPoolCreateRestorePointContent(string restorePointLabel)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Synapse.Models
             Argument.AssertNotNull(restorePointLabel, nameof(restorePointLabel));
 
             RestorePointLabel = restorePointLabel;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolCreateRestorePointContent"/>. </summary>
+        /// <param name="restorePointLabel"> The restore point label to apply. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlPoolCreateRestorePointContent(string restorePointLabel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RestorePointLabel = restorePointLabel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolCreateRestorePointContent"/> for deserialization. </summary>
+        internal SqlPoolCreateRestorePointContent()
+        {
         }
 
         /// <summary> The restore point label to apply. </summary>

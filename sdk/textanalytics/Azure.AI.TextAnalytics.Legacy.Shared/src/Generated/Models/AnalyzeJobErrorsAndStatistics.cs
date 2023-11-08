@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The AnalyzeJobErrorsAndStatistics. </summary>
     internal partial class AnalyzeJobErrorsAndStatistics
     {
-        /// <summary> Initializes a new instance of AnalyzeJobErrorsAndStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobErrorsAndStatistics"/>. </summary>
         internal AnalyzeJobErrorsAndStatistics()
         {
             Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeJobErrorsAndStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobErrorsAndStatistics"/>. </summary>
         /// <param name="errors"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        internal AnalyzeJobErrorsAndStatistics(IReadOnlyList<TextAnalyticsError> errors, RequestStatistics statistics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeJobErrorsAndStatistics(IReadOnlyList<TextAnalyticsError> errors, RequestStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the errors. </summary>

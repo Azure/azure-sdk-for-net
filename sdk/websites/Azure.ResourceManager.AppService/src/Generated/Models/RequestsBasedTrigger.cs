@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Trigger based on total requests. </summary>
     public partial class RequestsBasedTrigger
     {
-        /// <summary> Initializes a new instance of RequestsBasedTrigger. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequestsBasedTrigger"/>. </summary>
         public RequestsBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of RequestsBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestsBasedTrigger"/>. </summary>
         /// <param name="count"> Request Count. </param>
         /// <param name="timeInterval"> Time interval. </param>
-        internal RequestsBasedTrigger(int? count, string timeInterval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequestsBasedTrigger(int? count, string timeInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             TimeInterval = timeInterval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Request Count. </summary>

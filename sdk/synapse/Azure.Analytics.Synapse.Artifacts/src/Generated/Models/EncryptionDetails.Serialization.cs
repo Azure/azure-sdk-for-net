@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,27 +16,68 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(EncryptionDetailsConverter))]
-    public partial class EncryptionDetails : IUtf8JsonSerializable
+    public partial class EncryptionDetails : IUtf8JsonSerializable, IJsonModel<EncryptionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EncryptionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DoubleEncryptionEnabled))
+                {
+                    writer.WritePropertyName("doubleEncryptionEnabled"u8);
+                    writer.WriteBooleanValue(DoubleEncryptionEnabled.Value);
+                }
+            }
             if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element)
+        EncryptionDetails IJsonModel<EncryptionDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EncryptionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncryptionDetails(document.RootElement, options);
+        }
+
+        internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> doubleEncryptionEnabled = default;
             Optional<CustomerManagedKeyDetails> cmk = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryptionEnabled"u8))
@@ -54,9 +98,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cmk = CustomerManagedKeyDetails.DeserializeCustomerManagedKeyDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EncryptionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EncryptionDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EncryptionDetails IModel<EncryptionDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EncryptionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEncryptionDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EncryptionDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>
         {

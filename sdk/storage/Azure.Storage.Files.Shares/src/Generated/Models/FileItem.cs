@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A listed file item. </summary>
     internal partial class FileItem
     {
-        /// <summary> Initializes a new instance of FileItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> File properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
@@ -26,19 +30,26 @@ namespace Azure.Storage.Files.Shares.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of FileItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="fileId"></param>
         /// <param name="properties"> File properties. </param>
         /// <param name="attributes"></param>
         /// <param name="permissionKey"></param>
-        internal FileItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FileId = fileId;
             Properties = properties;
             Attributes = attributes;
             PermissionKey = permissionKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileItem"/> for deserialization. </summary>
+        internal FileItem()
+        {
         }
 
         /// <summary> Gets the name. </summary>

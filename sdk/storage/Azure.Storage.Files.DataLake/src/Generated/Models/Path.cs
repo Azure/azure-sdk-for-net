@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The Path. </summary>
     internal partial class Path
     {
-        /// <summary> Initializes a new instance of Path. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Path"/>. </summary>
         internal Path()
         {
         }
 
-        /// <summary> Initializes a new instance of Path. </summary>
+        /// <summary> Initializes a new instance of <see cref="Path"/>. </summary>
         /// <param name="name"></param>
         /// <param name="lastModified"></param>
         /// <param name="owner"></param>
@@ -30,7 +34,8 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="contentLength"></param>
         /// <param name="isDirectory"></param>
         /// <param name="etag"></param>
-        internal Path(string name, DateTimeOffset? lastModified, string owner, string group, string permissions, string encryptionScope, string creationTime, string expiryTime, string encryptionContext, string contentLength, string isDirectory, string etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Path(string name, DateTimeOffset? lastModified, string owner, string group, string permissions, string encryptionScope, string creationTime, string expiryTime, string encryptionContext, string contentLength, string isDirectory, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             LastModified = lastModified;
@@ -44,6 +49,7 @@ namespace Azure.Storage.Files.DataLake.Models
             ContentLength = contentLength;
             IsDirectory = isDirectory;
             Etag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

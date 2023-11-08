@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of recommendations. </summary>
     internal partial class AppServiceRecommendationListResult
     {
-        /// <summary> Initializes a new instance of AppServiceRecommendationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceRecommendationListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceRecommendationListResult(IEnumerable<AppServiceRecommendation> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServiceRecommendationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceRecommendationListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppServiceRecommendationListResult(IReadOnlyList<AppServiceRecommendation> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceRecommendationListResult(IReadOnlyList<AppServiceRecommendation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceRecommendationListResult"/> for deserialization. </summary>
+        internal AppServiceRecommendationListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The KqlScriptContent. </summary>
     public partial class KqlScriptContent
     {
-        /// <summary> Initializes a new instance of KqlScriptContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContent"/>. </summary>
         public KqlScriptContent()
         {
         }
 
-        /// <summary> Initializes a new instance of KqlScriptContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContent"/>. </summary>
         /// <param name="query"></param>
         /// <param name="metadata"></param>
         /// <param name="currentConnection"></param>
-        internal KqlScriptContent(string query, KqlScriptContentMetadata metadata, KqlScriptContentCurrentConnection currentConnection)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KqlScriptContent(string query, KqlScriptContentMetadata metadata, KqlScriptContentCurrentConnection currentConnection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Query = query;
             Metadata = metadata;
             CurrentConnection = currentConnection;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the query. </summary>

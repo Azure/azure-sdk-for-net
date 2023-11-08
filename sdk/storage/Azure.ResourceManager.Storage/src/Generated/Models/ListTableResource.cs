@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Response schema. Contains list of tables returned. </summary>
     internal partial class ListTableResource
     {
-        /// <summary> Initializes a new instance of ListTableResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListTableResource"/>. </summary>
         internal ListTableResource()
         {
             Value = new ChangeTrackingList<TableData>();
         }
 
-        /// <summary> Initializes a new instance of ListTableResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTableResource"/>. </summary>
         /// <param name="value"> List of tables returned. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of tables. </param>
-        internal ListTableResource(IReadOnlyList<TableData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListTableResource(IReadOnlyList<TableData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of tables returned. </summary>

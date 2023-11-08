@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobName. </summary>
     internal partial class BlobName
     {
-        /// <summary> Initializes a new instance of BlobName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobName"/>. </summary>
         internal BlobName()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobName. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobName"/>. </summary>
         /// <param name="encoded"> Indicates if the blob name is encoded. </param>
         /// <param name="content"> The name of the blob. </param>
-        internal BlobName(bool? encoded, string content)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobName(bool? encoded, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Encoded = encoded;
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates if the blob name is encoded. </summary>

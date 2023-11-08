@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapApplicationServerInstanceResource(Client, SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e)), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SapApplicationServerInstanceResource(Client, SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e)), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapApplicationServerInstanceResource(Client, SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e)), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SapApplicationServerInstanceResource(Client, SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(e)), _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics, Pipeline, "SapApplicationServerInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

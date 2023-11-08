@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class BillingAccountPolicyProperties
+    public partial class BillingAccountPolicyProperties : IUtf8JsonSerializable, IJsonModel<BillingAccountPolicyProperties>
     {
-        internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingAccountPolicyProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BillingAccountPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ServiceTenants))
+            {
+                writer.WritePropertyName("serviceTenants"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceTenants)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AllowTransfers))
+            {
+                writer.WritePropertyName("allowTransfers"u8);
+                writer.WriteBooleanValue(AllowTransfers.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BillingAccountPolicyProperties IJsonModel<BillingAccountPolicyProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingAccountPolicyProperties(document.RootElement, options);
+        }
+
+        internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ServiceTenant>> serviceTenants = default;
             Optional<bool> allowTransfers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceTenants"u8))
@@ -46,8 +103,38 @@ namespace Azure.ResourceManager.Subscription.Models
                     allowTransfers = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BillingAccountPolicyProperties(Optional.ToList(serviceTenants), Optional.ToNullable(allowTransfers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BillingAccountPolicyProperties(Optional.ToList(serviceTenants), Optional.ToNullable(allowTransfers), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<BillingAccountPolicyProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BillingAccountPolicyProperties IModel<BillingAccountPolicyProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBillingAccountPolicyProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BillingAccountPolicyProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

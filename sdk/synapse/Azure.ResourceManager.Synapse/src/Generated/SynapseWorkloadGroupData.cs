@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseWorkloadGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseWorkloadGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkloadGroupData"/>. </summary>
         public SynapseWorkloadGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkloadGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkloadGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +37,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="maxResourcePercentPerRequest"> The workload group request maximum grant percentage. </param>
         /// <param name="importance"> The workload group importance level. </param>
         /// <param name="queryExecutionTimeout"> The workload group query execution timeout. </param>
-        internal SynapseWorkloadGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? minResourcePercent, int? maxResourcePercent, double? minResourcePercentPerRequest, double? maxResourcePercentPerRequest, string importance, int? queryExecutionTimeout) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkloadGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? minResourcePercent, int? maxResourcePercent, double? minResourcePercentPerRequest, double? maxResourcePercentPerRequest, string importance, int? queryExecutionTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MinResourcePercent = minResourcePercent;
             MaxResourcePercent = maxResourcePercent;
@@ -40,6 +46,7 @@ namespace Azure.ResourceManager.Synapse
             MaxResourcePercentPerRequest = maxResourcePercentPerRequest;
             Importance = importance;
             QueryExecutionTimeout = queryExecutionTimeout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The workload group minimum percentage resource. </summary>

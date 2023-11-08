@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The service error response object. </summary>
     internal partial class StorageErrorError
     {
-        /// <summary> Initializes a new instance of StorageErrorError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageErrorError"/>. </summary>
         internal StorageErrorError()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageErrorError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageErrorError"/>. </summary>
         /// <param name="code"> The service error code. </param>
         /// <param name="message"> The service error message. </param>
-        internal StorageErrorError(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageErrorError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The service error code. </summary>

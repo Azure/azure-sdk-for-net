@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Deletes an existing pipeline topology. </summary>
     public partial class PipelineTopologyDeleteRequest : MethodRequestEmptyBodyBase
     {
-        /// <summary> Initializes a new instance of PipelineTopologyDeleteRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyDeleteRequest"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PipelineTopologyDeleteRequest(string name) : base(name)
@@ -23,13 +24,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = "pipelineTopologyDelete";
         }
 
-        /// <summary> Initializes a new instance of PipelineTopologyDeleteRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyDeleteRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
-        internal PipelineTopologyDeleteRequest(string methodName, string apiVersion, string name) : base(methodName, apiVersion, name)
+        internal PipelineTopologyDeleteRequest(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(methodName, apiVersion, serializedAdditionalRawData, name)
         {
             MethodName = methodName ?? "pipelineTopologyDelete";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologyDeleteRequest"/> for deserialization. </summary>
+        internal PipelineTopologyDeleteRequest()
+        {
         }
     }
 }

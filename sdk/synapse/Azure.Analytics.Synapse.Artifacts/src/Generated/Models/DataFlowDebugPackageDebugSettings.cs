@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Data flow debug settings. </summary>
     public partial class DataFlowDebugPackageDebugSettings
     {
-        /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackageDebugSettings"/>. </summary>
         public DataFlowDebugPackageDebugSettings()
         {
             SourceSettings = new ChangeTrackingList<DataFlowSourceSetting>();
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackageDebugSettings"/>. </summary>
         /// <param name="sourceSettings"> Source setting for data flow debug. </param>
         /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="datasetParameters"> Parameters for dataset. </param>
-        internal DataFlowDebugPackageDebugSettings(IList<DataFlowSourceSetting> sourceSettings, IDictionary<string, object> parameters, object datasetParameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowDebugPackageDebugSettings(IList<DataFlowSourceSetting> sourceSettings, IDictionary<string, object> parameters, object datasetParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceSettings = sourceSettings;
             Parameters = parameters;
             DatasetParameters = datasetParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source setting for data flow debug. </summary>

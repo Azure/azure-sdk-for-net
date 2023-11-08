@@ -5,16 +5,109 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkStatementOutput
+    public partial class SparkStatementOutput : IUtf8JsonSerializable, IJsonModel<SparkStatementOutput>
     {
-        internal static SparkStatementOutput DeserializeSparkStatementOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkStatementOutput>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SparkStatementOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            writer.WritePropertyName("execution_count"u8);
+            writer.WriteNumberValue(ExecutionCount);
+            if (Optional.IsDefined(Data))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteObjectValue(Data);
+            }
+            if (Optional.IsDefined(ErrorName))
+            {
+                if (ErrorName != null)
+                {
+                    writer.WritePropertyName("ename"u8);
+                    writer.WriteStringValue(ErrorName);
+                }
+                else
+                {
+                    writer.WriteNull("ename");
+                }
+            }
+            if (Optional.IsDefined(ErrorValue))
+            {
+                if (ErrorValue != null)
+                {
+                    writer.WritePropertyName("evalue"u8);
+                    writer.WriteStringValue(ErrorValue);
+                }
+                else
+                {
+                    writer.WriteNull("evalue");
+                }
+            }
+            if (Optional.IsCollectionDefined(Traceback))
+            {
+                if (Traceback != null)
+                {
+                    writer.WritePropertyName("traceback"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Traceback)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("traceback");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SparkStatementOutput IJsonModel<SparkStatementOutput>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkStatementOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkStatementOutput(document.RootElement, options);
+        }
+
+        internal static SparkStatementOutput DeserializeSparkStatementOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +118,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<string> ename = default;
             Optional<string> evalue = default;
             Optional<IReadOnlyList<string>> traceback = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -80,8 +175,38 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     traceback = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SparkStatementOutput(status.Value, executionCount, data.Value, ename.Value, evalue.Value, Optional.ToList(traceback));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkStatementOutput(status.Value, executionCount, data.Value, ename.Value, evalue.Value, Optional.ToList(traceback), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SparkStatementOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkStatementOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SparkStatementOutput IModel<SparkStatementOutput>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkStatementOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSparkStatementOutput(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SparkStatementOutput>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

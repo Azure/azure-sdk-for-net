@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes the status of the test operation along with error information, if applicable. </summary>
     public partial class StreamAnalyticsResourceTestStatus
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsResourceTestStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsResourceTestStatus"/>. </summary>
         internal StreamAnalyticsResourceTestStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsResourceTestStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsResourceTestStatus"/>. </summary>
         /// <param name="status"> The status of the test operation. </param>
         /// <param name="code"> Error code associated with the error that occurred. </param>
         /// <param name="message"> Describes the error in detail. </param>
-        internal StreamAnalyticsResourceTestStatus(string status, string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsResourceTestStatus(string status, string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the test operation. </summary>

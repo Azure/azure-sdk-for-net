@@ -7,21 +7,48 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceRecommendation : IUtf8JsonSerializable
+    public partial class AppServiceRecommendation : IUtf8JsonSerializable, IJsonModel<AppServiceRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceRecommendation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AppServiceRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -69,6 +96,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(CategoryTags))
+                {
+                    writer.WritePropertyName("categoryTags"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in CategoryTags)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(ActionName))
             {
@@ -141,11 +181,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(ForwardLink);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceRecommendation DeserializeAppServiceRecommendation(JsonElement element)
+        AppServiceRecommendation IJsonModel<AppServiceRecommendation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceRecommendation(document.RootElement, options);
+        }
+
+        internal static AppServiceRecommendation DeserializeAppServiceRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -178,6 +247,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> extensionName = default;
             Optional<string> bladeName = default;
             Optional<string> forwardLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -410,8 +481,38 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceRecommendation(id, name, type, systemData.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), actionName.Value, Optional.ToNullable(enabled), Optional.ToList(states), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceRecommendation(id, name, type, systemData.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), actionName.Value, Optional.ToNullable(enabled), Optional.ToList(states), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AppServiceRecommendation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceRecommendation IModel<AppServiceRecommendation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceRecommendation(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AppServiceRecommendation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

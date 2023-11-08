@@ -5,14 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Publishing options for requested profile. </summary>
     public partial class CsmPublishingProfile
     {
-        /// <summary> Initializes a new instance of CsmPublishingProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CsmPublishingProfile"/>. </summary>
         public CsmPublishingProfile()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CsmPublishingProfile"/>. </summary>
+        /// <param name="format">
+        /// Name of the format. Valid values are:
+        /// FileZilla3
+        /// WebDeploy -- default
+        /// Ftp
+        /// </param>
+        /// <param name="isIncludeDisasterRecoveryEndpoints"> Include the DisasterRecover endpoint if true. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CsmPublishingProfile(PublishingProfileFormat? format, bool? isIncludeDisasterRecoveryEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Format = format;
+            IsIncludeDisasterRecoveryEndpoints = isIncludeDisasterRecoveryEndpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

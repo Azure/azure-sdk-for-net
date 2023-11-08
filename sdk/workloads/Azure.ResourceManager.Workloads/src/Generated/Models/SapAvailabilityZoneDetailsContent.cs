@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -12,7 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP request to get list of availability zones. </summary>
     public partial class SapAvailabilityZoneDetailsContent
     {
-        /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
@@ -21,6 +26,24 @@ namespace Azure.ResourceManager.Workloads.Models
             AppLocation = appLocation;
             SapProduct = sapProduct;
             DatabaseType = databaseType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsContent"/>. </summary>
+        /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
+        /// <param name="sapProduct"> Defines the SAP Product type. </param>
+        /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapAvailabilityZoneDetailsContent(AzureLocation appLocation, SapProductType sapProduct, SapDatabaseType databaseType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AppLocation = appLocation;
+            SapProduct = sapProduct;
+            DatabaseType = databaseType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsContent"/> for deserialization. </summary>
+        internal SapAvailabilityZoneDetailsContent()
+        {
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>

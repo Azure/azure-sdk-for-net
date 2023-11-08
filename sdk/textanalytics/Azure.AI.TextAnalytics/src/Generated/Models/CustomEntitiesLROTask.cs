@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Use custom models to ease the process of information extraction from unstructured documents like contracts or financial documents. </summary>
     internal partial class CustomEntitiesLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of CustomEntitiesLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesLROTask"/>. </summary>
         public CustomEntitiesLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.CustomEntityRecognition;
         }
 
-        /// <summary> Initializes a new instance of CustomEntitiesLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesLROTask"/>. </summary>
         /// <param name="taskName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Custom Entities task. </param>
-        internal CustomEntitiesLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomEntitiesTaskParameters parameters) : base(taskName, kind)
+        internal CustomEntitiesLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, CustomEntitiesTaskParameters parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
             Kind = kind;

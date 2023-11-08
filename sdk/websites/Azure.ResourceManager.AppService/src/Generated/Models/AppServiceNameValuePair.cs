@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Name value pair. </summary>
     public partial class AppServiceNameValuePair
     {
-        /// <summary> Initializes a new instance of AppServiceNameValuePair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceNameValuePair"/>. </summary>
         public AppServiceNameValuePair()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceNameValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceNameValuePair"/>. </summary>
         /// <param name="name"> Pair name. </param>
         /// <param name="value"> Pair value. </param>
-        internal AppServiceNameValuePair(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceNameValuePair(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Pair name. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// </summary>
     public abstract partial class StorageMoverCredentials
     {
-        /// <summary> Initializes a new instance of StorageMoverCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverCredentials"/>. </summary>
         protected StorageMoverCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMoverCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverCredentials"/>. </summary>
         /// <param name="credentialType"> The Credentials type. </param>
-        internal StorageMoverCredentials(CredentialType credentialType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverCredentials(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CredentialType = credentialType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Credentials type. </summary>

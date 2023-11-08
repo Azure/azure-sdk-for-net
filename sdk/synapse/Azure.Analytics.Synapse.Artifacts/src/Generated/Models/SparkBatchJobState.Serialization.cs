@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,141 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkBatchJobStateConverter))]
-    public partial class SparkBatchJobState
+    public partial class SparkBatchJobState : IUtf8JsonSerializable, IJsonModel<SparkBatchJobState>
     {
-        internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkBatchJobState>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SparkBatchJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NotStartedAt))
+            {
+                if (NotStartedAt != null)
+                {
+                    writer.WritePropertyName("notStartedAt"u8);
+                    writer.WriteStringValue(NotStartedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("notStartedAt");
+                }
+            }
+            if (Optional.IsDefined(StartingAt))
+            {
+                if (StartingAt != null)
+                {
+                    writer.WritePropertyName("startingAt"u8);
+                    writer.WriteStringValue(StartingAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startingAt");
+                }
+            }
+            if (Optional.IsDefined(RunningAt))
+            {
+                if (RunningAt != null)
+                {
+                    writer.WritePropertyName("runningAt"u8);
+                    writer.WriteStringValue(RunningAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("runningAt");
+                }
+            }
+            if (Optional.IsDefined(DeadAt))
+            {
+                if (DeadAt != null)
+                {
+                    writer.WritePropertyName("deadAt"u8);
+                    writer.WriteStringValue(DeadAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("deadAt");
+                }
+            }
+            if (Optional.IsDefined(SuccessAt))
+            {
+                if (SuccessAt != null)
+                {
+                    writer.WritePropertyName("successAt"u8);
+                    writer.WriteStringValue(SuccessAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("successAt");
+                }
+            }
+            if (Optional.IsDefined(TerminatedAt))
+            {
+                if (TerminatedAt != null)
+                {
+                    writer.WritePropertyName("killedAt"u8);
+                    writer.WriteStringValue(TerminatedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("killedAt");
+                }
+            }
+            if (Optional.IsDefined(RecoveringAt))
+            {
+                if (RecoveringAt != null)
+                {
+                    writer.WritePropertyName("recoveringAt"u8);
+                    writer.WriteStringValue(RecoveringAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("recoveringAt");
+                }
+            }
+            if (Optional.IsDefined(CurrentState))
+            {
+                writer.WritePropertyName("currentState"u8);
+                writer.WriteStringValue(CurrentState);
+            }
+            if (Optional.IsDefined(JobCreationRequest))
+            {
+                writer.WritePropertyName("jobCreationRequest"u8);
+                writer.WriteObjectValue(JobCreationRequest);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SparkBatchJobState IJsonModel<SparkBatchJobState>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkBatchJobState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkBatchJobState(document.RootElement, options);
+        }
+
+        internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +164,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset?> recoveringAt = default;
             Optional<string> currentState = default;
             Optional<SparkRequest> jobCreationRequest = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"u8))
@@ -116,15 +252,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     jobCreationRequest = SparkRequest.DeserializeSparkRequest(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SparkBatchJobState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(runningAt), Optional.ToNullable(deadAt), Optional.ToNullable(successAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), currentState.Value, jobCreationRequest.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkBatchJobState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(runningAt), Optional.ToNullable(deadAt), Optional.ToNullable(successAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), currentState.Value, jobCreationRequest.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SparkBatchJobState>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkBatchJobState)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SparkBatchJobState IModel<SparkBatchJobState>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkBatchJobState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSparkBatchJobState(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SparkBatchJobState>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class SparkBatchJobStateConverter : JsonConverter<SparkBatchJobState>
         {
             public override void Write(Utf8JsonWriter writer, SparkBatchJobState model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override SparkBatchJobState Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

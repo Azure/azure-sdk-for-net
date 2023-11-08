@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The ExtractedSummarySentence. </summary>
     internal partial class ExtractedSummarySentence
     {
-        /// <summary> Initializes a new instance of ExtractedSummarySentence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtractedSummarySentence"/>. </summary>
         /// <param name="text"> The extracted sentence text. </param>
         /// <param name="rankScore"> A double value representing the relevance of the sentence within the summary. Higher values indicate higher importance. </param>
         /// <param name="offset"> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </param>
@@ -27,6 +31,26 @@ namespace Azure.AI.TextAnalytics.Models
             RankScore = rankScore;
             Offset = offset;
             Length = length;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtractedSummarySentence"/>. </summary>
+        /// <param name="text"> The extracted sentence text. </param>
+        /// <param name="rankScore"> A double value representing the relevance of the sentence within the summary. Higher values indicate higher importance. </param>
+        /// <param name="offset"> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </param>
+        /// <param name="length"> The length of the sentence. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtractedSummarySentence(string text, double rankScore, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            RankScore = rankScore;
+            Offset = offset;
+            Length = length;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtractedSummarySentence"/> for deserialization. </summary>
+        internal ExtractedSummarySentence()
+        {
         }
 
         /// <summary> The extracted sentence text. </summary>

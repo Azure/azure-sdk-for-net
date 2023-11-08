@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A list of remote device adapters. </summary>
     public partial class RemoteDeviceAdapterCollection
     {
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterCollection"/>. </summary>
         public RemoteDeviceAdapterCollection()
         {
             Value = new ChangeTrackingList<RemoteDeviceAdapter>();
         }
 
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterCollection"/>. </summary>
         /// <param name="value"> An array of remote device adapters. </param>
         /// <param name="continuationToken"> A continuation token to use in subsequent calls to enumerate through the remote device adapter collection. This is used when the collection contains too many results to return in one response. </param>
-        internal RemoteDeviceAdapterCollection(IList<RemoteDeviceAdapter> value, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteDeviceAdapterCollection(IList<RemoteDeviceAdapter> value, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of remote device adapters. </summary>

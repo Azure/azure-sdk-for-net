@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,26 +16,59 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkedIntegrationRuntimeRbacAuthorizationConverter))]
-    public partial class LinkedIntegrationRuntimeRbacAuthorization : IUtf8JsonSerializable
+    public partial class LinkedIntegrationRuntimeRbacAuthorization : IUtf8JsonSerializable, IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkedIntegrationRuntimeRbacAuthorization DeserializeLinkedIntegrationRuntimeRbacAuthorization(JsonElement element)
+        LinkedIntegrationRuntimeRbacAuthorization IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkedIntegrationRuntimeRbacAuthorization(document.RootElement, options);
+        }
+
+        internal static LinkedIntegrationRuntimeRbacAuthorization DeserializeLinkedIntegrationRuntimeRbacAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string resourceId = default;
             string authorizationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -45,9 +81,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     authorizationType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkedIntegrationRuntimeRbacAuthorization(authorizationType, resourceId);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkedIntegrationRuntimeRbacAuthorization(authorizationType, serializedAdditionalRawData, resourceId);
         }
+
+        BinaryData IModel<LinkedIntegrationRuntimeRbacAuthorization>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkedIntegrationRuntimeRbacAuthorization IModel<LinkedIntegrationRuntimeRbacAuthorization>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkedIntegrationRuntimeRbacAuthorization(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LinkedIntegrationRuntimeRbacAuthorization>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class LinkedIntegrationRuntimeRbacAuthorizationConverter : JsonConverter<LinkedIntegrationRuntimeRbacAuthorization>
         {
