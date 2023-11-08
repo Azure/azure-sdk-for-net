@@ -57,7 +57,7 @@ public class OpenAIClient
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
 
-        using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
+        using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.MessageClassifier = MessageClassifier200;
@@ -67,9 +67,9 @@ public class OpenAIClient
         return result;
     }
 
-    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
     {
-        ClientMessage message = _pipeline.CreateMessage();
+        PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
         MessageRequest request = message.Request;

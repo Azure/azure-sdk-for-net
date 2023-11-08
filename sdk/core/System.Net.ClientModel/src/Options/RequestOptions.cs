@@ -15,7 +15,7 @@ namespace System.Net.ClientModel;
 // Note: I was calling this RequestOptions, but I'm changing it back to RequestOptions.
 public class RequestOptions : PipelineOptions
 {
-    public virtual void Apply(ClientMessage message)
+    public virtual void Apply(PipelineMessage message)
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
