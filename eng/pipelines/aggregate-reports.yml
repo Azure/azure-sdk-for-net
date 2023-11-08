@@ -179,7 +179,22 @@ stages:
               softwareName: 'Azure SDK Libraries'
               softwareVersionNum: '$(OfficialBuildId)'
               isLargeApp: false
+              preserveLogsFolder: true
+              verbosityLevel: standard
             env:
               # azure-sdk-apiscan (81109e5f-0620-423c-a37a-c22fbf8973a7)
               AzureServicesAuthConnectionString: runAs=App;AppId=81109e5f-0620-423c-a37a-c22fbf8973a7;TenantId=72f988bf-86f1-41af-91ab-2d7cd011db47;AppKey=$(azure-sdk-apiscan-client-secret)
 
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+            displayName: 'Post Analysis (ApiScan)'
+            inputs:
+              GdnBreakAllTools: false
+              GdnBreakGdnToolApiScan: true
+              GdnBreakGdnToolApiScanSeverity: Warning
+            continueOnError: true
+
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+            displayName: 'Publish Analysis Logs'
+            inputs:
+              APIScan: true
+            condition: succeededOrFailed()
