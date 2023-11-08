@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Company information of the user to be passed to partners. </summary>
     public partial class CompanyInfo
     {
-        /// <summary> Initializes a new instance of CompanyInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompanyInfo"/>. </summary>
         public CompanyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of CompanyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompanyInfo"/>. </summary>
         /// <param name="domain"> Domain of the company. </param>
         /// <param name="business"> Business of the company. </param>
         /// <param name="employeesNumber"> Number of employees in the company. </param>
         /// <param name="state"> State of the company location. </param>
         /// <param name="country"> Country of the company location. </param>
-        internal CompanyInfo(string domain, string business, string employeesNumber, string state, string country)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompanyInfo(string domain, string business, string employeesNumber, string state, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Domain = domain;
             Business = business;
             EmployeesNumber = employeesNumber;
             State = state;
             Country = country;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Domain of the company. </summary>

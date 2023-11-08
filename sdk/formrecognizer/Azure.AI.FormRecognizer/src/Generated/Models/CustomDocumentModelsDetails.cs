@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Details regarding custom document models. </summary>
     internal partial class CustomDocumentModelsDetails
     {
-        /// <summary> Initializes a new instance of CustomDocumentModelsDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomDocumentModelsDetails"/>. </summary>
         /// <param name="count"> Number of custom document models in the current resource. </param>
         /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
         internal CustomDocumentModelsDetails(int count, int limit)
         {
             Count = count;
             Limit = limit;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomDocumentModelsDetails"/>. </summary>
+        /// <param name="count"> Number of custom document models in the current resource. </param>
+        /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomDocumentModelsDetails(int count, int limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Count = count;
+            Limit = limit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomDocumentModelsDetails"/> for deserialization. </summary>
+        internal CustomDocumentModelsDetails()
+        {
         }
 
         /// <summary> Number of custom document models in the current resource. </summary>

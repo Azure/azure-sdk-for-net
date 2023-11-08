@@ -5,15 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabResourceCost
+    public partial class DevTestLabResourceCost : IUtf8JsonSerializable, IJsonModel<DevTestLabResourceCost>
     {
-        internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabResourceCost>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DevTestLabResourceCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourcename"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (Optional.IsDefined(ResourceUniqueId))
+            {
+                writer.WritePropertyName("resourceUId"u8);
+                writer.WriteStringValue(ResourceUniqueId);
+            }
+            if (Optional.IsDefined(ResourceCost))
+            {
+                writer.WritePropertyName("resourceCost"u8);
+                writer.WriteNumberValue(ResourceCost.Value);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (Optional.IsDefined(ResourceOwner))
+            {
+                writer.WritePropertyName("resourceOwner"u8);
+                writer.WriteStringValue(ResourceOwner);
+            }
+            if (Optional.IsDefined(ResourcePricingTier))
+            {
+                writer.WritePropertyName("resourcePricingTier"u8);
+                writer.WriteStringValue(ResourcePricingTier);
+            }
+            if (Optional.IsDefined(ResourceStatus))
+            {
+                writer.WritePropertyName("resourceStatus"u8);
+                writer.WriteStringValue(ResourceStatus);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(ExternalResourceId))
+            {
+                writer.WritePropertyName("externalResourceId"u8);
+                writer.WriteStringValue(ExternalResourceId);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DevTestLabResourceCost IJsonModel<DevTestLabResourceCost>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabResourceCost(document.RootElement, options);
+        }
+
+        internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +113,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> resourceStatus = default;
             Optional<string> resourceId = default;
             Optional<string> externalResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourcename"u8))
@@ -78,8 +166,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     externalResourceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DevTestLabResourceCost>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DevTestLabResourceCost IModel<DevTestLabResourceCost>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDevTestLabResourceCost(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DevTestLabResourceCost>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

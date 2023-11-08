@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Error info. </summary>
     internal partial class Error
     {
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,19 +31,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Details = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Target of the error. </param>
         /// <param name="details"> List of detailed errors. </param>
         /// <param name="innererror"> Detailed error. </param>
-        internal Error(string code, string message, string target, IReadOnlyList<Error> details, InnerError innererror)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Error(string code, string message, string target, IReadOnlyList<Error> details, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             Innererror = innererror;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Error"/> for deserialization. </summary>
+        internal Error()
+        {
         }
 
         /// <summary> Error code. </summary>

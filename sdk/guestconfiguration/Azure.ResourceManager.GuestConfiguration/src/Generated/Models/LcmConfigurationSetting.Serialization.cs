@@ -5,15 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class LcmConfigurationSetting
+    public partial class LcmConfigurationSetting : IUtf8JsonSerializable, IJsonModel<LcmConfigurationSetting>
     {
-        internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LcmConfigurationSetting>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LcmConfigurationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ConfigurationMode))
+                {
+                    writer.WritePropertyName("configurationMode"u8);
+                    writer.WriteStringValue(ConfigurationMode.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsModuleOverwriteAllowed))
+                {
+                    writer.WritePropertyName("allowModuleOverwrite"u8);
+                    writer.WriteBooleanValue(IsModuleOverwriteAllowed.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ActionAfterReboot))
+                {
+                    writer.WritePropertyName("actionAfterReboot"u8);
+                    writer.WriteStringValue(ActionAfterReboot.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RefreshFrequencyInMins))
+                {
+                    writer.WritePropertyName("refreshFrequencyMins"u8);
+                    writer.WriteNumberValue(RefreshFrequencyInMins.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RebootIfNeeded))
+                {
+                    writer.WritePropertyName("rebootIfNeeded"u8);
+                    writer.WriteBooleanValue(RebootIfNeeded.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ConfigurationModeFrequencyInMins))
+                {
+                    writer.WritePropertyName("configurationModeFrequencyMins"u8);
+                    writer.WriteNumberValue(ConfigurationModeFrequencyInMins.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LcmConfigurationSetting IJsonModel<LcmConfigurationSetting>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLcmConfigurationSetting(document.RootElement, options);
+        }
+
+        internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +113,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<float> refreshFrequencyMins = default;
             Optional<bool> rebootIfNeeded = default;
             Optional<float> configurationModeFrequencyMins = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationMode"u8))
@@ -80,8 +171,38 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     configurationModeFrequencyMins = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LcmConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LcmConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LcmConfigurationSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LcmConfigurationSetting IModel<LcmConfigurationSetting>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLcmConfigurationSetting(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LcmConfigurationSetting>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

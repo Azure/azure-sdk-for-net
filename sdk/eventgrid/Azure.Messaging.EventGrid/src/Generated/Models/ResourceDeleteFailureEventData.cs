@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -12,12 +14,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteFailure event. This is raised when a resource delete operation fails. </summary>
     public partial class ResourceDeleteFailureEventData
     {
-        /// <summary> Initializes a new instance of ResourceDeleteFailureEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceDeleteFailureEventData"/>. </summary>
         internal ResourceDeleteFailureEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceDeleteFailureEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceDeleteFailureEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>
@@ -29,7 +34,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="claimsJson"> The properties of the claims. </param>
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequestJson"> The details of the operation. </param>
-        internal ResourceDeleteFailureEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceDeleteFailureEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
@@ -42,6 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ClaimsJson = claimsJson;
             CorrelationId = correlationId;
             HttpRequestJson = httpRequestJson;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The tenant ID of the resource. </summary>

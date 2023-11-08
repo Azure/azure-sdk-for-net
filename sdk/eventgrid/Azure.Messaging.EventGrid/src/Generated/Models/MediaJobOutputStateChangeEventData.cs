@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Media.JobOutputStateChange event. </summary>
     public partial class MediaJobOutputStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobOutputStateChangeEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputStateChangeEventData"/>. </summary>
         internal MediaJobOutputStateChangeEventData()
         {
             JobCorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputStateChangeEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputStateChangeEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
@@ -27,11 +31,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
-        internal MediaJobOutputStateChangeEventData(MediaJobState? previousState, MediaJobOutput output, IReadOnlyDictionary<string, string> jobCorrelationData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobOutputStateChangeEventData(MediaJobState? previousState, MediaJobOutput output, IReadOnlyDictionary<string, string> jobCorrelationData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreviousState = previousState;
             Output = output;
             JobCorrelationData = jobCorrelationData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The previous state of the Job. </summary>

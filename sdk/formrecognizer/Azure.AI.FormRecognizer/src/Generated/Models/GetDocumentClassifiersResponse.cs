@@ -15,7 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> List document classifiers response object. </summary>
     internal partial class GetDocumentClassifiersResponse
     {
-        /// <summary> Initializes a new instance of GetDocumentClassifiersResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetDocumentClassifiersResponse"/>. </summary>
         /// <param name="value"> List of document classifiers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GetDocumentClassifiersResponse(IEnumerable<DocumentClassifierDetails> value)
@@ -25,13 +28,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetDocumentClassifiersResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDocumentClassifiersResponse"/>. </summary>
         /// <param name="value"> List of document classifiers. </param>
         /// <param name="nextLink"> Link to the next page of document classifiers. </param>
-        internal GetDocumentClassifiersResponse(IReadOnlyList<DocumentClassifierDetails> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetDocumentClassifiersResponse(IReadOnlyList<DocumentClassifierDetails> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetDocumentClassifiersResponse"/> for deserialization. </summary>
+        internal GetDocumentClassifiersResponse()
+        {
         }
 
         /// <summary> List of document classifiers. </summary>

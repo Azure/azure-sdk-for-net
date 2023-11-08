@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Detail of action on the app. </summary>
     public partial class AppEventTypeDetail
     {
-        /// <summary> Initializes a new instance of AppEventTypeDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
         internal AppEventTypeDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of AppEventTypeDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
         /// <param name="action"> Type of action of the operation. </param>
-        internal AppEventTypeDetail(AppAction? action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppEventTypeDetail(AppAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of action of the operation. </summary>

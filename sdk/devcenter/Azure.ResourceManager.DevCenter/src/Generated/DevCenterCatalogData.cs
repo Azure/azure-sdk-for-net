@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterCatalogData : ResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterCatalogData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogData"/>. </summary>
         public DevCenterCatalogData()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,13 +37,15 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="syncState"> The synchronization state of the catalog. </param>
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
-        internal DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, DateTimeOffset? lastSyncOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, DateTimeOffset? lastSyncOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GitHub = gitHub;
             AdoGit = adoGit;
             ProvisioningState = provisioningState;
             SyncState = syncState;
             LastSyncOn = lastSyncOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties for a GitHub catalog type. </summary>

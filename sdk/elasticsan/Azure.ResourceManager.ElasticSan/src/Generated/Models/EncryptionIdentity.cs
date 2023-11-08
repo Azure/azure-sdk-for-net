@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Encryption identity for the volume group. </summary>
     internal partial class EncryptionIdentity
     {
-        /// <summary> Initializes a new instance of EncryptionIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
         public EncryptionIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
         /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </param>
-        internal EncryptionIdentity(string encryptionUserAssignedIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionIdentity(string encryptionUserAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EncryptionUserAssignedIdentity = encryptionUserAssignedIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>

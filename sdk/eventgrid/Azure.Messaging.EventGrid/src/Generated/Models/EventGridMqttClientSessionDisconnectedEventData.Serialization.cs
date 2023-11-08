@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,77 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(EventGridMqttClientSessionDisconnectedEventDataConverter))]
-    public partial class EventGridMqttClientSessionDisconnectedEventData
+    public partial class EventGridMqttClientSessionDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<EventGridMqttClientSessionDisconnectedEventData>
     {
-        internal static EventGridMqttClientSessionDisconnectedEventData DeserializeEventGridMqttClientSessionDisconnectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMqttClientSessionDisconnectedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EventGridMqttClientSessionDisconnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ClientSessionName))
+            {
+                writer.WritePropertyName("clientSessionName"u8);
+                writer.WriteStringValue(ClientSessionName);
+            }
+            if (Optional.IsDefined(SequenceNumber))
+            {
+                writer.WritePropertyName("sequenceNumber"u8);
+                writer.WriteNumberValue(SequenceNumber.Value);
+            }
+            if (Optional.IsDefined(DisconnectionReason))
+            {
+                writer.WritePropertyName("disconnectionReason"u8);
+                writer.WriteStringValue(DisconnectionReason.Value.ToString());
+            }
+            if (Optional.IsDefined(ClientAuthenticationName))
+            {
+                writer.WritePropertyName("clientAuthenticationName"u8);
+                writer.WriteStringValue(ClientAuthenticationName);
+            }
+            if (Optional.IsDefined(ClientName))
+            {
+                writer.WritePropertyName("clientName"u8);
+                writer.WriteStringValue(ClientName);
+            }
+            if (Optional.IsDefined(NamespaceName))
+            {
+                writer.WritePropertyName("namespaceName"u8);
+                writer.WriteStringValue(NamespaceName);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EventGridMqttClientSessionDisconnectedEventData IJsonModel<EventGridMqttClientSessionDisconnectedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridMqttClientSessionDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridMqttClientSessionDisconnectedEventData(document.RootElement, options);
+        }
+
+        internal static EventGridMqttClientSessionDisconnectedEventData DeserializeEventGridMqttClientSessionDisconnectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +97,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> clientAuthenticationName = default;
             Optional<string> clientName = default;
             Optional<string> namespaceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientSessionName"u8))
@@ -67,15 +139,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     namespaceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridMqttClientSessionDisconnectedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, clientSessionName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(disconnectionReason));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridMqttClientSessionDisconnectedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, serializedAdditionalRawData, clientSessionName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(disconnectionReason));
         }
+
+        BinaryData IModel<EventGridMqttClientSessionDisconnectedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridMqttClientSessionDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventGridMqttClientSessionDisconnectedEventData IModel<EventGridMqttClientSessionDisconnectedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridMqttClientSessionDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventGridMqttClientSessionDisconnectedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EventGridMqttClientSessionDisconnectedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class EventGridMqttClientSessionDisconnectedEventDataConverter : JsonConverter<EventGridMqttClientSessionDisconnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientSessionDisconnectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override EventGridMqttClientSessionDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

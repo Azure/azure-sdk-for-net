@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Data used when creating a volume snapshot. </summary>
     public partial class SnapshotCreationData
     {
-        /// <summary> Initializes a new instance of SnapshotCreationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotCreationData"/>. </summary>
         /// <param name="sourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         public SnapshotCreationData(ResourceIdentifier sourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             SourceId = sourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotCreationData"/>. </summary>
+        /// <param name="sourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotCreationData(ResourceIdentifier sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceId = sourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotCreationData"/> for deserialization. </summary>
+        internal SnapshotCreationData()
+        {
         }
 
         /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>

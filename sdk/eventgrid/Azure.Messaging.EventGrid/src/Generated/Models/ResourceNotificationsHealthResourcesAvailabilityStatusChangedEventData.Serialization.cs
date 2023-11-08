@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,62 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventDataConverter))]
-    public partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData
+    public partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData : IUtf8JsonSerializable, IJsonModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>
     {
-        internal static ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData DeserializeResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceDetails))
+            {
+                writer.WritePropertyName("resourceInfo"u8);
+                writer.WriteObjectValue(ResourceDetails);
+            }
+            if (Optional.IsDefined(OperationalDetails))
+            {
+                writer.WritePropertyName("operationalInfo"u8);
+                writer.WriteObjectValue(OperationalDetails);
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData IJsonModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(document.RootElement, options);
+        }
+
+        internal static ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData DeserializeResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +79,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<ResourceNotificationsResourceUpdatedDetails> resourceInfo = default;
             Optional<ResourceNotificationsOperationalDetails> operationalInfo = default;
             Optional<string> apiVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceInfo"u8))
@@ -49,15 +106,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(resourceInfo.Value, operationalInfo.Value, apiVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(resourceInfo.Value, operationalInfo.Value, apiVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData IModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventDataConverter : JsonConverter<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

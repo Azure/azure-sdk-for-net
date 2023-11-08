@@ -5,21 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
-    public partial class ControllerConnectionDetailsList
+    public partial class ControllerConnectionDetailsList : IUtf8JsonSerializable, IJsonModel<ControllerConnectionDetailsList>
     {
-        internal static ControllerConnectionDetailsList DeserializeControllerConnectionDetailsList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControllerConnectionDetailsList>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ControllerConnectionDetailsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ConnectionDetailsList))
+            {
+                writer.WritePropertyName("connectionDetailsList"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConnectionDetailsList)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ControllerConnectionDetailsList IJsonModel<ControllerConnectionDetailsList>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeControllerConnectionDetailsList(document.RootElement, options);
+        }
+
+        internal static ControllerConnectionDetailsList DeserializeControllerConnectionDetailsList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ControllerConnectionDetails>> connectionDetailsList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionDetailsList"u8))
@@ -36,8 +88,38 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     connectionDetailsList = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ControllerConnectionDetailsList(Optional.ToList(connectionDetailsList));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ControllerConnectionDetailsList(Optional.ToList(connectionDetailsList), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ControllerConnectionDetailsList>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ControllerConnectionDetailsList IModel<ControllerConnectionDetailsList>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ControllerConnectionDetailsList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeControllerConnectionDetailsList(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ControllerConnectionDetailsList>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

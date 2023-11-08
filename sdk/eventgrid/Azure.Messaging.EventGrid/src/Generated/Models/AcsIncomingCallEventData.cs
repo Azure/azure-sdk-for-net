@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.IncomingCall event. </summary>
     public partial class AcsIncomingCallEventData
     {
-        /// <summary> Initializes a new instance of AcsIncomingCallEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
         internal AcsIncomingCallEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsIncomingCallEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
         /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
         /// <param name="serverCallId"> The Id of the server call. </param>
@@ -23,7 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
-        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, string correlationId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, string correlationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ToCommunicationIdentifier = toCommunicationIdentifier;
             FromCommunicationIdentifier = fromCommunicationIdentifier;
@@ -32,6 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CustomContext = customContext;
             IncomingCallContext = incomingCallContext;
             CorrelationId = correlationId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The communication identifier of the target user. </summary>

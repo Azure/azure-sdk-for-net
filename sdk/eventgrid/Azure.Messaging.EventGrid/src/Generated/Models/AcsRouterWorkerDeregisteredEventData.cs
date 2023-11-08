@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeregistered event. </summary>
     public partial class AcsRouterWorkerDeregisteredEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterWorkerDeregisteredEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerDeregisteredEventData"/>. </summary>
         internal AcsRouterWorkerDeregisteredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterWorkerDeregisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerDeregisteredEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Deregistered Worker Id. </param>
-        internal AcsRouterWorkerDeregisteredEventData(string workerId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterWorkerDeregisteredEventData(string workerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkerId = workerId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Router Worker Deregistered Worker Id. </summary>

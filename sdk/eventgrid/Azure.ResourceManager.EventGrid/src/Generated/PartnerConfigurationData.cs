@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerConfigurationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PartnerConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PartnerConfigurationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="location"> The location. </param>
         /// <param name="partnerAuthorization"> The details of authorized partners. </param>
         /// <param name="provisioningState"> Provisioning state of the partner configuration. </param>
-        internal PartnerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerAuthorization partnerAuthorization, PartnerConfigurationProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerAuthorization partnerAuthorization, PartnerConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PartnerAuthorization = partnerAuthorization;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationData"/> for deserialization. </summary>
+        internal PartnerConfigurationData()
+        {
         }
 
         /// <summary> The details of authorized partners. </summary>

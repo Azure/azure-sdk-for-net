@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GraphServices.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> Property bag from billing account. </summary>
     public partial class GraphServicesAccountResourceProperties
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public GraphServicesAccountResourceProperties(string appId)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.GraphServices.Models
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <param name="billingPlanId"> Billing Plan Id. </param>
-        internal GraphServicesAccountResourceProperties(GraphServicesProvisioningState? provisioningState, string appId, string billingPlanId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GraphServicesAccountResourceProperties(GraphServicesProvisioningState? provisioningState, string appId, string billingPlanId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AppId = appId;
             BillingPlanId = billingPlanId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/> for deserialization. </summary>
+        internal GraphServicesAccountResourceProperties()
+        {
         }
 
         /// <summary> Provisioning state. </summary>

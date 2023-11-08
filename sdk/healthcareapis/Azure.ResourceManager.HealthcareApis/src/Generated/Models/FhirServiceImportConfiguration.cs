@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Import operation configuration information. </summary>
     public partial class FhirServiceImportConfiguration
     {
-        /// <summary> Initializes a new instance of FhirServiceImportConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FhirServiceImportConfiguration"/>. </summary>
         public FhirServiceImportConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FhirServiceImportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceImportConfiguration"/>. </summary>
         /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
         /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
         /// <param name="isEnabled"> If the import operation is enabled. </param>
-        internal FhirServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FhirServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IntegrationDataStore = integrationDataStore;
             IsInitialImportMode = isInitialImportMode;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the default integration storage account. </summary>

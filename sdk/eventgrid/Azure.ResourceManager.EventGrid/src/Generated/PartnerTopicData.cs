@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerTopicData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PartnerTopicData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PartnerTopicData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.EventGrid
         /// This will be helpful to remove any ambiguity of the origin of creation of the partner topic for the customer.
         /// </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
-        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? partnerRegistrationImmutableId, string source, PartnerTopicEventTypeInfo eventTypeInfo, DateTimeOffset? expireOnIfNotActivated, PartnerTopicProvisioningState? provisioningState, PartnerTopicActivationState? activationState, string partnerTopicFriendlyDescription, string messageForActivation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? partnerRegistrationImmutableId, string source, PartnerTopicEventTypeInfo eventTypeInfo, DateTimeOffset? expireOnIfNotActivated, PartnerTopicProvisioningState? provisioningState, PartnerTopicActivationState? activationState, string partnerTopicFriendlyDescription, string messageForActivation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
@@ -58,6 +62,12 @@ namespace Azure.ResourceManager.EventGrid
             ActivationState = activationState;
             PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
             MessageForActivation = messageForActivation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicData"/> for deserialization. </summary>
+        internal PartnerTopicData()
+        {
         }
 
         /// <summary> Identity information for the Partner Topic resource. </summary>

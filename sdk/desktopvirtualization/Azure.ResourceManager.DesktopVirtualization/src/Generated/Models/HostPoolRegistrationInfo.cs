@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents a RegistrationInfo definition. </summary>
     public partial class HostPoolRegistrationInfo
     {
-        /// <summary> Initializes a new instance of HostPoolRegistrationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostPoolRegistrationInfo"/>. </summary>
         public HostPoolRegistrationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HostPoolRegistrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolRegistrationInfo"/>. </summary>
         /// <param name="expireOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
-        internal HostPoolRegistrationInfo(DateTimeOffset? expireOn, string token, HostPoolRegistrationTokenOperation? registrationTokenOperation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostPoolRegistrationInfo(DateTimeOffset? expireOn, string token, HostPoolRegistrationTokenOperation? registrationTokenOperation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpireOn = expireOn;
             Token = token;
             RegistrationTokenOperation = registrationTokenOperation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Expiration time of registration token. </summary>

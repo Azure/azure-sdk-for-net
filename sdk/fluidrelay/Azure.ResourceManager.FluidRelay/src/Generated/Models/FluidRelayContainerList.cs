@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FluidRelay;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> Paged response. </summary>
     internal partial class FluidRelayContainerList
     {
-        /// <summary> Initializes a new instance of FluidRelayContainerList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FluidRelayContainerList"/>. </summary>
         internal FluidRelayContainerList()
         {
             Value = new ChangeTrackingList<FluidRelayContainerData>();
         }
 
-        /// <summary> Initializes a new instance of FluidRelayContainerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayContainerList"/>. </summary>
         /// <param name="value"> A sequence of FluidRelay containers. </param>
         /// <param name="nextLink"> A link to the next page of results, if any. </param>
-        internal FluidRelayContainerList(IReadOnlyList<FluidRelayContainerData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FluidRelayContainerList(IReadOnlyList<FluidRelayContainerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A sequence of FluidRelay containers. </summary>

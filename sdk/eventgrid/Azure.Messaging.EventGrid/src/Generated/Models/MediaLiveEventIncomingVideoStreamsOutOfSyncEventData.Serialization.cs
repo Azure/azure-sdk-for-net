@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,87 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaLiveEventIncomingVideoStreamsOutOfSyncEventDataConverter))]
-    public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
+    public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>
     {
-        internal static MediaLiveEventIncomingVideoStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FirstTimestamp))
+                {
+                    writer.WritePropertyName("firstTimestamp"u8);
+                    writer.WriteStringValue(FirstTimestamp);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FirstDuration))
+                {
+                    writer.WritePropertyName("firstDuration"u8);
+                    writer.WriteStringValue(FirstDuration);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SecondTimestamp))
+                {
+                    writer.WritePropertyName("secondTimestamp"u8);
+                    writer.WriteStringValue(SecondTimestamp);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SecondDuration))
+                {
+                    writer.WritePropertyName("secondDuration"u8);
+                    writer.WriteStringValue(SecondDuration);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Timescale))
+                {
+                    writer.WritePropertyName("timescale"u8);
+                    writer.WriteStringValue(Timescale);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaLiveEventIncomingVideoStreamsOutOfSyncEventData IJsonModel<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIncomingVideoStreamsOutOfSyncEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(document.RootElement, options);
+        }
+
+        internal static MediaLiveEventIncomingVideoStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +106,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> secondTimestamp = default;
             Optional<string> secondDuration = default;
             Optional<string> timescale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstTimestamp"u8))
@@ -53,15 +135,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     timescale = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(firstTimestamp.Value, firstDuration.Value, secondTimestamp.Value, secondDuration.Value, timescale.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(firstTimestamp.Value, firstDuration.Value, secondTimestamp.Value, secondDuration.Value, timescale.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIncomingVideoStreamsOutOfSyncEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaLiveEventIncomingVideoStreamsOutOfSyncEventData IModel<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventIncomingVideoStreamsOutOfSyncEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventIncomingVideoStreamsOutOfSyncEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaLiveEventIncomingVideoStreamsOutOfSyncEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

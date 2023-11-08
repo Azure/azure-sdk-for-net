@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Represents a list of cluster pool versions. </summary>
     internal partial class ClusterPoolVersionListResult
     {
-        /// <summary> Initializes a new instance of ClusterPoolVersionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolVersionListResult"/>. </summary>
         internal ClusterPoolVersionListResult()
         {
             Value = new ChangeTrackingList<ClusterPoolVersion>();
         }
 
-        /// <summary> Initializes a new instance of ClusterPoolVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolVersionListResult"/>. </summary>
         /// <param name="value"> The list of cluster pool versions. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ClusterPoolVersionListResult(IReadOnlyList<ClusterPoolVersion> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterPoolVersionListResult(IReadOnlyList<ClusterPoolVersion> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of cluster pool versions. </summary>

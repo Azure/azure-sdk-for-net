@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class TopicSpaceData : ResourceData
     {
-        /// <summary> Initializes a new instance of TopicSpaceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicSpaceData"/>. </summary>
         public TopicSpaceData()
         {
             TopicTemplates = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TopicSpaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,11 +42,13 @@ namespace Azure.ResourceManager.EventGrid
         ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the TopicSpace resource. </param>
-        internal TopicSpaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> topicTemplates, TopicSpaceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicSpaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> topicTemplates, TopicSpaceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             TopicTemplates = topicTemplates;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description for the Topic Space resource. </summary>

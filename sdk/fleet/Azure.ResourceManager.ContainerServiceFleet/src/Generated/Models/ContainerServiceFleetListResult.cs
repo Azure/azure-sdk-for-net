@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The response of a Fleet list operation. </summary>
     internal partial class ContainerServiceFleetListResult
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetListResult"/>. </summary>
         /// <param name="value"> The Fleet items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContainerServiceFleetListResult(IEnumerable<ContainerServiceFleetData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetListResult"/>. </summary>
         /// <param name="value"> The Fleet items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal ContainerServiceFleetListResult(IReadOnlyList<ContainerServiceFleetData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetListResult(IReadOnlyList<ContainerServiceFleetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetListResult"/> for deserialization. </summary>
+        internal ContainerServiceFleetListResult()
+        {
         }
 
         /// <summary> The Fleet items on this page. </summary>

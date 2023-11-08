@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A collection of Fhir services. </summary>
     internal partial class FhirServiceCollection
     {
-        /// <summary> Initializes a new instance of FhirServiceCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FhirServiceCollection"/>. </summary>
         internal FhirServiceCollection()
         {
             Value = new ChangeTrackingList<FhirServiceData>();
         }
 
-        /// <summary> Initializes a new instance of FhirServiceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Fhir Services. </param>
         /// <param name="value"> The list of Fhir Services. </param>
-        internal FhirServiceCollection(string nextLink, IReadOnlyList<FhirServiceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FhirServiceCollection(string nextLink, IReadOnlyList<FhirServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of Fhir Services. </summary>

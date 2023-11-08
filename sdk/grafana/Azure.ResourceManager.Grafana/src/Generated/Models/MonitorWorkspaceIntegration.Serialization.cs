@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class MonitorWorkspaceIntegration : IUtf8JsonSerializable
+    public partial class MonitorWorkspaceIntegration : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceIntegration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceIntegration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MonitorWorkspaceIntegration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitorWorkspaceResourceId))
@@ -20,16 +26,47 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
                 writer.WriteStringValue(MonitorWorkspaceResourceId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorWorkspaceIntegration DeserializeMonitorWorkspaceIntegration(JsonElement element)
+        MonitorWorkspaceIntegration IJsonModel<MonitorWorkspaceIntegration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorWorkspaceIntegration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorWorkspaceIntegration(document.RootElement, options);
+        }
+
+        internal static MonitorWorkspaceIntegration DeserializeMonitorWorkspaceIntegration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> azureMonitorWorkspaceResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorWorkspaceResourceId"u8))
@@ -41,8 +78,38 @@ namespace Azure.ResourceManager.Grafana.Models
                     azureMonitorWorkspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorWorkspaceIntegration(azureMonitorWorkspaceResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitorWorkspaceIntegration(azureMonitorWorkspaceResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MonitorWorkspaceIntegration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorWorkspaceIntegration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitorWorkspaceIntegration IModel<MonitorWorkspaceIntegration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorWorkspaceIntegration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitorWorkspaceIntegration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MonitorWorkspaceIntegration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

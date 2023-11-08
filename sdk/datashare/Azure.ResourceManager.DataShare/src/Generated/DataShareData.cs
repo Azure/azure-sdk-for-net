@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareData"/>. </summary>
         public DataShareData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="terms"> Share terms. </param>
         /// <param name="userEmail"> Email of the user who created the resource. </param>
         /// <param name="userName"> Name of the user who created the resource. </param>
-        internal DataShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string description, DataShareProvisioningState? provisioningState, DataShareKind? shareKind, string terms, string userEmail, string userName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string description, DataShareProvisioningState? provisioningState, DataShareKind? shareKind, string terms, string userEmail, string userName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             Description = description;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.DataShare
             Terms = terms;
             UserEmail = userEmail;
             UserName = userName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time at which the share was created. </summary>

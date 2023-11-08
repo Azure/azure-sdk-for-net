@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> A group to be updated. </summary>
     public partial class ContainerServiceFleetUpdateGroup
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
         /// <param name="name">
         /// Name of the group.
         /// It must match a group name of an existing fleet member.
@@ -24,6 +28,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
+        /// <param name="name">
+        /// Name of the group.
+        /// It must match a group name of an existing fleet member.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateGroup(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/> for deserialization. </summary>
+        internal ContainerServiceFleetUpdateGroup()
+        {
         }
 
         /// <summary>

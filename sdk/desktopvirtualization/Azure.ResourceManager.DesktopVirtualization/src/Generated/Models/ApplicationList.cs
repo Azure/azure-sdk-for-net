@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of Application definitions. </summary>
     internal partial class ApplicationList
     {
-        /// <summary> Initializes a new instance of ApplicationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationList"/>. </summary>
         internal ApplicationList()
         {
             Value = new ChangeTrackingList<VirtualApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationList"/>. </summary>
         /// <param name="value"> List of Application definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal ApplicationList(IReadOnlyList<VirtualApplicationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationList(IReadOnlyList<VirtualApplicationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Application definitions. </summary>

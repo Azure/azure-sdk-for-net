@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Input of CheckNameAvailability API. </summary>
     public partial class FrontDoorNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of FrontDoorNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
         /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
             Name = name;
             ResourceType = resourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The resource name to validate. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorNameAvailabilityContent(string name, FrontDoorResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNameAvailabilityContent"/> for deserialization. </summary>
+        internal FrontDoorNameAvailabilityContent()
+        {
         }
 
         /// <summary> The resource name to validate. </summary>

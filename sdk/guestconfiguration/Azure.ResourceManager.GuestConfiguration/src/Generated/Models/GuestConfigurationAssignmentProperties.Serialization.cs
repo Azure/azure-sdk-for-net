@@ -7,20 +7,92 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationAssignmentProperties : IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentProperties : IUtf8JsonSerializable, IJsonModel<GuestConfigurationAssignmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationAssignmentProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GuestConfigurationAssignmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TargetResourceId))
+                {
+                    if (TargetResourceId != null)
+                    {
+                        writer.WritePropertyName("targetResourceId"u8);
+                        writer.WriteStringValue(TargetResourceId);
+                    }
+                    else
+                    {
+                        writer.WriteNull("targetResourceId");
+                    }
+                }
+            }
             if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
                 writer.WriteObjectValue(GuestConfiguration);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ComplianceStatus))
+                {
+                    writer.WritePropertyName("complianceStatus"u8);
+                    writer.WriteStringValue(ComplianceStatus.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastComplianceStatusCheckedOn))
+                {
+                    if (LastComplianceStatusCheckedOn != null)
+                    {
+                        writer.WritePropertyName("lastComplianceStatusChecked"u8);
+                        writer.WriteStringValue(LastComplianceStatusCheckedOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("lastComplianceStatusChecked");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LatestReportId))
+                {
+                    if (LatestReportId != null)
+                    {
+                        writer.WritePropertyName("latestReportId"u8);
+                        writer.WriteStringValue(LatestReportId);
+                    }
+                    else
+                    {
+                        writer.WriteNull("latestReportId");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ParameterHash))
+                {
+                    if (ParameterHash != null)
+                    {
+                        writer.WritePropertyName("parameterHash"u8);
+                        writer.WriteStringValue(ParameterHash);
+                    }
+                    else
+                    {
+                        writer.WriteNull("parameterHash");
+                    }
+                }
             }
             if (Optional.IsDefined(LatestAssignmentReport))
             {
@@ -31,6 +103,51 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AssignmentHash))
+                {
+                    if (AssignmentHash != null)
+                    {
+                        writer.WritePropertyName("assignmentHash"u8);
+                        writer.WriteStringValue(AssignmentHash);
+                    }
+                    else
+                    {
+                        writer.WriteNull("assignmentHash");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    if (ProvisioningState != null)
+                    {
+                        writer.WritePropertyName("provisioningState"u8);
+                        writer.WriteStringValue(ProvisioningState.Value.ToString());
+                    }
+                    else
+                    {
+                        writer.WriteNull("provisioningState");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    if (ResourceType != null)
+                    {
+                        writer.WritePropertyName("resourceType"u8);
+                        writer.WriteStringValue(ResourceType);
+                    }
+                    else
+                    {
+                        writer.WriteNull("resourceType");
+                    }
+                }
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
@@ -49,11 +166,40 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("vmssVMList");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GuestConfigurationAssignmentProperties DeserializeGuestConfigurationAssignmentProperties(JsonElement element)
+        GuestConfigurationAssignmentProperties IJsonModel<GuestConfigurationAssignmentProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGuestConfigurationAssignmentProperties(document.RootElement, options);
+        }
+
+        internal static GuestConfigurationAssignmentProperties DeserializeGuestConfigurationAssignmentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +216,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<GuestConfigurationProvisioningState?> provisioningState = default;
             Optional<string> resourceType = default;
             Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"u8))
@@ -189,8 +337,38 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     vmssVmList = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, Optional.ToList(vmssVmList));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, Optional.ToList(vmssVmList), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GuestConfigurationAssignmentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GuestConfigurationAssignmentProperties IModel<GuestConfigurationAssignmentProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGuestConfigurationAssignmentProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GuestConfigurationAssignmentProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

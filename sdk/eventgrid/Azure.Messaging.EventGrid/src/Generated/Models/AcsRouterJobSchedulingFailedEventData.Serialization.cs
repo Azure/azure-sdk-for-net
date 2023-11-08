@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,124 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsRouterJobSchedulingFailedEventDataConverter))]
-    public partial class AcsRouterJobSchedulingFailedEventData
+    public partial class AcsRouterJobSchedulingFailedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobSchedulingFailedEventData>
     {
-        internal static AcsRouterJobSchedulingFailedEventData DeserializeAcsRouterJobSchedulingFailedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobSchedulingFailedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AcsRouterJobSchedulingFailedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (Optional.IsCollectionDefined(ExpiredAttachedWorkerSelectors))
+            {
+                writer.WritePropertyName("expiredAttachedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredAttachedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ExpiredRequestedWorkerSelectors))
+            {
+                writer.WritePropertyName("expiredRequestedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredRequestedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ScheduledOn))
+            {
+                writer.WritePropertyName("scheduledOn"u8);
+                writer.WriteStringValue(ScheduledOn.Value, "O");
+            }
+            if (Optional.IsDefined(FailureReason))
+            {
+                writer.WritePropertyName("failureReason"u8);
+                writer.WriteStringValue(FailureReason);
+            }
+            if (Optional.IsDefined(QueueId))
+            {
+                writer.WritePropertyName("queueId"u8);
+                writer.WriteStringValue(QueueId);
+            }
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in Labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(ChannelReference))
+            {
+                writer.WritePropertyName("channelReference"u8);
+                writer.WriteStringValue(ChannelReference);
+            }
+            if (Optional.IsDefined(ChannelId))
+            {
+                writer.WritePropertyName("channelId"u8);
+                writer.WriteStringValue(ChannelId);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsRouterJobSchedulingFailedEventData IJsonModel<AcsRouterJobSchedulingFailedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterJobSchedulingFailedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsRouterJobSchedulingFailedEventData(document.RootElement, options);
+        }
+
+        internal static AcsRouterJobSchedulingFailedEventData DeserializeAcsRouterJobSchedulingFailedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +149,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
             Optional<string> channelId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -134,15 +252,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     channelId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsRouterJobSchedulingFailedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToNullable(priority), Optional.ToList(expiredAttachedWorkerSelectors), Optional.ToList(expiredRequestedWorkerSelectors), Optional.ToNullable(scheduledOn), failureReason.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsRouterJobSchedulingFailedEventData(jobId.Value, channelReference.Value, channelId.Value, serializedAdditionalRawData, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToNullable(priority), Optional.ToList(expiredAttachedWorkerSelectors), Optional.ToList(expiredRequestedWorkerSelectors), Optional.ToNullable(scheduledOn), failureReason.Value);
         }
+
+        BinaryData IModel<AcsRouterJobSchedulingFailedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterJobSchedulingFailedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsRouterJobSchedulingFailedEventData IModel<AcsRouterJobSchedulingFailedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterJobSchedulingFailedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsRouterJobSchedulingFailedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AcsRouterJobSchedulingFailedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class AcsRouterJobSchedulingFailedEventDataConverter : JsonConverter<AcsRouterJobSchedulingFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobSchedulingFailedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsRouterJobSchedulingFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

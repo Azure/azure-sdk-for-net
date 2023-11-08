@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -20,13 +21,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// </summary>
     public partial class HardwareSecurityModulesPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateEndpointConnectionData"/>. </summary>
         public HardwareSecurityModulesPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,13 +40,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        internal HardwareSecurityModulesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, SubResource privateEndpoint, HardwareSecurityModulesPrivateLinkServiceConnectionState connectionState, HardwareSecurityModulesPrivateEndpointConnectionProvisioningState? provisioningState, IReadOnlyList<string> groupIds) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareSecurityModulesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, SubResource privateEndpoint, HardwareSecurityModulesPrivateLinkServiceConnectionState connectionState, HardwareSecurityModulesPrivateEndpointConnectionProvisioningState? provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             GroupIds = groupIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>

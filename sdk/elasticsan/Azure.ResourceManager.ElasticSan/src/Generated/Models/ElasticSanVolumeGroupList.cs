@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of Volume Groups. </summary>
     internal partial class ElasticSanVolumeGroupList
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupList"/>. </summary>
         internal ElasticSanVolumeGroupList()
         {
             Value = new ChangeTrackingList<ElasticSanVolumeGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupList"/>. </summary>
         /// <param name="value"> An array of Volume Groups objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        internal ElasticSanVolumeGroupList(IReadOnlyList<ElasticSanVolumeGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeGroupList(IReadOnlyList<ElasticSanVolumeGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of Volume Groups objects. </summary>

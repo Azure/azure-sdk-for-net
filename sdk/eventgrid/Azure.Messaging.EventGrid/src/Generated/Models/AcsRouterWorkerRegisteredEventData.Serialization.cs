@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,99 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsRouterWorkerRegisteredEventDataConverter))]
-    public partial class AcsRouterWorkerRegisteredEventData
+    public partial class AcsRouterWorkerRegisteredEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterWorkerRegisteredEventData>
     {
-        internal static AcsRouterWorkerRegisteredEventData DeserializeAcsRouterWorkerRegisteredEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterWorkerRegisteredEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AcsRouterWorkerRegisteredEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(WorkerId))
+            {
+                writer.WritePropertyName("workerId"u8);
+                writer.WriteStringValue(WorkerId);
+            }
+            if (Optional.IsCollectionDefined(QueueAssignments))
+            {
+                writer.WritePropertyName("queueAssignments"u8);
+                writer.WriteStartArray();
+                foreach (var item in QueueAssignments)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ChannelConfigurations))
+            {
+                writer.WritePropertyName("channelConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChannelConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(TotalCapacity))
+            {
+                writer.WritePropertyName("totalCapacity"u8);
+                writer.WriteNumberValue(TotalCapacity.Value);
+            }
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in Labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsRouterWorkerRegisteredEventData IJsonModel<AcsRouterWorkerRegisteredEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterWorkerRegisteredEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsRouterWorkerRegisteredEventData(document.RootElement, options);
+        }
+
+        internal static AcsRouterWorkerRegisteredEventData DeserializeAcsRouterWorkerRegisteredEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +119,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<int> totalCapacity = default;
             Optional<IReadOnlyDictionary<string, string>> labels = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workerId"u8))
@@ -100,15 +193,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsRouterWorkerRegisteredEventData(workerId.Value, Optional.ToList(queueAssignments), Optional.ToList(channelConfigurations), Optional.ToNullable(totalCapacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsRouterWorkerRegisteredEventData(workerId.Value, Optional.ToList(queueAssignments), Optional.ToList(channelConfigurations), Optional.ToNullable(totalCapacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AcsRouterWorkerRegisteredEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterWorkerRegisteredEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsRouterWorkerRegisteredEventData IModel<AcsRouterWorkerRegisteredEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRouterWorkerRegisteredEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsRouterWorkerRegisteredEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AcsRouterWorkerRegisteredEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class AcsRouterWorkerRegisteredEventDataConverter : JsonConverter<AcsRouterWorkerRegisteredEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerRegisteredEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsRouterWorkerRegisteredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

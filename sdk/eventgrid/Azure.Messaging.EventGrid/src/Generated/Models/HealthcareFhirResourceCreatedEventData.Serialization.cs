@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,67 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(HealthcareFhirResourceCreatedEventDataConverter))]
-    public partial class HealthcareFhirResourceCreatedEventData
+    public partial class HealthcareFhirResourceCreatedEventData : IUtf8JsonSerializable, IJsonModel<HealthcareFhirResourceCreatedEventData>
     {
-        internal static HealthcareFhirResourceCreatedEventData DeserializeHealthcareFhirResourceCreatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareFhirResourceCreatedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HealthcareFhirResourceCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FhirResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(FhirResourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(FhirServiceHostName))
+            {
+                writer.WritePropertyName("resourceFhirAccount"u8);
+                writer.WriteStringValue(FhirServiceHostName);
+            }
+            if (Optional.IsDefined(FhirResourceId))
+            {
+                writer.WritePropertyName("resourceFhirId"u8);
+                writer.WriteStringValue(FhirResourceId);
+            }
+            if (Optional.IsDefined(FhirResourceVersionId))
+            {
+                writer.WritePropertyName("resourceVersionId"u8);
+                writer.WriteNumberValue(FhirResourceVersionId.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HealthcareFhirResourceCreatedEventData IJsonModel<HealthcareFhirResourceCreatedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareFhirResourceCreatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareFhirResourceCreatedEventData(document.RootElement, options);
+        }
+
+        internal static HealthcareFhirResourceCreatedEventData DeserializeHealthcareFhirResourceCreatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +85,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> resourceFhirAccount = default;
             Optional<string> resourceFhirId = default;
             Optional<long> resourceVersionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -55,15 +117,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resourceVersionId = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthcareFhirResourceCreatedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthcareFhirResourceCreatedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HealthcareFhirResourceCreatedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareFhirResourceCreatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthcareFhirResourceCreatedEventData IModel<HealthcareFhirResourceCreatedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareFhirResourceCreatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthcareFhirResourceCreatedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HealthcareFhirResourceCreatedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class HealthcareFhirResourceCreatedEventDataConverter : JsonConverter<HealthcareFhirResourceCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, HealthcareFhirResourceCreatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override HealthcareFhirResourceCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

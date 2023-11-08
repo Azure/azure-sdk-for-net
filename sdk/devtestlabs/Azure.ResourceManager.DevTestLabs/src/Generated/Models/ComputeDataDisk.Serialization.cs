@@ -6,15 +6,75 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class ComputeDataDisk
+    public partial class ComputeDataDisk : IUtf8JsonSerializable, IJsonModel<ComputeDataDisk>
     {
-        internal static ComputeDataDisk DeserializeComputeDataDisk(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeDataDisk>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ComputeDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DiskUri))
+            {
+                writer.WritePropertyName("diskUri"u8);
+                writer.WriteStringValue(DiskUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ManagedDiskId))
+            {
+                writer.WritePropertyName("managedDiskId"u8);
+                writer.WriteStringValue(ManagedDiskId);
+            }
+            if (Optional.IsDefined(DiskSizeGiB))
+            {
+                writer.WritePropertyName("diskSizeGiB"u8);
+                writer.WriteNumberValue(DiskSizeGiB.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ComputeDataDisk IJsonModel<ComputeDataDisk>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeDataDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeDataDisk(document.RootElement, options);
+        }
+
+        internal static ComputeDataDisk DeserializeComputeDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +83,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<Uri> diskUri = default;
             Optional<string> managedDiskId = default;
             Optional<int> diskSizeGiB = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,8 +115,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     diskSizeGiB = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComputeDataDisk(name.Value, diskUri.Value, managedDiskId.Value, Optional.ToNullable(diskSizeGiB));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ComputeDataDisk(name.Value, diskUri.Value, managedDiskId.Value, Optional.ToNullable(diskSizeGiB), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ComputeDataDisk>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeDataDisk)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ComputeDataDisk IModel<ComputeDataDisk>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ComputeDataDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeComputeDataDisk(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ComputeDataDisk>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

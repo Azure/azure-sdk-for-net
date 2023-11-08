@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The cluster host information. </summary>
     public partial class HDInsightClusterHostInfo
     {
-        /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterHostInfo"/>. </summary>
         internal HDInsightClusterHostInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterHostInfo"/>. </summary>
         /// <param name="name"> The host name. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of host. </param>
         /// <param name="effectiveDiskEncryptionKeyUri"> The effective disk encryption key URL used by the host. </param>
-        internal HDInsightClusterHostInfo(string name, string fqdn, Uri effectiveDiskEncryptionKeyUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterHostInfo(string name, string fqdn, Uri effectiveDiskEncryptionKeyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Fqdn = fqdn;
             EffectiveDiskEncryptionKeyUri = effectiveDiskEncryptionKeyUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The host name. </summary>

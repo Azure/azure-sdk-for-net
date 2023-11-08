@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Security domain properties information for Cloud HSM cluster. </summary>
     public partial class CloudHsmClusterSecurityDomainProperties
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterSecurityDomainProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
         public CloudHsmClusterSecurityDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudHsmClusterSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
         /// <param name="fipsState"> FIPS state information for security domain. </param>
         /// <param name="activationStatus"> status of security domain activation. </param>
-        internal CloudHsmClusterSecurityDomainProperties(int? fipsState, string activationStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudHsmClusterSecurityDomainProperties(int? fipsState, string activationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FipsState = fipsState;
             ActivationStatus = activationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> FIPS state information for security domain. </summary>

@@ -15,7 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing observed text styles. </summary>
     public partial class DocumentStyle
     {
-        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
@@ -27,7 +30,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
         /// <param name="isHandwritten"> Is content handwritten?. </param>
         /// <param name="similarFontFamily"> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. 'Arial, sans-serif'). </param>
         /// <param name="fontStyle"> Font style. </param>
@@ -36,7 +39,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format.. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHandwritten = isHandwritten;
             SimilarFontFamily = similarFontFamily;
@@ -46,6 +50,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             BackgroundColor = backgroundColor;
             Spans = spans;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/> for deserialization. </summary>
+        internal DocumentStyle()
+        {
         }
 
         /// <summary> Is content handwritten?. </summary>

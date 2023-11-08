@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Export operation configuration information. </summary>
     internal partial class FhirServiceExportConfiguration
     {
-        /// <summary> Initializes a new instance of FhirServiceExportConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FhirServiceExportConfiguration"/>. </summary>
         public FhirServiceExportConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FhirServiceExportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceExportConfiguration"/>. </summary>
         /// <param name="storageAccountName"> The name of the default export storage account. </param>
-        internal FhirServiceExportConfiguration(string storageAccountName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FhirServiceExportConfiguration(string storageAccountName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountName = storageAccountName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the default export storage account. </summary>

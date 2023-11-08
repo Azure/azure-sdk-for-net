@@ -6,15 +6,70 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsSmsDeliveryAttemptProperties
+    public partial class AcsSmsDeliveryAttemptProperties : IUtf8JsonSerializable, IJsonModel<AcsSmsDeliveryAttemptProperties>
     {
-        internal static AcsSmsDeliveryAttemptProperties DeserializeAcsSmsDeliveryAttemptProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsSmsDeliveryAttemptProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AcsSmsDeliveryAttemptProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(SegmentsSucceeded))
+            {
+                writer.WritePropertyName("segmentsSucceeded"u8);
+                writer.WriteNumberValue(SegmentsSucceeded.Value);
+            }
+            if (Optional.IsDefined(SegmentsFailed))
+            {
+                writer.WritePropertyName("segmentsFailed"u8);
+                writer.WriteNumberValue(SegmentsFailed.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsSmsDeliveryAttemptProperties IJsonModel<AcsSmsDeliveryAttemptProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsSmsDeliveryAttemptProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsSmsDeliveryAttemptProperties(document.RootElement, options);
+        }
+
+        internal static AcsSmsDeliveryAttemptProperties DeserializeAcsSmsDeliveryAttemptProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +77,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> timestamp = default;
             Optional<int> segmentsSucceeded = default;
             Optional<int> segmentsFailed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -51,8 +108,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     segmentsFailed = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsSmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsSmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AcsSmsDeliveryAttemptProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsSmsDeliveryAttemptProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsSmsDeliveryAttemptProperties IModel<AcsSmsDeliveryAttemptProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsSmsDeliveryAttemptProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsSmsDeliveryAttemptProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AcsSmsDeliveryAttemptProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Details about the connection between the Batch service and the endpoint. </summary>
     public partial class DevCenterEndpointDetail
     {
-        /// <summary> Initializes a new instance of DevCenterEndpointDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterEndpointDetail"/>. </summary>
         internal DevCenterEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
-        internal DevCenterEndpointDetail(int? port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterEndpointDetail(int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The port an endpoint is connected to. </summary>

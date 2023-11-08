@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The storage profile. </summary>
     internal partial class StorageProfile
     {
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         public StorageProfile()
         {
             StorageAccounts = new ChangeTrackingList<HDInsightStorageAccountInfo>();
         }
 
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         /// <param name="storageAccounts"> The list of storage accounts in the cluster. </param>
-        internal StorageProfile(IList<HDInsightStorageAccountInfo> storageAccounts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageProfile(IList<HDInsightStorageAccountInfo> storageAccounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccounts = storageAccounts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of storage accounts in the cluster. </summary>

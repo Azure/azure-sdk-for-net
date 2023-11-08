@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,10 +15,22 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Represents the properties of the Dns Resource Reference Request. </summary>
     public partial class DnsResourceReferenceContent
     {
-        /// <summary> Initializes a new instance of DnsResourceReferenceContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsResourceReferenceContent"/>. </summary>
         public DnsResourceReferenceContent()
         {
             TargetResources = new ChangeTrackingList<WritableSubResource>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResourceReferenceContent"/>. </summary>
+        /// <param name="targetResources"> A list of references to azure resources for which referencing dns records need to be queried. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsResourceReferenceContent(IList<WritableSubResource> targetResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetResources = targetResources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of references to azure resources for which referencing dns records need to be queried. </summary>

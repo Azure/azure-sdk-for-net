@@ -6,15 +6,109 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class CertificateVerificationCodeProperties
+    public partial class CertificateVerificationCodeProperties : IUtf8JsonSerializable, IJsonModel<CertificateVerificationCodeProperties>
     {
-        internal static CertificateVerificationCodeProperties DeserializeCertificateVerificationCodeProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateVerificationCodeProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CertificateVerificationCodeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VerificationCode))
+            {
+                writer.WritePropertyName("verificationCode"u8);
+                writer.WriteStringValue(VerificationCode);
+            }
+            if (Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiry"u8);
+                writer.WriteStringValue(ExpireOn.Value, "R");
+            }
+            if (Optional.IsDefined(Thumbprint))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(IsVerified))
+            {
+                writer.WritePropertyName("isVerified"u8);
+                writer.WriteBooleanValue(IsVerified.Value);
+            }
+            if (Optional.IsDefined(Certificate))
+            {
+                writer.WritePropertyName("certificate"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Certificate);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Certificate))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("created"u8);
+                writer.WriteStringValue(CreatedOn.Value, "R");
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updated"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "R");
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CertificateVerificationCodeProperties IJsonModel<CertificateVerificationCodeProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCertificateVerificationCodeProperties(document.RootElement, options);
+        }
+
+        internal static CertificateVerificationCodeProperties DeserializeCertificateVerificationCodeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +121,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Optional<BinaryData> certificate = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verificationCode"u8))
@@ -93,8 +189,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     updated = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CertificateVerificationCodeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CertificateVerificationCodeProperties IModel<CertificateVerificationCodeProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCertificateVerificationCodeProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CertificateVerificationCodeProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

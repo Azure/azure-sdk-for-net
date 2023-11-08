@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Event Hub ingestion endpoint configuration. </summary>
     public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorEventHubIngestionConfiguration"/>. </summary>
         public HealthcareApisIotConnectorEventHubIngestionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorEventHubIngestionConfiguration"/>. </summary>
         /// <param name="eventHubName"> Event Hub name to connect to. </param>
         /// <param name="consumerGroup"> Consumer group of the event hub to connected to. </param>
         /// <param name="fullyQualifiedEventHubNamespace"> Fully qualified namespace of the Event Hub to connect to. </param>
-        internal HealthcareApisIotConnectorEventHubIngestionConfiguration(string eventHubName, string consumerGroup, string fullyQualifiedEventHubNamespace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisIotConnectorEventHubIngestionConfiguration(string eventHubName, string consumerGroup, string fullyQualifiedEventHubNamespace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             FullyQualifiedEventHubNamespace = fullyQualifiedEventHubNamespace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Event Hub name to connect to. </summary>

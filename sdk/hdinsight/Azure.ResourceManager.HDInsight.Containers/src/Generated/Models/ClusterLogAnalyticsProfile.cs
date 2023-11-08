@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Cluster log analytics profile to enable or disable OMS agent for cluster. </summary>
     public partial class ClusterLogAnalyticsProfile
     {
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsProfile"/>. </summary>
         /// <param name="isEnabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
         public ClusterLogAnalyticsProfile(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsProfile"/>. </summary>
         /// <param name="isEnabled"> True if log analytics is enabled for the cluster, otherwise false. </param>
         /// <param name="applicationLogs"> Collection of logs to be enabled or disabled for log analytics. </param>
         /// <param name="isMetricsEnabled"> True if metrics are enabled, otherwise false. </param>
-        internal ClusterLogAnalyticsProfile(bool isEnabled, ClusterLogAnalyticsApplicationLogs applicationLogs, bool? isMetricsEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterLogAnalyticsProfile(bool isEnabled, ClusterLogAnalyticsApplicationLogs applicationLogs, bool? isMetricsEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             ApplicationLogs = applicationLogs;
             IsMetricsEnabled = isMetricsEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsProfile"/> for deserialization. </summary>
+        internal ClusterLogAnalyticsProfile()
+        {
         }
 
         /// <summary> True if log analytics is enabled for the cluster, otherwise false. </summary>

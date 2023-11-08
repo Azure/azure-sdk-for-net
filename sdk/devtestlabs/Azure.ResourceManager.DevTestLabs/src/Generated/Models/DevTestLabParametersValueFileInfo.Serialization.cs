@@ -6,21 +6,80 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabParametersValueFileInfo
+    public partial class DevTestLabParametersValueFileInfo : IUtf8JsonSerializable, IJsonModel<DevTestLabParametersValueFileInfo>
     {
-        internal static DevTestLabParametersValueFileInfo DeserializeDevTestLabParametersValueFileInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabParametersValueFileInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DevTestLabParametersValueFileInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FileName))
+            {
+                writer.WritePropertyName("fileName"u8);
+                writer.WriteStringValue(FileName);
+            }
+            if (Optional.IsDefined(ParametersValueInfo))
+            {
+                writer.WritePropertyName("parametersValueInfo"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ParametersValueInfo);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ParametersValueInfo))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DevTestLabParametersValueFileInfo IJsonModel<DevTestLabParametersValueFileInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabParametersValueFileInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabParametersValueFileInfo(document.RootElement, options);
+        }
+
+        internal static DevTestLabParametersValueFileInfo DeserializeDevTestLabParametersValueFileInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> fileName = default;
             Optional<BinaryData> parametersValueInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -37,8 +96,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     parametersValueInfo = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabParametersValueFileInfo(fileName.Value, parametersValueInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabParametersValueFileInfo(fileName.Value, parametersValueInfo.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DevTestLabParametersValueFileInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabParametersValueFileInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DevTestLabParametersValueFileInfo IModel<DevTestLabParametersValueFileInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabParametersValueFileInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDevTestLabParametersValueFileInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DevTestLabParametersValueFileInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

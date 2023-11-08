@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Recognized field value. </summary>
     internal partial class FieldValue_internal
     {
-        /// <summary> Initializes a new instance of FieldValue_internal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FieldValue_internal"/>. </summary>
         /// <param name="type"> Type of field value. </param>
         internal FieldValue_internal(FieldValueType type)
         {
@@ -25,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FieldValue_internal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldValue_internal"/>. </summary>
         /// <param name="type"> Type of field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value. </param>
@@ -42,7 +45,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence"> Confidence score. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this field. </param>
         /// <param name="page"> The 1-based page number in the input document. </param>
-        internal FieldValue_internal(FieldValueType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, float? valueNumber, long? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, SelectionMarkState? valueSelectionMark, string valueCountryRegion, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FieldValue_internal(FieldValueType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, float? valueNumber, long? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, SelectionMarkState? valueSelectionMark, string valueCountryRegion, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             ValueString = valueString;
@@ -60,6 +64,12 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = confidence;
             Elements = elements;
             Page = page;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FieldValue_internal"/> for deserialization. </summary>
+        internal FieldValue_internal()
+        {
         }
 
         /// <summary> Type of field value. </summary>

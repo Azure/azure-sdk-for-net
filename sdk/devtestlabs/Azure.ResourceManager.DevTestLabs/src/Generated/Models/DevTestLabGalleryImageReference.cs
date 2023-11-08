@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The reference information for an Azure Marketplace image. </summary>
     public partial class DevTestLabGalleryImageReference
     {
-        /// <summary> Initializes a new instance of DevTestLabGalleryImageReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImageReference"/>. </summary>
         public DevTestLabGalleryImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabGalleryImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImageReference"/>. </summary>
         /// <param name="offer"> The offer of the gallery image. </param>
         /// <param name="publisher"> The publisher of the gallery image. </param>
         /// <param name="sku"> The SKU of the gallery image. </param>
         /// <param name="osType"> The OS type of the gallery image. </param>
         /// <param name="version"> The version of the gallery image. </param>
-        internal DevTestLabGalleryImageReference(string offer, string publisher, string sku, string osType, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabGalleryImageReference(string offer, string publisher, string sku, string osType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Offer = offer;
             Publisher = publisher;
             Sku = sku;
             OSType = osType;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The offer of the gallery image. </summary>

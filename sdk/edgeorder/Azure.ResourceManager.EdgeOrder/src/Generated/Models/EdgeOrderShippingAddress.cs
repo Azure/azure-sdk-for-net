@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Shipping address where customer wishes to receive the device. </summary>
     public partial class EdgeOrderShippingAddress
     {
-        /// <summary> Initializes a new instance of EdgeOrderShippingAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> or <paramref name="country"/> is null. </exception>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Country = country;
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="zipExtendedCode"> Extended Zip Code. </param>
         /// <param name="companyName"> Name of the company. </param>
         /// <param name="addressType"> Type of address. </param>
-        internal EdgeOrderShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, EdgeOrderAddressType? addressType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, EdgeOrderAddressType? addressType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;
@@ -49,6 +54,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ZipExtendedCode = zipExtendedCode;
             CompanyName = companyName;
             AddressType = addressType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/> for deserialization. </summary>
+        internal EdgeOrderShippingAddress()
+        {
         }
 
         /// <summary> Street Address line 1. </summary>

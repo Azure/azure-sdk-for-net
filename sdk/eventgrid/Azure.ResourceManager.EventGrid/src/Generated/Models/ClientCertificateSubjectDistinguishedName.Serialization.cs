@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class ClientCertificateSubjectDistinguishedName : IUtf8JsonSerializable
+    public partial class ClientCertificateSubjectDistinguishedName : IUtf8JsonSerializable, IJsonModel<ClientCertificateSubjectDistinguishedName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientCertificateSubjectDistinguishedName>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ClientCertificateSubjectDistinguishedName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CommonName))
@@ -35,11 +41,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClientCertificateSubjectDistinguishedName DeserializeClientCertificateSubjectDistinguishedName(JsonElement element)
+        ClientCertificateSubjectDistinguishedName IJsonModel<ClientCertificateSubjectDistinguishedName>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClientCertificateSubjectDistinguishedName)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClientCertificateSubjectDistinguishedName(document.RootElement, options);
+        }
+
+        internal static ClientCertificateSubjectDistinguishedName DeserializeClientCertificateSubjectDistinguishedName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> organization = default;
             Optional<string> organizationUnit = default;
             Optional<string> countryCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonName"u8))
@@ -70,8 +107,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     countryCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClientCertificateSubjectDistinguishedName(commonName.Value, organization.Value, organizationUnit.Value, countryCode.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClientCertificateSubjectDistinguishedName(commonName.Value, organization.Value, organizationUnit.Value, countryCode.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ClientCertificateSubjectDistinguishedName>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClientCertificateSubjectDistinguishedName)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClientCertificateSubjectDistinguishedName IModel<ClientCertificateSubjectDistinguishedName>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClientCertificateSubjectDistinguishedName)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClientCertificateSubjectDistinguishedName(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ClientCertificateSubjectDistinguishedName>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

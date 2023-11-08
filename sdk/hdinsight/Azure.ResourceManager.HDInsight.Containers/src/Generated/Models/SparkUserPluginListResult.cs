@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Spark user plugins spec. </summary>
     internal partial class SparkUserPluginListResult
     {
-        /// <summary> Initializes a new instance of SparkUserPluginListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkUserPluginListResult"/>. </summary>
         public SparkUserPluginListResult()
         {
             Plugins = new ChangeTrackingList<SparkUserPlugin>();
         }
 
-        /// <summary> Initializes a new instance of SparkUserPluginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkUserPluginListResult"/>. </summary>
         /// <param name="plugins"> Spark user plugins. </param>
-        internal SparkUserPluginListResult(IList<SparkUserPlugin> plugins)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkUserPluginListResult(IList<SparkUserPlugin> plugins, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Plugins = plugins;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Spark user plugins. </summary>

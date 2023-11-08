@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HardwareSecurityModules;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> List of Cloud HSM Clusters. </summary>
     internal partial class CloudHsmClusterListResult
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/>. </summary>
         internal CloudHsmClusterListResult()
         {
             Value = new ChangeTrackingList<CloudHsmClusterData>();
         }
 
-        /// <summary> Initializes a new instance of CloudHsmClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/>. </summary>
         /// <param name="value"> The list of Cloud HSM Clusters. </param>
         /// <param name="nextLink"> The URL to get the next set of Cloud HSM Clusters. </param>
-        internal CloudHsmClusterListResult(IReadOnlyList<CloudHsmClusterData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudHsmClusterListResult(IReadOnlyList<CloudHsmClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Cloud HSM Clusters. </summary>

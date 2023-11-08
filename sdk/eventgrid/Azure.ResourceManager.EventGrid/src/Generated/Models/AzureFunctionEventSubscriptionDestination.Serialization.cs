@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class AzureFunctionEventSubscriptionDestination : IUtf8JsonSerializable
+    public partial class AzureFunctionEventSubscriptionDestination : IUtf8JsonSerializable, IJsonModel<AzureFunctionEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionEventSubscriptionDestination>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AzureFunctionEventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
@@ -46,11 +51,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureFunctionEventSubscriptionDestination DeserializeAzureFunctionEventSubscriptionDestination(JsonElement element)
+        AzureFunctionEventSubscriptionDestination IJsonModel<AzureFunctionEventSubscriptionDestination>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFunctionEventSubscriptionDestination(document.RootElement, options);
+        }
+
+        internal static AzureFunctionEventSubscriptionDestination DeserializeAzureFunctionEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +94,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<int> maxEventsPerBatch = default;
             Optional<int> preferredBatchSizeInKilobytes = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -120,8 +156,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureFunctionEventSubscriptionDestination(endpointType, resourceId.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToList(deliveryAttributeMappings));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureFunctionEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToList(deliveryAttributeMappings));
         }
+
+        BinaryData IModel<AzureFunctionEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureFunctionEventSubscriptionDestination IModel<AzureFunctionEventSubscriptionDestination>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureFunctionEventSubscriptionDestination(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AzureFunctionEventSubscriptionDestination>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

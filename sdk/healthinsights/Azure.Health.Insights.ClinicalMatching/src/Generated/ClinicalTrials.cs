@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,23 +18,29 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// </summary>
     public partial class ClinicalTrials
     {
-        /// <summary> Initializes a new instance of ClinicalTrials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrials"/>. </summary>
         public ClinicalTrials()
         {
             CustomTrials = new ChangeTrackingList<ClinicalTrialDetails>();
             RegistryFilters = new ChangeTrackingList<ClinicalTrialRegistryFilter>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrials"/>. </summary>
         /// <param name="customTrials"> A list of clinical trials. </param>
         /// <param name="registryFilters">
         /// A list of filters, each one creating a selection of trials from a given
         /// clinical trial registry.
         /// </param>
-        internal ClinicalTrials(IList<ClinicalTrialDetails> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrials(IList<ClinicalTrialDetails> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomTrials = customTrials;
             RegistryFilters = registryFilters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of clinical trials. </summary>

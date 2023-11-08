@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the corresponding partner topic of a Channel. </summary>
     public partial class PartnerTopicInfo
     {
-        /// <summary> Initializes a new instance of PartnerTopicInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicInfo"/>. </summary>
         public PartnerTopicInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerTopicInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicInfo"/>. </summary>
         /// <param name="azureSubscriptionId">
         /// Azure subscription ID of the subscriber. The partner topic associated with the channel will be
         /// created under this Azure subscription.
@@ -36,13 +40,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// are originating. This information can be used by the subscriber during the approval process of the
         /// created partner topic.
         /// </param>
-        internal PartnerTopicInfo(Guid? azureSubscriptionId, string resourceGroupName, string name, PartnerTopicEventTypeInfo eventTypeInfo, string source)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerTopicInfo(Guid? azureSubscriptionId, string resourceGroupName, string name, PartnerTopicEventTypeInfo eventTypeInfo, string source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureSubscriptionId = azureSubscriptionId;
             ResourceGroupName = resourceGroupName;
             Name = name;
             EventTypeInfo = eventTypeInfo;
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

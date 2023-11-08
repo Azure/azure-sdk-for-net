@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicSpaceRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topicSpaceRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicSpaceRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topicSpaceRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

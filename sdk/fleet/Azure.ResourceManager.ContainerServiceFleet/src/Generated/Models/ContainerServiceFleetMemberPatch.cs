@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The type used for update operations of the FleetMember. </summary>
     public partial class ContainerServiceFleetMemberPatch
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
         public ContainerServiceFleetMemberPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
+        /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetMemberPatch(string group, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Group = group;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The group this member belongs to for multi-cluster update management. </summary>

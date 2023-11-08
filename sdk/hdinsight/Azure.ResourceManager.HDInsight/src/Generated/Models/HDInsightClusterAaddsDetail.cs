@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -13,12 +14,15 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The Azure active directory domain service resource details. </summary>
     public partial class HDInsightClusterAaddsDetail
     {
-        /// <summary> Initializes a new instance of HDInsightClusterAaddsDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterAaddsDetail"/>. </summary>
         internal HDInsightClusterAaddsDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterAaddsDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterAaddsDetail"/>. </summary>
         /// <param name="domainName"> The Azure active directory domain service name. </param>
         /// <param name="isInitialSyncComplete"> This indicates whether initial sync complete or not. </param>
         /// <param name="isLdapsEnabled"> This indicates whether enable ldaps or not. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="resourceId"> The resource id of azure active directory domain service. </param>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="tenantId"> The tenant id of azure active directory domain service . </param>
-        internal HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, ResourceIdentifier resourceId, ResourceIdentifier subnetId, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, ResourceIdentifier resourceId, ResourceIdentifier subnetId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainName = domainName;
             IsInitialSyncComplete = isInitialSyncComplete;
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             ResourceId = resourceId;
             SubnetId = subnetId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure active directory domain service name. </summary>

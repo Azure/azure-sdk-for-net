@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/>. </summary>
         /// <param name="connectionState"> Private Link Service Connection State. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public ElasticSanPrivateEndpointConnectionData(ElasticSanPrivateLinkServiceConnectionState connectionState)
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,12 +43,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="privateEndpoint"> Private Endpoint resource. </param>
         /// <param name="connectionState"> Private Link Service Connection State. </param>
         /// <param name="groupIds"> List of resources private endpoint is mapped. </param>
-        internal ElasticSanPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticSanProvisioningState? provisioningState, SubResource privateEndpoint, ElasticSanPrivateLinkServiceConnectionState connectionState, IList<string> groupIds) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticSanProvisioningState? provisioningState, SubResource privateEndpoint, ElasticSanPrivateLinkServiceConnectionState connectionState, IList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             GroupIds = groupIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/> for deserialization. </summary>
+        internal ElasticSanPrivateEndpointConnectionData()
+        {
         }
 
         /// <summary> Provisioning State of Private Endpoint connection resource. </summary>

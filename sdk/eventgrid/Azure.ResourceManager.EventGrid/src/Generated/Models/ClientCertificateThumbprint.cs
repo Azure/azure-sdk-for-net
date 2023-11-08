@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Thumbprints are used by the service to validate the device permission when authentication is done using self signed certificate. </summary>
     public partial class ClientCertificateThumbprint
     {
-        /// <summary> Initializes a new instance of ClientCertificateThumbprint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateThumbprint"/>. </summary>
         public ClientCertificateThumbprint()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientCertificateThumbprint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateThumbprint"/>. </summary>
         /// <param name="primary"> The primary thumbprint used for validation. </param>
         /// <param name="secondary"> The secondary thumbprint used for validation. </param>
-        internal ClientCertificateThumbprint(string primary, string secondary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientCertificateThumbprint(string primary, string secondary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Primary = primary;
             Secondary = secondary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary thumbprint used for validation. </summary>

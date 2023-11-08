@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The cluster monitor parameters. </summary>
     public partial class HDInsightClusterEnableClusterMonitoringContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterEnableClusterMonitoringContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterEnableClusterMonitoringContent"/>. </summary>
         public HDInsightClusterEnableClusterMonitoringContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterEnableClusterMonitoringContent"/>. </summary>
+        /// <param name="workspaceId"> The cluster monitor workspace ID. </param>
+        /// <param name="primaryKey"> The cluster monitor workspace key. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterEnableClusterMonitoringContent(string workspaceId, string primaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            WorkspaceId = workspaceId;
+            PrimaryKey = primaryKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cluster monitor workspace ID. </summary>

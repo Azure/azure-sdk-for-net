@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> The Cloud HSM Properties. </summary>
     public partial class CloudHsmProperties
     {
-        /// <summary> Initializes a new instance of CloudHsmProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
         public CloudHsmProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
         /// <param name="fqdn"> FQDN of the Cloud HSM. </param>
         /// <param name="state"> The Cloud HSM State. </param>
         /// <param name="stateMessage"> The Cloud HSM State message. </param>
-        internal CloudHsmProperties(string fqdn, string state, string stateMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudHsmProperties(string fqdn, string state, string stateMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             State = state;
             StateMessage = stateMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> FQDN of the Cloud HSM. </summary>

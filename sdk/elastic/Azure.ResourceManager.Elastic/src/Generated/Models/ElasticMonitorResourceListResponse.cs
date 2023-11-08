@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Elastic;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class ElasticMonitorResourceListResponse
     {
-        /// <summary> Initializes a new instance of ElasticMonitorResourceListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourceListResponse"/>. </summary>
         internal ElasticMonitorResourceListResponse()
         {
             Value = new ChangeTrackingList<ElasticMonitorResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticMonitorResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourceListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal ElasticMonitorResourceListResponse(IReadOnlyList<ElasticMonitorResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticMonitorResourceListResponse(IReadOnlyList<ElasticMonitorResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Results of a list operation. </summary>

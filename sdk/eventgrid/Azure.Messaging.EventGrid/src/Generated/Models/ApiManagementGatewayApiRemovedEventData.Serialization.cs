@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,15 +16,59 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ApiManagementGatewayApiRemovedEventDataConverter))]
-    public partial class ApiManagementGatewayApiRemovedEventData
+    public partial class ApiManagementGatewayApiRemovedEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementGatewayApiRemovedEventData>
     {
-        internal static ApiManagementGatewayApiRemovedEventData DeserializeApiManagementGatewayApiRemovedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGatewayApiRemovedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ApiManagementGatewayApiRemovedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceUri))
+            {
+                writer.WritePropertyName("resourceUri"u8);
+                writer.WriteStringValue(ResourceUri);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApiManagementGatewayApiRemovedEventData IJsonModel<ApiManagementGatewayApiRemovedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiManagementGatewayApiRemovedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementGatewayApiRemovedEventData(document.RootElement, options);
+        }
+
+        internal static ApiManagementGatewayApiRemovedEventData DeserializeApiManagementGatewayApiRemovedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> resourceUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUri"u8))
@@ -29,15 +76,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resourceUri = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiManagementGatewayApiRemovedEventData(resourceUri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiManagementGatewayApiRemovedEventData(resourceUri.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ApiManagementGatewayApiRemovedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiManagementGatewayApiRemovedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApiManagementGatewayApiRemovedEventData IModel<ApiManagementGatewayApiRemovedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiManagementGatewayApiRemovedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApiManagementGatewayApiRemovedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ApiManagementGatewayApiRemovedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class ApiManagementGatewayApiRemovedEventDataConverter : JsonConverter<ApiManagementGatewayApiRemovedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementGatewayApiRemovedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ApiManagementGatewayApiRemovedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

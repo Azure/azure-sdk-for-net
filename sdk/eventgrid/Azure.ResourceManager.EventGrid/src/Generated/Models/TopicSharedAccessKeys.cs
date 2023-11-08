@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Shared access keys of the Topic. </summary>
     public partial class TopicSharedAccessKeys
     {
-        /// <summary> Initializes a new instance of TopicSharedAccessKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicSharedAccessKeys"/>. </summary>
         internal TopicSharedAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of TopicSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the topic. </param>
         /// <param name="key2"> Shared access key2 for the topic. </param>
-        internal TopicSharedAccessKeys(string key1, string key2)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicSharedAccessKeys(string key1, string key2, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key1 = key1;
             Key2 = key2;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Shared access key1 for the topic. </summary>

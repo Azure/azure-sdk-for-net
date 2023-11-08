@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,92 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(EventHubCaptureFileCreatedEventDataConverter))]
-    public partial class EventHubCaptureFileCreatedEventData
+    public partial class EventHubCaptureFileCreatedEventData : IUtf8JsonSerializable, IJsonModel<EventHubCaptureFileCreatedEventData>
     {
-        internal static EventHubCaptureFileCreatedEventData DeserializeEventHubCaptureFileCreatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubCaptureFileCreatedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EventHubCaptureFileCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Fileurl))
+            {
+                writer.WritePropertyName("fileUrl"u8);
+                writer.WriteStringValue(Fileurl);
+            }
+            if (Optional.IsDefined(FileType))
+            {
+                writer.WritePropertyName("fileType"u8);
+                writer.WriteStringValue(FileType);
+            }
+            if (Optional.IsDefined(PartitionId))
+            {
+                writer.WritePropertyName("partitionId"u8);
+                writer.WriteStringValue(PartitionId);
+            }
+            if (Optional.IsDefined(SizeInBytes))
+            {
+                writer.WritePropertyName("sizeInBytes"u8);
+                writer.WriteNumberValue(SizeInBytes.Value);
+            }
+            if (Optional.IsDefined(EventCount))
+            {
+                writer.WritePropertyName("eventCount"u8);
+                writer.WriteNumberValue(EventCount.Value);
+            }
+            if (Optional.IsDefined(FirstSequenceNumber))
+            {
+                writer.WritePropertyName("firstSequenceNumber"u8);
+                writer.WriteNumberValue(FirstSequenceNumber.Value);
+            }
+            if (Optional.IsDefined(LastSequenceNumber))
+            {
+                writer.WritePropertyName("lastSequenceNumber"u8);
+                writer.WriteNumberValue(LastSequenceNumber.Value);
+            }
+            if (Optional.IsDefined(FirstEnqueueTime))
+            {
+                writer.WritePropertyName("firstEnqueueTime"u8);
+                writer.WriteStringValue(FirstEnqueueTime.Value, "O");
+            }
+            if (Optional.IsDefined(LastEnqueueTime))
+            {
+                writer.WritePropertyName("lastEnqueueTime"u8);
+                writer.WriteStringValue(LastEnqueueTime.Value, "O");
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EventHubCaptureFileCreatedEventData IJsonModel<EventHubCaptureFileCreatedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement, options);
+        }
+
+        internal static EventHubCaptureFileCreatedEventData DeserializeEventHubCaptureFileCreatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +115,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<int> lastSequenceNumber = default;
             Optional<DateTimeOffset> firstEnqueueTime = default;
             Optional<DateTimeOffset> lastEnqueueTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileUrl"u8))
@@ -101,15 +188,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     lastEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubCaptureFileCreatedEventData(fileUrl.Value, fileType.Value, partitionId.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(eventCount), Optional.ToNullable(firstSequenceNumber), Optional.ToNullable(lastSequenceNumber), Optional.ToNullable(firstEnqueueTime), Optional.ToNullable(lastEnqueueTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubCaptureFileCreatedEventData(fileUrl.Value, fileType.Value, partitionId.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(eventCount), Optional.ToNullable(firstSequenceNumber), Optional.ToNullable(lastSequenceNumber), Optional.ToNullable(firstEnqueueTime), Optional.ToNullable(lastEnqueueTime), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EventHubCaptureFileCreatedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventHubCaptureFileCreatedEventData IModel<EventHubCaptureFileCreatedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EventHubCaptureFileCreatedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventHubCaptureFileCreatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override EventHubCaptureFileCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

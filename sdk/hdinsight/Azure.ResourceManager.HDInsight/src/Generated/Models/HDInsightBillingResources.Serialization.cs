@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightBillingResources
+    public partial class HDInsightBillingResources : IUtf8JsonSerializable, IJsonModel<HDInsightBillingResources>
     {
-        internal static HDInsightBillingResources DeserializeHDInsightBillingResources(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightBillingResources>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HDInsightBillingResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region.Value);
+            }
+            if (Optional.IsCollectionDefined(BillingMeters))
+            {
+                writer.WritePropertyName("billingMeters"u8);
+                writer.WriteStartArray();
+                foreach (var item in BillingMeters)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DiskBillingMeters))
+            {
+                writer.WritePropertyName("diskBillingMeters"u8);
+                writer.WriteStartArray();
+                foreach (var item in DiskBillingMeters)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HDInsightBillingResources IJsonModel<HDInsightBillingResources>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightBillingResources(document.RootElement, options);
+        }
+
+        internal static HDInsightBillingResources DeserializeHDInsightBillingResources(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +87,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<AzureLocation> region = default;
             Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
             Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))
@@ -61,8 +128,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     diskBillingMeters = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightBillingResources(Optional.ToNullable(region), Optional.ToList(billingMeters), Optional.ToList(diskBillingMeters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightBillingResources(Optional.ToNullable(region), Optional.ToList(billingMeters), Optional.ToList(diskBillingMeters), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HDInsightBillingResources>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightBillingResources IModel<HDInsightBillingResources>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightBillingResources(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HDInsightBillingResources>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

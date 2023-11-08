@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceResourceVersionPolicyConfiguration : IUtf8JsonSerializable
+    public partial class FhirServiceResourceVersionPolicyConfiguration : IUtf8JsonSerializable, IJsonModel<FhirServiceResourceVersionPolicyConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceResourceVersionPolicyConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FhirServiceResourceVersionPolicyConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Default))
@@ -32,17 +37,48 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FhirServiceResourceVersionPolicyConfiguration DeserializeFhirServiceResourceVersionPolicyConfiguration(JsonElement element)
+        FhirServiceResourceVersionPolicyConfiguration IJsonModel<FhirServiceResourceVersionPolicyConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFhirServiceResourceVersionPolicyConfiguration(document.RootElement, options);
+        }
+
+        internal static FhirServiceResourceVersionPolicyConfiguration DeserializeFhirServiceResourceVersionPolicyConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<FhirResourceVersionPolicy> @default = default;
             Optional<IDictionary<string, FhirResourceVersionPolicy>> resourceTypeOverrides = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -68,8 +104,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     resourceTypeOverrides = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FhirServiceResourceVersionPolicyConfiguration(Optional.ToNullable(@default), Optional.ToDictionary(resourceTypeOverrides));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FhirServiceResourceVersionPolicyConfiguration(Optional.ToNullable(@default), Optional.ToDictionary(resourceTypeOverrides), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FhirServiceResourceVersionPolicyConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FhirServiceResourceVersionPolicyConfiguration IModel<FhirServiceResourceVersionPolicyConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FhirServiceResourceVersionPolicyConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFhirServiceResourceVersionPolicyConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FhirServiceResourceVersionPolicyConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

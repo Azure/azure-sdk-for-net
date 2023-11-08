@@ -5,18 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial struct CurrencyValue
+    public partial struct CurrencyValue : IUtf8JsonSerializable, IJsonModel<CurrencyValue>, IJsonModel<object>
     {
-        internal static CurrencyValue DeserializeCurrencyValue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CurrencyValue>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CurrencyValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("amount"u8);
+            writer.WriteNumberValue(Amount);
+            if (Optional.IsDefined(Symbol))
+            {
+                writer.WritePropertyName("currencySymbol"u8);
+                writer.WriteStringValue(Symbol);
+            }
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("currencyCode"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CurrencyValue IJsonModel<CurrencyValue>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CurrencyValue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCurrencyValue(document.RootElement, options);
+        }
+
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CurrencyValue>)this).Write(writer, options);
+
+        object IJsonModel<object>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CurrencyValue>)this).Read(ref reader, options);
+
+        internal static CurrencyValue DeserializeCurrencyValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             double amount = default;
             Optional<string> currencySymbol = default;
             Optional<string> currencyCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amount"u8))
@@ -34,8 +93,44 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     currencyCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CurrencyValue(amount, currencySymbol.Value, currencyCode.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CurrencyValue(amount, currencySymbol.Value, currencyCode.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CurrencyValue>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CurrencyValue)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CurrencyValue IModel<CurrencyValue>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CurrencyValue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCurrencyValue(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CurrencyValue>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+
+        BinaryData IModel<object>.Write(ModelReaderWriterOptions options) => ((IModel<CurrencyValue>)this).Write(options);
+
+        object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options) => ((IModel<CurrencyValue>)this).Read(data, options);
+
+        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ((IModel<CurrencyValue>)this).GetWireFormat(options);
     }
 }

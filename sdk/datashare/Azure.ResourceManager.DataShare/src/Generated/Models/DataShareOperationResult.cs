@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -13,24 +14,34 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Response for long running operation. </summary>
     public partial class DataShareOperationResult
     {
-        /// <summary> Initializes a new instance of DataShareOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareOperationResult"/>. </summary>
         /// <param name="status"> Operation state of the long running operation. </param>
         internal DataShareOperationResult(DataShareOperationStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of DataShareOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareOperationResult"/>. </summary>
         /// <param name="endOn"> start time. </param>
         /// <param name="error"> The error property when status is failed. </param>
         /// <param name="startOn"> start time. </param>
         /// <param name="status"> Operation state of the long running operation. </param>
-        internal DataShareOperationResult(DateTimeOffset? endOn, ResponseError error, DateTimeOffset? startOn, DataShareOperationStatus status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareOperationResult(DateTimeOffset? endOn, ResponseError error, DateTimeOffset? startOn, DataShareOperationStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndOn = endOn;
             Error = error;
             StartOn = startOn;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataShareOperationResult"/> for deserialization. </summary>
+        internal DataShareOperationResult()
+        {
         }
 
         /// <summary> start time. </summary>

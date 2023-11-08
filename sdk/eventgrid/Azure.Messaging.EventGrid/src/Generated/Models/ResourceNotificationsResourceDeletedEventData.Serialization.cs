@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,16 +16,65 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ResourceNotificationsResourceDeletedEventDataConverter))]
-    public partial class ResourceNotificationsResourceDeletedEventData
+    public partial class ResourceNotificationsResourceDeletedEventData : IUtf8JsonSerializable, IJsonModel<ResourceNotificationsResourceDeletedEventData>
     {
-        internal static ResourceNotificationsResourceDeletedEventData DeserializeResourceNotificationsResourceDeletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNotificationsResourceDeletedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ResourceNotificationsResourceDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceDetails))
+            {
+                writer.WritePropertyName("resourceInfo"u8);
+                writer.WriteObjectValue(ResourceDetails);
+            }
+            if (Optional.IsDefined(OperationalDetails))
+            {
+                writer.WritePropertyName("operationalInfo"u8);
+                writer.WriteObjectValue(OperationalDetails);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourceNotificationsResourceDeletedEventData IJsonModel<ResourceNotificationsResourceDeletedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceNotificationsResourceDeletedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceNotificationsResourceDeletedEventData(document.RootElement, options);
+        }
+
+        internal static ResourceNotificationsResourceDeletedEventData DeserializeResourceNotificationsResourceDeletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceNotificationsResourceDeletedDetails> resourceInfo = default;
             Optional<ResourceNotificationsOperationalDetails> operationalInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceInfo"u8))
@@ -43,15 +95,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     operationalInfo = ResourceNotificationsOperationalDetails.DeserializeResourceNotificationsOperationalDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceNotificationsResourceDeletedEventData(resourceInfo.Value, operationalInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceNotificationsResourceDeletedEventData(resourceInfo.Value, operationalInfo.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ResourceNotificationsResourceDeletedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceNotificationsResourceDeletedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceNotificationsResourceDeletedEventData IModel<ResourceNotificationsResourceDeletedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceNotificationsResourceDeletedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceNotificationsResourceDeletedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ResourceNotificationsResourceDeletedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class ResourceNotificationsResourceDeletedEventDataConverter : JsonConverter<ResourceNotificationsResourceDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceNotificationsResourceDeletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ResourceNotificationsResourceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

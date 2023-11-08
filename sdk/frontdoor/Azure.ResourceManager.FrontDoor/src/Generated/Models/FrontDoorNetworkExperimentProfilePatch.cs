@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines modifiable attributes of a Profile. </summary>
     public partial class FrontDoorNetworkExperimentProfilePatch
     {
-        /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfilePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfilePatch"/>. </summary>
         public FrontDoorNetworkExperimentProfilePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfilePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="enabledState"> The enabled state of the Profile. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorNetworkExperimentProfilePatch(IDictionary<string, string> tags, FrontDoorExperimentState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            EnabledState = enabledState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

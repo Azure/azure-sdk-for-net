@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceBillingPlanInfo : IUtf8JsonSerializable
+    public partial class DynatraceBillingPlanInfo : IUtf8JsonSerializable, IJsonModel<DynatraceBillingPlanInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceBillingPlanInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DynatraceBillingPlanInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(UsageType))
@@ -36,11 +41,40 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DynatraceBillingPlanInfo DeserializeDynatraceBillingPlanInfo(JsonElement element)
+        DynatraceBillingPlanInfo IJsonModel<DynatraceBillingPlanInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceBillingPlanInfo(document.RootElement, options);
+        }
+
+        internal static DynatraceBillingPlanInfo DeserializeDynatraceBillingPlanInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +83,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> billingCycle = default;
             Optional<string> planDetails = default;
             Optional<DateTimeOffset> effectiveDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageType"u8))
@@ -75,8 +111,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     effectiveDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DynatraceBillingPlanInfo(usageType.Value, billingCycle.Value, planDetails.Value, Optional.ToNullable(effectiveDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DynatraceBillingPlanInfo(usageType.Value, billingCycle.Value, planDetails.Value, Optional.ToNullable(effectiveDate), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DynatraceBillingPlanInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DynatraceBillingPlanInfo IModel<DynatraceBillingPlanInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDynatraceBillingPlanInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DynatraceBillingPlanInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

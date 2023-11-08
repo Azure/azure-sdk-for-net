@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Trino worker. </summary>
     public partial class TrinoWorker
     {
-        /// <summary> Initializes a new instance of TrinoWorker. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoWorker"/>. </summary>
         public TrinoWorker()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoWorker"/>. </summary>
         /// <param name="isEnabled"> The flag that if enable debug or not. </param>
         /// <param name="port"> The debug port. </param>
         /// <param name="suspend"> The flag that if suspend debug or not. </param>
-        internal TrinoWorker(bool? isEnabled, int? port, bool? suspend)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoWorker(bool? isEnabled, int? port, bool? suspend, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Port = port;
             Suspend = suspend;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The flag that if enable debug or not. </summary>

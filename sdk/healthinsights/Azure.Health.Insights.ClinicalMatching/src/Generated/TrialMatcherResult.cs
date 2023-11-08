@@ -15,13 +15,17 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The response for the Trial Matcher request. </summary>
     public partial class TrialMatcherResult
     {
-        /// <summary> Initializes a new instance of TrialMatcherResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherResult"/>. </summary>
         internal TrialMatcherResult()
         {
             Errors = new ChangeTrackingList<ResponseError>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherResult"/>. </summary>
         /// <param name="jobId"> A processing job identifier. </param>
         /// <param name="createdDateTime"> The date and time when the processing job was created. </param>
         /// <param name="expirationDateTime"> The date and time when the processing job is set to expire. </param>
@@ -29,7 +33,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="status"> The status of the processing job. </param>
         /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
         /// <param name="results"> The inference results for the Trial Matcher request. </param>
-        internal TrialMatcherResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, TrialMatcherResults results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, TrialMatcherResults results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedDateTime = createdDateTime;
@@ -38,6 +43,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Status = status;
             Errors = errors;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A processing job identifier. </summary>

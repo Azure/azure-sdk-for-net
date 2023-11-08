@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Namespace regenerate share access key request. </summary>
     public partial class NamespaceRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of NamespaceRegenerateKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public NamespaceRegenerateKeyContent(string keyName)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.EventGrid.Models
             Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceRegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceRegenerateKeyContent(string keyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyName = keyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceRegenerateKeyContent"/> for deserialization. </summary>
+        internal NamespaceRegenerateKeyContent()
+        {
         }
 
         /// <summary> Key name to regenerate key1 or key2. </summary>

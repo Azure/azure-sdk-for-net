@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.DnsResolver
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,12 +44,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="metadata"> Metadata attached to the virtual network link. </param>
         /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, WritableSubResource virtualNetwork, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, WritableSubResource virtualNetwork, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             VirtualNetwork = virtualNetwork;
             Metadata = metadata;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/> for deserialization. </summary>
+        internal DnsForwardingRulesetVirtualNetworkLinkData()
+        {
         }
 
         /// <summary> ETag of the virtual network link. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,13 +18,16 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class PartnerDestinationInfo
     {
-        /// <summary> Initializes a new instance of PartnerDestinationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationInfo"/>. </summary>
         protected PartnerDestinationInfo()
         {
             ResourceMoveChangeHistory = new ChangeTrackingList<ResourceMoveChangeHistory>();
         }
 
-        /// <summary> Initializes a new instance of PartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationInfo"/>. </summary>
         /// <param name="azureSubscriptionId">
         /// Azure subscription ID of the subscriber. The partner destination associated with the channel will be
         /// created under this Azure subscription.
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
         /// <param name="endpointServiceContext"> Additional context of the partner destination endpoint. </param>
         /// <param name="resourceMoveChangeHistory"> Change history of the resource move. </param>
-        internal PartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureSubscriptionId = azureSubscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             EndpointType = endpointType;
             EndpointServiceContext = endpointServiceContext;
             ResourceMoveChangeHistory = resourceMoveChangeHistory;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

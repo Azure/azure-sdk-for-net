@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevSpaces;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> The ControllerList. </summary>
     internal partial class ControllerList
     {
-        /// <summary> Initializes a new instance of ControllerList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ControllerList"/>. </summary>
         internal ControllerList()
         {
             Value = new ChangeTrackingList<ControllerData>();
         }
 
-        /// <summary> Initializes a new instance of ControllerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControllerList"/>. </summary>
         /// <param name="value"> List of Azure Dev Spaces Controllers. </param>
         /// <param name="nextLink"> The URI that can be used to request the next page for list of Azure Dev Spaces Controllers. </param>
-        internal ControllerList(IReadOnlyList<ControllerData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ControllerList(IReadOnlyList<ControllerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Azure Dev Spaces Controllers. </summary>

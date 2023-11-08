@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Result of the request to list Rules Engine Configurations. It contains a list of RulesEngine objects and a URL link to get the next set of results. </summary>
     internal partial class RulesEngineListResult
     {
-        /// <summary> Initializes a new instance of RulesEngineListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulesEngineListResult"/>. </summary>
         internal RulesEngineListResult()
         {
             Value = new ChangeTrackingList<FrontDoorRulesEngineData>();
         }
 
-        /// <summary> Initializes a new instance of RulesEngineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineListResult"/>. </summary>
         /// <param name="value"> List of rulesEngines within a Front Door. </param>
         /// <param name="nextLink"> URL to get the next set of RulesEngine objects if there are any. </param>
-        internal RulesEngineListResult(IReadOnlyList<FrontDoorRulesEngineData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulesEngineListResult(IReadOnlyList<FrontDoorRulesEngineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of rulesEngines within a Front Door. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for adding a new or existing data disk to a virtual machine. </summary>
     public partial class DevTestLabDataDiskProperties
     {
-        /// <summary> Initializes a new instance of DevTestLabDataDiskProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDataDiskProperties"/>. </summary>
         public DevTestLabDataDiskProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabDataDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDataDiskProperties"/>. </summary>
         /// <param name="attachNewDataDiskOptions"> Specifies options to attach a new disk to the virtual machine. </param>
         /// <param name="existingLabDiskId"> Specifies the existing lab disk id to attach to virtual machine. </param>
         /// <param name="hostCaching"> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </param>
-        internal DevTestLabDataDiskProperties(AttachNewDataDiskDetails attachNewDataDiskOptions, ResourceIdentifier existingLabDiskId, DevTestLabHostCachingOption? hostCaching)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabDataDiskProperties(AttachNewDataDiskDetails attachNewDataDiskOptions, ResourceIdentifier existingLabDiskId, DevTestLabHostCachingOption? hostCaching, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AttachNewDataDiskOptions = attachNewDataDiskOptions;
             ExistingLabDiskId = existingLabDiskId;
             HostCaching = hostCaching;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies options to attach a new disk to the virtual machine. </summary>

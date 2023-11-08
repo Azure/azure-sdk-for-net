@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The check availability request body. </summary>
     public partial class DevCenterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DevCenterNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterNameAvailabilityContent"/>. </summary>
         public DevCenterNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
