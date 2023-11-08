@@ -6,8 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Analytics.Purview.Workflows;
 using Azure.Core;
 using Azure.Identity;
