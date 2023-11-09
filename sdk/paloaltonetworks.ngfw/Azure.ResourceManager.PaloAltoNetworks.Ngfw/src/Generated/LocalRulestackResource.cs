@@ -780,7 +780,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<string> GetAppIdsAsync(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListAppIdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appIdVersion, appPrefix, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetAppIds", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetAppIds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -805,7 +806,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<string> GetAppIds(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListAppIdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appIdVersion, appPrefix, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetAppIds", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetAppIds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -828,7 +830,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListCountriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -851,7 +854,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<RulestackCountry> GetCountries(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListCountriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RulestackCountry.DeserializeRulestackCountry, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetCountries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -916,7 +920,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -939,7 +944,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _localRulestackClientDiagnostics, Pipeline, "LocalRulestackResource.GetPredefinedUrlCategories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
