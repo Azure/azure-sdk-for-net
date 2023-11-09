@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ProfileResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceFormatData"/>. </summary>
         public ProfileResourceFormatData()
         {
             Attributes = new ChangeTrackingDictionary<string, IList<string>>();
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.CustomerInsights
             StrongIds = new ChangeTrackingList<StrongId>();
         }
 
-        /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +56,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="timestampFieldName"> The timestamp property name. Represents the time when the interaction or profile update happened. </param>
         /// <param name="typeName"> The name of the entity. </param>
         /// <param name="strongIds"> The strong IDs. </param>
-        internal ProfileResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, IList<string>> attributes, IDictionary<string, string> description, IDictionary<string, string> displayName, IDictionary<string, IDictionary<string, string>> localizedAttributes, string smallImage, string mediumImage, string largeImage, string apiEntitySetName, EntityType? entityType, IList<PropertyDefinition> fields, int? instancesCount, DateTimeOffset? lastChangedUtc, ProvisioningState? provisioningState, string schemaItemTypeLink, Guid? tenantId, string timestampFieldName, string typeName, IList<StrongId> strongIds) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProfileResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, IList<string>> attributes, IDictionary<string, string> description, IDictionary<string, string> displayName, IDictionary<string, IDictionary<string, string>> localizedAttributes, string smallImage, string mediumImage, string largeImage, string apiEntitySetName, EntityType? entityType, IList<PropertyDefinition> fields, int? instancesCount, DateTimeOffset? lastChangedUtc, ProvisioningState? provisioningState, string schemaItemTypeLink, Guid? tenantId, string timestampFieldName, string typeName, IList<StrongId> strongIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Attributes = attributes;
             Description = description;
@@ -73,6 +77,7 @@ namespace Azure.ResourceManager.CustomerInsights
             TimestampFieldName = timestampFieldName;
             TypeName = typeName;
             StrongIds = strongIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The attributes for the Type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
     public partial class VirtualMachineScaleSetVmProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmProfile"/>. </summary>
         public VirtualMachineScaleSetVmProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmProfile"/>. </summary>
         /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="networkProfile"> Specifies properties of the network interfaces of the virtual machines in the scale set. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
         /// <param name="serviceArtifactReference"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. Minimum api-version: 2022-11-01. </param>
         /// <param name="securityPostureReference"> Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01. </param>
-        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, WritableSubResource serviceArtifactReference, ComputeSecurityPostureReference securityPostureReference)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, WritableSubResource serviceArtifactReference, ComputeSecurityPostureReference securityPostureReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSProfile = osProfile;
             StorageProfile = storageProfile;
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             HardwareProfile = hardwareProfile;
             ServiceArtifactReference = serviceArtifactReference;
             SecurityPostureReference = securityPostureReference;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the operating system settings for the virtual machines in the scale set. </summary>

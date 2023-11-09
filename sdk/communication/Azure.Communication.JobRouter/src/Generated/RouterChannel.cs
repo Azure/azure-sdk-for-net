@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,15 +14,25 @@ namespace Azure.Communication.JobRouter
     /// <summary> Represents the capacity a job in this channel will consume from a worker. </summary>
     public partial class RouterChannel
     {
-        /// <summary> Initializes a new instance of RouterChannel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterChannel"/>. </summary>
         /// <param name="channelId"> Id of the channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
-        internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ChannelId = channelId;
             CapacityCostPerJob = capacityCostPerJob;
             MaxNumberOfJobs = maxNumberOfJobs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterChannel"/> for deserialization. </summary>
+        internal RouterChannel()
+        {
         }
 
         /// <summary> Id of the channel. </summary>

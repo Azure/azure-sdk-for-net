@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of project resources. </summary>
     internal partial class ProjectList
     {
-        /// <summary> Initializes a new instance of ProjectList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
         internal ProjectList()
         {
             Value = new ChangeTrackingList<ProjectData>();
         }
 
-        /// <summary> Initializes a new instance of ProjectList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectList"/>. </summary>
         /// <param name="value"> List of projects. </param>
         /// <param name="nextLink"> URL to load the next page of projects. </param>
-        internal ProjectList(IReadOnlyList<ProjectData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectList(IReadOnlyList<ProjectData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of projects. </summary>

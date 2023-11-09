@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class that represents a VerificationStatus record. </summary>
     public partial class VerificationDnsRecord
     {
-        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VerificationDnsRecord"/>. </summary>
         internal VerificationDnsRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationDnsRecord"/>. </summary>
         /// <param name="dnsRecordType"> Type of the DNS record. Example: TXT. </param>
         /// <param name="name"> Name of the DNS record. </param>
         /// <param name="value"> Value of the DNS record. </param>
         /// <param name="timeToLiveInSeconds"> Represents an expiry time in seconds to represent how long this entry can be cached by the resolver, default = 3600sec. </param>
-        internal VerificationDnsRecord(string dnsRecordType, string name, string value, int? timeToLiveInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VerificationDnsRecord(string dnsRecordType, string name, string value, int? timeToLiveInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DnsRecordType = dnsRecordType;
             Name = name;
             Value = value;
             TimeToLiveInSeconds = timeToLiveInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the DNS record. Example: TXT. </summary>

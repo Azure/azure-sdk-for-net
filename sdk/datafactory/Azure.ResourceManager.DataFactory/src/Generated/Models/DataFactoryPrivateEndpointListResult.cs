@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of managed private endpoint resources. </summary>
     internal partial class DataFactoryPrivateEndpointListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointListResult"/>. </summary>
         /// <param name="value"> List of managed private endpoints. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryPrivateEndpointListResult(IEnumerable<DataFactoryPrivateEndpointData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointListResult"/>. </summary>
         /// <param name="value"> List of managed private endpoints. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal DataFactoryPrivateEndpointListResult(IReadOnlyList<DataFactoryPrivateEndpointData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPrivateEndpointListResult(IReadOnlyList<DataFactoryPrivateEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointListResult"/> for deserialization. </summary>
+        internal DataFactoryPrivateEndpointListResult()
+        {
         }
 
         /// <summary> List of managed private endpoints. </summary>

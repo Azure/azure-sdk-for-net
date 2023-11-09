@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.Sms.Models
     /// <summary> Recipient details for sending SMS messages. </summary>
     internal partial class SmsRecipient
     {
-        /// <summary> Initializes a new instance of SmsRecipient. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmsRecipient"/>. </summary>
         /// <param name="to"> The recipient's phone number in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public SmsRecipient(string to)
@@ -21,6 +25,24 @@ namespace Azure.Communication.Sms.Models
             Argument.AssertNotNull(to, nameof(to));
 
             To = to;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmsRecipient"/>. </summary>
+        /// <param name="to"> The recipient's phone number in E.164 format. </param>
+        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, 36-character hexadecimal case-insensitive encoding of a UUID (GUID), identifier for the request. </param>
+        /// <param name="repeatabilityFirstSent"> MUST be sent by clients to specify that a request is repeatable. Repeatability-First-Sent is used to specify the date and time at which the request was first created.eg- Tue, 26 Mar 2019 16:06:51 GMT. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmsRecipient(string to, string repeatabilityRequestId, string repeatabilityFirstSent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            To = to;
+            RepeatabilityRequestId = repeatabilityRequestId;
+            RepeatabilityFirstSent = repeatabilityFirstSent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmsRecipient"/> for deserialization. </summary>
+        internal SmsRecipient()
+        {
         }
 
         /// <summary> The recipient's phone number in E.164 format. </summary>

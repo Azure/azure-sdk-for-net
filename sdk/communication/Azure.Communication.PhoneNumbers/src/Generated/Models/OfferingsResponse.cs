@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,5 +14,18 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a wrapper around a list of offerings. </summary>
     internal partial class OfferingsResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OfferingsResponse"/>. </summary>
+        /// <param name="phoneNumberOfferings"> Represents the underlying list of offerings. </param>
+        /// <param name="nextLink"> Represents the URL link to the next page. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OfferingsResponse(IReadOnlyList<PhoneNumberOffering> phoneNumberOfferings, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PhoneNumberOfferings = phoneNumberOfferings;
+            NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

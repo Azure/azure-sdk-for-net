@@ -1661,7 +1661,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1694,7 +1694,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1757,7 +1757,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state, channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state, channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1788,7 +1788,7 @@ namespace Azure.Communication.JobRouter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state, channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state, channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateUpsertJobRequest(string jobId, RequestContent content, RequestConditions requestConditions, RequestContext context)

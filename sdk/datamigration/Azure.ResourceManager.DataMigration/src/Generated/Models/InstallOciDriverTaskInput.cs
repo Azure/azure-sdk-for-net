@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the service task to install an OCI driver. </summary>
     internal partial class InstallOciDriverTaskInput
     {
-        /// <summary> Initializes a new instance of InstallOciDriverTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskInput"/>. </summary>
         public InstallOciDriverTaskInput()
         {
         }
 
-        /// <summary> Initializes a new instance of InstallOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskInput"/>. </summary>
         /// <param name="driverPackageName"> Name of the uploaded driver package to install. </param>
-        internal InstallOciDriverTaskInput(string driverPackageName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstallOciDriverTaskInput(string driverPackageName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DriverPackageName = driverPackageName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the uploaded driver package to install. </summary>

@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters used for restore operations. </summary>
     public partial class MongoClusterRestoreParameters
     {
-        /// <summary> Initializes a new instance of MongoClusterRestoreParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreParameters"/>. </summary>
         public MongoClusterRestoreParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoClusterRestoreParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreParameters"/>. </summary>
         /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
         /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
-        internal MongoClusterRestoreParameters(DateTimeOffset? pointInTimeUTC, string sourceResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoClusterRestoreParameters(DateTimeOffset? pointInTimeUTC, string sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PointInTimeUTC = pointInTimeUTC;
             SourceResourceId = sourceResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> UTC point in time to restore a mongo cluster. </summary>

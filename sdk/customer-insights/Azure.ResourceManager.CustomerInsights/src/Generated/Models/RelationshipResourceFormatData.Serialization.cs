@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -14,11 +16,36 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class RelationshipResourceFormatData : IUtf8JsonSerializable
+    public partial class RelationshipResourceFormatData : IUtf8JsonSerializable, IJsonModel<RelationshipResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelationshipResourceFormatData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RelationshipResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Cardinality))
@@ -78,17 +105,78 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("profileType"u8);
                 writer.WriteStringValue(ProfileType);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RelationshipName))
+                {
+                    writer.WritePropertyName("relationshipName"u8);
+                    writer.WriteStringValue(RelationshipName);
+                }
+            }
             if (Optional.IsDefined(RelatedProfileType))
             {
                 writer.WritePropertyName("relatedProfileType"u8);
                 writer.WriteStringValue(RelatedProfileType);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RelationshipGuidId))
+                {
+                    writer.WritePropertyName("relationshipGuidId"u8);
+                    writer.WriteStringValue(RelationshipGuidId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RelationshipResourceFormatData DeserializeRelationshipResourceFormatData(JsonElement element)
+        RelationshipResourceFormatData IJsonModel<RelationshipResourceFormatData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRelationshipResourceFormatData(document.RootElement, options);
+        }
+
+        internal static RelationshipResourceFormatData DeserializeRelationshipResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +197,8 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> relatedProfileType = default;
             Optional<string> relationshipGuidId = default;
             Optional<Guid> tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -259,8 +349,38 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RelationshipResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(cardinality), Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(expiryDateTimeUtc), Optional.ToList(fields), Optional.ToList(lookupMappings), profileType.Value, Optional.ToNullable(provisioningState), relationshipName.Value, relatedProfileType.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RelationshipResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(cardinality), Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(expiryDateTimeUtc), Optional.ToList(fields), Optional.ToList(lookupMappings), profileType.Value, Optional.ToNullable(provisioningState), relationshipName.Value, relatedProfileType.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RelationshipResourceFormatData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RelationshipResourceFormatData IModel<RelationshipResourceFormatData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRelationshipResourceFormatData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RelationshipResourceFormatData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

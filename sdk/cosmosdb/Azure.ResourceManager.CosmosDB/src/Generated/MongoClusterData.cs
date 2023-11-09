@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class MongoClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MongoClusterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MongoClusterData(AzureLocation location) : base(location)
         {
             NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
         }
 
-        /// <summary> Initializes a new instance of MongoClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +46,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="provisioningState"> A provisioning state of the mongo cluster. </param>
         /// <param name="clusterStatus"> A status of the mongo cluster. </param>
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
-        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountCreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, CosmosDBProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, IList<NodeGroupSpec> nodeGroupSpecs) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountCreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, CosmosDBProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, IList<NodeGroupSpec> nodeGroupSpecs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -54,6 +59,12 @@ namespace Azure.ResourceManager.CosmosDB
             ProvisioningState = provisioningState;
             ClusterStatus = clusterStatus;
             NodeGroupSpecs = nodeGroupSpecs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoClusterData"/> for deserialization. </summary>
+        internal MongoClusterData()
+        {
         }
 
         /// <summary> The mode to create a mongo cluster. </summary>

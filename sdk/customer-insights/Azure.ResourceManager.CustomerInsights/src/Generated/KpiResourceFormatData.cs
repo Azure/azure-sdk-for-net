@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class KpiResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KpiResourceFormatData"/>. </summary>
         public KpiResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Extracts = new ChangeTrackingList<KpiExtract>();
         }
 
-        /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +58,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="thresHolds"> The KPI thresholds. </param>
         /// <param name="aliases"> The aliases. </param>
         /// <param name="extracts"> The KPI extracts. </param>
-        internal KpiResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityType? entityType, string entityTypeName, Guid? tenantId, string kpiName, IDictionary<string, string> displayName, IDictionary<string, string> description, CalculationWindowType? calculationWindow, string calculationWindowFieldName, KpiFunction? function, string expression, string unit, string filter, IList<string> groupBy, IReadOnlyList<KpiGroupByMetadata> groupByMetadata, IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata, ProvisioningState? provisioningState, KpiThresholds thresHolds, IList<KpiAlias> aliases, IList<KpiExtract> extracts) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KpiResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityType? entityType, string entityTypeName, Guid? tenantId, string kpiName, IDictionary<string, string> displayName, IDictionary<string, string> description, CalculationWindowType? calculationWindow, string calculationWindowFieldName, KpiFunction? function, string expression, string unit, string filter, IList<string> groupBy, IReadOnlyList<KpiGroupByMetadata> groupByMetadata, IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata, ProvisioningState? provisioningState, KpiThresholds thresHolds, IList<KpiAlias> aliases, IList<KpiExtract> extracts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EntityType = entityType;
             EntityTypeName = entityTypeName;
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights
             ThresHolds = thresHolds;
             Aliases = aliases;
             Extracts = extracts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The mapping entity type. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class InventoryItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         public InventoryItemData(InventoryType inventoryType)
         {
             InventoryType = inventoryType;
         }
 
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +40,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="moRefId"> Gets or sets the MoRef (Managed Object Reference) ID for the inventory item. </param>
         /// <param name="moName"> Gets or sets the vCenter Managed Object name for the inventory item. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string moRefId, string moName, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string moRefId, string moName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             InventoryType = inventoryType;
@@ -43,6 +49,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             MoRefId = moRefId;
             MoName = moName;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/> for deserialization. </summary>
+        internal InventoryItemData()
+        {
         }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>

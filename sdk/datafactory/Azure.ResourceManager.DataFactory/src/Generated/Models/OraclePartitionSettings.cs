@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The settings that will be leveraged for Oracle source partitioning. </summary>
     public partial class OraclePartitionSettings
     {
-        /// <summary> Initializes a new instance of OraclePartitionSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OraclePartitionSettings"/>. </summary>
         public OraclePartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of OraclePartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OraclePartitionSettings"/>. </summary>
         /// <param name="partitionNames"> Names of the physical partitions of Oracle table. </param>
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        internal OraclePartitionSettings(BinaryData partitionNames, DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OraclePartitionSettings(BinaryData partitionNames, DataFactoryElement<string> partitionColumnName, DataFactoryElement<string> partitionUpperBound, DataFactoryElement<string> partitionLowerBound, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartitionNames = partitionNames;
             PartitionColumnName = partitionColumnName;
             PartitionUpperBound = partitionUpperBound;
             PartitionLowerBound = partitionLowerBound;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

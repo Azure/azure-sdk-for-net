@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Compute properties for data flow activity. </summary>
     public partial class ExecuteDataFlowActivityComputeType
     {
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivityComputeType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivityComputeType"/>. </summary>
         public ExecuteDataFlowActivityComputeType()
         {
         }
 
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivityComputeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivityComputeType"/>. </summary>
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. Possible values include: 'General', 'MemoryOptimized', 'ComputeOptimized'. Type: string (or Expression with resultType string). </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </param>
-        internal ExecuteDataFlowActivityComputeType(DataFactoryElement<string> computeType, DataFactoryElement<int> coreCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExecuteDataFlowActivityComputeType(DataFactoryElement<string> computeType, DataFactoryElement<int> coreCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Compute type of the cluster which will execute data flow job. Possible values include: 'General', 'MemoryOptimized', 'ComputeOptimized'. Type: string (or Expression with resultType string). </summary>

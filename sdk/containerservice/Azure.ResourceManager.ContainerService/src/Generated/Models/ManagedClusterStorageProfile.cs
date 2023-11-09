@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Storage profile for the container service cluster. </summary>
     public partial class ManagedClusterStorageProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfile"/>. </summary>
         public ManagedClusterStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfile"/>. </summary>
         /// <param name="diskCsiDriver"> AzureDisk CSI Driver settings for the storage profile. </param>
         /// <param name="fileCsiDriver"> AzureFile CSI Driver settings for the storage profile. </param>
         /// <param name="snapshotController"> Snapshot Controller settings for the storage profile. </param>
         /// <param name="blobCsiDriver"> AzureBlob CSI Driver settings for the storage profile. </param>
-        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver, ManagedClusterStorageProfileFileCsiDriver fileCsiDriver, ManagedClusterStorageProfileSnapshotController snapshotController, ManagedClusterStorageProfileBlobCsiDriver blobCsiDriver)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver, ManagedClusterStorageProfileFileCsiDriver fileCsiDriver, ManagedClusterStorageProfileSnapshotController snapshotController, ManagedClusterStorageProfileBlobCsiDriver blobCsiDriver, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskCsiDriver = diskCsiDriver;
             FileCsiDriver = fileCsiDriver;
             SnapshotController = snapshotController;
             BlobCsiDriver = blobCsiDriver;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>

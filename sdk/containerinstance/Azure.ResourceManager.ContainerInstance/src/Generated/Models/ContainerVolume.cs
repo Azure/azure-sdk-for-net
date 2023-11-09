@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The properties of the volume. </summary>
     public partial class ContainerVolume
     {
-        /// <summary> Initializes a new instance of ContainerVolume. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerVolume"/>. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerVolume(string name)
@@ -25,19 +28,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Secret = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerVolume"/>. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
         /// <param name="secret"> The secret volume. </param>
         /// <param name="gitRepo"> The git repo volume. </param>
-        internal ContainerVolume(string name, ContainerInstanceAzureFileVolume azureFile, BinaryData emptyDir, IDictionary<string, string> secret, ContainerInstanceGitRepoVolume gitRepo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerVolume(string name, ContainerInstanceAzureFileVolume azureFile, BinaryData emptyDir, IDictionary<string, string> secret, ContainerInstanceGitRepoVolume gitRepo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AzureFile = azureFile;
             EmptyDir = emptyDir;
             Secret = secret;
             GitRepo = gitRepo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerVolume"/> for deserialization. </summary>
+        internal ContainerVolume()
+        {
         }
 
         /// <summary> The name of the volume. </summary>

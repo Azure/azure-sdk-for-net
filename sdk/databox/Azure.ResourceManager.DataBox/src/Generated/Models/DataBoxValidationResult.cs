@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Response of pre job creation validations. </summary>
     public partial class DataBoxValidationResult
     {
-        /// <summary> Initializes a new instance of DataBoxValidationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationResult"/>. </summary>
         internal DataBoxValidationResult()
         {
             IndividualResponseDetails = new ChangeTrackingList<DataBoxValidationInputResult>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationResult"/>. </summary>
         /// <param name="status"> Overall validation status. </param>
         /// <param name="individualResponseDetails">
         /// List of response details contain validationType and its response as key and value respectively.
         /// Please note <see cref="DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/> and <see cref="AddressValidationResult"/>.
         /// </param>
-        internal DataBoxValidationResult(OverallValidationStatus? status, IReadOnlyList<DataBoxValidationInputResult> individualResponseDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxValidationResult(OverallValidationStatus? status, IReadOnlyList<DataBoxValidationInputResult> individualResponseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             IndividualResponseDetails = individualResponseDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Overall validation status. </summary>

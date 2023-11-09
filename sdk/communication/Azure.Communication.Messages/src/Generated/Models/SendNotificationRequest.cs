@@ -15,7 +15,10 @@ namespace Azure.Communication.Messages
     /// <summary> Details of the message to send. </summary>
     internal partial class SendNotificationRequest
     {
-        /// <summary> Initializes a new instance of SendNotificationRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="type"> The type of message. Supports text, image, template. </param>
@@ -28,6 +31,30 @@ namespace Azure.Communication.Messages
             ChannelRegistrationId = channelRegistrationId;
             To = to.ToList();
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="type"> The type of message. Supports text, image, template. </param>
+        /// <param name="content"> Message content. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <param name="template"> The template object used to create templates. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendNotificationRequest(string channelRegistrationId, IList<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ChannelRegistrationId = channelRegistrationId;
+            To = to;
+            Type = type;
+            Content = content;
+            MediaUri = mediaUri;
+            Template = template;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/> for deserialization. </summary>
+        internal SendNotificationRequest()
+        {
         }
 
         /// <summary> The Channel Registration ID for the Business Identifier. </summary>

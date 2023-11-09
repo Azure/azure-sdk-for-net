@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,13 +17,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeAnalyticsAccountListResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountListResult"/>. </summary>
         internal DataLakeAnalyticsAccountListResult()
         {
             Value = new ChangeTrackingList<DataLakeAnalyticsAccountBasic>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: DataLakeAnalyticsAccountListResult.value
@@ -35,11 +39,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The link (url) to the next page of results.
         /// Serialized Name: DataLakeAnalyticsAccountListResult.nextLink
         /// </param>
-        internal DataLakeAnalyticsAccountListResult(IReadOnlyList<DataLakeAnalyticsAccountBasic> value, int? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsAccountListResult(IReadOnlyList<DataLakeAnalyticsAccountBasic> value, int? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -14,9 +17,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class ResourcePoolData : IUtf8JsonSerializable
+    public partial class ResourcePoolData : IUtf8JsonSerializable, IJsonModel<ResourcePoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcePoolData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ResourcePoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
@@ -42,8 +47,39 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Uuid))
+                {
+                    writer.WritePropertyName("uuid"u8);
+                    writer.WriteStringValue(Uuid);
+                }
+            }
             if (Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
@@ -59,12 +95,126 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MoName))
+                {
+                    writer.WritePropertyName("moName"u8);
+                    writer.WriteStringValue(MoName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CpuSharesLevel))
+                {
+                    writer.WritePropertyName("cpuSharesLevel"u8);
+                    writer.WriteStringValue(CpuSharesLevel);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CpuReservationMHz))
+                {
+                    writer.WritePropertyName("cpuReservationMHz"u8);
+                    writer.WriteNumberValue(CpuReservationMHz.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CpuLimitMHz))
+                {
+                    writer.WritePropertyName("cpuLimitMHz"u8);
+                    writer.WriteNumberValue(CpuLimitMHz.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MemSharesLevel))
+                {
+                    writer.WritePropertyName("memSharesLevel"u8);
+                    writer.WriteStringValue(MemSharesLevel);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MemReservationMB))
+                {
+                    writer.WritePropertyName("memReservationMB"u8);
+                    writer.WriteNumberValue(MemReservationMB.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MemLimitMB))
+                {
+                    writer.WritePropertyName("memLimitMB"u8);
+                    writer.WriteNumberValue(MemLimitMB.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CustomResourceName))
+                {
+                    writer.WritePropertyName("customResourceName"u8);
+                    writer.WriteStringValue(CustomResourceName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Statuses))
+                {
+                    writer.WritePropertyName("statuses"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Statuses)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourcePoolData DeserializeResourcePoolData(JsonElement element)
+        ResourcePoolData IJsonModel<ResourcePoolData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourcePoolData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourcePoolData(document.RootElement, options);
+        }
+
+        internal static ResourcePoolData DeserializeResourcePoolData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +241,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> customResourceName = default;
             Optional<IReadOnlyList<ResourceStatus>> statuses = default;
             Optional<string> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -257,8 +409,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourcePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourcePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), customResourceName.Value, Optional.ToList(statuses), provisioningState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ResourcePoolData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourcePoolData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourcePoolData IModel<ResourcePoolData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourcePoolData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourcePoolData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ResourcePoolData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

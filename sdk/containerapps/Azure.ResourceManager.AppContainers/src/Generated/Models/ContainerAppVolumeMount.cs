@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Volume mount for the Container App. </summary>
     public partial class ContainerAppVolumeMount
     {
-        /// <summary> Initializes a new instance of ContainerAppVolumeMount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVolumeMount"/>. </summary>
         public ContainerAppVolumeMount()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppVolumeMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppVolumeMount"/>. </summary>
         /// <param name="volumeName"> This must match the Name of a Volume. </param>
         /// <param name="mountPath"> Path within the container at which the volume should be mounted.Must not contain ':'. </param>
         /// <param name="subPath"> Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root). </param>
-        internal ContainerAppVolumeMount(string volumeName, string mountPath, string subPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppVolumeMount(string volumeName, string mountPath, string subPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VolumeName = volumeName;
             MountPath = mountPath;
             SubPath = subPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This must match the Name of a Volume. </summary>

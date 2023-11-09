@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The definition of suggested relationship for the type. </summary>
     public partial class RelationshipsLookup
     {
-        /// <summary> Initializes a new instance of RelationshipsLookup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipsLookup"/>. </summary>
         internal RelationshipsLookup()
         {
             ProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
             RelatedProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
         }
 
-        /// <summary> Initializes a new instance of RelationshipsLookup. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipsLookup"/>. </summary>
         /// <param name="profileName"> The relationship profile. </param>
         /// <param name="profilePropertyReferences"> The property references for the profile type. </param>
         /// <param name="relatedProfileName"> The related profile. </param>
         /// <param name="relatedProfilePropertyReferences"> The property references for the related profile type. </param>
         /// <param name="existingRelationshipName"> The name of existing Relationship. </param>
-        internal RelationshipsLookup(string profileName, IReadOnlyList<ParticipantProfilePropertyReference> profilePropertyReferences, string relatedProfileName, IReadOnlyList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences, string existingRelationshipName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationshipsLookup(string profileName, IReadOnlyList<ParticipantProfilePropertyReference> profilePropertyReferences, string relatedProfileName, IReadOnlyList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences, string existingRelationshipName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProfileName = profileName;
             ProfilePropertyReferences = profilePropertyReferences;
             RelatedProfileName = relatedProfileName;
             RelatedProfilePropertyReferences = relatedProfilePropertyReferences;
             ExistingRelationshipName = existingRelationshipName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The relationship profile. </summary>

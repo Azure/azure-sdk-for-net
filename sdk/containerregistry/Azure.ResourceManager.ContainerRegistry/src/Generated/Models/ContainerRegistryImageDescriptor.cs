@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Properties for a registry image. </summary>
     public partial class ContainerRegistryImageDescriptor
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImageDescriptor. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageDescriptor"/>. </summary>
         public ContainerRegistryImageDescriptor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryImageDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageDescriptor"/>. </summary>
         /// <param name="registry"> The registry login server. </param>
         /// <param name="repository"> The repository name. </param>
         /// <param name="tag"> The tag name. </param>
         /// <param name="digest"> The sha256-based digest of the image manifest. </param>
-        internal ContainerRegistryImageDescriptor(string registry, string repository, string tag, string digest)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryImageDescriptor(string registry, string repository, string tag, string digest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Registry = registry;
             Repository = repository;
             Tag = tag;
             Digest = digest;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The registry login server. </summary>

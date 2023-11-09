@@ -5,25 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DefaultValue))
+                {
+                    writer.WritePropertyName("defaultValue"u8);
+                    writer.WriteStringValue(DefaultValue);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Source))
+                {
+                    writer.WritePropertyName("source"u8);
+                    writer.WriteStringValue(Source);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBForPostgreSqlServerRoleGroupConfiguration DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(JsonElement element)
+        CosmosDBForPostgreSqlServerRoleGroupConfiguration IJsonModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerRoleGroupConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(document.RootElement, options);
+        }
+
+        internal static CosmosDBForPostgreSqlServerRoleGroupConfiguration DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +83,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             string value = default;
             Optional<string> defaultValue = default;
             Optional<string> source = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -54,8 +107,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     source = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBForPostgreSqlServerRoleGroupConfiguration(role, value, defaultValue.Value, source.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBForPostgreSqlServerRoleGroupConfiguration(role, value, defaultValue.Value, source.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerRoleGroupConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDBForPostgreSqlServerRoleGroupConfiguration IModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerRoleGroupConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

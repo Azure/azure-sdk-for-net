@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the disallowed configuration for a virtual machine image. </summary>
     internal partial class DisallowedConfiguration
     {
-        /// <summary> Initializes a new instance of DisallowedConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DisallowedConfiguration"/>. </summary>
         public DisallowedConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DisallowedConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisallowedConfiguration"/>. </summary>
         /// <param name="vmDiskType"> VM disk types which are disallowed. </param>
-        internal DisallowedConfiguration(VirtualMachineDiskType? vmDiskType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DisallowedConfiguration(VirtualMachineDiskType? vmDiskType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmDiskType = vmDiskType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> VM disk types which are disallowed. </summary>

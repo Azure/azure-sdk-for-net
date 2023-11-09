@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The environment variable to set within the container instance. </summary>
     public partial class ContainerEnvironmentVariable
     {
-        /// <summary> Initializes a new instance of ContainerEnvironmentVariable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerEnvironmentVariable"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerEnvironmentVariable(string name)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerEnvironmentVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEnvironmentVariable"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         /// <param name="secureValue"> The value of the secure environment variable. </param>
-        internal ContainerEnvironmentVariable(string name, string value, string secureValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerEnvironmentVariable(string name, string value, string secureValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             SecureValue = secureValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerEnvironmentVariable"/> for deserialization. </summary>
+        internal ContainerEnvironmentVariable()
+        {
         }
 
         /// <summary> The name of the environment variable. </summary>

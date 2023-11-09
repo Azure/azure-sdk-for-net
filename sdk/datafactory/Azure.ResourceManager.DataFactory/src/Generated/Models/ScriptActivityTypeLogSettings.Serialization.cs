@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ScriptActivityTypeLogSettings : IUtf8JsonSerializable
+    public partial class ScriptActivityTypeLogSettings : IUtf8JsonSerializable, IJsonModel<ScriptActivityTypeLogSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptActivityTypeLogSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ScriptActivityTypeLogSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
@@ -22,17 +28,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScriptActivityTypeLogSettings DeserializeScriptActivityTypeLogSettings(JsonElement element)
+        ScriptActivityTypeLogSettings IJsonModel<ScriptActivityTypeLogSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptActivityTypeLogSettings(document.RootElement, options);
+        }
+
+        internal static ScriptActivityTypeLogSettings DeserializeScriptActivityTypeLogSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
             Optional<LogLocationSettings> logLocationSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logDestination"u8))
@@ -49,8 +86,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScriptActivityTypeLogSettings(logDestination, logLocationSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScriptActivityTypeLogSettings(logDestination, logLocationSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ScriptActivityTypeLogSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScriptActivityTypeLogSettings IModel<ScriptActivityTypeLogSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptActivityTypeLogSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScriptActivityTypeLogSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ScriptActivityTypeLogSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

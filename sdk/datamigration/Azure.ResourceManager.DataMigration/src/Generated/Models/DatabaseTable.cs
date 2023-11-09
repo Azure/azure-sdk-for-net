@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Table properties. </summary>
     public partial class DatabaseTable
     {
-        /// <summary> Initializes a new instance of DatabaseTable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseTable"/>. </summary>
         internal DatabaseTable()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseTable"/>. </summary>
         /// <param name="hasRows"> Indicates whether table is empty or not. </param>
         /// <param name="name"> Schema-qualified name of the table. </param>
-        internal DatabaseTable(bool? hasRows, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseTable(bool? hasRows, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HasRows = hasRows;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether table is empty or not. </summary>

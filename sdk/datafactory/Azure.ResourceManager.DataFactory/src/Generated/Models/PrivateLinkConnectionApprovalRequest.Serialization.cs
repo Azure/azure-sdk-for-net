@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PrivateLinkConnectionApprovalRequest : IUtf8JsonSerializable
+    public partial class PrivateLinkConnectionApprovalRequest : IUtf8JsonSerializable, IJsonModel<PrivateLinkConnectionApprovalRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkConnectionApprovalRequest>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PrivateLinkConnectionApprovalRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
@@ -26,17 +32,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkConnectionApprovalRequest DeserializePrivateLinkConnectionApprovalRequest(JsonElement element)
+        PrivateLinkConnectionApprovalRequest IJsonModel<PrivateLinkConnectionApprovalRequest>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateLinkConnectionApprovalRequest(document.RootElement, options);
+        }
+
+        internal static PrivateLinkConnectionApprovalRequest DeserializePrivateLinkConnectionApprovalRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             Optional<WritableSubResource> privateEndpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
@@ -57,8 +94,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateLinkConnectionApprovalRequest(privateLinkServiceConnectionState.Value, privateEndpoint);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateLinkConnectionApprovalRequest(privateLinkServiceConnectionState.Value, privateEndpoint, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<PrivateLinkConnectionApprovalRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PrivateLinkConnectionApprovalRequest IModel<PrivateLinkConnectionApprovalRequest>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePrivateLinkConnectionApprovalRequest(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PrivateLinkConnectionApprovalRequest>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

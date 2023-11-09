@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that gets the list of tables contained within a provided list of Oracle schemas. </summary>
     public partial class GetUserTablesOracleTaskInput
     {
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Information for connecting to Oracle source. </param>
         /// <param name="selectedSchemas"> List of Oracle schemas for which to collect tables. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedSchemas"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedSchemas = selectedSchemas.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Information for connecting to Oracle source. </param>
         /// <param name="selectedSchemas"> List of Oracle schemas for which to collect tables. </param>
-        internal GetUserTablesOracleTaskInput(OracleConnectionInfo connectionInfo, IList<string> selectedSchemas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesOracleTaskInput(OracleConnectionInfo connectionInfo, IList<string> selectedSchemas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionInfo = connectionInfo;
             SelectedSchemas = selectedSchemas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskInput"/> for deserialization. </summary>
+        internal GetUserTablesOracleTaskInput()
+        {
         }
 
         /// <summary> Information for connecting to Oracle source. </summary>

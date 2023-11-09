@@ -5,16 +5,93 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesSqlSyncTaskOutput
+    public partial class GetUserTablesSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<GetUserTablesSqlSyncTaskOutput>
     {
-        internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesSqlSyncTaskOutput>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GetUserTablesSqlSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DatabasesToSourceTables))
+                {
+                    writer.WritePropertyName("databasesToSourceTables"u8);
+                    writer.WriteStringValue(DatabasesToSourceTables);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DatabasesToTargetTables))
+                {
+                    writer.WritePropertyName("databasesToTargetTables"u8);
+                    writer.WriteStringValue(DatabasesToTargetTables);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TableValidationErrors))
+                {
+                    writer.WritePropertyName("tableValidationErrors"u8);
+                    writer.WriteStringValue(TableValidationErrors);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ValidationErrors))
+                {
+                    writer.WritePropertyName("validationErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ValidationErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GetUserTablesSqlSyncTaskOutput IJsonModel<GetUserTablesSqlSyncTaskOutput>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesSqlSyncTaskOutput(document.RootElement, options);
+        }
+
+        internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +100,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> databasesToTargetTables = default;
             Optional<string> tableValidationErrors = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databasesToSourceTables"u8))
@@ -54,8 +133,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, Optional.ToList(validationErrors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GetUserTablesSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GetUserTablesSqlSyncTaskOutput IModel<GetUserTablesSqlSyncTaskOutput>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGetUserTablesSqlSyncTaskOutput(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GetUserTablesSqlSyncTaskOutput>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

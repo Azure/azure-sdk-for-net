@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Traffic weight assigned to a revision. </summary>
     public partial class ContainerAppRevisionTrafficWeight
     {
-        /// <summary> Initializes a new instance of ContainerAppRevisionTrafficWeight. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionTrafficWeight"/>. </summary>
         public ContainerAppRevisionTrafficWeight()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRevisionTrafficWeight. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionTrafficWeight"/>. </summary>
         /// <param name="revisionName"> Name of a revision. </param>
         /// <param name="weight"> Traffic weight assigned to a revision. </param>
         /// <param name="isLatestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>
         /// <param name="label"> Associates a traffic label with a revision. </param>
-        internal ContainerAppRevisionTrafficWeight(string revisionName, int? weight, bool? isLatestRevision, string label)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppRevisionTrafficWeight(string revisionName, int? weight, bool? isLatestRevision, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RevisionName = revisionName;
             Weight = weight;
             IsLatestRevision = isLatestRevision;
             Label = label;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of a revision. </summary>

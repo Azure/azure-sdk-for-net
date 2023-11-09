@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App container Custom scaling rule. </summary>
     public partial class ContainerAppCustomScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomScaleRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomScaleRule"/>. </summary>
         public ContainerAppCustomScaleRule()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomScaleRule"/>. </summary>
         /// <param name="customScaleRuleType">
         /// Type of the custom scale rule
         /// eg: azure-servicebus, redis etc.
         /// </param>
         /// <param name="metadata"> Metadata properties to describe custom scale rule. </param>
         /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
-        internal ContainerAppCustomScaleRule(string customScaleRuleType, IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCustomScaleRule(string customScaleRuleType, IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomScaleRuleType = customScaleRuleType;
             Metadata = metadata;
             Auth = auth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

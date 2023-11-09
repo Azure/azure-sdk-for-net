@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -17,16 +21,22 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class JobMatchingMode
     {
-        /// <summary> Initializes a new instance of JobMatchingMode. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobMatchingMode"/>. </summary>
         protected JobMatchingMode()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of JobMatchingMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobMatchingMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
-        internal JobMatchingMode(string kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobMatchingMode(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

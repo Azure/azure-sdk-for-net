@@ -6,21 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for closing jobs. </summary>
     public partial class CloseJobOptions
     {
-        /// <summary> Initializes a new instance of CloseJobOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloseJobOptions"/>. </summary>
         /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. </param>
         /// <param name="closeAt"> If not provided, worker capacity is released immediately along with a JobClosedEvent notification. If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC. </param>
         /// <param name="note"> A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
-        internal CloseJobOptions(string dispositionCode, DateTimeOffset closeAt, string note)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloseJobOptions(string dispositionCode, DateTimeOffset closeAt, string note, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DispositionCode = dispositionCode;
             CloseAt = closeAt;
             Note = note;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

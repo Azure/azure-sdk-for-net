@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeShippingAddress : IUtf8JsonSerializable
+    public partial class DataBoxEdgeShippingAddress : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeShippingAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeShippingAddress>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataBoxEdgeShippingAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressLine1))
@@ -47,11 +53,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeShippingAddress DeserializeDataBoxEdgeShippingAddress(JsonElement element)
+        DataBoxEdgeShippingAddress IJsonModel<DataBoxEdgeShippingAddress>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeShippingAddress DeserializeDataBoxEdgeShippingAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +98,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> city = default;
             Optional<string> state = default;
             string country = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressLine1"u8))
@@ -100,8 +137,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeShippingAddress(addressLine1.Value, addressLine2.Value, addressLine3.Value, postalCode.Value, city.Value, state.Value, country);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeShippingAddress(addressLine1.Value, addressLine2.Value, addressLine3.Value, postalCode.Value, city.Value, state.Value, country, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataBoxEdgeShippingAddress>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxEdgeShippingAddress IModel<DataBoxEdgeShippingAddress>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataBoxEdgeShippingAddress>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

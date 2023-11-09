@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Describes the credential parameters for accessing the source registry. </summary>
     internal partial class SourceRegistryCredentials
     {
-        /// <summary> Initializes a new instance of SourceRegistryCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceRegistryCredentials"/>. </summary>
         public SourceRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceRegistryCredentials"/>. </summary>
         /// <param name="loginMode">
         /// The authentication mode which determines the source registry login scope. The credentials for the source registry
         /// will be generated using the given scope. These credentials will be used to login to
         /// the source registry during the run.
         /// </param>
-        internal SourceRegistryCredentials(SourceRegistryLoginMode? loginMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceRegistryCredentials(SourceRegistryLoginMode? loginMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoginMode = loginMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

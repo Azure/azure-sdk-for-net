@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metadata related to an access key for a given database account. </summary>
     internal partial class AccountKeyMetadata
     {
-        /// <summary> Initializes a new instance of AccountKeyMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccountKeyMetadata"/>. </summary>
         internal AccountKeyMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountKeyMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountKeyMetadata"/>. </summary>
         /// <param name="generatedOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
-        internal AccountKeyMetadata(DateTimeOffset? generatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountKeyMetadata(DateTimeOffset? generatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GeneratedOn = generatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>

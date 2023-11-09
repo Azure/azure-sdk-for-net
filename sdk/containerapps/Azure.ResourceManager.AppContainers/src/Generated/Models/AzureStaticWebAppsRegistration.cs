@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the registration for the Azure Static Web Apps provider. </summary>
     internal partial class AzureStaticWebAppsRegistration
     {
-        /// <summary> Initializes a new instance of AzureStaticWebAppsRegistration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureStaticWebAppsRegistration"/>. </summary>
         public AzureStaticWebAppsRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureStaticWebAppsRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStaticWebAppsRegistration"/>. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
-        internal AzureStaticWebAppsRegistration(string clientId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureStaticWebAppsRegistration(string clientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Client ID of the app used for login. </summary>

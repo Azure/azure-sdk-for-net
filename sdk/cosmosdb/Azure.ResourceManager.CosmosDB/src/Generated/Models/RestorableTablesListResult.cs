@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Table events and their properties. </summary>
     internal partial class RestorableTablesListResult
     {
-        /// <summary> Initializes a new instance of RestorableTablesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableTablesListResult"/>. </summary>
         internal RestorableTablesListResult()
         {
             Value = new ChangeTrackingList<RestorableTable>();
         }
 
-        /// <summary> Initializes a new instance of RestorableTablesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTablesListResult"/>. </summary>
         /// <param name="value"> List of Table events and their properties. </param>
-        internal RestorableTablesListResult(IReadOnlyList<RestorableTable> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableTablesListResult(IReadOnlyList<RestorableTable> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Table events and their properties. </summary>

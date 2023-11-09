@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Parameters in Policy. </summary>
     public partial class BackupInstancePolicySettings
     {
-        /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicySettings"/>. </summary>
         public BackupInstancePolicySettings()
         {
             DataStoreParametersList = new ChangeTrackingList<DataStoreSettings>();
             BackupDataSourceParametersList = new ChangeTrackingList<BackupDataSourceSettings>();
         }
 
-        /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicySettings"/>. </summary>
         /// <param name="dataStoreParametersList">
         /// Gets or sets the DataStore Parameters
         /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -31,10 +35,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Please note <see cref="BackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobBackupDataSourceSettings"/> and <see cref="KubernetesClusterBackupDataSourceSettings"/>.
         /// </param>
-        internal BackupInstancePolicySettings(IList<DataStoreSettings> dataStoreParametersList, IList<BackupDataSourceSettings> backupDataSourceParametersList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupInstancePolicySettings(IList<DataStoreSettings> dataStoreParametersList, IList<BackupDataSourceSettings> backupDataSourceParametersList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataStoreParametersList = dataStoreParametersList;
             BackupDataSourceParametersList = backupDataSourceParametersList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

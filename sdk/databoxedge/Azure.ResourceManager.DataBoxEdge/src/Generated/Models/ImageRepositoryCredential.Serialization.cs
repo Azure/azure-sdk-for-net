@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class ImageRepositoryCredential : IUtf8JsonSerializable
+    public partial class ImageRepositoryCredential : IUtf8JsonSerializable, IJsonModel<ImageRepositoryCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageRepositoryCredential>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ImageRepositoryCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("imageRepositoryUrl"u8);
@@ -25,11 +30,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageRepositoryCredential DeserializeImageRepositoryCredential(JsonElement element)
+        ImageRepositoryCredential IJsonModel<ImageRepositoryCredential>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageRepositoryCredential)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageRepositoryCredential(document.RootElement, options);
+        }
+
+        internal static ImageRepositoryCredential DeserializeImageRepositoryCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +71,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Uri imageRepositoryUrl = default;
             string userName = default;
             Optional<AsymmetricEncryptedSecret> password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageRepositoryUrl"u8))
@@ -58,8 +94,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     password = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageRepositoryCredential(imageRepositoryUrl, userName, password.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageRepositoryCredential(imageRepositoryUrl, userName, password.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ImageRepositoryCredential>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageRepositoryCredential)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ImageRepositoryCredential IModel<ImageRepositoryCredential>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageRepositoryCredential)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeImageRepositoryCredential(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ImageRepositoryCredential>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

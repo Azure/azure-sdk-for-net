@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Details of a diagnostics data provider. </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadata
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadata"/>. </summary>
         public ContainerAppDiagnosticDataProviderMetadata()
         {
             PropertyBag = new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadata"/>. </summary>
         /// <param name="providerName"> Name of data provider. </param>
         /// <param name="propertyBag"> Collection of properties. </param>
-        internal ContainerAppDiagnosticDataProviderMetadata(string providerName, IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticDataProviderMetadata(string providerName, IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of data provider. </summary>

@@ -5,24 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Messages
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
     internal partial class TemplateResponseWhatsAppInternal
     {
-        /// <summary> Initializes a new instance of TemplateResponseWhatsAppInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateResponseWhatsAppInternal"/>. </summary>
         internal TemplateResponseWhatsAppInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateResponseWhatsAppInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateResponseWhatsAppInternal"/>. </summary>
         /// <param name="content">
         /// WhatsApp platform's template content
         /// This is the payload returned from WhatsApp API.
         /// </param>
-        internal TemplateResponseWhatsAppInternal(object content)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateResponseWhatsAppInternal(object content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

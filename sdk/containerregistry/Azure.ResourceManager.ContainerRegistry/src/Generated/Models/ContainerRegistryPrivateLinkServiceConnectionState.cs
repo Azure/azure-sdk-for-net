@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The state of a private link service connection. </summary>
     public partial class ContainerRegistryPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkServiceConnectionState"/>. </summary>
         public ContainerRegistryPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal ContainerRegistryPrivateLinkServiceConnectionState(ContainerRegistryPrivateLinkServiceConnectionStatus? status, string description, ActionsRequiredForPrivateLinkServiceConsumer? actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPrivateLinkServiceConnectionState(ContainerRegistryPrivateLinkServiceConnectionStatus? status, string description, ActionsRequiredForPrivateLinkServiceConsumer? actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private link service connection status. </summary>

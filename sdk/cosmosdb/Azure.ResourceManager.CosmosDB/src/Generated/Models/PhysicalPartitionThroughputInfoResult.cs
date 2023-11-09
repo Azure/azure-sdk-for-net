@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB PhysicalPartitionThroughputInfoResult object. </summary>
     public partial class PhysicalPartitionThroughputInfoResult : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResult"/>. </summary>
         /// <param name="location"> The location. </param>
         public PhysicalPartitionThroughputInfoResult(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,10 +33,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> properties of physical partition throughput info. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal PhysicalPartitionThroughputInfoResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PhysicalPartitionThroughputInfoResultPropertiesResource resource, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhysicalPartitionThroughputInfoResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PhysicalPartitionThroughputInfoResultPropertiesResource resource, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResult"/> for deserialization. </summary>
+        internal PhysicalPartitionThroughputInfoResult()
+        {
         }
 
         /// <summary> properties of physical partition throughput info. </summary>

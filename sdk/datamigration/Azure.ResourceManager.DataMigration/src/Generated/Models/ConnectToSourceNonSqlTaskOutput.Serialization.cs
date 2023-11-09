@@ -5,16 +5,106 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceNonSqlTaskOutput
+    public partial class ConnectToSourceNonSqlTaskOutput : IUtf8JsonSerializable, IJsonModel<ConnectToSourceNonSqlTaskOutput>
     {
-        internal static ConnectToSourceNonSqlTaskOutput DeserializeConnectToSourceNonSqlTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceNonSqlTaskOutput>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ConnectToSourceNonSqlTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SourceServerBrandVersion))
+                {
+                    writer.WritePropertyName("sourceServerBrandVersion"u8);
+                    writer.WriteStringValue(SourceServerBrandVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerProperties))
+                {
+                    writer.WritePropertyName("serverProperties"u8);
+                    writer.WriteObjectValue(ServerProperties);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Databases))
+                {
+                    writer.WritePropertyName("databases"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Databases)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ValidationErrors))
+                {
+                    writer.WritePropertyName("validationErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ValidationErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectToSourceNonSqlTaskOutput IJsonModel<ConnectToSourceNonSqlTaskOutput>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceNonSqlTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceNonSqlTaskOutput(document.RootElement, options);
+        }
+
+        internal static ConnectToSourceNonSqlTaskOutput DeserializeConnectToSourceNonSqlTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +114,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ServerProperties> serverProperties = default;
             Optional<IReadOnlyList<string>> databases = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -73,8 +165,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, Optional.ToList(databases), Optional.ToList(validationErrors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, Optional.ToList(databases), Optional.ToList(validationErrors), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ConnectToSourceNonSqlTaskOutput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceNonSqlTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectToSourceNonSqlTaskOutput IModel<ConnectToSourceNonSqlTaskOutput>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceNonSqlTaskOutput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectToSourceNonSqlTaskOutput(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ConnectToSourceNonSqlTaskOutput>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

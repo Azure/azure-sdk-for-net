@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Information of the backup file. </summary>
     public partial class BackupFileInfo
     {
-        /// <summary> Initializes a new instance of BackupFileInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupFileInfo"/>. </summary>
         internal BackupFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFileInfo"/>. </summary>
         /// <param name="fileLocation"> Location of the backup file in shared folder. </param>
         /// <param name="familySequenceNumber"> Sequence number of the backup file in the backup set. </param>
         /// <param name="status"> Status of the backup file during migration. </param>
-        internal BackupFileInfo(string fileLocation, int? familySequenceNumber, BackupFileStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupFileInfo(string fileLocation, int? familySequenceNumber, BackupFileStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileLocation = fileLocation;
             FamilySequenceNumber = familySequenceNumber;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the backup file in shared folder. </summary>

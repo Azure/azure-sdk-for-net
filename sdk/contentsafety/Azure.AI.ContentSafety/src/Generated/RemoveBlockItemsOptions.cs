@@ -15,7 +15,10 @@ namespace Azure.AI.ContentSafety
     /// <summary> The request of removing blockItems from text blocklist. </summary>
     public partial class RemoveBlockItemsOptions
     {
-        /// <summary> Initializes a new instance of RemoveBlockItemsOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoveBlockItemsOptions"/>. </summary>
         /// <param name="blockItemIds"> Array of blockItemIds to remove. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockItemIds"/> is null. </exception>
         public RemoveBlockItemsOptions(IEnumerable<string> blockItemIds)
@@ -23,13 +26,21 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(blockItemIds, nameof(blockItemIds));
 
             BlockItemIds = blockItemIds.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RemoveBlockItemsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveBlockItemsOptions"/>. </summary>
         /// <param name="blockItemIds"> Array of blockItemIds to remove. </param>
-        internal RemoveBlockItemsOptions(IList<string> blockItemIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoveBlockItemsOptions(IList<string> blockItemIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlockItemIds = blockItemIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoveBlockItemsOptions"/> for deserialization. </summary>
+        internal RemoveBlockItemsOptions()
+        {
         }
 
         /// <summary> Array of blockItemIds to remove. </summary>

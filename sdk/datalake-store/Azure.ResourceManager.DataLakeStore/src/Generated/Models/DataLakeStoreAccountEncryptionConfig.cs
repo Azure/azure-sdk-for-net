@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> The encryption configuration for the account. </summary>
     public partial class DataLakeStoreAccountEncryptionConfig
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountEncryptionConfig"/>. </summary>
         /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are 'UserManaged' and 'ServiceManaged'. </param>
         public DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType)
         {
             ConfigType = configType;
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountEncryptionConfig"/>. </summary>
         /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are 'UserManaged' and 'ServiceManaged'. </param>
         /// <param name="keyVaultMetaInfo"> The Key Vault information for connecting to user managed encryption keys. </param>
-        internal DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType, DataLakeStoreAccountKeyVaultMetaInfo keyVaultMetaInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType, DataLakeStoreAccountKeyVaultMetaInfo keyVaultMetaInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigType = configType;
             KeyVaultMetaInfo = keyVaultMetaInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountEncryptionConfig"/> for deserialization. </summary>
+        internal DataLakeStoreAccountEncryptionConfig()
+        {
         }
 
         /// <summary> The type of encryption configuration being used. Currently the only supported types are 'UserManaged' and 'ServiceManaged'. </summary>

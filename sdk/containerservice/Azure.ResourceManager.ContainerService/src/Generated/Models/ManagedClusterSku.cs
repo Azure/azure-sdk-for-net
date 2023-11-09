@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The SKU of a Managed Cluster. </summary>
     public partial class ManagedClusterSku
     {
-        /// <summary> Initializes a new instance of ManagedClusterSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSku"/>. </summary>
         public ManagedClusterSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSku"/>. </summary>
         /// <param name="name"> The name of a managed cluster SKU. </param>
         /// <param name="tier"> If not specified, the default is 'Free'. See [uptime SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details. </param>
-        internal ManagedClusterSku(ManagedClusterSkuName? name, ManagedClusterSkuTier? tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSku(ManagedClusterSkuName? name, ManagedClusterSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of a managed cluster SKU. </summary>

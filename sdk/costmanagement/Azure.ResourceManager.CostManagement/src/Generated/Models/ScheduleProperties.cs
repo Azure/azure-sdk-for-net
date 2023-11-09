@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The properties of the schedule. </summary>
     public partial class ScheduleProperties
     {
-        /// <summary> Initializes a new instance of ScheduleProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
         /// <param name="frequency"> Frequency of the schedule. </param>
         /// <param name="startOn"> The start date and time of the scheduled action (UTC). </param>
         /// <param name="endOn"> The end date and time of the scheduled action (UTC). </param>
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of ScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
         /// <param name="frequency"> Frequency of the schedule. </param>
         /// <param name="hourOfDay"> UTC time at which cost analysis data will be emailed. </param>
         /// <param name="daysOfWeek"> Day names in english on which cost analysis data will be emailed. This property is applicable when frequency is Weekly or Monthly. </param>
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="dayOfMonth"> UTC day on which cost analysis data will be emailed. Must be between 1 and 31. This property is applicable when frequency is Monthly and overrides weeksOfMonth or daysOfWeek. </param>
         /// <param name="startOn"> The start date and time of the scheduled action (UTC). </param>
         /// <param name="endOn"> The end date and time of the scheduled action (UTC). </param>
-        internal ScheduleProperties(ScheduleFrequency frequency, int? hourOfDay, IList<ScheduledActionDaysOfWeek> daysOfWeek, IList<ScheduledActionWeeksOfMonth> weeksOfMonth, int? dayOfMonth, DateTimeOffset startOn, DateTimeOffset endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduleProperties(ScheduleFrequency frequency, int? hourOfDay, IList<ScheduledActionDaysOfWeek> daysOfWeek, IList<ScheduledActionWeeksOfMonth> weeksOfMonth, int? dayOfMonth, DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             HourOfDay = hourOfDay;
@@ -44,6 +48,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             DayOfMonth = dayOfMonth;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/> for deserialization. </summary>
+        internal ScheduleProperties()
+        {
         }
 
         /// <summary> Frequency of the schedule. </summary>

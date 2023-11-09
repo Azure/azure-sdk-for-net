@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> AAD based security principal with associated Ledger RoleName. </summary>
     public partial class AadBasedSecurityPrincipal
     {
-        /// <summary> Initializes a new instance of AadBasedSecurityPrincipal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AadBasedSecurityPrincipal"/>. </summary>
         public AadBasedSecurityPrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of AadBasedSecurityPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadBasedSecurityPrincipal"/>. </summary>
         /// <param name="principalId"> UUID/GUID based Principal Id of the Security Principal. </param>
         /// <param name="tenantId"> UUID/GUID based Tenant Id of the Security Principal. </param>
         /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        internal AadBasedSecurityPrincipal(Guid? principalId, Guid? tenantId, ConfidentialLedgerRoleName? ledgerRoleName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AadBasedSecurityPrincipal(Guid? principalId, Guid? tenantId, ConfidentialLedgerRoleName? ledgerRoleName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             LedgerRoleName = ledgerRoleName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> UUID/GUID based Principal Id of the Security Principal. </summary>

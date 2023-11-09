@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB Cassandra table column. </summary>
     public partial class CassandraColumn
     {
-        /// <summary> Initializes a new instance of CassandraColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraColumn"/>. </summary>
         public CassandraColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraColumn"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table column. </param>
         /// <param name="cassandraColumnType"> Type of the Cosmos DB Cassandra table column. </param>
-        internal CassandraColumn(string name, string cassandraColumnType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraColumn(string name, string cassandraColumnType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             CassandraColumnType = cassandraColumnType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table column. </summary>

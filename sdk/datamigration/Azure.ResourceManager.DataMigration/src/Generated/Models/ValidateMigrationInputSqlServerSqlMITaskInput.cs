@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that validates migration input for SQL to Azure SQL Managed Instance. </summary>
     public partial class ValidateMigrationInputSqlServerSqlMITaskInput
     {
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupBlobShare = backupBlobShare;
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
         /// <param name="backupBlobShare"> SAS URI of Azure Storage Account Container to be used for storing backup files. </param>
         /// <param name="backupMode"> Backup Mode to specify whether to use existing backup or create new backup. </param>
-        internal ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, IList<string> selectedLogins, FileShare backupFileShare, BlobShare backupBlobShare, BackupMode? backupMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, IList<string> selectedLogins, FileShare backupFileShare, BlobShare backupBlobShare, BackupMode? backupMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -52,6 +56,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupFileShare = backupFileShare;
             BackupBlobShare = backupBlobShare;
             BackupMode = backupMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskInput"/> for deserialization. </summary>
+        internal ValidateMigrationInputSqlServerSqlMITaskInput()
+        {
         }
 
         /// <summary> Information for connecting to source. </summary>

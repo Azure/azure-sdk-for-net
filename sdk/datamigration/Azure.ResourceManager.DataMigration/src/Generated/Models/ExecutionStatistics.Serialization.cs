@@ -5,16 +5,97 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ExecutionStatistics
+    public partial class ExecutionStatistics : IUtf8JsonSerializable, IJsonModel<ExecutionStatistics>
     {
-        internal static ExecutionStatistics DeserializeExecutionStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionStatistics>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ExecutionStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExecutionCount))
+            {
+                writer.WritePropertyName("executionCount"u8);
+                writer.WriteNumberValue(ExecutionCount.Value);
+            }
+            if (Optional.IsDefined(CpuTimeMs))
+            {
+                writer.WritePropertyName("cpuTimeMs"u8);
+                writer.WriteNumberValue(CpuTimeMs.Value);
+            }
+            if (Optional.IsDefined(ElapsedTimeMs))
+            {
+                writer.WritePropertyName("elapsedTimeMs"u8);
+                writer.WriteNumberValue(ElapsedTimeMs.Value);
+            }
+            if (Optional.IsCollectionDefined(WaitStats))
+            {
+                writer.WritePropertyName("waitStats"u8);
+                writer.WriteStartObject();
+                foreach (var item in WaitStats)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(HasErrors))
+            {
+                writer.WritePropertyName("hasErrors"u8);
+                writer.WriteBooleanValue(HasErrors.Value);
+            }
+            if (Optional.IsCollectionDefined(SqlErrors))
+            {
+                writer.WritePropertyName("sqlErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in SqlErrors)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExecutionStatistics IJsonModel<ExecutionStatistics>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecutionStatistics(document.RootElement, options);
+        }
+
+        internal static ExecutionStatistics DeserializeExecutionStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
             Optional<bool> hasErrors = default;
             Optional<IReadOnlyList<string>> sqlErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("executionCount"u8))
@@ -91,8 +174,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sqlErrors = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ExecutionStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExecutionStatistics IModel<ExecutionStatistics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExecutionStatistics(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ExecutionStatistics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

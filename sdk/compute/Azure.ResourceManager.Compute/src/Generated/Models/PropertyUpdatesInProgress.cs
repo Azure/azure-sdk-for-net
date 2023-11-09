@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Properties of the disk for which update is pending. </summary>
     internal partial class PropertyUpdatesInProgress
     {
-        /// <summary> Initializes a new instance of PropertyUpdatesInProgress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PropertyUpdatesInProgress"/>. </summary>
         internal PropertyUpdatesInProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of PropertyUpdatesInProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyUpdatesInProgress"/>. </summary>
         /// <param name="targetTier"> The target performance tier of the disk if a tier change operation is in progress. </param>
-        internal PropertyUpdatesInProgress(string targetTier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PropertyUpdatesInProgress(string targetTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetTier = targetTier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>

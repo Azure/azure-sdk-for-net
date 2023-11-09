@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> VmMemory Data. </summary>
     public partial class DataBoxEdgeVmMemory
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeVmMemory. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeVmMemory"/>. </summary>
         public DataBoxEdgeVmMemory()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeVmMemory. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeVmMemory"/>. </summary>
         /// <param name="startupMemoryInMB"> The total amount of RAM in the virtual machine, as seen by the guest  operating system. For a virtual machine with dynamic memory enabled, this represents the initial memory available at startup. </param>
         /// <param name="currentMemoryUsageInMB"> The current memory used by the virtual machine. </param>
-        internal DataBoxEdgeVmMemory(long? startupMemoryInMB, long? currentMemoryUsageInMB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeVmMemory(long? startupMemoryInMB, long? currentMemoryUsageInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartupMemoryInMB = startupMemoryInMB;
             CurrentMemoryUsageInMB = currentMemoryUsageInMB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The total amount of RAM in the virtual machine, as seen by the guest  operating system. For a virtual machine with dynamic memory enabled, this represents the initial memory available at startup. </summary>

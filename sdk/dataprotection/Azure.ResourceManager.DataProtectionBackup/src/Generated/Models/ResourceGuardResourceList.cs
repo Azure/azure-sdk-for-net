@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List of ResourceGuard resources. </summary>
     internal partial class ResourceGuardResourceList
     {
-        /// <summary> Initializes a new instance of ResourceGuardResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardResourceList"/>. </summary>
         internal ResourceGuardResourceList()
         {
             Value = new ChangeTrackingList<ResourceGuardData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal ResourceGuardResourceList(IReadOnlyList<ResourceGuardData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardResourceList(IReadOnlyList<ResourceGuardData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of resources. </summary>

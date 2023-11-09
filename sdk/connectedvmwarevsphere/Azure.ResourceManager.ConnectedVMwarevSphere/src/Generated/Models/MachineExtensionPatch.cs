@@ -6,15 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Describes a Machine Extension Update. </summary>
     public partial class MachineExtensionPatch : ResourcePatch
     {
-        /// <summary> Initializes a new instance of MachineExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionPatch"/>. </summary>
         public MachineExtensionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="machineExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        internal MachineExtensionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string forceUpdateTag, string publisher, string machineExtensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings) : base(tags, serializedAdditionalRawData)
+        {
+            ForceUpdateTag = forceUpdateTag;
+            Publisher = publisher;
+            MachineExtensionType = machineExtensionType;
+            TypeHandlerVersion = typeHandlerVersion;
+            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            Settings = settings;
+            ProtectedSettings = protectedSettings;
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>

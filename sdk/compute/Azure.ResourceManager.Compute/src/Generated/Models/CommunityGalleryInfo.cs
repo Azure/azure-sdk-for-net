@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information of community gallery if current gallery is shared to community. </summary>
     public partial class CommunityGalleryInfo
     {
-        /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryInfo"/>. </summary>
         public CommunityGalleryInfo()
         {
             PublicNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryInfo"/>. </summary>
         /// <param name="publisherUri"> The link to the publisher website. Visible to all users. </param>
         /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
         /// <param name="eula"> End-user license agreement for community gallery image. </param>
         /// <param name="publicNamePrefix"> The prefix of the gallery name that will be displayed publicly. Visible to all users. </param>
         /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
         /// <param name="publicNames"> Community gallery public name list. </param>
-        internal CommunityGalleryInfo(Uri publisherUri, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunityGalleryInfo(Uri publisherUri, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublisherUri = publisherUri;
             PublisherContact = publisherContact;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             PublicNamePrefix = publicNamePrefix;
             CommunityGalleryEnabled = communityGalleryEnabled;
             PublicNames = publicNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the publisher website. Visible to all users. </summary>

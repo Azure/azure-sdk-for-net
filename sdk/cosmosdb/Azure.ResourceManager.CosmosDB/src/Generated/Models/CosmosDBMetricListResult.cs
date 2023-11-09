@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The response to a list metrics request. </summary>
     internal partial class CosmosDBMetricListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBMetricListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricListResult"/>. </summary>
         internal CosmosDBMetricListResult()
         {
             Value = new ChangeTrackingList<CosmosDBBaseMetric>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMetricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricListResult"/>. </summary>
         /// <param name="value"> The list of metrics for the account. </param>
-        internal CosmosDBMetricListResult(IReadOnlyList<CosmosDBBaseMetric> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBMetricListResult(IReadOnlyList<CosmosDBBaseMetric> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of metrics for the account. </summary>

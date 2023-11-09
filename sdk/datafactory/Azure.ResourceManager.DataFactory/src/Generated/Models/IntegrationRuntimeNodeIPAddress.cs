@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The IP address of self-hosted integration runtime node. </summary>
     public partial class IntegrationRuntimeNodeIPAddress
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
         internal IntegrationRuntimeNodeIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeNodeIPAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
-        internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddress = ipAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IP address of self-hosted integration runtime node. </summary>

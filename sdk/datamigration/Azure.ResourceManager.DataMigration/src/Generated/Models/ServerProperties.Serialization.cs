@@ -5,15 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ServerProperties
+    public partial class ServerProperties : IUtf8JsonSerializable, IJsonModel<ServerProperties>
     {
-        internal static ServerProperties DeserializeServerProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerPlatform))
+                {
+                    writer.WritePropertyName("serverPlatform"u8);
+                    writer.WriteStringValue(ServerPlatform);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerName))
+                {
+                    writer.WritePropertyName("serverName"u8);
+                    writer.WriteStringValue(ServerName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerVersion))
+                {
+                    writer.WritePropertyName("serverVersion"u8);
+                    writer.WriteStringValue(ServerVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerEdition))
+                {
+                    writer.WritePropertyName("serverEdition"u8);
+                    writer.WriteStringValue(ServerEdition);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerOperatingSystemVersion))
+                {
+                    writer.WritePropertyName("serverOperatingSystemVersion"u8);
+                    writer.WriteStringValue(ServerOperatingSystemVersion);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerDatabaseCount))
+                {
+                    writer.WritePropertyName("serverDatabaseCount"u8);
+                    writer.WriteNumberValue(ServerDatabaseCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServerProperties IJsonModel<ServerProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerProperties(document.RootElement, options);
+        }
+
+        internal static ServerProperties DeserializeServerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +113,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> serverEdition = default;
             Optional<string> serverOperatingSystemVersion = default;
             Optional<int> serverDatabaseCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverPlatform"u8))
@@ -60,8 +151,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     serverDatabaseCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ServerProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServerProperties IModel<ServerProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServerProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ServerProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

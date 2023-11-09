@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The SKU type. </summary>
     public partial class DataBoxEdgeSku
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSku"/>. </summary>
         public DataBoxEdgeSku()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
-        internal DataBoxEdgeSku(DataBoxEdgeSkuName? name, DataBoxEdgeSkuTier? tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeSku(DataBoxEdgeSkuName? name, DataBoxEdgeSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SKU name. </summary>

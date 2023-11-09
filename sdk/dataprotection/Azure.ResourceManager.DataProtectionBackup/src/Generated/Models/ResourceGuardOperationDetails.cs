@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> This class contains all the details about a critical operation. </summary>
     public partial class ResourceGuardOperationDetails
     {
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetails"/>. </summary>
         internal ResourceGuardOperationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetails"/>. </summary>
         /// <param name="vaultCriticalOperation"> Name of the critical operation. </param>
         /// <param name="requestResourceType"> Type of resource request. </param>
-        internal ResourceGuardOperationDetails(string vaultCriticalOperation, ResourceType? requestResourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardOperationDetails(string vaultCriticalOperation, ResourceType? requestResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VaultCriticalOperation = vaultCriticalOperation;
             RequestResourceType = requestResourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the critical operation. </summary>

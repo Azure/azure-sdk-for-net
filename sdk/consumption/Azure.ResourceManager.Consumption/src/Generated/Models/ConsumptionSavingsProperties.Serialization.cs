@@ -5,16 +5,106 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionSavingsProperties
+    public partial class ConsumptionSavingsProperties : IUtf8JsonSerializable, IJsonModel<ConsumptionSavingsProperties>
     {
-        internal static ConsumptionSavingsProperties DeserializeConsumptionSavingsProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionSavingsProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ConsumptionSavingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(CalculatedSavings))
+            {
+                writer.WritePropertyName("calculatedSavings"u8);
+                writer.WriteStartArray();
+                foreach (var item in CalculatedSavings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LookBackPeriod))
+                {
+                    writer.WritePropertyName("lookBackPeriod"u8);
+                    writer.WriteNumberValue(LookBackPeriod.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RecommendedQuantity))
+                {
+                    writer.WritePropertyName("recommendedQuantity"u8);
+                    writer.WriteNumberValue(RecommendedQuantity.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ReservationOrderTerm))
+                {
+                    writer.WritePropertyName("reservationOrderTerm"u8);
+                    writer.WriteStringValue(ReservationOrderTerm);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SavingsType))
+                {
+                    writer.WritePropertyName("savingsType"u8);
+                    writer.WriteStringValue(SavingsType);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UnitOfMeasure))
+                {
+                    writer.WritePropertyName("unitOfMeasure"u8);
+                    writer.WriteStringValue(UnitOfMeasure);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionSavingsProperties IJsonModel<ConsumptionSavingsProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionSavingsProperties(document.RootElement, options);
+        }
+
+        internal static ConsumptionSavingsProperties DeserializeConsumptionSavingsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +115,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> reservationOrderTerm = default;
             Optional<string> savingsType = default;
             Optional<string> unitOfMeasure = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("calculatedSavings"u8))
@@ -74,8 +166,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     unitOfMeasure = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionSavingsProperties(Optional.ToList(calculatedSavings), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionSavingsProperties(Optional.ToList(calculatedSavings), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ConsumptionSavingsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConsumptionSavingsProperties IModel<ConsumptionSavingsProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConsumptionSavingsProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ConsumptionSavingsProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

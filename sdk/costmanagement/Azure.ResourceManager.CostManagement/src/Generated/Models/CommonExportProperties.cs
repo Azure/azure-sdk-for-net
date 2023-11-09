@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The common properties of the export. </summary>
     public partial class CommonExportProperties
     {
-        /// <summary> Initializes a new instance of CommonExportProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deliveryInfo"/> or <paramref name="definition"/> is null. </exception>
@@ -27,14 +30,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of CommonExportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <param name="runHistory"> If requested, has the most recent run history for the export. </param>
         /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </param>
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
-        internal CommonExportProperties(ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommonExportProperties(ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Format = format;
             DeliveryInfo = deliveryInfo;
@@ -42,6 +46,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             RunHistory = runHistory;
             PartitionData = partitionData;
             NextRunTimeEstimate = nextRunTimeEstimate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/> for deserialization. </summary>
+        internal CommonExportProperties()
+        {
         }
 
         /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>

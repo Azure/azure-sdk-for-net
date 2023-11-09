@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Types of validations to run after the migration. </summary>
     public partial class MigrationValidationOptions
     {
-        /// <summary> Initializes a new instance of MigrationValidationOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationOptions"/>. </summary>
         public MigrationValidationOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationValidationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationOptions"/>. </summary>
         /// <param name="enableSchemaValidation"> Allows to compare the schema information between source and target. </param>
         /// <param name="enableDataIntegrityValidation"> Allows to perform a checksum based data integrity validation between source and target for the selected database / tables . </param>
         /// <param name="enableQueryAnalysisValidation"> Allows to perform a quick and intelligent query analysis by retrieving queries from the source database and executes them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries. </param>
-        internal MigrationValidationOptions(bool? enableSchemaValidation, bool? enableDataIntegrityValidation, bool? enableQueryAnalysisValidation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationValidationOptions(bool? enableSchemaValidation, bool? enableDataIntegrityValidation, bool? enableQueryAnalysisValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableSchemaValidation = enableSchemaValidation;
             EnableDataIntegrityValidation = enableDataIntegrityValidation;
             EnableQueryAnalysisValidation = enableQueryAnalysisValidation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allows to compare the schema information between source and target. </summary>

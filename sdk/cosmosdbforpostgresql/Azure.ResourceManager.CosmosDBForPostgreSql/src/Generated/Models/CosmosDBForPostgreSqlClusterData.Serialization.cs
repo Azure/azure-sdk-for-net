@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
@@ -14,9 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlClusterData : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlClusterData : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CosmosDBForPostgreSqlClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -32,12 +36,59 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AdministratorLogin))
+                {
+                    writer.WritePropertyName("administratorLogin"u8);
+                    writer.WriteStringValue(AdministratorLogin);
+                }
+            }
             if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
             }
             if (Optional.IsDefined(PostgresqlVersion))
             {
@@ -114,6 +165,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("nodeEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsNodePublicIPAccessEnabled.Value);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ServerNames))
+                {
+                    writer.WritePropertyName("serverNames"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ServerNames)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
@@ -129,12 +193,75 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(ReadReplicas))
+                {
+                    writer.WritePropertyName("readReplicas"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ReadReplicas)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EarliestRestoreOn))
+                {
+                    writer.WritePropertyName("earliestRestoreTime"u8);
+                    writer.WriteStringValue(EarliestRestoreOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBForPostgreSqlClusterData DeserializeCosmosDBForPostgreSqlClusterData(JsonElement element)
+        CosmosDBForPostgreSqlClusterData IJsonModel<CosmosDBForPostgreSqlClusterData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlClusterData(document.RootElement, options);
+        }
+
+        internal static CosmosDBForPostgreSqlClusterData DeserializeCosmosDBForPostgreSqlClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -171,6 +298,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<IReadOnlyList<string>> readReplicas = default;
             Optional<DateTimeOffset> earliestRestoreTime = default;
             Optional<IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>> privateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -441,8 +570,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CosmosDBForPostgreSqlClusterData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDBForPostgreSqlClusterData IModel<CosmosDBForPostgreSqlClusterData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDBForPostgreSqlClusterData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CosmosDBForPostgreSqlClusterData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

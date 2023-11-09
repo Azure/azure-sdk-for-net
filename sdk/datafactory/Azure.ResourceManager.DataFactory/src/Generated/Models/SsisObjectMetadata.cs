@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -14,22 +17,27 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisObjectMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/>. </summary>
         protected SsisObjectMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisObjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
-        internal SsisObjectMetadata(SsisObjectMetadataType metadataType, long? id, string name, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisObjectMetadata(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetadataType = metadataType;
             Id = id;
             Name = name;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of metadata. </summary>

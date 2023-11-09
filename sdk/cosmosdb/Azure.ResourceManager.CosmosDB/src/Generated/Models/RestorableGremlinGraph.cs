@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB Gremlin graph event. </summary>
     public partial class RestorableGremlinGraph : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableGremlinGraph. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinGraph"/>. </summary>
         internal RestorableGremlinGraph()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinGraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinGraph"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB Gremlin graph event. </param>
-        internal RestorableGremlinGraph(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableGremlinGraphResourceInfo resource) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableGremlinGraph(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableGremlinGraphResourceInfo resource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource of an Azure Cosmos DB Gremlin graph event. </summary>

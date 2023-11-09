@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> RemoteApplicationType for which remote support settings is being modified. </summary>
     public partial class EdgeRemoteSupportSettings
     {
-        /// <summary> Initializes a new instance of EdgeRemoteSupportSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeRemoteSupportSettings"/>. </summary>
         public EdgeRemoteSupportSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeRemoteSupportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeRemoteSupportSettings"/>. </summary>
         /// <param name="remoteApplicationType"> Remote application type. </param>
         /// <param name="accessLevel"> Access level allowed for this remote application type. </param>
         /// <param name="expireOn"> Expiration time stamp. </param>
-        internal EdgeRemoteSupportSettings(EdgeRemoteApplicationType? remoteApplicationType, EdgeRemoteApplicationAccessLevel? accessLevel, DateTimeOffset? expireOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeRemoteSupportSettings(EdgeRemoteApplicationType? remoteApplicationType, EdgeRemoteApplicationAccessLevel? accessLevel, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RemoteApplicationType = remoteApplicationType;
             AccessLevel = accessLevel;
             ExpireOn = expireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Remote application type. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations. </summary>
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source Oracle. </param>
@@ -31,15 +34,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source Oracle. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput(IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, OracleConnectionInfo sourceConnectionInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput(IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, OracleConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedDatabases = selectedDatabases;
             TargetConnectionInfo = targetConnectionInfo;
             SourceConnectionInfo = sourceConnectionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskInput"/> for deserialization. </summary>
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput()
+        {
         }
 
         /// <summary> Databases to migrate. </summary>

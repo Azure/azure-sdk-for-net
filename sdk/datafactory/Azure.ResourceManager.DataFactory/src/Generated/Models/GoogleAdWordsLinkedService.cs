@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Google AdWords service linked service. </summary>
     public partial class GoogleAdWordsLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of GoogleAdWordsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleAdWordsLinkedService"/>. </summary>
         public GoogleAdWordsLinkedService()
         {
             LinkedServiceType = "GoogleAdWords";
         }
 
-        /// <summary> Initializes a new instance of GoogleAdWordsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleAdWordsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

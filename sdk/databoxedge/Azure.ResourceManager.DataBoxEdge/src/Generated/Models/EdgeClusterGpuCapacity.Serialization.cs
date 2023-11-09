@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeClusterGpuCapacity : IUtf8JsonSerializable
+    public partial class EdgeClusterGpuCapacity : IUtf8JsonSerializable, IJsonModel<EdgeClusterGpuCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeClusterGpuCapacity>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EdgeClusterGpuCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(GpuType))
@@ -40,11 +46,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("gpuTotalUnitsCount"u8);
                 writer.WriteNumberValue(GpuTotalUnitsCount.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeClusterGpuCapacity DeserializeEdgeClusterGpuCapacity(JsonElement element)
+        EdgeClusterGpuCapacity IJsonModel<EdgeClusterGpuCapacity>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeClusterGpuCapacity(document.RootElement, options);
+        }
+
+        internal static EdgeClusterGpuCapacity DeserializeEdgeClusterGpuCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +89,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> gpuFreeUnitsCount = default;
             Optional<int> gpuReservedForFailoverUnitsCount = default;
             Optional<int> gpuTotalUnitsCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gpuType"u8))
@@ -97,8 +134,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     gpuTotalUnitsCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeClusterGpuCapacity(gpuType.Value, Optional.ToNullable(gpuUsedUnitsCount), Optional.ToNullable(gpuFreeUnitsCount), Optional.ToNullable(gpuReservedForFailoverUnitsCount), Optional.ToNullable(gpuTotalUnitsCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeClusterGpuCapacity(gpuType.Value, Optional.ToNullable(gpuUsedUnitsCount), Optional.ToNullable(gpuFreeUnitsCount), Optional.ToNullable(gpuReservedForFailoverUnitsCount), Optional.ToNullable(gpuTotalUnitsCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EdgeClusterGpuCapacity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EdgeClusterGpuCapacity IModel<EdgeClusterGpuCapacity>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEdgeClusterGpuCapacity(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EdgeClusterGpuCapacity>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

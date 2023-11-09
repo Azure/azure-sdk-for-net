@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -16,13 +18,18 @@ namespace Azure.Communication.MediaComposition.Models
     /// </summary>
     public abstract partial class MediaInput
     {
-        /// <summary> Initializes a new instance of MediaInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
-        internal MediaInput(MediaInputType kind, string placeholderImageUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaInput(MediaInputType kind, string placeholderImageUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             PlaceholderImageUri = placeholderImageUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of media input. </summary>

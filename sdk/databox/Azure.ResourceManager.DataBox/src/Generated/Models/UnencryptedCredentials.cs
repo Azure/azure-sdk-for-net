@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Unencrypted credentials for accessing device. </summary>
     public partial class UnencryptedCredentials
     {
-        /// <summary> Initializes a new instance of UnencryptedCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnencryptedCredentials"/>. </summary>
         internal UnencryptedCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of UnencryptedCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnencryptedCredentials"/>. </summary>
         /// <param name="jobName"> Name of the job. </param>
         /// <param name="jobSecrets">
         /// Secrets related to this job.
         /// Please note <see cref="Models.JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataboxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
         /// </param>
-        internal UnencryptedCredentials(string jobName, JobSecrets jobSecrets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnencryptedCredentials(string jobName, JobSecrets jobSecrets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobName = jobName;
             JobSecrets = jobSecrets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the job. </summary>

@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Default value. </summary>
     public partial class DWCopyCommandDefaultValue
     {
-        /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandDefaultValue"/>. </summary>
         public DWCopyCommandDefaultValue()
         {
         }
 
-        /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandDefaultValue"/>. </summary>
         /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
         /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
-        internal DWCopyCommandDefaultValue(BinaryData columnName, BinaryData defaultValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DWCopyCommandDefaultValue(BinaryData columnName, BinaryData defaultValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ColumnName = columnName;
             DefaultValue = defaultValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

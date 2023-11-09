@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeStore;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Data Lake Store trusted identity provider list information. </summary>
     internal partial class DataLakeStoreTrustedIdProviderListResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreTrustedIdProviderListResult"/>. </summary>
         internal DataLakeStoreTrustedIdProviderListResult()
         {
             Value = new ChangeTrackingList<DataLakeStoreTrustedIdProviderData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreTrustedIdProviderListResult"/>. </summary>
         /// <param name="value"> The results of the list operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal DataLakeStoreTrustedIdProviderListResult(IReadOnlyList<DataLakeStoreTrustedIdProviderData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreTrustedIdProviderListResult(IReadOnlyList<DataLakeStoreTrustedIdProviderData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The results of the list operation. </summary>

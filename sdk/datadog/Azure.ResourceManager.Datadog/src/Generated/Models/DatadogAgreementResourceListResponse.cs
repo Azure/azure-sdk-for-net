@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class DatadogAgreementResourceListResponse
     {
-        /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResponse"/>. </summary>
         internal DatadogAgreementResourceListResponse()
         {
             Value = new ChangeTrackingList<DatadogAgreementResourceProperties>();
         }
 
-        /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal DatadogAgreementResourceListResponse(IReadOnlyList<DatadogAgreementResourceProperties> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogAgreementResourceListResponse(IReadOnlyList<DatadogAgreementResourceProperties> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Results of a list operation. </summary>

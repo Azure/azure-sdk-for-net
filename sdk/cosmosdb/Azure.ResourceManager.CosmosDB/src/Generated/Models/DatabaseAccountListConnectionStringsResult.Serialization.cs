@@ -5,21 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class DatabaseAccountListConnectionStringsResult
+    internal partial class DatabaseAccountListConnectionStringsResult : IUtf8JsonSerializable, IJsonModel<DatabaseAccountListConnectionStringsResult>
     {
-        internal static DatabaseAccountListConnectionStringsResult DeserializeDatabaseAccountListConnectionStringsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseAccountListConnectionStringsResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DatabaseAccountListConnectionStringsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ConnectionStrings))
+            {
+                writer.WritePropertyName("connectionStrings"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConnectionStrings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DatabaseAccountListConnectionStringsResult IJsonModel<DatabaseAccountListConnectionStringsResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseAccountListConnectionStringsResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseAccountListConnectionStringsResult(document.RootElement, options);
+        }
+
+        internal static DatabaseAccountListConnectionStringsResult DeserializeDatabaseAccountListConnectionStringsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionStrings"u8))
@@ -36,8 +88,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionStrings = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DatabaseAccountListConnectionStringsResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseAccountListConnectionStringsResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatabaseAccountListConnectionStringsResult IModel<DatabaseAccountListConnectionStringsResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseAccountListConnectionStringsResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatabaseAccountListConnectionStringsResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DatabaseAccountListConnectionStringsResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

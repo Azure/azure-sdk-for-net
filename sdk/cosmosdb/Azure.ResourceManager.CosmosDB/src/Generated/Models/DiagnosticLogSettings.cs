@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Indicates what diagnostic log settings are to be enabled. </summary>
     internal partial class DiagnosticLogSettings
     {
-        /// <summary> Initializes a new instance of DiagnosticLogSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticLogSettings"/>. </summary>
         public DiagnosticLogSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticLogSettings"/>. </summary>
         /// <param name="enableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
-        internal DiagnosticLogSettings(EnableFullTextQuery? enableFullTextQuery)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticLogSettings(EnableFullTextQuery? enableFullTextQuery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableFullTextQuery = enableFullTextQuery;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>

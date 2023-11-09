@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of a request to list private endpoint connections for a container registry. </summary>
     internal partial class ContainerRegistryPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateEndpointConnectionListResult"/>. </summary>
         internal ContainerRegistryPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The list of private endpoint connections. Since this list may be incomplete, the nextLink field should be used to request the next list of private endpoint connections. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of private endpoint connections. </param>
-        internal ContainerRegistryPrivateEndpointConnectionListResult(IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPrivateEndpointConnectionListResult(IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of private endpoint connections. Since this list may be incomplete, the nextLink field should be used to request the next list of private endpoint connections. </summary>

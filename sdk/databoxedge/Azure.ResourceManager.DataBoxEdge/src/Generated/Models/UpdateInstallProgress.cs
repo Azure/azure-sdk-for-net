@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Progress details during installation of updates. </summary>
     public partial class UpdateInstallProgress
     {
-        /// <summary> Initializes a new instance of UpdateInstallProgress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateInstallProgress"/>. </summary>
         internal UpdateInstallProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateInstallProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateInstallProgress"/>. </summary>
         /// <param name="percentComplete"> Percentage completed. </param>
         /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
         /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
-        internal UpdateInstallProgress(int? percentComplete, int? numberOfUpdatesToInstall, int? numberOfUpdatesInstalled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateInstallProgress(int? percentComplete, int? numberOfUpdatesToInstall, int? numberOfUpdatesInstalled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PercentComplete = percentComplete;
             NumberOfUpdatesToInstall = numberOfUpdatesToInstall;
             NumberOfUpdatesInstalled = numberOfUpdatesInstalled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Percentage completed. </summary>

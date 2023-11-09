@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Response body structure of data flow result for data preview, statistics or expression preview. </summary>
     public partial class DataFactoryDataFlowDebugCommandResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugCommandResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugCommandResult"/>. </summary>
         internal DataFactoryDataFlowDebugCommandResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugCommandResult"/>. </summary>
         /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
         /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
-        internal DataFactoryDataFlowDebugCommandResult(string status, string data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataFlowDebugCommandResult(string status, string data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The run status of data preview, statistics or expression preview. </summary>

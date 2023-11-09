@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class PlacementProfile
     {
-        /// <summary> Initializes a new instance of PlacementProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlacementProfile"/>. </summary>
         public PlacementProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of PlacementProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementProfile"/>. </summary>
         /// <param name="resourcePoolId"> Gets or sets the ARM Id of the resourcePool resource on which this virtual machine will deploy. </param>
         /// <param name="clusterId"> Gets or sets the ARM Id of the cluster resource on which this virtual machine will deploy. </param>
         /// <param name="hostId"> Gets or sets the ARM Id of the host resource on which this virtual machine will deploy. </param>
         /// <param name="datastoreId"> Gets or sets the ARM Id of the datastore resource on which the data for the virtual machine will be kept. </param>
-        internal PlacementProfile(string resourcePoolId, string clusterId, string hostId, string datastoreId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlacementProfile(string resourcePoolId, string clusterId, string hostId, string datastoreId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourcePoolId = resourcePoolId;
             ClusterId = clusterId;
             HostId = hostId;
             DatastoreId = datastoreId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the ARM Id of the resourcePool resource on which this virtual machine will deploy. </summary>

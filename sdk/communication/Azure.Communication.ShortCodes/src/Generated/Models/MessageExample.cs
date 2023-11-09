@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> Represents a message example to be sent from or to the end user. </summary>
     public partial class MessageExample
     {
-        /// <summary> Initializes a new instance of MessageExample. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageExample"/>. </summary>
         public MessageExample()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageExample. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageExample"/>. </summary>
         /// <param name="direction"> Indicates whether the message example is supposed to be sent to or from the end user e.g. toUser. </param>
         /// <param name="text"> Actual example text for the message e.g. 'Want me to notify you when package in the way?'. </param>
-        internal MessageExample(MessageDirection? direction, string text)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageExample(MessageDirection? direction, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             Text = text;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the message example is supposed to be sent to or from the end user e.g. toUser. </summary>

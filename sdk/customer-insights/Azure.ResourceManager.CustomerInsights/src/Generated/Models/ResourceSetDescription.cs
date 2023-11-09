@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The resource set description. </summary>
     public partial class ResourceSetDescription
     {
-        /// <summary> Initializes a new instance of ResourceSetDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSetDescription"/>. </summary>
         public ResourceSetDescription()
         {
             Elements = new ChangeTrackingList<string>();
             Exceptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSetDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSetDescription"/>. </summary>
         /// <param name="elements"> The elements included in the set. </param>
         /// <param name="exceptions"> The elements that are not included in the set, in case elements contains '*' indicating 'all'. </param>
-        internal ResourceSetDescription(IList<string> elements, IList<string> exceptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSetDescription(IList<string> elements, IList<string> exceptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Elements = elements;
             Exceptions = exceptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The elements included in the set. </summary>

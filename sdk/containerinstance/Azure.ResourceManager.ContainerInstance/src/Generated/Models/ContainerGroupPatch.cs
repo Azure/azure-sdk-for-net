@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,14 +15,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The Resource model definition. </summary>
     public partial class ContainerGroupPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerGroupPatch(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,9 +33,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        internal ContainerGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/> for deserialization. </summary>
+        internal ContainerGroupPatch()
+        {
         }
 
         /// <summary> The zones for the container group. </summary>

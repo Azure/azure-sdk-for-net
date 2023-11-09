@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class AcrManifests
+    internal partial class AcrManifests : IUtf8JsonSerializable, IJsonModel<AcrManifests>
     {
-        internal static AcrManifests DeserializeAcrManifests(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcrManifests>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AcrManifests>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RegistryLoginServer))
+            {
+                writer.WritePropertyName("registry"u8);
+                writer.WriteStringValue(RegistryLoginServer);
+            }
+            if (Optional.IsDefined(Repository))
+            {
+                writer.WritePropertyName("imageName"u8);
+                writer.WriteStringValue(Repository);
+            }
+            if (Optional.IsCollectionDefined(Manifests))
+            {
+                writer.WritePropertyName("manifests"u8);
+                writer.WriteStartArray();
+                foreach (var item in Manifests)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Link))
+            {
+                writer.WritePropertyName("link"u8);
+                writer.WriteStringValue(Link);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcrManifests IJsonModel<AcrManifests>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcrManifests)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcrManifests(document.RootElement, options);
+        }
+
+        internal static AcrManifests DeserializeAcrManifests(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +88,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> imageName = default;
             Optional<IReadOnlyList<ManifestAttributesBase>> manifests = default;
             Optional<string> link = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -54,8 +121,38 @@ namespace Azure.Containers.ContainerRegistry
                     link = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcrManifests(registry.Value, imageName.Value, Optional.ToList(manifests), link.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcrManifests(registry.Value, imageName.Value, Optional.ToList(manifests), link.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AcrManifests>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcrManifests)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcrManifests IModel<AcrManifests>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcrManifests)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcrManifests(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AcrManifests>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

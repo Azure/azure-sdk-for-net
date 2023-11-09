@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a timer trigger. </summary>
     public partial class ContainerRegistryTimerTrigger
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTrigger. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/>. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="name"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/>. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
-        internal ContainerRegistryTimerTrigger(string schedule, ContainerRegistryTriggerStatus? status, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTimerTrigger(string schedule, ContainerRegistryTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Schedule = schedule;
             Status = status;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/> for deserialization. </summary>
+        internal ContainerRegistryTimerTrigger()
+        {
         }
 
         /// <summary> The CRON expression for the task schedule. </summary>

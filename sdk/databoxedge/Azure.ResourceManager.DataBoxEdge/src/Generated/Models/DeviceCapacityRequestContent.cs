@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Object for Capturing DeviceCapacityRequestInfo. </summary>
     public partial class DeviceCapacityRequestContent
     {
-        /// <summary> Initializes a new instance of DeviceCapacityRequestContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceCapacityRequestContent"/>. </summary>
         /// <param name="vmPlacementQuery"> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmPlacementQuery"/> is null. </exception>
         public DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery)
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             VmPlacementQuery = vmPlacementQuery.ToList();
             VmPlacementResults = new ChangeTrackingList<VmPlacementRequestResult>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceCapacityRequestContent"/>. </summary>
+        /// <param name="vmPlacementQuery"> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </param>
+        /// <param name="vmPlacementResults"> Array of the VMs of the sizes in VmSizes can be provisioned on the appliance. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceCapacityRequestContent(IList<IList<string>> vmPlacementQuery, IList<VmPlacementRequestResult> vmPlacementResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VmPlacementQuery = vmPlacementQuery;
+            VmPlacementResults = vmPlacementResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceCapacityRequestContent"/> for deserialization. </summary>
+        internal DeviceCapacityRequestContent()
+        {
         }
 
         /// <summary> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </summary>

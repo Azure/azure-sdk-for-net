@@ -20,14 +20,17 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class ProjectData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProjectData(AzureLocation location) : base(location)
         {
             DatabasesInfo = new ChangeTrackingList<DatabaseInfo>();
         }
 
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +54,8 @@ namespace Azure.ResourceManager.DataMigration
         /// </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
         /// <param name="provisioningState"> The project's provisioning state. </param>
-        internal ProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ProjectSourcePlatform? sourcePlatform, AzureActiveDirectoryApp azureAuthenticationInfo, ProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ConnectionInfo sourceConnectionInfo, ConnectionInfo targetConnectionInfo, IList<DatabaseInfo> databasesInfo, ProjectProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ProjectSourcePlatform? sourcePlatform, AzureActiveDirectoryApp azureAuthenticationInfo, ProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ConnectionInfo sourceConnectionInfo, ConnectionInfo targetConnectionInfo, IList<DatabaseInfo> databasesInfo, ProjectProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             SourcePlatform = sourcePlatform;
@@ -62,6 +66,12 @@ namespace Azure.ResourceManager.DataMigration
             TargetConnectionInfo = targetConnectionInfo;
             DatabasesInfo = databasesInfo;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProjectData"/> for deserialization. </summary>
+        internal ProjectData()
+        {
         }
 
         /// <summary> HTTP strong entity tag value. This is ignored if submitted. </summary>

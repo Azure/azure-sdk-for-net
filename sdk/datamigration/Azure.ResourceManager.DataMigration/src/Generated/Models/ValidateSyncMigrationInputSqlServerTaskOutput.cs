@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for task that validates migration input for SQL sync migrations. </summary>
     public partial class ValidateSyncMigrationInputSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskOutput"/>. </summary>
         internal ValidateSyncMigrationInputSqlServerTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskOutput"/>. </summary>
         /// <param name="id"> Database identifier. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>
-        internal ValidateSyncMigrationInputSqlServerTaskOutput(string id, string name, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateSyncMigrationInputSqlServerTaskOutput(string id, string name, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             ValidationErrors = validationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database identifier. </summary>

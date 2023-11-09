@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceMaintenanceConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationData"/>. </summary>
         public ContainerServiceMaintenanceConfigurationData()
         {
             TimesInWeek = new ChangeTrackingList<ContainerServiceTimeInWeek>();
             NotAllowedTimes = new ChangeTrackingList<ContainerServiceTimeSpan>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,11 +37,13 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="timesInWeek"> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </param>
         /// <param name="notAllowedTimes"> Time slots on which upgrade is not allowed. </param>
         /// <param name="maintenanceWindow"> Maintenance window for the maintenance configuration. </param>
-        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes, ContainerServiceMaintenanceWindow maintenanceWindow) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes, ContainerServiceMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TimesInWeek = timesInWeek;
             NotAllowedTimes = notAllowedTimes;
             MaintenanceWindow = maintenanceWindow;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </summary>

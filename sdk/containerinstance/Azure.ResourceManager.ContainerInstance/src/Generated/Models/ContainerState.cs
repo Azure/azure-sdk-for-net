@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The container instance state. </summary>
     public partial class ContainerState
     {
-        /// <summary> Initializes a new instance of ContainerState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerState"/>. </summary>
         internal ContainerState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerState"/>. </summary>
         /// <param name="state"> The state of the container instance. </param>
         /// <param name="startOn"> The date-time when the container instance state started. </param>
         /// <param name="exitCode"> The container instance exit codes correspond to those from the `docker run` command. </param>
         /// <param name="finishOn"> The date-time when the container instance state finished. </param>
         /// <param name="detailStatus"> The human-readable status of the container instance state. </param>
-        internal ContainerState(string state, DateTimeOffset? startOn, int? exitCode, DateTimeOffset? finishOn, string detailStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerState(string state, DateTimeOffset? startOn, int? exitCode, DateTimeOffset? finishOn, string detailStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             StartOn = startOn;
             ExitCode = exitCode;
             FinishOn = finishOn;
             DetailStatus = detailStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the container instance. </summary>

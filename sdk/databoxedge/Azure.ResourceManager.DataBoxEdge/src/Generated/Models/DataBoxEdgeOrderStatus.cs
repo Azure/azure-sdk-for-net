@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Represents a single status change. </summary>
     public partial class DataBoxEdgeOrderStatus
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderStatus"/>. </summary>
         /// <param name="status"> Status of the order as per the allowed status types. </param>
         internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status)
         {
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             AdditionalOrderDetails = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderStatus"/>. </summary>
         /// <param name="status"> Status of the order as per the allowed status types. </param>
         /// <param name="updateOn"> Time of status update. </param>
         /// <param name="comments"> Comments related to this status change. </param>
@@ -31,13 +34,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// Dictionary to hold generic information which is not stored
         /// by the already existing properties
         /// </param>
-        internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status, DateTimeOffset? updateOn, string comments, DataBoxEdgeTrackingInfo trackingInformation, IReadOnlyDictionary<string, string> additionalOrderDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status, DateTimeOffset? updateOn, string comments, DataBoxEdgeTrackingInfo trackingInformation, IReadOnlyDictionary<string, string> additionalOrderDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             UpdateOn = updateOn;
             Comments = comments;
             TrackingInformation = trackingInformation;
             AdditionalOrderDetails = additionalOrderDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderStatus"/> for deserialization. </summary>
+        internal DataBoxEdgeOrderStatus()
+        {
         }
 
         /// <summary> Status of the order as per the allowed status types. </summary>

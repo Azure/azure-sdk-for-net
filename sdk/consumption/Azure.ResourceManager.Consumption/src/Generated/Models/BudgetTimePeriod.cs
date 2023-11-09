@@ -6,26 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The start and end date for a budget. </summary>
     public partial class BudgetTimePeriod
     {
-        /// <summary> Initializes a new instance of BudgetTimePeriod. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BudgetTimePeriod"/>. </summary>
         /// <param name="startOn"> The start date for the budget. </param>
         public BudgetTimePeriod(DateTimeOffset startOn)
         {
             StartOn = startOn;
         }
 
-        /// <summary> Initializes a new instance of BudgetTimePeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetTimePeriod"/>. </summary>
         /// <param name="startOn"> The start date for the budget. </param>
         /// <param name="endOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
-        internal BudgetTimePeriod(DateTimeOffset startOn, DateTimeOffset? endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BudgetTimePeriod(DateTimeOffset startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BudgetTimePeriod"/> for deserialization. </summary>
+        internal BudgetTimePeriod()
+        {
         }
 
         /// <summary> The start date for the budget. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The incurred cost for a single short code. </summary>
     public partial class ShortCodeCost
     {
-        /// <summary> Initializes a new instance of ShortCodeCost. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShortCodeCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
@@ -25,6 +29,24 @@ namespace Azure.Communication.ShortCodes.Models
             Amount = amount;
             CurrencyCode = currencyCode;
             BillingFrequency = billingFrequency;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShortCodeCost"/>. </summary>
+        /// <param name="amount"> The cost amount. </param>
+        /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
+        /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShortCodeCost(double amount, string currencyCode, BillingFrequency billingFrequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Amount = amount;
+            CurrencyCode = currencyCode;
+            BillingFrequency = billingFrequency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShortCodeCost"/> for deserialization. </summary>
+        internal ShortCodeCost()
+        {
         }
 
         /// <summary> The cost amount. </summary>

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -14,13 +16,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class LinkResourceFormatData : IUtf8JsonSerializable
+    public partial class LinkResourceFormatData : IUtf8JsonSerializable, IJsonModel<LinkResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkResourceFormatData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LinkResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LinkName))
+                {
+                    writer.WritePropertyName("linkName"u8);
+                    writer.WriteStringValue(LinkName);
+                }
+            }
             if (Optional.IsDefined(SourceEntityType))
             {
                 writer.WritePropertyName("sourceEntityType"u8);
@@ -83,6 +126,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(ReferenceOnly))
             {
                 writer.WritePropertyName("referenceOnly"u8);
@@ -94,11 +145,40 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkResourceFormatData DeserializeLinkResourceFormatData(JsonElement element)
+        LinkResourceFormatData IJsonModel<LinkResourceFormatData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkResourceFormatData(document.RootElement, options);
+        }
+
+        internal static LinkResourceFormatData DeserializeLinkResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -120,6 +200,8 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<ProvisioningState> provisioningState = default;
             Optional<bool> referenceOnly = default;
             Optional<InstanceOperationType> operationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -283,8 +365,38 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), linkName.Value, Optional.ToNullable(sourceEntityType), Optional.ToNullable(targetEntityType), sourceEntityTypeName.Value, targetEntityTypeName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToList(mappings), Optional.ToList(participantPropertyReferences), Optional.ToNullable(provisioningState), Optional.ToNullable(referenceOnly), Optional.ToNullable(operationType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), linkName.Value, Optional.ToNullable(sourceEntityType), Optional.ToNullable(targetEntityType), sourceEntityTypeName.Value, targetEntityTypeName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToList(mappings), Optional.ToList(participantPropertyReferences), Optional.ToNullable(provisioningState), Optional.ToNullable(referenceOnly), Optional.ToNullable(operationType), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LinkResourceFormatData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkResourceFormatData IModel<LinkResourceFormatData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkResourceFormatData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LinkResourceFormatData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

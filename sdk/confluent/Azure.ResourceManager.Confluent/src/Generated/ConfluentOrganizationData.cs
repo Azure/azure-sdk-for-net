@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Confluent
     /// </summary>
     public partial class ConfluentOrganizationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Confluent
             UserDetail = userDetail;
         }
 
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
-        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -54,6 +58,12 @@ namespace Azure.ResourceManager.Confluent
             SsoUri = ssoUri;
             OfferDetail = offerDetail;
             UserDetail = userDetail;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/> for deserialization. </summary>
+        internal ConfluentOrganizationData()
+        {
         }
 
         /// <summary> The creation time of the resource. </summary>

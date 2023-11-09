@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a MongoDB data source. </summary>
     public partial class MongoDBClusterInfo
     {
-        /// <summary> Initializes a new instance of MongoDBClusterInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="supportsSharding"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>
@@ -32,17 +35,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of MongoDBClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
         /// <param name="supportsSharding"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>
         /// <param name="version"> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </param>
-        internal MongoDBClusterInfo(IReadOnlyList<MongoDBDatabaseInfo> databases, bool supportsSharding, MongoDBClusterType clusterType, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBClusterInfo(IReadOnlyList<MongoDBDatabaseInfo> databases, bool supportsSharding, MongoDBClusterType clusterType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Databases = databases;
             SupportsSharding = supportsSharding;
             ClusterType = clusterType;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBClusterInfo"/> for deserialization. </summary>
+        internal MongoDBClusterInfo()
+        {
         }
 
         /// <summary> A list of non-system databases in the cluster. </summary>

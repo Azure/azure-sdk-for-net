@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to Azure SQL Database Managed Instance. </summary>
     public partial class ConnectToTargetSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMISyncTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskOutput"/>. </summary>
         internal ConnectToTargetSqlMISyncTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskOutput"/>. </summary>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="validationErrors"> Validation errors. </param>
-        internal ConnectToTargetSqlMISyncTaskOutput(string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToTargetSqlMISyncTaskOutput(string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetServerVersion = targetServerVersion;
             TargetServerBrandVersion = targetServerBrandVersion;
             ValidationErrors = validationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Target server version. </summary>

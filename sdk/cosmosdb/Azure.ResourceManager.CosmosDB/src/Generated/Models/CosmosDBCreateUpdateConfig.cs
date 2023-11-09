@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> CreateUpdateOptions are a list of key-value pairs that describe the resource. Supported keys are "If-Match", "If-None-Match", "Session-Token" and "Throughput". </summary>
     public partial class CosmosDBCreateUpdateConfig
     {
-        /// <summary> Initializes a new instance of CosmosDBCreateUpdateConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBCreateUpdateConfig"/>. </summary>
         public CosmosDBCreateUpdateConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBCreateUpdateConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBCreateUpdateConfig"/>. </summary>
         /// <param name="throughput"> Request Units per second. For example, "throughput": 10000. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. Note: Either throughput or autoscaleSettings is required, but not both. </param>
-        internal CosmosDBCreateUpdateConfig(int? throughput, AutoscaleSettings autoscaleSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBCreateUpdateConfig(int? throughput, AutoscaleSettings autoscaleSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Throughput = throughput;
             AutoscaleSettings = autoscaleSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Request Units per second. For example, "throughput": 10000. </summary>

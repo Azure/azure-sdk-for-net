@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to Azure SQL DB and target server requirements. </summary>
     public partial class ConnectToTargetSqlDBSyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBSyncTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBSyncTaskInput"/>. </summary>
+        /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
+        /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToTargetSqlDBSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceConnectionInfo = sourceConnectionInfo;
+            TargetConnectionInfo = targetConnectionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBSyncTaskInput"/> for deserialization. </summary>
+        internal ConnectToTargetSqlDBSyncTaskInput()
+        {
         }
 
         /// <summary> Connection information for source SQL Server. </summary>

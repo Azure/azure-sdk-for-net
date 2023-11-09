@@ -5,16 +5,96 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class Platform
+    internal partial class Platform : IUtf8JsonSerializable, IJsonModel<Platform>
     {
-        internal static Platform DeserializePlatform(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Platform>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<Platform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture"u8);
+                writer.WriteStringValue(Architecture);
+            }
+            if (Optional.IsDefined(Os))
+            {
+                writer.WritePropertyName("os"u8);
+                writer.WriteStringValue(Os);
+            }
+            if (Optional.IsDefined(OsVersion))
+            {
+                writer.WritePropertyName("os.version"u8);
+                writer.WriteStringValue(OsVersion);
+            }
+            if (Optional.IsCollectionDefined(OsFeatures))
+            {
+                writer.WritePropertyName("os.features"u8);
+                writer.WriteStartArray();
+                foreach (var item in OsFeatures)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Variant))
+            {
+                writer.WritePropertyName("variant"u8);
+                writer.WriteStringValue(Variant);
+            }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features"u8);
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        Platform IJsonModel<Platform>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Platform)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlatform(document.RootElement, options);
+        }
+
+        internal static Platform DeserializePlatform(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +105,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<IReadOnlyList<string>> osFeatures = default;
             Optional<string> variant = default;
             Optional<IReadOnlyList<string>> features = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"u8))
@@ -75,8 +157,38 @@ namespace Azure.Containers.ContainerRegistry
                     features = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Platform(architecture.Value, os.Value, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Platform(architecture.Value, os.Value, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<Platform>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Platform)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Platform IModel<Platform>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Platform)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePlatform(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<Platform>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

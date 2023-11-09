@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -13,9 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionEventSummary : IUtf8JsonSerializable
+    public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ConsumptionEventSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
@@ -23,19 +28,239 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TransactOn))
+                {
+                    writer.WritePropertyName("transactionDate"u8);
+                    writer.WriteStringValue(TransactOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NewCredit))
+                {
+                    writer.WritePropertyName("newCredit"u8);
+                    writer.WriteObjectValue(NewCredit);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Adjustments))
+                {
+                    writer.WritePropertyName("adjustments"u8);
+                    writer.WriteObjectValue(Adjustments);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreditExpired))
+                {
+                    writer.WritePropertyName("creditExpired"u8);
+                    writer.WriteObjectValue(CreditExpired);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Charges))
+                {
+                    writer.WritePropertyName("charges"u8);
+                    writer.WriteObjectValue(Charges);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ClosedBalance))
+                {
+                    writer.WritePropertyName("closedBalance"u8);
+                    writer.WriteObjectValue(ClosedBalance);
+                }
+            }
             if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(InvoiceNumber))
+                {
+                    writer.WritePropertyName("invoiceNumber"u8);
+                    writer.WriteStringValue(InvoiceNumber);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(BillingProfileId))
+                {
+                    writer.WritePropertyName("billingProfileId"u8);
+                    writer.WriteStringValue(BillingProfileId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(BillingProfileDisplayName))
+                {
+                    writer.WritePropertyName("billingProfileDisplayName"u8);
+                    writer.WriteStringValue(BillingProfileDisplayName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LotId))
+                {
+                    writer.WritePropertyName("lotId"u8);
+                    writer.WriteStringValue(LotId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LotSource))
+                {
+                    writer.WritePropertyName("lotSource"u8);
+                    writer.WriteStringValue(LotSource);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CanceledCredit))
+                {
+                    writer.WritePropertyName("canceledCredit"u8);
+                    writer.WriteObjectValue(CanceledCredit);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreditCurrency))
+                {
+                    writer.WritePropertyName("creditCurrency"u8);
+                    writer.WriteStringValue(CreditCurrency);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(BillingCurrency))
+                {
+                    writer.WritePropertyName("billingCurrency"u8);
+                    writer.WriteStringValue(BillingCurrency);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Reseller))
+                {
+                    writer.WritePropertyName("reseller"u8);
+                    writer.WriteObjectValue(Reseller);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreditExpiredInBillingCurrency))
+                {
+                    writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
+                    writer.WriteObjectValue(CreditExpiredInBillingCurrency);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NewCreditInBillingCurrency))
+                {
+                    writer.WritePropertyName("newCreditInBillingCurrency"u8);
+                    writer.WriteObjectValue(NewCreditInBillingCurrency);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AdjustmentsInBillingCurrency))
+                {
+                    writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
+                    writer.WriteObjectValue(AdjustmentsInBillingCurrency);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ChargesInBillingCurrency))
+                {
+                    writer.WritePropertyName("chargesInBillingCurrency"u8);
+                    writer.WriteObjectValue(ChargesInBillingCurrency);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ClosedBalanceInBillingCurrency))
+                {
+                    writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
+                    writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element)
+        ConsumptionEventSummary IJsonModel<ConsumptionEventSummary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionEventSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +292,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<ConsumptionAmountWithExchangeRate> adjustmentsInBillingCurrency = default;
             Optional<ConsumptionAmountWithExchangeRate> chargesInBillingCurrency = default;
             Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -288,8 +515,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ConsumptionEventSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConsumptionEventSummary IModel<ConsumptionEventSummary>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConsumptionEventSummary(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ConsumptionEventSummary>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

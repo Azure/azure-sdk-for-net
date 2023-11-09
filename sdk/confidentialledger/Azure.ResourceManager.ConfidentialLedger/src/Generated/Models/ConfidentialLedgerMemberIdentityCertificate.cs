@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object representing MemberIdentityCertificate for Managed CCF. </summary>
     public partial class ConfidentialLedgerMemberIdentityCertificate
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerMemberIdentityCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerMemberIdentityCertificate"/>. </summary>
         public ConfidentialLedgerMemberIdentityCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerMemberIdentityCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerMemberIdentityCertificate"/>. </summary>
         /// <param name="certificate"> Member Identity Certificate. </param>
         /// <param name="encryptionkey"> Member Identity Certificate Encryption Key. </param>
         /// <param name="tags"> Anything. </param>
-        internal ConfidentialLedgerMemberIdentityCertificate(string certificate, string encryptionkey, BinaryData tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialLedgerMemberIdentityCertificate(string certificate, string encryptionkey, BinaryData tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Certificate = certificate;
             Encryptionkey = encryptionkey;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Member Identity Certificate. </summary>

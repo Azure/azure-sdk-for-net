@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> ListResource. </summary>
     internal partial class DppResourceList
     {
-        /// <summary> Initializes a new instance of DppResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DppResourceList"/>. </summary>
         internal DppResourceList()
         {
         }
 
-        /// <summary> Initializes a new instance of DppResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DppResourceList"/>. </summary>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal DppResourceList(string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DppResourceList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </summary>

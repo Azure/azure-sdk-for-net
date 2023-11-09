@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to SQL DB and target server requirements. </summary>
     public partial class ConnectToTargetSqlDBTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
         public ConnectToTargetSqlDBTaskInput(SqlConnectionInfo targetConnectionInfo)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetConnectionInfo = targetConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
         /// <param name="queryObjectCounts"> Boolean flag indicating whether to query object counts for each database on the target server. </param>
-        internal ConnectToTargetSqlDBTaskInput(SqlConnectionInfo targetConnectionInfo, bool? queryObjectCounts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToTargetSqlDBTaskInput(SqlConnectionInfo targetConnectionInfo, bool? queryObjectCounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetConnectionInfo = targetConnectionInfo;
             QueryObjectCounts = queryObjectCounts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskInput"/> for deserialization. </summary>
+        internal ConnectToTargetSqlDBTaskInput()
+        {
         }
 
         /// <summary> Connection information for target SQL DB. </summary>

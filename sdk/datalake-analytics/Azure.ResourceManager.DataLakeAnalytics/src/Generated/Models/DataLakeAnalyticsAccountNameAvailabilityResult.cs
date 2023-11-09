@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     /// <summary>
@@ -13,12 +16,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityResult"/>. </summary>
         internal DataLakeAnalyticsAccountNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable">
         /// The Boolean value of true or false to indicate whether the Data Lake Analytics account name is available or not.
         /// Serialized Name: NameAvailabilityInformation.nameAvailable
@@ -31,11 +37,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The message describing why the Data Lake Analytics account name is not available, if nameAvailable is false.
         /// Serialized Name: NameAvailabilityInformation.message
         /// </param>
-        internal DataLakeAnalyticsAccountNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsAccountNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

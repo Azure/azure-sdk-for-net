@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppManagedCertificateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppManagedCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedCertificateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppManagedCertificateData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppManagedCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +36,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Certificate resource specific properties. </param>
-        internal ContainerAppManagedCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedCertificateProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppManagedCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedCertificateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedCertificateData"/> for deserialization. </summary>
+        internal ContainerAppManagedCertificateData()
+        {
         }
 
         /// <summary> Certificate resource specific properties. </summary>

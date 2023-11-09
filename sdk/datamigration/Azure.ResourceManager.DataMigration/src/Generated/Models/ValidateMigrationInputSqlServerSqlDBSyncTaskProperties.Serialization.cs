@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateMigrationInputSqlServerSqlDBSyncTaskProperties : IUtf8JsonSerializable
+    public partial class ValidateMigrationInputSqlServerSqlDBSyncTaskProperties : IUtf8JsonSerializable, IJsonModel<ValidateMigrationInputSqlServerSqlDBSyncTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateMigrationInputSqlServerSqlDBSyncTaskProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ValidateMigrationInputSqlServerSqlDBSyncTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
@@ -21,8 +26,55 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Output))
+                {
+                    writer.WritePropertyName("output"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Output)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Errors))
+                {
+                    writer.WritePropertyName("errors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Errors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Commands))
+                {
+                    writer.WritePropertyName("commands"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Commands)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
@@ -34,11 +86,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ValidateMigrationInputSqlServerSqlDBSyncTaskProperties DeserializeValidateMigrationInputSqlServerSqlDBSyncTaskProperties(JsonElement element)
+        ValidateMigrationInputSqlServerSqlDBSyncTaskProperties IJsonModel<ValidateMigrationInputSqlServerSqlDBSyncTaskProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlDBSyncTaskProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeValidateMigrationInputSqlServerSqlDBSyncTaskProperties(document.RootElement, options);
+        }
+
+        internal static ValidateMigrationInputSqlServerSqlDBSyncTaskProperties DeserializeValidateMigrationInputSqlServerSqlDBSyncTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +131,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<TaskState> state = default;
             Optional<IReadOnlyList<CommandProperties>> commands = default;
             Optional<IDictionary<string, string>> clientData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -131,8 +214,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     clientData = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, Optional.ToList(output));
         }
+
+        BinaryData IModel<ValidateMigrationInputSqlServerSqlDBSyncTaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlDBSyncTaskProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ValidateMigrationInputSqlServerSqlDBSyncTaskProperties IModel<ValidateMigrationInputSqlServerSqlDBSyncTaskProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlDBSyncTaskProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeValidateMigrationInputSqlServerSqlDBSyncTaskProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ValidateMigrationInputSqlServerSqlDBSyncTaskProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

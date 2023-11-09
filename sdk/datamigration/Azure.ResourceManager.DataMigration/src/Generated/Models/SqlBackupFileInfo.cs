@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Information of backup file. </summary>
     public partial class SqlBackupFileInfo
     {
-        /// <summary> Initializes a new instance of SqlBackupFileInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlBackupFileInfo"/>. </summary>
         internal SqlBackupFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlBackupFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlBackupFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="status"> Status of the file. (Initial, Uploading, Uploaded, Restoring, Restored or Skipped). </param>
         /// <param name="totalSize"> File size in bytes. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="copyThroughput"> Copy throughput in KBps. </param>
         /// <param name="copyDuration"> Copy Duration in seconds. </param>
         /// <param name="familySequenceNumber"> Media family sequence number. </param>
-        internal SqlBackupFileInfo(string fileName, string status, long? totalSize, long? dataRead, long? dataWritten, double? copyThroughput, int? copyDuration, int? familySequenceNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlBackupFileInfo(string fileName, string status, long? totalSize, long? dataRead, long? dataWritten, double? copyThroughput, int? copyDuration, int? familySequenceNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
             Status = status;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             CopyThroughput = copyThroughput;
             CopyDuration = copyDuration;
             FamilySequenceNumber = familySequenceNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> File name. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure Backup Rehydrate Request. </summary>
     public partial class BackupRehydrationContent
     {
-        /// <summary> Initializes a new instance of BackupRehydrationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupRehydrationContent"/>. </summary>
         /// <param name="recoveryPointId"> Id of the recovery point to be recovered. </param>
         /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
@@ -23,6 +27,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             RecoveryPointId = recoveryPointId;
             RehydrationRetentionDuration = rehydrationRetentionDuration;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRehydrationContent"/>. </summary>
+        /// <param name="recoveryPointId"> Id of the recovery point to be recovered. </param>
+        /// <param name="rehydrationPriority"> Priority to be used for rehydration. Values High or Standard. </param>
+        /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupRehydrationContent(string recoveryPointId, BackupRehydrationPriority? rehydrationPriority, TimeSpan rehydrationRetentionDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RecoveryPointId = recoveryPointId;
+            RehydrationPriority = rehydrationPriority;
+            RehydrationRetentionDuration = rehydrationRetentionDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRehydrationContent"/> for deserialization. </summary>
+        internal BackupRehydrationContent()
+        {
         }
 
         /// <summary> Id of the recovery point to be recovered. </summary>

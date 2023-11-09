@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The current amount of cost which is being tracked for a budget. </summary>
     public partial class BudgetCurrentSpend
     {
-        /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BudgetCurrentSpend"/>. </summary>
         internal BudgetCurrentSpend()
         {
         }
 
-        /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetCurrentSpend"/>. </summary>
         /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
-        internal BudgetCurrentSpend(decimal? amount, string unit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BudgetCurrentSpend(decimal? amount, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Amount = amount;
             Unit = unit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The total amount of cost which is being tracked by the budget. </summary>

@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The ManagedClusterVerticalPodAutoscaler. </summary>
     public partial class ManagedClusterVerticalPodAutoscaler
     {
-        /// <summary> Initializes a new instance of ManagedClusterVerticalPodAutoscaler. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/>. </summary>
         /// <param name="isEnabled"> Whether to enable VPA. Default value is false. </param>
         /// <param name="controlledValues"> Controls which resource value autoscaler will change. Default value is RequestsAndLimits. </param>
         /// <param name="updateMode"> Each update mode level is a superset of the lower levels. Off&lt;Initial&lt;Recreate&lt;=Auto. For example: if UpdateMode is Initial, it means VPA sets the recommended resources in the VerticalPodAutoscaler Custom Resource (from UpdateMode Off) and also assigns resources on pod creation (from Initial). The default value is Off. </param>
@@ -19,6 +25,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             IsEnabled = isEnabled;
             ControlledValues = controlledValues;
             UpdateMode = updateMode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/>. </summary>
+        /// <param name="isEnabled"> Whether to enable VPA. Default value is false. </param>
+        /// <param name="controlledValues"> Controls which resource value autoscaler will change. Default value is RequestsAndLimits. </param>
+        /// <param name="updateMode"> Each update mode level is a superset of the lower levels. Off&lt;Initial&lt;Recreate&lt;=Auto. For example: if UpdateMode is Initial, it means VPA sets the recommended resources in the VerticalPodAutoscaler Custom Resource (from UpdateMode Off) and also assigns resources on pod creation (from Initial). The default value is Off. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterVerticalPodAutoscaler(bool isEnabled, ManagedClusterWorkloadAutoScalerControlledValue controlledValues, ManagedClusterVerticalPodAutoscalerUpdateMode updateMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsEnabled = isEnabled;
+            ControlledValues = controlledValues;
+            UpdateMode = updateMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/> for deserialization. </summary>
+        internal ManagedClusterVerticalPodAutoscaler()
+        {
         }
 
         /// <summary> Whether to enable VPA. Default value is false. </summary>

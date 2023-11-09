@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Resource Skus operation response. </summary>
     internal partial class ResourceSkusResult
     {
-        /// <summary> Initializes a new instance of ResourceSkusResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceSkusResult(IEnumerable<ComputeResourceSku> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the subscription. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Resource Skus. Call ListNext() with this URI to fetch the next page of Resource Skus. </param>
-        internal ResourceSkusResult(IReadOnlyList<ComputeResourceSku> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSkusResult(IReadOnlyList<ComputeResourceSku> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/> for deserialization. </summary>
+        internal ResourceSkusResult()
+        {
         }
 
         /// <summary> The list of skus available for the subscription. </summary>

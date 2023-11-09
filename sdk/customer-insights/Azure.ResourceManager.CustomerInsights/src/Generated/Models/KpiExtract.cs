@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI extract. </summary>
     public partial class KpiExtract
     {
-        /// <summary> Initializes a new instance of KpiExtract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KpiExtract"/>. </summary>
         /// <param name="extractName"> KPI extract name. </param>
         /// <param name="expression"> The expression. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extractName"/> or <paramref name="expression"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
             ExtractName = extractName;
             Expression = expression;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KpiExtract"/>. </summary>
+        /// <param name="extractName"> KPI extract name. </param>
+        /// <param name="expression"> The expression. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KpiExtract(string extractName, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExtractName = extractName;
+            Expression = expression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KpiExtract"/> for deserialization. </summary>
+        internal KpiExtract()
+        {
         }
 
         /// <summary> KPI extract name. </summary>

@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> The machine extension instance view. </summary>
     public partial class MachineExtensionPropertiesInstanceView : MachineExtensionInstanceView
     {
-        /// <summary> Initializes a new instance of MachineExtensionPropertiesInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionPropertiesInstanceView"/>. </summary>
         public MachineExtensionPropertiesInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionPropertiesInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionPropertiesInstanceView"/>. </summary>
         /// <param name="name"> The machine extension name. </param>
         /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
-        internal MachineExtensionPropertiesInstanceView(string name, string machineExtensionInstanceViewType, string typeHandlerVersion, MachineExtensionInstanceViewStatus status) : base(name, machineExtensionInstanceViewType, typeHandlerVersion, status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineExtensionPropertiesInstanceView(string name, string machineExtensionInstanceViewType, string typeHandlerVersion, MachineExtensionInstanceViewStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, machineExtensionInstanceViewType, typeHandlerVersion, status, serializedAdditionalRawData)
         {
         }
     }

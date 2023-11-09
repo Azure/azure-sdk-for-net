@@ -16,7 +16,10 @@ namespace Azure.Communication.Sms.Models
     /// <summary> Represents the properties of a send message request. </summary>
     internal partial class SendMessageRequest
     {
-        /// <summary> Initializes a new instance of SendMessageRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SendMessageRequest"/>. </summary>
         /// <param name="from"> The sender's phone number in E.164 format that is owned by the authenticated account. </param>
         /// <param name="smsRecipients"> The recipient's phone number in E.164 format. In this version, a minimum of 1 and upto 100 recipients in the list are supported. </param>
         /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
@@ -30,6 +33,26 @@ namespace Azure.Communication.Sms.Models
             From = @from;
             SmsRecipients = smsRecipients.ToList();
             Message = message;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendMessageRequest"/>. </summary>
+        /// <param name="from"> The sender's phone number in E.164 format that is owned by the authenticated account. </param>
+        /// <param name="smsRecipients"> The recipient's phone number in E.164 format. In this version, a minimum of 1 and upto 100 recipients in the list are supported. </param>
+        /// <param name="message"> The contents of the message that will be sent to the recipient. The allowable content is defined by RFC 5724. </param>
+        /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendMessageRequest(string @from, IList<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            From = @from;
+            SmsRecipients = smsRecipients;
+            Message = message;
+            SmsSendOptions = smsSendOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendMessageRequest"/> for deserialization. </summary>
+        internal SendMessageRequest()
+        {
         }
 
         /// <summary> The sender's phone number in E.164 format that is owned by the authenticated account. </summary>

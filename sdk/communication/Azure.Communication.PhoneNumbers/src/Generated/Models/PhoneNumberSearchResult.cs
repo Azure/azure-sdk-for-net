@@ -15,7 +15,10 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The result of a phone number search operation. </summary>
     public partial class PhoneNumberSearchResult
     {
-        /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
         /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
@@ -40,7 +43,7 @@ namespace Azure.Communication.PhoneNumbers
             SearchExpiresOn = searchExpiresOn;
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
         /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
@@ -50,7 +53,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
         /// <param name="errorCode"> The error code of the search. </param>
         /// <param name="error"> Mapping Error Messages to Codes. </param>
-        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn, int? errorCode, PhoneNumberSearchResultError? error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn, int? errorCode, PhoneNumberSearchResultError? error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchId = searchId;
             PhoneNumbers = phoneNumbers;
@@ -61,6 +65,12 @@ namespace Azure.Communication.PhoneNumbers
             SearchExpiresOn = searchExpiresOn;
             ErrorCode = errorCode;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchResult"/> for deserialization. </summary>
+        internal PhoneNumberSearchResult()
+        {
         }
 
         /// <summary> The search id. </summary>

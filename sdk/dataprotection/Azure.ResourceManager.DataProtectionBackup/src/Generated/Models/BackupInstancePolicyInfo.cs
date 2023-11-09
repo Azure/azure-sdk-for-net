@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Policy Info in backupInstance. </summary>
     public partial class BackupInstancePolicyInfo
     {
-        /// <summary> Initializes a new instance of BackupInstancePolicyInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicyInfo"/>. </summary>
         /// <param name="policyId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         public BackupInstancePolicyInfo(ResourceIdentifier policyId)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             PolicyId = policyId;
         }
 
-        /// <summary> Initializes a new instance of BackupInstancePolicyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicyInfo"/>. </summary>
         /// <param name="policyId"></param>
         /// <param name="policyVersion"></param>
         /// <param name="policyParameters"> Policy parameters for the backup instance. </param>
-        internal BackupInstancePolicyInfo(ResourceIdentifier policyId, string policyVersion, BackupInstancePolicySettings policyParameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupInstancePolicyInfo(ResourceIdentifier policyId, string policyVersion, BackupInstancePolicySettings policyParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyId = policyId;
             PolicyVersion = policyVersion;
             PolicyParameters = policyParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicyInfo"/> for deserialization. </summary>
+        internal BackupInstancePolicyInfo()
+        {
         }
 
         /// <summary> Gets or sets the policy id. </summary>

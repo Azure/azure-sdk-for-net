@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The response to a list percentile metrics request. </summary>
     internal partial class PercentileMetricListResult
     {
-        /// <summary> Initializes a new instance of PercentileMetricListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PercentileMetricListResult"/>. </summary>
         internal PercentileMetricListResult()
         {
             Value = new ChangeTrackingList<CosmosDBPercentileMetric>();
         }
 
-        /// <summary> Initializes a new instance of PercentileMetricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentileMetricListResult"/>. </summary>
         /// <param name="value"> The list of percentile metrics for the account. </param>
-        internal PercentileMetricListResult(IReadOnlyList<CosmosDBPercentileMetric> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PercentileMetricListResult(IReadOnlyList<CosmosDBPercentileMetric> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of percentile metrics for the account. </summary>

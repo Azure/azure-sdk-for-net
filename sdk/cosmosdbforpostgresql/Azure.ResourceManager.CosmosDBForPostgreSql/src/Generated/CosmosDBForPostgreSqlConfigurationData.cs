@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationData"/>. </summary>
         public CosmosDBForPostgreSqlConfigurationData()
         {
             ServerRoleGroupConfigurations = new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="isRestartRequired"> If configuration change requires restart. </param>
         /// <param name="serverRoleGroupConfigurations"> The list of server role group configuration values. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
-        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations, CosmosDBForPostgreSqlProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> serverRoleGroupConfigurations, CosmosDBForPostgreSqlProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             DataType = dataType;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             IsRestartRequired = isRestartRequired;
             ServerRoleGroupConfigurations = serverRoleGroupConfigurations;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of the configuration. </summary>

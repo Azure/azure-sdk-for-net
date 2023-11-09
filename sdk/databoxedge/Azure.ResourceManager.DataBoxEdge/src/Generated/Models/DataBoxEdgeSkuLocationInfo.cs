@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The location info. </summary>
     public partial class DataBoxEdgeSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuLocationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuLocationInfo"/>. </summary>
         internal DataBoxEdgeSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             Sites = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuLocationInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="sites"> The sites. </param>
-        internal DataBoxEdgeSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<string> sites)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<string> sites, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
             Sites = sites;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The location. </summary>

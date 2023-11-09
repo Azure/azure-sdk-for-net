@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The resource limits. </summary>
     public partial class ContainerResourceLimits
     {
-        /// <summary> Initializes a new instance of ContainerResourceLimits. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceLimits"/>. </summary>
         public ContainerResourceLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceLimits"/>. </summary>
         /// <param name="memoryInGB"> The memory limit in GB of this container instance. </param>
         /// <param name="cpu"> The CPU limit of this container instance. </param>
         /// <param name="gpu"> The GPU limit of this container instance. </param>
-        internal ContainerResourceLimits(double? memoryInGB, double? cpu, ContainerGpuResourceInfo gpu)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerResourceLimits(double? memoryInGB, double? cpu, ContainerGpuResourceInfo gpu, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MemoryInGB = memoryInGB;
             Cpu = cpu;
             Gpu = gpu;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The memory limit in GB of this container instance. </summary>

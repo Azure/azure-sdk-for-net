@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The QueueStatus of Agent Pool. </summary>
     public partial class ContainerRegistryAgentPoolQueueStatus
     {
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolQueueStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolQueueStatus"/>. </summary>
         internal ContainerRegistryAgentPoolQueueStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolQueueStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolQueueStatus"/>. </summary>
         /// <param name="count"> The number of pending runs in the queue. </param>
-        internal ContainerRegistryAgentPoolQueueStatus(int? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryAgentPoolQueueStatus(int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of pending runs in the queue. </summary>

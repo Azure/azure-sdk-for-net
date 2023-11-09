@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The MessageDetails. </summary>
     public partial class MessageDetails
     {
-        /// <summary> Initializes a new instance of MessageDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageDetails"/>. </summary>
         public MessageDetails()
         {
             SupportedProtocols = new ChangeTrackingList<MessageProtocol>();
             UseCases = new ChangeTrackingList<UseCase>();
         }
 
-        /// <summary> Initializes a new instance of MessageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageDetails"/>. </summary>
         /// <param name="supportedProtocols"> Applicable message protocols used in the program e.g. SMS, MMS. </param>
         /// <param name="recurrence"> Indicates the nature of the messaging associated with the program e.g. 'subscription', 'transaction'. </param>
         /// <param name="helpMessage">
@@ -36,7 +40,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="confirmationMessage"> ConfirmationMessage. </param>
         /// <param name="directionality"> Describes directionality e.g. oneWay or twoWay. </param>
         /// <param name="useCases"> Provides message exchange examples from and to end user for each supported message content type. </param>
-        internal MessageDetails(IList<MessageProtocol> supportedProtocols, MessageRecurrence? recurrence, string helpMessage, string optOutMessage, string optInMessage, string optInReply, string confirmationMessage, MessageDirectionality? directionality, IList<UseCase> useCases)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageDetails(IList<MessageProtocol> supportedProtocols, MessageRecurrence? recurrence, string helpMessage, string optOutMessage, string optInMessage, string optInReply, string confirmationMessage, MessageDirectionality? directionality, IList<UseCase> useCases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportedProtocols = supportedProtocols;
             Recurrence = recurrence;
@@ -47,6 +52,7 @@ namespace Azure.Communication.ShortCodes.Models
             ConfirmationMessage = confirmationMessage;
             Directionality = directionality;
             UseCases = useCases;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Applicable message protocols used in the program e.g. SMS, MMS. </summary>

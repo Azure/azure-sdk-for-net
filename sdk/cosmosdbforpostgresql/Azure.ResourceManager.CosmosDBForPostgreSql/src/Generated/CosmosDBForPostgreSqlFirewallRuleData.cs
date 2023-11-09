@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleData"/>. </summary>
         /// <param name="startIPAddress"> The start IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,11 +44,18 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="startIPAddress"> The start IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="provisioningState"> Provisioning state of the firewall rule. </param>
-        internal CosmosDBForPostgreSqlFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress, CosmosDBForPostgreSqlProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress, CosmosDBForPostgreSqlProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleData"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlFirewallRuleData()
+        {
         }
 
         /// <summary> The start IP address of the cluster firewall rule. Must be IPv4 format. </summary>

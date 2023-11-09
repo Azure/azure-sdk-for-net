@@ -6,21 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult. </summary>
     public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult : MigrateSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>. </summary>
         internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult()
         {
             ResultType = "MigrationDatabaseLevelValidationOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="targetDatabaseName"> Name of the target database. </param>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="schemaValidationResult"> Provides schema comparison result between source and target database. </param>
         /// <param name="queryAnalysisValidationResult"> Results of some of the query execution result between source and target database. </param>
         /// <param name="status"> Current status of validation at the database level. </param>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id, string resultType, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataIntegrityValidationResult dataIntegrityValidationResult, SchemaComparisonValidationResult schemaValidationResult, QueryAnalysisValidationResult queryAnalysisValidationResult, ValidationStatus? status) : base(id, resultType)
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataIntegrityValidationResult dataIntegrityValidationResult, SchemaComparisonValidationResult schemaValidationResult, QueryAnalysisValidationResult queryAnalysisValidationResult, ValidationStatus? status) : base(id, resultType, serializedAdditionalRawData)
         {
             MigrationId = migrationId;
             SourceDatabaseName = sourceDatabaseName;

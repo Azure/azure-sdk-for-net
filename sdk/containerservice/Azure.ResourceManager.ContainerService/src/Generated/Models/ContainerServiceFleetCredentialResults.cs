@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The list credential result response. </summary>
     public partial class ContainerServiceFleetCredentialResults
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetCredentialResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetCredentialResults"/>. </summary>
         internal ContainerServiceFleetCredentialResults()
         {
             Kubeconfigs = new ChangeTrackingList<ContainerServiceFleetCredentialResult>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetCredentialResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetCredentialResults"/>. </summary>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
-        internal ContainerServiceFleetCredentialResults(IReadOnlyList<ContainerServiceFleetCredentialResult> kubeconfigs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetCredentialResults(IReadOnlyList<ContainerServiceFleetCredentialResult> kubeconfigs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kubeconfigs = kubeconfigs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>

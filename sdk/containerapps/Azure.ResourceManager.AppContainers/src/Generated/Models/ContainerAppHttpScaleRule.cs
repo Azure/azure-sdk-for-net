@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App container Http scaling rule. </summary>
     public partial class ContainerAppHttpScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppHttpScaleRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpScaleRule"/>. </summary>
         public ContainerAppHttpScaleRule()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppHttpScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpScaleRule"/>. </summary>
         /// <param name="metadata"> Metadata properties to describe http scale rule. </param>
         /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
-        internal ContainerAppHttpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metadata = metadata;
             Auth = auth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata properties to describe http scale rule. </summary>

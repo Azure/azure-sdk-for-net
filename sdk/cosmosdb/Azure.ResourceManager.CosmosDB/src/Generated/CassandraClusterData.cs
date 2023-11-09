@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CassandraClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CassandraClusterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CassandraClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of a managed Cassandra cluster. </param>
         /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
-        internal CassandraClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraClusterProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraClusterProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterData"/> for deserialization. </summary>
+        internal CassandraClusterData()
+        {
         }
 
         /// <summary> Properties of a managed Cassandra cluster. </summary>

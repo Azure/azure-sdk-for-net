@@ -5,15 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterPropertiesForSnapshot
+    public partial class ManagedClusterPropertiesForSnapshot : IUtf8JsonSerializable, IJsonModel<ManagedClusterPropertiesForSnapshot>
     {
-        internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterPropertiesForSnapshot>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagedClusterPropertiesForSnapshot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku);
+            }
+            if (Optional.IsDefined(EnableRbac))
+            {
+                writer.WritePropertyName("enableRbac"u8);
+                writer.WriteBooleanValue(EnableRbac.Value);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NetworkProfile))
+                {
+                    writer.WritePropertyName("networkProfile"u8);
+                    writer.WriteObjectValue(NetworkProfile);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedClusterPropertiesForSnapshot IJsonModel<ManagedClusterPropertiesForSnapshot>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterPropertiesForSnapshot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterPropertiesForSnapshot(document.RootElement, options);
+        }
+
+        internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +86,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterSku> sku = default;
             Optional<bool> enableRbac = default;
             Optional<ContainerServiceNetworkProfileForSnapshot> networkProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -56,8 +122,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     networkProfile = ContainerServiceNetworkProfileForSnapshot.DeserializeContainerServiceNetworkProfileForSnapshot(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion.Value, sku.Value, Optional.ToNullable(enableRbac), networkProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion.Value, sku.Value, Optional.ToNullable(enableRbac), networkProfile.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagedClusterPropertiesForSnapshot>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterPropertiesForSnapshot)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedClusterPropertiesForSnapshot IModel<ManagedClusterPropertiesForSnapshot>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterPropertiesForSnapshot)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedClusterPropertiesForSnapshot(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagedClusterPropertiesForSnapshot>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

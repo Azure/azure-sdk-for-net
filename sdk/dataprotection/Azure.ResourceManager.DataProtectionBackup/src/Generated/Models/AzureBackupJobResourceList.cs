@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List of AzureBackup Job resources. </summary>
     internal partial class AzureBackupJobResourceList
     {
-        /// <summary> Initializes a new instance of AzureBackupJobResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureBackupJobResourceList"/>. </summary>
         internal AzureBackupJobResourceList()
         {
             Value = new ChangeTrackingList<DataProtectionBackupJobData>();
         }
 
-        /// <summary> Initializes a new instance of AzureBackupJobResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBackupJobResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal AzureBackupJobResourceList(IReadOnlyList<DataProtectionBackupJobData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureBackupJobResourceList(IReadOnlyList<DataProtectionBackupJobData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of resources. </summary>

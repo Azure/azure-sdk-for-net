@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Unknown version of WorkerSelectorAttachment. </summary>
     internal partial class UnknownWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of UnknownWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkerSelectorAttachment"/>. </summary>
         internal UnknownWorkerSelectorAttachment()
         {
         }
 
-        /// <summary> Initializes a new instance of UnknownWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
-        internal UnknownWorkerSelectorAttachment(string kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWorkerSelectorAttachment(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
         }
     }

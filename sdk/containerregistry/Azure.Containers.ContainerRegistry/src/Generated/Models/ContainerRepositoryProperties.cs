@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -13,7 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Properties of this repository. </summary>
     public partial class ContainerRepositoryProperties
     {
-        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRepositoryProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -34,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry
             TagCount = tagCount;
         }
 
-        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRepositoryProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -45,7 +49,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryLoginServer = registryLoginServer;
             Name = name;
@@ -57,6 +62,7 @@ namespace Azure.Containers.ContainerRegistry
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>

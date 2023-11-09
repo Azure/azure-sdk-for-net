@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container group encryption properties. </summary>
     public partial class ContainerGroupEncryptionProperties
     {
-        /// <summary> Initializes a new instance of ContainerGroupEncryptionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupEncryptionProperties"/>. </summary>
         /// <param name="vaultBaseUri"> The keyvault base url. </param>
         /// <param name="keyName"> The encryption key name. </param>
         /// <param name="keyVersion"> The encryption key version. </param>
@@ -29,17 +33,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             KeyVersion = keyVersion;
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupEncryptionProperties"/>. </summary>
         /// <param name="vaultBaseUri"> The keyvault base url. </param>
         /// <param name="keyName"> The encryption key name. </param>
         /// <param name="keyVersion"> The encryption key version. </param>
         /// <param name="identity"> The keyvault managed identity. </param>
-        internal ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion, string identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VaultBaseUri = vaultBaseUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupEncryptionProperties"/> for deserialization. </summary>
+        internal ContainerGroupEncryptionProperties()
+        {
         }
 
         /// <summary> The keyvault base url. </summary>

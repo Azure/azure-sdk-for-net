@@ -5,15 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ArtifactManifestPlatform
+    public partial class ArtifactManifestPlatform : IUtf8JsonSerializable, IJsonModel<ArtifactManifestPlatform>
     {
-        internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactManifestPlatform>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ArtifactManifestPlatform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("digest"u8);
+                writer.WriteStringValue(Digest);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Architecture))
+                {
+                    writer.WritePropertyName("architecture"u8);
+                    writer.WriteStringValue(Architecture.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(OperatingSystem))
+                {
+                    writer.WritePropertyName("os"u8);
+                    writer.WriteStringValue(OperatingSystem.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ArtifactManifestPlatform IJsonModel<ArtifactManifestPlatform>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArtifactManifestPlatform)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArtifactManifestPlatform(document.RootElement, options);
+        }
+
+        internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +83,8 @@ namespace Azure.Containers.ContainerRegistry
             string digest = default;
             Optional<ArtifactArchitecture> architecture = default;
             Optional<ArtifactOperatingSystem> os = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"u8))
@@ -46,8 +110,38 @@ namespace Azure.Containers.ContainerRegistry
                     os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArtifactManifestPlatform(digest, Optional.ToNullable(architecture), Optional.ToNullable(os));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArtifactManifestPlatform(digest, Optional.ToNullable(architecture), Optional.ToNullable(os), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ArtifactManifestPlatform>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArtifactManifestPlatform)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ArtifactManifestPlatform IModel<ArtifactManifestPlatform>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArtifactManifestPlatform)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeArtifactManifestPlatform(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ArtifactManifestPlatform>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

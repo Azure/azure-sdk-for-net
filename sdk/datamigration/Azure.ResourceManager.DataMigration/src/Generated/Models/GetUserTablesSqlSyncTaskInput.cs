@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for SQL DB. </param>
         /// <param name="selectedSourceDatabases"> List of source database names to collect tables for. </param>
@@ -34,17 +37,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedTargetDatabases = selectedTargetDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for SQL DB. </param>
         /// <param name="selectedSourceDatabases"> List of source database names to collect tables for. </param>
         /// <param name="selectedTargetDatabases"> List of target database names to collect tables for. </param>
-        internal GetUserTablesSqlSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<string> selectedSourceDatabases, IList<string> selectedTargetDatabases)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesSqlSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<string> selectedSourceDatabases, IList<string> selectedTargetDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedSourceDatabases = selectedSourceDatabases;
             SelectedTargetDatabases = selectedTargetDatabases;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskInput"/> for deserialization. </summary>
+        internal GetUserTablesSqlSyncTaskInput()
+        {
         }
 
         /// <summary> Connection information for SQL Server. </summary>

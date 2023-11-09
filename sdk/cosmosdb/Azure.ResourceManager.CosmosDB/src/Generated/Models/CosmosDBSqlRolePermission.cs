@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The set of data plane operations permitted through this Role Definition. </summary>
     public partial class CosmosDBSqlRolePermission
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRolePermission. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRolePermission"/>. </summary>
         public CosmosDBSqlRolePermission()
         {
             DataActions = new ChangeTrackingList<string>();
             NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlRolePermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRolePermission"/>. </summary>
         /// <param name="dataActions"> An array of data actions that are allowed. </param>
         /// <param name="notDataActions"> An array of data actions that are denied. </param>
-        internal CosmosDBSqlRolePermission(IList<string> dataActions, IList<string> notDataActions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlRolePermission(IList<string> dataActions, IList<string> notDataActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataActions = dataActions;
             NotDataActions = notDataActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of data actions that are allowed. </summary>

@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Capabilities of a phone number. </summary>
     public partial class PhoneNumberCapabilities
     {
-        /// <summary> Initializes a new instance of PhoneNumberCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilities"/>. </summary>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
         public PhoneNumberCapabilities(PhoneNumberCapabilityType calling, PhoneNumberCapabilityType sms)
         {
             Calling = calling;
             Sms = sms;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilities"/>. </summary>
+        /// <param name="calling"> Capability value for calling. </param>
+        /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberCapabilities(PhoneNumberCapabilityType calling, PhoneNumberCapabilityType sms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Calling = calling;
+            Sms = sms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilities"/> for deserialization. </summary>
+        internal PhoneNumberCapabilities()
+        {
         }
 
         /// <summary> Capability value for calling. </summary>

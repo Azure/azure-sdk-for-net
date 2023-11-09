@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -13,7 +14,10 @@ namespace Azure.AI.ContentSafety
     /// <summary> Text Blocklist. </summary>
     public partial class TextBlocklist
     {
-        /// <summary> Initializes a new instance of TextBlocklist. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklist"/>. </summary>
         /// <param name="blocklistName"> Text blocklist name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/> is null. </exception>
         internal TextBlocklist(string blocklistName)
@@ -21,15 +25,23 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNull(blocklistName, nameof(blocklistName));
 
             BlocklistName = blocklistName;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TextBlocklist. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextBlocklist"/>. </summary>
         /// <param name="blocklistName"> Text blocklist name. </param>
         /// <param name="description"> Text blocklist description. </param>
-        internal TextBlocklist(string blocklistName, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextBlocklist(string blocklistName, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlocklistName = blocklistName;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextBlocklist"/> for deserialization. </summary>
+        internal TextBlocklist()
+        {
         }
 
         /// <summary> Text blocklist name. </summary>

@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class TemplateResponseInternal
+    internal partial class TemplateResponseInternal : IUtf8JsonSerializable, IJsonModel<TemplateResponseInternal>
     {
-        internal static TemplateResponseInternal DeserializeTemplateResponseInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateResponseInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<TemplateResponseInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
+            if (Optional.IsDefined(ChannelType))
+            {
+                writer.WritePropertyName("channelType"u8);
+                writer.WriteStringValue(ChannelType.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(WhatsApp))
+            {
+                writer.WritePropertyName("whatsApp"u8);
+                writer.WriteObjectValue(WhatsApp);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TemplateResponseInternal IJsonModel<TemplateResponseInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TemplateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTemplateResponseInternal(document.RootElement, options);
+        }
+
+        internal static TemplateResponseInternal DeserializeTemplateResponseInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +89,8 @@ namespace Azure.Communication.Messages
             Optional<CommunicationMessagesChannelType> channelType = default;
             Optional<TemplateStatus> status = default;
             Optional<TemplateResponseWhatsAppInternal> whatsApp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -62,8 +130,38 @@ namespace Azure.Communication.Messages
                     whatsApp = TemplateResponseWhatsAppInternal.DeserializeTemplateResponseWhatsAppInternal(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TemplateResponseInternal(name.Value, language.Value, Optional.ToNullable(channelType), Optional.ToNullable(status), whatsApp.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TemplateResponseInternal(name.Value, language.Value, Optional.ToNullable(channelType), Optional.ToNullable(status), whatsApp.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<TemplateResponseInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TemplateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TemplateResponseInternal IModel<TemplateResponseInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TemplateResponseInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTemplateResponseInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<TemplateResponseInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunData"/>. </summary>
         public ContainerRegistryRunData()
         {
             OutputImages = new ChangeTrackingList<ContainerRegistryImageDescriptor>();
             CustomRegistries = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +56,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="logArtifact"> The image description for the log artifact. </param>
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
-        internal ContainerRegistryRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runId, ContainerRegistryRunStatus? status, DateTimeOffset? lastUpdatedOn, ContainerRegistryRunType? runType, string agentPoolName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? finishOn, IList<ContainerRegistryImageDescriptor> outputImages, string task, ContainerRegistryImageUpdateTrigger imageUpdateTrigger, ContainerRegistrySourceTriggerDescriptor sourceTrigger, ContainerRegistryTimerTriggerDescriptor timerTrigger, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceRegistryAuth, IList<string> customRegistries, string runErrorMessage, string updateTriggerToken, ContainerRegistryImageDescriptor logArtifact, ContainerRegistryProvisioningState? provisioningState, bool? isArchiveEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runId, ContainerRegistryRunStatus? status, DateTimeOffset? lastUpdatedOn, ContainerRegistryRunType? runType, string agentPoolName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? finishOn, IList<ContainerRegistryImageDescriptor> outputImages, string task, ContainerRegistryImageUpdateTrigger imageUpdateTrigger, ContainerRegistrySourceTriggerDescriptor sourceTrigger, ContainerRegistryTimerTriggerDescriptor timerTrigger, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceRegistryAuth, IList<string> customRegistries, string runErrorMessage, string updateTriggerToken, ContainerRegistryImageDescriptor logArtifact, ContainerRegistryProvisioningState? provisioningState, bool? isArchiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RunId = runId;
             Status = status;
@@ -77,6 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             LogArtifact = logArtifact;
             ProvisioningState = provisioningState;
             IsArchiveEnabled = isArchiveEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier for the run. </summary>

@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppReplicaData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaData"/>. </summary>
         public ContainerAppReplicaData()
         {
             Containers = new ChangeTrackingList<ContainerAppReplicaContainer>();
             InitContainers = new ChangeTrackingList<ContainerAppReplicaContainer>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,13 +39,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="runningStateDetails"> The details of replica current running state. </param>
         /// <param name="containers"> The containers collection under a replica. </param>
         /// <param name="initContainers"> The init containers collection under a replica. </param>
-        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerAppReplicaRunningState? runningState, string runningStateDetails, IList<ContainerAppReplicaContainer> containers, IList<ContainerAppReplicaContainer> initContainers) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerAppReplicaRunningState? runningState, string runningStateDetails, IList<ContainerAppReplicaContainer> containers, IList<ContainerAppReplicaContainer> initContainers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             RunningState = runningState;
             RunningStateDetails = runningStateDetails;
             Containers = containers;
             InitContainers = initContainers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Timestamp describing when the pod was created by controller. </summary>

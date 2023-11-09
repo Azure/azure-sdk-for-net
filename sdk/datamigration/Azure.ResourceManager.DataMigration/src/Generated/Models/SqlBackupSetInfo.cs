@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information of backup set. </summary>
     public partial class SqlBackupSetInfo
     {
-        /// <summary> Initializes a new instance of SqlBackupSetInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlBackupSetInfo"/>. </summary>
         internal SqlBackupSetInfo()
         {
             ListOfBackupFiles = new ChangeTrackingList<SqlBackupFileInfo>();
             IgnoreReasons = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SqlBackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlBackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Backup set id. </param>
         /// <param name="firstLSN"> First LSN of the backup set. </param>
         /// <param name="lastLSN"> Last LSN of the backup set. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="hasBackupChecksums"> Has Backup Checksums. </param>
         /// <param name="familyCount"> Media family count. </param>
         /// <param name="ignoreReasons"> The reasons why the backup set is ignored. </param>
-        internal SqlBackupSetInfo(Guid? backupSetId, string firstLSN, string lastLSN, string backupType, IReadOnlyList<SqlBackupFileInfo> listOfBackupFiles, DateTimeOffset? backupStartOn, DateTimeOffset? backupFinishOn, bool? isBackupRestored, bool? hasBackupChecksums, int? familyCount, IReadOnlyList<string> ignoreReasons)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlBackupSetInfo(Guid? backupSetId, string firstLSN, string lastLSN, string backupType, IReadOnlyList<SqlBackupFileInfo> listOfBackupFiles, DateTimeOffset? backupStartOn, DateTimeOffset? backupFinishOn, bool? isBackupRestored, bool? hasBackupChecksums, int? familyCount, IReadOnlyList<string> ignoreReasons, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupSetId = backupSetId;
             FirstLSN = firstLSN;
@@ -46,6 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             HasBackupChecksums = hasBackupChecksums;
             FamilyCount = familyCount;
             IgnoreReasons = ignoreReasons;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backup set id. </summary>
