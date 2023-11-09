@@ -4,9 +4,9 @@
 
 ### Features Added
 
-- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartBackup` and `StartBackupAsync`. Managed Identity will be used instead of `sasToken` is null.
-- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead of `sasToken` is null.
-- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`. Managed Identity will be used instead of `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartBackup` and `StartBackupAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
 
 ### Bugs Fixed
 
