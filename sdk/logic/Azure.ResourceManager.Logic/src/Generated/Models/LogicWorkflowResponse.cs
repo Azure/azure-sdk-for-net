@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> A response. </summary>
     public partial class LogicWorkflowResponse
     {
-        /// <summary> Initializes a new instance of LogicWorkflowResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowResponse"/>. </summary>
         public LogicWorkflowResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowResponse"/>. </summary>
         /// <param name="headers"> A list of all the headers attached to the response. </param>
         /// <param name="statusCode"> The status code of the response. </param>
         /// <param name="bodyLink"> Details on the location of the body content. </param>
-        internal LogicWorkflowResponse(BinaryData headers, int? statusCode, LogicContentLink bodyLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowResponse(BinaryData headers, int? statusCode, LogicContentLink bodyLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Headers = headers;
             StatusCode = statusCode;
             BodyLink = bodyLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

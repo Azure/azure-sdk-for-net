@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of a private endpoint connection. </summary>
     public partial class IotHubPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="connectionState"> The current state of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public IotHubPrivateEndpointConnectionProperties(IotHubPrivateLinkServiceConnectionState connectionState)
@@ -24,13 +28,20 @@ namespace Azure.ResourceManager.IotHub.Models
             ConnectionState = connectionState;
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint property of a private endpoint connection. </param>
         /// <param name="connectionState"> The current state of a private endpoint connection. </param>
-        internal IotHubPrivateEndpointConnectionProperties(SubResource privateEndpoint, IotHubPrivateLinkServiceConnectionState connectionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubPrivateEndpointConnectionProperties(SubResource privateEndpoint, IotHubPrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionProperties"/> for deserialization. </summary>
+        internal IotHubPrivateEndpointConnectionProperties()
+        {
         }
 
         /// <summary> The private endpoint property of a private endpoint connection. </summary>

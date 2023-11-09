@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class for content key in Streaming Locator. </summary>
     public partial class StreamingLocatorContentKey
     {
-        /// <summary> Initializes a new instance of StreamingLocatorContentKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorContentKey"/>. </summary>
         /// <param name="id"> ID of Content Key. </param>
         public StreamingLocatorContentKey(Guid id)
         {
@@ -22,14 +25,15 @@ namespace Azure.ResourceManager.Media.Models
             Tracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorContentKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorContentKey"/>. </summary>
         /// <param name="id"> ID of Content Key. </param>
         /// <param name="keyType"> Encryption type of Content Key. </param>
         /// <param name="labelReferenceInStreamingPolicy"> Label of Content Key as specified in the Streaming Policy. </param>
         /// <param name="value"> Value of Content Key. </param>
         /// <param name="policyName"> ContentKeyPolicy used by Content Key. </param>
         /// <param name="tracks"> Tracks which use this Content Key. </param>
-        internal StreamingLocatorContentKey(Guid id, StreamingLocatorContentKeyType? keyType, string labelReferenceInStreamingPolicy, string value, string policyName, IReadOnlyList<MediaTrackSelection> tracks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingLocatorContentKey(Guid id, StreamingLocatorContentKeyType? keyType, string labelReferenceInStreamingPolicy, string value, string policyName, IReadOnlyList<MediaTrackSelection> tracks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             KeyType = keyType;
@@ -37,6 +41,12 @@ namespace Azure.ResourceManager.Media.Models
             Value = value;
             PolicyName = policyName;
             Tracks = tracks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorContentKey"/> for deserialization. </summary>
+        internal StreamingLocatorContentKey()
+        {
         }
 
         /// <summary> ID of Content Key. </summary>

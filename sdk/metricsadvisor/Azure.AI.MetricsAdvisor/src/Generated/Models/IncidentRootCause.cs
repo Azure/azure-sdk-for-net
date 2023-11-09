@@ -15,7 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The RootCause. </summary>
     public partial class IncidentRootCause
     {
-        /// <summary> Initializes a new instance of IncidentRootCause. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncidentRootCause"/>. </summary>
         /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>
@@ -33,17 +36,24 @@ namespace Azure.AI.MetricsAdvisor.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of IncidentRootCause. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentRootCause"/>. </summary>
         /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>
         /// <param name="description"> description of the root cause. </param>
-        internal IncidentRootCause(DimensionKey seriesKey, IReadOnlyList<string> paths, double contributionScore, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncidentRootCause(DimensionKey seriesKey, IReadOnlyList<string> paths, double contributionScore, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SeriesKey = seriesKey;
             Paths = paths;
             ContributionScore = contributionScore;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IncidentRootCause"/> for deserialization. </summary>
+        internal IncidentRootCause()
+        {
         }
     }
 }

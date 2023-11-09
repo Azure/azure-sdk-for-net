@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class DeploymentResourceIdReference
     {
-        /// <summary> Initializes a new instance of DeploymentResourceIdReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentResourceIdReference"/>. </summary>
         protected DeploymentResourceIdReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentResourceIdReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentResourceIdReference"/>. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
-        internal DeploymentResourceIdReference(IdType idType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentResourceIdReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdType = idType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource reference arm id type. </summary>

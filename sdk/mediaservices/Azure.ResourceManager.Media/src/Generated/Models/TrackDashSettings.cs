@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The DASH setting for a track. </summary>
     internal partial class TrackDashSettings
     {
-        /// <summary> Initializes a new instance of TrackDashSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrackDashSettings"/>. </summary>
         public TrackDashSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of TrackDashSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackDashSettings"/>. </summary>
         /// <param name="role"> The role for the DASH setting. </param>
-        internal TrackDashSettings(string role)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrackDashSettings(string role, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role for the DASH setting. </summary>

@@ -5,31 +5,44 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The InfluxDBParameter. </summary>
     internal partial class InfluxDBParameter
     {
-        /// <summary> Initializes a new instance of InfluxDBParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InfluxDBParameter"/>. </summary>
         /// <param name="query"> The script to query this database. </param>
         public InfluxDBParameter(string query)
         {
             Query = query;
         }
 
-        /// <summary> Initializes a new instance of InfluxDBParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfluxDBParameter"/>. </summary>
         /// <param name="connectionString"> The connection string of this InfluxDB. </param>
         /// <param name="database"> A database name. </param>
         /// <param name="userName"> The user name of the account that can access this database. </param>
         /// <param name="password"> The password of the account that can access this database. </param>
         /// <param name="query"> The script to query this database. </param>
-        internal InfluxDBParameter(string connectionString, string database, string userName, string password, string query)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InfluxDBParameter(string connectionString, string database, string userName, string password, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             Database = database;
             UserName = userName;
             Password = password;
             Query = query;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InfluxDBParameter"/> for deserialization. </summary>
+        internal InfluxDBParameter()
+        {
         }
 
         /// <summary> The connection string of this InfluxDB. </summary>

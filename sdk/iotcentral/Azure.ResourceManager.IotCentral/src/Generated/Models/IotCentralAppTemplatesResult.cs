@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> A list of IoT Central Application Templates with a next link. </summary>
     internal partial class IotCentralAppTemplatesResult
     {
-        /// <summary> Initializes a new instance of IotCentralAppTemplatesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplatesResult"/>. </summary>
         internal IotCentralAppTemplatesResult()
         {
             Value = new ChangeTrackingList<IotCentralAppTemplate>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppTemplatesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplatesResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Central application templates. </param>
         /// <param name="value"> A list of IoT Central Application Templates. </param>
-        internal IotCentralAppTemplatesResult(string nextLink, IReadOnlyList<IotCentralAppTemplate> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralAppTemplatesResult(string nextLink, IReadOnlyList<IotCentralAppTemplate> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of IoT Central application templates. </summary>

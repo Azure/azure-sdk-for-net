@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 envelope override settings. </summary>
     public partial class X12EnvelopeOverride
     {
-        /// <summary> Initializes a new instance of X12EnvelopeOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeOverride"/>. </summary>
         /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
         /// <param name="protocolVersion"> The protocol version on which this envelope settings has to be applied. </param>
         /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Logic.Models
             TimeFormat = timeFormat;
         }
 
-        /// <summary> Initializes a new instance of X12EnvelopeOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeOverride"/>. </summary>
         /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
         /// <param name="protocolVersion"> The protocol version on which this envelope settings has to be applied. </param>
         /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
@@ -56,7 +60,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="functionalIdentifierCode"> The functional identifier code. </param>
         /// <param name="dateFormat"> The date format. </param>
         /// <param name="timeFormat"> The time format. </param>
-        internal X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, string functionalIdentifierCode, X12DateFormat dateFormat, X12TimeFormat timeFormat)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, string functionalIdentifierCode, X12DateFormat dateFormat, X12TimeFormat timeFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetNamespace = targetNamespace;
             ProtocolVersion = protocolVersion;
@@ -68,6 +73,12 @@ namespace Azure.ResourceManager.Logic.Models
             FunctionalIdentifierCode = functionalIdentifierCode;
             DateFormat = dateFormat;
             TimeFormat = timeFormat;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeOverride"/> for deserialization. </summary>
+        internal X12EnvelopeOverride()
+        {
         }
 
         /// <summary> The target namespace on which this envelope settings has to be applied. </summary>

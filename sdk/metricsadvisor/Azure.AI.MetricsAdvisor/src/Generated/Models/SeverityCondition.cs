@@ -5,10 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SeverityCondition. </summary>
     public partial class SeverityCondition
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SeverityCondition"/>. </summary>
+        /// <param name="minimumAlertSeverity"> min alert severity. </param>
+        /// <param name="maximumAlertSeverity"> max alert severity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SeverityCondition(AnomalySeverity minimumAlertSeverity, AnomalySeverity maximumAlertSeverity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MinimumAlertSeverity = minimumAlertSeverity;
+            MaximumAlertSeverity = maximumAlertSeverity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeverityCondition"/> for deserialization. </summary>
+        internal SeverityCondition()
+        {
+        }
     }
 }

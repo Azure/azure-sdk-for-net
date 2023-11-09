@@ -14,5 +14,16 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> The FeedbackDimensionFilter. </summary>
     public partial class FeedbackFilter
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeedbackFilter"/>. </summary>
+        /// <param name="dimension"> metric dimension filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeedbackFilter(IDictionary<string, string> dimension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Dimension = dimension;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

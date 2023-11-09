@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The swagger custom dynamic tree parameter. </summary>
     public partial class SwaggerCustomDynamicTreeParameterInfo
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeParameterInfo"/>. </summary>
         public SwaggerCustomDynamicTreeParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeParameterInfo"/>. </summary>
         /// <param name="selectedItemValuePath"> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </param>
         /// <param name="value"> The parameter value. </param>
         /// <param name="parameterReference"> The parameter reference. </param>
         /// <param name="isRequired"> Indicates whether the parameter is required. </param>
-        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? isRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? isRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedItemValuePath = selectedItemValuePath;
             Value = value;
             ParameterReference = parameterReference;
             IsRequired = isRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </summary>

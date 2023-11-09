@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration account maps. </summary>
     internal partial class IntegrationAccountMapListResult
     {
-        /// <summary> Initializes a new instance of IntegrationAccountMapListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountMapListResult"/>. </summary>
         internal IntegrationAccountMapListResult()
         {
             Value = new ChangeTrackingList<IntegrationAccountMapData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountMapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountMapListResult"/>. </summary>
         /// <param name="value"> The list of integration account maps. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal IntegrationAccountMapListResult(IReadOnlyList<IntegrationAccountMapData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountMapListResult(IReadOnlyList<IntegrationAccountMapData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of integration account maps. </summary>

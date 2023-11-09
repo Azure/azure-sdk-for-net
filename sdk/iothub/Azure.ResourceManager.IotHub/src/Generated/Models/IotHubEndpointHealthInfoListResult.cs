@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of EndpointHealthData objects with a next link. </summary>
     internal partial class IotHubEndpointHealthInfoListResult
     {
-        /// <summary> Initializes a new instance of IotHubEndpointHealthInfoListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubEndpointHealthInfoListResult"/>. </summary>
         internal IotHubEndpointHealthInfoListResult()
         {
             Value = new ChangeTrackingList<IotHubEndpointHealthInfo>();
         }
 
-        /// <summary> Initializes a new instance of IotHubEndpointHealthInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubEndpointHealthInfoListResult"/>. </summary>
         /// <param name="value"> JSON-serialized array of Endpoint health data. </param>
         /// <param name="nextLink"> Link to more results. </param>
-        internal IotHubEndpointHealthInfoListResult(IReadOnlyList<IotHubEndpointHealthInfo> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubEndpointHealthInfoListResult(IReadOnlyList<IotHubEndpointHealthInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> JSON-serialized array of Endpoint health data. </summary>

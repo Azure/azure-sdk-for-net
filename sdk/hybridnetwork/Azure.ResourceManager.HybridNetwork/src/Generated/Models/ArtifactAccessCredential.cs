@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class ArtifactAccessCredential
     {
-        /// <summary> Initializes a new instance of ArtifactAccessCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactAccessCredential"/>. </summary>
         protected ArtifactAccessCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactAccessCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactAccessCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
-        internal ArtifactAccessCredential(CredentialType credentialType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactAccessCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CredentialType = credentialType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The credential type. </summary>

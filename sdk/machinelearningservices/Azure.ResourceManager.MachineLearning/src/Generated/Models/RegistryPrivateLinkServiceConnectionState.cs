@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The connection state. </summary>
     public partial class RegistryPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateLinkServiceConnectionState"/>. </summary>
         public RegistryPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistryPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
         /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
         /// <param name="status"> Connection status of the service consumer with the service provider. </param>
-        internal RegistryPrivateLinkServiceConnectionState(string actionsRequired, string description, MachineLearningPrivateEndpointServiceConnectionStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegistryPrivateLinkServiceConnectionState(string actionsRequired, string description, MachineLearningPrivateEndpointServiceConnectionStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionsRequired = actionsRequired;
             Description = description;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Some RP chose "None". Other RPs use this for region expansion. </summary>

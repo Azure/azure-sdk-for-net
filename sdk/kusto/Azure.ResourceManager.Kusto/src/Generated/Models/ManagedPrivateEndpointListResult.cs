@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list managed private endpoints operation response. </summary>
     internal partial class ManagedPrivateEndpointListResult
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointListResult"/>. </summary>
         internal ManagedPrivateEndpointListResult()
         {
             Value = new ChangeTrackingList<KustoManagedPrivateEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointListResult"/>. </summary>
         /// <param name="value"> The list of managed private endpoints. </param>
-        internal ManagedPrivateEndpointListResult(IReadOnlyList<KustoManagedPrivateEndpointData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedPrivateEndpointListResult(IReadOnlyList<KustoManagedPrivateEndpointData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of managed private endpoints. </summary>

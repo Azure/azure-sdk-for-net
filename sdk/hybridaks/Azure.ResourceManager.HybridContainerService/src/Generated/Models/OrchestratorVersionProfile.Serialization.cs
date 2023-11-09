@@ -5,16 +5,98 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class OrchestratorVersionProfile
+    public partial class OrchestratorVersionProfile : IUtf8JsonSerializable, IJsonModel<OrchestratorVersionProfile>
     {
-        internal static OrchestratorVersionProfile DeserializeOrchestratorVersionProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrchestratorVersionProfile>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<OrchestratorVersionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsPreview))
+                {
+                    writer.WritePropertyName("isPreview"u8);
+                    writer.WriteBooleanValue(IsPreview.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Default))
+                {
+                    writer.WritePropertyName("default"u8);
+                    writer.WriteBooleanValue(Default.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(OrchestratorType))
+                {
+                    writer.WritePropertyName("orchestratorType"u8);
+                    writer.WriteStringValue(OrchestratorType);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(OrchestratorVersion))
+                {
+                    writer.WritePropertyName("orchestratorVersion"u8);
+                    writer.WriteStringValue(OrchestratorVersion);
+                }
+            }
+            if (Optional.IsCollectionDefined(Upgrades))
+            {
+                writer.WritePropertyName("upgrades"u8);
+                writer.WriteStartArray();
+                foreach (var item in Upgrades)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OrchestratorVersionProfile IJsonModel<OrchestratorVersionProfile>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrchestratorVersionProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrchestratorVersionProfile(document.RootElement, options);
+        }
+
+        internal static OrchestratorVersionProfile DeserializeOrchestratorVersionProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +106,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> orchestratorType = default;
             Optional<string> orchestratorVersion = default;
             Optional<IReadOnlyList<OrchestratorProfile>> upgrades = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isPreview"u8))
@@ -68,8 +152,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     upgrades = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OrchestratorVersionProfile(Optional.ToNullable(isPreview), Optional.ToNullable(@default), orchestratorType.Value, orchestratorVersion.Value, Optional.ToList(upgrades));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OrchestratorVersionProfile(Optional.ToNullable(isPreview), Optional.ToNullable(@default), orchestratorType.Value, orchestratorVersion.Value, Optional.ToList(upgrades), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<OrchestratorVersionProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrchestratorVersionProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OrchestratorVersionProfile IModel<OrchestratorVersionProfile>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OrchestratorVersionProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOrchestratorVersionProfile(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<OrchestratorVersionProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

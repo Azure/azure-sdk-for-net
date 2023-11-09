@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The request to invite a follower to a database. </summary>
     public partial class DatabaseInviteFollowerContent
     {
-        /// <summary> Initializes a new instance of DatabaseInviteFollowerContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseInviteFollowerContent"/>. </summary>
         /// <param name="inviteeEmail"> The email of the invited user for which the follower invitation is generated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inviteeEmail"/> is null. </exception>
         public DatabaseInviteFollowerContent(string inviteeEmail)
@@ -21,6 +25,22 @@ namespace Azure.ResourceManager.Kusto.Models
             Argument.AssertNotNull(inviteeEmail, nameof(inviteeEmail));
 
             InviteeEmail = inviteeEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseInviteFollowerContent"/>. </summary>
+        /// <param name="inviteeEmail"> The email of the invited user for which the follower invitation is generated. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseInviteFollowerContent(string inviteeEmail, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InviteeEmail = inviteeEmail;
+            TableLevelSharingProperties = tableLevelSharingProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseInviteFollowerContent"/> for deserialization. </summary>
+        internal DatabaseInviteFollowerContent()
+        {
         }
 
         /// <summary> The email of the invited user for which the follower invitation is generated. </summary>

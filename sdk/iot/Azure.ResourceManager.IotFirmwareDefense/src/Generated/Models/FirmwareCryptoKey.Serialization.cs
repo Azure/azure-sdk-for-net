@@ -5,16 +5,165 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCryptoKey
+    public partial class FirmwareCryptoKey : IUtf8JsonSerializable, IJsonModel<FirmwareCryptoKey>
     {
-        internal static FirmwareCryptoKey DeserializeFirmwareCryptoKey(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareCryptoKey>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FirmwareCryptoKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FirmwareCryptoKeyId))
+            {
+                if (FirmwareCryptoKeyId != null)
+                {
+                    writer.WritePropertyName("cryptoKeyId"u8);
+                    writer.WriteStringValue(FirmwareCryptoKeyId);
+                }
+                else
+                {
+                    writer.WriteNull("cryptoKeyId");
+                }
+            }
+            if (Optional.IsDefined(KeyType))
+            {
+                if (KeyType != null)
+                {
+                    writer.WritePropertyName("keyType"u8);
+                    writer.WriteStringValue(KeyType);
+                }
+                else
+                {
+                    writer.WriteNull("keyType");
+                }
+            }
+            if (Optional.IsDefined(KeySize))
+            {
+                if (KeySize != null)
+                {
+                    writer.WritePropertyName("keySize"u8);
+                    writer.WriteNumberValue(KeySize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("keySize");
+                }
+            }
+            if (Optional.IsDefined(KeyAlgorithm))
+            {
+                if (KeyAlgorithm != null)
+                {
+                    writer.WritePropertyName("keyAlgorithm"u8);
+                    writer.WriteStringValue(KeyAlgorithm);
+                }
+                else
+                {
+                    writer.WriteNull("keyAlgorithm");
+                }
+            }
+            if (Optional.IsCollectionDefined(Usage))
+            {
+                if (Usage != null)
+                {
+                    writer.WritePropertyName("usage"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Usage)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("usage");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(FilePaths))
+                {
+                    if (FilePaths != null)
+                    {
+                        writer.WritePropertyName("filePaths"u8);
+                        writer.WriteStartArray();
+                        foreach (var item in FilePaths)
+                        {
+                            writer.WriteStringValue(item);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
+                    {
+                        writer.WriteNull("filePaths");
+                    }
+                }
+            }
+            if (Optional.IsDefined(PairedKey))
+            {
+                if (PairedKey != null)
+                {
+                    writer.WritePropertyName("pairedKey"u8);
+                    writer.WriteObjectValue(PairedKey);
+                }
+                else
+                {
+                    writer.WriteNull("pairedKey");
+                }
+            }
+            if (Optional.IsDefined(IsShortKeySize))
+            {
+                if (IsShortKeySize != null)
+                {
+                    writer.WritePropertyName("isShortKeySize"u8);
+                    writer.WriteStringValue(IsShortKeySize.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("isShortKeySize");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FirmwareCryptoKey IJsonModel<FirmwareCryptoKey>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirmwareCryptoKey(document.RootElement, options);
+        }
+
+        internal static FirmwareCryptoKey DeserializeFirmwareCryptoKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +176,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<IReadOnlyList<string>> filePaths = default;
             Optional<PairedKey> pairedKey = default;
             Optional<IsShortKeySize?> isShortKeySize = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cryptoKeyId"u8))
@@ -117,8 +268,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     isShortKeySize = new IsShortKeySize(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FirmwareCryptoKey>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoKey)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FirmwareCryptoKey IModel<FirmwareCryptoKey>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirmwareCryptoKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFirmwareCryptoKey(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FirmwareCryptoKey>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

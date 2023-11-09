@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the Machine Extensions List Result. </summary>
     internal partial class MachineExtensionsListResult
     {
-        /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionsListResult"/>. </summary>
         internal MachineExtensionsListResult()
         {
             Value = new ChangeTrackingList<HybridComputeMachineExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionsListResult"/>. </summary>
         /// <param name="value"> The list of extensions. </param>
         /// <param name="nextLink"> The uri to fetch the next page of machine extensions. Call ListNext() with this to fetch the next page of extensions. </param>
-        internal MachineExtensionsListResult(IReadOnlyList<HybridComputeMachineExtensionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineExtensionsListResult(IReadOnlyList<HybridComputeMachineExtensionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of extensions. </summary>

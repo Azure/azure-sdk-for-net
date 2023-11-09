@@ -5,14 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The properties for Quota update or retrieval. </summary>
     public partial class MachineLearningQuotaProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningQuotaProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningQuotaProperties"/>. </summary>
         public MachineLearningQuotaProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningQuotaProperties"/>. </summary>
+        /// <param name="id"> Specifies the resource ID. </param>
+        /// <param name="quotaBasePropertiesType"> Specifies the resource type. </param>
+        /// <param name="limit"> The maximum permitted quota of the resource. </param>
+        /// <param name="unit"> An enum describing the unit of quota measurement. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningQuotaProperties(string id, string quotaBasePropertiesType, long? limit, MachineLearningQuotaUnit? unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            QuotaBasePropertiesType = quotaBasePropertiesType;
+            Limit = limit;
+            Unit = unit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the resource ID. </summary>

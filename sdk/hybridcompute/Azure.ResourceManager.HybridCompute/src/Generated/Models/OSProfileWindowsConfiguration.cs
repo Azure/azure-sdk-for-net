@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Specifies the windows configuration for update management. </summary>
     public partial class OSProfileWindowsConfiguration
     {
-        /// <summary> Initializes a new instance of OSProfileWindowsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSProfileWindowsConfiguration"/>. </summary>
         public OSProfileWindowsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfileWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileWindowsConfiguration"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
-        internal OSProfileWindowsConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSProfileWindowsConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssessmentMode = assessmentMode;
             PatchMode = patchMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the assessment mode. </summary>

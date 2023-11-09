@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyProperty. </summary>
     internal partial class AnomalyProperty
     {
-        /// <summary> Initializes a new instance of AnomalyProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyProperty"/>. </summary>
         /// <param name="anomalySeverity"> anomaly severity. </param>
         /// <param name="value"> value of the anomaly. </param>
         internal AnomalyProperty(AnomalySeverity anomalySeverity, double value)
@@ -19,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of AnomalyProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyProperty"/>. </summary>
         /// <param name="anomalySeverity"> anomaly severity. </param>
         /// <param name="anomalyStatus">
         /// anomaly status
@@ -28,12 +34,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </param>
         /// <param name="value"> value of the anomaly. </param>
         /// <param name="expectedValue"> expected value of the anomaly given by smart detector. </param>
-        internal AnomalyProperty(AnomalySeverity anomalySeverity, AnomalyStatus? anomalyStatus, double value, double? expectedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyProperty(AnomalySeverity anomalySeverity, AnomalyStatus? anomalyStatus, double value, double? expectedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AnomalySeverity = anomalySeverity;
             AnomalyStatus = anomalyStatus;
             Value = value;
             ExpectedValue = expectedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyProperty"/> for deserialization. </summary>
+        internal AnomalyProperty()
+        {
         }
 
         /// <summary> anomaly severity. </summary>

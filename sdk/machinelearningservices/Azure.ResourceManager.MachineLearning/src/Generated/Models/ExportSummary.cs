@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,24 +17,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class ExportSummary
     {
-        /// <summary> Initializes a new instance of ExportSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportSummary"/>. </summary>
         protected ExportSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSummary"/>. </summary>
         /// <param name="endOn"> The time when the export was completed. </param>
         /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
         /// <param name="format"> [Required] The format of exported labels, also as the discriminator. </param>
         /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
         /// <param name="startOn"> The time when the export was requested. </param>
-        internal ExportSummary(DateTimeOffset? endOn, long? exportedRowCount, ExportFormatType format, string labelingJobId, DateTimeOffset? startOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportSummary(DateTimeOffset? endOn, long? exportedRowCount, ExportFormatType format, string labelingJobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndOn = endOn;
             ExportedRowCount = exportedRowCount;
             Format = format;
             LabelingJobId = labelingJobId;
             StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time when the export was completed. </summary>

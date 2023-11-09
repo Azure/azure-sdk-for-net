@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> An item returned from Batch API. Extend with 'response' property. </summary>
     internal partial class BatchResultItem
     {
-        /// <summary> Initializes a new instance of BatchResultItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchResultItem"/>. </summary>
         internal BatchResultItem()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResultItem"/>. </summary>
         /// <param name="statusCode"> HTTP request status code. </param>
-        internal BatchResultItem(int? statusCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchResultItem(int? statusCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StatusCode = statusCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> HTTP request status code. </summary>

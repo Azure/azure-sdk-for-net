@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationServiceEnvironmentManagedApiData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiData"/>. </summary>
         /// <param name="location"> The location. </param>
         public IntegrationServiceEnvironmentManagedApiData(AzureLocation location) : base(location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Logic
             Capabilities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +52,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="category"> The category. </param>
         /// <param name="deploymentParameters"> The integration service environment managed api deployment parameters. </param>
-        internal IntegrationServiceEnvironmentManagedApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, IReadOnlyDictionary<string, BinaryData> connectionParameters, LogicApiResourceMetadata metadata, IReadOnlyList<Uri> runtimeUris, LogicApiResourceGeneralInformation generalInformation, IReadOnlyList<string> capabilities, LogicApiResourceBackendService backendService, LogicApiResourcePolicies policies, Uri apiDefinitionUri, LogicApiResourceDefinitions apiDefinitions, LogicResourceReference integrationServiceEnvironment, LogicWorkflowProvisioningState? provisioningState, LogicApiTier? category, IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentManagedApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, IReadOnlyDictionary<string, BinaryData> connectionParameters, LogicApiResourceMetadata metadata, IReadOnlyList<Uri> runtimeUris, LogicApiResourceGeneralInformation generalInformation, IReadOnlyList<string> capabilities, LogicApiResourceBackendService backendService, LogicApiResourcePolicies policies, Uri apiDefinitionUri, LogicApiResourceDefinitions apiDefinitions, LogicResourceReference integrationServiceEnvironment, LogicWorkflowProvisioningState? provisioningState, LogicApiTier? category, IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             NamePropertiesName = namePropertiesName;
             ConnectionParameters = connectionParameters;
@@ -65,6 +69,12 @@ namespace Azure.ResourceManager.Logic
             ProvisioningState = provisioningState;
             Category = category;
             DeploymentParameters = deploymentParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiData"/> for deserialization. </summary>
+        internal IntegrationServiceEnvironmentManagedApiData()
+        {
         }
 
         /// <summary> The name. </summary>

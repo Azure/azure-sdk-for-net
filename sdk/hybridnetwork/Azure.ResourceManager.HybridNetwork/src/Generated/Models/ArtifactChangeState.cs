@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The artifact updating request payload. </summary>
     public partial class ArtifactChangeState
     {
-        /// <summary> Initializes a new instance of ArtifactChangeState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactChangeState"/>. </summary>
         public ArtifactChangeState()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactChangeState"/>. </summary>
+        /// <param name="properties"> Artifact update state properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactChangeState(ArtifactChangeStateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Artifact update state properties. </summary>

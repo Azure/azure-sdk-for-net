@@ -5,14 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Update the administrative state on list of resources. </summary>
     public partial class UpdateDeviceAdministrativeStateContent : UpdateAdministrativeStateOnResources
     {
-        /// <summary> Initializes a new instance of UpdateDeviceAdministrativeStateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDeviceAdministrativeStateContent"/>. </summary>
         public UpdateDeviceAdministrativeStateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDeviceAdministrativeStateContent"/>. </summary>
+        /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="state"> Administrative state. </param>
+        internal UpdateDeviceAdministrativeStateContent(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkDeviceAdministrativeState? state) : base(resourceIds, serializedAdditionalRawData)
+        {
+            State = state;
         }
 
         /// <summary> Administrative state. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class ModelPerformanceMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of ModelPerformanceMetricThresholdBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelPerformanceMetricThresholdBase"/>. </summary>
         protected ModelPerformanceMetricThresholdBase()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelPerformanceMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPerformanceMetricThresholdBase"/>. </summary>
         /// <param name="modelType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        internal ModelPerformanceMetricThresholdBase(MonitoringModelType modelType, MonitoringThreshold threshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelPerformanceMetricThresholdBase(MonitoringModelType modelType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelType = modelType;
             Threshold = threshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the data type of the metric threshold. </summary>

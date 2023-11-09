@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Permissions the identity has for keys, secrets, certificates and storage. </summary>
     public partial class IdentityAccessPermissions
     {
-        /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessPermissions"/>. </summary>
         public IdentityAccessPermissions()
         {
             Keys = new ChangeTrackingList<IdentityAccessKeyPermission>();
@@ -22,17 +26,19 @@ namespace Azure.ResourceManager.KeyVault.Models
             Storage = new ChangeTrackingList<IdentityAccessStoragePermission>();
         }
 
-        /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessPermissions"/>. </summary>
         /// <param name="keys"> Permissions to keys. </param>
         /// <param name="secrets"> Permissions to secrets. </param>
         /// <param name="certificates"> Permissions to certificates. </param>
         /// <param name="storage"> Permissions to storage accounts. </param>
-        internal IdentityAccessPermissions(IList<IdentityAccessKeyPermission> keys, IList<IdentityAccessSecretPermission> secrets, IList<IdentityAccessCertificatePermission> certificates, IList<IdentityAccessStoragePermission> storage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdentityAccessPermissions(IList<IdentityAccessKeyPermission> keys, IList<IdentityAccessSecretPermission> secrets, IList<IdentityAccessCertificatePermission> certificates, IList<IdentityAccessStoragePermission> storage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keys = keys;
             Secrets = secrets;
             Certificates = certificates;
             Storage = storage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Permissions to keys. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The bulk collections response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
     public partial class BulkCollectionsActionResult
     {
-        /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionResult"/>. </summary>
         internal BulkCollectionsActionResult()
         {
             Succeeded = new ChangeTrackingList<PrivateStoreCollectionDetails>();
             Failed = new ChangeTrackingList<PrivateStoreCollectionDetails>();
         }
 
-        /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionResult"/>. </summary>
         /// <param name="succeeded"> Succeeded collections. </param>
         /// <param name="failed"> Failed collections. </param>
-        internal BulkCollectionsActionResult(IReadOnlyList<PrivateStoreCollectionDetails> succeeded, IReadOnlyList<PrivateStoreCollectionDetails> failed)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BulkCollectionsActionResult(IReadOnlyList<PrivateStoreCollectionDetails> succeeded, IReadOnlyList<PrivateStoreCollectionDetails> failed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Succeeded = succeeded;
             Failed = failed;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Succeeded collections. </summary>

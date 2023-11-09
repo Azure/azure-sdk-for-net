@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an Aml Instance container. </summary>
     public partial class MachineLearningComputeInstanceContainer
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceContainer"/>. </summary>
         internal MachineLearningComputeInstanceContainer()
         {
             Services = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceContainer"/>. </summary>
         /// <param name="name"> Name of the ComputeInstance container. </param>
         /// <param name="autosave"> Auto save settings. </param>
         /// <param name="gpu"> Information of GPU. </param>
         /// <param name="network"> network of this container. </param>
         /// <param name="environment"> Environment information of this container. </param>
         /// <param name="services"> services of this containers. </param>
-        internal MachineLearningComputeInstanceContainer(string name, MachineLearningComputeInstanceAutosave? autosave, string gpu, MachineLearningNetwork? network, MachineLearningComputeInstanceEnvironmentInfo environment, IReadOnlyList<BinaryData> services)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceContainer(string name, MachineLearningComputeInstanceAutosave? autosave, string gpu, MachineLearningNetwork? network, MachineLearningComputeInstanceEnvironmentInfo environment, IReadOnlyList<BinaryData> services, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Autosave = autosave;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Network = network;
             Environment = environment;
             Services = services;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the ComputeInstance container. </summary>

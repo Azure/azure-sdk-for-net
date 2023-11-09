@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class of response for listPaths action. </summary>
     public partial class StreamingPathsResult
     {
-        /// <summary> Initializes a new instance of StreamingPathsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingPathsResult"/>. </summary>
         internal StreamingPathsResult()
         {
             StreamingPaths = new ChangeTrackingList<StreamingPath>();
             DownloadPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingPathsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPathsResult"/>. </summary>
         /// <param name="streamingPaths"> Streaming Paths supported by current Streaming Locator. </param>
         /// <param name="downloadPaths"> Download Paths supported by current Streaming Locator. </param>
-        internal StreamingPathsResult(IReadOnlyList<StreamingPath> streamingPaths, IReadOnlyList<string> downloadPaths)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingPathsResult(IReadOnlyList<StreamingPath> streamingPaths, IReadOnlyList<string> downloadPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StreamingPaths = streamingPaths;
             DownloadPaths = downloadPaths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Streaming Paths supported by current Streaming Locator. </summary>

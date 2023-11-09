@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of RoutePolicies. </summary>
     internal partial class RoutePoliciesListResult
     {
-        /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/>. </summary>
         internal RoutePoliciesListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricRoutePolicyData>();
         }
 
-        /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/>. </summary>
         /// <param name="value"> List of RoutePolicy resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal RoutePoliciesListResult(IReadOnlyList<NetworkFabricRoutePolicyData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutePoliciesListResult(IReadOnlyList<NetworkFabricRoutePolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of RoutePolicy resources. </summary>

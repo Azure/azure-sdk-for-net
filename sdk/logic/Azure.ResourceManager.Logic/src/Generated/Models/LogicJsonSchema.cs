@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The JSON schema. </summary>
     public partial class LogicJsonSchema
     {
-        /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicJsonSchema"/>. </summary>
         internal LogicJsonSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicJsonSchema"/>. </summary>
         /// <param name="title"> The JSON title. </param>
         /// <param name="content"> The JSON content. </param>
-        internal LogicJsonSchema(string title, BinaryData content)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicJsonSchema(string title, BinaryData content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The JSON title. </summary>

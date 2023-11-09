@@ -15,7 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DetectionSeriesQuery. </summary>
     internal partial class DetectionSeriesQuery
     {
-        /// <summary> Initializes a new instance of DetectionSeriesQuery. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectionSeriesQuery"/>. </summary>
         /// <param name="startTime"> This is inclusive. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> This is exclusive. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="series"> The series to be queried. The identity must be able to define one single time series instead of a group of time series. The maximum number of series is 100. </param>
@@ -27,6 +30,24 @@ namespace Azure.AI.MetricsAdvisor.Models
             StartTime = startTime;
             EndTime = endTime;
             Series = series.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionSeriesQuery"/>. </summary>
+        /// <param name="startTime"> This is inclusive. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="endTime"> This is exclusive. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="series"> The series to be queried. The identity must be able to define one single time series instead of a group of time series. The maximum number of series is 100. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectionSeriesQuery(DateTimeOffset startTime, DateTimeOffset endTime, IList<SeriesIdentity> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Series = series;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionSeriesQuery"/> for deserialization. </summary>
+        internal DetectionSeriesQuery()
+        {
         }
 
         /// <summary> This is inclusive. The maximum number of data points (series number * time range) is 10000. </summary>

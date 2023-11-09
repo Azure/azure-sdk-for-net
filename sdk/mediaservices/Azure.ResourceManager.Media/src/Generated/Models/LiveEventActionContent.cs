@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The LiveEvent action input parameter definition. </summary>
     public partial class LiveEventActionContent
     {
-        /// <summary> Initializes a new instance of LiveEventActionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventActionContent"/>. </summary>
         public LiveEventActionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventActionContent"/>. </summary>
+        /// <param name="removeOutputsOnStop"> The flag indicates whether live outputs are automatically deleted when live event is being stopped. Deleting live outputs do not delete the underlying assets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveEventActionContent(bool? removeOutputsOnStop, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RemoveOutputsOnStop = removeOutputsOnStop;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The flag indicates whether live outputs are automatically deleted when live event is being stopped. Deleting live outputs do not delete the underlying assets. </summary>

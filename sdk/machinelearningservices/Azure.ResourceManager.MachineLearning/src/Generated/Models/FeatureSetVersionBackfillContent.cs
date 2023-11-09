@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Request payload for creating a backfill request for a given feature set version. </summary>
     public partial class FeatureSetVersionBackfillContent
     {
-        /// <summary> Initializes a new instance of FeatureSetVersionBackfillContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureSetVersionBackfillContent"/>. </summary>
         public FeatureSetVersionBackfillContent()
         {
             SparkConfiguration = new ChangeTrackingDictionary<string, string>();
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FeatureSetVersionBackfillContent"/>. </summary>
+        /// <param name="description"> Specifies description. </param>
+        /// <param name="displayName"> Specifies description. </param>
+        /// <param name="featureWindow"> Specifies the backfill feature window to be materialized. </param>
+        /// <param name="resource"> Specifies the compute resource settings. </param>
+        /// <param name="sparkConfiguration"> Specifies the spark compute settings. </param>
+        /// <param name="tags"> Specifies the tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureSetVersionBackfillContent(string description, string displayName, FeatureWindow featureWindow, MaterializationComputeResource resource, IDictionary<string, string> sparkConfiguration, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Description = description;
+            DisplayName = displayName;
+            FeatureWindow = featureWindow;
+            Resource = resource;
+            SparkConfiguration = sparkConfiguration;
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies description. </summary>

@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Retry settings for a batch inference operation. </summary>
     public partial class MachineLearningBatchRetrySettings
     {
-        /// <summary> Initializes a new instance of MachineLearningBatchRetrySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchRetrySettings"/>. </summary>
         public MachineLearningBatchRetrySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchRetrySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchRetrySettings"/>. </summary>
         /// <param name="maxRetries"> Maximum retry count for a mini-batch. </param>
         /// <param name="timeout"> Invocation timeout for a mini-batch, in ISO 8601 format. </param>
-        internal MachineLearningBatchRetrySettings(int? maxRetries, TimeSpan? timeout)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningBatchRetrySettings(int? maxRetries, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxRetries = maxRetries;
             Timeout = timeout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Maximum retry count for a mini-batch. </summary>

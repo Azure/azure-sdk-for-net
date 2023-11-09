@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The WorkspaceConnectionServicePrincipal. </summary>
     public partial class WorkspaceConnectionServicePrincipal
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionServicePrincipal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionServicePrincipal"/>. </summary>
         public WorkspaceConnectionServicePrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionServicePrincipal"/>. </summary>
         /// <param name="clientId"></param>
         /// <param name="clientSecret"></param>
         /// <param name="tenantId"></param>
-        internal WorkspaceConnectionServicePrincipal(string clientId, string clientSecret, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceConnectionServicePrincipal(string clientId, string clientSecret, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the client id. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The PrivateLinkScopeValidationDetails. </summary>
     public partial class PrivateLinkScopeValidationDetails
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopeValidationDetails"/>. </summary>
         internal PrivateLinkScopeValidationDetails()
         {
             ConnectionDetails = new ChangeTrackingList<ConnectionDetail>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopeValidationDetails"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="connectionDetails"> List of Private Endpoint Connection details. </param>
-        internal PrivateLinkScopeValidationDetails(string id, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<ConnectionDetail> connectionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkScopeValidationDetails(string id, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<ConnectionDetail> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PublicNetworkAccess = publicNetworkAccess;
             ConnectionDetails = connectionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource Id. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
@@ -13,7 +14,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> The update settings request object. </summary>
     internal partial class UpdateSettingRequest
     {
-        /// <summary> Initializes a new instance of UpdateSettingRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
         /// <param name="value"> The value of the pool setting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateSettingRequest(string value)
@@ -21,6 +25,20 @@ namespace Azure.Security.KeyVault.Administration.Models
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
+        /// <param name="value"> The value of the pool setting. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateSettingRequest(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/> for deserialization. </summary>
+        internal UpdateSettingRequest()
+        {
         }
 
         /// <summary> The value of the pool setting. </summary>

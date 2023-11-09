@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningRegistry data model. </summary>
     public partial class MachineLearningRegistryData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningRegistryData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningRegistryData(AzureLocation location) : base(location)
         {
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning
             RegionDetails = new ChangeTrackingList<RegistryRegionArmDetails>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningRegistryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// Possible values: "Enabled" or "Disabled"
         /// </param>
         /// <param name="regionDetails"> Details of each region the registry is in. </param>
-        internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> privateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> privateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.MachineLearning
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             RegionDetails = regionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryData"/> for deserialization. </summary>
+        internal MachineLearningRegistryData()
+        {
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>

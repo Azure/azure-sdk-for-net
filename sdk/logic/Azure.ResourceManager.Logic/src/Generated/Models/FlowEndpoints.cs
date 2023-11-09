@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The flow endpoints configuration. </summary>
     public partial class FlowEndpoints
     {
-        /// <summary> Initializes a new instance of FlowEndpoints. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
         public FlowEndpoints()
         {
             OutgoingIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
             AccessEndpointIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
         }
 
-        /// <summary> Initializes a new instance of FlowEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpoints"/>. </summary>
         /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
         /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
-        internal FlowEndpoints(IList<FlowEndpointIPAddress> outgoingIPAddresses, IList<FlowEndpointIPAddress> accessEndpointIPAddresses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowEndpoints(IList<FlowEndpointIPAddress> outgoingIPAddresses, IList<FlowEndpointIPAddress> accessEndpointIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OutgoingIPAddresses = outgoingIPAddresses;
             AccessEndpointIPAddresses = accessEndpointIPAddresses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The outgoing ip address. </summary>

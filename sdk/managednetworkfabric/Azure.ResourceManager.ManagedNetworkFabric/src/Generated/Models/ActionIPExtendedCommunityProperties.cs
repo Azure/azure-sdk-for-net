@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,16 +14,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Extended Community Properties. </summary>
     public partial class ActionIPExtendedCommunityProperties : IPExtendedCommunityAddOperationProperties
     {
-        /// <summary> Initializes a new instance of ActionIPExtendedCommunityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionIPExtendedCommunityProperties"/>. </summary>
         public ActionIPExtendedCommunityProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ActionIPExtendedCommunityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionIPExtendedCommunityProperties"/>. </summary>
         /// <param name="add"> List of IP Extended Community IDs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="delete"> List of IP Extended Community IDs. </param>
         /// <param name="set"> List of IP Extended Community IDs. </param>
-        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set) : base(@add)
+        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IDictionary<string, BinaryData> serializedAdditionalRawData, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set) : base(@add, serializedAdditionalRawData)
         {
             Delete = delete;
             Set = @set;

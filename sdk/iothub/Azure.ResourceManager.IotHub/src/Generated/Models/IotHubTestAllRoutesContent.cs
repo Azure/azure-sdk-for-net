@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Input for testing all routes. </summary>
     public partial class IotHubTestAllRoutesContent
     {
-        /// <summary> Initializes a new instance of IotHubTestAllRoutesContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesContent"/>. </summary>
         public IotHubTestAllRoutesContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesContent"/>. </summary>
+        /// <param name="routingSource"> Routing source. </param>
+        /// <param name="message"> Routing message. </param>
+        /// <param name="twin"> Routing Twin Reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubTestAllRoutesContent(IotHubRoutingSource? routingSource, RoutingMessage message, RoutingTwin twin, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RoutingSource = routingSource;
+            Message = message;
+            Twin = twin;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Routing source. </summary>

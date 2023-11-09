@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The tracking event. </summary>
     public partial class IntegrationAccountTrackingEvent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountTrackingEvent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEvent"/>. </summary>
         /// <param name="eventLevel"> The event level. </param>
         /// <param name="eventOn"> The event time. </param>
         /// <param name="recordType"> The record type. </param>
@@ -21,6 +25,28 @@ namespace Azure.ResourceManager.Logic.Models
             EventLevel = eventLevel;
             EventOn = eventOn;
             RecordType = recordType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEvent"/>. </summary>
+        /// <param name="eventLevel"> The event level. </param>
+        /// <param name="eventOn"> The event time. </param>
+        /// <param name="recordType"> The record type. </param>
+        /// <param name="record"> The record. </param>
+        /// <param name="error"> The error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountTrackingEvent(IntegrationAccountEventLevel eventLevel, DateTimeOffset eventOn, IntegrationAccountTrackingRecordType recordType, BinaryData record, IntegrationAccountTrackingEventErrorInfo error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EventLevel = eventLevel;
+            EventOn = eventOn;
+            RecordType = recordType;
+            Record = record;
+            Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEvent"/> for deserialization. </summary>
+        internal IntegrationAccountTrackingEvent()
+        {
         }
 
         /// <summary> The event level. </summary>

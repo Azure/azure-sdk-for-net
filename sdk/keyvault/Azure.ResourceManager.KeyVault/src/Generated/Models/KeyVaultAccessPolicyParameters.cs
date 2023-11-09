@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for updating the access policy in a vault. </summary>
     public partial class KeyVaultAccessPolicyParameters : ResourceData
     {
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicyParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyParameters"/>. </summary>
         /// <param name="properties"> Properties of the access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultAccessPolicyParameters(KeyVaultAccessPolicyProperties properties)
@@ -25,17 +28,24 @@ namespace Azure.ResourceManager.KeyVault.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyParameters"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The resource type of the access policy. </param>
         /// <param name="properties"> Properties of the access policy. </param>
-        internal KeyVaultAccessPolicyParameters(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KeyVaultAccessPolicyProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultAccessPolicyParameters(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KeyVaultAccessPolicyProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyParameters"/> for deserialization. </summary>
+        internal KeyVaultAccessPolicyParameters()
+        {
         }
 
         /// <summary> The resource type of the access policy. </summary>

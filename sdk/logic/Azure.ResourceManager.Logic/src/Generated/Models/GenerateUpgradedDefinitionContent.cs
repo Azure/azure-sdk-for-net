@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The parameters to generate upgraded definition. </summary>
     public partial class GenerateUpgradedDefinitionContent
     {
-        /// <summary> Initializes a new instance of GenerateUpgradedDefinitionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GenerateUpgradedDefinitionContent"/>. </summary>
         public GenerateUpgradedDefinitionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateUpgradedDefinitionContent"/>. </summary>
+        /// <param name="targetSchemaVersion"> The target schema version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateUpgradedDefinitionContent(string targetSchemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetSchemaVersion = targetSchemaVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The target schema version. </summary>

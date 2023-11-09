@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Instance type schema. </summary>
     public partial class MachineLearningInstanceTypeSchema
     {
-        /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchema. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInstanceTypeSchema"/>. </summary>
         public MachineLearningInstanceTypeSchema()
         {
             NodeSelector = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInstanceTypeSchema"/>. </summary>
         /// <param name="nodeSelector"> Node Selector. </param>
         /// <param name="resources"> Resource requests/limits for this instance type. </param>
-        internal MachineLearningInstanceTypeSchema(IDictionary<string, string> nodeSelector, MachineLearningInstanceTypeSchemaResources resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningInstanceTypeSchema(IDictionary<string, string> nodeSelector, MachineLearningInstanceTypeSchemaResources resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NodeSelector = nodeSelector;
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Node Selector. </summary>

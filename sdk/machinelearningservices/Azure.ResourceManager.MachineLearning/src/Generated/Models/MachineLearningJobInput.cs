@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningJobInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         protected MachineLearningJobInput()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        internal MachineLearningJobInput(string description, JobInputType jobInputType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             JobInputType = jobInputType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description for the input. </summary>

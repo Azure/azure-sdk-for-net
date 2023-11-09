@@ -5,15 +5,67 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEstimatedVmPrices
+    public partial class MachineLearningEstimatedVmPrices : IUtf8JsonSerializable, IJsonModel<MachineLearningEstimatedVmPrices>
     {
-        internal static MachineLearningEstimatedVmPrices DeserializeMachineLearningEstimatedVmPrices(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEstimatedVmPrices>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MachineLearningEstimatedVmPrices>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("billingCurrency"u8);
+            writer.WriteStringValue(BillingCurrency.ToString());
+            writer.WritePropertyName("unitOfMeasure"u8);
+            writer.WriteStringValue(UnitOfMeasure.ToString());
+            writer.WritePropertyName("values"u8);
+            writer.WriteStartArray();
+            foreach (var item in Values)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningEstimatedVmPrices IJsonModel<MachineLearningEstimatedVmPrices>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningEstimatedVmPrices)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEstimatedVmPrices(document.RootElement, options);
+        }
+
+        internal static MachineLearningEstimatedVmPrices DeserializeMachineLearningEstimatedVmPrices(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +73,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningBillingCurrency billingCurrency = default;
             MachineLearningUnitOfMeasure unitOfMeasure = default;
             IReadOnlyList<MachineLearningEstimatedVmPrice> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingCurrency"u8))
@@ -43,8 +97,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningEstimatedVmPrices(billingCurrency, unitOfMeasure, values);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningEstimatedVmPrices(billingCurrency, unitOfMeasure, values, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MachineLearningEstimatedVmPrices>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningEstimatedVmPrices)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningEstimatedVmPrices IModel<MachineLearningEstimatedVmPrices>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningEstimatedVmPrices)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEstimatedVmPrices(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MachineLearningEstimatedVmPrices>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

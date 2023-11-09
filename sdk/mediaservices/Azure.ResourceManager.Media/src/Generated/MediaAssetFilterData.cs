@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaAssetFilterData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaAssetFilterData"/>. </summary>
         public MediaAssetFilterData()
         {
             Tracks = new ChangeTrackingList<FilterTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetFilterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,11 +36,13 @@ namespace Azure.ResourceManager.Media
         /// <param name="presentationTimeRange"> The presentation time range. </param>
         /// <param name="firstQuality"> The first quality. </param>
         /// <param name="tracks"> The tracks selection conditions. </param>
-        internal MediaAssetFilterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PresentationTimeRange presentationTimeRange, FirstQuality firstQuality, IList<FilterTrackSelection> tracks) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaAssetFilterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PresentationTimeRange presentationTimeRange, FirstQuality firstQuality, IList<FilterTrackSelection> tracks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PresentationTimeRange = presentationTimeRange;
             FirstQuality = firstQuality;
             Tracks = tracks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The presentation time range. </summary>

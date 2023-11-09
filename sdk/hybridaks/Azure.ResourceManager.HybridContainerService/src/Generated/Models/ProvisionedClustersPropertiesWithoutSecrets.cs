@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Properties of provisioned clusters without the corresponding secrets. </summary>
     public partial class ProvisionedClustersPropertiesWithoutSecrets
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithoutSecrets. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersPropertiesWithoutSecrets"/>. </summary>
         public ProvisionedClustersPropertiesWithoutSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithoutSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersPropertiesWithoutSecrets"/>. </summary>
         /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
         /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
         /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>
-        internal ProvisionedClustersPropertiesWithoutSecrets(AADProfileResponse aadProfile, WindowsProfileResponse windowsProfile, HttpProxyConfigResponse httpProxyConfig)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClustersPropertiesWithoutSecrets(AADProfileResponse aadProfile, WindowsProfileResponse windowsProfile, HttpProxyConfigResponse httpProxyConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AadProfile = aadProfile;
             WindowsProfile = windowsProfile;
             HttpProxyConfig = httpProxyConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AAD profile for the provisioned cluster. </summary>

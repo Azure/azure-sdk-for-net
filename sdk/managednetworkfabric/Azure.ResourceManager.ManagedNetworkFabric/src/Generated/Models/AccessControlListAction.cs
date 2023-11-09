@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Action that need to performed. </summary>
     public partial class AccessControlListAction
     {
-        /// <summary> Initializes a new instance of AccessControlListAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccessControlListAction"/>. </summary>
         public AccessControlListAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AccessControlListAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListAction"/>. </summary>
         /// <param name="aclActionType"> Type of actions that can be performed. </param>
         /// <param name="counterName"> Name of the counter block to get match count information. </param>
-        internal AccessControlListAction(AclActionType? aclActionType, string counterName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccessControlListAction(AclActionType? aclActionType, string counterName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AclActionType = aclActionType;
             CounterName = counterName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of actions that can be performed. </summary>

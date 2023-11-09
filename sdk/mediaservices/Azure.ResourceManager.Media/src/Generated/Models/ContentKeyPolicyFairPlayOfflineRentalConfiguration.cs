@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The ContentKeyPolicyFairPlayOfflineRentalConfiguration. </summary>
     public partial class ContentKeyPolicyFairPlayOfflineRentalConfiguration
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyFairPlayOfflineRentalConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyFairPlayOfflineRentalConfiguration"/>. </summary>
         /// <param name="playbackDurationInSeconds"> Playback duration. </param>
         /// <param name="storageDurationInSeconds"> Storage duration. </param>
         public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationInSeconds, long storageDurationInSeconds)
         {
             PlaybackDurationInSeconds = playbackDurationInSeconds;
             StorageDurationInSeconds = storageDurationInSeconds;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyFairPlayOfflineRentalConfiguration"/>. </summary>
+        /// <param name="playbackDurationInSeconds"> Playback duration. </param>
+        /// <param name="storageDurationInSeconds"> Storage duration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationInSeconds, long storageDurationInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PlaybackDurationInSeconds = playbackDurationInSeconds;
+            StorageDurationInSeconds = storageDurationInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyFairPlayOfflineRentalConfiguration"/> for deserialization. </summary>
+        internal ContentKeyPolicyFairPlayOfflineRentalConfiguration()
+        {
         }
 
         /// <summary> Playback duration. </summary>

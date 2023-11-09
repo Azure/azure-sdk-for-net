@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The X509Thumbprint. </summary>
     public partial class X509Thumbprint
     {
-        /// <summary> Initializes a new instance of X509Thumbprint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X509Thumbprint"/>. </summary>
         public X509Thumbprint()
         {
         }
 
-        /// <summary> Initializes a new instance of X509Thumbprint. </summary>
+        /// <summary> Initializes a new instance of <see cref="X509Thumbprint"/>. </summary>
         /// <param name="primaryThumbprint"> The X509 client certificate primary thumbprint. </param>
         /// <param name="secondaryThumbprint"> The X509 client certificate secondary thumbprint. </param>
-        internal X509Thumbprint(string primaryThumbprint, string secondaryThumbprint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X509Thumbprint(string primaryThumbprint, string secondaryThumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryThumbprint = primaryThumbprint;
             SecondaryThumbprint = secondaryThumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The X509 client certificate primary thumbprint. </summary>

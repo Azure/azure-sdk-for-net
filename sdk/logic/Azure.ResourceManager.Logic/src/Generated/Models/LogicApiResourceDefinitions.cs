@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Api resource definition. </summary>
     public partial class LogicApiResourceDefinitions
     {
-        /// <summary> Initializes a new instance of LogicApiResourceDefinitions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceDefinitions"/>. </summary>
         internal LogicApiResourceDefinitions()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceDefinitions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceDefinitions"/>. </summary>
         /// <param name="originalSwaggerUri"> The original swagger url. </param>
         /// <param name="modifiedSwaggerUri"> The modified swagger url. </param>
-        internal LogicApiResourceDefinitions(Uri originalSwaggerUri, Uri modifiedSwaggerUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiResourceDefinitions(Uri originalSwaggerUri, Uri modifiedSwaggerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OriginalSwaggerUri = originalSwaggerUri;
             ModifiedSwaggerUri = modifiedSwaggerUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The original swagger url. </summary>

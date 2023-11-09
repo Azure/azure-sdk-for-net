@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> The Azure service principal used by Kubernetes for configuring load balancers. </summary>
     public partial class ServicePrincipalProperties
     {
-        /// <summary> Initializes a new instance of ServicePrincipalProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
         /// <param name="clientId"> The service principal client ID. </param>
         /// <param name="secret"> The service principal secret. This is not returned in response of GET/PUT on the resource. To see this please call listKeys. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="secret"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
             ClientId = clientId;
             Secret = secret;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
+        /// <param name="clientId"> The service principal client ID. </param>
+        /// <param name="secret"> The service principal secret. This is not returned in response of GET/PUT on the resource. To see this please call listKeys. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePrincipalProperties(string clientId, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClientId = clientId;
+            Secret = secret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/> for deserialization. </summary>
+        internal ServicePrincipalProperties()
+        {
         }
 
         /// <summary> The service principal client ID. </summary>

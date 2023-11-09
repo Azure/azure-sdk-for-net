@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Result of the request to list ScopeAssignment. It contains a list of groups and a URL link to get the next set of results. </summary>
     internal partial class ScopeAssignmentListResult
     {
-        /// <summary> Initializes a new instance of ScopeAssignmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentListResult"/>. </summary>
         internal ScopeAssignmentListResult()
         {
             Value = new ChangeTrackingList<ScopeAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of ScopeAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentListResult"/>. </summary>
         /// <param name="value"> Gets a page of ScopeAssignment. </param>
         /// <param name="nextLink"> Gets the URL to get the next set of results. </param>
-        internal ScopeAssignmentListResult(IReadOnlyList<ScopeAssignmentData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeAssignmentListResult(IReadOnlyList<ScopeAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets a page of ScopeAssignment. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The EncryptionUpdateProperties. </summary>
     public partial class EncryptionUpdateProperties
     {
-        /// <summary> Initializes a new instance of EncryptionUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionUpdateProperties"/>. </summary>
         /// <param name="keyVaultProperties"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
         public EncryptionUpdateProperties(EncryptionKeyVaultUpdateProperties keyVaultProperties)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(keyVaultProperties, nameof(keyVaultProperties));
 
             KeyVaultProperties = keyVaultProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionUpdateProperties"/>. </summary>
+        /// <param name="keyVaultProperties"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionUpdateProperties(EncryptionKeyVaultUpdateProperties keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyVaultProperties = keyVaultProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionUpdateProperties"/> for deserialization. </summary>
+        internal EncryptionUpdateProperties()
+        {
         }
 
         /// <summary> Gets the key vault properties. </summary>

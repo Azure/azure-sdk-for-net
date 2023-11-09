@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabVirtualMachineData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineData"/>. </summary>
         public LabVirtualMachineData()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +37,15 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="connectionProfile"> Profile for information about connecting to the virtual machine. </param>
         /// <param name="claimedByUserId"> The lab user ID (not the PUID!) of who claimed the virtual machine. </param>
         /// <param name="vmType"> The type of this VM resource. </param>
-        internal LabVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LabServicesProvisioningState? provisioningState, LabVirtualMachineState? state, LabVirtualMachineConnectionProfile connectionProfile, string claimedByUserId, LabVirtualMachineType? vmType) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LabServicesProvisioningState? provisioningState, LabVirtualMachineState? state, LabVirtualMachineConnectionProfile connectionProfile, string claimedByUserId, LabVirtualMachineType? vmType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             State = state;
             ConnectionProfile = connectionProfile;
             ClaimedByUserId = claimedByUserId;
             VmType = vmType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current provisioning state of the virtual machine. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database principal assignments operation response. </summary>
     internal partial class DatabasePrincipalAssignmentListResult
     {
-        /// <summary> Initializes a new instance of DatabasePrincipalAssignmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalAssignmentListResult"/>. </summary>
         internal DatabasePrincipalAssignmentListResult()
         {
             Value = new ChangeTrackingList<KustoDatabasePrincipalAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of DatabasePrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of Kusto database principal assignments. </param>
-        internal DatabasePrincipalAssignmentListResult(IReadOnlyList<KustoDatabasePrincipalAssignmentData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabasePrincipalAssignmentListResult(IReadOnlyList<KustoDatabasePrincipalAssignmentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Kusto database principal assignments. </summary>

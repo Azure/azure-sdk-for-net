@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ValueCondition. </summary>
     public partial class MetricBoundaryCondition
     {
-        /// <summary> Initializes a new instance of MetricBoundaryCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricBoundaryCondition"/>. </summary>
         /// <param name="lowerBound">
         /// lower bound
         ///
@@ -29,7 +35,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         ///
         /// should be specified only when using other metric to filter
         /// </param>
-        internal MetricBoundaryCondition(double? lowerBound, double? upperBound, BoundaryDirection direction, BoundaryMeasureType? measureType, string companionMetricId, bool? shouldAlertIfDataPointMissing)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricBoundaryCondition(double? lowerBound, double? upperBound, BoundaryDirection direction, BoundaryMeasureType? measureType, string companionMetricId, bool? shouldAlertIfDataPointMissing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LowerBound = lowerBound;
             UpperBound = upperBound;
@@ -37,6 +44,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             MeasureType = measureType;
             CompanionMetricId = companionMetricId;
             ShouldAlertIfDataPointMissing = shouldAlertIfDataPointMissing;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricBoundaryCondition"/> for deserialization. </summary>
+        internal MetricBoundaryCondition()
+        {
         }
     }
 }

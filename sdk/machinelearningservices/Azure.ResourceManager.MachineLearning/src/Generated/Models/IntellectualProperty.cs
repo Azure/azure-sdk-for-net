@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Intellectual Property details for a resource. </summary>
     public partial class IntellectualProperty
     {
-        /// <summary> Initializes a new instance of IntellectualProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntellectualProperty"/>. </summary>
         /// <param name="publisher"> [Required] Publisher of the Intellectual Property. Must be the same as Registry publisher name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/> is null. </exception>
         public IntellectualProperty(string publisher)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Publisher = publisher;
         }
 
-        /// <summary> Initializes a new instance of IntellectualProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntellectualProperty"/>. </summary>
         /// <param name="protectionLevel"> Protection level of the Intellectual Property. </param>
         /// <param name="publisher"> [Required] Publisher of the Intellectual Property. Must be the same as Registry publisher name. </param>
-        internal IntellectualProperty(IntellectualProtectionLevel? protectionLevel, string publisher)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntellectualProperty(IntellectualProtectionLevel? protectionLevel, string publisher, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectionLevel = protectionLevel;
             Publisher = publisher;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntellectualProperty"/> for deserialization. </summary>
+        internal IntellectualProperty()
+        {
         }
 
         /// <summary> Protection level of the Intellectual Property. </summary>

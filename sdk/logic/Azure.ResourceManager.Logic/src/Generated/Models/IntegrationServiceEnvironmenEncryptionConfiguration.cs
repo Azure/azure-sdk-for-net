@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The encryption configuration for the integration service environment. </summary>
     internal partial class IntegrationServiceEnvironmenEncryptionConfiguration
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmenEncryptionConfiguration"/>. </summary>
         public IntegrationServiceEnvironmenEncryptionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmenEncryptionConfiguration"/>. </summary>
         /// <param name="encryptionKeyReference"> The encryption key reference. </param>
-        internal IntegrationServiceEnvironmenEncryptionConfiguration(IntegrationServiceEnvironmenEncryptionKeyReference encryptionKeyReference)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmenEncryptionConfiguration(IntegrationServiceEnvironmenEncryptionKeyReference encryptionKeyReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EncryptionKeyReference = encryptionKeyReference;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The encryption key reference. </summary>

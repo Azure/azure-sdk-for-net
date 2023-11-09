@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The VirtualNetworksPropertiesVipPoolItem. </summary>
     public partial class VirtualNetworksPropertiesVipPoolItem
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesVipPoolItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesVipPoolItem"/>. </summary>
         public VirtualNetworksPropertiesVipPoolItem()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesVipPoolItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesVipPoolItem"/>. </summary>
         /// <param name="endIP"> Ending IP address for the IP Pool. </param>
         /// <param name="startIP"> Starting IP address for the IP Pool. </param>
-        internal VirtualNetworksPropertiesVipPoolItem(string endIP, string startIP)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksPropertiesVipPoolItem(string endIP, string startIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndIP = endIP;
             StartIP = startIP;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Ending IP address for the IP Pool. </summary>

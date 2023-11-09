@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Wrapper for error response to follow ARM guidelines. </summary>
     public partial class ErrorResponseWrapper
     {
-        /// <summary> Initializes a new instance of ErrorResponseWrapper. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseWrapper"/>. </summary>
         internal ErrorResponseWrapper()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorResponseWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseWrapper"/>. </summary>
         /// <param name="error"> The error response. </param>
-        internal ErrorResponseWrapper(ErrorResponse error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorResponseWrapper(ErrorResponse error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error response. </summary>

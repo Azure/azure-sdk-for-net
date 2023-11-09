@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A script name availability request. </summary>
     public partial class KustoScriptNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoScriptNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoScriptNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Script name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoScriptNameAvailabilityContent(string name)
@@ -22,6 +26,22 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ResourceType = KustoScriptType.MicrosoftKustoClustersDatabasesScripts;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoScriptNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Script name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/scripts. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoScriptNameAvailabilityContent(string name, KustoScriptType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoScriptNameAvailabilityContent"/> for deserialization. </summary>
+        internal KustoScriptNameAvailabilityContent()
+        {
         }
 
         /// <summary> Script name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful POI Category Tree call. </summary>
     public partial class PointOfInterestCategoryTreeResult
     {
-        /// <summary> Initializes a new instance of PointOfInterestCategoryTreeResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategoryTreeResult"/>. </summary>
         internal PointOfInterestCategoryTreeResult()
         {
             Categories = new ChangeTrackingList<PointOfInterestCategory>();
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestCategoryTreeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategoryTreeResult"/>. </summary>
         /// <param name="categories"> Categories array. </param>
-        internal PointOfInterestCategoryTreeResult(IReadOnlyList<PointOfInterestCategory> categories)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PointOfInterestCategoryTreeResult(IReadOnlyList<PointOfInterestCategory> categories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Categories = categories;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Categories array. </summary>

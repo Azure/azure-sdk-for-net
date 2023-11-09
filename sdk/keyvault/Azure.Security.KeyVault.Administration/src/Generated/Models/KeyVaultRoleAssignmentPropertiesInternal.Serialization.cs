@@ -5,21 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class KeyVaultRoleAssignmentPropertiesInternal : IUtf8JsonSerializable
+    internal partial class KeyVaultRoleAssignmentPropertiesInternal : IUtf8JsonSerializable, IJsonModel<KeyVaultRoleAssignmentPropertiesInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultRoleAssignmentPropertiesInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<KeyVaultRoleAssignmentPropertiesInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        KeyVaultRoleAssignmentPropertiesInternal IJsonModel<KeyVaultRoleAssignmentPropertiesInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultRoleAssignmentPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultRoleAssignmentPropertiesInternal(document.RootElement, options);
+        }
+
+        internal static KeyVaultRoleAssignmentPropertiesInternal DeserializeKeyVaultRoleAssignmentPropertiesInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string roleDefinitionId = default;
+            string principalId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("roleDefinitionId"u8))
+                {
+                    roleDefinitionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("principalId"u8))
+                {
+                    principalId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeyVaultRoleAssignmentPropertiesInternal(roleDefinitionId, principalId, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<KeyVaultRoleAssignmentPropertiesInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultRoleAssignmentPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KeyVaultRoleAssignmentPropertiesInternal IModel<KeyVaultRoleAssignmentPropertiesInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultRoleAssignmentPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKeyVaultRoleAssignmentPropertiesInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<KeyVaultRoleAssignmentPropertiesInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

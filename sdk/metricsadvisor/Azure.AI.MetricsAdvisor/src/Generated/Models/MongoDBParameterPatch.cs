@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MongoDBParameterPatch. </summary>
     internal partial class MongoDBParameterPatch
     {
-        /// <summary> Initializes a new instance of MongoDBParameterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBParameterPatch"/>. </summary>
         public MongoDBParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this MongoDB. </param>
+        /// <param name="database"> A database name in this MongoDB. </param>
+        /// <param name="command"> The script to query this database. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBParameterPatch(string connectionString, string database, string command, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConnectionString = connectionString;
+            Database = database;
+            Command = command;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connection string of this MongoDB. </summary>

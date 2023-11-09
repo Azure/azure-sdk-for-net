@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class for NoEncryption scheme. </summary>
     internal partial class NoEncryption
     {
-        /// <summary> Initializes a new instance of NoEncryption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NoEncryption"/>. </summary>
         public NoEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of NoEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="NoEncryption"/>. </summary>
         /// <param name="enabledProtocols"> Representing supported protocols. </param>
-        internal NoEncryption(MediaEnabledProtocols enabledProtocols)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NoEncryption(MediaEnabledProtocols enabledProtocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnabledProtocols = enabledProtocols;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Representing supported protocols. </summary>

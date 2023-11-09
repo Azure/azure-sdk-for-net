@@ -14,23 +14,28 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The expression. </summary>
     public partial class LogicExpression
     {
-        /// <summary> Initializes a new instance of LogicExpression. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicExpression"/>. </summary>
         internal LogicExpression()
         {
             Subexpressions = new ChangeTrackingList<LogicExpression>();
         }
 
-        /// <summary> Initializes a new instance of LogicExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpression"/>. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>
         /// <param name="error"> The azure resource error info. </param>
-        internal LogicExpression(string text, BinaryData value, IReadOnlyList<LogicExpression> subexpressions, LogicExpressionErrorInfo error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicExpression(string text, BinaryData value, IReadOnlyList<LogicExpression> subexpressions, LogicExpressionErrorInfo error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Value = value;
             Subexpressions = subexpressions;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The text. </summary>

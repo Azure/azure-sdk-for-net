@@ -7,15 +7,130 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricEnrichedSeriesData
+    public partial class MetricEnrichedSeriesData : IUtf8JsonSerializable, IJsonModel<MetricEnrichedSeriesData>
     {
-        internal static MetricEnrichedSeriesData DeserializeMetricEnrichedSeriesData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricEnrichedSeriesData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MetricEnrichedSeriesData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("series"u8);
+            writer.WriteObjectValue(Series);
+            writer.WritePropertyName("timestampList"u8);
+            writer.WriteStartArray();
+            foreach (var item in Timestamps)
+            {
+                writer.WriteStringValue(item, "O");
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("valueList"u8);
+            writer.WriteStartArray();
+            foreach (var item in MetricValues)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("isAnomalyList"u8);
+            writer.WriteStartArray();
+            foreach (var item in IsAnomaly)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteBooleanValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("periodList"u8);
+            writer.WriteStartArray();
+            foreach (var item in Periods)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("expectedValueList"u8);
+            writer.WriteStartArray();
+            foreach (var item in ExpectedMetricValues)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("lowerBoundaryList"u8);
+            writer.WriteStartArray();
+            foreach (var item in LowerBoundaryValues)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("upperBoundaryList"u8);
+            writer.WriteStartArray();
+            foreach (var item in UpperBoundaryValues)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MetricEnrichedSeriesData IJsonModel<MetricEnrichedSeriesData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricEnrichedSeriesData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricEnrichedSeriesData(document.RootElement, options);
+        }
+
+        internal static MetricEnrichedSeriesData DeserializeMetricEnrichedSeriesData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +143,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             IReadOnlyList<double?> expectedValueList = default;
             IReadOnlyList<double?> lowerBoundaryList = default;
             IReadOnlyList<double?> upperBoundaryList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("series"u8))
@@ -140,8 +257,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     upperBoundaryList = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricEnrichedSeriesData(series, timestampList, valueList, isAnomalyList, periodList, expectedValueList, lowerBoundaryList, upperBoundaryList);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricEnrichedSeriesData(series, timestampList, valueList, isAnomalyList, periodList, expectedValueList, lowerBoundaryList, upperBoundaryList, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MetricEnrichedSeriesData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricEnrichedSeriesData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MetricEnrichedSeriesData IModel<MetricEnrichedSeriesData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricEnrichedSeriesData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMetricEnrichedSeriesData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MetricEnrichedSeriesData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

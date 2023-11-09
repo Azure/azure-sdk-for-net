@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The security domain properties of the managed hsm. </summary>
     public partial class ManagedHSMSecurityDomainProperties
     {
-        /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         internal ManagedHSMSecurityDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         /// <param name="activationStatus"> Activation Status. </param>
         /// <param name="activationStatusMessage"> Activation Status Message. </param>
-        internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivationStatus = activationStatus;
             ActivationStatusMessage = activationStatusMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Activation Status. </summary>

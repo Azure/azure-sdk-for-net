@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Live event preview settings. </summary>
     public partial class LiveEventPreview
     {
-        /// <summary> Initializes a new instance of LiveEventPreview. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventPreview"/>. </summary>
         public LiveEventPreview()
         {
             Endpoints = new ChangeTrackingList<LiveEventEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of LiveEventPreview. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventPreview"/>. </summary>
         /// <param name="endpoints"> The endpoints for preview. Do not share the preview URL with the live event audience. </param>
         /// <param name="accessControl"> The access control for live event preview. </param>
         /// <param name="previewLocator"> The identifier of the preview locator in Guid format. Specifying this at creation time allows the caller to know the preview locator url before the event is created. If omitted, the service will generate a random identifier. This value cannot be updated once the live event is created. </param>
         /// <param name="streamingPolicyName"> The name of streaming policy used for the live event preview. This value is specified at creation time and cannot be updated. </param>
         /// <param name="alternativeMediaId"> An alternative media identifier associated with the streaming locator created for the preview. This value is specified at creation time and cannot be updated. The identifier can be used in the CustomLicenseAcquisitionUrlTemplate or the CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in the StreamingPolicyName field. </param>
-        internal LiveEventPreview(IList<LiveEventEndpoint> endpoints, LiveEventPreviewAccessControl accessControl, string previewLocator, string streamingPolicyName, string alternativeMediaId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveEventPreview(IList<LiveEventEndpoint> endpoints, LiveEventPreviewAccessControl accessControl, string previewLocator, string streamingPolicyName, string alternativeMediaId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoints = endpoints;
             AccessControl = accessControl;
             PreviewLocator = previewLocator;
             StreamingPolicyName = streamingPolicyName;
             AlternativeMediaId = alternativeMediaId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The endpoints for preview. Do not share the preview URL with the live event audience. </summary>

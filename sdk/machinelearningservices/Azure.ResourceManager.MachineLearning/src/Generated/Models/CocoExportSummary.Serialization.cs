@@ -6,23 +6,147 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CocoExportSummary : IUtf8JsonSerializable
+    public partial class CocoExportSummary : IUtf8JsonSerializable, IJsonModel<CocoExportSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CocoExportSummary>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CocoExportSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ContainerName))
+                {
+                    if (ContainerName != null)
+                    {
+                        writer.WritePropertyName("containerName"u8);
+                        writer.WriteStringValue(ContainerName);
+                    }
+                    else
+                    {
+                        writer.WriteNull("containerName");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SnapshotPath))
+                {
+                    if (SnapshotPath != null)
+                    {
+                        writer.WritePropertyName("snapshotPath"u8);
+                        writer.WriteStringValue(SnapshotPath);
+                    }
+                    else
+                    {
+                        writer.WriteNull("snapshotPath");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    if (EndOn != null)
+                    {
+                        writer.WritePropertyName("endDateTime"u8);
+                        writer.WriteStringValue(EndOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("endDateTime");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExportedRowCount))
+                {
+                    if (ExportedRowCount != null)
+                    {
+                        writer.WritePropertyName("exportedRowCount"u8);
+                        writer.WriteNumberValue(ExportedRowCount.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNull("exportedRowCount");
+                    }
+                }
+            }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LabelingJobId))
+                {
+                    if (LabelingJobId != null)
+                    {
+                        writer.WritePropertyName("labelingJobId"u8);
+                        writer.WriteStringValue(LabelingJobId);
+                    }
+                    else
+                    {
+                        writer.WriteNull("labelingJobId");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    if (StartOn != null)
+                    {
+                        writer.WritePropertyName("startDateTime"u8);
+                        writer.WriteStringValue(StartOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("startDateTime");
+                    }
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CocoExportSummary DeserializeCocoExportSummary(JsonElement element)
+        CocoExportSummary IJsonModel<CocoExportSummary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CocoExportSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCocoExportSummary(document.RootElement, options);
+        }
+
+        internal static CocoExportSummary DeserializeCocoExportSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +158,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ExportFormatType format = default;
             Optional<string> labelingJobId = default;
             Optional<DateTimeOffset?> startDateTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerName"u8))
@@ -101,8 +227,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CocoExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), containerName.Value, snapshotPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CocoExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), serializedAdditionalRawData, containerName.Value, snapshotPath.Value);
         }
+
+        BinaryData IModel<CocoExportSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CocoExportSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CocoExportSummary IModel<CocoExportSummary>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CocoExportSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCocoExportSummary(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CocoExportSummary>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

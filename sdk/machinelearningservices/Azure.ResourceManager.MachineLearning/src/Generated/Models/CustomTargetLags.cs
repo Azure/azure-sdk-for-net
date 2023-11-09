@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CustomTargetLags. </summary>
     public partial class CustomTargetLags : TargetLags
     {
-        /// <summary> Initializes a new instance of CustomTargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomTargetLags"/>. </summary>
         /// <param name="values"> [Required] Set target lags values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         public CustomTargetLags(IEnumerable<int> values)
@@ -26,13 +26,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Mode = TargetLagsMode.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomTargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomTargetLags"/>. </summary>
         /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> [Required] Set target lags values. </param>
-        internal CustomTargetLags(TargetLagsMode mode, IList<int> values) : base(mode)
+        internal CustomTargetLags(TargetLagsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<int> values) : base(mode, serializedAdditionalRawData)
         {
             Values = values;
             Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomTargetLags"/> for deserialization. </summary>
+        internal CustomTargetLags()
+        {
         }
 
         /// <summary> [Required] Set target lags values. </summary>

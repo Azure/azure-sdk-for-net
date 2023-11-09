@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Inference Endpoint base definition. </summary>
     public partial class MachineLearningEndpointProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         public MachineLearningEndpointProperties(MachineLearningEndpointAuthMode authMode)
         {
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
@@ -32,7 +35,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="scoringUri"> Endpoint URI. </param>
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
-        internal MachineLearningEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthMode = authMode;
             Description = description;
@@ -40,6 +44,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Properties = properties;
             ScoringUri = scoringUri;
             SwaggerUri = swaggerUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointProperties"/> for deserialization. </summary>
+        internal MachineLearningEndpointProperties()
+        {
         }
 
         /// <summary> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The FeatureStoreSettings. </summary>
     public partial class FeatureStoreSettings
     {
-        /// <summary> Initializes a new instance of FeatureStoreSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureStoreSettings"/>. </summary>
         public FeatureStoreSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureStoreSettings"/>. </summary>
         /// <param name="computeRuntime"></param>
         /// <param name="offlineStoreConnectionName"></param>
         /// <param name="onlineStoreConnectionName"></param>
-        internal FeatureStoreSettings(ComputeRuntimeDto computeRuntime, string offlineStoreConnectionName, string onlineStoreConnectionName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureStoreSettings(ComputeRuntimeDto computeRuntime, string offlineStoreConnectionName, string onlineStoreConnectionName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeRuntime = computeRuntime;
             OfflineStoreConnectionName = offlineStoreConnectionName;
             OnlineStoreConnectionName = onlineStoreConnectionName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the compute runtime. </summary>

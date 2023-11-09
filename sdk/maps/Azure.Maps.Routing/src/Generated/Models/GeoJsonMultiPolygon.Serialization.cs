@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    internal partial class GeoJsonMultiPolygon : IUtf8JsonSerializable
+    internal partial class GeoJsonMultiPolygon : IUtf8JsonSerializable, IJsonModel<GeoJsonMultiPolygon>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoJsonMultiPolygon>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GeoJsonMultiPolygon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("coordinates"u8);
@@ -54,7 +60,133 @@ namespace Azure.Maps.Routing.Models
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        GeoJsonMultiPolygon IJsonModel<GeoJsonMultiPolygon>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GeoJsonMultiPolygon)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoJsonMultiPolygon(document.RootElement, options);
+        }
+
+        internal static GeoJsonMultiPolygon DeserializeGeoJsonMultiPolygon(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<IList<IList<IList<double>>>> coordinates = default;
+            GeoJsonObjectType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("coordinates"u8))
+                {
+                    List<IList<IList<IList<double>>>> array = new List<IList<IList<IList<double>>>>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            List<IList<IList<double>>> array0 = new List<IList<IList<double>>>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    List<IList<double>> array1 = new List<IList<double>>();
+                                    foreach (var item1 in item0.EnumerateArray())
+                                    {
+                                        if (item1.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array1.Add(null);
+                                        }
+                                        else
+                                        {
+                                            List<double> array2 = new List<double>();
+                                            foreach (var item2 in item1.EnumerateArray())
+                                            {
+                                                array2.Add(item2.GetDouble());
+                                            }
+                                            array1.Add(array2);
+                                        }
+                                    }
+                                    array0.Add(array1);
+                                }
+                            }
+                            array.Add(array0);
+                        }
+                    }
+                    coordinates = array;
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GeoJsonMultiPolygon(type, serializedAdditionalRawData, coordinates);
+        }
+
+        BinaryData IModel<GeoJsonMultiPolygon>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GeoJsonMultiPolygon)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GeoJsonMultiPolygon IModel<GeoJsonMultiPolygon>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GeoJsonMultiPolygon)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGeoJsonMultiPolygon(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GeoJsonMultiPolygon>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

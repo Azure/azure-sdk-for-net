@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedServices;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The list of marketplace registration definitions. </summary>
     internal partial class MarketplaceRegistrationDefinitionList
     {
-        /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRegistrationDefinitionList"/>. </summary>
         internal MarketplaceRegistrationDefinitionList()
         {
             Value = new ChangeTrackingList<ManagedServicesMarketplaceRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRegistrationDefinitionList"/>. </summary>
         /// <param name="value"> The list of marketplace registration definitions. </param>
         /// <param name="nextLink"> The link to the next page of marketplace registration definitions. </param>
-        internal MarketplaceRegistrationDefinitionList(IReadOnlyList<ManagedServicesMarketplaceRegistrationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceRegistrationDefinitionList(IReadOnlyList<ManagedServicesMarketplaceRegistrationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of marketplace registration definitions. </summary>

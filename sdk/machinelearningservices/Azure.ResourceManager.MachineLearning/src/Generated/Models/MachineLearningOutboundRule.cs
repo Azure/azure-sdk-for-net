@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningOutboundRule
     {
-        /// <summary> Initializes a new instance of MachineLearningOutboundRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
         protected MachineLearningOutboundRule()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOutboundRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        internal MachineLearningOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Status = status;
             OutboundRuleType = outboundRuleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Category of a managed network Outbound Rule of a machine learning workspace. </summary>

@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the deleted managed HSM. </summary>
     public partial class DeletedManagedHsmProperties
     {
-        /// <summary> Initializes a new instance of DeletedManagedHsmProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmProperties"/>. </summary>
         internal DeletedManagedHsmProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DeletedManagedHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmProperties"/>. </summary>
         /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
         /// <param name="deletedOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
-        internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagedHsmId = managedHsmId;
             Location = location;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             ScheduledPurgeOn = scheduledPurgeOn;
             PurgeProtectionEnabled = purgeProtectionEnabled;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id of the original managed HSM. </summary>

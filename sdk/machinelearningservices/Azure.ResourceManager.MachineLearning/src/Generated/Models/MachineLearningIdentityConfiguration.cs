@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningIdentityConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningIdentityConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningIdentityConfiguration"/>. </summary>
         protected MachineLearningIdentityConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningIdentityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningIdentityConfiguration"/>. </summary>
         /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
-        internal MachineLearningIdentityConfiguration(IdentityConfigurationType identityType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningIdentityConfiguration(IdentityConfigurationType identityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the type of identity framework. </summary>

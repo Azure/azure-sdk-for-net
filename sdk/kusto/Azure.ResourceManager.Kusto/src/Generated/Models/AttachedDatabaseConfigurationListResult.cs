@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list attached database configurations operation response. </summary>
     internal partial class AttachedDatabaseConfigurationListResult
     {
-        /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttachedDatabaseConfigurationListResult"/>. </summary>
         internal AttachedDatabaseConfigurationListResult()
         {
             Value = new ChangeTrackingList<KustoAttachedDatabaseConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedDatabaseConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of attached database configurations. </param>
-        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<KustoAttachedDatabaseConfigurationData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<KustoAttachedDatabaseConfigurationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of attached database configurations. </summary>

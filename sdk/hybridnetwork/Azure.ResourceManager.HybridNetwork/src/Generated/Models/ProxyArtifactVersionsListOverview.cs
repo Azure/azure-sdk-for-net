@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The proxy artifact overview. </summary>
     public partial class ProxyArtifactVersionsListOverview : ResourceData
     {
-        /// <summary> Initializes a new instance of ProxyArtifactVersionsListOverview. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsListOverview"/>. </summary>
         public ProxyArtifactVersionsListOverview()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactVersionsListOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsListOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Proxy Artifact overview properties. </param>
-        internal ProxyArtifactVersionsListOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProxyArtifactOverviewPropertiesValue properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProxyArtifactVersionsListOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProxyArtifactOverviewPropertiesValue properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Proxy Artifact overview properties. </summary>

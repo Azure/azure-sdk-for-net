@@ -5,16 +5,207 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteInstruction
+    public partial class RouteInstruction : IUtf8JsonSerializable, IJsonModel<RouteInstruction>
     {
-        internal static RouteInstruction DeserializeRouteInstruction(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteInstruction>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RouteInstruction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RouteOffsetInMeters))
+                {
+                    writer.WritePropertyName("routeOffsetInMeters"u8);
+                    writer.WriteNumberValue(RouteOffsetInMeters.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TravelTimeInSeconds))
+                {
+                    writer.WritePropertyName("travelTimeInSeconds"u8);
+                    writer.WriteNumberValue(TravelTimeInSeconds.Value);
+                }
+            }
+            if (Optional.IsDefined(_Point))
+            {
+                writer.WritePropertyName("point"u8);
+                writer.WriteObjectValue(_Point);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PointIndex))
+                {
+                    writer.WritePropertyName("pointIndex"u8);
+                    writer.WriteNumberValue(PointIndex.Value);
+                }
+            }
+            if (Optional.IsDefined(InstructionType))
+            {
+                writer.WritePropertyName("instructionType"u8);
+                writer.WriteStringValue(InstructionType.Value.ToString());
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(RoadNumbers))
+                {
+                    writer.WritePropertyName("roadNumbers"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in RoadNumbers)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExitNumber))
+                {
+                    writer.WritePropertyName("exitNumber"u8);
+                    writer.WriteStringValue(ExitNumber);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Street))
+                {
+                    writer.WritePropertyName("street"u8);
+                    writer.WriteStringValue(Street);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SignpostText))
+                {
+                    writer.WritePropertyName("signpostText"u8);
+                    writer.WriteStringValue(SignpostText);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CountryCode))
+                {
+                    writer.WritePropertyName("countryCode"u8);
+                    writer.WriteStringValue(CountryCode);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StateCode))
+                {
+                    writer.WritePropertyName("stateCode"u8);
+                    writer.WriteStringValue(StateCode);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(JunctionType))
+                {
+                    writer.WritePropertyName("junctionType"u8);
+                    writer.WriteStringValue(JunctionType.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TurnAngleInDegrees))
+                {
+                    writer.WritePropertyName("turnAngleInDecimalDegrees"u8);
+                    writer.WriteNumberValue(TurnAngleInDegrees.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RoundaboutExitNumber))
+                {
+                    writer.WritePropertyName("roundaboutExitNumber"u8);
+                    writer.WriteStringValue(RoundaboutExitNumber);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PossibleCombineWithNext))
+                {
+                    writer.WritePropertyName("possibleCombineWithNext"u8);
+                    writer.WriteBooleanValue(PossibleCombineWithNext.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DrivingSide))
+                {
+                    writer.WritePropertyName("drivingSide"u8);
+                    writer.WriteStringValue(DrivingSide.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Maneuver))
+                {
+                    writer.WritePropertyName("maneuver"u8);
+                    writer.WriteStringValue(Maneuver.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CombinedMessage))
+                {
+                    writer.WritePropertyName("combinedMessage"u8);
+                    writer.WriteStringValue(CombinedMessage);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteInstruction IJsonModel<RouteInstruction>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteInstruction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteInstruction(document.RootElement, options);
+        }
+
+        internal static RouteInstruction DeserializeRouteInstruction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +229,8 @@ namespace Azure.Maps.Routing.Models
             Optional<GuidanceManeuver> maneuver = default;
             Optional<string> message = default;
             Optional<string> combinedMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routeOffsetInMeters"u8))
@@ -184,8 +377,38 @@ namespace Azure.Maps.Routing.Models
                     combinedMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteInstruction(Optional.ToNullable(routeOffsetInMeters), Optional.ToNullable(travelTimeInSeconds), point.Value, Optional.ToNullable(pointIndex), Optional.ToNullable(instructionType), Optional.ToList(roadNumbers), exitNumber.Value, street.Value, signpostText.Value, countryCode.Value, stateCode.Value, Optional.ToNullable(junctionType), Optional.ToNullable(turnAngleInDecimalDegrees), roundaboutExitNumber.Value, Optional.ToNullable(possibleCombineWithNext), Optional.ToNullable(drivingSide), Optional.ToNullable(maneuver), message.Value, combinedMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteInstruction(Optional.ToNullable(routeOffsetInMeters), Optional.ToNullable(travelTimeInSeconds), point.Value, Optional.ToNullable(pointIndex), Optional.ToNullable(instructionType), Optional.ToList(roadNumbers), exitNumber.Value, street.Value, signpostText.Value, countryCode.Value, stateCode.Value, Optional.ToNullable(junctionType), Optional.ToNullable(turnAngleInDecimalDegrees), roundaboutExitNumber.Value, Optional.ToNullable(possibleCombineWithNext), Optional.ToNullable(drivingSide), Optional.ToNullable(maneuver), message.Value, combinedMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RouteInstruction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteInstruction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RouteInstruction IModel<RouteInstruction>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouteInstruction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRouteInstruction(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RouteInstruction>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

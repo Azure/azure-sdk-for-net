@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Supported version details of the network device. </summary>
     public partial class SupportedVersionProperties
     {
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         public SupportedVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         /// <param name="version"> Operating system and firmware combined versions. </param>
         /// <param name="vendorOSVersion"> Operating system version. </param>
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>
         /// <param name="isDefault"> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </param>
-        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             VendorOSVersion = vendorOSVersion;
             VendorFirmwareVersion = vendorFirmwareVersion;
             IsDefault = isDefault;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Operating system and firmware combined versions. </summary>

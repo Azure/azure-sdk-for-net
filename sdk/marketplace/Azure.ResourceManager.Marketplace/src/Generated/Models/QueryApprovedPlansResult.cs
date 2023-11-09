@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Query approved plans response. </summary>
     public partial class QueryApprovedPlansResult
     {
-        /// <summary> Initializes a new instance of QueryApprovedPlansResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansResult"/>. </summary>
         internal QueryApprovedPlansResult()
         {
             Details = new ChangeTrackingList<QueryApprovedPlansDetails>();
         }
 
-        /// <summary> Initializes a new instance of QueryApprovedPlansResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansResult"/>. </summary>
         /// <param name="details"> A list indicating for each plan which subscriptions are approved. Plan Id is unique. </param>
-        internal QueryApprovedPlansResult(IReadOnlyList<QueryApprovedPlansDetails> details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryApprovedPlansResult(IReadOnlyList<QueryApprovedPlansDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list indicating for each plan which subscriptions are approved. Plan Id is unique. </summary>

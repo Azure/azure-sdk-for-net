@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DetectionAnomalyFilterCondition. </summary>
     internal partial class DetectionAnomalyFilterCondition
     {
-        /// <summary> Initializes a new instance of DetectionAnomalyFilterCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyFilterCondition"/>. </summary>
         public DetectionAnomalyFilterCondition()
         {
             DimensionFilter = new ChangeTrackingList<DimensionKey>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyFilterCondition"/>. </summary>
+        /// <param name="dimensionFilter"> dimension filter. </param>
+        /// <param name="severityFilter"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectionAnomalyFilterCondition(IList<DimensionKey> dimensionFilter, SeverityFilterCondition severityFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DimensionFilter = dimensionFilter;
+            SeverityFilter = severityFilter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> dimension filter. </summary>

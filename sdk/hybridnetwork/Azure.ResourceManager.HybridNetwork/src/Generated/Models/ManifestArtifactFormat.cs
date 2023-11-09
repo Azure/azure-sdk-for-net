@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Manifest artifact properties. </summary>
     public partial class ManifestArtifactFormat
     {
-        /// <summary> Initializes a new instance of ManifestArtifactFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManifestArtifactFormat"/>. </summary>
         public ManifestArtifactFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of ManifestArtifactFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestArtifactFormat"/>. </summary>
         /// <param name="artifactName"> The artifact name. </param>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
-        internal ManifestArtifactFormat(string artifactName, ArtifactType? artifactType, string artifactVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManifestArtifactFormat(string artifactName, ArtifactType? artifactType, string artifactVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactName = artifactName;
             ArtifactType = artifactType;
             ArtifactVersion = artifactVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The artifact name. </summary>

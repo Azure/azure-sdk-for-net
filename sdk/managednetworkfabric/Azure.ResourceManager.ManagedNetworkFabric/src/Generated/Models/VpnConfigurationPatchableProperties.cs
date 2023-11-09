@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network and credential configuration currently applied on terminal server. </summary>
     public partial class VpnConfigurationPatchableProperties
     {
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableProperties"/>. </summary>
         public VpnConfigurationPatchableProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableProperties"/>. </summary>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
         /// <param name="optionAProperties"> option A properties. </param>
-        internal VpnConfigurationPatchableProperties(ResourceIdentifier networkToNetworkInterconnectId, PeeringOption? peeringOption, OptionBProperties optionBProperties, VpnConfigurationPatchableOptionAProperties optionAProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnConfigurationPatchableProperties(ResourceIdentifier networkToNetworkInterconnectId, PeeringOption? peeringOption, OptionBProperties optionBProperties, VpnConfigurationPatchableOptionAProperties optionAProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             PeeringOption = peeringOption;
             OptionBProperties = optionBProperties;
             OptionAProperties = optionAProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM Resource ID of the Network To Network Interconnect. </summary>

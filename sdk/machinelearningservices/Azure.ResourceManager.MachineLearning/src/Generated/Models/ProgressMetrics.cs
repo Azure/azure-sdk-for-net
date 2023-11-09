@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Progress metrics definition. </summary>
     public partial class ProgressMetrics
     {
-        /// <summary> Initializes a new instance of ProgressMetrics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProgressMetrics"/>. </summary>
         internal ProgressMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of ProgressMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgressMetrics"/>. </summary>
         /// <param name="completedDatapointCount"> The completed datapoint count. </param>
         /// <param name="incrementalDataLastRefreshOn"> The time of last successful incremental data refresh in UTC. </param>
         /// <param name="skippedDatapointCount"> The skipped datapoint count. </param>
         /// <param name="totalDatapointCount"> The total datapoint count. </param>
-        internal ProgressMetrics(long? completedDatapointCount, DateTimeOffset? incrementalDataLastRefreshOn, long? skippedDatapointCount, long? totalDatapointCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProgressMetrics(long? completedDatapointCount, DateTimeOffset? incrementalDataLastRefreshOn, long? skippedDatapointCount, long? totalDatapointCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CompletedDatapointCount = completedDatapointCount;
             IncrementalDataLastRefreshOn = incrementalDataLastRefreshOn;
             SkippedDatapointCount = skippedDatapointCount;
             TotalDatapointCount = totalDatapointCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The completed datapoint count. </summary>

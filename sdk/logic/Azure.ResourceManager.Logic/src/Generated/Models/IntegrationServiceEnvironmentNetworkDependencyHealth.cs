@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration service environment subnet network health. </summary>
     public partial class IntegrationServiceEnvironmentNetworkDependencyHealth
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependencyHealth. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkDependencyHealth"/>. </summary>
         internal IntegrationServiceEnvironmentNetworkDependencyHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependencyHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkDependencyHealth"/>. </summary>
         /// <param name="error"> The error if any occurred during the operation. </param>
         /// <param name="state"> The network dependency health state. </param>
-        internal IntegrationServiceEnvironmentNetworkDependencyHealth(IntegrationServiceErrorInfo error, IntegrationServiceEnvironmentNetworkDependencyHealthState? state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentNetworkDependencyHealth(IntegrationServiceErrorInfo error, IntegrationServiceEnvironmentNetworkDependencyHealthState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error if any occurred during the operation. </summary>

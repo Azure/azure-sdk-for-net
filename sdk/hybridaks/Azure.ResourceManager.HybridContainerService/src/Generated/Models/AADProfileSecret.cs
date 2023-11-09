@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The server AAD application secret. </summary>
     public partial class AADProfileSecret
     {
-        /// <summary> Initializes a new instance of AADProfileSecret. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AADProfileSecret"/>. </summary>
         public AADProfileSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of AADProfileSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AADProfileSecret"/>. </summary>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
-        internal AADProfileSecret(string serverAppSecret)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AADProfileSecret(string serverAppSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerAppSecret = serverAppSecret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The server AAD application secret. </summary>

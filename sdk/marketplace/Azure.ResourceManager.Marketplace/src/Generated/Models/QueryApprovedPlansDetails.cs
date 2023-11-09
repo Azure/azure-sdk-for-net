@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Query approved plans response. </summary>
     public partial class QueryApprovedPlansDetails
     {
-        /// <summary> Initializes a new instance of QueryApprovedPlansDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansDetails"/>. </summary>
         internal QueryApprovedPlansDetails()
         {
             SubscriptionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of QueryApprovedPlansDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansDetails"/>. </summary>
         /// <param name="planId"> Plan id. </param>
         /// <param name="subscriptionIds"> Approved subscription ids list. In case all subscriptions are approved for a plan, allSubscriptions flag is true and list is empty ( else flag is set to false). In case both subscriptions list is empty and allSubscriptions flag is false, the plan is not approved for any subscription. </param>
         /// <param name="allSubscriptions"> Indicates whether all subscriptions are approved for this plan. </param>
-        internal QueryApprovedPlansDetails(string planId, IReadOnlyList<string> subscriptionIds, bool? allSubscriptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryApprovedPlansDetails(string planId, IReadOnlyList<string> subscriptionIds, bool? allSubscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlanId = planId;
             SubscriptionIds = subscriptionIds;
             AllSubscriptions = allSubscriptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Plan id. </summary>

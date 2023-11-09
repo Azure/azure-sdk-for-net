@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class MaintenanceApplyUpdateData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceApplyUpdateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceApplyUpdateData"/>. </summary>
         public MaintenanceApplyUpdateData()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceApplyUpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceApplyUpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +35,13 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="status"> The status. </param>
         /// <param name="resourceId"> The resourceId. </param>
         /// <param name="lastUpdatedOn"> Last Update time. </param>
-        internal MaintenanceApplyUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceApplyUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             ResourceId = resourceId;
             LastUpdatedOn = lastUpdatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status. </summary>

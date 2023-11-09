@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Range of route errors. </summary>
     public partial class RouteErrorRange
     {
-        /// <summary> Initializes a new instance of RouteErrorRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteErrorRange"/>. </summary>
         internal RouteErrorRange()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteErrorRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteErrorRange"/>. </summary>
         /// <param name="start"> Start where the route error happened. </param>
         /// <param name="end"> End where the route error happened. </param>
-        internal RouteErrorRange(RouteErrorPosition start, RouteErrorPosition end)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteErrorRange(RouteErrorPosition start, RouteErrorPosition end, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Start = start;
             End = end;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Start where the route error happened. </summary>

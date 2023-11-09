@@ -6,19 +6,39 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IngestionProgressResetOptions. </summary>
     internal partial class IngestionProgressResetOptions
     {
-        /// <summary> Initializes a new instance of IngestionProgressResetOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngestionProgressResetOptions"/>. </summary>
         /// <param name="startTime"> the start point of time range to reset data ingestion status. </param>
         /// <param name="endTime"> the end point of time range to reset data ingestion status. </param>
         public IngestionProgressResetOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IngestionProgressResetOptions"/>. </summary>
+        /// <param name="startTime"> the start point of time range to reset data ingestion status. </param>
+        /// <param name="endTime"> the end point of time range to reset data ingestion status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionProgressResetOptions(DateTimeOffset startTime, DateTimeOffset endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IngestionProgressResetOptions"/> for deserialization. </summary>
+        internal IngestionProgressResetOptions()
+        {
         }
 
         /// <summary> the start point of time range to reset data ingestion status. </summary>

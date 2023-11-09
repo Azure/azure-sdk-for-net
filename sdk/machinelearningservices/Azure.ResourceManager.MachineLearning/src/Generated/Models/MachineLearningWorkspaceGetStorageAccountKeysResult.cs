@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetStorageAccountKeysResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
         internal MachineLearningWorkspaceGetStorageAccountKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
         /// <param name="userStorageKey"> The access key of the storage. </param>
-        internal MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserStorageKey = userStorageKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The access key of the storage. </summary>

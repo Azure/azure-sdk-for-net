@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.Maps.Routing.Models
     /// <summary> This object is returned from a successful Route Directions call. </summary>
     public partial class RouteDirections
     {
-        /// <summary> Initializes a new instance of RouteDirections. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteDirections"/>. </summary>
         internal RouteDirections()
         {
             Routes = new ChangeTrackingList<RouteData>();
             OptimizedWaypoints = new ChangeTrackingList<RouteOptimizedWaypoint>();
         }
 
-        /// <summary> Initializes a new instance of RouteDirections. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteDirections"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="routes"> Routes array. </param>
         /// <param name="optimizedWaypoints">
@@ -37,12 +41,14 @@ namespace Azure.Maps.Routing.Models
         /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is "first, second, third" while the optimized is "second, third, first".
         /// </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>
-        internal RouteDirections(string formatVersion, IReadOnlyList<RouteData> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteDirections(string formatVersion, IReadOnlyList<RouteData> routes, IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints, RouteReport report, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FormatVersion = formatVersion;
             Routes = routes;
             OptimizedWaypoints = optimizedWaypoints;
             Report = report;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Format Version property. </summary>

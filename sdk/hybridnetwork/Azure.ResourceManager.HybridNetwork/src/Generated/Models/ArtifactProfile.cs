@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,16 +15,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact profile properties. </summary>
     public partial class ArtifactProfile
     {
-        /// <summary> Initializes a new instance of ArtifactProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
         public ArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
-        internal ArtifactProfile(WritableSubResource artifactStore)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactStore = artifactStore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The reference to artifact store. </summary>

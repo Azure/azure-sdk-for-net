@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AlertResult. </summary>
     public partial class AnomalyAlert
     {
-        /// <summary> Initializes a new instance of AnomalyAlert. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlert"/>. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdOn"> created time. </param>
@@ -27,6 +31,26 @@ namespace Azure.AI.MetricsAdvisor.Models
             Timestamp = timestamp;
             CreatedOn = createdOn;
             LastModified = lastModified;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlert"/>. </summary>
+        /// <param name="id"> alert id. </param>
+        /// <param name="timestamp"> anomaly time. </param>
+        /// <param name="createdOn"> created time. </param>
+        /// <param name="lastModified"> modified time. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyAlert(string id, DateTimeOffset timestamp, DateTimeOffset createdOn, DateTimeOffset lastModified, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Timestamp = timestamp;
+            CreatedOn = createdOn;
+            LastModified = lastModified;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlert"/> for deserialization. </summary>
+        internal AnomalyAlert()
+        {
         }
     }
 }

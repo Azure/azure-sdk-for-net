@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Crypto certificate properties. </summary>
     public partial class FirmwareCryptoCertificate
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificate"/>. </summary>
         internal FirmwareCryptoCertificate()
         {
             Usage = new ChangeTrackingList<string>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificate"/>. </summary>
         /// <param name="cryptoCertId"> ID for the certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="subject"> Subject information of the certificate. </param>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isSelfSigned"> Indicates if the certificate was self-signed. </param>
         /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
         /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
-        internal FirmwareCryptoCertificate(string cryptoCertId, string name, FirmwareCryptoCertificateEntity subject, FirmwareCryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IReadOnlyList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, IsExpired? isExpired, IsSelfSigned? isSelfSigned, IsWeakSignature? isWeakSignature, IsShortKeySize? isShortKeySize)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareCryptoCertificate(string cryptoCertId, string name, FirmwareCryptoCertificateEntity subject, FirmwareCryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IReadOnlyList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, IsExpired? isExpired, IsSelfSigned? isSelfSigned, IsWeakSignature? isWeakSignature, IsShortKeySize? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CryptoCertId = cryptoCertId;
             Name = name;
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             IsSelfSigned = isSelfSigned;
             IsWeakSignature = isWeakSignature;
             IsShortKeySize = isShortKeySize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID for the certificate. </summary>

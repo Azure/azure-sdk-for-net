@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The correlation property. </summary>
     internal partial class Correlation
     {
-        /// <summary> Initializes a new instance of Correlation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Correlation"/>. </summary>
         internal Correlation()
         {
         }
 
-        /// <summary> Initializes a new instance of Correlation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Correlation"/>. </summary>
         /// <param name="clientTrackingId"> The client tracking id. </param>
-        internal Correlation(string clientTrackingId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Correlation(string clientTrackingId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientTrackingId = clientTrackingId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The client tracking id. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Represents a tenant ID that is trusted by the cluster. </summary>
     public partial class KustoClusterTrustedExternalTenant
     {
-        /// <summary> Initializes a new instance of KustoClusterTrustedExternalTenant. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterTrustedExternalTenant"/>. </summary>
         public KustoClusterTrustedExternalTenant()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoClusterTrustedExternalTenant. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterTrustedExternalTenant"/>. </summary>
         /// <param name="value"> GUID representing an external tenant. </param>
-        internal KustoClusterTrustedExternalTenant(string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoClusterTrustedExternalTenant(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> GUID representing an external tenant. </summary>

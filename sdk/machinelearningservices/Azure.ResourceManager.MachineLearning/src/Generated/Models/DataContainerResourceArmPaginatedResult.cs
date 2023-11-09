@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of DataContainer entities. </summary>
     internal partial class DataContainerResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataContainerResourceArmPaginatedResult"/>. </summary>
         internal DataContainerResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningDataContainerData>();
         }
 
-        /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataContainerResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of DataContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type DataContainer. </param>
-        internal DataContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDataContainerData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDataContainerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of DataContainer objects. If null, there are no additional pages. </summary>

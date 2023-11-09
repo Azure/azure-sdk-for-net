@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEncryptionSetting. </summary>
     public partial class MachineLearningEncryptionSetting
     {
-        /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
         /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
         /// <param name="cosmosDBResourceId">
         /// The byok cosmosdb account that customer brings to store customer's data
         /// with encryption
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The byok storage account that customer brings to store customer's data
         /// with encryption
         /// </param>
-        internal MachineLearningEncryptionSetting(ResourceIdentifier cosmosDBResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEncryptionSetting(ResourceIdentifier cosmosDBResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CosmosDBResourceId = cosmosDBResourceId;
             Identity = identity;
@@ -49,6 +54,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SearchAccountResourceId = searchAccountResourceId;
             Status = status;
             StorageAccountResourceId = storageAccountResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/> for deserialization. </summary>
+        internal MachineLearningEncryptionSetting()
+        {
         }
 
         /// <summary>

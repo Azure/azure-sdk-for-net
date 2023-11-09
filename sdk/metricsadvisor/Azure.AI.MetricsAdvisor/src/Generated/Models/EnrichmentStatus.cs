@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EnrichmentStatus. </summary>
     public partial class EnrichmentStatus
     {
-        /// <summary> Initializes a new instance of EnrichmentStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatus"/>. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest enrichment status for this data slice. </param>
         /// <param name="message"> the trimmed message describes details of the enrichment status. </param>
@@ -26,6 +30,24 @@ namespace Azure.AI.MetricsAdvisor.Models
             Timestamp = timestamp;
             Status = status;
             Message = message;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatus"/>. </summary>
+        /// <param name="timestamp"> data slice timestamp. </param>
+        /// <param name="status"> latest enrichment status for this data slice. </param>
+        /// <param name="message"> the trimmed message describes details of the enrichment status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnrichmentStatus(DateTimeOffset timestamp, string status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Timestamp = timestamp;
+            Status = status;
+            Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatus"/> for deserialization. </summary>
+        internal EnrichmentStatus()
+        {
         }
     }
 }

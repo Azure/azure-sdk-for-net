@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Update version properties. </summary>
     public partial class NetworkFabricUpdateVersionContent
     {
-        /// <summary> Initializes a new instance of NetworkFabricUpdateVersionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricUpdateVersionContent"/>. </summary>
         public NetworkFabricUpdateVersionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricUpdateVersionContent"/>. </summary>
+        /// <param name="version"> Specify the version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricUpdateVersionContent(string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specify the version. </summary>

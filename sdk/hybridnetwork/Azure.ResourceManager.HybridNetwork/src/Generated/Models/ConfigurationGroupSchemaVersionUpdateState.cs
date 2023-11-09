@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Publisher configuration group schema update request definition. </summary>
     public partial class ConfigurationGroupSchemaVersionUpdateState
     {
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaVersionUpdateState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaVersionUpdateState"/>. </summary>
         public ConfigurationGroupSchemaVersionUpdateState()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaVersionUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaVersionUpdateState"/>. </summary>
         /// <param name="versionState"> The configuration group schema state. </param>
-        internal ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VersionState = versionState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The configuration group schema state. </summary>

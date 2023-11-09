@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The EventHub consumer group. </summary>
     public partial class EventHubConsumerGroupInfoCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of EventHubConsumerGroupInfoCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> EventHub consumer group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EventHubConsumerGroupInfoCreateOrUpdateContent(string name)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.IotHub.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> EventHub consumer group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubConsumerGroupInfoCreateOrUpdateContent(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoCreateOrUpdateContent"/> for deserialization. </summary>
+        internal EventHubConsumerGroupInfoCreateOrUpdateContent()
+        {
         }
 
         /// <summary> EventHub consumer group name. </summary>

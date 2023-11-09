@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.MachineLearningCompute
     /// </summary>
     public partial class OperationalizationClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OperationalizationClusterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OperationalizationClusterData(AzureLocation location) : base(location)
         {
             ProvisioningErrors = new ChangeTrackingList<ErrorResponseWrapper>();
         }
 
-        /// <summary> Initializes a new instance of OperationalizationClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <param name="containerService"> Parameters for the Azure Container Service cluster. </param>
         /// <param name="appInsights"> AppInsights configuration. </param>
         /// <param name="globalServiceConfiguration"> Contains global configuration for the web services in the cluster. </param>
-        internal OperationalizationClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationStatus? provisioningState, IReadOnlyList<ErrorResponseWrapper> provisioningErrors, ClusterType? clusterType, StorageAccountProperties storageAccount, ContainerRegistryProperties containerRegistry, AcsClusterProperties containerService, AppInsightsProperties appInsights, GlobalServiceConfiguration globalServiceConfiguration) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalizationClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationStatus? provisioningState, IReadOnlyList<ErrorResponseWrapper> provisioningErrors, ClusterType? clusterType, StorageAccountProperties storageAccount, ContainerRegistryProperties containerRegistry, AcsClusterProperties containerService, AppInsightsProperties appInsights, GlobalServiceConfiguration globalServiceConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             CreatedOn = createdOn;
@@ -57,6 +61,12 @@ namespace Azure.ResourceManager.MachineLearningCompute
             ContainerService = containerService;
             AppInsights = appInsights;
             GlobalServiceConfiguration = globalServiceConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterData"/> for deserialization. </summary>
+        internal OperationalizationClusterData()
+        {
         }
 
         /// <summary> The description of the cluster. </summary>

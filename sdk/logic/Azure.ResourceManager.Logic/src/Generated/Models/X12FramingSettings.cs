@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The X12 agreement framing settings. </summary>
     public partial class X12FramingSettings
     {
-        /// <summary> Initializes a new instance of X12FramingSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12FramingSettings"/>. </summary>
         /// <param name="dataElementSeparator"> The data element separator. </param>
         /// <param name="componentSeparator"> The component separator. </param>
         /// <param name="replaceSeparatorsInPayload"> The value indicating whether to replace separators in payload. </param>
@@ -27,6 +33,32 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminator = segmentTerminator;
             CharacterSet = characterSet;
             SegmentTerminatorSuffix = segmentTerminatorSuffix;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12FramingSettings"/>. </summary>
+        /// <param name="dataElementSeparator"> The data element separator. </param>
+        /// <param name="componentSeparator"> The component separator. </param>
+        /// <param name="replaceSeparatorsInPayload"> The value indicating whether to replace separators in payload. </param>
+        /// <param name="replaceCharacter"> The replacement character. </param>
+        /// <param name="segmentTerminator"> The segment terminator. </param>
+        /// <param name="characterSet"> The X12 character set. </param>
+        /// <param name="segmentTerminatorSuffix"> The segment terminator suffix. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12FramingSettings(int dataElementSeparator, int componentSeparator, bool replaceSeparatorsInPayload, int replaceCharacter, int segmentTerminator, X12CharacterSet characterSet, SegmentTerminatorSuffix segmentTerminatorSuffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DataElementSeparator = dataElementSeparator;
+            ComponentSeparator = componentSeparator;
+            ReplaceSeparatorsInPayload = replaceSeparatorsInPayload;
+            ReplaceCharacter = replaceCharacter;
+            SegmentTerminator = segmentTerminator;
+            CharacterSet = characterSet;
+            SegmentTerminatorSuffix = segmentTerminatorSuffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12FramingSettings"/> for deserialization. </summary>
+        internal X12FramingSettings()
+        {
         }
 
         /// <summary> The data element separator. </summary>

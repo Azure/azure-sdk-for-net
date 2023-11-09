@@ -5,15 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceGetKeysResult
+    public partial class MachineLearningWorkspaceGetKeysResult : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceGetKeysResult>
     {
-        internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceGetKeysResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MachineLearningWorkspaceGetKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AppInsightsInstrumentationKey))
+                {
+                    writer.WritePropertyName("appInsightsInstrumentationKey"u8);
+                    writer.WriteStringValue(AppInsightsInstrumentationKey);
+                }
+            }
+            if (Optional.IsDefined(ContainerRegistryCredentials))
+            {
+                writer.WritePropertyName("containerRegistryCredentials"u8);
+                writer.WriteObjectValue(ContainerRegistryCredentials);
+            }
+            if (Optional.IsDefined(NotebookAccessKeys))
+            {
+                writer.WritePropertyName("notebookAccessKeys"u8);
+                writer.WriteObjectValue(NotebookAccessKeys);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UserStorageResourceId))
+                {
+                    writer.WritePropertyName("userStorageArmId"u8);
+                    writer.WriteStringValue(UserStorageResourceId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UserStorageKey))
+                {
+                    writer.WritePropertyName("userStorageKey"u8);
+                    writer.WriteStringValue(UserStorageKey);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningWorkspaceGetKeysResult IJsonModel<MachineLearningWorkspaceGetKeysResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetKeysResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceGetKeysResult(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +98,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
             Optional<string> userStorageArmId = default;
             Optional<string> userStorageKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appInsightsInstrumentationKey"u8))
@@ -58,8 +135,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     userStorageKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value, userStorageArmId.Value, userStorageKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value, userStorageArmId.Value, userStorageKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MachineLearningWorkspaceGetKeysResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetKeysResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningWorkspaceGetKeysResult IModel<MachineLearningWorkspaceGetKeysResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetKeysResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceGetKeysResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MachineLearningWorkspaceGetKeysResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new KustoPrivateLinkResource(Client, KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(e)), _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "KustoPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class PendingUploadResponseDto
+    public partial class PendingUploadResponseDto : IUtf8JsonSerializable, IJsonModel<PendingUploadResponseDto>
     {
-        internal static PendingUploadResponseDto DeserializePendingUploadResponseDto(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PendingUploadResponseDto>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PendingUploadResponseDto>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BlobReferenceForConsumption))
+            {
+                if (BlobReferenceForConsumption != null)
+                {
+                    writer.WritePropertyName("blobReferenceForConsumption"u8);
+                    writer.WriteObjectValue(BlobReferenceForConsumption);
+                }
+                else
+                {
+                    writer.WriteNull("blobReferenceForConsumption");
+                }
+            }
+            if (Optional.IsDefined(PendingUploadId))
+            {
+                if (PendingUploadId != null)
+                {
+                    writer.WritePropertyName("pendingUploadId"u8);
+                    writer.WriteStringValue(PendingUploadId);
+                }
+                else
+                {
+                    writer.WriteNull("pendingUploadId");
+                }
+            }
+            if (Optional.IsDefined(PendingUploadType))
+            {
+                writer.WritePropertyName("pendingUploadType"u8);
+                writer.WriteStringValue(PendingUploadType.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PendingUploadResponseDto IJsonModel<PendingUploadResponseDto>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePendingUploadResponseDto(document.RootElement, options);
+        }
+
+        internal static PendingUploadResponseDto DeserializePendingUploadResponseDto(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<BlobReferenceForConsumptionDto> blobReferenceForConsumption = default;
             Optional<string> pendingUploadId = default;
             Optional<PendingUploadType> pendingUploadType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobReferenceForConsumption"u8))
@@ -52,8 +124,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     pendingUploadType = new PendingUploadType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PendingUploadResponseDto(blobReferenceForConsumption.Value, pendingUploadId.Value, Optional.ToNullable(pendingUploadType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PendingUploadResponseDto(blobReferenceForConsumption.Value, pendingUploadId.Value, Optional.ToNullable(pendingUploadType), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<PendingUploadResponseDto>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PendingUploadResponseDto IModel<PendingUploadResponseDto>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePendingUploadResponseDto(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PendingUploadResponseDto>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

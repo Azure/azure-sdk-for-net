@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Service Tag destination for a Service Tag Outbound Rule for the managed network of a machine learning workspace. </summary>
     public partial class ServiceTagDestination
     {
-        /// <summary> Initializes a new instance of ServiceTagDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceTagDestination"/>. </summary>
         public ServiceTagDestination()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceTagDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagDestination"/>. </summary>
         /// <param name="action"> The action enum for networking rule. </param>
         /// <param name="addressPrefixes"> Optional, if provided, the ServiceTag property will be ignored. </param>
         /// <param name="portRanges"></param>
         /// <param name="protocol"></param>
         /// <param name="serviceTag"></param>
-        internal ServiceTagDestination(NetworkingRuleAction? action, IReadOnlyList<string> addressPrefixes, string portRanges, string protocol, string serviceTag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTagDestination(NetworkingRuleAction? action, IReadOnlyList<string> addressPrefixes, string portRanges, string protocol, string serviceTag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             AddressPrefixes = addressPrefixes;
             PortRanges = portRanges;
             Protocol = protocol;
             ServiceTag = serviceTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The action enum for networking rule. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitorComputeIdentityBase
     {
-        /// <summary> Initializes a new instance of MonitorComputeIdentityBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeIdentityBase"/>. </summary>
         protected MonitorComputeIdentityBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorComputeIdentityBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeIdentityBase"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
-        internal MonitorComputeIdentityBase(MonitorComputeIdentityType computeIdentityType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorComputeIdentityBase(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeIdentityType = computeIdentityType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Monitor compute identity type enum. </summary>

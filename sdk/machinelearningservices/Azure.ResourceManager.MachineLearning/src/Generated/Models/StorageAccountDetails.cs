@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Details of storage account to be used for the Registry. </summary>
     public partial class StorageAccountDetails
     {
-        /// <summary> Initializes a new instance of StorageAccountDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountDetails"/>. </summary>
         public StorageAccountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountDetails"/>. </summary>
         /// <param name="systemCreatedStorageAccount"> Details of system created storage account to be used for the registry. </param>
         /// <param name="userCreatedStorageAccount"> Details of user created storage account to be used for the registry.  Not supported in most cases and will throw 400 error if provided. </param>
-        internal StorageAccountDetails(SystemCreatedStorageAccount systemCreatedStorageAccount, UserCreatedStorageAccount userCreatedStorageAccount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountDetails(SystemCreatedStorageAccount systemCreatedStorageAccount, UserCreatedStorageAccount userCreatedStorageAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemCreatedStorageAccount = systemCreatedStorageAccount;
             UserCreatedStorageAccount = userCreatedStorageAccount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Details of system created storage account to be used for the registry. </summary>

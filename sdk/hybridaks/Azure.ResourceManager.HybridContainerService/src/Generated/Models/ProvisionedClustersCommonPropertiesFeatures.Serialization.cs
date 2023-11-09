@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class ProvisionedClustersCommonPropertiesFeatures : IUtf8JsonSerializable
+    internal partial class ProvisionedClustersCommonPropertiesFeatures : IUtf8JsonSerializable, IJsonModel<ProvisionedClustersCommonPropertiesFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClustersCommonPropertiesFeatures>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ProvisionedClustersCommonPropertiesFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAgentProfile))
@@ -20,16 +26,47 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("arcAgentProfile"u8);
                 writer.WriteObjectValue(ArcAgentProfile);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClustersCommonPropertiesFeatures DeserializeProvisionedClustersCommonPropertiesFeatures(JsonElement element)
+        ProvisionedClustersCommonPropertiesFeatures IJsonModel<ProvisionedClustersCommonPropertiesFeatures>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClustersCommonPropertiesFeatures)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersCommonPropertiesFeatures(document.RootElement, options);
+        }
+
+        internal static ProvisionedClustersCommonPropertiesFeatures DeserializeProvisionedClustersCommonPropertiesFeatures(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ArcAgentProfile> arcAgentProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAgentProfile"u8))
@@ -41,8 +78,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     arcAgentProfile = ArcAgentProfile.DeserializeArcAgentProfile(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProvisionedClustersCommonPropertiesFeatures(arcAgentProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProvisionedClustersCommonPropertiesFeatures(arcAgentProfile.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ProvisionedClustersCommonPropertiesFeatures>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClustersCommonPropertiesFeatures)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProvisionedClustersCommonPropertiesFeatures IModel<ProvisionedClustersCommonPropertiesFeatures>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClustersCommonPropertiesFeatures)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProvisionedClustersCommonPropertiesFeatures(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ProvisionedClustersCommonPropertiesFeatures>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

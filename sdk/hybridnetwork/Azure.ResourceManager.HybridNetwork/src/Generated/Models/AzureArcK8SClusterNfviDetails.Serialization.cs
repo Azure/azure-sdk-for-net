@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureArcK8SClusterNfviDetails : IUtf8JsonSerializable
+    public partial class AzureArcK8SClusterNfviDetails : IUtf8JsonSerializable, IJsonModel<AzureArcK8SClusterNfviDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcK8SClusterNfviDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AzureArcK8SClusterNfviDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomLocationReference))
@@ -28,11 +34,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             writer.WritePropertyName("nfviType"u8);
             writer.WriteStringValue(NfviType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureArcK8SClusterNfviDetails DeserializeAzureArcK8SClusterNfviDetails(JsonElement element)
+        AzureArcK8SClusterNfviDetails IJsonModel<AzureArcK8SClusterNfviDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureArcK8SClusterNfviDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureArcK8SClusterNfviDetails(document.RootElement, options);
+        }
+
+        internal static AzureArcK8SClusterNfviDetails DeserializeAzureArcK8SClusterNfviDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +75,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<WritableSubResource> customLocationReference = default;
             Optional<string> name = default;
             NfviType nfviType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customLocationReference"u8))
@@ -61,8 +98,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     nfviType = new NfviType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureArcK8SClusterNfviDetails(name.Value, nfviType, customLocationReference);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureArcK8SClusterNfviDetails(name.Value, nfviType, serializedAdditionalRawData, customLocationReference);
         }
+
+        BinaryData IModel<AzureArcK8SClusterNfviDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureArcK8SClusterNfviDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureArcK8SClusterNfviDetails IModel<AzureArcK8SClusterNfviDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureArcK8SClusterNfviDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureArcK8SClusterNfviDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AzureArcK8SClusterNfviDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

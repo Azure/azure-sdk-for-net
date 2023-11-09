@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Fixed training parameters that won't be swept over during AutoML Table training. </summary>
     public partial class TableFixedParameters
     {
-        /// <summary> Initializes a new instance of TableFixedParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableFixedParameters"/>. </summary>
         public TableFixedParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of TableFixedParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableFixedParameters"/>. </summary>
         /// <param name="booster"> Specify the boosting type, e.g gbdt for XGBoost. </param>
         /// <param name="boostingType"> Specify the boosting type, e.g gbdt for LightGBM. </param>
         /// <param name="growPolicy"> Specify the grow policy, which controls the way new nodes are added to the tree. </param>
@@ -36,7 +42,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="treeMethod"> Specify the tree method. </param>
         /// <param name="withMean"> If true, center before scaling the data with StandardScalar. </param>
         /// <param name="withStd"> If true, scaling the data with Unit Variance with StandardScalar. </param>
-        internal TableFixedParameters(string booster, string boostingType, string growPolicy, double? learningRate, int? maxBin, int? maxDepth, int? maxLeaves, int? minDataInLeaf, double? minSplitGain, string modelName, int? nEstimators, int? numLeaves, string preprocessorName, double? regAlpha, double? regLambda, double? subsample, double? subsampleFreq, string treeMethod, bool? withMean, bool? withStd)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableFixedParameters(string booster, string boostingType, string growPolicy, double? learningRate, int? maxBin, int? maxDepth, int? maxLeaves, int? minDataInLeaf, double? minSplitGain, string modelName, int? nEstimators, int? numLeaves, string preprocessorName, double? regAlpha, double? regLambda, double? subsample, double? subsampleFreq, string treeMethod, bool? withMean, bool? withStd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Booster = booster;
             BoostingType = boostingType;
@@ -58,6 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TreeMethod = treeMethod;
             WithMean = withMean;
             WithStd = withStd;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specify the boosting type, e.g gbdt for XGBoost. </summary>

@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> AutoScale configuration properties. </summary>
     public partial class AutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of AutoScaleConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoScaleConfiguration"/>. </summary>
         public AutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleConfiguration"/>. </summary>
         /// <param name="status"> If auto-scale is enabled for all services. Each service can turn it off individually. </param>
         /// <param name="minReplicas"> The minimum number of replicas for each service. </param>
         /// <param name="maxReplicas"> The maximum number of replicas for each service. </param>
         /// <param name="targetUtilization"> The target utilization. </param>
         /// <param name="refreshPeriodInSeconds"> Refresh period in seconds. </param>
-        internal AutoScaleConfiguration(Status? status, int? minReplicas, int? maxReplicas, float? targetUtilization, int? refreshPeriodInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoScaleConfiguration(Status? status, int? minReplicas, int? maxReplicas, float? targetUtilization, int? refreshPeriodInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             MinReplicas = minReplicas;
             MaxReplicas = maxReplicas;
             TargetUtilization = targetUtilization;
             RefreshPeriodInSeconds = refreshPeriodInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If auto-scale is enabled for all services. Each service can turn it off individually. </summary>

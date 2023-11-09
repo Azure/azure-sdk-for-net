@@ -15,7 +15,10 @@ namespace Azure.Maps.Search.Models
     /// <summary> The GeoJsonFeatureCollectionData. </summary>
     internal partial class GeoJsonFeatureCollectionData
     {
-        /// <summary> Initializes a new instance of GeoJsonFeatureCollectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
         public GeoJsonFeatureCollectionData(IEnumerable<GeoJsonFeature> features)
@@ -25,11 +28,18 @@ namespace Azure.Maps.Search.Models
             Features = features.ToList();
         }
 
-        /// <summary> Initializes a new instance of GeoJsonFeatureCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        internal GeoJsonFeatureCollectionData(IList<GeoJsonFeature> features)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonFeatureCollectionData(IList<GeoJsonFeature> features, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Features = features;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/> for deserialization. </summary>
+        internal GeoJsonFeatureCollectionData()
+        {
         }
 
         /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>

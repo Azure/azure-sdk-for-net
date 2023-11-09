@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Properties of App Insights. </summary>
     internal partial class AppInsightsProperties
     {
-        /// <summary> Initializes a new instance of AppInsightsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppInsightsProperties"/>. </summary>
         public AppInsightsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppInsightsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInsightsProperties"/>. </summary>
         /// <param name="resourceId"> ARM resource ID of the App Insights. </param>
-        internal AppInsightsProperties(string resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppInsightsProperties(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM resource ID of the App Insights. </summary>

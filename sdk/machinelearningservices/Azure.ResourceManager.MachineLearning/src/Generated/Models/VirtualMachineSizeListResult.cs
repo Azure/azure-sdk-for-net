@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The List Virtual Machine size operation response. </summary>
     internal partial class VirtualMachineSizeListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeListResult"/>. </summary>
         internal VirtualMachineSizeListResult()
         {
             Value = new ChangeTrackingList<MachineLearningVmSize>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine sizes supported by AmlCompute. </param>
-        internal VirtualMachineSizeListResult(IReadOnlyList<MachineLearningVmSize> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineSizeListResult(IReadOnlyList<MachineLearningVmSize> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of virtual machine sizes supported by AmlCompute. </summary>
