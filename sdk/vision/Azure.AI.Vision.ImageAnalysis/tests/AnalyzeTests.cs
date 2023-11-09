@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 {
     internal class AnalyzeTests : ImageAnalysisTestBase
     {
-        public AnalyzeTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AnalyzeTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         { }
 
         public AnalyzeTests(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Live) : base(isAsync, mode)
