@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         }
 
         [Event(3, Message = "Accessing environment variable - {0} failed with exception: {1}.", Level = EventLevel.Warning)]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(2, environmentVariable, exceptionMessage);
+        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(3, environmentVariable, exceptionMessage);
 
         [NonEvent]
         public void SdkVersionCreateFailed(Exception ex)

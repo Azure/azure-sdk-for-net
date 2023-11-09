@@ -12,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// Overload for Guid.ToString().
         /// </summary>
         /// <remarks>
-        /// This method encapsulates the language switch for NetStandard and NetFramework and resolves the error "The behavior of guid.ToStrinc() could vary based on the current user's locale settings".
+        /// This method encapsulates the language switch for NetStandard and NetFramework and resolves the error "The behavior of guid.ToString() could vary based on the current user's locale settings"
         /// </remarks>
         public static string ToStringInvariant(this Guid guid, string format)
         {

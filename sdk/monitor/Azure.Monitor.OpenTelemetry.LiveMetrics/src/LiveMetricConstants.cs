@@ -19,11 +19,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         internal const string ProcessorTimeInstrumentName = "ProcessorTimeBytesLiveMetric";
 
         internal const string RequestDurationMetricIdValue = @"\ApplicationInsights\Request Duration";
-        internal const string RequestsMetricIdValue = @"\ApplicationInsights\Requests/Sec";
+        internal const string RequestsPerSecondMetricIdValue = @"\ApplicationInsights\Requests/Sec";
         internal const string RequestsSucceededPerSecondMetricIdValue = @"\ApplicationInsights\Requests Succeeded/Sec";
         internal const string RequestsFailedPerSecondMetricIdValue = @"\ApplicationInsights\Requests Failed/Sec";
         internal const string DependencyDurationMetricIdValue = @"\ApplicationInsights\Dependency Call Duration";
-        internal const string DependencyMetricIdValue = @"\ApplicationInsights\Dependency Calls/Sec";
+        internal const string DependenciesPerSecondMetricIdValue = @"\ApplicationInsights\Dependency Calls/Sec";
         internal const string DependencySucceededPerSecondMetricIdValue = @"\ApplicationInsights\Dependency Calls Succeeded/Sec";
         internal const string DependencyFailedPerSecondMetricIdValue = @"\ApplicationInsights\Dependency Calls Failed/Sec";
         internal const string ExceptionsPerSecondMetricIdValue = @"\ApplicationInsights\Exceptions/Sec";

@@ -34,11 +34,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         internal static readonly IReadOnlyDictionary<string, string> s_liveMetricNameMapping = new Dictionary<string, string>()
         {
             [LiveMetricConstants.RequestDurationInstrumentName] = LiveMetricConstants.RequestDurationMetricIdValue,
-            [LiveMetricConstants.RequestsInstrumentName] = LiveMetricConstants.RequestsMetricIdValue,
+            [LiveMetricConstants.RequestsInstrumentName] = LiveMetricConstants.RequestsPerSecondMetricIdValue,
             [LiveMetricConstants.RequestsSucceededPerSecondInstrumentName] = LiveMetricConstants.RequestsSucceededPerSecondMetricIdValue,
             [LiveMetricConstants.RequestsFailedPerSecondInstrumentName] = LiveMetricConstants.RequestsFailedPerSecondMetricIdValue,
             [LiveMetricConstants.DependencyDurationInstrumentName] = LiveMetricConstants.DependencyDurationMetricIdValue,
-            [LiveMetricConstants.DependencyInstrumentName] = LiveMetricConstants.DependencyMetricIdValue,
+            [LiveMetricConstants.DependencyInstrumentName] = LiveMetricConstants.DependenciesPerSecondMetricIdValue,
             [LiveMetricConstants.DependencySucceededPerSecondInstrumentName] = LiveMetricConstants.DependencySucceededPerSecondMetricIdValue,
             [LiveMetricConstants.DependencyFailedPerSecondInstrumentName] = LiveMetricConstants.DependencyFailedPerSecondMetricIdValue,
             [LiveMetricConstants.ExceptionsPerSecondInstrumentName] = LiveMetricConstants.ExceptionsPerSecondMetricIdValue,
