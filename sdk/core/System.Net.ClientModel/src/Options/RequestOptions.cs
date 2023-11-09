@@ -8,8 +8,11 @@ namespace System.Net.ClientModel;
 
 /// <summary>
 /// Controls the end-to-end duration of the service method call, including
-/// the message being sent down the pipeline.  For the duration of pipeline.Send,
-/// this may change some behaviors in various pipeline policies and the transport.
+/// the message being sent down the pipeline.  If PipelineOptions are created,
+/// modified, and passed to the RequestOptions constructor, this instance will
+/// hold a cached pipeline instance that can be reused across service methods.
+/// To prevent recreating a pipeline instance, store RequestOptions instances
+/// for reuse.
 /// </summary>
 public class RequestOptions
 {
@@ -24,13 +27,19 @@ public class RequestOptions
         _pipelineOptions = pipelineOptions;
         ErrorBehavior = ErrorBehavior.Default;
         CancellationToken = CancellationToken.None;
+        MessageClassifier = MessageClassifier.Default;
     }
 
     protected internal virtual void Apply(PipelineMessage message)
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
-        message.MessageClassifier = MessageClassifier ?? MessageClassifier.Default;
+
+        // Don't overwrite the classifier on the message if it's already set.
+        if (!message.HasMessageClassifier)
+        {
+            message.MessageClassifier = MessageClassifier;
+        }
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why
@@ -47,9 +56,9 @@ public class RequestOptions
 
     // TODO: Should RequestOptions be freezable too, to prevent client-authors from
     // modifying client-user-passed options values?
-    public virtual MessageClassifier? MessageClassifier { get; set; }
+    public virtual MessageClassifier MessageClassifier { get; set; }
 
-    internal PipelineOptions PipelineOptions { get => _pipelineOptions; }
+    internal PipelineOptions PipelineOptions => _pipelineOptions;
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {

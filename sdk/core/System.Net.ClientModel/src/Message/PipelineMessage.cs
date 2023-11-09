@@ -49,6 +49,8 @@ public class PipelineMessage : IDisposable
     public void SetProperty(Type type, object value) =>
         _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
+    internal bool HasMessageClassifier => _messageClassifer is not null;
+
     private MessageClassifier? _messageClassifer;
     public virtual MessageClassifier MessageClassifier
     {

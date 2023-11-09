@@ -42,7 +42,7 @@ namespace System.Net.ClientModel
         public RequestOptions(System.Net.ClientModel.Core.PipelineOptions pipelineOptions) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
         public void AddPolicy(System.Net.ClientModel.Core.PipelinePolicy policy, System.Net.ClientModel.Core.PipelinePosition position) { }
         protected internal virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
     }

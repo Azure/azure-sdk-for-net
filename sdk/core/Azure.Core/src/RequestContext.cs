@@ -77,15 +77,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        internal void Apply(HttpMessage message)
-        {
-            message.CancellationToken = CancellationToken;
-
-            // TODO: Note, we don't set response classifier here, but need to rethink this
-            // story e2e.
-
-            base.Apply(message);
-        }
+        internal void Apply(HttpMessage message) => base.Apply(message);
 
         /// <summary>
         /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.
