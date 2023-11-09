@@ -65,16 +65,16 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
         return FromJson(document.RootElement);
     }
 
-    public ModelReaderWriterFormat GetWireFormat(ModelReaderWriterOptions options)
-        => ModelReaderWriterFormat.Json;
+    public string GetWireFormat(ModelReaderWriterOptions options)
+        => "J";
 
-    public IPAddressCountryPair Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    public IPAddressCountryPair Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
         using var document = JsonDocument.ParseValue(ref reader);
         return FromJson(document.RootElement);
     }
 
-    public IPAddressCountryPair Read(BinaryData data, ModelReaderWriterOptions options)
+    public IPAddressCountryPair Create(BinaryData data, ModelReaderWriterOptions options)
     {
         using var document = JsonDocument.Parse(data.ToString());
         return FromJson(document.RootElement);

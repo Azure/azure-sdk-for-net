@@ -23,7 +23,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             Assert.AreEqual("X", ((ModelX)modelX).Kind);
             Assert.AreEqual("xmodel", ((ModelX)modelX).Name);
             Assert.AreEqual(100, ((ModelX)modelX).XProperty);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 var rawData = ModelTests<ModelX>.GetRawData((ModelX)modelX);
                 Assert.IsNotNull(rawData);

@@ -27,7 +27,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
                 return null;
             }
 
-            return RequestContent.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(availabilitySetData, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator AvailabilitySetData(Response response)
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>

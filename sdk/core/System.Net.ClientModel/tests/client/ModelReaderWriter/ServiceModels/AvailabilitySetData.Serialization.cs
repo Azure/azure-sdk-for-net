@@ -25,17 +25,17 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.ToString());
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.ToString());
@@ -91,7 +91,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -234,7 +234,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses));
         }
 
-        AvailabilitySetData IModel<AvailabilitySetData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        AvailabilitySetData IModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -258,7 +258,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             public OptionalProperty<IReadOnlyList<InstanceViewStatus>> Statuses { get; set; }
         }
 
-        AvailabilitySetData IJsonModel<AvailabilitySetData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -273,6 +273,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

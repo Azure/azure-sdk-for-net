@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(envelope, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(envelope, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator Envelope<T>(Response response)
@@ -53,11 +53,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeEnvelope(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeEnvelope(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<Envelope<T>>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -98,7 +98,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -123,7 +123,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                     continue;
                 }
 
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -161,14 +161,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return (T)serializer.Deserialize(m, typeof(T), default);
         }
 
-        Envelope<T> IModel<Envelope<T>>.Read(BinaryData data, ModelReaderWriterOptions options)
+        Envelope<T> IModel<Envelope<T>>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeEnvelope(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        Envelope<T> IJsonModel<Envelope<T>>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Envelope<T> IJsonModel<Envelope<T>>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => "J";
         #endregion
     }
 }

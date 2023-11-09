@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         public static implicit operator RequestContent(ModelX modelX)
         {
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(modelX, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelX(Response response)
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         void IJsonModel<ModelX>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -104,12 +104,12 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 writer.WriteEndObject();
             }
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("xProperty"u8);
                 writer.WriteNumberValue(XProperty);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 SerializeRawData(writer);
             }
@@ -118,7 +118,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                     xProperty = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -182,7 +182,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new ModelX(kind, name, xProperty, Optional.ToNullable(nullProperty), Optional.ToList(fields), Optional.ToDictionary(keyValuePairs), rawData);
         }
 
-        ModelX IModel<ModelX>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelX IModel<ModelX>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -195,7 +195,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             ((IUtf8JsonSerializable)this).Write(writer);
         }
 
-        ModelX IJsonModel<ModelX>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelX IJsonModel<ModelX>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -210,6 +210,6 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

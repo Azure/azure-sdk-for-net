@@ -24,7 +24,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestBodyContent"/> that wraps a <see cref="IModel{T}"/>.</returns>
         public static RequestBodyContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
-            => new ModelMessageBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
+            => new ModelMessageBody(model, options ?? ModelReaderWriterOptions.Wire);
 
         /// <summary>
         /// Attempts to compute the length of the underlying body content, if available.
@@ -51,7 +51,6 @@ namespace System.Net.ClientModel.Core
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
-            private readonly ModelReaderWriterFormat _wireFormat;
 
             // Used when _model is an IJsonModel
             private ModelWriter? _writer;
@@ -63,7 +62,6 @@ namespace System.Net.ClientModel.Core
             {
                 _model = model;
                 _options = options;
-                _wireFormat = model.GetWireFormat(options);
             }
 
             private ModelWriter Writer
@@ -84,7 +82,7 @@ namespace System.Net.ClientModel.Core
             {
                 get
                 {
-                    if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
+                    if (_model is IJsonModel<object> && _options.Format == "J")
                     {
                         throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
                     }
@@ -96,7 +94,7 @@ namespace System.Net.ClientModel.Core
 
             public override bool TryComputeLength(out long length)
             {
-                if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
+                if (_model is IJsonModel<object> && _options.Format == "J")
                 {
                     return Writer.TryComputeLength(out length);
                 }
@@ -112,7 +110,7 @@ namespace System.Net.ClientModel.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
-                if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
+                if (_model is IJsonModel<object> && _options.Format == "J")
                 {
                     Writer.CopyTo(stream, cancellation);
                     return;
@@ -127,7 +125,7 @@ namespace System.Net.ClientModel.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-                if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
+                if (_model is IJsonModel<object> && _options.Format == "J")
                 {
                     await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
                     return;

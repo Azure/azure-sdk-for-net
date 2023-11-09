@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         /// <summary> Gets the id. </summary>
         public int Id { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<ModelAsStruct>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -42,7 +42,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteNumberValue(Id);
-            if (_rawData is not null && options.Format == ModelReaderWriterFormat.Json)
+            if (_rawData is not null && options.Format == "J")
             {
                 foreach (var property in _rawData)
                 {
@@ -66,10 +66,10 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static implicit operator RequestContent(ModelAsStruct model)
         {
-            return RequestContent.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(model, ModelReaderWriterOptions.Wire);
         }
 
-        ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelAsStruct IModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -79,7 +79,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             int id = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -90,7 +90,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                     id = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new ModelAsStruct(id, rawData);
         }
 
-        ModelAsStruct IJsonModel<ModelAsStruct>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelAsStruct IJsonModel<ModelAsStruct>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -112,12 +112,12 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
-        object IJsonModel<object>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -132,7 +132,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options)
+        object IModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -140,8 +140,8 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
-        ModelReaderWriterFormat IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -55,11 +55,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write(model, options.Format);
+            return ModelReaderWriter.Write(model, options);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options.Format) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }
 
@@ -91,7 +91,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<T>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -107,7 +107,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<object>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -123,7 +123,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IJsonModel<T>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IJsonModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -139,7 +139,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IJsonModel<object>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IJsonModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -156,7 +156,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
-            return ((IJsonModel<T>)model).Read(ref reader, options);
+            return ((IJsonModel<T>)model).Create(ref reader, options);
         }
     }
 
@@ -173,7 +173,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
-            return ((IJsonModel<object>)model).Read(ref reader, options);
+            return ((IJsonModel<object>)model).Create(ref reader, options);
         }
     }
 

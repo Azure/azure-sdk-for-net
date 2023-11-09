@@ -21,7 +21,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override Func<Response, ModelX> FromResponse => response => (ModelX)response;
 
-        protected override void CompareModels(ModelX model, ModelX model2, ModelReaderWriterFormat format)
+        protected override void CompareModels(ModelX model, ModelX model2, string format)
         {
             Assert.AreEqual(model.Name, model2.Name);
             Assert.AreEqual(model.Kind, model2.Kind);
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             Assert.AreEqual(model.KeyValuePairs, model2.KeyValuePairs);
             Assert.AreEqual(model.NullProperty, model2.NullProperty);
 
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 Assert.AreEqual(model.XProperty, model2.XProperty);
                 var rawData = GetRawData(model);
@@ -42,20 +42,20 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             }
         }
 
-        protected override string GetExpectedResult(ModelReaderWriterFormat format)
+        protected override string GetExpectedResult(string format)
         {
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
             expected += ",\"fields\":[\"testField\"]";
             expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 expected += ",\"xProperty\":100";
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 expected += ",\"extra\":\"stuff\"";
             expected += "}";
             return expected;
         }
 
-        protected override void VerifyModel(ModelX model, ModelReaderWriterFormat format)
+        protected override void VerifyModel(ModelX model, string format)
         {
             Assert.AreEqual("X", model.Kind);
             Assert.AreEqual("xmodel", model.Name);
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 Assert.AreEqual(100, model.XProperty);
                 Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
