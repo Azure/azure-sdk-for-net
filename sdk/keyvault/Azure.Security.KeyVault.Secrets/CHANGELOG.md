@@ -1,8 +1,6 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
-
-### Features Added
+## 4.6.0-beta.1 (2023-11-09)
 
 ### Breaking Changes
 
