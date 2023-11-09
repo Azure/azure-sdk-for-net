@@ -11,15 +11,6 @@ namespace Azure.Communication.CallAutomation
     public class CallIntelligenceOptions
     {
         /// <summary>
-        /// Creates a new CallIntelligenceOptions object.
-        /// </summary>
-        /// <param name="cognitiveServicesEndpoint">The endpoint URL of the Azure Cognitive Services resource attached.</param>
-        public CallIntelligenceOptions(Uri cognitiveServicesEndpoint)
-        {
-            CognitiveServicesEndpoint = cognitiveServicesEndpoint;
-        }
-
-        /// <summary>
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri CognitiveServicesEndpoint { get; set; }

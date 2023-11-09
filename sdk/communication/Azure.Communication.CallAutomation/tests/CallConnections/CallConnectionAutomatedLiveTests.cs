@@ -272,11 +272,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 await WaitForOperationCompletion(3000);
 
                 // cancel add participant
-                CancelAddParticipantOptions options = new(addParticipantResponse.Value.InvitationId)
+                CancelAddParticipantOperationOptions options = new(addParticipantResponse.Value.InvitationId)
                 {
                     OperationContext = operationContext
                 };
-                await callConnection.CancelAddParticipantAsync(options);
+                await callConnection.CancelAddParticipantOperationAsync(options);
 
                 // wait for cancel event
                 var cancelAddParticipantSucceededEvent = await WaitForEvent<CancelAddParticipantSucceeded>(callConnectionId, TimeSpan.FromSeconds(20));

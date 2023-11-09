@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>CancelAddParticipantResult Result.</summary>
-    public class CancelAddParticipantResult
+    /// <summary>CancelAddParticipantOperation Result.</summary>
+    public class CancelAddParticipantOperationResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal CancelAddParticipantResult(string invitationId, string operationContext)
+        internal CancelAddParticipantOperationResult(string invitationId, string operationContext)
         {
             InvitationId = invitationId;
             OperationContext = operationContext;
         }
 
-        internal CancelAddParticipantResult(CancelAddParticipantResponseInternal internalObj)
+        internal CancelAddParticipantOperationResult(CancelAddParticipantResponseInternal internalObj)
         {
             InvitationId = internalObj.InvitationId;
             OperationContext = internalObj.OperationContext;
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="CancelAddParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="CancelAddParticipantEventResult"/> which contains either <see cref="CancelAddParticipantSucceeded"/> event or <see cref="CancelAddParticipantFailed"/> event.</returns>
+        /// <returns>Returns <see cref="CancelAddParticipantOperationResult"/> which contains either <see cref="CancelAddParticipantSucceeded"/> event or <see cref="CancelAddParticipantFailed"/> event.</returns>
         public CancelAddParticipantEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
