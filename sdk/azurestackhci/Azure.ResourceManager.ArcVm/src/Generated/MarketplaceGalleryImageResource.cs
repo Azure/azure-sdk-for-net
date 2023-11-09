@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ArcVm
     public partial class MarketplaceGalleryImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MarketplaceGalleryImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="marketplaceGalleryImageName"> The marketplaceGalleryImageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string marketplaceGalleryImageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}";

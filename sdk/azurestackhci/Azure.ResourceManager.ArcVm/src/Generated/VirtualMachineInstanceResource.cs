@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ArcVm
     public partial class VirtualMachineInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineInstanceResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default";

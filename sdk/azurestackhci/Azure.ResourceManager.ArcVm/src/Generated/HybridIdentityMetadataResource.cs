@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ArcVm
     public partial class HybridIdentityMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridIdentityMetadataResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/hybridIdentityMetadata/default";

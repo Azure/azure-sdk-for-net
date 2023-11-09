@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ArcVm
     public partial class LogicalNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicalNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="logicalNetworkName"> The logicalNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string logicalNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}";

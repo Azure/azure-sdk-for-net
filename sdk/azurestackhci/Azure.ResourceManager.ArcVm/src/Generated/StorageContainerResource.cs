@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ArcVm
     public partial class StorageContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageContainerName"> The storageContainerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageContainerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}";

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcVm
     }
     public partial class GalleryImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GalleryImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GalleryImageData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ArcVm.Models.CloudInitDataSource? CloudInitDataSource { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.ArcVm.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ArcVm
     }
     public partial class LogicalNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LogicalNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicalNetworkData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> DhcpOptionsDnsServers { get { throw null; } }
         public Azure.ResourceManager.ArcVm.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.ArcVm.Models.ProvisioningStateEnum? ProvisioningState { get { throw null; } }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ArcVm
     }
     public partial class MarketplaceGalleryImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MarketplaceGalleryImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MarketplaceGalleryImageData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ArcVm.Models.CloudInitDataSource? CloudInitDataSource { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.ArcVm.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcVm
     }
     public partial class NetworkInterfaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkInterfaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkInterfaceData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public Azure.ResourceManager.ArcVm.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcVm.Models.IPConfiguration> IPConfigurations { get { throw null; } }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ArcVm
     }
     public partial class StorageContainerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageContainerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StorageContainerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ArcVm.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public Azure.ResourceManager.ArcVm.Models.ProvisioningStateEnum? ProvisioningState { get { throw null; } }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ArcVm
     }
     public partial class VirtualHardDiskData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualHardDiskData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualHardDiskData(Azure.Core.AzureLocation location) { }
         public int? BlockSizeBytes { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.ArcVm.Models.DiskFileFormat? DiskFileFormat { get { throw null; } set { } }
@@ -416,6 +416,61 @@ namespace Azure.ResourceManager.ArcVm
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ArcVm.VirtualMachineInstanceResource>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ArcVm.VirtualMachineInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ArcVm.Models.VirtualMachineInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ArcVm.VirtualMachineInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ArcVm.Models.VirtualMachineInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ArcVm.Mocking
+{
+    public partial class MockableArcVmArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableArcVmArmClient() { }
+        public virtual Azure.ResourceManager.ArcVm.GalleryImageResource GetGalleryImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.GuestAgentResource GetGuestAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.HybridIdentityMetadataResource GetHybridIdentityMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.LogicalNetworkResource GetLogicalNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.MarketplaceGalleryImageResource GetMarketplaceGalleryImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.NetworkInterfaceResource GetNetworkInterfaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.StorageContainerResource GetStorageContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.VirtualHardDiskResource GetVirtualHardDiskResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.VirtualMachineInstanceResource GetVirtualMachineInstance(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.VirtualMachineInstanceResource GetVirtualMachineInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableArcVmResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableArcVmResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ArcVm.GalleryImageResource> GetGalleryImage(string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcVm.GalleryImageResource>> GetGalleryImageAsync(string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.GalleryImageCollection GetGalleryImages() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcVm.LogicalNetworkResource> GetLogicalNetwork(string logicalNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcVm.LogicalNetworkResource>> GetLogicalNetworkAsync(string logicalNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.LogicalNetworkCollection GetLogicalNetworks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcVm.MarketplaceGalleryImageResource> GetMarketplaceGalleryImage(string marketplaceGalleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcVm.MarketplaceGalleryImageResource>> GetMarketplaceGalleryImageAsync(string marketplaceGalleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.MarketplaceGalleryImageCollection GetMarketplaceGalleryImages() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcVm.NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcVm.NetworkInterfaceResource>> GetNetworkInterfaceAsync(string networkInterfaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.NetworkInterfaceCollection GetNetworkInterfaces() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcVm.StorageContainerResource> GetStorageContainer(string storageContainerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcVm.StorageContainerResource>> GetStorageContainerAsync(string storageContainerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.StorageContainerCollection GetStorageContainers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ArcVm.VirtualHardDiskResource> GetVirtualHardDisk(string virtualHardDiskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcVm.VirtualHardDiskResource>> GetVirtualHardDiskAsync(string virtualHardDiskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArcVm.VirtualHardDiskCollection GetVirtualHardDisks() { throw null; }
+    }
+    public partial class MockableArcVmSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableArcVmSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcVm.GalleryImageResource> GetGalleryImages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcVm.GalleryImageResource> GetGalleryImagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcVm.LogicalNetworkResource> GetLogicalNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcVm.LogicalNetworkResource> GetLogicalNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcVm.MarketplaceGalleryImageResource> GetMarketplaceGalleryImages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcVm.MarketplaceGalleryImageResource> GetMarketplaceGalleryImagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcVm.NetworkInterfaceResource> GetNetworkInterfaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcVm.NetworkInterfaceResource> GetNetworkInterfacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcVm.StorageContainerResource> GetStorageContainers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcVm.StorageContainerResource> GetStorageContainersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcVm.VirtualHardDiskResource> GetVirtualHardDisks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcVm.VirtualHardDiskResource> GetVirtualHardDisksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ArcVm.Models

@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ArcVm;
 
-namespace Azure.ResourceManager.ArcVm
+namespace Azure.ResourceManager.ArcVm.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class MockableArcVmSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _galleryImageClientDiagnostics;
         private GalleryImagesRestOperations _galleryImageRestClient;
@@ -30,15 +31,15 @@ namespace Azure.ResourceManager.ArcVm
         private ClientDiagnostics _virtualHardDiskClientDiagnostics;
         private VirtualHardDisksRestOperations _virtualHardDiskRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="MockableArcVmSubscriptionResource"/> class for mocking. </summary>
+        protected MockableArcVmSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableArcVmSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableArcVmSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), GalleryImageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), GalleryImageClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), GalleryImageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), GalleryImageClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicalNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicalNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), LogicalNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicalNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), LogicalNetworkClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetLogicalNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicalNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicalNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), LogicalNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicalNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicalNetworkResource(Client, LogicalNetworkData.DeserializeLogicalNetworkData(e)), LogicalNetworkClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetLogicalNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceGalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceGalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MarketplaceGalleryImageResource(Client, MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(e)), MarketplaceGalleryImageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MarketplaceGalleryImageResource(Client, MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(e)), MarketplaceGalleryImageClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceGalleryImageRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceGalleryImageRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MarketplaceGalleryImageResource(Client, MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(e)), MarketplaceGalleryImageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MarketplaceGalleryImageResource(Client, MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(e)), MarketplaceGalleryImageClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageContainerRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageContainerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageContainerResource(Client, StorageContainerData.DeserializeStorageContainerData(e)), StorageContainerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageContainerResource(Client, StorageContainerData.DeserializeStorageContainerData(e)), StorageContainerClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetStorageContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageContainerRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageContainerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageContainerResource(Client, StorageContainerData.DeserializeStorageContainerData(e)), StorageContainerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageContainers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageContainerResource(Client, StorageContainerData.DeserializeStorageContainerData(e)), StorageContainerClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetStorageContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHardDiskRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHardDiskRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualHardDiskResource(Client, VirtualHardDiskData.DeserializeVirtualHardDiskData(e)), VirtualHardDiskClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualHardDisks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualHardDiskResource(Client, VirtualHardDiskData.DeserializeVirtualHardDiskData(e)), VirtualHardDiskClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetVirtualHardDisks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.ArcVm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHardDiskRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHardDiskRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualHardDiskResource(Client, VirtualHardDiskData.DeserializeVirtualHardDiskData(e)), VirtualHardDiskClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualHardDisks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualHardDiskResource(Client, VirtualHardDiskData.DeserializeVirtualHardDiskData(e)), VirtualHardDiskClientDiagnostics, Pipeline, "MockableArcVmSubscriptionResource.GetVirtualHardDisks", "value", "nextLink", cancellationToken);
         }
     }
 }

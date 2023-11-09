@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
             await foreach (VirtualHardDiskResource virtualHardDiskFromList in virtualHardDiskCollection)
             {
-                Assert.AreEqual(virtualHardDiskFromList.Data.DiskSizeGB, 2);
+                Assert.AreEqual(virtualHardDiskFromList.Data.Dynamic, true);
             }
         }
     }
