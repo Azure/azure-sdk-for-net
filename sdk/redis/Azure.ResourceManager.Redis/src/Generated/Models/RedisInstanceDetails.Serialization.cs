@@ -5,15 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisInstanceDetails
+    public partial class RedisInstanceDetails : IUtf8JsonSerializable, IJsonModel<RedisInstanceDetails>
     {
-        internal static RedisInstanceDetails DeserializeRedisInstanceDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisInstanceDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RedisInstanceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SslPort))
+                {
+                    writer.WritePropertyName("sslPort"u8);
+                    writer.WriteNumberValue(SslPort.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NonSslPort))
+                {
+                    writer.WritePropertyName("nonSslPort"u8);
+                    writer.WriteNumberValue(NonSslPort.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Zone))
+                {
+                    writer.WritePropertyName("zone"u8);
+                    writer.WriteStringValue(Zone);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ShardId))
+                {
+                    writer.WritePropertyName("shardId"u8);
+                    writer.WriteNumberValue(ShardId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsMaster))
+                {
+                    writer.WritePropertyName("isMaster"u8);
+                    writer.WriteBooleanValue(IsMaster.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsPrimary))
+                {
+                    writer.WritePropertyName("isPrimary"u8);
+                    writer.WriteBooleanValue(IsPrimary.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RedisInstanceDetails IJsonModel<RedisInstanceDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisInstanceDetails(document.RootElement, options);
+        }
+
+        internal static RedisInstanceDetails DeserializeRedisInstanceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +113,8 @@ namespace Azure.ResourceManager.Redis.Models
             Optional<int> shardId = default;
             Optional<bool> isMaster = default;
             Optional<bool> isPrimary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sslPort"u8))
@@ -76,8 +167,38 @@ namespace Azure.ResourceManager.Redis.Models
                     isPrimary = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisInstanceDetails(Optional.ToNullable(sslPort), Optional.ToNullable(nonSslPort), zone.Value, Optional.ToNullable(shardId), Optional.ToNullable(isMaster), Optional.ToNullable(isPrimary));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisInstanceDetails(Optional.ToNullable(sslPort), Optional.ToNullable(nonSslPort), zone.Value, Optional.ToNullable(shardId), Optional.ToNullable(isMaster), Optional.ToNullable(isPrimary), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RedisInstanceDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RedisInstanceDetails IModel<RedisInstanceDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRedisInstanceDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RedisInstanceDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

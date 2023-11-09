@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class PurviewAccountEndpoint
+    public partial class PurviewAccountEndpoint : IUtf8JsonSerializable, IJsonModel<PurviewAccountEndpoint>
     {
-        internal static PurviewAccountEndpoint DeserializePurviewAccountEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewAccountEndpoint>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PurviewAccountEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Catalog))
+                {
+                    writer.WritePropertyName("catalog"u8);
+                    writer.WriteStringValue(Catalog);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Guardian))
+                {
+                    writer.WritePropertyName("guardian"u8);
+                    writer.WriteStringValue(Guardian);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Scan))
+                {
+                    writer.WritePropertyName("scan"u8);
+                    writer.WriteStringValue(Scan);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PurviewAccountEndpoint IJsonModel<PurviewAccountEndpoint>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePurviewAccountEndpoint(document.RootElement, options);
+        }
+
+        internal static PurviewAccountEndpoint DeserializePurviewAccountEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +86,8 @@ namespace Azure.ResourceManager.Purview.Models
             Optional<string> catalog = default;
             Optional<string> guardian = default;
             Optional<string> scan = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("catalog"u8))
@@ -38,8 +105,38 @@ namespace Azure.ResourceManager.Purview.Models
                     scan = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PurviewAccountEndpoint(catalog.Value, guardian.Value, scan.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PurviewAccountEndpoint(catalog.Value, guardian.Value, scan.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<PurviewAccountEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PurviewAccountEndpoint IModel<PurviewAccountEndpoint>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePurviewAccountEndpoint(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PurviewAccountEndpoint>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

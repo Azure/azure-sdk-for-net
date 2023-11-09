@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> The Get Telemetry Config Result appliance. </summary>
     public partial class ApplianceTelemetryConfigResult
     {
-        /// <summary> Initializes a new instance of ApplianceTelemetryConfigResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceTelemetryConfigResult"/>. </summary>
         internal ApplianceTelemetryConfigResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceTelemetryConfigResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceTelemetryConfigResult"/>. </summary>
         /// <param name="telemetryInstrumentationKey"> Telemetry instrumentation key. </param>
-        internal ApplianceTelemetryConfigResult(string telemetryInstrumentationKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceTelemetryConfigResult(string telemetryInstrumentationKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TelemetryInstrumentationKey = telemetryInstrumentationKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Telemetry instrumentation key. </summary>

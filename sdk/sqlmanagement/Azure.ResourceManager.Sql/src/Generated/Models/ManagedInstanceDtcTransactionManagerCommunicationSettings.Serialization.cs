@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : IUtf8JsonSerializable
+    public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : IUtf8JsonSerializable, IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowInboundEnabled))
@@ -30,11 +36,40 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedInstanceDtcTransactionManagerCommunicationSettings DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(JsonElement element)
+        ManagedInstanceDtcTransactionManagerCommunicationSettings IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(document.RootElement, options);
+        }
+
+        internal static ManagedInstanceDtcTransactionManagerCommunicationSettings DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<bool> allowInboundEnabled = default;
             Optional<bool> allowOutboundEnabled = default;
             Optional<string> authentication = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowInboundEnabled"u8))
@@ -67,8 +104,38 @@ namespace Azure.ResourceManager.Sql.Models
                     authentication = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedInstanceDtcTransactionManagerCommunicationSettings(Optional.ToNullable(allowInboundEnabled), Optional.ToNullable(allowOutboundEnabled), authentication.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedInstanceDtcTransactionManagerCommunicationSettings(Optional.ToNullable(allowInboundEnabled), Optional.ToNullable(allowOutboundEnabled), authentication.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedInstanceDtcTransactionManagerCommunicationSettings IModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

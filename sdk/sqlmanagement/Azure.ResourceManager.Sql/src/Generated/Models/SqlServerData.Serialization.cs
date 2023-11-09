@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,9 +16,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerData : IUtf8JsonSerializable
+    public partial class SqlServerData : IUtf8JsonSerializable, IJsonModel<SqlServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SqlServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -24,6 +28,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    writer.WritePropertyName("kind"u8);
+                    writer.WriteStringValue(Kind);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -38,6 +50,29 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorLogin))
@@ -55,6 +90,35 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FullyQualifiedDomainName))
+                {
+                    writer.WritePropertyName("fullyQualifiedDomainName"u8);
+                    writer.WriteStringValue(FullyQualifiedDomainName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
@@ -64,6 +128,14 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(WorkspaceFeature))
+                {
+                    writer.WritePropertyName("workspaceFeature"u8);
+                    writer.WriteStringValue(WorkspaceFeature.Value.ToString());
+                }
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
@@ -95,12 +167,49 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isIPv6Enabled"u8);
                 writer.WriteStringValue(IsIPv6Enabled.Value.ToString());
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExternalGovernanceStatus))
+                {
+                    writer.WritePropertyName("externalGovernanceStatus"u8);
+                    writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlServerData DeserializeSqlServerData(JsonElement element)
+        SqlServerData IJsonModel<SqlServerData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerData(document.RootElement, options);
+        }
+
+        internal static SqlServerData DeserializeSqlServerData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,6 +238,8 @@ namespace Azure.ResourceManager.Sql
             Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
             Optional<ServerNetworkAccessFlag> isIPv6Enabled = default;
             Optional<ExternalGovernanceStatus> externalGovernanceStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -326,8 +437,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SqlServerData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlServerData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlServerData IModel<SqlServerData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlServerData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SqlServerData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanA2AFailoverContent : IUtf8JsonSerializable
+    public partial class RecoveryPlanA2AFailoverContent : IUtf8JsonSerializable, IJsonModel<RecoveryPlanA2AFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanA2AFailoverContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RecoveryPlanA2AFailoverContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
@@ -29,7 +35,108 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RecoveryPlanA2AFailoverContent IJsonModel<RecoveryPlanA2AFailoverContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanA2AFailoverContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanA2AFailoverContent(document.RootElement, options);
+        }
+
+        internal static RecoveryPlanA2AFailoverContent DeserializeRecoveryPlanA2AFailoverContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            A2ARpRecoveryPointType recoveryPointType = default;
+            Optional<string> cloudServiceCreationOption = default;
+            Optional<MultiVmSyncPointOption> multiVmSyncPointOption = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPointType"u8))
+                {
+                    recoveryPointType = new A2ARpRecoveryPointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("cloudServiceCreationOption"u8))
+                {
+                    cloudServiceCreationOption = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("multiVmSyncPointOption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    multiVmSyncPointOption = new MultiVmSyncPointOption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecoveryPlanA2AFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, cloudServiceCreationOption.Value, Optional.ToNullable(multiVmSyncPointOption));
+        }
+
+        BinaryData IModel<RecoveryPlanA2AFailoverContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanA2AFailoverContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryPlanA2AFailoverContent IModel<RecoveryPlanA2AFailoverContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanA2AFailoverContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanA2AFailoverContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RecoveryPlanA2AFailoverContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -18,14 +18,17 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class SubscriptionData
     {
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/>. </summary>
         internal SubscriptionData()
         {
             ManagedByTenants = new ChangeTrackingList<ManagedByTenant>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/>. </summary>
         /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </param>
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
-        internal SubscriptionData(ResourceIdentifier id, string subscriptionId, string displayName, Guid? tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionData(ResourceIdentifier id, string subscriptionId, string displayName, Guid? tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SubscriptionId = subscriptionId;
@@ -46,6 +50,7 @@ namespace Azure.ResourceManager.Resources
             AuthorizationSource = authorizationSource;
             ManagedByTenants = managedByTenants;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }

@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class GenericContainerExtendedInfo : IUtf8JsonSerializable
+    public partial class GenericContainerExtendedInfo : IUtf8JsonSerializable, IJsonModel<GenericContainerExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericContainerExtendedInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GenericContainerExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(RawCertData))
@@ -37,11 +42,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GenericContainerExtendedInfo DeserializeGenericContainerExtendedInfo(JsonElement element)
+        GenericContainerExtendedInfo IJsonModel<GenericContainerExtendedInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenericContainerExtendedInfo(document.RootElement, options);
+        }
+
+        internal static GenericContainerExtendedInfo DeserializeGenericContainerExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +83,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> rawCertData = default;
             Optional<ContainerIdentityInfo> containerIdentityInfo = default;
             Optional<IDictionary<string, string>> serviceEndpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawCertData"u8))
@@ -79,8 +115,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     serviceEndpoints = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, Optional.ToDictionary(serviceEndpoints));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, Optional.ToDictionary(serviceEndpoints), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GenericContainerExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GenericContainerExtendedInfo IModel<GenericContainerExtendedInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGenericContainerExtendedInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GenericContainerExtendedInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

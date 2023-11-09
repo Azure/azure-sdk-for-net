@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Information about a token returned by an analyzer. </summary>
     public partial class AnalyzedTokenInfo
     {
-        /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzedTokenInfo"/>. </summary>
         /// <param name="token"> The token returned by the analyzer. </param>
         /// <param name="startOffset"> The index of the first character of the token in the input text. </param>
         /// <param name="endOffset"> The index of the last character of the token in the input text. </param>
@@ -27,6 +31,26 @@ namespace Azure.Search.Documents.Indexes.Models
             StartOffset = startOffset;
             EndOffset = endOffset;
             Position = position;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzedTokenInfo"/>. </summary>
+        /// <param name="token"> The token returned by the analyzer. </param>
+        /// <param name="startOffset"> The index of the first character of the token in the input text. </param>
+        /// <param name="endOffset"> The index of the last character of the token in the input text. </param>
+        /// <param name="position"> The position of the token in the input text relative to other tokens. The first token in the input text has position 0, the next has position 1, and so on. Depending on the analyzer used, some tokens might have the same position, for example if they are synonyms of each other. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzedTokenInfo(string token, int startOffset, int endOffset, int position, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Token = token;
+            StartOffset = startOffset;
+            EndOffset = endOffset;
+            Position = position;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzedTokenInfo"/> for deserialization. </summary>
+        internal AnalyzedTokenInfo()
+        {
         }
 
         /// <summary> The token returned by the analyzer. </summary>

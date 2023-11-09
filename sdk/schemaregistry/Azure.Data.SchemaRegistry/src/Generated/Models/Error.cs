@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
@@ -13,7 +14,10 @@ namespace Azure.Data.SchemaRegistry.Models
     /// <summary> An error response returned from Azure Schema Registry service. </summary>
     internal partial class Error
     {
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="errorValue"> Error response returned from Azure Schema Registry service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errorValue"/> is null. </exception>
         internal Error(ErrorDetail errorValue)
@@ -21,6 +25,20 @@ namespace Azure.Data.SchemaRegistry.Models
             Argument.AssertNotNull(errorValue, nameof(errorValue));
 
             ErrorValue = errorValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <param name="errorValue"> Error response returned from Azure Schema Registry service. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Error(ErrorDetail errorValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ErrorValue = errorValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Error"/> for deserialization. </summary>
+        internal Error()
+        {
         }
 
         /// <summary> Error response returned from Azure Schema Registry service. </summary>

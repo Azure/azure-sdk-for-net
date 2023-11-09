@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesDataReplication;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Protected item model collection. </summary>
     internal partial class DataReplicationProtectedItemListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemListResult"/>. </summary>
         internal DataReplicationProtectedItemListResult()
         {
             Value = new ChangeTrackingList<DataReplicationProtectedItemData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of protected items. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
-        internal DataReplicationProtectedItemListResult(IReadOnlyList<DataReplicationProtectedItemData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationProtectedItemListResult(IReadOnlyList<DataReplicationProtectedItemData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of protected items. </summary>

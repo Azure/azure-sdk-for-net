@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupHourlySchedule : IUtf8JsonSerializable
+    public partial class BackupHourlySchedule : IUtf8JsonSerializable, IJsonModel<BackupHourlySchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupHourlySchedule>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BackupHourlySchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
@@ -31,11 +36,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("scheduleWindowDuration"u8);
                 writer.WriteNumberValue(ScheduleWindowDuration.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupHourlySchedule DeserializeBackupHourlySchedule(JsonElement element)
+        BackupHourlySchedule IJsonModel<BackupHourlySchedule>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupHourlySchedule(document.RootElement, options);
+        }
+
+        internal static BackupHourlySchedule DeserializeBackupHourlySchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> interval = default;
             Optional<DateTimeOffset> scheduleWindowStartTime = default;
             Optional<int> scheduleWindowDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"u8))
@@ -72,8 +108,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     scheduleWindowDuration = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupHourlySchedule(Optional.ToNullable(interval), Optional.ToNullable(scheduleWindowStartTime), Optional.ToNullable(scheduleWindowDuration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupHourlySchedule(Optional.ToNullable(interval), Optional.ToNullable(scheduleWindowStartTime), Optional.ToNullable(scheduleWindowDuration), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<BackupHourlySchedule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackupHourlySchedule IModel<BackupHourlySchedule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackupHourlySchedule(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BackupHourlySchedule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

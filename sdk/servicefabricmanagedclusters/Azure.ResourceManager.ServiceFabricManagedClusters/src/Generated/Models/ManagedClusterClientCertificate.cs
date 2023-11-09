@@ -6,30 +6,41 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Client certificate definition. </summary>
     public partial class ManagedClusterClientCertificate
     {
-        /// <summary> Initializes a new instance of ManagedClusterClientCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterClientCertificate"/>. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         public ManagedClusterClientCertificate(bool isAdmin)
         {
             IsAdmin = isAdmin;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterClientCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterClientCertificate"/>. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="commonName"> Certificate common name. </param>
         /// <param name="issuerThumbprint"> Issuer thumbprint for the certificate. Only used together with CommonName. </param>
-        internal ManagedClusterClientCertificate(bool isAdmin, BinaryData thumbprint, string commonName, BinaryData issuerThumbprint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterClientCertificate(bool isAdmin, BinaryData thumbprint, string commonName, BinaryData issuerThumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsAdmin = isAdmin;
             Thumbprint = thumbprint;
             CommonName = commonName;
             IssuerThumbprint = issuerThumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterClientCertificate"/> for deserialization. </summary>
+        internal ManagedClusterClientCertificate()
+        {
         }
 
         /// <summary> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </summary>

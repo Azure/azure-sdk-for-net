@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSqlInstanceWorkloadItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSqlInstanceWorkloadItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSqlInstanceWorkloadItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSqlInstanceWorkloadItem>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VmWorkloadSqlInstanceWorkloadItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DataDirectoryPaths))
@@ -73,11 +78,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadSqlInstanceWorkloadItem DeserializeVmWorkloadSqlInstanceWorkloadItem(JsonElement element)
+        VmWorkloadSqlInstanceWorkloadItem IJsonModel<VmWorkloadSqlInstanceWorkloadItem>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadSqlInstanceWorkloadItem(document.RootElement, options);
+        }
+
+        internal static VmWorkloadSqlInstanceWorkloadItem DeserializeVmWorkloadSqlInstanceWorkloadItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,6 +127,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string workloadItemType = default;
             Optional<string> friendlyName = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDirectoryPaths"u8))
@@ -175,8 +211,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmWorkloadSqlInstanceWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount), Optional.ToList(dataDirectoryPaths));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmWorkloadSqlInstanceWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount), Optional.ToList(dataDirectoryPaths));
         }
+
+        BinaryData IModel<VmWorkloadSqlInstanceWorkloadItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VmWorkloadSqlInstanceWorkloadItem IModel<VmWorkloadSqlInstanceWorkloadItem>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVmWorkloadSqlInstanceWorkloadItem(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VmWorkloadSqlInstanceWorkloadItem>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

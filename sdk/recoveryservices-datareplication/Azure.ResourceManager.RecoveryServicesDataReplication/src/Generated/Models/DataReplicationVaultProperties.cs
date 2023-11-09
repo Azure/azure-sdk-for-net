@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Vault properties. </summary>
     public partial class DataReplicationVaultProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultProperties"/>. </summary>
         public DataReplicationVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the vault. </param>
         /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>
         /// <param name="vaultType"> Gets or sets the type of vault. </param>
-        internal DataReplicationVaultProperties(DataReplicationProvisioningState? provisioningState, ResourceIdentifier serviceResourceId, DataReplicationReplicationVaultType? vaultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationVaultProperties(DataReplicationProvisioningState? provisioningState, ResourceIdentifier serviceResourceId, DataReplicationReplicationVaultType? vaultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ServiceResourceId = serviceResourceId;
             VaultType = vaultType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the provisioning state of the vault. </summary>

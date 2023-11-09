@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The provider registration definition. </summary>
     public partial class ProviderRegistrationContent
     {
-        /// <summary> Initializes a new instance of ProviderRegistrationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
         public ProviderRegistrationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
+        /// <param name="thirdPartyProviderConsent"> The provider consent. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderRegistrationContent(ProviderConsentDefinition thirdPartyProviderConsent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ThirdPartyProviderConsent = thirdPartyProviderConsent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provider consent. </summary>

@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ReplicationUsage
+    public partial class ReplicationUsage : IUtf8JsonSerializable, IJsonModel<ReplicationUsage>
     {
-        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationUsage>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ReplicationUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MonitoringSummary))
+            {
+                writer.WritePropertyName("monitoringSummary"u8);
+                writer.WriteObjectValue(MonitoringSummary);
+            }
+            if (Optional.IsDefined(JobsSummary))
+            {
+                writer.WritePropertyName("jobsSummary"u8);
+                writer.WriteObjectValue(JobsSummary);
+            }
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                writer.WritePropertyName("protectedItemCount"u8);
+                writer.WriteNumberValue(ProtectedItemCount.Value);
+            }
+            if (Optional.IsDefined(RecoveryPlanCount))
+            {
+                writer.WritePropertyName("recoveryPlanCount"u8);
+                writer.WriteNumberValue(RecoveryPlanCount.Value);
+            }
+            if (Optional.IsDefined(RegisteredServersCount))
+            {
+                writer.WritePropertyName("registeredServersCount"u8);
+                writer.WriteNumberValue(RegisteredServersCount.Value);
+            }
+            if (Optional.IsDefined(RecoveryServicesProviderAuthType))
+            {
+                writer.WritePropertyName("recoveryServicesProviderAuthType"u8);
+                writer.WriteNumberValue(RecoveryServicesProviderAuthType.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReplicationUsage IJsonModel<ReplicationUsage>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationUsage(document.RootElement, options);
+        }
+
+        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +95,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<int> recoveryPlanCount = default;
             Optional<int> registeredServersCount = default;
             Optional<int> recoveryServicesProviderAuthType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSummary"u8))
@@ -80,8 +153,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     recoveryServicesProviderAuthType = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ReplicationUsage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReplicationUsage IModel<ReplicationUsage>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReplicationUsage(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ReplicationUsage>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment properties with additional details. </summary>
     public partial class ArmDeploymentPropertiesExtended
     {
-        /// <summary> Initializes a new instance of ArmDeploymentPropertiesExtended. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentPropertiesExtended"/>. </summary>
         internal ArmDeploymentPropertiesExtended()
         {
             Providers = new ChangeTrackingList<ResourceProviderData>();
@@ -25,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             ValidatedResources = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentPropertiesExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentPropertiesExtended"/>. </summary>
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="correlationId"> The correlation ID of the deployment. </param>
         /// <param name="timestamp"> The timestamp of the template deployment. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -62,6 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
             OutputResources = outputResources;
             ValidatedResources = validatedResources;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Denotes the state of provisioning. </summary>

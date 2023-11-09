@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The elastic pool edition capability. </summary>
     public partial class ElasticPoolEditionCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolEditionCapability"/>. </summary>
         internal ElasticPoolEditionCapability()
         {
             SupportedElasticPoolPerformanceLevels = new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolEditionCapability"/>. </summary>
         /// <param name="name"> The elastic pool edition name. </param>
         /// <param name="supportedElasticPoolPerformanceLevels"> The list of supported elastic pool DTU levels for the edition. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedElasticPoolPerformanceLevels = supportedElasticPoolPerformanceLevels;
             IsZoneRedundant = isZoneRedundant;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The elastic pool edition name. </summary>

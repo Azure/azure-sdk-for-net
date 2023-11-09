@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery services provider properties. </summary>
     public partial class SiteRecoveryServicesProviderProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderProperties"/>. </summary>
         internal SiteRecoveryServicesProviderProperties()
         {
             AllowedScenarios = new ChangeTrackingList<string>();
             HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderProperties"/>. </summary>
         /// <param name="fabricType"> Type of the site. </param>
         /// <param name="friendlyName"> Friendly name of the DRA. </param>
         /// <param name="providerVersion"> The provider version. </param>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resourceAccessIdentityDetails"> The resource access identity details. </param>
         /// <param name="dataPlaneAuthenticationIdentityDetails"> The data plane authentication identity details. </param>
         /// <param name="providerVersionDetails"> The provider version details. </param>
-        internal SiteRecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpireOn, string fabricFriendlyName, DateTimeOffset? lastHeartbeatReceivedOn, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, SiteRecoveryVersionDetails providerVersionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpireOn, string fabricFriendlyName, DateTimeOffset? lastHeartbeatReceivedOn, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, SiteRecoveryVersionDetails providerVersionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceAccessIdentityDetails = resourceAccessIdentityDetails;
             DataPlaneAuthenticationIdentityDetails = dataPlaneAuthenticationIdentityDetails;
             ProviderVersionDetails = providerVersionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the site. </summary>

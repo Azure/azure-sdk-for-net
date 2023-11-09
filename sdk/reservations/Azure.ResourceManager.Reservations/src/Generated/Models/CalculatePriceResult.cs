@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The response of calculate price for reservation. </summary>
     public partial class CalculatePriceResult
     {
-        /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResult"/>. </summary>
         internal CalculatePriceResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResult"/>. </summary>
         /// <param name="properties"> Properties for calculate price response. </param>
-        internal CalculatePriceResult(CalculatePriceResultProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CalculatePriceResult(CalculatePriceResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties for calculate price response. </summary>

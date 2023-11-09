@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class CurrentQuotaLimitBaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of CurrentQuotaLimitBaseData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CurrentQuotaLimitBaseData"/>. </summary>
         public CurrentQuotaLimitBaseData()
         {
         }
 
-        /// <summary> Initializes a new instance of CurrentQuotaLimitBaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentQuotaLimitBaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Quota properties for the specified resource, based on the API called, Quotas or Usages. </param>
-        internal CurrentQuotaLimitBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CurrentQuotaLimitBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Quota properties for the specified resource, based on the API called, Quotas or Usages. </summary>

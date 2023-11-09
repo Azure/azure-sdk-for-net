@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> User information that made some action. </summary>
     public partial class SecurityInsightsUserInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsUserInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsUserInfo"/>. </summary>
         public SecurityInsightsUserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsUserInfo"/>. </summary>
         /// <param name="email"> The email of the user. </param>
         /// <param name="name"> The name of the user. </param>
         /// <param name="objectId"> The object id of the user. </param>
-        internal SecurityInsightsUserInfo(string email, string name, Guid? objectId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsUserInfo(string email, string name, Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Email = email;
             Name = name;
             ObjectId = objectId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The email of the user. </summary>

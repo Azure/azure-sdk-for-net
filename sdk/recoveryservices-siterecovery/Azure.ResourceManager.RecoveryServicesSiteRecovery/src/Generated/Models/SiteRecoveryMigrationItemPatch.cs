@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Update migration item input. </summary>
     public partial class SiteRecoveryMigrationItemPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemPatch"/>. </summary>
         public SiteRecoveryMigrationItemPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemPatch"/>. </summary>
+        /// <param name="properties"> Update migration item input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryMigrationItemPatch(UpdateMigrationItemProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Update migration item input properties. </summary>

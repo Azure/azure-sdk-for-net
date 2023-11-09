@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The result of the assessment. </summary>
     public partial class SecurityAssessmentStatus
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatus"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         public SecurityAssessmentStatus(SecurityAssessmentStatusCode code)
         {
             Code = code;
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatus"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
-        internal SecurityAssessmentStatus(SecurityAssessmentStatusCode code, string cause, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentStatus(SecurityAssessmentStatusCode code, string cause, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Cause = cause;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatus"/> for deserialization. </summary>
+        internal SecurityAssessmentStatus()
+        {
         }
 
         /// <summary> Programmatic code for the status of the assessment. </summary>

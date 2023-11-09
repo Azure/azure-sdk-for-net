@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageAzureV2 protected disk details. </summary>
     public partial class InMageAzureV2ProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ProtectedDiskDetails"/>. </summary>
         internal InMageAzureV2ProtectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="protectionStage"> The protection stage. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="progressHealth"> The Progress Health. </param>
         /// <param name="progressStatus"> The Progress Status. </param>
         /// <param name="secondsToTakeSwitchProvider"> The seconds to take for switch provider. </param>
-        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
             SecondsToTakeSwitchProvider = secondsToTakeSwitchProvider;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk id. </summary>

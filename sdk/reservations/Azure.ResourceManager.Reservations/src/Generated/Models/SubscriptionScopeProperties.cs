@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The scopes checked by the available scope api. </summary>
     internal partial class SubscriptionScopeProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionScopeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeProperties"/>. </summary>
         internal SubscriptionScopeProperties()
         {
             Scopes = new ChangeTrackingList<ScopeProperties>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeProperties"/>. </summary>
         /// <param name="scopes"></param>
-        internal SubscriptionScopeProperties(IReadOnlyList<ScopeProperties> scopes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionScopeProperties(IReadOnlyList<ScopeProperties> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Scopes = scopes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the scopes. </summary>

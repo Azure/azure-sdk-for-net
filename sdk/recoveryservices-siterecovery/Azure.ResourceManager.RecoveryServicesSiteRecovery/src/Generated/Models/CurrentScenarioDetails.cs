@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Current scenario details of the protected entity. </summary>
     public partial class CurrentScenarioDetails
     {
-        /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CurrentScenarioDetails"/>. </summary>
         internal CurrentScenarioDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentScenarioDetails"/>. </summary>
         /// <param name="scenarioName"> Scenario name. </param>
         /// <param name="jobId"> ARM Id of the job being executed. </param>
         /// <param name="startOn"> Start time of the workflow. </param>
-        internal CurrentScenarioDetails(string scenarioName, ResourceIdentifier jobId, DateTimeOffset? startOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CurrentScenarioDetails(string scenarioName, ResourceIdentifier jobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScenarioName = scenarioName;
             JobId = jobId;
             StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Scenario name. </summary>

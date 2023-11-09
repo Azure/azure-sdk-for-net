@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ServiceTypeHealthPolicy : IUtf8JsonSerializable
+    public partial class ServiceTypeHealthPolicy : IUtf8JsonSerializable, IJsonModel<ServiceTypeHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTypeHealthPolicy>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ServiceTypeHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("maxPercentUnhealthyServices"u8);
@@ -21,11 +27,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteNumberValue(MaxPercentUnhealthyPartitionsPerService);
             writer.WritePropertyName("maxPercentUnhealthyReplicasPerPartition"u8);
             writer.WriteNumberValue(MaxPercentUnhealthyReplicasPerPartition);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceTypeHealthPolicy DeserializeServiceTypeHealthPolicy(JsonElement element)
+        ServiceTypeHealthPolicy IJsonModel<ServiceTypeHealthPolicy>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceTypeHealthPolicy(document.RootElement, options);
+        }
+
+        internal static ServiceTypeHealthPolicy DeserializeServiceTypeHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +68,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int maxPercentUnhealthyServices = default;
             int maxPercentUnhealthyPartitionsPerService = default;
             int maxPercentUnhealthyReplicasPerPartition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentUnhealthyServices"u8))
@@ -50,8 +87,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     maxPercentUnhealthyReplicasPerPartition = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceTypeHealthPolicy(maxPercentUnhealthyServices, maxPercentUnhealthyPartitionsPerService, maxPercentUnhealthyReplicasPerPartition);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceTypeHealthPolicy(maxPercentUnhealthyServices, maxPercentUnhealthyPartitionsPerService, maxPercentUnhealthyReplicasPerPartition, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ServiceTypeHealthPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceTypeHealthPolicy IModel<ServiceTypeHealthPolicy>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceTypeHealthPolicy(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ServiceTypeHealthPolicy>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

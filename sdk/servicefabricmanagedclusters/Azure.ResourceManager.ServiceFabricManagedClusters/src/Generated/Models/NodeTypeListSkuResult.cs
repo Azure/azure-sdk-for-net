@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Node type available sku list results. </summary>
     internal partial class NodeTypeListSkuResult
     {
-        /// <summary> Initializes a new instance of NodeTypeListSkuResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeListSkuResult"/>. </summary>
         internal NodeTypeListSkuResult()
         {
             Value = new ChangeTrackingList<NodeTypeAvailableSku>();
         }
 
-        /// <summary> Initializes a new instance of NodeTypeListSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeListSkuResult"/>. </summary>
         /// <param name="value"> The list of available node type SKUs. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal NodeTypeListSkuResult(IReadOnlyList<NodeTypeAvailableSku> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeListSkuResult(IReadOnlyList<NodeTypeAvailableSku> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of available node type SKUs. </summary>

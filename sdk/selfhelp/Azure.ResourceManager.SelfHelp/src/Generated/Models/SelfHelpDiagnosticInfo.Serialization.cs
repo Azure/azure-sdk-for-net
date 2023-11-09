@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnosticInfo
+    public partial class SelfHelpDiagnosticInfo : IUtf8JsonSerializable, IJsonModel<SelfHelpDiagnosticInfo>
     {
-        internal static SelfHelpDiagnosticInfo DeserializeSelfHelpDiagnosticInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpDiagnosticInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SelfHelpDiagnosticInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SolutionId))
+            {
+                writer.WritePropertyName("solutionId"u8);
+                writer.WriteStringValue(SolutionId);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Insights))
+            {
+                writer.WritePropertyName("insights"u8);
+                writer.WriteStartArray();
+                foreach (var item in Insights)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SelfHelpDiagnosticInfo IJsonModel<SelfHelpDiagnosticInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHelpDiagnosticInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfHelpDiagnosticInfo(document.RootElement, options);
+        }
+
+        internal static SelfHelpDiagnosticInfo DeserializeSelfHelpDiagnosticInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +88,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<SelfHelpDiagnosticStatus> status = default;
             Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
             Optional<SelfHelpError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -62,8 +129,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     error = SelfHelpError.DeserializeSelfHelpError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SelfHelpDiagnosticInfo(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SelfHelpDiagnosticInfo(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SelfHelpDiagnosticInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHelpDiagnosticInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SelfHelpDiagnosticInfo IModel<SelfHelpDiagnosticInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHelpDiagnosticInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSelfHelpDiagnosticInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SelfHelpDiagnosticInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

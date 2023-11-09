@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class QuotaRequestDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
         internal QuotaRequestDetailData()
         {
             Value = new ChangeTrackingList<QuotaSubRequestDetail>();
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +38,15 @@ namespace Azure.ResourceManager.Quota
         /// <param name="error"> Error details of the quota request. </param>
         /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
-        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IReadOnlyList<QuotaSubRequestDetail> value) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IReadOnlyList<QuotaSubRequestDetail> value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Message = message;
             Error = error;
             RequestSubmitOn = requestSubmitOn;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The quota request status. </summary>

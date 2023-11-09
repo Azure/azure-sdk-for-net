@@ -5,19 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReverseReplicationProviderSpecificContent : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownReverseReplicationProviderSpecificContent))]
+    public partial class ReverseReplicationProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<ReverseReplicationProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseReplicationProviderSpecificContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ReverseReplicationProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ReverseReplicationProviderSpecificContent IJsonModel<ReverseReplicationProviderSpecificContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReverseReplicationProviderSpecificContent(document.RootElement, options);
+        }
+
+        internal static ReverseReplicationProviderSpecificContent DeserializeReverseReplicationProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "A2A": return A2AReprotectContent.DeserializeA2AReprotectContent(element);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureReprotectContent.DeserializeHyperVReplicaAzureReprotectContent(element);
+                    case "InMage": return InMageReprotectContent.DeserializeInMageReprotectContent(element);
+                    case "InMageAzureV2": return InMageAzureV2ReprotectContent.DeserializeInMageAzureV2ReprotectContent(element);
+                    case "InMageRcm": return InMageRcmReprotectContent.DeserializeInMageRcmReprotectContent(element);
+                    case "InMageRcmFailback": return InMageRcmFailbackReprotectContent.DeserializeInMageRcmFailbackReprotectContent(element);
+                }
+            }
+            return UnknownReverseReplicationProviderSpecificContent.DeserializeUnknownReverseReplicationProviderSpecificContent(element);
+        }
+
+        BinaryData IModel<ReverseReplicationProviderSpecificContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReverseReplicationProviderSpecificContent IModel<ReverseReplicationProviderSpecificContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReverseReplicationProviderSpecificContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ReverseReplicationProviderSpecificContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

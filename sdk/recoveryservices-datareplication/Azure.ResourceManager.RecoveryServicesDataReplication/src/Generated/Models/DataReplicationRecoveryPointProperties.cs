@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Recovery point model properties. </summary>
     public partial class DataReplicationRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationRecoveryPointProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> Gets or sets the recovery point time. </param>
         /// <param name="recoveryPointType"> Gets or sets the recovery point type. </param>
         /// <param name="customProperties">
@@ -29,6 +33,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointType = recoveryPointType;
             CustomProperties = customProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointProperties"/>. </summary>
+        /// <param name="recoveryPointOn"> Gets or sets the recovery point time. </param>
+        /// <param name="recoveryPointType"> Gets or sets the recovery point type. </param>
+        /// <param name="customProperties">
+        /// Recovery point model custom properties.
+        /// Please note <see cref="RecoveryPointModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationRecoveryPointProperties(DateTimeOffset recoveryPointOn, DataReplicationRecoveryPointType recoveryPointType, RecoveryPointModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RecoveryPointOn = recoveryPointOn;
+            RecoveryPointType = recoveryPointType;
+            CustomProperties = customProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointProperties"/> for deserialization. </summary>
+        internal DataReplicationRecoveryPointProperties()
+        {
         }
 
         /// <summary> Gets or sets the recovery point time. </summary>

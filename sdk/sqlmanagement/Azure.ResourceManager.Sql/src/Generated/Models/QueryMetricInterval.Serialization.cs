@@ -5,17 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class QueryMetricInterval : IUtf8JsonSerializable
+    public partial class QueryMetricInterval : IUtf8JsonSerializable, IJsonModel<QueryMetricInterval>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryMetricInterval>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<QueryMetricInterval>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IntervalStartTime))
+                {
+                    writer.WritePropertyName("intervalStartTime"u8);
+                    writer.WriteStringValue(IntervalStartTime);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IntervalType))
+                {
+                    writer.WritePropertyName("intervalType"u8);
+                    writer.WriteStringValue(IntervalType.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExecutionCount))
+                {
+                    writer.WritePropertyName("executionCount"u8);
+                    writer.WriteNumberValue(ExecutionCount.Value);
+                }
+            }
             if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
@@ -26,11 +55,40 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QueryMetricInterval DeserializeQueryMetricInterval(JsonElement element)
+        QueryMetricInterval IJsonModel<QueryMetricInterval>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryMetricInterval(document.RootElement, options);
+        }
+
+        internal static QueryMetricInterval DeserializeQueryMetricInterval(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +97,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<QueryTimeGrainType> intervalType = default;
             Optional<long> executionCount = default;
             Optional<IList<QueryMetricProperties>> metrics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("intervalStartTime"u8))
@@ -78,8 +138,38 @@ namespace Azure.ResourceManager.Sql.Models
                     metrics = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueryMetricInterval(intervalStartTime.Value, Optional.ToNullable(intervalType), Optional.ToNullable(executionCount), Optional.ToList(metrics));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryMetricInterval(intervalStartTime.Value, Optional.ToNullable(intervalType), Optional.ToNullable(executionCount), Optional.ToList(metrics), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<QueryMetricInterval>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QueryMetricInterval IModel<QueryMetricInterval>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQueryMetricInterval(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<QueryMetricInterval>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

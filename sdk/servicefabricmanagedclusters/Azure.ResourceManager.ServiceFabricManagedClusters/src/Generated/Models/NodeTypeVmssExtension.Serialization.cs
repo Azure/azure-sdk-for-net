@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeVmssExtension : IUtf8JsonSerializable
+    public partial class NodeTypeVmssExtension : IUtf8JsonSerializable, IJsonModel<NodeTypeVmssExtension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeTypeVmssExtension>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NodeTypeVmssExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -71,17 +75,54 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NodeTypeVmssExtension DeserializeNodeTypeVmssExtension(JsonElement element)
+        NodeTypeVmssExtension IJsonModel<NodeTypeVmssExtension>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNodeTypeVmssExtension(document.RootElement, options);
+        }
+
+        internal static NodeTypeVmssExtension DeserializeNodeTypeVmssExtension(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +138,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<IList<string>> provisionAfterExtensions = default;
             Optional<string> provisioningState = default;
             Optional<bool> enableAutomaticUpgrade = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -191,8 +234,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<NodeTypeVmssExtension>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NodeTypeVmssExtension IModel<NodeTypeVmssExtension>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNodeTypeVmssExtension(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NodeTypeVmssExtension>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

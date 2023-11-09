@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class contains the error details per object. </summary>
     public partial class SiteRecoveryJobProviderError
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobProviderError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProviderError"/>. </summary>
         internal SiteRecoveryJobProviderError()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobProviderError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobProviderError"/>. </summary>
         /// <param name="errorCode"> The Error code. </param>
         /// <param name="errorMessage"> The Error message. </param>
         /// <param name="errorId"> The Provider error Id. </param>
         /// <param name="possibleCauses"> The possible causes for the error. </param>
         /// <param name="recommendedAction"> The recommended action to resolve the error. </param>
-        internal SiteRecoveryJobProviderError(int? errorCode, string errorMessage, string errorId, string possibleCauses, string recommendedAction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobProviderError(int? errorCode, string errorMessage, string errorId, string possibleCauses, string recommendedAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             ErrorId = errorId;
             PossibleCauses = possibleCauses;
             RecommendedAction = recommendedAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Error code. </summary>

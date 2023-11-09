@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> An error response from Azure. </summary>
     public partial class ErrorData
     {
-        /// <summary> Initializes a new instance of ErrorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorData"/>. </summary>
         internal ErrorData()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorData"/>. </summary>
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for displaying in a user interface. </param>
-        internal ErrorData(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorData(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </summary>

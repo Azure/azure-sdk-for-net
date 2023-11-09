@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The list of catalogs and pagination information. </summary>
     internal partial class CatalogsResult
     {
-        /// <summary> Initializes a new instance of CatalogsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CatalogsResult"/>. </summary>
         internal CatalogsResult()
         {
             Value = new ChangeTrackingList<ReservationCatalog>();
         }
 
-        /// <summary> Initializes a new instance of CatalogsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogsResult"/>. </summary>
         /// <param name="value"> The list of catalogs. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="totalItems"> The total amount of catalog items. </param>
-        internal CatalogsResult(IReadOnlyList<ReservationCatalog> value, string nextLink, long? totalItems)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CatalogsResult(IReadOnlyList<ReservationCatalog> value, string nextLink, long? totalItems, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             TotalItems = totalItems;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of catalogs. </summary>

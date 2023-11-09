@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,22 +19,27 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ServerAdvancedThreatProtectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerAdvancedThreatProtectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerAdvancedThreatProtectionData"/>. </summary>
         public ServerAdvancedThreatProtectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerAdvancedThreatProtectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerAdvancedThreatProtectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        internal ServerAdvancedThreatProtectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvancedThreatProtectionState? state, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerAdvancedThreatProtectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvancedThreatProtectionState? state, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </summary>

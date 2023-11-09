@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> AzureKB web result. </summary>
     public partial class WebResult
     {
-        /// <summary> Initializes a new instance of WebResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebResult"/>. </summary>
         public WebResult()
         {
             SearchResults = new ChangeTrackingList<SearchResult>();
         }
 
-        /// <summary> Initializes a new instance of WebResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebResult"/>. </summary>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="searchResults"> AzureKB search results. </param>
-        internal WebResult(string replacementKey, IList<SearchResult> searchResults)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebResult(string replacementKey, IList<SearchResult> searchResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplacementKey = replacementKey;
             SearchResults = searchResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Place holder used in HTML Content replace control with the content. </summary>

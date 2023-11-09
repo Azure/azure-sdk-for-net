@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary> A class representing the SecurityInsightsAutomationRule data model. </summary>
     public partial class SecurityInsightsAutomationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/>. </summary>
         /// <param name="displayName"> The display name of the automation rule. </param>
         /// <param name="order"> The order of execution of the automation rule. </param>
         /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +61,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
         /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsAutomationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, int order, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic, IList<SecurityInsightsAutomationRuleAction> actions, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, SecurityInsightsClientInfo lastModifiedBy, SecurityInsightsClientInfo createdBy, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAutomationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, int order, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic, IList<SecurityInsightsAutomationRuleAction> actions, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, SecurityInsightsClientInfo lastModifiedBy, SecurityInsightsClientInfo createdBy, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Order = order;
@@ -69,6 +73,12 @@ namespace Azure.ResourceManager.SecurityInsights
             LastModifiedBy = lastModifiedBy;
             CreatedBy = createdBy;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/> for deserialization. </summary>
+        internal SecurityInsightsAutomationRuleData()
+        {
         }
 
         /// <summary> The display name of the automation rule. </summary>

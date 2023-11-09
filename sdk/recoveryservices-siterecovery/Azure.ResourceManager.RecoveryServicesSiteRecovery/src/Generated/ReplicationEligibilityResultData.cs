@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class ReplicationEligibilityResultData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultData"/>. </summary>
         internal ReplicationEligibilityResultData()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Gets properties model for replication eligibility results API. </param>
-        internal ReplicationEligibilityResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationEligibilityResultProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationEligibilityResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationEligibilityResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets properties model for replication eligibility results API. </summary>

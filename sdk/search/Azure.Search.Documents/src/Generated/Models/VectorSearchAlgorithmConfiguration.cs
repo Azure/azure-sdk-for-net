@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -17,7 +18,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public abstract partial class VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected VectorSearchAlgorithmConfiguration(string name)
@@ -27,13 +31,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. </param>
-        internal VectorSearchAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VectorSearchAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/> for deserialization. </summary>
+        internal VectorSearchAlgorithmConfiguration()
+        {
         }
 
         /// <summary> The name to associate with this particular configuration. </summary>

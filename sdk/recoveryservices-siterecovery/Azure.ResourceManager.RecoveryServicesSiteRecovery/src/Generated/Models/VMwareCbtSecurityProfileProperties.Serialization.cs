@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtSecurityProfileProperties : IUtf8JsonSerializable
+    public partial class VMwareCbtSecurityProfileProperties : IUtf8JsonSerializable, IJsonModel<VMwareCbtSecurityProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtSecurityProfileProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VMwareCbtSecurityProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetVmSecurityType))
@@ -40,11 +46,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("isTargetVmConfidentialEncryptionEnabled"u8);
                 writer.WriteStringValue(IsTargetVmConfidentialEncryptionEnabled);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VMwareCbtSecurityProfileProperties DeserializeVMwareCbtSecurityProfileProperties(JsonElement element)
+        VMwareCbtSecurityProfileProperties IJsonModel<VMwareCbtSecurityProfileProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtSecurityProfileProperties(document.RootElement, options);
+        }
+
+        internal static VMwareCbtSecurityProfileProperties DeserializeVMwareCbtSecurityProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +89,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> isTargetVmTpmEnabled = default;
             Optional<string> isTargetVmIntegrityMonitoringEnabled = default;
             Optional<string> isTargetVmConfidentialEncryptionEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetVmSecurityType"u8))
@@ -85,8 +122,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     isTargetVmConfidentialEncryptionEnabled = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareCbtSecurityProfileProperties(Optional.ToNullable(targetVmSecurityType), isTargetVmSecureBootEnabled.Value, isTargetVmTpmEnabled.Value, isTargetVmIntegrityMonitoringEnabled.Value, isTargetVmConfidentialEncryptionEnabled.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareCbtSecurityProfileProperties(Optional.ToNullable(targetVmSecurityType), isTargetVmSecureBootEnabled.Value, isTargetVmTpmEnabled.Value, isTargetVmIntegrityMonitoringEnabled.Value, isTargetVmConfidentialEncryptionEnabled.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<VMwareCbtSecurityProfileProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VMwareCbtSecurityProfileProperties IModel<VMwareCbtSecurityProfileProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVMwareCbtSecurityProfileProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VMwareCbtSecurityProfileProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

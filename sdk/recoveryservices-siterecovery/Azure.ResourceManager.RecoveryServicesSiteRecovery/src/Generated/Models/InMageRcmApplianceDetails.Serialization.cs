@@ -5,16 +5,149 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmApplianceDetails
+    public partial class InMageRcmApplianceDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmApplianceDetails>
     {
-        internal static InMageRcmApplianceDetails DeserializeInMageRcmApplianceDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmApplianceDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<InMageRcmApplianceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FabricArmId))
+                {
+                    writer.WritePropertyName("fabricArmId"u8);
+                    writer.WriteStringValue(FabricArmId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProcessServer))
+                {
+                    writer.WritePropertyName("processServer"u8);
+                    writer.WriteObjectValue(ProcessServer);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RcmProxy))
+                {
+                    writer.WritePropertyName("rcmProxy"u8);
+                    writer.WriteObjectValue(RcmProxy);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PushInstaller))
+                {
+                    writer.WritePropertyName("pushInstaller"u8);
+                    writer.WriteObjectValue(PushInstaller);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ReplicationAgent))
+                {
+                    writer.WritePropertyName("replicationAgent"u8);
+                    writer.WriteObjectValue(ReplicationAgent);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ReprotectAgent))
+                {
+                    writer.WritePropertyName("reprotectAgent"u8);
+                    writer.WriteObjectValue(ReprotectAgent);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MarsAgent))
+                {
+                    writer.WritePropertyName("marsAgent"u8);
+                    writer.WriteObjectValue(MarsAgent);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Dra))
+                {
+                    writer.WritePropertyName("dra"u8);
+                    writer.WriteObjectValue(Dra);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+                {
+                    writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SwitchProviderBlockingErrorDetails)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmApplianceDetails IJsonModel<InMageRcmApplianceDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmApplianceDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmApplianceDetails DeserializeInMageRcmApplianceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +163,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<MarsAgentDetails> marsAgent = default;
             Optional<SiteRecoveryDraDetails> dra = default;
             Optional<IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,8 +263,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     switchProviderBlockingErrorDetails = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmApplianceDetails(id.Value, name.Value, fabricArmId.Value, processServer.Value, rcmProxy.Value, pushInstaller.Value, replicationAgent.Value, reprotectAgent.Value, marsAgent.Value, dra.Value, Optional.ToList(switchProviderBlockingErrorDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmApplianceDetails(id.Value, name.Value, fabricArmId.Value, processServer.Value, rcmProxy.Value, pushInstaller.Value, replicationAgent.Value, reprotectAgent.Value, marsAgent.Value, dra.Value, Optional.ToList(switchProviderBlockingErrorDetails), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<InMageRcmApplianceDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageRcmApplianceDetails IModel<InMageRcmApplianceDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageRcmApplianceDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<InMageRcmApplianceDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

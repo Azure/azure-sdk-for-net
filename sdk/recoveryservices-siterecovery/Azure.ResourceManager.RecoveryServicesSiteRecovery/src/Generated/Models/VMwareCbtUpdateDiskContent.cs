@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt disk input for update. </summary>
     public partial class VMwareCbtUpdateDiskContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtUpdateDiskContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public VMwareCbtUpdateDiskContent(string diskId)
@@ -21,6 +25,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="targetDiskName"> The target disk name. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareCbtUpdateDiskContent(string diskId, string targetDiskName, string isOSDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DiskId = diskId;
+            TargetDiskName = targetDiskName;
+            IsOSDisk = isOSDisk;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/> for deserialization. </summary>
+        internal VMwareCbtUpdateDiskContent()
+        {
         }
 
         /// <summary> The disk Id. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Reservations
     /// </summary>
     public partial class ReservationDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReservationDetailData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationDetailData"/>. </summary>
         internal ReservationDetailData()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +37,15 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="sku"> The sku information associated to this reservation. </param>
         /// <param name="properties"> The properties associated to this reservation. </param>
         /// <param name="kind"> Resource Provider type to be reserved. </param>
-        internal ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, int? version, ReservationsSkuName sku, ReservationProperties properties, ReservationKind? kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, int? version, ReservationsSkuName sku, ReservationProperties properties, ReservationKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Version = version;
             Sku = sku;
             Properties = properties;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure region where the reserved resource lives. </summary>

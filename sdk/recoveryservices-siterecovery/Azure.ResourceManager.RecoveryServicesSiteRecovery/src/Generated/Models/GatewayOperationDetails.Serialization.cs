@@ -5,16 +5,125 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class GatewayOperationDetails
+    public partial class GatewayOperationDetails : IUtf8JsonSerializable, IJsonModel<GatewayOperationDetails>
     {
-        internal static GatewayOperationDetails DeserializeGatewayOperationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayOperationDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GatewayOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProgressPercentage))
+                {
+                    writer.WritePropertyName("progressPercentage"u8);
+                    writer.WriteNumberValue(ProgressPercentage.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TimeElapsed))
+                {
+                    writer.WritePropertyName("timeElapsed"u8);
+                    writer.WriteNumberValue(TimeElapsed.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TimeRemaining))
+                {
+                    writer.WritePropertyName("timeRemaining"u8);
+                    writer.WriteNumberValue(TimeRemaining.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UploadSpeed))
+                {
+                    writer.WritePropertyName("uploadSpeed"u8);
+                    writer.WriteNumberValue(UploadSpeed.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(HostName))
+                {
+                    writer.WritePropertyName("hostName"u8);
+                    writer.WriteStringValue(HostName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(DataStores))
+                {
+                    writer.WritePropertyName("dataStores"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DataStores)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VMwareReadThroughput))
+                {
+                    writer.WritePropertyName("vmwareReadThroughput"u8);
+                    writer.WriteNumberValue(VMwareReadThroughput.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GatewayOperationDetails IJsonModel<GatewayOperationDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGatewayOperationDetails(document.RootElement, options);
+        }
+
+        internal static GatewayOperationDetails DeserializeGatewayOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +136,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> hostName = default;
             Optional<IReadOnlyList<string>> dataStores = default;
             Optional<long> vmwareReadThroughput = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -98,8 +209,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmwareReadThroughput = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GatewayOperationDetails(state.Value, Optional.ToNullable(progressPercentage), Optional.ToNullable(timeElapsed), Optional.ToNullable(timeRemaining), Optional.ToNullable(uploadSpeed), hostName.Value, Optional.ToList(dataStores), Optional.ToNullable(vmwareReadThroughput));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GatewayOperationDetails(state.Value, Optional.ToNullable(progressPercentage), Optional.ToNullable(timeElapsed), Optional.ToNullable(timeRemaining), Optional.ToNullable(uploadSpeed), hostName.Value, Optional.ToList(dataStores), Optional.ToNullable(vmwareReadThroughput), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GatewayOperationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GatewayOperationDetails IModel<GatewayOperationDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGatewayOperationDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GatewayOperationDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

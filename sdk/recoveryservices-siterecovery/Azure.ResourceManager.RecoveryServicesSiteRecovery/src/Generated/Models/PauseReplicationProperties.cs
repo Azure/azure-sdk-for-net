@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Pause replication input properties. </summary>
     public partial class PauseReplicationProperties
     {
-        /// <summary> Initializes a new instance of PauseReplicationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PauseReplicationProperties"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceType"/> is null. </exception>
         public PauseReplicationProperties(string instanceType)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(instanceType, nameof(instanceType));
 
             InstanceType = instanceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PauseReplicationProperties"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PauseReplicationProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PauseReplicationProperties"/> for deserialization. </summary>
+        internal PauseReplicationProperties()
+        {
         }
 
         /// <summary> The class type. </summary>

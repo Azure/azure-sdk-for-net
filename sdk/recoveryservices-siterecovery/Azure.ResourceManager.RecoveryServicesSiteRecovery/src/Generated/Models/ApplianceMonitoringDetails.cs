@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Appliance details of the migration item. </summary>
     public partial class ApplianceMonitoringDetails
     {
-        /// <summary> Initializes a new instance of ApplianceMonitoringDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceMonitoringDetails"/>. </summary>
         internal ApplianceMonitoringDetails()
         {
             DatastoreSnapshot = new ChangeTrackingList<DataStoreUtilizationDetails>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceMonitoringDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceMonitoringDetails"/>. </summary>
         /// <param name="cpuDetails"> The appliance CPU details. </param>
         /// <param name="ramDetails"> The appliance RAM details. </param>
         /// <param name="datastoreSnapshot"> The appliance datastore snapshot details. </param>
         /// <param name="disksReplicationDetails"> The disk replication details. </param>
         /// <param name="esxiNfcBuffer"> The ESXi NFC buffer details. </param>
         /// <param name="networkBandwidth"> The appliance network bandwidth details. </param>
-        internal ApplianceMonitoringDetails(ApplianceResourceDetails cpuDetails, ApplianceResourceDetails ramDetails, IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot, ApplianceResourceDetails disksReplicationDetails, ApplianceResourceDetails esxiNfcBuffer, ApplianceResourceDetails networkBandwidth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceMonitoringDetails(ApplianceResourceDetails cpuDetails, ApplianceResourceDetails ramDetails, IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot, ApplianceResourceDetails disksReplicationDetails, ApplianceResourceDetails esxiNfcBuffer, ApplianceResourceDetails networkBandwidth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CpuDetails = cpuDetails;
             RamDetails = ramDetails;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DisksReplicationDetails = disksReplicationDetails;
             EsxiNfcBuffer = esxiNfcBuffer;
             NetworkBandwidth = networkBandwidth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The appliance CPU details. </summary>

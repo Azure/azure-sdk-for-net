@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
     public abstract partial class KnowledgeStoreProjectionSelector
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjectionSelector"/>. </summary>
         public KnowledgeStoreProjectionSelector()
         {
             Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
-        internal KnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceKeyName = referenceKeyName;
             GeneratedKeyName = generatedKeyName;
             Source = source;
             SourceContext = sourceContext;
             Inputs = inputs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of reference key to different projection. </summary>

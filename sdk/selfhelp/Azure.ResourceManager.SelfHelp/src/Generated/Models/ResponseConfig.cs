@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> The status of the resource. </summary>
     public partial class ResponseConfig
     {
-        /// <summary> Initializes a new instance of ResponseConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResponseConfig"/>. </summary>
         internal ResponseConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ResponseConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseConfig"/>. </summary>
         /// <param name="key"> Unique string. </param>
         /// <param name="value"> Option description. </param>
-        internal ResponseConfig(string key, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseConfig(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique string. </summary>

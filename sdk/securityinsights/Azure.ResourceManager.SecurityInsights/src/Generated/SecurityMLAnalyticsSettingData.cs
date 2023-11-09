@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -20,22 +22,27 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityMLAnalyticsSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingData"/>. </summary>
         public SecurityMLAnalyticsSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of security ML Analytics Settings. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityMLAnalyticsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityMLAnalyticsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The kind of security ML Analytics Settings. </summary>

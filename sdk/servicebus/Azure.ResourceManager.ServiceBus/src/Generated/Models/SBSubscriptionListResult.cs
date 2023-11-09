@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response to the List Subscriptions operation. </summary>
     internal partial class SBSubscriptionListResult
     {
-        /// <summary> Initializes a new instance of SBSubscriptionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SBSubscriptionListResult"/>. </summary>
         internal SBSubscriptionListResult()
         {
             Value = new ChangeTrackingList<ServiceBusSubscriptionData>();
         }
 
-        /// <summary> Initializes a new instance of SBSubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SBSubscriptionListResult"/>. </summary>
         /// <param name="value"> Result of the List Subscriptions operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of subscriptions. </param>
-        internal SBSubscriptionListResult(IReadOnlyList<ServiceBusSubscriptionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SBSubscriptionListResult(IReadOnlyList<ServiceBusSubscriptionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the List Subscriptions operation. </summary>

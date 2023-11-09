@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class GovernanceAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of GovernanceAssignmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentData"/>. </summary>
         public GovernanceAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of GovernanceAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance assignment. </param>
         /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
         /// <param name="additionalData"> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </param>
-        internal GovernanceAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string owner, DateTimeOffset? remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalInfo additionalData) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string owner, DateTimeOffset? remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalInfo additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Owner = owner;
             RemediationDueOn = remediationDueOn;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter
             IsGracePeriod = isGracePeriod;
             GovernanceEmailNotification = governanceEmailNotification;
             AdditionalData = additionalData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Owner for the governance assignment - e.g. user@contoso.com - see example. </summary>

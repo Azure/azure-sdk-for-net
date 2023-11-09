@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationProtectedItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemData"/>. </summary>
         /// <param name="properties"> Protected item model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataReplicationProtectedItemData(DataReplicationProtectedItemProperties properties)
@@ -28,15 +32,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Protected item model properties. </param>
-        internal DataReplicationProtectedItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataReplicationProtectedItemProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationProtectedItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataReplicationProtectedItemProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemData"/> for deserialization. </summary>
+        internal DataReplicationProtectedItemData()
+        {
         }
 
         /// <summary> Protected item model properties. </summary>

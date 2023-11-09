@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<RecommendedActionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendedActionDatabaseRecommendedActionsRestClient.CreateListByDatabaseAdvisorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RecommendedActionResource(Client, RecommendedActionData.DeserializeRecommendedActionData(e)), _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new RecommendedActionResource(Client, RecommendedActionData.DeserializeRecommendedActionData(e)), _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<RecommendedActionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendedActionDatabaseRecommendedActionsRestClient.CreateListByDatabaseAdvisorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RecommendedActionResource(Client, RecommendedActionData.DeserializeRecommendedActionData(e)), _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new RecommendedActionResource(Client, RecommendedActionData.DeserializeRecommendedActionData(e)), _recommendedActionDatabaseRecommendedActionsClientDiagnostics, Pipeline, "RecommendedActionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

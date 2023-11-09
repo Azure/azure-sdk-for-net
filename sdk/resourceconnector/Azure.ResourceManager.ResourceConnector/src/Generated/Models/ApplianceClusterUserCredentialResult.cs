@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The List Cluster User Credential appliance. </summary>
     public partial class ApplianceClusterUserCredentialResult
     {
-        /// <summary> Initializes a new instance of ApplianceClusterUserCredentialResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserCredentialResult"/>. </summary>
         internal ApplianceClusterUserCredentialResult()
         {
             Kubeconfigs = new ChangeTrackingList<ApplianceCredentialKubeconfig>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceClusterUserCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserCredentialResult"/>. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
-        internal ApplianceClusterUserCredentialResult(HybridConnectionConfig hybridConnectionConfig, IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceClusterUserCredentialResult(HybridConnectionConfig hybridConnectionConfig, IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HybridConnectionConfig = hybridConnectionConfig;
             Kubeconfigs = kubeconfigs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </summary>

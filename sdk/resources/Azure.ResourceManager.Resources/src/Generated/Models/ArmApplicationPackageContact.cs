@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The application package contact information. </summary>
     public partial class ArmApplicationPackageContact
     {
-        /// <summary> Initializes a new instance of ArmApplicationPackageContact. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageContact"/>. </summary>
         /// <param name="email"> The contact email. </param>
         /// <param name="phone"> The contact phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> or <paramref name="phone"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.ResourceManager.Resources.Models
             Phone = phone;
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageContact"/>. </summary>
         /// <param name="contactName"> The contact name. </param>
         /// <param name="email"> The contact email. </param>
         /// <param name="phone"> The contact phone number. </param>
-        internal ArmApplicationPackageContact(string contactName, string email, string phone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationPackageContact(string contactName, string email, string phone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactName = contactName;
             Email = email;
             Phone = phone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageContact"/> for deserialization. </summary>
+        internal ArmApplicationPackageContact()
+        {
         }
 
         /// <summary> The contact name. </summary>

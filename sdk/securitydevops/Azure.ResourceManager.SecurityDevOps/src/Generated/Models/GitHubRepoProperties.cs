@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> GitHub Repo properties. </summary>
     public partial class GitHubRepoProperties
     {
-        /// <summary> Initializes a new instance of GitHubRepoProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoProperties"/>. </summary>
         public GitHubRepoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubRepoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="accountId"> Gets or sets gitHub repo account id. </param>
         /// <param name="repoUri"> Gets or sets gitHub repo url. </param>
         /// <param name="ownerName"> Gets or sets GitHub Owner Name. </param>
-        internal GitHubRepoProperties(ProvisioningState? provisioningState, long? accountId, Uri repoUri, string ownerName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubRepoProperties(ProvisioningState? provisioningState, long? accountId, Uri repoUri, string ownerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AccountId = accountId;
             RepoUri = repoUri;
             OwnerName = ownerName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

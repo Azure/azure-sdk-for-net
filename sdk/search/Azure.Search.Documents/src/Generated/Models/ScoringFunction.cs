@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -17,17 +18,27 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class ScoringFunction
     {
-        /// <summary> Initializes a new instance of ScoringFunction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScoringFunction"/>. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
-        internal ScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             FieldName = fieldName;
             Boost = boost;
             Interpolation = interpolation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScoringFunction"/> for deserialization. </summary>
+        internal ScoringFunction()
+        {
         }
 
         /// <summary> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </summary>

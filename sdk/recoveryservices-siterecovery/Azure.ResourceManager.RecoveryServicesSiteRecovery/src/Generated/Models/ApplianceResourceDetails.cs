@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Details of the appliance resource. </summary>
     public partial class ApplianceResourceDetails
     {
-        /// <summary> Initializes a new instance of ApplianceResourceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceResourceDetails"/>. </summary>
         internal ApplianceResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceResourceDetails"/>. </summary>
         /// <param name="capacity"> A value indicating the total capacity of appliance resource. </param>
         /// <param name="processUtilization"> A value indicating the utilization percentage by gateway agent on appliance. </param>
         /// <param name="totalUtilization"> A value indicating the total utilization percentage for all processes on the appliance. </param>
         /// <param name="status"> A value indicating the status of appliance resource. </param>
-        internal ApplianceResourceDetails(long? capacity, double? processUtilization, double? totalUtilization, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceResourceDetails(long? capacity, double? processUtilization, double? totalUtilization, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capacity = capacity;
             ProcessUtilization = processUtilization;
             TotalUtilization = totalUtilization;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A value indicating the total capacity of appliance resource. </summary>

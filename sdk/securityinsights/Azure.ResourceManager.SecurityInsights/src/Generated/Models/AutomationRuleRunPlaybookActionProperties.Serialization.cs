@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleRunPlaybookActionProperties : IUtf8JsonSerializable
+    public partial class AutomationRuleRunPlaybookActionProperties : IUtf8JsonSerializable, IJsonModel<AutomationRuleRunPlaybookActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRuleRunPlaybookActionProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AutomationRuleRunPlaybookActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logicAppResourceId"u8);
@@ -23,17 +28,48 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationRuleRunPlaybookActionProperties DeserializeAutomationRuleRunPlaybookActionProperties(JsonElement element)
+        AutomationRuleRunPlaybookActionProperties IJsonModel<AutomationRuleRunPlaybookActionProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRuleRunPlaybookActionProperties(document.RootElement, options);
+        }
+
+        internal static AutomationRuleRunPlaybookActionProperties DeserializeAutomationRuleRunPlaybookActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier logicAppResourceId = default;
             Optional<Guid> tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logicAppResourceId"u8))
@@ -50,8 +86,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AutomationRuleRunPlaybookActionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AutomationRuleRunPlaybookActionProperties IModel<AutomationRuleRunPlaybookActionProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAutomationRuleRunPlaybookActionProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AutomationRuleRunPlaybookActionProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

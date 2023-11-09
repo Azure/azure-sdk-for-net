@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm disk input. </summary>
     public partial class InMageRcmDiskContent
     {
-        /// <summary> Initializes a new instance of InMageRcmDiskContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
@@ -26,6 +30,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskId = diskId;
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DiskId = diskId;
+            LogStorageAccountId = logStorageAccountId;
+            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/> for deserialization. </summary>
+        internal InMageRcmDiskContent()
+        {
         }
 
         /// <summary> The disk Id. </summary>

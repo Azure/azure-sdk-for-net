@@ -5,27 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecurityAlertedDevice : IUtf8JsonSerializable
+    public partial class IotSecurityAlertedDevice : IUtf8JsonSerializable, IJsonModel<IotSecurityAlertedDevice>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecurityAlertedDevice>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<IotSecurityAlertedDevice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DeviceId))
+                {
+                    writer.WritePropertyName("deviceId"u8);
+                    writer.WriteStringValue(DeviceId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AlertsCount))
+                {
+                    writer.WritePropertyName("alertsCount"u8);
+                    writer.WriteNumberValue(AlertsCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotSecurityAlertedDevice DeserializeIotSecurityAlertedDevice(JsonElement element)
+        IotSecurityAlertedDevice IJsonModel<IotSecurityAlertedDevice>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotSecurityAlertedDevice)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotSecurityAlertedDevice(document.RootElement, options);
+        }
+
+        internal static IotSecurityAlertedDevice DeserializeIotSecurityAlertedDevice(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> deviceId = default;
             Optional<long> alertsCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -42,8 +95,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     alertsCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotSecurityAlertedDevice(deviceId.Value, Optional.ToNullable(alertsCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IotSecurityAlertedDevice(deviceId.Value, Optional.ToNullable(alertsCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<IotSecurityAlertedDevice>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotSecurityAlertedDevice)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IotSecurityAlertedDevice IModel<IotSecurityAlertedDevice>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotSecurityAlertedDevice)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIotSecurityAlertedDevice(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<IotSecurityAlertedDevice>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

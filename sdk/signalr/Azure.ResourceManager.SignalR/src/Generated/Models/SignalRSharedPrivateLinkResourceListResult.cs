@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SignalR;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> A list of shared private link resources. </summary>
     internal partial class SignalRSharedPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceListResult"/>. </summary>
         internal SignalRSharedPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The list of the shared private link resources. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
-        internal SignalRSharedPrivateLinkResourceListResult(IReadOnlyList<SignalRSharedPrivateLinkResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRSharedPrivateLinkResourceListResult(IReadOnlyList<SignalRSharedPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of the shared private link resources. </summary>

@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndex : IUtf8JsonSerializable
+    public partial class SearchIndex : IUtf8JsonSerializable, IJsonModel<SearchIndex>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndex>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SearchIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -148,11 +153,40 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SearchIndex DeserializeSearchIndex(JsonElement element)
+        SearchIndex IJsonModel<SearchIndex>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchIndex)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchIndex(document.RootElement, options);
+        }
+
+        internal static SearchIndex DeserializeSearchIndex(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,6 +206,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<SemanticSearch> semantic = default;
             Optional<VectorSearch> vectorSearch = default;
             Optional<string> odataEtag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -332,8 +368,38 @@ namespace Azure.Search.Documents.Indexes.Models
                     odataEtag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchIndex(name, fields, Optional.ToList(scoringProfiles), defaultScoringProfile.Value, corsOptions.Value, Optional.ToList(suggesters), Optional.ToList(analyzers), Optional.ToList(tokenizers), Optional.ToList(tokenFilters), Optional.ToList(charFilters), encryptionKey.Value, similarity.Value, semantic.Value, vectorSearch.Value, odataEtag.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchIndex(name, fields, Optional.ToList(scoringProfiles), defaultScoringProfile.Value, corsOptions.Value, Optional.ToList(suggesters), Optional.ToList(analyzers), Optional.ToList(tokenizers), Optional.ToList(tokenFilters), Optional.ToList(charFilters), encryptionKey.Value, similarity.Value, semantic.Value, vectorSearch.Value, odataEtag.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SearchIndex>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchIndex)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SearchIndex IModel<SearchIndex>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchIndex)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSearchIndex(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SearchIndex>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

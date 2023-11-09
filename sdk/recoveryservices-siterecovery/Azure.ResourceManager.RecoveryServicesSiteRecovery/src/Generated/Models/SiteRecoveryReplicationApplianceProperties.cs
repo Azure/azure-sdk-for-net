@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Replication appliance properties. </summary>
     internal partial class SiteRecoveryReplicationApplianceProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationApplianceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationApplianceProperties"/>. </summary>
         internal SiteRecoveryReplicationApplianceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationApplianceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationApplianceProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// Provider specific settings.
         /// Please note <see cref="SiteRecoveryApplianceSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InMageRcmApplianceSpecificDetails"/>.
         /// </param>
-        internal SiteRecoveryReplicationApplianceProperties(SiteRecoveryApplianceSpecificDetails providerSpecificDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryReplicationApplianceProperties(SiteRecoveryApplianceSpecificDetails providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedServiceScalingPolicy : IUtf8JsonSerializable
+    public partial class ManagedServiceScalingPolicy : IUtf8JsonSerializable, IJsonModel<ManagedServiceScalingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceScalingPolicy>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagedServiceScalingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("scalingMechanism"u8);
             writer.WriteObjectValue(ScalingMechanism);
             writer.WritePropertyName("scalingTrigger"u8);
             writer.WriteObjectValue(ScalingTrigger);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServiceScalingPolicy DeserializeManagedServiceScalingPolicy(JsonElement element)
+        ManagedServiceScalingPolicy IJsonModel<ManagedServiceScalingPolicy>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServiceScalingPolicy(document.RootElement, options);
+        }
+
+        internal static ManagedServiceScalingPolicy DeserializeManagedServiceScalingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ManagedServiceScalingMechanism scalingMechanism = default;
             ManagedServiceScalingTrigger scalingTrigger = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scalingMechanism"u8))
@@ -42,8 +79,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedServiceScalingPolicy(scalingMechanism, scalingTrigger);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedServiceScalingPolicy(scalingMechanism, scalingTrigger, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagedServiceScalingPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedServiceScalingPolicy IModel<ManagedServiceScalingPolicy>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedServiceScalingPolicy(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagedServiceScalingPolicy>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

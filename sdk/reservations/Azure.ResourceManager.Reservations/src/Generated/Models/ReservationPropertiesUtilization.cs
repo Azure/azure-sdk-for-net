@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation utilization. </summary>
     public partial class ReservationPropertiesUtilization
     {
-        /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationPropertiesUtilization"/>. </summary>
         internal ReservationPropertiesUtilization()
         {
             Aggregates = new ChangeTrackingList<ReservationUtilizationAggregates>();
         }
 
-        /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationPropertiesUtilization"/>. </summary>
         /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
         /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
-        internal ReservationPropertiesUtilization(string trend, IReadOnlyList<ReservationUtilizationAggregates> aggregates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationPropertiesUtilization(string trend, IReadOnlyList<ReservationUtilizationAggregates> aggregates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Trend = trend;
             Aggregates = aggregates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> last 7 day utilization trend for a reservation. </summary>

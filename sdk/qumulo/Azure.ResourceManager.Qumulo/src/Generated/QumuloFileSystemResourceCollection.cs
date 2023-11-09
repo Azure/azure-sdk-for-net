@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Qumulo
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Qumulo
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

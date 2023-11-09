@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Customer Managed Key details of the resource. </summary>
     public partial class VaultPropertiesEncryption
     {
-        /// <summary> Initializes a new instance of VaultPropertiesEncryption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesEncryption"/>. </summary>
         public VaultPropertiesEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesEncryption"/>. </summary>
         /// <param name="keyVaultProperties"> The properties of the Key Vault which hosts CMK. </param>
         /// <param name="kekIdentity"> The details of the identity used for CMK. </param>
         /// <param name="infrastructureEncryption"> Enabling/Disabling the Double Encryption state. </param>
-        internal VaultPropertiesEncryption(CmkKeyVaultProperties keyVaultProperties, CmkKekIdentity kekIdentity, InfrastructureEncryptionState? infrastructureEncryption)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultPropertiesEncryption(CmkKeyVaultProperties keyVaultProperties, CmkKekIdentity kekIdentity, InfrastructureEncryptionState? infrastructureEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             KekIdentity = kekIdentity;
             InfrastructureEncryption = infrastructureEncryption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties of the Key Vault which hosts CMK. </summary>

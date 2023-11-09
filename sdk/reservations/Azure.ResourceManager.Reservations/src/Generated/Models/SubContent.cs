@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The sub-request submitted with the quota request. </summary>
     public partial class SubContent
     {
-        /// <summary> Initializes a new instance of SubContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubContent"/>. </summary>
         internal SubContent()
         {
         }
 
-        /// <summary> Initializes a new instance of SubContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubContent"/>. </summary>
         /// <param name="limit"> Quota (resource limit). </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> Resource type for which the quota check was made. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="subRequestId"> Sub request ID for individual request. </param>
-        internal SubContent(int? limit, ReservationResourceName name, string resourceType, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubContent(int? limit, ReservationResourceName name, string resourceType, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Limit = limit;
             Name = name;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ProvisioningState = provisioningState;
             Message = message;
             SubRequestId = subRequestId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Quota (resource limit). </summary>

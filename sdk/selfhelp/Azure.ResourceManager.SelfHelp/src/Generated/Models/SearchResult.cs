@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Details of an AzureKB search result. </summary>
     public partial class SearchResult
     {
-        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         public SearchResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
         /// <param name="solutionId"> Unique id of the result. </param>
         /// <param name="content"> Content of the search result. </param>
         /// <param name="title"> Title of the search result. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="resultType"> Result type of the search result. </param>
         /// <param name="rank"> rank of the search result. </param>
         /// <param name="link"> Link to the document. </param>
-        internal SearchResult(string solutionId, string content, string title, SelfHelpConfidence? confidence, string source, ResultType? resultType, int? rank, string link)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchResult(string solutionId, string content, string title, SelfHelpConfidence? confidence, string source, ResultType? resultType, int? rank, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             Content = content;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResultType = resultType;
             Rank = rank;
             Link = link;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique id of the result. </summary>

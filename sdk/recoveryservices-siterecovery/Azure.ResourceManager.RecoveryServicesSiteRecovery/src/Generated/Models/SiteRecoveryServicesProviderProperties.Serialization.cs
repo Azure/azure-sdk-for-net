@@ -7,15 +7,164 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryServicesProviderProperties
+    public partial class SiteRecoveryServicesProviderProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryServicesProviderProperties>
     {
-        internal static SiteRecoveryServicesProviderProperties DeserializeSiteRecoveryServicesProviderProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryServicesProviderProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SiteRecoveryServicesProviderProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FabricType))
+            {
+                writer.WritePropertyName("fabricType"u8);
+                writer.WriteStringValue(FabricType);
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(ProviderVersion))
+            {
+                writer.WritePropertyName("providerVersion"u8);
+                writer.WriteStringValue(ProviderVersion);
+            }
+            if (Optional.IsDefined(ServerVersion))
+            {
+                writer.WritePropertyName("serverVersion"u8);
+                writer.WriteStringValue(ServerVersion);
+            }
+            if (Optional.IsDefined(ProviderVersionState))
+            {
+                writer.WritePropertyName("providerVersionState"u8);
+                writer.WriteStringValue(ProviderVersionState);
+            }
+            if (Optional.IsDefined(ProviderVersionExpireOn))
+            {
+                writer.WritePropertyName("providerVersionExpiryDate"u8);
+                writer.WriteStringValue(ProviderVersionExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(FabricFriendlyName))
+            {
+                writer.WritePropertyName("fabricFriendlyName"u8);
+                writer.WriteStringValue(FabricFriendlyName);
+            }
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                writer.WritePropertyName("lastHeartBeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ConnectionStatus))
+            {
+                writer.WritePropertyName("connectionStatus"u8);
+                writer.WriteStringValue(ConnectionStatus);
+            }
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                writer.WritePropertyName("protectedItemCount"u8);
+                writer.WriteNumberValue(ProtectedItemCount.Value);
+            }
+            if (Optional.IsCollectionDefined(AllowedScenarios))
+            {
+                writer.WritePropertyName("allowedScenarios"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedScenarios)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            {
+                writer.WritePropertyName("healthErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrorDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DraIdentifier))
+            {
+                writer.WritePropertyName("draIdentifier"u8);
+                writer.WriteStringValue(DraIdentifier);
+            }
+            if (Optional.IsDefined(MachineId))
+            {
+                writer.WritePropertyName("machineId"u8);
+                writer.WriteStringValue(MachineId);
+            }
+            if (Optional.IsDefined(MachineName))
+            {
+                writer.WritePropertyName("machineName"u8);
+                writer.WriteStringValue(MachineName);
+            }
+            if (Optional.IsDefined(BiosId))
+            {
+                writer.WritePropertyName("biosId"u8);
+                writer.WriteStringValue(BiosId);
+            }
+            if (Optional.IsDefined(AuthenticationIdentityDetails))
+            {
+                writer.WritePropertyName("authenticationIdentityDetails"u8);
+                writer.WriteObjectValue(AuthenticationIdentityDetails);
+            }
+            if (Optional.IsDefined(ResourceAccessIdentityDetails))
+            {
+                writer.WritePropertyName("resourceAccessIdentityDetails"u8);
+                writer.WriteObjectValue(ResourceAccessIdentityDetails);
+            }
+            if (Optional.IsDefined(DataPlaneAuthenticationIdentityDetails))
+            {
+                writer.WritePropertyName("dataPlaneAuthenticationIdentityDetails"u8);
+                writer.WriteObjectValue(DataPlaneAuthenticationIdentityDetails);
+            }
+            if (Optional.IsDefined(ProviderVersionDetails))
+            {
+                writer.WritePropertyName("providerVersionDetails"u8);
+                writer.WriteObjectValue(ProviderVersionDetails);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryServicesProviderProperties IJsonModel<SiteRecoveryServicesProviderProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryServicesProviderProperties(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryServicesProviderProperties DeserializeSiteRecoveryServicesProviderProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +189,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IdentityProviderDetails> resourceAccessIdentityDetails = default;
             Optional<IdentityProviderDetails> dataPlaneAuthenticationIdentityDetails = default;
             Optional<SiteRecoveryVersionDetails> providerVersionDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricType"u8))
@@ -188,8 +339,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     providerVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SiteRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryServicesProviderProperties IModel<SiteRecoveryServicesProviderProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryServicesProviderProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SiteRecoveryServicesProviderProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,15 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationCatalogMsrp
+    public partial class ReservationCatalogMsrp : IUtf8JsonSerializable, IJsonModel<ReservationCatalogMsrp>
     {
-        internal static ReservationCatalogMsrp DeserializeReservationCatalogMsrp(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCatalogMsrp>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ReservationCatalogMsrp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(P1Y))
+            {
+                writer.WritePropertyName("p1Y"u8);
+                writer.WriteObjectValue(P1Y);
+            }
+            if (Optional.IsDefined(P3Y))
+            {
+                writer.WritePropertyName("p3Y"u8);
+                writer.WriteObjectValue(P3Y);
+            }
+            if (Optional.IsDefined(P5Y))
+            {
+                writer.WritePropertyName("p5Y"u8);
+                writer.WriteObjectValue(P5Y);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReservationCatalogMsrp IJsonModel<ReservationCatalogMsrp>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationCatalogMsrp(document.RootElement, options);
+        }
+
+        internal static ReservationCatalogMsrp DeserializeReservationCatalogMsrp(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +77,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> p1Y = default;
             Optional<PurchasePrice> p3Y = default;
             Optional<PurchasePrice> p5Y = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("p1Y"u8))
@@ -50,8 +108,38 @@ namespace Azure.ResourceManager.Reservations.Models
                     p5Y = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationCatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReservationCatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ReservationCatalogMsrp>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReservationCatalogMsrp IModel<ReservationCatalogMsrp>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReservationCatalogMsrp(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ReservationCatalogMsrp>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload specific restore details for restores using managed identity. </summary>
     public partial class IdentityBasedRestoreDetails
     {
-        /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityBasedRestoreDetails"/>. </summary>
         public IdentityBasedRestoreDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityBasedRestoreDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityBasedRestoreDetails"/>. </summary>
         /// <param name="objectType"> Gets the class type. </param>
         /// <param name="targetStorageAccountId"> Fully qualified ARM ID of the target storage account. </param>
-        internal IdentityBasedRestoreDetails(string objectType, ResourceIdentifier targetStorageAccountId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdentityBasedRestoreDetails(string objectType, ResourceIdentifier targetStorageAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ObjectType = objectType;
             TargetStorageAccountId = targetStorageAccountId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the class type. </summary>

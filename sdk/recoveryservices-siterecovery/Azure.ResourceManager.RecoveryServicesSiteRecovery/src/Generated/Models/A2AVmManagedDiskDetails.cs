@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A managed disk input details. </summary>
     public partial class A2AVmManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AVmManagedDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Arm Id. </param>
         /// <param name="recoveryResourceGroupId"> The target resource group Arm Id. </param>
@@ -27,6 +31,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskDetails"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Arm Id. </param>
+        /// <param name="recoveryResourceGroupId"> The target resource group Arm Id. </param>
+        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
+        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DiskId = diskId;
+            PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
+            RecoveryResourceGroupId = recoveryResourceGroupId;
+            RecoveryReplicaDiskAccountType = recoveryReplicaDiskAccountType;
+            RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
+            RecoveryDiskEncryptionSetId = recoveryDiskEncryptionSetId;
+            DiskEncryptionInfo = diskEncryptionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskDetails"/> for deserialization. </summary>
+        internal A2AVmManagedDiskDetails()
+        {
         }
 
         /// <summary> The disk Id. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,18 +15,23 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Description of VirtualNetworkRules - NetworkRules resource. </summary>
     public partial class ServiceBusNetworkRuleSetVirtualNetworkRules
     {
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetVirtualNetworkRules"/>. </summary>
         public ServiceBusNetworkRuleSetVirtualNetworkRules()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetVirtualNetworkRules"/>. </summary>
         /// <param name="subnet"> Subnet properties. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing VNet Service Endpoint. </param>
-        internal ServiceBusNetworkRuleSetVirtualNetworkRules(WritableSubResource subnet, bool? ignoreMissingVnetServiceEndpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusNetworkRuleSetVirtualNetworkRules(WritableSubResource subnet, bool? ignoreMissingVnetServiceEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subnet = subnet;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Subnet properties. </summary>

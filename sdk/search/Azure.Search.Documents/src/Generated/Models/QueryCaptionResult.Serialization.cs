@@ -5,16 +5,69 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class QueryCaptionResult
+    public partial class QueryCaptionResult : IUtf8JsonSerializable, IJsonModel<QueryCaptionResult>
     {
-        internal static QueryCaptionResult DeserializeQueryCaptionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryCaptionResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<QueryCaptionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Text))
+                {
+                    writer.WritePropertyName("text"u8);
+                    writer.WriteStringValue(Text);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Highlights))
+                {
+                    if (Highlights != null)
+                    {
+                        writer.WritePropertyName("highlights"u8);
+                        writer.WriteStringValue(Highlights);
+                    }
+                    else
+                    {
+                        writer.WriteNull("highlights");
+                    }
+                }
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        QueryCaptionResult IJsonModel<QueryCaptionResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryCaptionResult(document.RootElement, options);
+        }
+
+        internal static QueryCaptionResult DeserializeQueryCaptionResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,5 +98,30 @@ namespace Azure.Search.Documents.Models
             additionalProperties = additionalPropertiesDictionary;
             return new QueryCaptionResult(text.Value, highlights.Value, additionalProperties);
         }
+
+        BinaryData IModel<QueryCaptionResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QueryCaptionResult IModel<QueryCaptionResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQueryCaptionResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<QueryCaptionResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

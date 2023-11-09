@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Models
     /// <summary> The result of Autocomplete requests. </summary>
     public partial class AutocompleteItem
     {
-        /// <summary> Initializes a new instance of AutocompleteItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutocompleteItem"/>. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="queryPlusText"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Search.Documents.Models
 
             Text = text;
             QueryPlusText = queryPlusText;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutocompleteItem"/>. </summary>
+        /// <param name="text"> The completed term. </param>
+        /// <param name="queryPlusText"> The query along with the completed term. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutocompleteItem(string text, string queryPlusText, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            QueryPlusText = queryPlusText;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutocompleteItem"/> for deserialization. </summary>
+        internal AutocompleteItem()
+        {
         }
 
         /// <summary> The completed term. </summary>

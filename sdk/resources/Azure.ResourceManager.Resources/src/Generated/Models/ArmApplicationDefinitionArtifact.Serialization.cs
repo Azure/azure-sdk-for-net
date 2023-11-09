@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationDefinitionArtifact : IUtf8JsonSerializable
+    public partial class ArmApplicationDefinitionArtifact : IUtf8JsonSerializable, IJsonModel<ArmApplicationDefinitionArtifact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationDefinitionArtifact>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ArmApplicationDefinitionArtifact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -22,11 +27,40 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ArtifactType.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmApplicationDefinitionArtifact DeserializeArmApplicationDefinitionArtifact(JsonElement element)
+        ArmApplicationDefinitionArtifact IJsonModel<ArmApplicationDefinitionArtifact>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationDefinitionArtifact)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmApplicationDefinitionArtifact(document.RootElement, options);
+        }
+
+        internal static ArmApplicationDefinitionArtifact DeserializeArmApplicationDefinitionArtifact(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +68,8 @@ namespace Azure.ResourceManager.Resources.Models
             ArmApplicationDefinitionArtifactName name = default;
             Uri uri = default;
             ArmApplicationArtifactType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -51,8 +87,38 @@ namespace Azure.ResourceManager.Resources.Models
                     type = property.Value.GetString().ToArmApplicationArtifactType();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmApplicationDefinitionArtifact(name, uri, type);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArmApplicationDefinitionArtifact(name, uri, type, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ArmApplicationDefinitionArtifact>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationDefinitionArtifact)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ArmApplicationDefinitionArtifact IModel<ArmApplicationDefinitionArtifact>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationDefinitionArtifact)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeArmApplicationDefinitionArtifact(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ArmApplicationDefinitionArtifact>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

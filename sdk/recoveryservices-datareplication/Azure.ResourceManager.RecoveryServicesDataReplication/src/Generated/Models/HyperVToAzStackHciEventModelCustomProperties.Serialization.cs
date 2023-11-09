@@ -5,15 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVToAzStackHciEventModelCustomProperties
+    public partial class HyperVToAzStackHciEventModelCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciEventModelCustomProperties>
     {
-        internal static HyperVToAzStackHciEventModelCustomProperties DeserializeHyperVToAzStackHciEventModelCustomProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciEventModelCustomProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HyperVToAzStackHciEventModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EventSourceFriendlyName))
+                {
+                    writer.WritePropertyName("eventSourceFriendlyName"u8);
+                    writer.WriteStringValue(EventSourceFriendlyName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProtectedItemFriendlyName))
+                {
+                    writer.WritePropertyName("protectedItemFriendlyName"u8);
+                    writer.WriteStringValue(ProtectedItemFriendlyName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SourceApplianceName))
+                {
+                    writer.WritePropertyName("sourceApplianceName"u8);
+                    writer.WriteStringValue(SourceApplianceName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TargetApplianceName))
+                {
+                    writer.WritePropertyName("targetApplianceName"u8);
+                    writer.WriteStringValue(TargetApplianceName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerType))
+                {
+                    writer.WritePropertyName("serverType"u8);
+                    writer.WriteStringValue(ServerType);
+                }
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HyperVToAzStackHciEventModelCustomProperties IJsonModel<HyperVToAzStackHciEventModelCustomProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciEventModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVToAzStackHciEventModelCustomProperties(document.RootElement, options);
+        }
+
+        internal static HyperVToAzStackHciEventModelCustomProperties DeserializeHyperVToAzStackHciEventModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +107,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> targetApplianceName = default;
             Optional<string> serverType = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSourceFriendlyName"u8))
@@ -56,8 +141,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVToAzStackHciEventModelCustomProperties(instanceType, eventSourceFriendlyName.Value, protectedItemFriendlyName.Value, sourceApplianceName.Value, targetApplianceName.Value, serverType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVToAzStackHciEventModelCustomProperties(instanceType, serializedAdditionalRawData, eventSourceFriendlyName.Value, protectedItemFriendlyName.Value, sourceApplianceName.Value, targetApplianceName.Value, serverType.Value);
         }
+
+        BinaryData IModel<HyperVToAzStackHciEventModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciEventModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HyperVToAzStackHciEventModelCustomProperties IModel<HyperVToAzStackHciEventModelCustomProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciEventModelCustomProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHyperVToAzStackHciEventModelCustomProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HyperVToAzStackHciEventModelCustomProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

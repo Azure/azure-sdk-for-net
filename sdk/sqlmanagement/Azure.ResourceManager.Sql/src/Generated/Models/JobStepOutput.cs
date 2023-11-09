@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The output configuration of a job step. </summary>
     public partial class JobStepOutput
     {
-        /// <summary> Initializes a new instance of JobStepOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobStepOutput"/>. </summary>
         /// <param name="serverName"> The output destination server name. </param>
         /// <param name="databaseName"> The output destination database. </param>
         /// <param name="tableName"> The output destination table. </param>
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
             Credential = credential;
         }
 
-        /// <summary> Initializes a new instance of JobStepOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepOutput"/>. </summary>
         /// <param name="outputType"> The output destination type. </param>
         /// <param name="subscriptionId"> The output destination subscription id. </param>
         /// <param name="resourceGroupName"> The output destination resource group. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="schemaName"> The output destination schema. </param>
         /// <param name="tableName"> The output destination table. </param>
         /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
-        internal JobStepOutput(JobStepOutputType? outputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobStepOutput(JobStepOutputType? outputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OutputType = outputType;
             SubscriptionId = subscriptionId;
@@ -51,6 +56,12 @@ namespace Azure.ResourceManager.Sql.Models
             SchemaName = schemaName;
             TableName = tableName;
             Credential = credential;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobStepOutput"/> for deserialization. </summary>
+        internal JobStepOutput()
+        {
         }
 
         /// <summary> The output destination type. </summary>

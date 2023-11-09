@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> RCM proxy details. </summary>
     public partial class RcmProxyDetails
     {
-        /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RcmProxyDetails"/>. </summary>
         internal RcmProxyDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RcmProxyDetails"/>. </summary>
         /// <param name="id"> The RCM proxy Id. </param>
         /// <param name="name"> The RCM proxy name. </param>
         /// <param name="biosId"> The RCM proxy Bios Id. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the RCM proxy. </param>
         /// <param name="health"> The health of the RCM proxy. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        internal RcmProxyDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string clientAuthenticationType, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RcmProxyDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string clientAuthenticationType, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             Health = health;
             HealthErrors = healthErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The RCM proxy Id. </summary>

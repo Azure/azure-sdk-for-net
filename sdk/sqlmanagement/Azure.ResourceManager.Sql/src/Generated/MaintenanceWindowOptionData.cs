@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class MaintenanceWindowOptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowOptionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionData"/>. </summary>
         public MaintenanceWindowOptionData()
         {
             MaintenanceWindowCycles = new ChangeTrackingList<MaintenanceWindowTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowOptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="minCycles"> Minimum number of maintenance windows cycles to be set on the database. </param>
         /// <param name="timeGranularityInMinutes"> Time granularity in minutes for maintenance windows. </param>
         /// <param name="allowMultipleMaintenanceWindowsPerCycle"> Whether we allow multiple maintenance windows per cycle. </param>
-        internal MaintenanceWindowOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<MaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceWindowOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<MaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             MaintenanceWindowCycles = maintenanceWindowCycles;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.Sql
             MinCycles = minCycles;
             TimeGranularityInMinutes = timeGranularityInMinutes;
             AllowMultipleMaintenanceWindowsPerCycle = allowMultipleMaintenanceWindowsPerCycle;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether maintenance windows are enabled for the database. </summary>

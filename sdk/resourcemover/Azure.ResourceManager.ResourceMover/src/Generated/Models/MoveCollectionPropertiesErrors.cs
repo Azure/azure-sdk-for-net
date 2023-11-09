@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,14 +14,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the move collection errors. </summary>
     internal partial class MoveCollectionPropertiesErrors : MoveResourceError
     {
-        /// <summary> Initializes a new instance of MoveCollectionPropertiesErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveCollectionPropertiesErrors"/>. </summary>
         internal MoveCollectionPropertiesErrors()
         {
         }
 
-        /// <summary> Initializes a new instance of MoveCollectionPropertiesErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveCollectionPropertiesErrors"/>. </summary>
         /// <param name="properties"> The move resource error body. </param>
-        internal MoveCollectionPropertiesErrors(ResponseError properties) : base(properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoveCollectionPropertiesErrors(ResponseError properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(properties, serializedAdditionalRawData)
         {
         }
     }

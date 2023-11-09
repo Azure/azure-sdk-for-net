@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Patch Resource information, as returned by the resource provider. </summary>
     public partial class RecoveryServicesVaultPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesVaultPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public RecoveryServicesVaultPatch(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +36,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="etag"> Optional ETag. </param>
-        internal RecoveryServicesVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
             Identity = identity;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultPatch"/> for deserialization. </summary>
+        internal RecoveryServicesVaultPatch()
+        {
         }
 
         /// <summary> Properties of the vault. </summary>

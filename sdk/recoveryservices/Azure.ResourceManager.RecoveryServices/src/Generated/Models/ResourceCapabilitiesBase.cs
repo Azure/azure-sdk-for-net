@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -12,11 +14,28 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Base class for request and response capabilities information for Microsoft.RecoveryServices. </summary>
     public partial class ResourceCapabilitiesBase
     {
-        /// <summary> Initializes a new instance of ResourceCapabilitiesBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCapabilitiesBase"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
         public ResourceCapabilitiesBase(ResourceType resourceCapabilitiesBaseType)
         {
             ResourceCapabilitiesBaseType = resourceCapabilitiesBaseType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCapabilitiesBase"/>. </summary>
+        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceCapabilitiesBase(ResourceType resourceCapabilitiesBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceCapabilitiesBaseType = resourceCapabilitiesBaseType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCapabilitiesBase"/> for deserialization. </summary>
+        internal ResourceCapabilitiesBase()
+        {
         }
 
         /// <summary> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </summary>

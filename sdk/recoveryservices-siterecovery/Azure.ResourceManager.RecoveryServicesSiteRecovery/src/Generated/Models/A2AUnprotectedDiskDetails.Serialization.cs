@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AUnprotectedDiskDetails
+    public partial class A2AUnprotectedDiskDetails : IUtf8JsonSerializable, IJsonModel<A2AUnprotectedDiskDetails>
     {
-        internal static A2AUnprotectedDiskDetails DeserializeA2AUnprotectedDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AUnprotectedDiskDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<A2AUnprotectedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DiskLunId))
+            {
+                writer.WritePropertyName("diskLunId"u8);
+                writer.WriteNumberValue(DiskLunId.Value);
+            }
+            if (Optional.IsDefined(DiskAutoProtectionStatus))
+            {
+                writer.WritePropertyName("diskAutoProtectionStatus"u8);
+                writer.WriteStringValue(DiskAutoProtectionStatus.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        A2AUnprotectedDiskDetails IJsonModel<A2AUnprotectedDiskDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AUnprotectedDiskDetails(document.RootElement, options);
+        }
+
+        internal static A2AUnprotectedDiskDetails DeserializeA2AUnprotectedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> diskLunId = default;
             Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskLunId"u8))
@@ -40,8 +93,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskAutoProtectionStatus = new AutoProtectionOfDataDisk(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new A2AUnprotectedDiskDetails(Optional.ToNullable(diskLunId), Optional.ToNullable(diskAutoProtectionStatus));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new A2AUnprotectedDiskDetails(Optional.ToNullable(diskLunId), Optional.ToNullable(diskAutoProtectionStatus), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<A2AUnprotectedDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        A2AUnprotectedDiskDetails IModel<A2AUnprotectedDiskDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeA2AUnprotectedDiskDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<A2AUnprotectedDiskDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

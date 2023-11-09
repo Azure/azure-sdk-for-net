@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -14,24 +17,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class WorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of WorkloadProtectableItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItem"/>. </summary>
         protected WorkloadProtectableItem()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        internal WorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
             ProtectableItemType = protectableItemType;
             FriendlyName = friendlyName;
             ProtectionState = protectionState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of backup management to backup an item. </summary>

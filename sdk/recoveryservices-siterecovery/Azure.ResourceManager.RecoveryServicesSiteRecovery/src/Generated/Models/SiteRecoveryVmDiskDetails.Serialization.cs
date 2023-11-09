@@ -5,15 +5,106 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryVmDiskDetails
+    public partial class SiteRecoveryVmDiskDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryVmDiskDetails>
     {
-        internal static SiteRecoveryVmDiskDetails DeserializeSiteRecoveryVmDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryVmDiskDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SiteRecoveryVmDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VhdType))
+            {
+                writer.WritePropertyName("vhdType"u8);
+                writer.WriteStringValue(VhdType);
+            }
+            if (Optional.IsDefined(VhdId))
+            {
+                writer.WritePropertyName("vhdId"u8);
+                writer.WriteStringValue(VhdId);
+            }
+            if (Optional.IsDefined(DiskId))
+            {
+                writer.WritePropertyName("diskId"u8);
+                writer.WriteStringValue(DiskId);
+            }
+            if (Optional.IsDefined(VhdName))
+            {
+                writer.WritePropertyName("vhdName"u8);
+                writer.WriteStringValue(VhdName);
+            }
+            if (Optional.IsDefined(MaxSizeMB))
+            {
+                writer.WritePropertyName("maxSizeMB"u8);
+                writer.WriteStringValue(MaxSizeMB);
+            }
+            if (Optional.IsDefined(TargetDiskLocation))
+            {
+                writer.WritePropertyName("targetDiskLocation"u8);
+                writer.WriteStringValue(TargetDiskLocation);
+            }
+            if (Optional.IsDefined(TargetDiskName))
+            {
+                writer.WritePropertyName("targetDiskName"u8);
+                writer.WriteStringValue(TargetDiskName);
+            }
+            if (Optional.IsDefined(LunId))
+            {
+                writer.WritePropertyName("lunId"u8);
+                writer.WriteStringValue(LunId);
+            }
+            if (Optional.IsDefined(DiskEncryptionSetId))
+            {
+                writer.WritePropertyName("diskEncryptionSetId"u8);
+                writer.WriteStringValue(DiskEncryptionSetId);
+            }
+            if (Optional.IsDefined(CustomTargetDiskName))
+            {
+                writer.WritePropertyName("customTargetDiskName"u8);
+                writer.WriteStringValue(CustomTargetDiskName);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryVmDiskDetails IJsonModel<SiteRecoveryVmDiskDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryVmDiskDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryVmDiskDetails DeserializeSiteRecoveryVmDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +119,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> lunId = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<string> customTargetDiskName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vhdType"u8))
@@ -84,8 +177,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customTargetDiskName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryVmDiskDetails(vhdType.Value, vhdId.Value, diskId.Value, vhdName.Value, maxSizeMB.Value, targetDiskLocation.Value, targetDiskName.Value, lunId.Value, diskEncryptionSetId.Value, customTargetDiskName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryVmDiskDetails(vhdType.Value, vhdId.Value, diskId.Value, vhdName.Value, maxSizeMB.Value, targetDiskLocation.Value, targetDiskName.Value, lunId.Value, diskEncryptionSetId.Value, customTargetDiskName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SiteRecoveryVmDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryVmDiskDetails IModel<SiteRecoveryVmDiskDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryVmDiskDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SiteRecoveryVmDiskDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

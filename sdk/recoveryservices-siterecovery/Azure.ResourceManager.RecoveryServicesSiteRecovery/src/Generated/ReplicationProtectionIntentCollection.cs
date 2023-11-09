@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

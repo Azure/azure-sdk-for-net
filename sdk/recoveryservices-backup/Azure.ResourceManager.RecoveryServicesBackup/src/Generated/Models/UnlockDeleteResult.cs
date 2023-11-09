@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Response of Unlock Delete API. </summary>
     public partial class UnlockDeleteResult
     {
-        /// <summary> Initializes a new instance of UnlockDeleteResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteResult"/>. </summary>
         internal UnlockDeleteResult()
         {
         }
 
-        /// <summary> Initializes a new instance of UnlockDeleteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteResult"/>. </summary>
         /// <param name="unlockDeleteExpireOn"> This is the time when unlock delete privileges will get expired. </param>
-        internal UnlockDeleteResult(DateTimeOffset? unlockDeleteExpireOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnlockDeleteResult(DateTimeOffset? unlockDeleteExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UnlockDeleteExpireOn = unlockDeleteExpireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is the time when unlock delete privileges will get expired. </summary>

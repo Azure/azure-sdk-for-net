@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Connection string for ingesting security data and logs. </summary>
     public partial class IngestionConnectionString
     {
-        /// <summary> Initializes a new instance of IngestionConnectionString. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngestionConnectionString"/>. </summary>
         internal IngestionConnectionString()
         {
         }
 
-        /// <summary> Initializes a new instance of IngestionConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionConnectionString"/>. </summary>
         /// <param name="location"> The region where ingested logs and data resides. </param>
         /// <param name="value"> Connection string value. </param>
-        internal IngestionConnectionString(AzureLocation? location, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionConnectionString(AzureLocation? location, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The region where ingested logs and data resides. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RecoveryResourceGroupCustomDetails
     {
-        /// <summary> Initializes a new instance of RecoveryResourceGroupCustomDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryResourceGroupCustomDetails"/>. </summary>
         protected RecoveryResourceGroupCustomDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryResourceGroupCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryResourceGroupCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        internal RecoveryResourceGroupCustomDetails(string resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryResourceGroupCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The class type. </summary>

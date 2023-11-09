@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Migration item recovery point properties. </summary>
     public partial class MigrationRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationRecoveryPointProperties"/>. </summary>
         internal MigrationRecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
-        internal MigrationRecoveryPointProperties(DateTimeOffset? recoveryPointOn, MigrationRecoveryPointType? recoveryPointType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationRecoveryPointProperties(DateTimeOffset? recoveryPointOn, MigrationRecoveryPointType? recoveryPointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointType = recoveryPointType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The recovery point time. </summary>

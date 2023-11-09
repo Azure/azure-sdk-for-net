@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +13,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create protection container input. </summary>
     public partial class SiteRecoveryProtectionContainerCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryProtectionContainerCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Create protection container input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProtectionContainerCreateOrUpdateContent(SiteRecoveryCreateProtectionContainerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Create protection container input properties. </summary>

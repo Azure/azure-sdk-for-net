@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> The redundancy Settings of a Vault. </summary>
     public partial class VaultPropertiesRedundancySettings
     {
-        /// <summary> Initializes a new instance of VaultPropertiesRedundancySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesRedundancySettings"/>. </summary>
         public VaultPropertiesRedundancySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesRedundancySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesRedundancySettings"/>. </summary>
         /// <param name="standardTierStorageRedundancy"> The storage redundancy setting of a vault. </param>
         /// <param name="crossRegionRestore"> Flag to show if Cross Region Restore is enabled on the Vault or not. </param>
-        internal VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy, CrossRegionRestore? crossRegionRestore)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy, CrossRegionRestore? crossRegionRestore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StandardTierStorageRedundancy = standardTierStorageRedundancy;
             CrossRegionRestore = crossRegionRestore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage redundancy setting of a vault. </summary>

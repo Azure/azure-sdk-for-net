@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Container object for various projection selectors. </summary>
     public partial class KnowledgeStoreProjection
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjection"/>. </summary>
         public KnowledgeStoreProjection()
         {
             Tables = new ChangeTrackingList<KnowledgeStoreTableProjectionSelector>();
@@ -21,15 +25,17 @@ namespace Azure.Search.Documents.Indexes.Models
             Files = new ChangeTrackingList<KnowledgeStoreFileProjectionSelector>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjection"/>. </summary>
         /// <param name="tables"> Projections to Azure Table storage. </param>
         /// <param name="objects"> Projections to Azure Blob storage. </param>
         /// <param name="files"> Projections to Azure File storage. </param>
-        internal KnowledgeStoreProjection(IList<KnowledgeStoreTableProjectionSelector> tables, IList<KnowledgeStoreObjectProjectionSelector> objects, IList<KnowledgeStoreFileProjectionSelector> files)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeStoreProjection(IList<KnowledgeStoreTableProjectionSelector> tables, IList<KnowledgeStoreObjectProjectionSelector> objects, IList<KnowledgeStoreFileProjectionSelector> files, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tables = tables;
             Objects = objects;
             Files = files;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Projections to Azure Table storage. </summary>

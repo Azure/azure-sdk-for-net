@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The DiskExclusionProperties. </summary>
     public partial class DiskExclusionProperties
     {
-        /// <summary> Initializes a new instance of DiskExclusionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskExclusionProperties"/>. </summary>
         public DiskExclusionProperties()
         {
             DiskLunList = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of DiskExclusionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskExclusionProperties"/>. </summary>
         /// <param name="diskLunList"> List of Disks' Logical Unit Numbers (LUN) to be used for VM Protection. </param>
         /// <param name="isInclusionList"> Flag to indicate whether DiskLunList is to be included/ excluded from backup. </param>
-        internal DiskExclusionProperties(IList<int> diskLunList, bool? isInclusionList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskExclusionProperties(IList<int> diskLunList, bool? isInclusionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskLunList = diskLunList;
             IsInclusionList = isInclusionList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Disks' Logical Unit Numbers (LUN) to be used for VM Protection. </summary>

@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Reprotect agent details. </summary>
     public partial class ReprotectAgentDetails
     {
-        /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReprotectAgentDetails"/>. </summary>
         internal ReprotectAgentDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             AccessibleDatastores = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReprotectAgentDetails"/>. </summary>
         /// <param name="id"> The reprotect agent Id. </param>
         /// <param name="name"> The reprotect agent name. </param>
         /// <param name="biosId"> The reprotect agent Bios Id. </param>
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="accessibleDatastores"> The list of accessible datastores fetched from discovery. </param>
         /// <param name="vCenterId"> The Vcenter Id. </param>
         /// <param name="last"> The last time when SDS information discovered in SRS. </param>
-        internal ReprotectAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? last)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReprotectAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? last, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -50,6 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AccessibleDatastores = accessibleDatastores;
             VCenterId = vCenterId;
             Last = last;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The reprotect agent Id. </summary>

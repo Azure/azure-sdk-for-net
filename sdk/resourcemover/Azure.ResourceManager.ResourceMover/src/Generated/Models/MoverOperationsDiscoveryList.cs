@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Collection of ClientDiscovery details. </summary>
     internal partial class MoverOperationsDiscoveryList
     {
-        /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverOperationsDiscoveryList"/>. </summary>
         internal MoverOperationsDiscoveryList()
         {
             Value = new ChangeTrackingList<MoverOperationsDiscovery>();
         }
 
-        /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationsDiscoveryList"/>. </summary>
         /// <param name="value"> Gets or sets the ClientDiscovery details. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
-        internal MoverOperationsDiscoveryList(IReadOnlyList<MoverOperationsDiscovery> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverOperationsDiscoveryList(IReadOnlyList<MoverOperationsDiscovery> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the ClientDiscovery details. </summary>

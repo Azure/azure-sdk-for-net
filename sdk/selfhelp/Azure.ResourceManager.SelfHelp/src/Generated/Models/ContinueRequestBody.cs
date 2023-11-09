@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter ContinueRequest body. </summary>
     public partial class ContinueRequestBody
     {
-        /// <summary> Initializes a new instance of ContinueRequestBody. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinueRequestBody"/>. </summary>
         public ContinueRequestBody()
         {
             Responses = new ChangeTrackingList<TroubleshooterResult>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContinueRequestBody"/>. </summary>
+        /// <param name="stepId"> Unique id of the result. </param>
+        /// <param name="responses"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinueRequestBody(string stepId, IList<TroubleshooterResult> responses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StepId = stepId;
+            Responses = responses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique id of the result. </summary>

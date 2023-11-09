@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the alert rules. </summary>
     internal partial class AlertRulesList
     {
-        /// <summary> Initializes a new instance of AlertRulesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertRulesList"/>. </summary>
         /// <param name="value">
         /// Array of alert rules.
         /// Please note <see cref="SecurityInsightsAlertRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -30,17 +33,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AlertRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRulesList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of alert rules. </param>
         /// <param name="value">
         /// Array of alert rules.
         /// Please note <see cref="SecurityInsightsAlertRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/> and <see cref="SecurityInsightsScheduledAlertRule"/>.
         /// </param>
-        internal AlertRulesList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertRulesList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertRulesList"/> for deserialization. </summary>
+        internal AlertRulesList()
+        {
         }
 
         /// <summary> URL to fetch the next set of alert rules. </summary>

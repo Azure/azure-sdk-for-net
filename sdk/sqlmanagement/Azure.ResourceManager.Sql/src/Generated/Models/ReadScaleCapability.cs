@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The read scale capability. </summary>
     public partial class ReadScaleCapability
     {
-        /// <summary> Initializes a new instance of ReadScaleCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReadScaleCapability"/>. </summary>
         internal ReadScaleCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of ReadScaleCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadScaleCapability"/>. </summary>
         /// <param name="maxNumberOfReplicas"> The maximum number of read scale replicas. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ReadScaleCapability(int? maxNumberOfReplicas, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReadScaleCapability(int? maxNumberOfReplicas, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxNumberOfReplicas = maxNumberOfReplicas;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The maximum number of read scale replicas. </summary>

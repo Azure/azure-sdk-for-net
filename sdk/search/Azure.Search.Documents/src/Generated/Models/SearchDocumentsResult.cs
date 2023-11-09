@@ -16,7 +16,10 @@ namespace Azure.Search.Documents.Models
     /// <summary> Response containing search results from an index. </summary>
     internal partial class SearchDocumentsResult
     {
-        /// <summary> Initializes a new instance of SearchDocumentsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal SearchDocumentsResult(IEnumerable<SearchResult> results)
@@ -28,7 +31,7 @@ namespace Azure.Search.Documents.Models
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of SearchDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         /// <param name="count"> The total count of results found by the search operation, or null if the count was not requested. If present, the count may be greater than the number of results in this response. This can happen if you use the $top or $skip parameters, or if the query can't return all the requested documents in a single response. </param>
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="facets"> The facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not include any facet expressions. </param>
@@ -38,7 +41,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="nextLink"> Continuation URL returned when the query can't return all the requested results in a single response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response. </param>
         /// <param name="semanticPartialResponseReason"> Reason that a partial response was returned for a semantic ranking request. </param>
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic ranking request. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             Coverage = coverage;
@@ -49,6 +53,12 @@ namespace Azure.Search.Documents.Models
             NextLink = nextLink;
             SemanticPartialResponseReason = semanticPartialResponseReason;
             SemanticPartialResponseType = semanticPartialResponseType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/> for deserialization. </summary>
+        internal SearchDocumentsResult()
+        {
         }
 
         /// <summary> The total count of results found by the search operation, or null if the count was not requested. If present, the count may be greater than the number of results in this response. This can happen if you use the $top or $skip parameters, or if the query can't return all the requested documents in a single response. </summary>

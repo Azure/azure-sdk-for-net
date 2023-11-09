@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class VmRecommendation : IUtf8JsonSerializable
+    public partial class VmRecommendation : IUtf8JsonSerializable, IJsonModel<VmRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmRecommendation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VmRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ConfigurationStatus))
@@ -35,11 +41,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("enforcementSupport"u8);
                 writer.WriteStringValue(EnforcementSupport.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmRecommendation DeserializeVmRecommendation(JsonElement element)
+        VmRecommendation IJsonModel<VmRecommendation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmRecommendation(document.RootElement, options);
+        }
+
+        internal static VmRecommendation DeserializeVmRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<RecommendationAction> recommendationAction = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<SecurityCenterVmEnforcementSupportState> enforcementSupport = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationStatus"u8))
@@ -86,8 +123,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     enforcementSupport = new SecurityCenterVmEnforcementSupportState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmRecommendation(Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationAction), resourceId.Value, Optional.ToNullable(enforcementSupport));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VmRecommendation(Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationAction), resourceId.Value, Optional.ToNullable(enforcementSupport), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<VmRecommendation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VmRecommendation IModel<VmRecommendation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VmRecommendation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVmRecommendation(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VmRecommendation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

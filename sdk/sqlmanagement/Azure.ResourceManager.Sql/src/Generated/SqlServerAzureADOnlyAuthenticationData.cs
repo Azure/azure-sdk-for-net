@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,20 +18,25 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerAzureADOnlyAuthenticationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerAzureADOnlyAuthenticationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerAzureADOnlyAuthenticationData"/>. </summary>
         public SqlServerAzureADOnlyAuthenticationData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerAzureADOnlyAuthenticationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAzureADOnlyAuthenticationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
-        internal SqlServerAzureADOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAzureADOnlyAuthenticationEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerAzureADOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAzureADOnlyAuthenticationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsAzureADOnlyAuthenticationEnabled = isAzureADOnlyAuthenticationEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure Active Directory only Authentication enabled. </summary>

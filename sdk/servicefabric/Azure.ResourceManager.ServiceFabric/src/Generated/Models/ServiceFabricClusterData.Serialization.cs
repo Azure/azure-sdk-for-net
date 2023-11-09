@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,11 +17,21 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    public partial class ServiceFabricClusterData : IUtf8JsonSerializable
+    public partial class ServiceFabricClusterData : IUtf8JsonSerializable, IJsonModel<ServiceFabricClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricClusterData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ServiceFabricClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -33,6 +45,29 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AddOnFeatures))
@@ -44,6 +79,19 @@ namespace Azure.ResourceManager.ServiceFabric
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(AvailableClusterVersions))
+                {
+                    writer.WritePropertyName("availableClusterVersions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AvailableClusterVersions)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(AzureActiveDirectory))
             {
@@ -85,6 +133,30 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ClusterEndpoint))
+                {
+                    writer.WritePropertyName("clusterEndpoint"u8);
+                    writer.WriteStringValue(ClusterEndpoint.AbsoluteUri);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ClusterId))
+                {
+                    writer.WritePropertyName("clusterId"u8);
+                    writer.WriteStringValue(ClusterId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ClusterState))
+                {
+                    writer.WritePropertyName("clusterState"u8);
+                    writer.WriteStringValue(ClusterState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(DiagnosticsStorageAccountConfig))
             {
                 writer.WritePropertyName("diagnosticsStorageAccountConfig"u8);
@@ -119,6 +191,14 @@ namespace Azure.ResourceManager.ServiceFabric
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
             }
             if (Optional.IsDefined(ReliabilityLevel))
             {
@@ -201,11 +281,40 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricClusterData DeserializeServiceFabricClusterData(JsonElement element)
+        ServiceFabricClusterData IJsonModel<ServiceFabricClusterData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceFabricClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricClusterData(document.RootElement, options);
+        }
+
+        internal static ServiceFabricClusterData DeserializeServiceFabricClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -249,6 +358,8 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<DateTimeOffset> upgradePauseEndTimestampUtc = default;
             Optional<bool> waveUpgradePaused = default;
             Optional<IList<ClusterNotification>> notifications = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -630,8 +741,38 @@ namespace Azure.ResourceManager.ServiceFabric
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceFabricClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(addOnFeatures), Optional.ToList(availableClusterVersions), azureActiveDirectory.Value, certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, clusterEndpoint.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), diagnosticsStorageAccountConfig.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), managementEndpoint.Value, Optional.ToList(nodeTypes), Optional.ToNullable(provisioningState), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, reverseProxyCertificateCommonNames.Value, upgradeDescription.Value, Optional.ToNullable(upgradeMode), applicationTypeVersionsCleanupPolicy.Value, vmImage.Value, Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceFabricClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(addOnFeatures), Optional.ToList(availableClusterVersions), azureActiveDirectory.Value, certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, clusterEndpoint.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), diagnosticsStorageAccountConfig.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), managementEndpoint.Value, Optional.ToList(nodeTypes), Optional.ToNullable(provisioningState), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, reverseProxyCertificateCommonNames.Value, upgradeDescription.Value, Optional.ToNullable(upgradeMode), applicationTypeVersionsCleanupPolicy.Value, vmImage.Value, Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ServiceFabricClusterData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceFabricClusterData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceFabricClusterData IModel<ServiceFabricClusterData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceFabricClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceFabricClusterData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ServiceFabricClusterData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

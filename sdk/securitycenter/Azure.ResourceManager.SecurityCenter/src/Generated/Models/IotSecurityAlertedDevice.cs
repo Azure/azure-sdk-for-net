@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Statistical information about the number of alerts per device during last set number of days. </summary>
     public partial class IotSecurityAlertedDevice
     {
-        /// <summary> Initializes a new instance of IotSecurityAlertedDevice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAlertedDevice"/>. </summary>
         public IotSecurityAlertedDevice()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAlertedDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAlertedDevice"/>. </summary>
         /// <param name="deviceId"> Device identifier. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
-        internal IotSecurityAlertedDevice(string deviceId, long? alertsCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecurityAlertedDevice(string deviceId, long? alertsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceId = deviceId;
             AlertsCount = alertsCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Device identifier. </summary>

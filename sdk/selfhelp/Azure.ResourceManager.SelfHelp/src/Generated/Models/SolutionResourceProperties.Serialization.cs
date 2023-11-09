@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionResourceProperties : IUtf8JsonSerializable
+    public partial class SolutionResourceProperties : IUtf8JsonSerializable, IJsonModel<SolutionResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionResourceProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SolutionResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TriggerCriteria))
@@ -72,11 +77,40 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SolutionResourceProperties DeserializeSolutionResourceProperties(JsonElement element)
+        SolutionResourceProperties IJsonModel<SolutionResourceProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSolutionResourceProperties(document.RootElement, options);
+        }
+
+        internal static SolutionResourceProperties DeserializeSolutionResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +123,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> content = default;
             Optional<ReplacementMaps> replacementMaps = default;
             Optional<IList<SelfHelpSection>> sections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerCriteria"u8))
@@ -166,8 +202,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     sections = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SolutionResourceProperties(Optional.ToList(triggerCriteria), Optional.ToDictionary(parameters), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, Optional.ToList(sections));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SolutionResourceProperties(Optional.ToList(triggerCriteria), Optional.ToDictionary(parameters), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, Optional.ToList(sections), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SolutionResourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SolutionResourceProperties IModel<SolutionResourceProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSolutionResourceProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SolutionResourceProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Protection profile custom data details. </summary>
     public partial class SiteRecoveryPolicyProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyProperties"/>. </summary>
         internal SiteRecoveryPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyProperties"/>. </summary>
         /// <param name="friendlyName"> The FriendlyName. </param>
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </param>
-        internal SiteRecoveryPolicyProperties(string friendlyName, PolicyProviderSpecificDetails providerSpecificDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryPolicyProperties(string friendlyName, PolicyProviderSpecificDetails providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The FriendlyName. </summary>

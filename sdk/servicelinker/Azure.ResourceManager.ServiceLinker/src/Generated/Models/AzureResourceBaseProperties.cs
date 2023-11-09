@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class AzureResourceBaseProperties
     {
-        /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureResourceBaseProperties"/>. </summary>
         protected AzureResourceBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceBaseProperties"/>. </summary>
         /// <param name="azureResourceType"> The azure resource type. </param>
-        internal AzureResourceBaseProperties(AzureResourceType azureResourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureResourceBaseProperties(AzureResourceType azureResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureResourceType = azureResourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The azure resource type. </summary>

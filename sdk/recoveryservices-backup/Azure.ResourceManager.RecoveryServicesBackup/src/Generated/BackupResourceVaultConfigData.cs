@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupResourceVaultConfigData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BackupResourceVaultConfigData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupResourceVaultConfigData"/>. </summary>
         /// <param name="location"> The location. </param>
         public BackupResourceVaultConfigData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceVaultConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceVaultConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,10 +38,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupResourceVaultConfigResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal BackupResourceVaultConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupResourceVaultConfigProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupResourceVaultConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupResourceVaultConfigProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupResourceVaultConfigData"/> for deserialization. </summary>
+        internal BackupResourceVaultConfigData()
+        {
         }
 
         /// <summary> BackupResourceVaultConfigResource properties. </summary>

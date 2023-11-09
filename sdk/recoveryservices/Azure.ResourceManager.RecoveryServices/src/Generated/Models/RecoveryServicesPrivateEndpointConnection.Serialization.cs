@@ -5,17 +5,91 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class RecoveryServicesPrivateEndpointConnection
+    public partial class RecoveryServicesPrivateEndpointConnection : IUtf8JsonSerializable, IJsonModel<RecoveryServicesPrivateEndpointConnection>
     {
-        internal static RecoveryServicesPrivateEndpointConnection DeserializeRecoveryServicesPrivateEndpointConnection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesPrivateEndpointConnection>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RecoveryServicesPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PrivateEndpoint))
+                {
+                    writer.WritePropertyName("privateEndpoint"u8);
+                    JsonSerializer.Serialize(writer, PrivateEndpoint);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+                {
+                    writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                    writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                }
+            }
+            if (Optional.IsCollectionDefined(GroupIds))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RecoveryServicesPrivateEndpointConnection IJsonModel<RecoveryServicesPrivateEndpointConnection>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryServicesPrivateEndpointConnection(document.RootElement, options);
+        }
+
+        internal static RecoveryServicesPrivateEndpointConnection DeserializeRecoveryServicesPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +98,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<SubResource> privateEndpoint = default;
             Optional<RecoveryServicesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<IReadOnlyList<VaultSubResourceType>> groupIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -67,8 +143,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     groupIds = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryServicesPrivateEndpointConnection(Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(groupIds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecoveryServicesPrivateEndpointConnection(Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(groupIds), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RecoveryServicesPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryServicesPrivateEndpointConnection IModel<RecoveryServicesPrivateEndpointConnection>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryServicesPrivateEndpointConnection(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RecoveryServicesPrivateEndpointConnection>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

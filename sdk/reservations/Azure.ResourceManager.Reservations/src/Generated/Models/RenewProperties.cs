@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The renew properties for a reservation. </summary>
     public partial class RenewProperties
     {
-        /// <summary> Initializes a new instance of RenewProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RenewProperties"/>. </summary>
         internal RenewProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewProperties"/>. </summary>
         /// <param name="purchaseProperties"> The request for reservation purchase. </param>
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </param>
-        internal RenewProperties(ReservationPurchaseContent purchaseProperties, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenewProperties(ReservationPurchaseContent purchaseProperties, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PurchaseProperties = purchaseProperties;
             PricingCurrencyTotal = pricingCurrencyTotal;
             BillingCurrencyTotal = billingCurrencyTotal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The request for reservation purchase. </summary>

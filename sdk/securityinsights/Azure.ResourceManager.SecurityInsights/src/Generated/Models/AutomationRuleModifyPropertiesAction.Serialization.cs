@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleModifyPropertiesAction : IUtf8JsonSerializable
+    public partial class AutomationRuleModifyPropertiesAction : IUtf8JsonSerializable, IJsonModel<AutomationRuleModifyPropertiesAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRuleModifyPropertiesAction>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AutomationRuleModifyPropertiesAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionConfiguration))
@@ -24,11 +30,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationRuleModifyPropertiesAction DeserializeAutomationRuleModifyPropertiesAction(JsonElement element)
+        AutomationRuleModifyPropertiesAction IJsonModel<AutomationRuleModifyPropertiesAction>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleModifyPropertiesAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRuleModifyPropertiesAction(document.RootElement, options);
+        }
+
+        internal static AutomationRuleModifyPropertiesAction DeserializeAutomationRuleModifyPropertiesAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +71,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SecurityInsightsIncidentActionConfiguration> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionConfiguration"u8))
@@ -57,8 +94,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     actionType = new ActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationRuleModifyPropertiesAction(order, actionType, actionConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutomationRuleModifyPropertiesAction(order, actionType, serializedAdditionalRawData, actionConfiguration.Value);
         }
+
+        BinaryData IModel<AutomationRuleModifyPropertiesAction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleModifyPropertiesAction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AutomationRuleModifyPropertiesAction IModel<AutomationRuleModifyPropertiesAction>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationRuleModifyPropertiesAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAutomationRuleModifyPropertiesAction(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AutomationRuleModifyPropertiesAction>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

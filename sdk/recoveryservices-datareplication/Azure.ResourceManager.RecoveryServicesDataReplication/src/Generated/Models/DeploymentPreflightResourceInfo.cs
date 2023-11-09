@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Deployment preflight resource. </summary>
     public partial class DeploymentPreflightResourceInfo
     {
-        /// <summary> Initializes a new instance of DeploymentPreflightResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentPreflightResourceInfo"/>. </summary>
         public DeploymentPreflightResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentPreflightResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentPreflightResourceInfo"/>. </summary>
         /// <param name="name"> Gets or sets the resource name. </param>
         /// <param name="deploymentPreflightResourceType"> Gets or sets the resource type. </param>
         /// <param name="location"> Gets or sets the location of the resource. </param>
         /// <param name="apiVersion"> Gets or sets the Api version. </param>
-        internal DeploymentPreflightResourceInfo(string name, ResourceType? deploymentPreflightResourceType, AzureLocation? location, string apiVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentPreflightResourceInfo(string name, ResourceType? deploymentPreflightResourceType, AzureLocation? location, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DeploymentPreflightResourceType = deploymentPreflightResourceType;
             Location = location;
             ApiVersion = apiVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the resource name. </summary>

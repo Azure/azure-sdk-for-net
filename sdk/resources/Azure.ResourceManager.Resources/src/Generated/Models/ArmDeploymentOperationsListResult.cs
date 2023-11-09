@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of deployment operations. </summary>
     internal partial class ArmDeploymentOperationsListResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentOperationsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentOperationsListResult"/>. </summary>
         internal ArmDeploymentOperationsListResult()
         {
             Value = new ChangeTrackingList<ArmDeploymentOperation>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentOperationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentOperationsListResult"/>. </summary>
         /// <param name="value"> An array of deployment operations. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ArmDeploymentOperationsListResult(IReadOnlyList<ArmDeploymentOperation> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentOperationsListResult(IReadOnlyList<ArmDeploymentOperation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of deployment operations. </summary>

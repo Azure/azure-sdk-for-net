@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Search;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing a list of Azure Cognitive Search services. </summary>
     internal partial class SearchServiceListResult
     {
-        /// <summary> Initializes a new instance of SearchServiceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceListResult"/>. </summary>
         internal SearchServiceListResult()
         {
             Value = new ChangeTrackingList<SearchServiceData>();
         }
 
-        /// <summary> Initializes a new instance of SearchServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceListResult"/>. </summary>
         /// <param name="value"> The list of Search services. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of search services. Returned when the total number of requested search services exceed maximum page size. </param>
-        internal SearchServiceListResult(IReadOnlyList<SearchServiceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceListResult(IReadOnlyList<SearchServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Search services. </summary>

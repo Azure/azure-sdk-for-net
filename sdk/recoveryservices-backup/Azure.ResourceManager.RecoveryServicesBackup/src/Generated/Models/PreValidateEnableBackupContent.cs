@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -18,9 +20,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class PreValidateEnableBackupContent
     {
-        /// <summary> Initializes a new instance of PreValidateEnableBackupContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupContent"/>. </summary>
         public PreValidateEnableBackupContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupContent"/>. </summary>
+        /// <param name="resourceType"> ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. </param>
+        /// <param name="resourceId"> ARM Virtual Machine Id. </param>
+        /// <param name="vaultId"> ARM id of the Recovery Services Vault. </param>
+        /// <param name="properties"> Configuration of VM if any needs to be validated like OS type etc. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PreValidateEnableBackupContent(BackupDataSourceType? resourceType, ResourceIdentifier resourceId, ResourceIdentifier vaultId, string properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceType = resourceType;
+            ResourceId = resourceId;
+            VaultId = vaultId;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. </summary>

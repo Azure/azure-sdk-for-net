@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A managed server DNS alias acquisition request. </summary>
     public partial class ManagedServerDnsAliasAcquisition
     {
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasAcquisition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasAcquisition"/>. </summary>
         /// <param name="oldManagedServerDnsAliasResourceId"> The resource ID of the managed server DNS alias that will be acquired to point to this managed server instead. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oldManagedServerDnsAliasResourceId"/> is null. </exception>
         public ManagedServerDnsAliasAcquisition(ResourceIdentifier oldManagedServerDnsAliasResourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Sql.Models
             Argument.AssertNotNull(oldManagedServerDnsAliasResourceId, nameof(oldManagedServerDnsAliasResourceId));
 
             OldManagedServerDnsAliasResourceId = oldManagedServerDnsAliasResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasAcquisition"/>. </summary>
+        /// <param name="oldManagedServerDnsAliasResourceId"> The resource ID of the managed server DNS alias that will be acquired to point to this managed server instead. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServerDnsAliasAcquisition(ResourceIdentifier oldManagedServerDnsAliasResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OldManagedServerDnsAliasResourceId = oldManagedServerDnsAliasResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasAcquisition"/> for deserialization. </summary>
+        internal ManagedServerDnsAliasAcquisition()
+        {
         }
 
         /// <summary> The resource ID of the managed server DNS alias that will be acquired to point to this managed server instead. </summary>

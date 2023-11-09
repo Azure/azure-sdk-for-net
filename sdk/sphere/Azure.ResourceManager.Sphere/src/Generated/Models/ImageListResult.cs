@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class ImageListResult
     {
-        /// <summary> Initializes a new instance of ImageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/>. </summary>
         /// <param name="value">
         /// The Image items on this page
         /// Serialized Name: ImageListResult.value
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ImageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/>. </summary>
         /// <param name="value">
         /// The Image items on this page
         /// Serialized Name: ImageListResult.value
@@ -41,10 +44,17 @@ namespace Azure.ResourceManager.Sphere.Models
         /// The link to the next page of items
         /// Serialized Name: ImageListResult.nextLink
         /// </param>
-        internal ImageListResult(IReadOnlyList<SphereImageData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageListResult(IReadOnlyList<SphereImageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/> for deserialization. </summary>
+        internal ImageListResult()
+        {
         }
 
         /// <summary>

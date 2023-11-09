@@ -7,15 +7,134 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryHealthError
+    public partial class SiteRecoveryHealthError : IUtf8JsonSerializable, IJsonModel<SiteRecoveryHealthError>
     {
-        internal static SiteRecoveryHealthError DeserializeSiteRecoveryHealthError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryHealthError>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SiteRecoveryHealthError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(InnerHealthErrors))
+            {
+                writer.WritePropertyName("innerHealthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in InnerHealthErrors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ErrorSource))
+            {
+                writer.WritePropertyName("errorSource"u8);
+                writer.WriteStringValue(ErrorSource);
+            }
+            if (Optional.IsDefined(ErrorType))
+            {
+                writer.WritePropertyName("errorType"u8);
+                writer.WriteStringValue(ErrorType);
+            }
+            if (Optional.IsDefined(ErrorLevel))
+            {
+                writer.WritePropertyName("errorLevel"u8);
+                writer.WriteStringValue(ErrorLevel);
+            }
+            if (Optional.IsDefined(ErrorCategory))
+            {
+                writer.WritePropertyName("errorCategory"u8);
+                writer.WriteStringValue(ErrorCategory);
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(SummaryMessage))
+            {
+                writer.WritePropertyName("summaryMessage"u8);
+                writer.WriteStringValue(SummaryMessage);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(PossibleCauses))
+            {
+                writer.WritePropertyName("possibleCauses"u8);
+                writer.WriteStringValue(PossibleCauses);
+            }
+            if (Optional.IsDefined(RecommendedAction))
+            {
+                writer.WritePropertyName("recommendedAction"u8);
+                writer.WriteStringValue(RecommendedAction);
+            }
+            if (Optional.IsDefined(CreationTimeUtc))
+            {
+                writer.WritePropertyName("creationTimeUtc"u8);
+                writer.WriteStringValue(CreationTimeUtc.Value, "O");
+            }
+            if (Optional.IsDefined(RecoveryProviderErrorMessage))
+            {
+                writer.WritePropertyName("recoveryProviderErrorMessage"u8);
+                writer.WriteStringValue(RecoveryProviderErrorMessage);
+            }
+            if (Optional.IsDefined(EntityId))
+            {
+                writer.WritePropertyName("entityId"u8);
+                writer.WriteStringValue(EntityId);
+            }
+            if (Optional.IsDefined(ErrorId))
+            {
+                writer.WritePropertyName("errorId"u8);
+                writer.WriteStringValue(ErrorId);
+            }
+            if (Optional.IsDefined(CustomerResolvability))
+            {
+                writer.WritePropertyName("customerResolvability"u8);
+                writer.WriteStringValue(CustomerResolvability.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryHealthError IJsonModel<SiteRecoveryHealthError>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryHealthError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryHealthError(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryHealthError DeserializeSiteRecoveryHealthError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +154,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> entityId = default;
             Optional<string> errorId = default;
             Optional<HealthErrorCustomerResolvability> customerResolvability = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("innerHealthErrors"u8))
@@ -129,8 +250,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customerResolvability = new HealthErrorCustomerResolvability(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryHealthError(Optional.ToList(innerHealthErrors), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryHealthError(Optional.ToList(innerHealthErrors), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SiteRecoveryHealthError>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryHealthError)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryHealthError IModel<SiteRecoveryHealthError>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryHealthError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryHealthError(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SiteRecoveryHealthError>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

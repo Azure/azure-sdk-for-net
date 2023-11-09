@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SqlDataDirectoryMapping : IUtf8JsonSerializable
+    public partial class SqlDataDirectoryMapping : IUtf8JsonSerializable, IJsonModel<SqlDataDirectoryMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDataDirectoryMapping>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SqlDataDirectoryMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(MappingType))
@@ -35,11 +41,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDataDirectoryMapping DeserializeSqlDataDirectoryMapping(JsonElement element)
+        SqlDataDirectoryMapping IJsonModel<SqlDataDirectoryMapping>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDataDirectoryMapping(document.RootElement, options);
+        }
+
+        internal static SqlDataDirectoryMapping DeserializeSqlDataDirectoryMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> sourceLogicalName = default;
             Optional<string> sourcePath = default;
             Optional<string> targetPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mappingType"u8))
@@ -74,8 +111,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     targetPath = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDataDirectoryMapping(Optional.ToNullable(mappingType), sourceLogicalName.Value, sourcePath.Value, targetPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDataDirectoryMapping(Optional.ToNullable(mappingType), sourceLogicalName.Value, sourcePath.Value, targetPath.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SqlDataDirectoryMapping>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlDataDirectoryMapping IModel<SqlDataDirectoryMapping>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlDataDirectoryMapping(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SqlDataDirectoryMapping>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

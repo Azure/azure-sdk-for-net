@@ -5,16 +5,109 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ApplianceMonitoringDetails
+    public partial class ApplianceMonitoringDetails : IUtf8JsonSerializable, IJsonModel<ApplianceMonitoringDetails>
     {
-        internal static ApplianceMonitoringDetails DeserializeApplianceMonitoringDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceMonitoringDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ApplianceMonitoringDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CpuDetails))
+                {
+                    writer.WritePropertyName("cpuDetails"u8);
+                    writer.WriteObjectValue(CpuDetails);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RamDetails))
+                {
+                    writer.WritePropertyName("ramDetails"u8);
+                    writer.WriteObjectValue(RamDetails);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(DatastoreSnapshot))
+                {
+                    writer.WritePropertyName("datastoreSnapshot"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DatastoreSnapshot)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DisksReplicationDetails))
+                {
+                    writer.WritePropertyName("disksReplicationDetails"u8);
+                    writer.WriteObjectValue(DisksReplicationDetails);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EsxiNfcBuffer))
+                {
+                    writer.WritePropertyName("esxiNfcBuffer"u8);
+                    writer.WriteObjectValue(EsxiNfcBuffer);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NetworkBandwidth))
+                {
+                    writer.WritePropertyName("networkBandwidth"u8);
+                    writer.WriteObjectValue(NetworkBandwidth);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApplianceMonitoringDetails IJsonModel<ApplianceMonitoringDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplianceMonitoringDetails(document.RootElement, options);
+        }
+
+        internal static ApplianceMonitoringDetails DeserializeApplianceMonitoringDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +118,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ApplianceResourceDetails> disksReplicationDetails = default;
             Optional<ApplianceResourceDetails> esxiNfcBuffer = default;
             Optional<ApplianceResourceDetails> networkBandwidth = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuDetails"u8))
@@ -86,8 +181,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     networkBandwidth = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplianceMonitoringDetails(cpuDetails.Value, ramDetails.Value, Optional.ToList(datastoreSnapshot), disksReplicationDetails.Value, esxiNfcBuffer.Value, networkBandwidth.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplianceMonitoringDetails(cpuDetails.Value, ramDetails.Value, Optional.ToList(datastoreSnapshot), disksReplicationDetails.Value, esxiNfcBuffer.Value, networkBandwidth.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ApplianceMonitoringDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplianceMonitoringDetails IModel<ApplianceMonitoringDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplianceMonitoringDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ApplianceMonitoringDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

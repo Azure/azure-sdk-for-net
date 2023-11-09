@@ -14,7 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Job details. </summary>
     public partial class JobDetails
     {
-        /// <summary> Initializes a new instance of JobDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobDetails"/>. </summary>
         /// <param name="containerUri"> The blob container SAS uri, the container is used to host job data. </param>
         /// <param name="inputDataFormat"> The format of the input data. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>
@@ -35,7 +38,7 @@ namespace Azure.Quantum.Jobs.Models
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of JobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDetails"/>. </summary>
         /// <param name="id"> The job id. </param>
         /// <param name="name"> The job name. Is not required for the name to be unique and it's only used for display purposes. </param>
         /// <param name="containerUri"> The blob container SAS uri, the container is used to host job data. </param>
@@ -55,7 +58,8 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="costEstimate"> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </param>
         /// <param name="errorData"> The error data for the job. This is expected only when Status 'Failed'. </param>
         /// <param name="tags"> List of user-supplied tags associated with the job. </param>
-        internal JobDetails(string id, string name, string containerUri, string inputDataUri, string inputDataFormat, object inputParams, string providerId, string target, IDictionary<string, string> metadata, string outputDataUri, string outputDataFormat, JobStatus? status, DateTimeOffset? creationTime, DateTimeOffset? beginExecutionTime, DateTimeOffset? endExecutionTime, DateTimeOffset? cancellationTime, CostEstimate costEstimate, ErrorData errorData, IList<string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobDetails(string id, string name, string containerUri, string inputDataUri, string inputDataFormat, object inputParams, string providerId, string target, IDictionary<string, string> metadata, string outputDataUri, string outputDataFormat, JobStatus? status, DateTimeOffset? creationTime, DateTimeOffset? beginExecutionTime, DateTimeOffset? endExecutionTime, DateTimeOffset? cancellationTime, CostEstimate costEstimate, ErrorData errorData, IList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -76,6 +80,12 @@ namespace Azure.Quantum.Jobs.Models
             CostEstimate = costEstimate;
             ErrorData = errorData;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobDetails"/> for deserialization. </summary>
+        internal JobDetails()
+        {
         }
 
         /// <summary> The job id. </summary>

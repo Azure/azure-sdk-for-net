@@ -8,15 +8,165 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackDiscoveredProtectedVmDetails
+    public partial class InMageRcmFailbackDiscoveredProtectedVmDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>
     {
-        internal static InMageRcmFailbackDiscoveredProtectedVmDetails DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VCenterId))
+                {
+                    writer.WritePropertyName("vCenterId"u8);
+                    writer.WriteStringValue(VCenterId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VCenterFqdn))
+                {
+                    writer.WritePropertyName("vCenterFqdn"u8);
+                    writer.WriteStringValue(VCenterFqdn);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Datastores))
+                {
+                    writer.WritePropertyName("datastores"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Datastores)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(IPAddresses))
+                {
+                    writer.WritePropertyName("ipAddresses"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in IPAddresses)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VMwareToolsStatus))
+                {
+                    writer.WritePropertyName("vmwareToolsStatus"u8);
+                    writer.WriteStringValue(VMwareToolsStatus);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PowerStatus))
+                {
+                    writer.WritePropertyName("powerStatus"u8);
+                    writer.WriteStringValue(PowerStatus);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VmFqdn))
+                {
+                    writer.WritePropertyName("vmFqdn"u8);
+                    writer.WriteStringValue(VmFqdn);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(OSName))
+                {
+                    writer.WritePropertyName("osName"u8);
+                    writer.WriteStringValue(OSName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdTimestamp"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UpdatedOn))
+                {
+                    writer.WritePropertyName("updatedTimestamp"u8);
+                    writer.WriteStringValue(UpdatedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsDeleted))
+                {
+                    writer.WritePropertyName("isDeleted"u8);
+                    writer.WriteBooleanValue(IsDeleted.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastDiscoveredOn))
+                {
+                    writer.WritePropertyName("lastDiscoveryTimeInUtc"u8);
+                    writer.WriteStringValue(LastDiscoveredOn.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmFailbackDiscoveredProtectedVmDetails IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmFailbackDiscoveredProtectedVmDetails DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +183,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> updatedTimestamp = default;
             Optional<bool> isDeleted = default;
             Optional<DateTimeOffset> lastDiscoveryTimeInUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCenterId"u8))
@@ -136,8 +288,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastDiscoveryTimeInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageRcmFailbackDiscoveredProtectedVmDetails IModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

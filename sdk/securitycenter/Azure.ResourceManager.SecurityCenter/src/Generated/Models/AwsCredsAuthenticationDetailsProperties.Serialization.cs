@@ -5,28 +5,91 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsCredsAuthenticationDetailsProperties : IUtf8JsonSerializable
+    public partial class AwsCredsAuthenticationDetailsProperties : IUtf8JsonSerializable, IJsonModel<AwsCredsAuthenticationDetailsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsCredsAuthenticationDetailsProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AwsCredsAuthenticationDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AccountId))
+                {
+                    writer.WritePropertyName("accountId"u8);
+                    writer.WriteStringValue(AccountId);
+                }
+            }
             writer.WritePropertyName("awsAccessKeyId"u8);
             writer.WriteStringValue(AwsAccessKeyId);
             writer.WritePropertyName("awsSecretAccessKey"u8);
             writer.WriteStringValue(AwsSecretAccessKey);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AuthenticationProvisioningState))
+                {
+                    writer.WritePropertyName("authenticationProvisioningState"u8);
+                    writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(GrantedPermissions))
+                {
+                    writer.WritePropertyName("grantedPermissions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in GrantedPermissions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AwsCredsAuthenticationDetailsProperties DeserializeAwsCredsAuthenticationDetailsProperties(JsonElement element)
+        AwsCredsAuthenticationDetailsProperties IJsonModel<AwsCredsAuthenticationDetailsProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AwsCredsAuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAwsCredsAuthenticationDetailsProperties(document.RootElement, options);
+        }
+
+        internal static AwsCredsAuthenticationDetailsProperties DeserializeAwsCredsAuthenticationDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +100,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
             Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))
@@ -82,8 +147,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AwsCredsAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, accountId.Value, awsAccessKeyId, awsSecretAccessKey);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AwsCredsAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, serializedAdditionalRawData, accountId.Value, awsAccessKeyId, awsSecretAccessKey);
         }
+
+        BinaryData IModel<AwsCredsAuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AwsCredsAuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AwsCredsAuthenticationDetailsProperties IModel<AwsCredsAuthenticationDetailsProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AwsCredsAuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAwsCredsAuthenticationDetailsProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AwsCredsAuthenticationDetailsProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

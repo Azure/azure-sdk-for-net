@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Backup management usages of a vault. </summary>
     public partial class BackupManagementUsage
     {
-        /// <summary> Initializes a new instance of BackupManagementUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsage"/>. </summary>
         internal BackupManagementUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupManagementUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsage"/>. </summary>
         /// <param name="unit"> Unit of the usage. </param>
         /// <param name="quotaPeriod"> Quota period of usage. </param>
         /// <param name="nextResetOn"> Next reset time of usage. </param>
         /// <param name="currentValue"> Current value of usage. </param>
         /// <param name="limit"> Limit of usage. </param>
         /// <param name="name"> Name of usage. </param>
-        internal BackupManagementUsage(BackupUsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, BackupNameInfo name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupManagementUsage(BackupUsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, BackupNameInfo name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Unit = unit;
             QuotaPeriod = quotaPeriod;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unit of the usage. </summary>

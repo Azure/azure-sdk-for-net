@@ -5,16 +5,119 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class EditionCapability
+    public partial class EditionCapability : IUtf8JsonSerializable, IJsonModel<EditionCapability>
     {
-        internal static EditionCapability DeserializeEditionCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EditionCapability>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(SupportedServiceLevelObjectives))
+                {
+                    writer.WritePropertyName("supportedServiceLevelObjectives"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SupportedServiceLevelObjectives)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsZoneRedundant))
+                {
+                    writer.WritePropertyName("zoneRedundant"u8);
+                    writer.WriteBooleanValue(IsZoneRedundant.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ReadScale))
+                {
+                    writer.WritePropertyName("readScale"u8);
+                    writer.WriteObjectValue(ReadScale);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(SupportedStorageCapabilities))
+                {
+                    writer.WritePropertyName("supportedStorageCapabilities"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SupportedStorageCapabilities)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToSerialString());
+                }
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EditionCapability IJsonModel<EditionCapability>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EditionCapability)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEditionCapability(document.RootElement, options);
+        }
+
+        internal static EditionCapability DeserializeEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +129,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -93,8 +198,38 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EditionCapability(name.Value, Optional.ToList(supportedServiceLevelObjectives), Optional.ToNullable(zoneRedundant), readScale.Value, Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(status), reason.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EditionCapability(name.Value, Optional.ToList(supportedServiceLevelObjectives), Optional.ToNullable(zoneRedundant), readScale.Value, Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EditionCapability>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EditionCapability)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EditionCapability IModel<EditionCapability>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EditionCapability)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEditionCapability(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EditionCapability>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

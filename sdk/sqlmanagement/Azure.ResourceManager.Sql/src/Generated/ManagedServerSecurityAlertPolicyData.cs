@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedServerSecurityAlertPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServerSecurityAlertPolicyData"/>. </summary>
         public ManagedServerSecurityAlertPolicyData()
         {
             DisabledAlerts = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        internal ManagedServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
@@ -49,6 +53,7 @@ namespace Azure.ResourceManager.Sql
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>

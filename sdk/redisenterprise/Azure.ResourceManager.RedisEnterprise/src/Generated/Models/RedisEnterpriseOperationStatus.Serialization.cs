@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseOperationStatus
+    public partial class RedisEnterpriseOperationStatus : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseOperationStatus>
     {
-        internal static RedisEnterpriseOperationStatus DeserializeRedisEnterpriseOperationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseOperationStatus>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RedisEnterpriseOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(ErrorResponse))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(ErrorResponse);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RedisEnterpriseOperationStatus IJsonModel<RedisEnterpriseOperationStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseOperationStatus(document.RootElement, options);
+        }
+
+        internal static RedisEnterpriseOperationStatus DeserializeRedisEnterpriseOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +95,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<string> status = default;
             Optional<ErrorResponse> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -73,8 +145,38 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisEnterpriseOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisEnterpriseOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RedisEnterpriseOperationStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RedisEnterpriseOperationStatus IModel<RedisEnterpriseOperationStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseOperationStatus(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RedisEnterpriseOperationStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

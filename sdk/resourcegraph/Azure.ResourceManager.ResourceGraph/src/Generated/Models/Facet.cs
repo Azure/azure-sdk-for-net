@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
@@ -17,7 +18,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// </summary>
     public abstract partial class Facet
     {
-        /// <summary> Initializes a new instance of Facet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Facet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         protected Facet(string expression)
@@ -27,13 +31,20 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Expression = expression;
         }
 
-        /// <summary> Initializes a new instance of Facet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Facet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
-        internal Facet(string expression, string resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Facet(string expression, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Expression = expression;
             ResultType = resultType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Facet"/> for deserialization. </summary>
+        internal Facet()
+        {
         }
 
         /// <summary> Facet expression, same as in the corresponding facet request. </summary>

@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains time series of various impacted metrics for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionMetricInfo
     {
-        /// <summary> Initializes a new instance of RecommendedActionMetricInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionMetricInfo"/>. </summary>
         internal RecommendedActionMetricInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionMetricInfo"/>. </summary>
         /// <param name="metricName"> Gets the name of the metric. e.g., CPU, Number of Queries. </param>
         /// <param name="unit"> Gets the unit in which metric is measured. e.g., DTU, Frequency. </param>
         /// <param name="timeGrain"> Gets the duration of time interval for the value given by this MetricInfo. e.g., PT1H (1 hour). </param>
         /// <param name="startOn"> Gets the start time of time interval given by this MetricInfo. </param>
         /// <param name="value"> Gets the value of the metric in the time interval given by this MetricInfo. </param>
-        internal RecommendedActionMetricInfo(string metricName, string unit, string timeGrain, DateTimeOffset? startOn, double? value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedActionMetricInfo(string metricName, string unit, string timeGrain, DateTimeOffset? startOn, double? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricName = metricName;
             Unit = unit;
             TimeGrain = timeGrain;
             StartOn = startOn;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name of the metric. e.g., CPU, Number of Queries. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure to Azure VM synced configuration details. </summary>
     public partial class A2AVmSyncedConfigDetails
     {
-        /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmSyncedConfigDetails"/>. </summary>
         internal A2AVmSyncedConfigDetails()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             VmEndpoints = new ChangeTrackingList<SiteRecoveryVmEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AVmSyncedConfigDetails"/>. </summary>
         /// <param name="tags"> The Azure VM tags. </param>
         /// <param name="vmEndpoints"> The Azure VM input endpoints. </param>
-        internal A2AVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags, IReadOnlyList<SiteRecoveryVmEndpoint> vmEndpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags, IReadOnlyList<SiteRecoveryVmEndpoint> vmEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             VmEndpoints = vmEndpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure VM tags. </summary>

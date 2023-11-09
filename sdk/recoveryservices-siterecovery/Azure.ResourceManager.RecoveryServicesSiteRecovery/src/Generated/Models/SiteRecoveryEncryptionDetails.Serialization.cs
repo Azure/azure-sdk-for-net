@@ -6,15 +6,70 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryEncryptionDetails
+    public partial class SiteRecoveryEncryptionDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryEncryptionDetails>
     {
-        internal static SiteRecoveryEncryptionDetails DeserializeSiteRecoveryEncryptionDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryEncryptionDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SiteRecoveryEncryptionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KekState))
+            {
+                writer.WritePropertyName("kekState"u8);
+                writer.WriteStringValue(KekState);
+            }
+            if (Optional.IsDefined(KekCertThumbprint))
+            {
+                writer.WritePropertyName("kekCertThumbprint"u8);
+                writer.WriteStringValue(KekCertThumbprint);
+            }
+            if (Optional.IsDefined(KekCertExpireOn))
+            {
+                writer.WritePropertyName("kekCertExpiryDate"u8);
+                writer.WriteStringValue(KekCertExpireOn.Value, "O");
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryEncryptionDetails IJsonModel<SiteRecoveryEncryptionDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryEncryptionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryEncryptionDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryEncryptionDetails DeserializeSiteRecoveryEncryptionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> kekState = default;
             Optional<string> kekCertThumbprint = default;
             Optional<DateTimeOffset> kekCertExpireOn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kekState"u8))
@@ -43,8 +100,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     kekCertExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Optional.ToNullable(kekCertExpireOn));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Optional.ToNullable(kekCertExpireOn), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SiteRecoveryEncryptionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryEncryptionDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryEncryptionDetails IModel<SiteRecoveryEncryptionDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryEncryptionDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryEncryptionDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SiteRecoveryEncryptionDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

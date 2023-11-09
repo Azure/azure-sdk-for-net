@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Private Endpoint Connection Response Properties. </summary>
     public partial class RecoveryServicesPrivateEndpointConnection
     {
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnection"/>. </summary>
         internal RecoveryServicesPrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<VaultSubResourceType>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnection"/>. </summary>
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The Private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
-        internal RecoveryServicesPrivateEndpointConnection(RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IReadOnlyList<VaultSubResourceType> groupIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesPrivateEndpointConnection(RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IReadOnlyList<VaultSubResourceType> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             GroupIds = groupIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>

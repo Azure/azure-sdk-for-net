@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The min capacity capability. </summary>
     public partial class MinCapacityCapability
     {
-        /// <summary> Initializes a new instance of MinCapacityCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MinCapacityCapability"/>. </summary>
         internal MinCapacityCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MinCapacityCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MinCapacityCapability"/>. </summary>
         /// <param name="value"> Min capacity value. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal MinCapacityCapability(double? value, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MinCapacityCapability(double? value, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Min capacity value. </summary>

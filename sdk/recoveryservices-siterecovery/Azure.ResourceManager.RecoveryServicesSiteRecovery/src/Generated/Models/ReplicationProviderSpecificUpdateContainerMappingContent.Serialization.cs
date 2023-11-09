@@ -5,19 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReplicationProviderSpecificUpdateContainerMappingContent : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownReplicationProviderSpecificUpdateContainerMappingContent))]
+    public partial class ReplicationProviderSpecificUpdateContainerMappingContent : IUtf8JsonSerializable, IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ReplicationProviderSpecificUpdateContainerMappingContent IJsonModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationProviderSpecificUpdateContainerMappingContent(document.RootElement, options);
+        }
+
+        internal static ReplicationProviderSpecificUpdateContainerMappingContent DeserializeReplicationProviderSpecificUpdateContainerMappingContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "A2A": return A2AUpdateContainerMappingContent.DeserializeA2AUpdateContainerMappingContent(element);
+                    case "InMageRcm": return InMageRcmUpdateContainerMappingContent.DeserializeInMageRcmUpdateContainerMappingContent(element);
+                }
+            }
+            return UnknownReplicationProviderSpecificUpdateContainerMappingContent.DeserializeUnknownReplicationProviderSpecificUpdateContainerMappingContent(element);
+        }
+
+        BinaryData IModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReplicationProviderSpecificUpdateContainerMappingContent IModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificUpdateContainerMappingContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReplicationProviderSpecificUpdateContainerMappingContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ReplicationProviderSpecificUpdateContainerMappingContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

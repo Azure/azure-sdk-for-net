@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,15 +16,25 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ElasticPoolData : IUtf8JsonSerializable
+    public partial class ElasticPoolData : IUtf8JsonSerializable, IJsonModel<ElasticPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ElasticPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    writer.WritePropertyName("kind"u8);
+                    writer.WriteStringValue(Kind);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -37,8 +49,47 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
@@ -85,11 +136,40 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ElasticPoolData DeserializeElasticPoolData(JsonElement element)
+        ElasticPoolData IJsonModel<ElasticPoolData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticPoolData(document.RootElement, options);
+        }
+
+        internal static ElasticPoolData DeserializeElasticPoolData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,6 +193,8 @@ namespace Azure.ResourceManager.Sql
             Optional<int> highAvailabilityReplicaCount = default;
             Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
             Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -283,8 +365,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ElasticPoolData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ElasticPoolData IModel<ElasticPoolData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeElasticPoolData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ElasticPoolData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

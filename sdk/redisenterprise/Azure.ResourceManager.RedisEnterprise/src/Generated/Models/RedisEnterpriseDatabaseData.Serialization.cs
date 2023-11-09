@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,11 +16,36 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    public partial class RedisEnterpriseDatabaseData : IUtf8JsonSerializable
+    public partial class RedisEnterpriseDatabaseData : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabaseData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RedisEnterpriseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientProtocol))
@@ -29,6 +57,22 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ResourceState))
+                {
+                    writer.WritePropertyName("resourceState"u8);
+                    writer.WriteStringValue(ResourceState.Value.ToString());
+                }
             }
             if (Optional.IsDefined(ClusteringPolicy))
             {
@@ -61,11 +105,40 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WriteObjectValue(GeoReplication);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisEnterpriseDatabaseData DeserializeRedisEnterpriseDatabaseData(JsonElement element)
+        RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseDatabaseData(document.RootElement, options);
+        }
+
+        internal static RedisEnterpriseDatabaseData DeserializeRedisEnterpriseDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +156,8 @@ namespace Azure.ResourceManager.RedisEnterprise
             Optional<RedisPersistenceSettings> persistence = default;
             Optional<IList<RedisEnterpriseModule>> modules = default;
             Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -207,8 +282,38 @@ namespace Azure.ResourceManager.RedisEnterprise
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisEnterpriseDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, Optional.ToList(modules), geoReplication.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisEnterpriseDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, Optional.ToList(modules), geoReplication.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RedisEnterpriseDatabaseData IModel<RedisEnterpriseDatabaseData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseDatabaseData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RedisEnterpriseDatabaseData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

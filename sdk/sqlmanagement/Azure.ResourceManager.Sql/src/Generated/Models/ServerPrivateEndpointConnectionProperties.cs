@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class ServerPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerPrivateEndpointConnectionProperties"/>. </summary>
         internal ServerPrivateEndpointConnectionProperties()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal ServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>

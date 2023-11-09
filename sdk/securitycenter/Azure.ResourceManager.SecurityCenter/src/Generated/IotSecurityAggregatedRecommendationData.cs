@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class IotSecurityAggregatedRecommendationData : ResourceData
     {
-        /// <summary> Initializes a new instance of IotSecurityAggregatedRecommendationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationData"/>. </summary>
         public IotSecurityAggregatedRecommendationData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedRecommendationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="unhealthyDeviceCount"> Number of unhealthy devices within the IoT Security solution. </param>
         /// <param name="logAnalyticsQuery"> Log analytics query for getting the list of affected devices/alerts. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal IotSecurityAggregatedRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string recommendationDisplayName, string description, string recommendationTypeId, string detectedBy, string remediationSteps, ReportedSeverity? reportedSeverity, long? healthyDevices, long? unhealthyDeviceCount, string logAnalyticsQuery, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecurityAggregatedRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string recommendationDisplayName, string description, string recommendationTypeId, string detectedBy, string remediationSteps, ReportedSeverity? reportedSeverity, long? healthyDevices, long? unhealthyDeviceCount, string logAnalyticsQuery, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RecommendationName = recommendationName;
             RecommendationDisplayName = recommendationDisplayName;
@@ -53,6 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
             UnhealthyDeviceCount = unhealthyDeviceCount;
             LogAnalyticsQuery = logAnalyticsQuery;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the recommendation. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> DiskExclusionInput when doing enable protection of virtual machine in InMage provider. </summary>
     public partial class InMageDiskExclusionContent
     {
-        /// <summary> Initializes a new instance of InMageDiskExclusionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageDiskExclusionContent"/>. </summary>
         public InMageDiskExclusionContent()
         {
             VolumeOptions = new ChangeTrackingList<InMageVolumeExclusionOptions>();
             DiskSignatureOptions = new ChangeTrackingList<InMageDiskSignatureExclusionOptions>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageDiskExclusionContent"/>. </summary>
+        /// <param name="volumeOptions"> The volume label based option for disk exclusion. </param>
+        /// <param name="diskSignatureOptions"> The guest disk signature based option for disk exclusion. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageDiskExclusionContent(IList<InMageVolumeExclusionOptions> volumeOptions, IList<InMageDiskSignatureExclusionOptions> diskSignatureOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VolumeOptions = volumeOptions;
+            DiskSignatureOptions = diskSignatureOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The volume label based option for disk exclusion. </summary>

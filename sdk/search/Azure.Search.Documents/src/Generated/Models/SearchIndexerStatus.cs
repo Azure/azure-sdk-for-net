@@ -15,7 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents the current status and execution history of an indexer. </summary>
     public partial class SearchIndexerStatus
     {
-        /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
@@ -30,17 +33,24 @@ namespace Azure.Search.Documents.Indexes.Models
             Limits = limits;
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
-        internal SearchIndexerStatus(IndexerStatus status, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerStatus(IndexerStatus status, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             LastResult = lastResult;
             ExecutionHistory = executionHistory;
             Limits = limits;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/> for deserialization. </summary>
+        internal SearchIndexerStatus()
+        {
         }
 
         /// <summary> Overall indexer status. </summary>

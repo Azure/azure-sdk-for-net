@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The BackupResourceEncryptionConfig. </summary>
     public partial class BackupResourceEncryptionConfig
     {
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfig"/>. </summary>
         public BackupResourceEncryptionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfig"/>. </summary>
         /// <param name="encryptionAtRestType"> Encryption At Rest Type. </param>
         /// <param name="keyUri"> Key Vault Key URI. </param>
         /// <param name="subscriptionId"> Key Vault Subscription Id. </param>
         /// <param name="lastUpdateStatus"></param>
         /// <param name="infrastructureEncryptionState"></param>
-        internal BackupResourceEncryptionConfig(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupResourceEncryptionConfig(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EncryptionAtRestType = encryptionAtRestType;
             KeyUri = keyUri;
             SubscriptionId = subscriptionId;
             LastUpdateStatus = lastUpdateStatus;
             InfrastructureEncryptionState = infrastructureEncryptionState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Encryption At Rest Type. </summary>

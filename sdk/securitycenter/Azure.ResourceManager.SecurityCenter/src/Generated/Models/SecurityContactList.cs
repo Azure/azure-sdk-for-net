@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security contacts response. </summary>
     internal partial class SecurityContactList
     {
-        /// <summary> Initializes a new instance of SecurityContactList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityContactList"/>. </summary>
         internal SecurityContactList()
         {
             Value = new ChangeTrackingList<SecurityContactData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityContactList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactList"/>. </summary>
         /// <param name="value"> List of security contacts. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecurityContactList(IReadOnlyList<SecurityContactData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityContactList(IReadOnlyList<SecurityContactData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of security contacts. </summary>

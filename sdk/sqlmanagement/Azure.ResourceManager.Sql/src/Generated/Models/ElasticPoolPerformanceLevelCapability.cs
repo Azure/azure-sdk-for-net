@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The Elastic Pool performance level capability. </summary>
     public partial class ElasticPoolPerformanceLevelCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerformanceLevelCapability"/>. </summary>
         internal ElasticPoolPerformanceLevelCapability()
         {
             SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerformanceLevelCapability"/>. </summary>
         /// <param name="performanceLevel"> The performance level for the pool. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? isZoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? isZoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PerformanceLevel = performanceLevel;
             Sku = sku;
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The performance level for the pool. </summary>

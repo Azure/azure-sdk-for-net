@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityAlertResourceIdentifier
     {
-        /// <summary> Initializes a new instance of SecurityAlertResourceIdentifier. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
         protected SecurityAlertResourceIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
-        internal SecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceIdentifierType = resourceIdentifierType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> There can be multiple identifiers of different type per alert, this field specify the identifier type. </summary>

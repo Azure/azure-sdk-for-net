@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response of the List Namespace operation. </summary>
     internal partial class SBNamespaceListResult
     {
-        /// <summary> Initializes a new instance of SBNamespaceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SBNamespaceListResult"/>. </summary>
         internal SBNamespaceListResult()
         {
             Value = new ChangeTrackingList<ServiceBusNamespaceData>();
         }
 
-        /// <summary> Initializes a new instance of SBNamespaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SBNamespaceListResult"/>. </summary>
         /// <param name="value"> Result of the List Namespace operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Namespaces. </param>
-        internal SBNamespaceListResult(IReadOnlyList<ServiceBusNamespaceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SBNamespaceListResult(IReadOnlyList<ServiceBusNamespaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the List Namespace operation. </summary>

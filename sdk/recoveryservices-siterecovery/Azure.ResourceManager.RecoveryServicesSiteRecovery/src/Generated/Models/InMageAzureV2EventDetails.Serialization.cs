@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2EventDetails
+    public partial class InMageAzureV2EventDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2EventDetails>
     {
-        internal static InMageAzureV2EventDetails DeserializeInMageAzureV2EventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2EventDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<InMageAzureV2EventDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("eventType"u8);
+                writer.WriteStringValue(EventType);
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsDefined(Component))
+            {
+                writer.WritePropertyName("component"u8);
+                writer.WriteStringValue(Component);
+            }
+            if (Optional.IsDefined(CorrectiveAction))
+            {
+                writer.WritePropertyName("correctiveAction"u8);
+                writer.WriteStringValue(CorrectiveAction);
+            }
+            if (Optional.IsDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStringValue(Details);
+            }
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStringValue(Summary);
+            }
+            if (Optional.IsDefined(SiteName))
+            {
+                writer.WritePropertyName("siteName"u8);
+                writer.WriteStringValue(SiteName);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageAzureV2EventDetails IJsonModel<InMageAzureV2EventDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2EventDetails(document.RootElement, options);
+        }
+
+        internal static InMageAzureV2EventDetails DeserializeInMageAzureV2EventDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +104,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> summary = default;
             Optional<string> siteName = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventType"u8))
@@ -68,8 +148,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageAzureV2EventDetails(instanceType, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageAzureV2EventDetails(instanceType, serializedAdditionalRawData, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value);
         }
+
+        BinaryData IModel<InMageAzureV2EventDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageAzureV2EventDetails IModel<InMageAzureV2EventDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageAzureV2EventDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<InMageAzureV2EventDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

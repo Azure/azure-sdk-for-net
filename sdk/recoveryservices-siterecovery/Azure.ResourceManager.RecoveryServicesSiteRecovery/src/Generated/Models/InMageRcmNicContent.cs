@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm NIC input. </summary>
     public partial class InMageRcmNicContent
     {
-        /// <summary> Initializes a new instance of InMageRcmNicContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicContent"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>
@@ -25,6 +29,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicContent"/>. </summary>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="targetStaticIPAddress"> The target static IP address. </param>
+        /// <param name="testSubnetName"> The test subnet name. </param>
+        /// <param name="testStaticIPAddress"> The test static IP address. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmNicContent(string nicId, string isPrimaryNic, string isSelectedForFailover, string targetSubnetName, IPAddress targetStaticIPAddress, string testSubnetName, IPAddress testStaticIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NicId = nicId;
+            IsPrimaryNic = isPrimaryNic;
+            IsSelectedForFailover = isSelectedForFailover;
+            TargetSubnetName = targetSubnetName;
+            TargetStaticIPAddress = targetStaticIPAddress;
+            TestSubnetName = testSubnetName;
+            TestStaticIPAddress = testStaticIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicContent"/> for deserialization. </summary>
+        internal InMageRcmNicContent()
+        {
         }
 
         /// <summary> The NIC Id. </summary>

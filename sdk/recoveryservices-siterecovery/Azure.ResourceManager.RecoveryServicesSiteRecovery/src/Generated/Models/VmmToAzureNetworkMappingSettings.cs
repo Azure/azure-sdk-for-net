@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> E2A Network Mapping fabric specific settings. </summary>
     public partial class VmmToAzureNetworkMappingSettings : NetworkMappingFabricSpecificSettings
     {
-        /// <summary> Initializes a new instance of VmmToAzureNetworkMappingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmToAzureNetworkMappingSettings"/>. </summary>
         internal VmmToAzureNetworkMappingSettings()
         {
             InstanceType = "VmmToAzure";
         }
 
-        /// <summary> Initializes a new instance of VmmToAzureNetworkMappingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmToAzureNetworkMappingSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        internal VmmToAzureNetworkMappingSettings(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmmToAzureNetworkMappingSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "VmmToAzure";
         }

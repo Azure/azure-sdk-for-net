@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class SecretBaseInfo
     {
-        /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretBaseInfo"/>. </summary>
         protected SecretBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBaseInfo"/>. </summary>
         /// <param name="secretType"> The secret type. </param>
-        internal SecretBaseInfo(LinkerSecretType secretType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretBaseInfo(LinkerSecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecretType = secretType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The secret type. </summary>

@@ -6,14 +6,72 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class FacetResult
+    public partial class FacetResult : IUtf8JsonSerializable, IJsonModel<FacetResult>
     {
-        internal static FacetResult DeserializeFacetResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacetResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FacetResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("totalRecords"u8);
+            writer.WriteNumberValue(TotalRecords);
+            writer.WritePropertyName("count"u8);
+            writer.WriteNumberValue(Count);
+            writer.WritePropertyName("data"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
+            writer.WritePropertyName("expression"u8);
+            writer.WriteStringValue(Expression);
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FacetResult IJsonModel<FacetResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FacetResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFacetResult(document.RootElement, options);
+        }
+
+        internal static FacetResult DeserializeFacetResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +81,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             BinaryData data = default;
             string expression = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalRecords"u8))
@@ -50,8 +110,38 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FacetResult(expression, resultType, totalRecords, count, data);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FacetResult(expression, resultType, serializedAdditionalRawData, totalRecords, count, data);
         }
+
+        BinaryData IModel<FacetResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FacetResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FacetResult IModel<FacetResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FacetResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFacetResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FacetResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

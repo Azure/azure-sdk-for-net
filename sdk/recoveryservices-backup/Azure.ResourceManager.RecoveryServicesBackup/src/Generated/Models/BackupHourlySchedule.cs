@@ -6,29 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The BackupHourlySchedule. </summary>
     public partial class BackupHourlySchedule
     {
-        /// <summary> Initializes a new instance of BackupHourlySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupHourlySchedule"/>. </summary>
         public BackupHourlySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupHourlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupHourlySchedule"/>. </summary>
         /// <param name="interval">
         /// Interval at which backup needs to be triggered. For hourly the value
         ///  can be 4/6/8/12
         /// </param>
         /// <param name="scheduleWindowStartOn"> To specify start time of the backup window. </param>
         /// <param name="scheduleWindowDuration"> To specify duration of the backup window. </param>
-        internal BackupHourlySchedule(int? interval, DateTimeOffset? scheduleWindowStartOn, int? scheduleWindowDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupHourlySchedule(int? interval, DateTimeOffset? scheduleWindowStartOn, int? scheduleWindowDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Interval = interval;
             ScheduleWindowStartOn = scheduleWindowStartOn;
             ScheduleWindowDuration = scheduleWindowDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

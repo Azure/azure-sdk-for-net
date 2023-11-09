@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Backup resource vault config details. </summary>
     public partial class BackupResourceVaultConfigProperties
     {
-        /// <summary> Initializes a new instance of BackupResourceVaultConfigProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupResourceVaultConfigProperties"/>. </summary>
         public BackupResourceVaultConfigProperties()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupResourceVaultConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceVaultConfigProperties"/>. </summary>
         /// <param name="storageModelType"> Storage type. </param>
         /// <param name="storageType"> Storage type. </param>
         /// <param name="storageTypeState"> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
         /// <param name="isSoftDeleteFeatureStateEditable"> This flag is no longer in use. Please use 'softDeleteFeatureState' to set the soft delete state for the vault. </param>
-        internal BackupResourceVaultConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, EnhancedSecurityState? enhancedSecurityState, SoftDeleteFeatureState? softDeleteFeatureState, int? softDeleteRetentionPeriodInDays, IList<string> resourceGuardOperationRequests, bool? isSoftDeleteFeatureStateEditable)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupResourceVaultConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, EnhancedSecurityState? enhancedSecurityState, SoftDeleteFeatureState? softDeleteFeatureState, int? softDeleteRetentionPeriodInDays, IList<string> resourceGuardOperationRequests, bool? isSoftDeleteFeatureStateEditable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
             IsSoftDeleteFeatureStateEditable = isSoftDeleteFeatureStateEditable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage type. </summary>

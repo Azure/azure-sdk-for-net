@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> The metadata supported value detail. </summary>
     public partial class MetadataSupportedValueDetail
     {
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         internal MetadataSupportedValueDetail()
         {
             ResourceTypes = new ChangeTrackingList<ResourceType>();
         }
 
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="resourceTypes"> The list of associated resource types. </param>
-        internal MetadataSupportedValueDetail(string id, string displayName, IReadOnlyList<ResourceType> resourceTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataSupportedValueDetail(string id, string displayName, IReadOnlyList<ResourceType> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id. </summary>

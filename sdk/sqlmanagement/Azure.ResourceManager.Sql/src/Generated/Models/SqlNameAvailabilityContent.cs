@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A request to check whether the specified name for a resource is available. </summary>
     public partial class SqlNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of SqlNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SqlNameAvailabilityContent(string name)
@@ -22,6 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
 
             Name = name;
             ResourceType = SqlNameAvailabilityResourceType.MicrosoftSqlServers;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/> for deserialization. </summary>
+        internal SqlNameAvailabilityContent()
+        {
         }
 
         /// <summary> Gets the name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution Invocation with additional params needed for invocation. </summary>
     public partial class SelfHelpDiagnosticInvocation
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInvocation"/>. </summary>
         public SelfHelpDiagnosticInvocation()
         {
             AdditionalParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInvocation"/>. </summary>
         /// <param name="solutionId"> Solution Id to invoke. </param>
         /// <param name="additionalParameters"> Additional parameters required to invoke the solutionId. </param>
-        internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             AdditionalParameters = additionalParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution Id to invoke. </summary>

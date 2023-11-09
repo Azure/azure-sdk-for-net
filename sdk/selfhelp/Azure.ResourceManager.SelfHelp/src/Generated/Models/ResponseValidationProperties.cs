@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Troubleshooter step input response validation properties. </summary>
     public partial class ResponseValidationProperties
     {
-        /// <summary> Initializes a new instance of ResponseValidationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResponseValidationProperties"/>. </summary>
         internal ResponseValidationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ResponseValidationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseValidationProperties"/>. </summary>
         /// <param name="regex"> Regex used for the input validation. </param>
         /// <param name="isRequired"> Default True. </param>
         /// <param name="validationErrorMessage"> Validation Error Message. </param>
         /// <param name="maxLength"> Max text input (open Ended Text). </param>
-        internal ResponseValidationProperties(string regex, bool? isRequired, string validationErrorMessage, long? maxLength)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseValidationProperties(string regex, bool? isRequired, string validationErrorMessage, long? maxLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Regex = regex;
             IsRequired = isRequired;
             ValidationErrorMessage = validationErrorMessage;
             MaxLength = maxLength;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Regex used for the input validation. </summary>

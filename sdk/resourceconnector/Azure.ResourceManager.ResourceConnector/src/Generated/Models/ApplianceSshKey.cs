@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> Appliance SSHKey definition. </summary>
     public partial class ApplianceSshKey
     {
-        /// <summary> Initializes a new instance of ApplianceSshKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceSshKey"/>. </summary>
         internal ApplianceSshKey()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceSshKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSshKey"/>. </summary>
         /// <param name="certificate"> Certificate associated with the public key if the key is signed. </param>
         /// <param name="creationTimeStamp"> Certificate creation timestamp (Unix). </param>
         /// <param name="expirationTimeStamp"> Certificate expiration timestamp (Unix). </param>
         /// <param name="privateKey"> Private Key. </param>
         /// <param name="publicKey"> Public Key. </param>
-        internal ApplianceSshKey(string certificate, long? creationTimeStamp, long? expirationTimeStamp, string privateKey, string publicKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceSshKey(string certificate, long? creationTimeStamp, long? expirationTimeStamp, string privateKey, string publicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Certificate = certificate;
             CreationTimeStamp = creationTimeStamp;
             ExpirationTimeStamp = expirationTimeStamp;
             PrivateKey = privateKey;
             PublicKey = publicKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Certificate associated with the public key if the key is signed. </summary>

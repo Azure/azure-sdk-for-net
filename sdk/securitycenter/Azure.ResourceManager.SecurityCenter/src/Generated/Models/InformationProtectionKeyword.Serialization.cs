@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InformationProtectionKeyword : IUtf8JsonSerializable
+    public partial class InformationProtectionKeyword : IUtf8JsonSerializable, IJsonModel<InformationProtectionKeyword>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionKeyword>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<InformationProtectionKeyword>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Pattern))
@@ -35,11 +41,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("excluded"u8);
                 writer.WriteBooleanValue(Excluded.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InformationProtectionKeyword DeserializeInformationProtectionKeyword(JsonElement element)
+        InformationProtectionKeyword IJsonModel<InformationProtectionKeyword>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInformationProtectionKeyword(document.RootElement, options);
+        }
+
+        internal static InformationProtectionKeyword DeserializeInformationProtectionKeyword(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> custom = default;
             Optional<bool> canBeNumeric = default;
             Optional<bool> excluded = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pattern"u8))
@@ -82,8 +119,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     excluded = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<InformationProtectionKeyword>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InformationProtectionKeyword IModel<InformationProtectionKeyword>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInformationProtectionKeyword(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<InformationProtectionKeyword>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

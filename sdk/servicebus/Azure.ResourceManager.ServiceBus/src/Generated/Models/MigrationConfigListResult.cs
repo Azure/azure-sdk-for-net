@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The result of the List migrationConfigurations operation. </summary>
     internal partial class MigrationConfigListResult
     {
-        /// <summary> Initializes a new instance of MigrationConfigListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationConfigListResult"/>. </summary>
         internal MigrationConfigListResult()
         {
             Value = new ChangeTrackingList<MigrationConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MigrationConfigListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationConfigListResult"/>. </summary>
         /// <param name="value"> List of Migration Configs. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of migrationConfigurations. </param>
-        internal MigrationConfigListResult(IReadOnlyList<MigrationConfigurationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationConfigListResult(IReadOnlyList<MigrationConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Migration Configs. </summary>

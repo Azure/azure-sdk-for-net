@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents a database data masking rule. </summary>
     public partial class DataMaskingRule : ResourceData
     {
-        /// <summary> Initializes a new instance of DataMaskingRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMaskingRule"/>. </summary>
         public DataMaskingRule()
         {
         }
 
-        /// <summary> Initializes a new instance of DataMaskingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +41,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
-        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
@@ -51,6 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
             PrefixSize = prefixSize;
             SuffixSize = suffixSize;
             ReplacementString = replacementString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The location of the data masking rule. </summary>

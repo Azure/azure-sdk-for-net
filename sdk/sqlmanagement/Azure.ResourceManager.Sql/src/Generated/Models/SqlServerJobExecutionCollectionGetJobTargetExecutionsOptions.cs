@@ -12,11 +12,16 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions. </summary>
     public partial class SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions
     {
-        /// <summary> Initializes a new instance of SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions"/>. </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
         public SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions(Guid jobExecutionId)
         {
             JobExecutionId = jobExecutionId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions"/> for deserialization. </summary>
+        internal SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions()
+        {
         }
 
         /// <summary> The id of the job execution. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disable protection input. </summary>
     public partial class DisableProtectionContent
     {
-        /// <summary> Initializes a new instance of DisableProtectionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DisableProtectionContent"/>. </summary>
         /// <param name="properties"> Disable protection input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DisableProtectionContent(DisableProtectionProperties properties)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DisableProtectionContent"/>. </summary>
+        /// <param name="properties"> Disable protection input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DisableProtectionContent(DisableProtectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DisableProtectionContent"/> for deserialization. </summary>
+        internal DisableProtectionContent()
+        {
         }
 
         /// <summary> Disable protection input properties. </summary>

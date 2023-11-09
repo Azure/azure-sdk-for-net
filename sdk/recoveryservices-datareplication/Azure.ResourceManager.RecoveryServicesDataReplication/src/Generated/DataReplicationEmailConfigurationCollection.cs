@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEmailConfigurationEmailConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEmailConfigurationEmailConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEmailConfigurationResource(Client, DataReplicationEmailConfigurationData.DeserializeDataReplicationEmailConfigurationData(e)), _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics, Pipeline, "DataReplicationEmailConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationEmailConfigurationResource(Client, DataReplicationEmailConfigurationData.DeserializeDataReplicationEmailConfigurationData(e)), _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics, Pipeline, "DataReplicationEmailConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationEmailConfigurationEmailConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationEmailConfigurationEmailConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationEmailConfigurationResource(Client, DataReplicationEmailConfigurationData.DeserializeDataReplicationEmailConfigurationData(e)), _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics, Pipeline, "DataReplicationEmailConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataReplicationEmailConfigurationResource(Client, DataReplicationEmailConfigurationData.DeserializeDataReplicationEmailConfigurationData(e)), _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics, Pipeline, "DataReplicationEmailConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of storage mapping details. </summary>
     internal partial class StorageClassificationMappingListResult
     {
-        /// <summary> Initializes a new instance of StorageClassificationMappingListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationMappingListResult"/>. </summary>
         internal StorageClassificationMappingListResult()
         {
             Value = new ChangeTrackingList<StorageClassificationMappingData>();
         }
 
-        /// <summary> Initializes a new instance of StorageClassificationMappingListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationMappingListResult"/>. </summary>
         /// <param name="value"> The storage details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal StorageClassificationMappingListResult(IReadOnlyList<StorageClassificationMappingData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageClassificationMappingListResult(IReadOnlyList<StorageClassificationMappingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage details. </summary>

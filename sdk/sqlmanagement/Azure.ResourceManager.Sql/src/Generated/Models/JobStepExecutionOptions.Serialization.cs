@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepExecutionOptions : IUtf8JsonSerializable
+    public partial class JobStepExecutionOptions : IUtf8JsonSerializable, IJsonModel<JobStepExecutionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobStepExecutionOptions>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<JobStepExecutionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeoutSeconds))
@@ -40,11 +46,40 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobStepExecutionOptions DeserializeJobStepExecutionOptions(JsonElement element)
+        JobStepExecutionOptions IJsonModel<JobStepExecutionOptions>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobStepExecutionOptions(document.RootElement, options);
+        }
+
+        internal static JobStepExecutionOptions DeserializeJobStepExecutionOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +89,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> initialRetryIntervalSeconds = default;
             Optional<int> maximumRetryIntervalSeconds = default;
             Optional<float> retryIntervalBackoffMultiplier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeoutSeconds"u8))
@@ -101,8 +138,38 @@ namespace Azure.ResourceManager.Sql.Models
                     retryIntervalBackoffMultiplier = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<JobStepExecutionOptions>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JobStepExecutionOptions IModel<JobStepExecutionOptions>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJobStepExecutionOptions(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<JobStepExecutionOptions>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

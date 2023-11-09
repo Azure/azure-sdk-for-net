@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class FailoverGroupReadWriteEndpoint : IUtf8JsonSerializable
+    public partial class FailoverGroupReadWriteEndpoint : IUtf8JsonSerializable, IJsonModel<FailoverGroupReadWriteEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupReadWriteEndpoint>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FailoverGroupReadWriteEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverPolicy"u8);
@@ -22,17 +28,48 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes"u8);
                 writer.WriteNumberValue(FailoverWithDataLossGracePeriodMinutes.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FailoverGroupReadWriteEndpoint DeserializeFailoverGroupReadWriteEndpoint(JsonElement element)
+        FailoverGroupReadWriteEndpoint IJsonModel<FailoverGroupReadWriteEndpoint>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFailoverGroupReadWriteEndpoint(document.RootElement, options);
+        }
+
+        internal static FailoverGroupReadWriteEndpoint DeserializeFailoverGroupReadWriteEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReadWriteEndpointFailoverPolicy failoverPolicy = default;
             Optional<int> failoverWithDataLossGracePeriodMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverPolicy"u8))
@@ -49,8 +86,38 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverWithDataLossGracePeriodMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FailoverGroupReadWriteEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FailoverGroupReadWriteEndpoint IModel<FailoverGroupReadWriteEndpoint>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFailoverGroupReadWriteEndpoint(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FailoverGroupReadWriteEndpoint>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The SecurityInsightsIncidentActionConfiguration. </summary>
     public partial class SecurityInsightsIncidentActionConfiguration
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentActionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentActionConfiguration"/>. </summary>
         public SecurityInsightsIncidentActionConfiguration()
         {
             Labels = new ChangeTrackingList<SecurityInsightsIncidentLabel>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentActionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentActionConfiguration"/>. </summary>
         /// <param name="severity"> The severity of the incident. </param>
         /// <param name="status"> The status of the incident. </param>
         /// <param name="classification"> The reason the incident was closed. </param>
@@ -27,7 +31,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
         /// <param name="owner"> Information on the user an incident is assigned to. </param>
         /// <param name="labels"> List of labels to add to the incident. </param>
-        internal SecurityInsightsIncidentActionConfiguration(SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, SecurityInsightsIncidentClassification? classification, SecurityInsightsIncidentClassificationReason? classificationReason, string classificationComment, SecurityInsightsIncidentOwnerInfo owner, IList<SecurityInsightsIncidentLabel> labels)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentActionConfiguration(SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, SecurityInsightsIncidentClassification? classification, SecurityInsightsIncidentClassificationReason? classificationReason, string classificationComment, SecurityInsightsIncidentOwnerInfo owner, IList<SecurityInsightsIncidentLabel> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Severity = severity;
             Status = status;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ClassificationComment = classificationComment;
             Owner = owner;
             Labels = labels;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The severity of the incident. </summary>

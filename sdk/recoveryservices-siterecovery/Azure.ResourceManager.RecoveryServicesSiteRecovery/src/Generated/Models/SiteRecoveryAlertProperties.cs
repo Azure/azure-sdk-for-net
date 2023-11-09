@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an alert. </summary>
     public partial class SiteRecoveryAlertProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertProperties"/>. </summary>
         internal SiteRecoveryAlertProperties()
         {
             CustomEmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertProperties"/>. </summary>
         /// <param name="sendToOwners"> A value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> The custom email address for sending emails. </param>
         /// <param name="locale"> The locale for the email notification. </param>
-        internal SiteRecoveryAlertProperties(string sendToOwners, IReadOnlyList<string> customEmailAddresses, string locale)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryAlertProperties(string sendToOwners, IReadOnlyList<string> customEmailAddresses, string locale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SendToOwners = sendToOwners;
             CustomEmailAddresses = customEmailAddresses;
             Locale = locale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A value indicating whether to send email to subscription administrator. </summary>

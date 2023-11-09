@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpProjectDetails : IUtf8JsonSerializable
+    public partial class GcpProjectDetails : IUtf8JsonSerializable, IJsonModel<GcpProjectDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpProjectDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GcpProjectDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ProjectNumber))
@@ -25,11 +31,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(WorkloadIdentityPoolId))
+                {
+                    writer.WritePropertyName("workloadIdentityPoolId"u8);
+                    writer.WriteStringValue(WorkloadIdentityPoolId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GcpProjectDetails DeserializeGcpProjectDetails(JsonElement element)
+        GcpProjectDetails IJsonModel<GcpProjectDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGcpProjectDetails(document.RootElement, options);
+        }
+
+        internal static GcpProjectDetails DeserializeGcpProjectDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> projectNumber = default;
             Optional<string> projectId = default;
             Optional<string> workloadIdentityPoolId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectNumber"u8))
@@ -54,8 +99,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     workloadIdentityPoolId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GcpProjectDetails(projectNumber.Value, projectId.Value, workloadIdentityPoolId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GcpProjectDetails(projectNumber.Value, projectId.Value, workloadIdentityPoolId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GcpProjectDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GcpProjectDetails IModel<GcpProjectDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGcpProjectDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GcpProjectDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

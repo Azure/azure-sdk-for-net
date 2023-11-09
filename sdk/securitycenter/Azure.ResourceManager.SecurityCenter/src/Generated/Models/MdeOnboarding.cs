@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The resource of the configuration or data needed to onboard the machine to MDE. </summary>
     public partial class MdeOnboarding : ResourceData
     {
-        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MdeOnboarding"/>. </summary>
         public MdeOnboarding()
         {
         }
 
-        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdeOnboarding"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="onboardingPackageWindows"> The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
         /// <param name="onboardingPackageLinux"> The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
-        internal MdeOnboarding(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] onboardingPackageWindows, byte[] onboardingPackageLinux) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MdeOnboarding(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] onboardingPackageWindows, byte[] onboardingPackageLinux, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OnboardingPackageWindows = onboardingPackageWindows;
             OnboardingPackageLinux = onboardingPackageLinux;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </summary>

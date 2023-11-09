@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionMetadataProperties : IUtf8JsonSerializable
+    public partial class SolutionMetadataProperties : IUtf8JsonSerializable, IJsonModel<SolutionMetadataProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionMetadataProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SolutionMetadataProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SolutionId))
@@ -21,11 +26,69 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SolutionType))
+                {
+                    writer.WritePropertyName("solutionType"u8);
+                    writer.WriteStringValue(SolutionType.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(RequiredInputs))
+                {
+                    writer.WritePropertyName("requiredInputs"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in RequiredInputs)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SolutionMetadataProperties DeserializeSolutionMetadataProperties(JsonElement element)
+        SolutionMetadataProperties IJsonModel<SolutionMetadataProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSolutionMetadataProperties(document.RootElement, options);
+        }
+
+        internal static SolutionMetadataProperties DeserializeSolutionMetadataProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +97,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<SolutionType> solutionType = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<string>> requiredInputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -69,8 +134,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     requiredInputs = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SolutionMetadataProperties(solutionId.Value, Optional.ToNullable(solutionType), description.Value, Optional.ToList(requiredInputs));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SolutionMetadataProperties(solutionId.Value, Optional.ToNullable(solutionType), description.Value, Optional.ToList(requiredInputs), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SolutionMetadataProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SolutionMetadataProperties IModel<SolutionMetadataProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSolutionMetadataProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SolutionMetadataProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

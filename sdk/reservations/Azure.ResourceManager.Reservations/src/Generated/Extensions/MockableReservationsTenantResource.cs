@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "MockableReservationsTenantResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "MockableReservationsTenantResource.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "MockableReservationsTenantResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "MockableReservationsTenantResource.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

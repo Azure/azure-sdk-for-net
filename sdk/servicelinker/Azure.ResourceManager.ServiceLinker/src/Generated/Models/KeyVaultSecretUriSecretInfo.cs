@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The secret info when type is keyVaultSecretUri. It's for scenario that user provides a secret stored in user's keyvault and source is Web App, Spring Cloud or Container App. </summary>
     public partial class KeyVaultSecretUriSecretInfo : SecretBaseInfo
     {
-        /// <summary> Initializes a new instance of KeyVaultSecretUriSecretInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretUriSecretInfo"/>. </summary>
         public KeyVaultSecretUriSecretInfo()
         {
             SecretType = LinkerSecretType.KeyVaultSecretUri;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultSecretUriSecretInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretUriSecretInfo"/>. </summary>
         /// <param name="secretType"> The secret type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> URI to the keyvault secret. </param>
-        internal KeyVaultSecretUriSecretInfo(LinkerSecretType secretType, string value) : base(secretType)
+        internal KeyVaultSecretUriSecretInfo(LinkerSecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(secretType, serializedAdditionalRawData)
         {
             Value = value;
             SecretType = secretType;

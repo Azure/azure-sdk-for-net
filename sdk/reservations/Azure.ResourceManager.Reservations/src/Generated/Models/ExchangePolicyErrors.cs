@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Exchange policy errors. </summary>
     internal partial class ExchangePolicyErrors
     {
-        /// <summary> Initializes a new instance of ExchangePolicyErrors. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExchangePolicyErrors"/>. </summary>
         internal ExchangePolicyErrors()
         {
             PolicyErrors = new ChangeTrackingList<ExchangePolicyError>();
         }
 
-        /// <summary> Initializes a new instance of ExchangePolicyErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePolicyErrors"/>. </summary>
         /// <param name="policyErrors"> Exchange Policy errors. </param>
-        internal ExchangePolicyErrors(IReadOnlyList<ExchangePolicyError> policyErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangePolicyErrors(IReadOnlyList<ExchangePolicyError> policyErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyErrors = policyErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Exchange Policy errors. </summary>

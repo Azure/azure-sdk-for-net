@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesDataReplication;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Replication extension model collection. </summary>
     internal partial class DataReplicationReplicationExtensionListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionListResult"/>. </summary>
         internal DataReplicationReplicationExtensionListResult()
         {
             Value = new ChangeTrackingList<DataReplicationReplicationExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of replication extensions. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
-        internal DataReplicationReplicationExtensionListResult(IReadOnlyList<DataReplicationReplicationExtensionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationReplicationExtensionListResult(IReadOnlyList<DataReplicationReplicationExtensionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of replication extensions. </summary>

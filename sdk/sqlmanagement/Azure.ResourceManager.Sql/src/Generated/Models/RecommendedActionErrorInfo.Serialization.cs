@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RecommendedActionErrorInfo
+    public partial class RecommendedActionErrorInfo : IUtf8JsonSerializable, IJsonModel<RecommendedActionErrorInfo>
     {
-        internal static RecommendedActionErrorInfo DeserializeRecommendedActionErrorInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedActionErrorInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RecommendedActionErrorInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ErrorCode))
+                {
+                    writer.WritePropertyName("errorCode"u8);
+                    writer.WriteStringValue(ErrorCode);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsRetryable))
+                {
+                    writer.WritePropertyName("isRetryable"u8);
+                    writer.WriteStringValue(IsRetryable.Value.ToSerialString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RecommendedActionErrorInfo IJsonModel<RecommendedActionErrorInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendedActionErrorInfo(document.RootElement, options);
+        }
+
+        internal static RecommendedActionErrorInfo DeserializeRecommendedActionErrorInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> errorCode = default;
             Optional<ActionRetryableState> isRetryable = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -36,8 +95,38 @@ namespace Azure.ResourceManager.Sql.Models
                     isRetryable = property.Value.GetString().ToActionRetryableState();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecommendedActionErrorInfo(errorCode.Value, Optional.ToNullable(isRetryable));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecommendedActionErrorInfo(errorCode.Value, Optional.ToNullable(isRetryable), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RecommendedActionErrorInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecommendedActionErrorInfo IModel<RecommendedActionErrorInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecommendedActionErrorInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RecommendedActionErrorInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

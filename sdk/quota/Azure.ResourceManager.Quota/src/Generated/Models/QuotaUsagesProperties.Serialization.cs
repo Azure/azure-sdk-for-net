@@ -6,15 +6,106 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaUsagesProperties
+    public partial class QuotaUsagesProperties : IUtf8JsonSerializable, IJsonModel<QuotaUsagesProperties>
     {
-        internal static QuotaUsagesProperties DeserializeQuotaUsagesProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaUsagesProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<QuotaUsagesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Usages))
+            {
+                writer.WritePropertyName("usages"u8);
+                writer.WriteObjectValue(Usages);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    writer.WritePropertyName("unit"u8);
+                    writer.WriteStringValue(Unit);
+                }
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteObjectValue(Name);
+            }
+            if (Optional.IsDefined(ResourceTypeName))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceTypeName);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(QuotaPeriod))
+                {
+                    writer.WritePropertyName("quotaPeriod"u8);
+                    writer.WriteStringValue(QuotaPeriod.Value, "P");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsQuotaApplicable))
+                {
+                    writer.WritePropertyName("isQuotaApplicable"u8);
+                    writer.WriteBooleanValue(IsQuotaApplicable.Value);
+                }
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Properties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        QuotaUsagesProperties IJsonModel<QuotaUsagesProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuotaUsagesProperties(document.RootElement, options);
+        }
+
+        internal static QuotaUsagesProperties DeserializeQuotaUsagesProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +117,8 @@ namespace Azure.ResourceManager.Quota.Models
             Optional<TimeSpan> quotaPeriod = default;
             Optional<bool> isQuotaApplicable = default;
             Optional<BinaryData> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usages"u8))
@@ -83,8 +176,38 @@ namespace Azure.ResourceManager.Quota.Models
                     properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QuotaUsagesProperties(usages.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QuotaUsagesProperties(usages.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<QuotaUsagesProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QuotaUsagesProperties IModel<QuotaUsagesProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQuotaUsagesProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<QuotaUsagesProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

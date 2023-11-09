@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Response to force reboot for Redis cache. </summary>
     public partial class RedisForceRebootResult
     {
-        /// <summary> Initializes a new instance of RedisForceRebootResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResult"/>. </summary>
         internal RedisForceRebootResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisForceRebootResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResult"/>. </summary>
         /// <param name="message"> Status message. </param>
-        internal RedisForceRebootResult(string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisForceRebootResult(string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status message. </summary>

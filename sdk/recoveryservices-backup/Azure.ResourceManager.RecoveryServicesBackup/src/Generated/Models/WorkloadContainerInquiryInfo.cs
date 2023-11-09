@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Details about inquired protectable items under a given container. </summary>
     public partial class WorkloadContainerInquiryInfo
     {
-        /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerInquiryInfo"/>. </summary>
         public WorkloadContainerInquiryInfo()
         {
             InquiryDetails = new ChangeTrackingList<WorkloadInquiryDetails>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerInquiryInfo"/>. </summary>
         /// <param name="status">
         /// Inquiry Status for this container such as
         /// InProgress | Failed | Succeeded
@@ -29,11 +33,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Inquiry Details which will have workload specific details.
         /// For e.g. - For SQL and oracle this will contain different details.
         /// </param>
-        internal WorkloadContainerInquiryInfo(string status, BackupErrorDetail errorDetail, IList<WorkloadInquiryDetails> inquiryDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadContainerInquiryInfo(string status, BackupErrorDetail errorDetail, IList<WorkloadInquiryDetails> inquiryDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             ErrorDetail = errorDetail;
             InquiryDetails = inquiryDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

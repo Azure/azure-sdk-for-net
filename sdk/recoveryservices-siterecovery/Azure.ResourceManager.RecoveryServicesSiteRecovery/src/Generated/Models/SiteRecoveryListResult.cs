@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of fabric details. </summary>
     internal partial class SiteRecoveryListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryListResult"/>. </summary>
         internal SiteRecoveryListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryEventData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryListResult"/>. </summary>
         /// <param name="value"> The list of events. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryListResult(IReadOnlyList<SiteRecoveryEventData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryListResult(IReadOnlyList<SiteRecoveryEventData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of events. </summary>
