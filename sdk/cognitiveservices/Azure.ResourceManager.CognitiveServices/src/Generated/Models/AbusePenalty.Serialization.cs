@@ -6,15 +6,70 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class AbusePenalty
+    public partial class AbusePenalty : IUtf8JsonSerializable, IJsonModel<AbusePenalty>
     {
-        internal static AbusePenalty DeserializeAbusePenalty(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AbusePenalty>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AbusePenalty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
+            }
+            if (Optional.IsDefined(RateLimitPercentage))
+            {
+                writer.WritePropertyName("rateLimitPercentage"u8);
+                writer.WriteNumberValue(RateLimitPercentage.Value);
+            }
+            if (Optional.IsDefined(Expiration))
+            {
+                writer.WritePropertyName("expiration"u8);
+                writer.WriteStringValue(Expiration.Value, "O");
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AbusePenalty IJsonModel<AbusePenalty>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AbusePenalty)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAbusePenalty(document.RootElement, options);
+        }
+
+        internal static AbusePenalty DeserializeAbusePenalty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +77,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<AbusePenaltyAction> action = default;
             Optional<float> rateLimitPercentage = default;
             Optional<DateTimeOffset> expiration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -51,8 +108,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     expiration = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AbusePenalty(Optional.ToNullable(action), Optional.ToNullable(rateLimitPercentage), Optional.ToNullable(expiration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AbusePenalty(Optional.ToNullable(action), Optional.ToNullable(rateLimitPercentage), Optional.ToNullable(expiration), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AbusePenalty>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AbusePenalty)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AbusePenalty IModel<AbusePenalty>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AbusePenalty)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAbusePenalty(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AbusePenalty>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

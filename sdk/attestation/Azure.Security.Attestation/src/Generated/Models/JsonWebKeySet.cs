@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.Security.Attestation
     /// <summary> The JsonWebKeySet. </summary>
     internal partial class JsonWebKeySet
     {
-        /// <summary> Initializes a new instance of JsonWebKeySet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
         internal JsonWebKeySet()
         {
             Keys = new ChangeTrackingList<JsonWebKey>();
         }
 
-        /// <summary> Initializes a new instance of JsonWebKeySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
         /// <param name="keys">
         /// The value of the "keys" parameter is an array of JWK values.  By
         /// default, the order of the JWK values within the array does not imply
@@ -27,9 +31,11 @@ namespace Azure.Security.Attestation
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </param>
-        internal JsonWebKeySet(IReadOnlyList<JsonWebKey> keys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JsonWebKeySet(IReadOnlyList<JsonWebKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keys = keys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

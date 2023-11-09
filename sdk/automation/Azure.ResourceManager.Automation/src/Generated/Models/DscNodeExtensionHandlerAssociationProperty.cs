@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The dsc extensionHandler property associated with the node. </summary>
     public partial class DscNodeExtensionHandlerAssociationProperty
     {
-        /// <summary> Initializes a new instance of DscNodeExtensionHandlerAssociationProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeExtensionHandlerAssociationProperty"/>. </summary>
         public DscNodeExtensionHandlerAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of DscNodeExtensionHandlerAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeExtensionHandlerAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the extension handler. </param>
         /// <param name="version"> Gets or sets the version of the extension handler. </param>
-        internal DscNodeExtensionHandlerAssociationProperty(string name, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeExtensionHandlerAssociationProperty(string name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the extension handler. </summary>

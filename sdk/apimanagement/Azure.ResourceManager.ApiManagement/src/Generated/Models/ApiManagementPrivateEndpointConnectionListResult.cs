@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class ApiManagementPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionListResult"/>. </summary>
         internal ApiManagementPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ApiManagementPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal ApiManagementPrivateEndpointConnectionListResult(IReadOnlyList<ApiManagementPrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementPrivateEndpointConnectionListResult(IReadOnlyList<ApiManagementPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

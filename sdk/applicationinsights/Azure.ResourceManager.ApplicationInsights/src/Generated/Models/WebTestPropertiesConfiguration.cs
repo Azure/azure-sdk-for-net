@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An XML configuration specification for a WebTest. </summary>
     internal partial class WebTestPropertiesConfiguration
     {
-        /// <summary> Initializes a new instance of WebTestPropertiesConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesConfiguration"/>. </summary>
         public WebTestPropertiesConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestPropertiesConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesConfiguration"/>. </summary>
         /// <param name="webTest"> The XML specification of a WebTest to run against an application. </param>
-        internal WebTestPropertiesConfiguration(string webTest)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestPropertiesConfiguration(string webTest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebTest = webTest;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The XML specification of a WebTest to run against an application. </summary>

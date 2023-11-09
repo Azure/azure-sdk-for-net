@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
@@ -14,17 +16,82 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    public partial class SmartGroupData : IUtf8JsonSerializable
+    public partial class SmartGroupData : IUtf8JsonSerializable, IJsonModel<SmartGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartGroupData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SmartGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SmartGroupState))
+                {
+                    writer.WritePropertyName("smartGroupState"u8);
+                    writer.WriteStringValue(SmartGroupState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    writer.WritePropertyName("severity"u8);
+                    writer.WriteStringValue(Severity.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startDateTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    writer.WritePropertyName("lastModifiedDateTime"u8);
+                    writer.WriteStringValue(LastModifiedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastModifiedBy))
+                {
+                    writer.WritePropertyName("lastModifiedUserName"u8);
+                    writer.WriteStringValue(LastModifiedBy);
+                }
             }
             if (Optional.IsCollectionDefined(Resources))
             {
@@ -102,11 +169,40 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStringValue(NextLink);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SmartGroupData DeserializeSmartGroupData(JsonElement element)
+        SmartGroupData IJsonModel<SmartGroupData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmartGroupData(document.RootElement, options);
+        }
+
+        internal static SmartGroupData DeserializeSmartGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,6 +225,8 @@ namespace Azure.ResourceManager.AlertsManagement
             Optional<IList<SmartGroupAggregatedProperty>> alertStates = default;
             Optional<IList<SmartGroupAggregatedProperty>> alertSeverities = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -320,8 +418,38 @@ namespace Azure.ResourceManager.AlertsManagement
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SmartGroupData(id, name, type, systemData.Value, Optional.ToNullable(alertsCount), Optional.ToNullable(smartGroupState), Optional.ToNullable(severity), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), lastModifiedUserName.Value, Optional.ToList(resources), Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(monitorServices), Optional.ToList(monitorConditions), Optional.ToList(alertStates), Optional.ToList(alertSeverities), nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SmartGroupData(id, name, type, systemData.Value, Optional.ToNullable(alertsCount), Optional.ToNullable(smartGroupState), Optional.ToNullable(severity), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), lastModifiedUserName.Value, Optional.ToList(resources), Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(monitorServices), Optional.ToList(monitorConditions), Optional.ToList(alertStates), Optional.ToList(alertSeverities), nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SmartGroupData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SmartGroupData IModel<SmartGroupData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSmartGroupData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SmartGroupData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

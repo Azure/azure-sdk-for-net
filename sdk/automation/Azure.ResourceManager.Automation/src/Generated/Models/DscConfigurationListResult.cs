@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list configuration operation. </summary>
     internal partial class DscConfigurationListResult
     {
-        /// <summary> Initializes a new instance of DscConfigurationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationListResult"/>. </summary>
         internal DscConfigurationListResult()
         {
             Value = new ChangeTrackingList<DscConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of DscConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of configurations. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         /// <param name="totalCount"> Gets the total number of configurations matching filter criteria. </param>
-        internal DscConfigurationListResult(IReadOnlyList<DscConfigurationData> value, string nextLink, int? totalCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscConfigurationListResult(IReadOnlyList<DscConfigurationData> value, string nextLink, int? totalCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             TotalCount = totalCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of configurations. </summary>

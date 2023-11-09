@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Communication.Chat
     /// <summary> Result of the create chat thread operation. </summary>
     internal partial class CreateChatThreadResultInternal
     {
-        /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadResultInternal"/>. </summary>
         internal CreateChatThreadResultInternal()
         {
             InvalidParticipants = new ChangeTrackingList<ChatError>();
         }
 
-        /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadResultInternal"/>. </summary>
         /// <param name="chatThread"> Chat thread. </param>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
-        internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<ChatError> invalidParticipants)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<ChatError> invalidParticipants, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ChatThread = chatThread;
             InvalidParticipants = invalidParticipants;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Chat thread. </summary>

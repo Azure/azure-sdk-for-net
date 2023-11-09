@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class KeyVaultCertificateSource : IUtf8JsonSerializable
+    public partial class KeyVaultCertificateSource : IUtf8JsonSerializable, IJsonModel<KeyVaultCertificateSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultCertificateSource>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<KeyVaultCertificateSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
@@ -34,11 +40,40 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(UpdateRule.ToString());
             writer.WritePropertyName("deleteRule"u8);
             writer.WriteStringValue(DeleteRule.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultCertificateSource DeserializeKeyVaultCertificateSource(JsonElement element)
+        KeyVaultCertificateSource IJsonModel<KeyVaultCertificateSource>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultCertificateSource(document.RootElement, options);
+        }
+
+        internal static KeyVaultCertificateSource DeserializeKeyVaultCertificateSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +86,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> secretVersion = default;
             CertificateUpdateAction updateRule = default;
             CertificateDeleteAction deleteRule = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -93,8 +130,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     deleteRule = new CertificateDeleteAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyVaultCertificateSource(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion.Value, updateRule, deleteRule);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeyVaultCertificateSource(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion.Value, updateRule, deleteRule, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<KeyVaultCertificateSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KeyVaultCertificateSource IModel<KeyVaultCertificateSource>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKeyVaultCertificateSource(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<KeyVaultCertificateSource>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

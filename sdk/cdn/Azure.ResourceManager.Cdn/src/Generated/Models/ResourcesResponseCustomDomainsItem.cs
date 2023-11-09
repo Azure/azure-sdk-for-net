@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ResourcesResponseCustomDomainsItem. </summary>
     public partial class ResourcesResponseCustomDomainsItem
     {
-        /// <summary> Initializes a new instance of ResourcesResponseCustomDomainsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseCustomDomainsItem"/>. </summary>
         internal ResourcesResponseCustomDomainsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponseCustomDomainsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseCustomDomainsItem"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="endpointId"></param>
         /// <param name="history"></param>
-        internal ResourcesResponseCustomDomainsItem(string id, string name, string endpointId, bool? history)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesResponseCustomDomainsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             EndpointId = endpointId;
             History = history;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the id. </summary>

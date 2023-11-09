@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayData"/>. </summary>
         public ApiManagementGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="locationData"> Gateway location. </param>
         /// <param name="description"> Gateway description. </param>
-        internal ApiManagementGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceLocationDataContract locationData, string description) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceLocationDataContract locationData, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LocationData = locationData;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gateway location. </summary>

@@ -5,16 +5,107 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class KnowledgeBaseAnswer
+    public partial class KnowledgeBaseAnswer : IUtf8JsonSerializable, IJsonModel<KnowledgeBaseAnswer>
     {
-        internal static KnowledgeBaseAnswer DeserializeKnowledgeBaseAnswer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeBaseAnswer>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<KnowledgeBaseAnswer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Questions))
+            {
+                writer.WritePropertyName("questions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Questions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Answer))
+            {
+                writer.WritePropertyName("answer"u8);
+                writer.WriteStringValue(Answer);
+            }
+            if (Optional.IsDefined(Confidence))
+            {
+                writer.WritePropertyName("confidenceScore"u8);
+                writer.WriteNumberValue(Confidence.Value);
+            }
+            if (Optional.IsDefined(QnaId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(QnaId.Value);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Dialog))
+            {
+                writer.WritePropertyName("dialog"u8);
+                writer.WriteObjectValue(Dialog);
+            }
+            if (Optional.IsDefined(ShortAnswer))
+            {
+                writer.WritePropertyName("answerSpan"u8);
+                writer.WriteObjectValue(ShortAnswer);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KnowledgeBaseAnswer IJsonModel<KnowledgeBaseAnswer>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KnowledgeBaseAnswer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKnowledgeBaseAnswer(document.RootElement, options);
+        }
+
+        internal static KnowledgeBaseAnswer DeserializeKnowledgeBaseAnswer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +118,8 @@ namespace Azure.AI.Language.QuestionAnswering
             Optional<IReadOnlyDictionary<string, string>> metadata = default;
             Optional<KnowledgeBaseAnswerDialog> dialog = default;
             Optional<AnswerSpan> answerSpan = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("questions"u8))
@@ -103,8 +196,38 @@ namespace Azure.AI.Language.QuestionAnswering
                     answerSpan = AnswerSpan.DeserializeAnswerSpan(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KnowledgeBaseAnswer(Optional.ToList(questions), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, Optional.ToDictionary(metadata), dialog.Value, answerSpan.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KnowledgeBaseAnswer(Optional.ToList(questions), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, Optional.ToDictionary(metadata), dialog.Value, answerSpan.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<KnowledgeBaseAnswer>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KnowledgeBaseAnswer)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KnowledgeBaseAnswer IModel<KnowledgeBaseAnswer>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KnowledgeBaseAnswer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKnowledgeBaseAnswer(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<KnowledgeBaseAnswer>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

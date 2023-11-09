@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The gateway details. </summary>
     public partial class AnalysisGatewayDetails
     {
-        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayDetails"/>. </summary>
         public AnalysisGatewayDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayDetails"/>. </summary>
         /// <param name="gatewayResourceId"> Gateway resource to be associated with the server. </param>
         /// <param name="gatewayObjectId"> Gateway object id from in the DMTS cluster for the gateway resource. </param>
         /// <param name="dmtsClusterUri"> Uri of the DMTS cluster. </param>
-        internal AnalysisGatewayDetails(string gatewayResourceId, string gatewayObjectId, Uri dmtsClusterUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisGatewayDetails(string gatewayResourceId, string gatewayObjectId, Uri dmtsClusterUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GatewayResourceId = gatewayResourceId;
             GatewayObjectId = gatewayObjectId;
             DmtsClusterUri = dmtsClusterUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gateway resource to be associated with the server. </summary>

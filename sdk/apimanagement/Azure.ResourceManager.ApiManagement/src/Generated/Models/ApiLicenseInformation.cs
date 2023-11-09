@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API license information. </summary>
     public partial class ApiLicenseInformation
     {
-        /// <summary> Initializes a new instance of ApiLicenseInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiLicenseInformation"/>. </summary>
         public ApiLicenseInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiLicenseInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiLicenseInformation"/>. </summary>
         /// <param name="name"> The license name used for the API. </param>
         /// <param name="uri"> A URL to the license used for the API. MUST be in the format of a URL. </param>
-        internal ApiLicenseInformation(string name, Uri uri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiLicenseInformation(string name, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The license name used for the API. </summary>

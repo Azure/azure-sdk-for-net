@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Check SKU availability result list. </summary>
     internal partial class CognitiveServicesSkuAvailabilityListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityListResult"/>. </summary>
         internal CognitiveServicesSkuAvailabilityListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesSkuAvailabilityList>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityListResult"/>. </summary>
         /// <param name="value"> Check SKU availability result list. </param>
-        internal CognitiveServicesSkuAvailabilityListResult(IReadOnlyList<CognitiveServicesSkuAvailabilityList> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesSkuAvailabilityListResult(IReadOnlyList<CognitiveServicesSkuAvailabilityList> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Check SKU availability result list. </summary>

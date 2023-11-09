@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Properties of Cognitive Services account commitment plan. </summary>
     public partial class CommitmentPlanProperties
     {
-        /// <summary> Initializes a new instance of CommitmentPlanProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanProperties"/>. </summary>
         public CommitmentPlanProperties()
         {
             ProvisioningIssues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="commitmentPlanGuid"> Commitment plan guid. </param>
         /// <param name="hostingModel"> Account hosting model. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="next"> Cognitive Services account commitment period. </param>
         /// <param name="last"> Cognitive Services account commitment period. </param>
         /// <param name="provisioningIssues"> The list of ProvisioningIssue. </param>
-        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, Guid? commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last, IReadOnlyList<string> provisioningIssues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, Guid? commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last, IReadOnlyList<string> provisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CommitmentPlanGuid = commitmentPlanGuid;
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Next = next;
             Last = last;
             ProvisioningIssues = provisioningIssues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>

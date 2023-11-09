@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppPlatformStorageProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageProperties"/>. </summary>
         protected AppPlatformStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageProperties"/>. </summary>
         /// <param name="storageType"> The type of the storage. </param>
-        internal AppPlatformStorageProperties(StorageType storageType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformStorageProperties(StorageType storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageType = storageType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the storage. </summary>

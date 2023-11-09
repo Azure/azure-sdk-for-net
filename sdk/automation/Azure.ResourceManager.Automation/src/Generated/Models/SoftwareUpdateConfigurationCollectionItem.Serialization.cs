@@ -6,15 +6,130 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationCollectionItem
+    public partial class SoftwareUpdateConfigurationCollectionItem : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationCollectionItem>
     {
-        internal static SoftwareUpdateConfigurationCollectionItem DeserializeSoftwareUpdateConfigurationCollectionItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationCollectionItem>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SoftwareUpdateConfigurationCollectionItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UpdateConfiguration))
+            {
+                writer.WritePropertyName("updateConfiguration"u8);
+                writer.WriteObjectValue(UpdateConfiguration);
+            }
+            if (Optional.IsDefined(Tasks))
+            {
+                writer.WritePropertyName("tasks"u8);
+                writer.WriteObjectValue(Tasks);
+            }
+            if (Optional.IsDefined(Frequency))
+            {
+                writer.WritePropertyName("frequency"u8);
+                writer.WriteStringValue(Frequency.Value.ToString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    writer.WritePropertyName("lastModifiedTime"u8);
+                    writer.WriteStringValue(LastModifiedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (Optional.IsDefined(NextRunOn))
+            {
+                if (NextRunOn != null)
+                {
+                    writer.WritePropertyName("nextRun"u8);
+                    writer.WriteStringValue(NextRunOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("nextRun");
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SoftwareUpdateConfigurationCollectionItem IJsonModel<SoftwareUpdateConfigurationCollectionItem>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationCollectionItem(document.RootElement, options);
+        }
+
+        internal static SoftwareUpdateConfigurationCollectionItem DeserializeSoftwareUpdateConfigurationCollectionItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +144,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset?> nextRun = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -126,8 +243,38 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SoftwareUpdateConfigurationCollectionItem(name.Value, id.Value, updateConfiguration.Value, tasks.Value, Optional.ToNullable(frequency), Optional.ToNullable(startTime), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, Optional.ToNullable(nextRun));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SoftwareUpdateConfigurationCollectionItem(name.Value, id.Value, updateConfiguration.Value, tasks.Value, Optional.ToNullable(frequency), Optional.ToNullable(startTime), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, Optional.ToNullable(nextRun), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SoftwareUpdateConfigurationCollectionItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SoftwareUpdateConfigurationCollectionItem IModel<SoftwareUpdateConfigurationCollectionItem>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSoftwareUpdateConfigurationCollectionItem(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SoftwareUpdateConfigurationCollectionItem>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

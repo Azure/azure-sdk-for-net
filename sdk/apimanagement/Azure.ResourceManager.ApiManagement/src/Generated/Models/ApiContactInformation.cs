@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API contact information. </summary>
     public partial class ApiContactInformation
     {
-        /// <summary> Initializes a new instance of ApiContactInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiContactInformation"/>. </summary>
         public ApiContactInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiContactInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiContactInformation"/>. </summary>
         /// <param name="name"> The identifying name of the contact person/organization. </param>
         /// <param name="uri"> The URL pointing to the contact information. MUST be in the format of a URL. </param>
         /// <param name="email"> The email address of the contact person/organization. MUST be in the format of an email address. </param>
-        internal ApiContactInformation(string name, Uri uri, string email)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiContactInformation(string name, Uri uri, string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Uri = uri;
             Email = email;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identifying name of the contact person/organization. </summary>

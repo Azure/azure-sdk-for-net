@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automanage;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The response of the list report operation. </summary>
     internal partial class ReportList
     {
-        /// <summary> Initializes a new instance of ReportList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReportList"/>. </summary>
         internal ReportList()
         {
             Value = new ChangeTrackingList<AutomanageConfigurationProfileAssignmentReportData>();
         }
 
-        /// <summary> Initializes a new instance of ReportList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportList"/>. </summary>
         /// <param name="value"> Result of the list report operation. </param>
-        internal ReportList(IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportList(IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the list report operation. </summary>

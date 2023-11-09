@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The usage data for a usage request. </summary>
     public partial class ServiceAccountUsage
     {
-        /// <summary> Initializes a new instance of ServiceAccountUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
         internal ServiceAccountUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentValue"> Current value for this metric. </param>
         /// <param name="nextResetTime"> Next reset time for current quota. </param>
         /// <param name="status"> Cognitive Services account quota usage status. </param>
-        internal ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Unit = unit;
             Name = name;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CurrentValue = currentValue;
             NextResetTime = nextResetTime;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unit of the metric. </summary>

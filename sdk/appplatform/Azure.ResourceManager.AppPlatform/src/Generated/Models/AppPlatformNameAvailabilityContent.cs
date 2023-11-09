@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Name availability parameters payload. </summary>
     public partial class AppPlatformNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of AppPlatformNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformNameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> Type of the resource to check name availability. </param>
         /// <param name="name"> Name to be checked. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
             ResourceType = resourceType;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformNameAvailabilityContent"/>. </summary>
+        /// <param name="resourceType"> Type of the resource to check name availability. </param>
+        /// <param name="name"> Name to be checked. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformNameAvailabilityContent(ResourceType resourceType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceType = resourceType;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformNameAvailabilityContent"/> for deserialization. </summary>
+        internal AppPlatformNameAvailabilityContent()
+        {
         }
 
         /// <summary> Type of the resource to check name availability. </summary>

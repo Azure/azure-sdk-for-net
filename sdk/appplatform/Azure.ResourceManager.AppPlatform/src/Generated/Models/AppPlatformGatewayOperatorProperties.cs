@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Properties of the Spring Cloud Gateway Operator. </summary>
     public partial class AppPlatformGatewayOperatorProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayOperatorProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayOperatorProperties"/>. </summary>
         internal AppPlatformGatewayOperatorProperties()
         {
             Instances = new ChangeTrackingList<AppPlatformGatewayInstance>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayOperatorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayOperatorProperties"/>. </summary>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Spring Cloud Gateway operator. </param>
-        internal AppPlatformGatewayOperatorProperties(AppPlatformGatewayOperatorResourceRequirements resourceRequests, IReadOnlyList<AppPlatformGatewayInstance> instances)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayOperatorProperties(AppPlatformGatewayOperatorResourceRequirements resourceRequests, IReadOnlyList<AppPlatformGatewayInstance> instances, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceRequests = resourceRequests;
             Instances = instances;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The requested resource quantity for required CPU and Memory. </summary>

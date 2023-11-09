@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the agent registration information type. </summary>
     public partial class AgentRegistration
     {
-        /// <summary> Initializes a new instance of AgentRegistration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentRegistration"/>. </summary>
         internal AgentRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentRegistration"/>. </summary>
         /// <param name="dscMetaConfiguration"> Gets or sets the dsc meta configuration. </param>
         /// <param name="endpoint"> Gets or sets the dsc server endpoint. </param>
         /// <param name="keys"> Gets or sets the agent registration keys. </param>
         /// <param name="id"> Gets or sets the id. </param>
-        internal AgentRegistration(string dscMetaConfiguration, Uri endpoint, AgentRegistrationKeys keys, ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentRegistration(string dscMetaConfiguration, Uri endpoint, AgentRegistrationKeys keys, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DscMetaConfiguration = dscMetaConfiguration;
             Endpoint = endpoint;
             Keys = keys;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the dsc meta configuration. </summary>

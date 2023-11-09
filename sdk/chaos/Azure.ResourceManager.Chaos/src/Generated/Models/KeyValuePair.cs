@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> A map to describe the settings of an action. </summary>
     public partial class KeyValuePair
     {
-        /// <summary> Initializes a new instance of KeyValuePair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/>. </summary>
         /// <param name="key"> The name of the setting for the action. </param>
         /// <param name="value"> The value of the setting for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Chaos.Models
 
             Key = key;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/>. </summary>
+        /// <param name="key"> The name of the setting for the action. </param>
+        /// <param name="value"> The value of the setting for the action. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyValuePair(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Key = key;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/> for deserialization. </summary>
+        internal KeyValuePair()
+        {
         }
 
         /// <summary> The name of the setting for the action. </summary>

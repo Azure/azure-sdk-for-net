@@ -14,7 +14,10 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Multivariate anomaly detection status. </summary>
     public partial class MultivariateBatchDetectionResultSummary
     {
-        /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. </param>
         /// <param name="setupInfo">
         /// Detection request for batch inference. This is an asynchronous inference that
@@ -29,9 +32,10 @@ namespace Azure.AI.AnomalyDetector
             Errors = new ChangeTrackingList<ErrorResponse>();
             VariableStates = new ChangeTrackingList<VariableState>();
             SetupInfo = setupInfo;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. </param>
         /// <param name="errors"> Error message when detection fails. </param>
         /// <param name="variableStates"> Variable status. </param>
@@ -39,12 +43,19 @@ namespace Azure.AI.AnomalyDetector
         /// Detection request for batch inference. This is an asynchronous inference that
         /// will need another API to get detection results.
         /// </param>
-        internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Errors = errors;
             VariableStates = variableStates;
             SetupInfo = setupInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/> for deserialization. </summary>
+        internal MultivariateBatchDetectionResultSummary()
+        {
         }
 
         /// <summary> Status of detection results. </summary>

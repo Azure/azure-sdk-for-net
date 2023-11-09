@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.Authorization.Models
     /// </summary>
     public abstract partial class RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRule"/>. </summary>
         protected RoleManagementPolicyRule()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        internal RoleManagementPolicyRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleManagementPolicyRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             RuleType = ruleType;
             Target = target;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the rule. </summary>

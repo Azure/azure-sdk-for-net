@@ -5,17 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class AnomalyValue
+    public partial class AnomalyValue : IUtf8JsonSerializable, IJsonModel<AnomalyValue>
     {
-        internal static AnomalyValue DeserializeAnomalyValue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnomalyValue>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AnomalyValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("isAnomaly"u8);
+            writer.WriteBooleanValue(IsAnomaly);
+            writer.WritePropertyName("severity"u8);
+            writer.WriteNumberValue(Severity);
+            writer.WritePropertyName("score"u8);
+            writer.WriteNumberValue(Score);
+            if (Optional.IsCollectionDefined(Interpretation))
+            {
+                writer.WritePropertyName("interpretation"u8);
+                writer.WriteStartArray();
+                foreach (var item in Interpretation)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnomalyValue IJsonModel<AnomalyValue>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyValue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyValue(document.RootElement, options);
+        }
+
+        internal static AnomalyValue DeserializeAnomalyValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +80,8 @@ namespace Azure.AI.AnomalyDetector
             float severity = default;
             float score = default;
             Optional<IReadOnlyList<AnomalyInterpretation>> interpretation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isAnomaly"u8))
@@ -55,16 +113,54 @@ namespace Azure.AI.AnomalyDetector
                     interpretation = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnomalyValue(isAnomaly, severity, score, Optional.ToList(interpretation));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnomalyValue(isAnomaly, severity, score, Optional.ToList(interpretation), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AnomalyValue>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyValue)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnomalyValue IModel<AnomalyValue>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyValue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnomalyValue(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AnomalyValue>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AnomalyValue FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAnomalyValue(document.RootElement);
+            return DeserializeAnomalyValue(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

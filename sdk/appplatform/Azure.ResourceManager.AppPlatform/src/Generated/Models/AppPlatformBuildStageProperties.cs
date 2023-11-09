@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The build stage (init-container and container) resources in build pod. </summary>
     public partial class AppPlatformBuildStageProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildStageProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildStageProperties"/>. </summary>
         internal AppPlatformBuildStageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildStageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildStageProperties"/>. </summary>
         /// <param name="name"> The name of this build stage resource. </param>
         /// <param name="status"> The provisioning state of this build stage resource. </param>
-        internal AppPlatformBuildStageProperties(string name, KPackBuildStageProvisioningState? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildStageProperties(string name, KPackBuildStageProvisioningState? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of this build stage resource. </summary>

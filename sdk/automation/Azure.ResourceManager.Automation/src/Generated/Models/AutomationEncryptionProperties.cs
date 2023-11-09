@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The encryption settings for automation account. </summary>
     public partial class AutomationEncryptionProperties
     {
-        /// <summary> Initializes a new instance of AutomationEncryptionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationEncryptionProperties"/>. </summary>
         public AutomationEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationEncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
         /// <param name="keySource"> Encryption Key Source. </param>
         /// <param name="identity"> User identity used for CMK. </param>
-        internal AutomationEncryptionProperties(AutomationKeyVaultProperties keyVaultProperties, EncryptionKeySourceType? keySource, EncryptionPropertiesIdentity identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationEncryptionProperties(AutomationKeyVaultProperties keyVaultProperties, EncryptionKeySourceType? keySource, EncryptionPropertiesIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key vault properties. </summary>

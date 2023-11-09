@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Check SKU availability parameter. </summary>
     public partial class CognitiveServicesSkuAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
         /// <param name="skus"> The SKU of the resource. </param>
         /// <param name="kind"> The Kind of the resource. </param>
         /// <param name="resourceType"> The Type of the resource. </param>
@@ -28,6 +31,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Skus = skus.ToList();
             Kind = kind;
             ResourceType = resourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
+        /// <param name="skus"> The SKU of the resource. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        /// <param name="resourceType"> The Type of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesSkuAvailabilityContent(IList<string> skus, string kind, ResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Skus = skus;
+            Kind = kind;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/> for deserialization. </summary>
+        internal CognitiveServicesSkuAvailabilityContent()
+        {
         }
 
         /// <summary> The SKU of the resource. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Line channel. </summary>
     public partial class LineChannelProperties
     {
-        /// <summary> Initializes a new instance of LineChannelProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LineChannelProperties"/>. </summary>
         /// <param name="lineRegistrations"> The list of line channel registrations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lineRegistrations"/> is null. </exception>
         public LineChannelProperties(IEnumerable<LineRegistration> lineRegistrations)
@@ -25,15 +28,22 @@ namespace Azure.ResourceManager.BotService.Models
             LineRegistrations = lineRegistrations.ToList();
         }
 
-        /// <summary> Initializes a new instance of LineChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LineChannelProperties"/>. </summary>
         /// <param name="lineRegistrations"> The list of line channel registrations. </param>
         /// <param name="callbackUri"> Callback Url to enter in line registration. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
-        internal LineChannelProperties(IList<LineRegistration> lineRegistrations, Uri callbackUri, bool? isValidated)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LineChannelProperties(IList<LineRegistration> lineRegistrations, Uri callbackUri, bool? isValidated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LineRegistrations = lineRegistrations;
             CallbackUri = callbackUri;
             IsValidated = isValidated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LineChannelProperties"/> for deserialization. </summary>
+        internal LineChannelProperties()
+        {
         }
 
         /// <summary> The list of line channel registrations. </summary>

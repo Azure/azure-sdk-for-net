@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformBuildServiceAgentPoolData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceAgentPoolData"/>. </summary>
         public AppPlatformBuildServiceAgentPoolData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> build service agent pool properties. </param>
-        internal AppPlatformBuildServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformBuildServiceAgentPoolProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformBuildServiceAgentPoolProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> build service agent pool properties. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The resource model definition representing SKU. </summary>
     public partial class AvsSku
     {
-        /// <summary> Initializes a new instance of AvsSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AvsSku(string name)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Avs.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsSku"/>. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsSku(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsSku"/> for deserialization. </summary>
+        internal AvsSku()
+        {
         }
 
         /// <summary> The name of the SKU. </summary>

@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchNetworkSecurityGroupRule : IUtf8JsonSerializable
+    public partial class BatchNetworkSecurityGroupRule : IUtf8JsonSerializable, IJsonModel<BatchNetworkSecurityGroupRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkSecurityGroupRule>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BatchNetworkSecurityGroupRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("priority"u8);
@@ -32,11 +37,40 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchNetworkSecurityGroupRule DeserializeBatchNetworkSecurityGroupRule(JsonElement element)
+        BatchNetworkSecurityGroupRule IJsonModel<BatchNetworkSecurityGroupRule>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchNetworkSecurityGroupRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchNetworkSecurityGroupRule(document.RootElement, options);
+        }
+
+        internal static BatchNetworkSecurityGroupRule DeserializeBatchNetworkSecurityGroupRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +79,8 @@ namespace Azure.ResourceManager.Batch.Models
             BatchNetworkSecurityGroupRuleAccess access = default;
             string sourceAddressPrefix = default;
             Optional<IList<string>> sourcePortRanges = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -76,8 +112,38 @@ namespace Azure.ResourceManager.Batch.Models
                     sourcePortRanges = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, Optional.ToList(sourcePortRanges));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, Optional.ToList(sourcePortRanges), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<BatchNetworkSecurityGroupRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchNetworkSecurityGroupRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BatchNetworkSecurityGroupRule IModel<BatchNetworkSecurityGroupRule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchNetworkSecurityGroupRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBatchNetworkSecurityGroupRule(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BatchNetworkSecurityGroupRule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

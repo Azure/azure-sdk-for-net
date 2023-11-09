@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class ContinuousDtmfRecognitionToneReceived
+    public partial class ContinuousDtmfRecognitionToneReceived : IUtf8JsonSerializable, IJsonModel<ContinuousDtmfRecognitionToneReceived>
     {
-        internal static ContinuousDtmfRecognitionToneReceived DeserializeContinuousDtmfRecognitionToneReceived(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContinuousDtmfRecognitionToneReceived>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContinuousDtmfRecognitionToneReceived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ToneInfo))
+            {
+                writer.WritePropertyName("toneInfo"u8);
+                writer.WriteObjectValue(ToneInfo);
+            }
+            if (Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(ResultInformation))
+            {
+                writer.WritePropertyName("resultInformation"u8);
+                writer.WriteObjectValue(ResultInformation);
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContinuousDtmfRecognitionToneReceived IJsonModel<ContinuousDtmfRecognitionToneReceived>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContinuousDtmfRecognitionToneReceived)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinuousDtmfRecognitionToneReceived(document.RootElement, options);
+        }
+
+        internal static ContinuousDtmfRecognitionToneReceived DeserializeContinuousDtmfRecognitionToneReceived(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +95,8 @@ namespace Azure.Communication.CallAutomation
             Optional<string> correlationId = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<string> operationContext = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toneInfo"u8))
@@ -64,8 +137,38 @@ namespace Azure.Communication.CallAutomation
                     operationContext = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContinuousDtmfRecognitionToneReceived(toneInfo.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContinuousDtmfRecognitionToneReceived(toneInfo.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContinuousDtmfRecognitionToneReceived>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContinuousDtmfRecognitionToneReceived)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContinuousDtmfRecognitionToneReceived IModel<ContinuousDtmfRecognitionToneReceived>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContinuousDtmfRecognitionToneReceived)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContinuousDtmfRecognitionToneReceived(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContinuousDtmfRecognitionToneReceived>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

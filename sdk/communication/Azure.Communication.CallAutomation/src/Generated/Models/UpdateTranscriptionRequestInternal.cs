@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The UpdateTranscriptionRequest. </summary>
     internal partial class UpdateTranscriptionRequestInternal
     {
-        /// <summary> Initializes a new instance of UpdateTranscriptionRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
         /// <param name="locale"> Defines new locale for transcription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
         public UpdateTranscriptionRequestInternal(string locale)
@@ -21,6 +25,20 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(locale, nameof(locale));
 
             Locale = locale;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
+        /// <param name="locale"> Defines new locale for transcription. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateTranscriptionRequestInternal(string locale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Locale = locale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/> for deserialization. </summary>
+        internal UpdateTranscriptionRequestInternal()
+        {
         }
 
         /// <summary> Defines new locale for transcription. </summary>

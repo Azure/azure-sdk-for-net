@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Remote debugging payload. </summary>
     public partial class ApplicationRemoteDebuggingContent
     {
-        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingContent"/>. </summary>
         public ApplicationRemoteDebuggingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingContent"/>. </summary>
+        /// <param name="port"> Application debugging port. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationRemoteDebuggingContent(int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application debugging port. </summary>

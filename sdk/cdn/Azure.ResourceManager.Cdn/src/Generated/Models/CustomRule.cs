@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the common attributes for a custom rule that can be included in a waf policy. </summary>
     public partial class CustomRule
     {
-        /// <summary> Initializes a new instance of CustomRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomRule"/>. </summary>
         /// <param name="name"> Defines the name of the custom rule. </param>
         /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
@@ -32,19 +35,26 @@ namespace Azure.ResourceManager.Cdn.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of CustomRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRule"/>. </summary>
         /// <param name="name"> Defines the name of the custom rule. </param>
         /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
         /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        internal CustomRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EnabledState = enabledState;
             Priority = priority;
             MatchConditions = matchConditions;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomRule"/> for deserialization. </summary>
+        internal CustomRule()
+        {
         }
 
         /// <summary> Defines the name of the custom rule. </summary>

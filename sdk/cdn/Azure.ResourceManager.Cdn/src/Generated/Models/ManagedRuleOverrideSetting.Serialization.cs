@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedRuleOverrideSetting : IUtf8JsonSerializable
+    public partial class ManagedRuleOverrideSetting : IUtf8JsonSerializable, IJsonModel<ManagedRuleOverrideSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleOverrideSetting>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagedRuleOverrideSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
@@ -27,11 +33,40 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleOverrideSetting DeserializeManagedRuleOverrideSetting(JsonElement element)
+        ManagedRuleOverrideSetting IJsonModel<ManagedRuleOverrideSetting>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleOverrideSetting(document.RootElement, options);
+        }
+
+        internal static ManagedRuleOverrideSetting DeserializeManagedRuleOverrideSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +74,8 @@ namespace Azure.ResourceManager.Cdn.Models
             string ruleId = default;
             Optional<ManagedRuleSetupState> enabledState = default;
             Optional<OverrideActionType> action = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -64,8 +101,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     action = new OverrideActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedRuleOverrideSetting(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedRuleOverrideSetting(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagedRuleOverrideSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedRuleOverrideSetting IModel<ManagedRuleOverrideSetting>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedRuleOverrideSetting(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagedRuleOverrideSetting>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Advisor.Models
 {
     /// <summary> The metadata supported value detail. </summary>
     public partial class MetadataSupportedValueDetail
     {
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         internal MetadataSupportedValueDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
-        internal MetadataSupportedValueDetail(string id, string displayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataSupportedValueDetail(string id, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id. </summary>

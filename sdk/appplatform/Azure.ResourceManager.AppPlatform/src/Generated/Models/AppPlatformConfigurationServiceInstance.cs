@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Collection of instances belong to the Application Configuration Service. </summary>
     public partial class AppPlatformConfigurationServiceInstance
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceInstance. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceInstance"/>. </summary>
         internal AppPlatformConfigurationServiceInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceInstance"/>. </summary>
         /// <param name="name"> Name of the Application Configuration Service instance. </param>
         /// <param name="status"> Status of the Application Configuration Service instance. </param>
-        internal AppPlatformConfigurationServiceInstance(string name, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceInstance(string name, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Application Configuration Service instance. </summary>

@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class WorkbookTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkbookTemplateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WorkbookTemplateData(AzureLocation location) : base(location)
         {
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             LocalizedGalleries = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
-        /// <summary> Initializes a new instance of WorkbookTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,13 +42,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
         /// <param name="galleries"> Workbook galleries supported by the template. </param>
         /// <param name="localizedGalleries"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
-        internal WorkbookTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkbookTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Priority = priority;
             Author = author;
             TemplateData = templateData;
             Galleries = galleries;
             LocalizedGalleries = localizedGalleries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateData"/> for deserialization. </summary>
+        internal WorkbookTemplateData()
+        {
         }
 
         /// <summary> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </summary>

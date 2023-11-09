@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Workbook list result. </summary>
     internal partial class MyWorkbooksListResult
     {
-        /// <summary> Initializes a new instance of MyWorkbooksListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MyWorkbooksListResult"/>. </summary>
         internal MyWorkbooksListResult()
         {
             Value = new ChangeTrackingList<MyWorkbookData>();
         }
 
-        /// <summary> Initializes a new instance of MyWorkbooksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbooksListResult"/>. </summary>
         /// <param name="value"> An array of private workbooks. </param>
         /// <param name="nextLink"></param>
-        internal MyWorkbooksListResult(IReadOnlyList<MyWorkbookData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MyWorkbooksListResult(IReadOnlyList<MyWorkbookData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of private workbooks. </summary>

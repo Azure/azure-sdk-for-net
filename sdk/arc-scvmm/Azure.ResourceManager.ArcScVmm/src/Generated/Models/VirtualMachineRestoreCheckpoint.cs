@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the restore checkpoint action properties. </summary>
     public partial class VirtualMachineRestoreCheckpoint
     {
-        /// <summary> Initializes a new instance of VirtualMachineRestoreCheckpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRestoreCheckpoint"/>. </summary>
         public VirtualMachineRestoreCheckpoint()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRestoreCheckpoint"/>. </summary>
+        /// <param name="id"> ID of the checkpoint to be restored to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineRestoreCheckpoint(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the checkpoint to be restored to. </summary>

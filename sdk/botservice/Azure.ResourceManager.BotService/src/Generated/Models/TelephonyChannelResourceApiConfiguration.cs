@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -12,19 +14,23 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A resource Api configuration for the Telephony channel. </summary>
     public partial class TelephonyChannelResourceApiConfiguration
     {
-        /// <summary> Initializes a new instance of TelephonyChannelResourceApiConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannelResourceApiConfiguration"/>. </summary>
         public TelephonyChannelResourceApiConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TelephonyChannelResourceApiConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannelResourceApiConfiguration"/>. </summary>
         /// <param name="id"> The id of config. </param>
         /// <param name="providerName"> The provider name. </param>
         /// <param name="cognitiveServiceSubscriptionKey"> The cognitive service subscription key. </param>
         /// <param name="cognitiveServiceRegion"> The cognitive service region. </param>
         /// <param name="cognitiveServiceResourceId"> The cognitive service resourceId. </param>
         /// <param name="defaultLocale"> The default locale. </param>
-        internal TelephonyChannelResourceApiConfiguration(string id, string providerName, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TelephonyChannelResourceApiConfiguration(string id, string providerName, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ProviderName = providerName;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.BotService.Models
             CognitiveServiceRegion = cognitiveServiceRegion;
             CognitiveServiceResourceId = cognitiveServiceResourceId;
             DefaultLocale = defaultLocale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of config. </summary>

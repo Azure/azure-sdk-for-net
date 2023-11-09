@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ScriptSecureStringExecutionParameterDetails : IUtf8JsonSerializable
+    public partial class ScriptSecureStringExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<ScriptSecureStringExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptSecureStringExecutionParameterDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ScriptSecureStringExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SecureValue))
@@ -24,11 +30,40 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScriptSecureStringExecutionParameterDetails DeserializeScriptSecureStringExecutionParameterDetails(JsonElement element)
+        ScriptSecureStringExecutionParameterDetails IJsonModel<ScriptSecureStringExecutionParameterDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptSecureStringExecutionParameterDetails(document.RootElement, options);
+        }
+
+        internal static ScriptSecureStringExecutionParameterDetails DeserializeScriptSecureStringExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +71,8 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> secureValue = default;
             string name = default;
             ScriptExecutionParameterType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureValue"u8))
@@ -53,8 +90,38 @@ namespace Azure.ResourceManager.Avs.Models
                     type = new ScriptExecutionParameterType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScriptSecureStringExecutionParameterDetails(name, type, secureValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScriptSecureStringExecutionParameterDetails(name, type, serializedAdditionalRawData, secureValue.Value);
         }
+
+        BinaryData IModel<ScriptSecureStringExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScriptSecureStringExecutionParameterDetails IModel<ScriptSecureStringExecutionParameterDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScriptSecureStringExecutionParameterDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ScriptSecureStringExecutionParameterDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

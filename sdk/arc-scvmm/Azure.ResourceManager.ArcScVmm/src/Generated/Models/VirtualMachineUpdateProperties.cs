@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,28 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class VirtualMachineUpdateProperties
     {
-        /// <summary> Initializes a new instance of VirtualMachineUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineUpdateProperties"/>. </summary>
         public VirtualMachineUpdateProperties()
         {
             AvailabilitySets = new ChangeTrackingList<AvailabilitySetListItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineUpdateProperties"/>. </summary>
+        /// <param name="hardwareProfile"> Defines the resource properties. </param>
+        /// <param name="storageProfile"> Defines the resource properties. </param>
+        /// <param name="networkProfile"> Defines the resource properties. </param>
+        /// <param name="availabilitySets"> Availability Sets in vm. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineUpdateProperties(HardwareProfileUpdate hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, IList<AvailabilitySetListItem> availabilitySets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+            AvailabilitySets = availabilitySets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the resource properties. </summary>

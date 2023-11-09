@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Sampling settings for Diagnostic. </summary>
     public partial class SamplingSettings
     {
-        /// <summary> Initializes a new instance of SamplingSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SamplingSettings"/>. </summary>
         public SamplingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SamplingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SamplingSettings"/>. </summary>
         /// <param name="samplingType"> Sampling type. </param>
         /// <param name="percentage"> Rate of sampling for fixed-rate sampling. </param>
-        internal SamplingSettings(SamplingType? samplingType, double? percentage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SamplingSettings(SamplingType? samplingType, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SamplingType = samplingType;
             Percentage = percentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sampling type. </summary>

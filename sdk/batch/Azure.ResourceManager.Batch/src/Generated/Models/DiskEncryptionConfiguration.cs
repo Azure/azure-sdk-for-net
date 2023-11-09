@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Shared Image Gallery Image. </summary>
     internal partial class DiskEncryptionConfiguration
     {
-        /// <summary> Initializes a new instance of DiskEncryptionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
         public DiskEncryptionConfiguration()
         {
             Targets = new ChangeTrackingList<BatchDiskEncryptionTarget>();
         }
 
-        /// <summary> Initializes a new instance of DiskEncryptionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
         /// <param name="targets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
-        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Targets = targets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The TextSource. </summary>
     internal partial class TextSourceInternal
     {
-        /// <summary> Initializes a new instance of TextSourceInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextSourceInternal"/>. </summary>
         /// <param name="text"> Text for the cognitive service to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public TextSourceInternal(string text)
@@ -21,6 +25,34 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextSourceInternal"/>. </summary>
+        /// <param name="text"> Text for the cognitive service to be played. </param>
+        /// <param name="sourceLocale">
+        /// Source language locale to be played
+        /// Refer to available locales here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
+        /// </param>
+        /// <param name="voiceGender"> Voice gender type. </param>
+        /// <param name="voiceName">
+        /// Voice name to be played
+        /// Refer to available Text-to-speech voices here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
+        /// </param>
+        /// <param name="customVoiceEndpointId"> Endpoint where the custom voice was deployed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextSourceInternal(string text, string sourceLocale, GenderType? voiceGender, string voiceName, string customVoiceEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            SourceLocale = sourceLocale;
+            VoiceGender = voiceGender;
+            VoiceName = voiceName;
+            CustomVoiceEndpointId = customVoiceEndpointId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextSourceInternal"/> for deserialization. </summary>
+        internal TextSourceInternal()
+        {
         }
 
         /// <summary> Text for the cognitive service to be played. </summary>

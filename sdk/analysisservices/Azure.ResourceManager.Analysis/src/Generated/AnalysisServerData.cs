@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Analysis
     /// </summary>
     public partial class AnalysisServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AnalysisServerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="analysisSku"> The SKU of the Analysis Services resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisSku"/> is null. </exception>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Analysis
             AnalysisSku = analysisSku;
         }
 
-        /// <summary> Initializes a new instance of AnalysisServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +52,8 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="serverFullName"> The full name of the Analysis Services resource. </param>
         /// <param name="analysisServerSku"> The SKU of the Analysis Services resource. </param>
         /// <param name="analysisSku"> The SKU of the Analysis Services resource. </param>
-        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSku, AnalysisResourceSku analysisSku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSku, AnalysisResourceSku analysisSku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AsAdministrators = asAdministrators;
             BackupBlobContainerUri = backupBlobContainerUri;
@@ -63,6 +67,12 @@ namespace Azure.ResourceManager.Analysis
             ServerFullName = serverFullName;
             AnalysisServerSku = analysisServerSku;
             AnalysisSku = analysisSku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerData"/> for deserialization. </summary>
+        internal AnalysisServerData()
+        {
         }
 
         /// <summary> A collection of AS server administrators. </summary>

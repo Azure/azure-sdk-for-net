@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of Clouds. </summary>
     internal partial class CloudListResult
     {
-        /// <summary> Initializes a new instance of CloudListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudListResult"/>. </summary>
         internal CloudListResult()
         {
             Value = new ChangeTrackingList<ScVmmCloudData>();
         }
 
-        /// <summary> Initializes a new instance of CloudListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudListResult"/>. </summary>
         /// <param name="value"> List of Clouds. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal CloudListResult(IReadOnlyList<ScVmmCloudData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudListResult(IReadOnlyList<ScVmmCloudData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Clouds. </summary>

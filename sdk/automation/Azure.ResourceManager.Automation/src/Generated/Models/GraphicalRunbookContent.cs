@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Graphical Runbook Content. </summary>
     public partial class GraphicalRunbookContent
     {
-        /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GraphicalRunbookContent"/>. </summary>
         public GraphicalRunbookContent()
         {
         }
 
-        /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphicalRunbookContent"/>. </summary>
         /// <param name="rawContent"> Raw graphical Runbook content. </param>
         /// <param name="graphRunbookJson"> Graphical Runbook content as JSON. </param>
-        internal GraphicalRunbookContent(RawGraphicalRunbookContent rawContent, string graphRunbookJson)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GraphicalRunbookContent(RawGraphicalRunbookContent rawContent, string graphRunbookJson, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RawContent = rawContent;
             GraphRunbookJson = graphRunbookJson;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Raw graphical Runbook content. </summary>

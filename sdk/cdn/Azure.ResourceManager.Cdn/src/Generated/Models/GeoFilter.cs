@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Rules defining user's geo access within a CDN endpoint. </summary>
     public partial class GeoFilter
     {
-        /// <summary> Initializes a new instance of GeoFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoFilter"/>. </summary>
         /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
         /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
@@ -30,15 +33,22 @@ namespace Azure.ResourceManager.Cdn.Models
             CountryCodes = countryCodes.ToList();
         }
 
-        /// <summary> Initializes a new instance of GeoFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoFilter"/>. </summary>
         /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
         /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
-        internal GeoFilter(string relativePath, GeoFilterAction action, IList<string> countryCodes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoFilter(string relativePath, GeoFilterAction action, IList<string> countryCodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RelativePath = relativePath;
             Action = action;
             CountryCodes = countryCodes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoFilter"/> for deserialization. </summary>
+        internal GeoFilter()
+        {
         }
 
         /// <summary> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </summary>

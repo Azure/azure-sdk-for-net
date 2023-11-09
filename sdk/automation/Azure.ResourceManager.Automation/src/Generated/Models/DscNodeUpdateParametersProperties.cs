@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The DscNodeUpdateParametersProperties. </summary>
     internal partial class DscNodeUpdateParametersProperties
     {
-        /// <summary> Initializes a new instance of DscNodeUpdateParametersProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeUpdateParametersProperties"/>. </summary>
         public DscNodeUpdateParametersProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeUpdateParametersProperties"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the dsc node configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeUpdateParametersProperties(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the dsc node configuration. </summary>

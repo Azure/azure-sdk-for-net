@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementOpenIdConnectProviderData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderData"/>. </summary>
         public ApiManagementOpenIdConnectProviderData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,13 +36,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
         /// <param name="clientId"> Client ID of developer console which is the client application. </param>
         /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
-        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
             MetadataEndpoint = metadataEndpoint;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User-friendly OpenID Connect Provider name. </summary>

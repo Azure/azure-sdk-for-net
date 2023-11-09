@@ -6,15 +6,102 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationAccountStatistics
+    public partial class AutomationAccountStatistics : IUtf8JsonSerializable, IJsonModel<AutomationAccountStatistics>
     {
-        internal static AutomationAccountStatistics DeserializeAutomationAccountStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationAccountStatistics>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AutomationAccountStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CounterProperty))
+                {
+                    writer.WritePropertyName("counterProperty"u8);
+                    writer.WriteStringValue(CounterProperty);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CounterValue))
+                {
+                    writer.WritePropertyName("counterValue"u8);
+                    writer.WriteNumberValue(CounterValue.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    if (EndOn != null)
+                    {
+                        writer.WritePropertyName("endTime"u8);
+                        writer.WriteStringValue(EndOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("endTime");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutomationAccountStatistics IJsonModel<AutomationAccountStatistics>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationAccountStatistics(document.RootElement, options);
+        }
+
+        internal static AutomationAccountStatistics DeserializeAutomationAccountStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +111,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             Optional<string> id = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("counterProperty"u8))
@@ -64,8 +153,38 @@ namespace Azure.ResourceManager.Automation.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationAccountStatistics(counterProperty.Value, Optional.ToNullable(counterValue), Optional.ToNullable(startTime), Optional.ToNullable(endTime), id.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutomationAccountStatistics(counterProperty.Value, Optional.ToNullable(counterValue), Optional.ToNullable(startTime), Optional.ToNullable(endTime), id.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AutomationAccountStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AutomationAccountStatistics IModel<AutomationAccountStatistics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAutomationAccountStatistics(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AutomationAccountStatistics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

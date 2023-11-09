@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class NetworkInterfacesUpdate : IUtf8JsonSerializable
+    public partial class NetworkInterfacesUpdate : IUtf8JsonSerializable, IJsonModel<NetworkInterfacesUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfacesUpdate>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NetworkInterfacesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -50,7 +56,134 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        NetworkInterfacesUpdate IJsonModel<NetworkInterfacesUpdate>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkInterfacesUpdate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkInterfacesUpdate(document.RootElement, options);
+        }
+
+        internal static NetworkInterfacesUpdate DeserializeNetworkInterfacesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<string> macAddress = default;
+            Optional<string> virtualNetworkId = default;
+            Optional<AllocationMethod> ipv4AddressType = default;
+            Optional<AllocationMethod> ipv6AddressType = default;
+            Optional<AllocationMethod> macAddressType = default;
+            Optional<string> nicId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("macAddress"u8))
+                {
+                    macAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("virtualNetworkId"u8))
+                {
+                    virtualNetworkId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("ipv4AddressType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipv4AddressType = new AllocationMethod(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ipv6AddressType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipv6AddressType = new AllocationMethod(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("macAddressType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    macAddressType = new AllocationMethod(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("nicId"u8))
+                {
+                    nicId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkInterfacesUpdate(name.Value, macAddress.Value, virtualNetworkId.Value, Optional.ToNullable(ipv4AddressType), Optional.ToNullable(ipv6AddressType), Optional.ToNullable(macAddressType), nicId.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<NetworkInterfacesUpdate>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkInterfacesUpdate)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkInterfacesUpdate IModel<NetworkInterfacesUpdate>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkInterfacesUpdate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkInterfacesUpdate(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NetworkInterfacesUpdate>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

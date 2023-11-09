@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Lists Regions operation response details. </summary>
     internal partial class RegionListResult
     {
-        /// <summary> Initializes a new instance of RegionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegionListResult"/>. </summary>
         internal RegionListResult()
         {
             Value = new ChangeTrackingList<RegionContract>();
         }
 
-        /// <summary> Initializes a new instance of RegionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionListResult"/>. </summary>
         /// <param name="value"> Lists of Regions. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal RegionListResult(IReadOnlyList<RegionContract> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegionListResult(IReadOnlyList<RegionContract> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Lists of Regions. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged NamedValue list representation. </summary>
     internal partial class NamedValueListResult
     {
-        /// <summary> Initializes a new instance of NamedValueListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamedValueListResult"/>. </summary>
         internal NamedValueListResult()
         {
             Value = new ChangeTrackingList<ApiManagementNamedValueData>();
         }
 
-        /// <summary> Initializes a new instance of NamedValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedValueListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal NamedValueListResult(IReadOnlyList<ApiManagementNamedValueData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamedValueListResult(IReadOnlyList<ApiManagementNamedValueData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page values. </summary>

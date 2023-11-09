@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class JsonWebKey : IUtf8JsonSerializable
+    internal partial class JsonWebKey : IUtf8JsonSerializable, IJsonModel<JsonWebKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKey>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<JsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Alg))
@@ -103,11 +108,40 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JsonWebKey DeserializeJsonWebKey(JsonElement element)
+        JsonWebKey IJsonModel<JsonWebKey>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonWebKey(document.RootElement, options);
+        }
+
+        internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,6 +163,8 @@ namespace Azure.Security.Attestation
             Optional<string> x = default;
             Optional<IList<string>> x5c = default;
             Optional<string> y = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alg"u8))
@@ -225,8 +261,38 @@ namespace Azure.Security.Attestation
                     y = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<JsonWebKey>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JsonWebKey IModel<JsonWebKey>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJsonWebKey(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<JsonWebKey>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

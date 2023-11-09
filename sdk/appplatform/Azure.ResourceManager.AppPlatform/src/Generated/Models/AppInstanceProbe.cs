@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Probe describes a health check to be performed against an App Instance to determine whether it is alive or ready to receive traffic. </summary>
     public partial class AppInstanceProbe
     {
-        /// <summary> Initializes a new instance of AppInstanceProbe. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbe"/>. </summary>
         /// <param name="isProbeDisabled"> Indicate whether the probe is disabled. </param>
         public AppInstanceProbe(bool isProbeDisabled)
         {
             IsProbeDisabled = isProbeDisabled;
         }
 
-        /// <summary> Initializes a new instance of AppInstanceProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbe"/>. </summary>
         /// <param name="probeAction">
         /// The action of the probe.
         /// Please note <see cref="AppInstanceProbeAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,7 +35,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="timeoutInSeconds"> Number of seconds after which the probe times out. Minimum value is 1. </param>
         /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Minimum value is 1. </param>
         /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Must be 1 for liveness and startup. Minimum value is 1. </param>
-        internal AppInstanceProbe(AppInstanceProbeAction probeAction, bool isProbeDisabled, int? initialDelayInSeconds, int? periodInSeconds, int? timeoutInSeconds, int? failureThreshold, int? successThreshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppInstanceProbe(AppInstanceProbeAction probeAction, bool isProbeDisabled, int? initialDelayInSeconds, int? periodInSeconds, int? timeoutInSeconds, int? failureThreshold, int? successThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProbeAction = probeAction;
             IsProbeDisabled = isProbeDisabled;
@@ -38,6 +45,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             TimeoutInSeconds = timeoutInSeconds;
             FailureThreshold = failureThreshold;
             SuccessThreshold = successThreshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbe"/> for deserialization. </summary>
+        internal AppInstanceProbe()
+        {
         }
 
         /// <summary>

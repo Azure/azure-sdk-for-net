@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppPlatformServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the Service resource. </param>
         /// <param name="sku"> Sku of the Service resource. </param>
-        internal AppPlatformServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppPlatformServiceProperties properties, AppPlatformSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppPlatformServiceProperties properties, AppPlatformSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceData"/> for deserialization. </summary>
+        internal AppPlatformServiceData()
+        {
         }
 
         /// <summary> Properties of the Service resource. </summary>

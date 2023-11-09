@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentAnalyticsItem : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentAnalyticsItem : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentAnalyticsItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentAnalyticsItem>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ApplicationInsightsComponentAnalyticsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -30,6 +36,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Content"u8);
                 writer.WriteStringValue(Content);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("Version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("Scope"u8);
@@ -40,16 +54,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TimeCreated))
+                {
+                    writer.WritePropertyName("TimeCreated"u8);
+                    writer.WriteStringValue(TimeCreated);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TimeModified))
+                {
+                    writer.WritePropertyName("TimeModified"u8);
+                    writer.WriteStringValue(TimeModified);
+                }
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteObjectValue(Properties);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationInsightsComponentAnalyticsItem DeserializeApplicationInsightsComponentAnalyticsItem(JsonElement element)
+        ApplicationInsightsComponentAnalyticsItem IJsonModel<ApplicationInsightsComponentAnalyticsItem>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentAnalyticsItem(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentAnalyticsItem DeserializeApplicationInsightsComponentAnalyticsItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +122,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> timeCreated = default;
             Optional<string> timeModified = default;
             Optional<ApplicationInsightsComponentAnalyticsItemProperties> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -122,8 +183,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     properties = ApplicationInsightsComponentAnalyticsItemProperties.DeserializeApplicationInsightsComponentAnalyticsItemProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentAnalyticsItem(id.Value, name.Value, content.Value, version.Value, Optional.ToNullable(scope), Optional.ToNullable(type), timeCreated.Value, timeModified.Value, properties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationInsightsComponentAnalyticsItem(id.Value, name.Value, content.Value, version.Value, Optional.ToNullable(scope), Optional.ToNullable(type), timeCreated.Value, timeModified.Value, properties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ApplicationInsightsComponentAnalyticsItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplicationInsightsComponentAnalyticsItem IModel<ApplicationInsightsComponentAnalyticsItem>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentAnalyticsItem(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ApplicationInsightsComponentAnalyticsItem>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

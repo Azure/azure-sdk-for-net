@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TranscriptionUpdate. </summary>
     public partial class TranscriptionUpdate
     {
-        /// <summary> Initializes a new instance of TranscriptionUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
         internal TranscriptionUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of TranscriptionUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
-        internal TranscriptionUpdate(TranscriptionStatus? transcriptionStatus, TranscriptionStatusDetails? transcriptionStatusDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranscriptionUpdate(TranscriptionStatus? transcriptionStatus, TranscriptionStatusDetails? transcriptionStatusDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TranscriptionStatus = transcriptionStatus;
             TranscriptionStatusDetails = transcriptionStatusDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the transcription status. </summary>

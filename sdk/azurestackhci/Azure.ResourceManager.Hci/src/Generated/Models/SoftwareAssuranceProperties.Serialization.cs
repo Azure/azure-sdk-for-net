@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class SoftwareAssuranceProperties : IUtf8JsonSerializable
+    public partial class SoftwareAssuranceProperties : IUtf8JsonSerializable, IJsonModel<SoftwareAssuranceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareAssuranceProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SoftwareAssuranceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftwareAssuranceStatus))
@@ -26,11 +31,48 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastUpdated))
+                {
+                    writer.WritePropertyName("lastUpdated"u8);
+                    writer.WriteStringValue(LastUpdated.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SoftwareAssuranceProperties DeserializeSoftwareAssuranceProperties(JsonElement element)
+        SoftwareAssuranceProperties IJsonModel<SoftwareAssuranceProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareAssuranceProperties(document.RootElement, options);
+        }
+
+        internal static SoftwareAssuranceProperties DeserializeSoftwareAssuranceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +80,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<SoftwareAssuranceStatus> softwareAssuranceStatus = default;
             Optional<SoftwareAssuranceIntent> softwareAssuranceIntent = default;
             Optional<DateTimeOffset> lastUpdated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softwareAssuranceStatus"u8))
@@ -67,8 +111,38 @@ namespace Azure.ResourceManager.Hci.Models
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SoftwareAssuranceProperties(Optional.ToNullable(softwareAssuranceStatus), Optional.ToNullable(softwareAssuranceIntent), Optional.ToNullable(lastUpdated));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SoftwareAssuranceProperties(Optional.ToNullable(softwareAssuranceStatus), Optional.ToNullable(softwareAssuranceIntent), Optional.ToNullable(lastUpdated), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SoftwareAssuranceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SoftwareAssuranceProperties IModel<SoftwareAssuranceProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSoftwareAssuranceProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SoftwareAssuranceProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Service network profile payload. </summary>
     public partial class AppPlatformServiceNetworkProfile
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceNetworkProfile"/>. </summary>
         public AppPlatformServiceNetworkProfile()
         {
             RequiredTraffics = new ChangeTrackingList<AppPlatformServiceRequiredTraffic>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceNetworkProfile"/>. </summary>
         /// <param name="serviceRuntimeSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Apps Service Runtime. </param>
         /// <param name="appSubnetId"> Fully qualified resource Id of the subnet to host customer apps in Azure Spring Apps. </param>
         /// <param name="serviceCidr"> Azure Spring Apps service reserved CIDR. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="requiredTraffics"> Required inbound or outbound traffics for Azure Spring Apps resource. </param>
         /// <param name="ingressConfig"> Ingress configuration payload for Azure Spring Apps resource. </param>
         /// <param name="outboundType"> The egress traffic type of Azure Spring Apps VNet instances. </param>
-        internal AppPlatformServiceNetworkProfile(ResourceIdentifier serviceRuntimeSubnetId, ResourceIdentifier appSubnetId, string serviceCidr, string serviceRuntimeNetworkResourceGroup, string appNetworkResourceGroup, NetworkProfileOutboundIPs outboundIPs, IReadOnlyList<AppPlatformServiceRequiredTraffic> requiredTraffics, IngressConfig ingressConfig, string outboundType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceNetworkProfile(ResourceIdentifier serviceRuntimeSubnetId, ResourceIdentifier appSubnetId, string serviceCidr, string serviceRuntimeNetworkResourceGroup, string appNetworkResourceGroup, NetworkProfileOutboundIPs outboundIPs, IReadOnlyList<AppPlatformServiceRequiredTraffic> requiredTraffics, IngressConfig ingressConfig, string outboundType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceRuntimeSubnetId = serviceRuntimeSubnetId;
             AppSubnetId = appSubnetId;
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             RequiredTraffics = requiredTraffics;
             IngressConfig = ingressConfig;
             OutboundType = outboundType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fully qualified resource Id of the subnet to host Azure Spring Apps Service Runtime. </summary>

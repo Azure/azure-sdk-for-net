@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Billing;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The list of billing subscription aliases. </summary>
     internal partial class BillingSubscriptionAliasListResult
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionAliasListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAliasListResult"/>. </summary>
         internal BillingSubscriptionAliasListResult()
         {
             Value = new ChangeTrackingList<BillingSubscriptionAliasData>();
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionAliasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAliasListResult"/>. </summary>
         /// <param name="value"> The list of billing subscription aliases. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal BillingSubscriptionAliasListResult(IReadOnlyList<BillingSubscriptionAliasData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionAliasListResult(IReadOnlyList<BillingSubscriptionAliasData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of billing subscription aliases. </summary>

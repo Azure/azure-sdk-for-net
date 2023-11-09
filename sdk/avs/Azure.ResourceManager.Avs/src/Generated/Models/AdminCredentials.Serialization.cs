@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AdminCredentials
+    public partial class AdminCredentials : IUtf8JsonSerializable, IJsonModel<AdminCredentials>
     {
-        internal static AdminCredentials DeserializeAdminCredentials(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminCredentials>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AdminCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NsxtUsername))
+                {
+                    writer.WritePropertyName("nsxtUsername"u8);
+                    writer.WriteStringValue(NsxtUsername);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NsxtPassword))
+                {
+                    writer.WritePropertyName("nsxtPassword"u8);
+                    writer.WriteStringValue(NsxtPassword);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VCenterUsername))
+                {
+                    writer.WritePropertyName("vcenterUsername"u8);
+                    writer.WriteStringValue(VCenterUsername);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VCenterPassword))
+                {
+                    writer.WritePropertyName("vcenterPassword"u8);
+                    writer.WriteStringValue(VCenterPassword);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AdminCredentials IJsonModel<AdminCredentials>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdminCredentials(document.RootElement, options);
+        }
+
+        internal static AdminCredentials DeserializeAdminCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +95,8 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> nsxtPassword = default;
             Optional<string> vcenterUsername = default;
             Optional<string> vcenterPassword = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nsxtUsername"u8))
@@ -44,8 +119,38 @@ namespace Azure.ResourceManager.Avs.Models
                     vcenterPassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AdminCredentials(nsxtUsername.Value, nsxtPassword.Value, vcenterUsername.Value, vcenterPassword.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AdminCredentials(nsxtUsername.Value, nsxtPassword.Value, vcenterUsername.Value, vcenterPassword.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AdminCredentials>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AdminCredentials IModel<AdminCredentials>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAdminCredentials(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AdminCredentials>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

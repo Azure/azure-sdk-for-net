@@ -6,21 +6,73 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems
+    public partial class Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems : IUtf8JsonSerializable, IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>
     {
-        internal static Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DateOn))
+            {
+                writer.WritePropertyName("dateTime"u8);
+                writer.WriteStringValue(DateOn.Value, "O");
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteNumberValue(Value.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(document.RootElement, options);
+        }
+
+        internal static Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> dateTime = default;
             Optional<float> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTime"u8))
@@ -41,8 +93,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     value = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(Optional.ToNullable(dateTime), Optional.ToNullable(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(Optional.ToNullable(dateTime), Optional.ToNullable(value), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems IModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

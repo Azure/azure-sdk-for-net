@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementLoggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerData"/>. </summary>
         public ApiManagementLoggerData()
         {
             Credentials = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,13 +41,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </param>
         /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
         /// <param name="resourceId"> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </param>
-        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LoggerType = loggerType;
             Description = description;
             Credentials = credentials;
             IsBuffered = isBuffered;
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Logger type. </summary>

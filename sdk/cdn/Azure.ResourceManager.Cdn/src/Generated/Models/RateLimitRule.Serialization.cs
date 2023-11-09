@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RateLimitRule : IUtf8JsonSerializable
+    public partial class RateLimitRule : IUtf8JsonSerializable, IJsonModel<RateLimitRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RateLimitRule>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RateLimitRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rateLimitThreshold"u8);
@@ -38,11 +43,40 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RateLimitRule DeserializeRateLimitRule(JsonElement element)
+        RateLimitRule IJsonModel<RateLimitRule>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RateLimitRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRateLimitRule(document.RootElement, options);
+        }
+
+        internal static RateLimitRule DeserializeRateLimitRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +88,8 @@ namespace Azure.ResourceManager.Cdn.Models
             int priority = default;
             IList<CustomRuleMatchCondition> matchConditions = default;
             OverrideActionType action = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rateLimitThreshold"u8))
@@ -100,8 +136,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     action = new OverrideActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, rateLimitThreshold, rateLimitDurationInMinutes);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData, rateLimitThreshold, rateLimitDurationInMinutes);
         }
+
+        BinaryData IModel<RateLimitRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RateLimitRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RateLimitRule IModel<RateLimitRule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RateLimitRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRateLimitRule(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RateLimitRule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

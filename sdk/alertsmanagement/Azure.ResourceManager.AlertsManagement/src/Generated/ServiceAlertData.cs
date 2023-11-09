@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.AlertsManagement
     /// </summary>
     public partial class ServiceAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAlertData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertData"/>. </summary>
         public ServiceAlertData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Alert property bag. </param>
-        internal ServiceAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Alert property bag. </summary>

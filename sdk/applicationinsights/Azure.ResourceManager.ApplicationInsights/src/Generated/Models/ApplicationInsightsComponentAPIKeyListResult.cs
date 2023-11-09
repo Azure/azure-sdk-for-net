@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Describes the list of API Keys of an Application Insights Component. </summary>
     internal partial class ApplicationInsightsComponentAPIKeyListResult
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKeyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAPIKeyListResult"/>. </summary>
         /// <param name="value"> List of API Key definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApplicationInsightsComponentAPIKeyListResult(IEnumerable<ApplicationInsightsComponentAPIKey> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAPIKeyListResult"/>. </summary>
         /// <param name="value"> List of API Key definitions. </param>
-        internal ApplicationInsightsComponentAPIKeyListResult(IReadOnlyList<ApplicationInsightsComponentAPIKey> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentAPIKeyListResult(IReadOnlyList<ApplicationInsightsComponentAPIKey> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAPIKeyListResult"/> for deserialization. </summary>
+        internal ApplicationInsightsComponentAPIKeyListResult()
+        {
         }
 
         /// <summary> List of API Key definitions. </summary>

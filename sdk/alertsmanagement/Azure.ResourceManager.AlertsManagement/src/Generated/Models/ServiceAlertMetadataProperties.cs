@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// </summary>
     public abstract partial class ServiceAlertMetadataProperties
     {
-        /// <summary> Initializes a new instance of ServiceAlertMetadataProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadataProperties"/>. </summary>
         protected ServiceAlertMetadataProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadataProperties"/>. </summary>
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
-        internal ServiceAlertMetadataProperties(ServiceAlertMetadataIdentifier metadataIdentifier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertMetadataProperties(ServiceAlertMetadataIdentifier metadataIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetadataIdentifier = metadataIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identification of the information to be retrieved by API call. </summary>

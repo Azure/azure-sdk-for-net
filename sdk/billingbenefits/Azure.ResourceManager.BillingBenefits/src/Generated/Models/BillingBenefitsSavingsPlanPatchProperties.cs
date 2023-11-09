@@ -5,14 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Savings plan patch request. </summary>
     public partial class BillingBenefitsSavingsPlanPatchProperties
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanPatchProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatchProperties"/>. </summary>
         public BillingBenefitsSavingsPlanPatchProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatchProperties"/>. </summary>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
+        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
+        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
+        /// <param name="renewProperties"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanPatchProperties(string displayName, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, bool? isRenewed, RenewProperties renewProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DisplayName = displayName;
+            AppliedScopeType = appliedScopeType;
+            AppliedScopeProperties = appliedScopeProperties;
+            IsRenewed = isRenewed;
+            RenewProperties = renewProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name. </summary>

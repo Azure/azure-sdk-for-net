@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Endpoint addresses. </summary>
     public partial class AvsPrivateCloudEndpoints
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudEndpoints. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
         internal AvsPrivateCloudEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
         /// <param name="nsxtManager"> Endpoint for the NSX-T Data Center manager. </param>
         /// <param name="vcsa"> Endpoint for Virtual Center Server Appliance. </param>
         /// <param name="hcxCloudManager"> Endpoint for the HCX Cloud Manager. </param>
-        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NsxtManager = nsxtManager;
             Vcsa = vcsa;
             HcxCloudManager = hcxCloudManager;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Endpoint for the NSX-T Data Center manager. </summary>

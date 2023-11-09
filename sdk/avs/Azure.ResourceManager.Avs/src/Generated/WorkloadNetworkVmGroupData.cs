@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkVmGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
         public WorkloadNetworkVmGroupData()
         {
             Members = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVmGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVmGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +38,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="status"> VM Group status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> members, WorkloadNetworkVmGroupStatus? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> members, WorkloadNetworkVmGroupStatus? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Members = members;
             Status = status;
             ProvisioningState = provisioningState;
             Revision = revision;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the VM group. </summary>

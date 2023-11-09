@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the an action and its status. </summary>
     public partial class ActionStatus
     {
-        /// <summary> Initializes a new instance of ActionStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActionStatus"/>. </summary>
         internal ActionStatus()
         {
             Targets = new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>();
         }
 
-        /// <summary> Initializes a new instance of ActionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionStatus"/>. </summary>
         /// <param name="actionName"> The name of the action status. </param>
         /// <param name="actionId"> The id of the action status. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="startOn"> String that represents the start time of the action. </param>
         /// <param name="endOn"> String that represents the end time of the action. </param>
         /// <param name="targets"> The array of targets. </param>
-        internal ActionStatus(string actionName, string actionId, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionStatus(string actionName, string actionId, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionName = actionName;
             ActionId = actionId;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.Chaos.Models
             StartOn = startOn;
             EndOn = endOn;
             Targets = targets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the action status. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class HcxEnterpriseSiteData : ResourceData
     {
-        /// <summary> Initializes a new instance of HcxEnterpriseSiteData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteData"/>. </summary>
         public HcxEnterpriseSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of HcxEnterpriseSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="activationKey"> The activation key. </param>
         /// <param name="status"> The status of the HCX Enterprise Site. </param>
-        internal HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string activationKey, HcxEnterpriseSiteStatus? status) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string activationKey, HcxEnterpriseSiteStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ActivationKey = activationKey;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The activation key. </summary>

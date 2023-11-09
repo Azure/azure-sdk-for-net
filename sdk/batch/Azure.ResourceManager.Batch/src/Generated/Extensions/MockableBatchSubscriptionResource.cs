@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BatchAccountRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BatchAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BatchAccountRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BatchAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchAccountResource(Client, BatchAccountData.DeserializeBatchAccountData(e)), BatchAccountClientDiagnostics, Pipeline, "MockableBatchSubscriptionResource.GetBatchAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The URI required to login to the supplemental portal from the Azure portal. </summary>
     public partial class SsoUri
     {
-        /// <summary> Initializes a new instance of SsoUri. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsoUri"/>. </summary>
         internal SsoUri()
         {
         }
 
-        /// <summary> Initializes a new instance of SsoUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsoUri"/>. </summary>
         /// <param name="availableSsoUri"> The URI used to login to the supplemental portal. </param>
-        internal SsoUri(Uri availableSsoUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsoUri(Uri availableSsoUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AvailableSsoUri = availableSsoUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URI used to login to the supplemental portal. </summary>

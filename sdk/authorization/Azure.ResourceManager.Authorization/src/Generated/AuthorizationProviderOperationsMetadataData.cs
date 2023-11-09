@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class AuthorizationProviderOperationsMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
         internal AuthorizationProviderOperationsMetadataData()
         {
             ResourceTypes = new ChangeTrackingList<AuthorizationProviderResourceType>();
             Operations = new ChangeTrackingList<AuthorizationProviderOperationInfo>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,11 +37,13 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="displayName"> The provider display name. </param>
         /// <param name="resourceTypes"> The provider resource types. </param>
         /// <param name="operations"> The provider operations. </param>
-        internal AuthorizationProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<AuthorizationProviderResourceType> resourceTypes, IReadOnlyList<AuthorizationProviderOperationInfo> operations) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<AuthorizationProviderResourceType> resourceTypes, IReadOnlyList<AuthorizationProviderOperationInfo> operations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
             Operations = operations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provider display name. </summary>

@@ -15,7 +15,10 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Request of the last detection. </summary>
     public partial class MultivariateLastDetectionOptions
     {
-        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/>. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
@@ -26,9 +29,10 @@ namespace Azure.AI.AnomalyDetector
             Argument.AssertNotNull(variables, nameof(variables));
 
             Variables = variables.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/>. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
@@ -38,10 +42,17 @@ namespace Azure.AI.AnomalyDetector
         /// variables for one anomalous time stamp in the response. The default is
         /// 10.
         /// </param>
-        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Variables = variables;
             TopContributorCount = topContributorCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/> for deserialization. </summary>
+        internal MultivariateLastDetectionOptions()
+        {
         }
 
         /// <summary>

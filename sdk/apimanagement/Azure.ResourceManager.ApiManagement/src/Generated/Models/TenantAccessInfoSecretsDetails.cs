@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Tenant access information contract of the API Management service. </summary>
     public partial class TenantAccessInfoSecretsDetails
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoSecretsDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoSecretsDetails"/>. </summary>
         internal TenantAccessInfoSecretsDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantAccessInfoSecretsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoSecretsDetails"/>. </summary>
         /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
-        internal TenantAccessInfoSecretsDetails(string accessInfoType, string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TenantAccessInfoSecretsDetails(string accessInfoType, string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessInfoType = accessInfoType;
             PrincipalId = principalId;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             IsDirectAccessEnabled = isDirectAccessEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Access Information type ('access' or 'gitAccess'). </summary>

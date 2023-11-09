@@ -5,20 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkSegmentPortVif
+    public partial class WorkloadNetworkSegmentPortVif : IUtf8JsonSerializable, IJsonModel<WorkloadNetworkSegmentPortVif>
     {
-        internal static WorkloadNetworkSegmentPortVif DeserializeWorkloadNetworkSegmentPortVif(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkSegmentPortVif>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<WorkloadNetworkSegmentPortVif>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PortName))
+            {
+                writer.WritePropertyName("portName"u8);
+                writer.WriteStringValue(PortName);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WorkloadNetworkSegmentPortVif IJsonModel<WorkloadNetworkSegmentPortVif>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkSegmentPortVif)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadNetworkSegmentPortVif(document.RootElement, options);
+        }
+
+        internal static WorkloadNetworkSegmentPortVif DeserializeWorkloadNetworkSegmentPortVif(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> portName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portName"u8))
@@ -26,8 +74,38 @@ namespace Azure.ResourceManager.Avs.Models
                     portName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadNetworkSegmentPortVif(portName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkloadNetworkSegmentPortVif(portName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<WorkloadNetworkSegmentPortVif>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkSegmentPortVif)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WorkloadNetworkSegmentPortVif IModel<WorkloadNetworkSegmentPortVif>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadNetworkSegmentPortVif)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWorkloadNetworkSegmentPortVif(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<WorkloadNetworkSegmentPortVif>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

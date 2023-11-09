@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsPrivateCloudAddonData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudAddonData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonData"/>. </summary>
         public AvsPrivateCloudAddonData()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudAddonData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +37,11 @@ namespace Azure.ResourceManager.Avs
         /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
         /// </param>
-        internal AvsPrivateCloudAddonData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudAddonProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudAddonData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudAddonProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the activity parameter set. </summary>
     public partial class AutomationActivityParameterSet
     {
-        /// <summary> Initializes a new instance of AutomationActivityParameterSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterSet"/>. </summary>
         internal AutomationActivityParameterSet()
         {
             Parameters = new ChangeTrackingList<AutomationActivityParameterDefinition>();
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityParameterSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterSet"/>. </summary>
         /// <param name="name"> Gets or sets the name of the activity parameter set. </param>
         /// <param name="parameters"> Gets or sets the parameters of the activity parameter set. </param>
-        internal AutomationActivityParameterSet(string name, IReadOnlyList<AutomationActivityParameterDefinition> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationActivityParameterSet(string name, IReadOnlyList<AutomationActivityParameterDefinition> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the activity parameter set. </summary>

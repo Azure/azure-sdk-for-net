@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> The properties of a change. </summary>
     public partial class ChangeProperties
     {
-        /// <summary> Initializes a new instance of ChangeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChangeProperties"/>. </summary>
         internal ChangeProperties()
         {
             InitiatedByList = new ChangeTrackingList<string>();
             PropertyChanges = new ChangeTrackingList<PropertyChange>();
         }
 
-        /// <summary> Initializes a new instance of ChangeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeProperties"/>. </summary>
         /// <param name="resourceId"> The resource id that the change is attached to. </param>
         /// <param name="changeDetectedOn"> The time when the change is detected. </param>
         /// <param name="initiatedByList">
@@ -30,13 +33,15 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// </param>
         /// <param name="changeType"> The type of the change. </param>
         /// <param name="propertyChanges"> The list of detailed changes at json property level. </param>
-        internal ChangeProperties(ResourceIdentifier resourceId, DateTimeOffset? changeDetectedOn, IReadOnlyList<string> initiatedByList, ChangeType? changeType, IReadOnlyList<PropertyChange> propertyChanges)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChangeProperties(ResourceIdentifier resourceId, DateTimeOffset? changeDetectedOn, IReadOnlyList<string> initiatedByList, ChangeType? changeType, IReadOnlyList<PropertyChange> propertyChanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ChangeDetectedOn = changeDetectedOn;
             InitiatedByList = initiatedByList;
             ChangeType = changeType;
             PropertyChanges = propertyChanges;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id that the change is attached to. </summary>

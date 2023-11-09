@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An Application Insights component daily data volume cap status. </summary>
     public partial class ApplicationInsightsComponentQuotaStatus
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentQuotaStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentQuotaStatus"/>. </summary>
         internal ApplicationInsightsComponentQuotaStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentQuotaStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentQuotaStatus"/>. </summary>
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
         /// <param name="expirationTime"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
-        internal ApplicationInsightsComponentQuotaStatus(string appId, bool? shouldBeThrottled, string expirationTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentQuotaStatus(string appId, bool? shouldBeThrottled, string expirationTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppId = appId;
             ShouldBeThrottled = shouldBeThrottled;
             ExpirationTime = expirationTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Application ID for the Application Insights component. </summary>

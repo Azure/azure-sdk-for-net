@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The connectivity check operation destination. </summary>
     public partial class ConnectivityCheckRequestDestination
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckRequestDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestDestination"/>. </summary>
         /// <param name="address"> Destination address. Can either be an IP address or a FQDN. </param>
         /// <param name="port"> Destination port. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Address = address;
             Port = port;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestDestination"/>. </summary>
+        /// <param name="address"> Destination address. Can either be an IP address or a FQDN. </param>
+        /// <param name="port"> Destination port. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityCheckRequestDestination(string address, long port, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Address = address;
+            Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestDestination"/> for deserialization. </summary>
+        internal ConnectivityCheckRequestDestination()
+        {
         }
 
         /// <summary> Destination address. Can either be an IP address or a FQDN. </summary>

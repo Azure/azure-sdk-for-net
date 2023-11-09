@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -13,7 +14,10 @@ namespace Azure.Communication.Chat
     /// <summary> The Communication Services error. </summary>
     internal partial class ChatErrorResponse
     {
-        /// <summary> Initializes a new instance of ChatErrorResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatErrorResponse"/>. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ChatErrorResponse(ChatError error)
@@ -21,6 +25,20 @@ namespace Azure.Communication.Chat
             Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatErrorResponse"/>. </summary>
+        /// <param name="error"> The Communication Services error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatErrorResponse(ChatError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatErrorResponse"/> for deserialization. </summary>
+        internal ChatErrorResponse()
+        {
         }
 
         /// <summary> The Communication Services error. </summary>

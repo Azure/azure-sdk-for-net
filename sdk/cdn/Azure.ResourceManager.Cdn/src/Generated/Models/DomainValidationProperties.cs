@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties to validate a domain. </summary>
     public partial class DomainValidationProperties
     {
-        /// <summary> Initializes a new instance of DomainValidationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainValidationProperties"/>. </summary>
         internal DomainValidationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainValidationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainValidationProperties"/>. </summary>
         /// <param name="validationToken"> Challenge used for DNS TXT record or file based validation. </param>
         /// <param name="expiresOn"> The date time that the token expires. </param>
-        internal DomainValidationProperties(string validationToken, DateTimeOffset? expiresOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainValidationProperties(string validationToken, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationToken = validationToken;
             ExpiresOn = expiresOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Challenge used for DNS TXT record or file based validation. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchApplicationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationData"/>. </summary>
         public BatchApplicationData()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +36,14 @@ namespace Azure.ResourceManager.Batch
         /// <param name="allowUpdates"> A value indicating whether packages within the application may be overwritten using the same version string. </param>
         /// <param name="defaultVersion"> The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             AllowUpdates = allowUpdates;
             DefaultVersion = defaultVersion;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The display name for the application. </summary>

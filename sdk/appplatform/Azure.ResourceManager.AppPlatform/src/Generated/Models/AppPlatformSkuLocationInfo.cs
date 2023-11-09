@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Locations and availability zones where the SKU is available. </summary>
     public partial class AppPlatformSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuLocationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuLocationInfo"/>. </summary>
         internal AppPlatformSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<AppPlatformSkuZoneDetails>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuLocationInfo"/>. </summary>
         /// <param name="location"> Gets location of the SKU. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
-        internal AppPlatformSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<AppPlatformSkuZoneDetails> zoneDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<AppPlatformSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets location of the SKU. </summary>

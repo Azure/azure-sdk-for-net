@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,9 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class WorkbookData : IUtf8JsonSerializable
+    public partial class WorkbookData : IUtf8JsonSerializable, IJsonModel<WorkbookData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<WorkbookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -48,6 +52,29 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -72,10 +99,26 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ModifiedOn))
+                {
+                    writer.WritePropertyName("timeModified"u8);
+                    writer.WriteStringValue(ModifiedOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UserId))
+                {
+                    writer.WritePropertyName("userId"u8);
+                    writer.WriteStringValue(UserId);
+                }
             }
             if (Optional.IsDefined(SourceId))
             {
@@ -106,12 +149,56 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("description");
                 }
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Revision))
+                {
+                    if (Revision != null)
+                    {
+                        writer.WritePropertyName("revision"u8);
+                        writer.WriteStringValue(Revision);
+                    }
+                    else
+                    {
+                        writer.WriteNull("revision");
+                    }
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkbookData DeserializeWorkbookData(JsonElement element)
+        WorkbookData IJsonModel<WorkbookData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkbookData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkbookData(document.RootElement, options);
+        }
+
+        internal static WorkbookData DeserializeWorkbookData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,6 +222,8 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<Uri> storageUri = default;
             Optional<string> description = default;
             Optional<string> revision = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -293,8 +382,38 @@ namespace Azure.ResourceManager.ApplicationInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, serializedData.Value, version.Value, Optional.ToNullable(timeModified), category.Value, userId.Value, sourceId.Value, storageUri.Value, description.Value, revision.Value, identity, Optional.ToNullable(kind), Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, serializedData.Value, version.Value, Optional.ToNullable(timeModified), category.Value, userId.Value, sourceId.Value, storageUri.Value, description.Value, revision.Value, identity, Optional.ToNullable(kind), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<WorkbookData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkbookData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WorkbookData IModel<WorkbookData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkbookData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWorkbookData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<WorkbookData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of AvailabilitySets. </summary>
     internal partial class AvailabilitySetListResult
     {
-        /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilitySetListResult"/>. </summary>
         internal AvailabilitySetListResult()
         {
             Value = new ChangeTrackingList<ScVmmAvailabilitySetData>();
         }
 
-        /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilitySetListResult"/>. </summary>
         /// <param name="value"> List of AvailabilitySets. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal AvailabilitySetListResult(IReadOnlyList<ScVmmAvailabilitySetData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilitySetListResult(IReadOnlyList<ScVmmAvailabilitySetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of AvailabilitySets. </summary>

@@ -17,7 +17,10 @@ namespace Azure.AI.AnomalyDetector
     /// </summary>
     public partial class ModelInfo
     {
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -40,9 +43,10 @@ namespace Azure.AI.AnomalyDetector
             StartTime = startTime;
             EndTime = endTime;
             Errors = new ChangeTrackingList<ErrorResponse>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -72,7 +76,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="status"> Model status. </param>
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
-        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
@@ -84,6 +89,12 @@ namespace Azure.AI.AnomalyDetector
             Status = status;
             Errors = errors;
             DiagnosticsInfo = diagnosticsInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/> for deserialization. </summary>
+        internal ModelInfo()
+        {
         }
 
         /// <summary>

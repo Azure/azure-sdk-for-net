@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ScriptParameter
+    public partial class ScriptParameter : IUtf8JsonSerializable, IJsonModel<ScriptParameter>
     {
-        internal static ScriptParameter DeserializeScriptParameter(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptParameter>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ScriptParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Core.Optional.IsDefined(ParameterType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ParameterType.Value.ToString());
+                }
+            }
+            if (Core.Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Core.Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Core.Optional.IsDefined(Visibility))
+                {
+                    writer.WritePropertyName("visibility"u8);
+                    writer.WriteStringValue(Visibility.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Core.Optional.IsDefined(Optional))
+                {
+                    writer.WritePropertyName("optional"u8);
+                    writer.WriteStringValue(Optional.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ScriptParameter IJsonModel<ScriptParameter>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptParameter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptParameter(document.RootElement, options);
+        }
+
+        internal static ScriptParameter DeserializeScriptParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +101,8 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> description = default;
             Optional<ParameterVisibilityStatus> visibility = default;
             Optional<ParameterOptionalityStatus> optional = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -62,8 +142,38 @@ namespace Azure.ResourceManager.Avs.Models
                     optional = new ParameterOptionalityStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScriptParameter(Core.Optional.ToNullable(type), name.Value, description.Value, Core.Optional.ToNullable(visibility), Core.Optional.ToNullable(optional));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScriptParameter(Core.Optional.ToNullable(type), name.Value, description.Value, Core.Optional.ToNullable(visibility), Core.Optional.ToNullable(optional), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ScriptParameter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptParameter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScriptParameter IModel<ScriptParameter>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScriptParameter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScriptParameter(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ScriptParameter>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,17 +5,134 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AddParticipantsFailedInternal
+    internal partial class AddParticipantsFailedInternal : IUtf8JsonSerializable, IJsonModel<AddParticipantsFailedInternal>
     {
-        internal static AddParticipantsFailedInternal DeserializeAddParticipantsFailedInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddParticipantsFailedInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AddParticipantsFailedInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EventSource))
+                {
+                    writer.WritePropertyName("eventSource"u8);
+                    writer.WriteStringValue(EventSource);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(OperationContext))
+                {
+                    writer.WritePropertyName("operationContext"u8);
+                    writer.WriteStringValue(OperationContext);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ResultInformation))
+                {
+                    writer.WritePropertyName("resultInformation"u8);
+                    writer.WriteObjectValue(ResultInformation);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Participants))
+                {
+                    writer.WritePropertyName("participants"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Participants)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CallConnectionId))
+                {
+                    writer.WritePropertyName("callConnectionId"u8);
+                    writer.WriteStringValue(CallConnectionId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ServerCallId))
+                {
+                    writer.WritePropertyName("serverCallId"u8);
+                    writer.WriteStringValue(ServerCallId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CorrelationId))
+                {
+                    writer.WritePropertyName("correlationId"u8);
+                    writer.WriteStringValue(CorrelationId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PublicEventType))
+                {
+                    writer.WritePropertyName("publicEventType"u8);
+                    writer.WriteStringValue(PublicEventType);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AddParticipantsFailedInternal IJsonModel<AddParticipantsFailedInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddParticipantsFailedInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddParticipantsFailedInternal(document.RootElement, options);
+        }
+
+        internal static AddParticipantsFailedInternal DeserializeAddParticipantsFailedInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +146,8 @@ namespace Azure.Communication.CallingServer
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<string> publicEventType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))
@@ -89,8 +208,38 @@ namespace Azure.Communication.CallingServer
                     publicEventType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AddParticipantsFailedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, Optional.ToList(participants), version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AddParticipantsFailedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, Optional.ToList(participants), version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AddParticipantsFailedInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddParticipantsFailedInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AddParticipantsFailedInternal IModel<AddParticipantsFailedInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddParticipantsFailedInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAddParticipantsFailedInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AddParticipantsFailedInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

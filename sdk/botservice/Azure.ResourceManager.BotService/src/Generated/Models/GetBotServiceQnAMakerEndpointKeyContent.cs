@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The request body for a request to Bot Service Management to list QnA Maker endpoint keys. </summary>
     public partial class GetBotServiceQnAMakerEndpointKeyContent
     {
-        /// <summary> Initializes a new instance of GetBotServiceQnAMakerEndpointKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetBotServiceQnAMakerEndpointKeyContent"/>. </summary>
         public GetBotServiceQnAMakerEndpointKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetBotServiceQnAMakerEndpointKeyContent"/>. </summary>
+        /// <param name="hostname"> the host name of the QnA Maker endpoint. </param>
+        /// <param name="authkey"> Subscription key which provides access to this API. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetBotServiceQnAMakerEndpointKeyContent(string hostname, string authkey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Hostname = hostname;
+            Authkey = authkey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the host name of the QnA Maker endpoint. </summary>

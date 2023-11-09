@@ -7,16 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class FacebookChannelProperties : IUtf8JsonSerializable
+    public partial class FacebookChannelProperties : IUtf8JsonSerializable, IJsonModel<FacebookChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacebookChannelProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FacebookChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VerifyToken))
+                {
+                    writer.WritePropertyName("verifyToken"u8);
+                    writer.WriteStringValue(VerifyToken);
+                }
+            }
             if (Optional.IsCollectionDefined(Pages))
             {
                 writer.WritePropertyName("pages"u8);
@@ -34,13 +46,50 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("appSecret"u8);
                 writer.WriteStringValue(AppSecret);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CallbackUri))
+                {
+                    writer.WritePropertyName("callbackUrl"u8);
+                    writer.WriteStringValue(CallbackUri.AbsoluteUri);
+                }
+            }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FacebookChannelProperties DeserializeFacebookChannelProperties(JsonElement element)
+        FacebookChannelProperties IJsonModel<FacebookChannelProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFacebookChannelProperties(document.RootElement, options);
+        }
+
+        internal static FacebookChannelProperties DeserializeFacebookChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +100,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> appSecret = default;
             Optional<Uri> callbackUrl = default;
             bool isEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verifyToken"u8))
@@ -96,8 +147,38 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FacebookChannelProperties(verifyToken.Value, Optional.ToList(pages), appId, appSecret.Value, callbackUrl.Value, isEnabled);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FacebookChannelProperties(verifyToken.Value, Optional.ToList(pages), appId, appSecret.Value, callbackUrl.Value, isEnabled, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FacebookChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FacebookChannelProperties IModel<FacebookChannelProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFacebookChannelProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FacebookChannelProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

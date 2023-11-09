@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class VirtualMachineUpdateProperties : IUtf8JsonSerializable
+    public partial class VirtualMachineUpdateProperties : IUtf8JsonSerializable, IJsonModel<VirtualMachineUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineUpdateProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VirtualMachineUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(HardwareProfile))
@@ -40,7 +46,125 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VirtualMachineUpdateProperties IJsonModel<VirtualMachineUpdateProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineUpdateProperties(document.RootElement, options);
+        }
+
+        internal static VirtualMachineUpdateProperties DeserializeVirtualMachineUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<HardwareProfileUpdate> hardwareProfile = default;
+            Optional<StorageProfileUpdate> storageProfile = default;
+            Optional<NetworkProfileUpdate> networkProfile = default;
+            Optional<IList<AvailabilitySetListItem>> availabilitySets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hardwareProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("networkProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("availabilitySets"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AvailabilitySetListItem> array = new List<AvailabilitySetListItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AvailabilitySetListItem.DeserializeAvailabilitySetListItem(item));
+                    }
+                    availabilitySets = array;
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineUpdateProperties(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, Optional.ToList(availabilitySets), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<VirtualMachineUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualMachineUpdateProperties IModel<VirtualMachineUpdateProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineUpdateProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VirtualMachineUpdateProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

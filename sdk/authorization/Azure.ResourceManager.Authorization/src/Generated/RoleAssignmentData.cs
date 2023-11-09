@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleAssignmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentData"/>. </summary>
         internal RoleAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <param name="delegatedManagedIdentityResourceId"> Id of the delegated managed identity resource. </param>
-        internal RoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, string description, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, ResourceIdentifier delegatedManagedIdentityResourceId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, string description, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, ResourceIdentifier delegatedManagedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.Authorization
             CreatedBy = createdBy;
             UpdatedBy = updatedBy;
             DelegatedManagedIdentityResourceId = delegatedManagedIdentityResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role assignment scope. </summary>

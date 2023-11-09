@@ -6,27 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class MyWorkbookUserAssignedIdentities : IUtf8JsonSerializable
+    public partial class MyWorkbookUserAssignedIdentities : IUtf8JsonSerializable, IJsonModel<MyWorkbookUserAssignedIdentities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MyWorkbookUserAssignedIdentities>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MyWorkbookUserAssignedIdentities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PrincipalId))
+                {
+                    writer.WritePropertyName("principalId"u8);
+                    writer.WriteStringValue(PrincipalId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MyWorkbookUserAssignedIdentities DeserializeMyWorkbookUserAssignedIdentities(JsonElement element)
+        MyWorkbookUserAssignedIdentities IJsonModel<MyWorkbookUserAssignedIdentities>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMyWorkbookUserAssignedIdentities(document.RootElement, options);
+        }
+
+        internal static MyWorkbookUserAssignedIdentities DeserializeMyWorkbookUserAssignedIdentities(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> principalId = default;
             Optional<Guid> tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -43,8 +95,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MyWorkbookUserAssignedIdentities(principalId.Value, Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MyWorkbookUserAssignedIdentities(principalId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MyWorkbookUserAssignedIdentities>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MyWorkbookUserAssignedIdentities IModel<MyWorkbookUserAssignedIdentities>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMyWorkbookUserAssignedIdentities(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MyWorkbookUserAssignedIdentities>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

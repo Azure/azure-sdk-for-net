@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGlobalSchemaData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGlobalSchemaData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGlobalSchemaData"/>. </summary>
         public ApiManagementGlobalSchemaData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGlobalSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGlobalSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +36,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="description"> Free-form schema entity description. </param>
         /// <param name="value"> Json-encoded string for non json-based schema. </param>
         /// <param name="document"> Global Schema document object for json-based schema formats(e.g. json schema). </param>
-        internal ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SchemaType = schemaType;
             Description = description;
             Value = value;
             Document = document;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Schema Type. Immutable. </summary>

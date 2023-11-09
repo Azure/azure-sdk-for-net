@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the source control sync job stream by id. </summary>
     public partial class SourceControlSyncJobStreamResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStreamResult"/>. </summary>
         internal SourceControlSyncJobStreamResult()
         {
             Value = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStreamResult"/>. </summary>
         /// <param name="id"> Resource id. </param>
         /// <param name="sourceControlSyncJobStreamId"> The sync job stream id. </param>
         /// <param name="summary"> The summary of the sync job stream. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="streamType"> The type of the sync job stream. </param>
         /// <param name="streamText"> The text of the sync job stream. </param>
         /// <param name="value"> The values of the job stream. </param>
-        internal SourceControlSyncJobStreamResult(ResourceIdentifier id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlSyncJobStreamResult(ResourceIdentifier id, string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
             StreamType = streamType;
             StreamText = streamText;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource id. </summary>

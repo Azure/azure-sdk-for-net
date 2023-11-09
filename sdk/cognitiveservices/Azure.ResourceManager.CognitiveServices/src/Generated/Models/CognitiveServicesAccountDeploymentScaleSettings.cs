@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account deployment model. </summary>
     public partial class CognitiveServicesAccountDeploymentScaleSettings
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentScaleSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentScaleSettings"/>. </summary>
         public CognitiveServicesAccountDeploymentScaleSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentScaleSettings"/>. </summary>
         /// <param name="scaleType"> Deployment scale type. </param>
         /// <param name="capacity"> Deployment capacity. </param>
         /// <param name="activeCapacity"> Deployment active capacity. This value might be different from `capacity` if customer recently updated `capacity`. </param>
-        internal CognitiveServicesAccountDeploymentScaleSettings(CognitiveServicesAccountDeploymentScaleType? scaleType, int? capacity, int? activeCapacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountDeploymentScaleSettings(CognitiveServicesAccountDeploymentScaleType? scaleType, int? capacity, int? activeCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScaleType = scaleType;
             Capacity = capacity;
             ActiveCapacity = activeCapacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Deployment scale type. </summary>

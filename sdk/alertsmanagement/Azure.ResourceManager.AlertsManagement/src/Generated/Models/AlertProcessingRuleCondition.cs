@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Condition to trigger an alert processing rule. </summary>
     public partial class AlertProcessingRuleCondition
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleCondition"/>. </summary>
         public AlertProcessingRuleCondition()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleCondition"/>. </summary>
         /// <param name="field"> Field for a given condition. </param>
         /// <param name="operator"> Operator for a given condition. </param>
         /// <param name="values"> List of values to match for a given condition. </param>
-        internal AlertProcessingRuleCondition(AlertProcessingRuleField? field, AlertProcessingRuleOperator? @operator, IList<string> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertProcessingRuleCondition(AlertProcessingRuleField? field, AlertProcessingRuleOperator? @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Field = field;
             Operator = @operator;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Field for a given condition. </summary>

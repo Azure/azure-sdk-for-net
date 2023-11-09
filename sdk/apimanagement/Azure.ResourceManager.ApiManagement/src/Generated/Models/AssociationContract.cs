@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Association entity details. </summary>
     public partial class AssociationContract : ResourceData
     {
-        /// <summary> Initializes a new instance of AssociationContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssociationContract"/>. </summary>
         public AssociationContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AssociationContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociationContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        internal AssociationContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssociationEntityProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssociationContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssociationEntityProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state. </summary>

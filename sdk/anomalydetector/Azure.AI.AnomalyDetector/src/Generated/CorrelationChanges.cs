@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,23 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Correlation changes among the anomalous variables. </summary>
     public partial class CorrelationChanges
     {
-        /// <summary> Initializes a new instance of CorrelationChanges. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CorrelationChanges"/>. </summary>
         internal CorrelationChanges()
         {
             ChangedVariables = new ChangeTrackingList<string>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CorrelationChanges. </summary>
+        /// <summary> Initializes a new instance of <see cref="CorrelationChanges"/>. </summary>
         /// <param name="changedVariables"> Correlated variables that have correlation changes under an anomaly. </param>
-        internal CorrelationChanges(IReadOnlyList<string> changedVariables)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CorrelationChanges(IReadOnlyList<string> changedVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ChangedVariables = changedVariables;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Correlated variables that have correlation changes under an anomaly. </summary>

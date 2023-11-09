@@ -5,21 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingSubscriptionValidateMoveEligibilityResult
+    public partial class BillingSubscriptionValidateMoveEligibilityResult : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionValidateMoveEligibilityResult>
     {
-        internal static BillingSubscriptionValidateMoveEligibilityResult DeserializeBillingSubscriptionValidateMoveEligibilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionValidateMoveEligibilityResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BillingSubscriptionValidateMoveEligibilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsMoveEligible))
+                {
+                    writer.WritePropertyName("isMoveEligible"u8);
+                    writer.WriteBooleanValue(IsMoveEligible.Value);
+                }
+            }
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                writer.WriteObjectValue(ErrorDetails);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BillingSubscriptionValidateMoveEligibilityResult IJsonModel<BillingSubscriptionValidateMoveEligibilityResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingSubscriptionValidateMoveEligibilityResult(document.RootElement, options);
+        }
+
+        internal static BillingSubscriptionValidateMoveEligibilityResult DeserializeBillingSubscriptionValidateMoveEligibilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isMoveEligible = default;
             Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isMoveEligible"u8))
@@ -40,8 +96,38 @@ namespace Azure.ResourceManager.Billing.Models
                     errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BillingSubscriptionValidateMoveEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BillingSubscriptionValidateMoveEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<BillingSubscriptionValidateMoveEligibilityResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BillingSubscriptionValidateMoveEligibilityResult IModel<BillingSubscriptionValidateMoveEligibilityResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBillingSubscriptionValidateMoveEligibilityResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BillingSubscriptionValidateMoveEligibilityResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Attestation
     /// </summary>
     public partial class AttestationProviderData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AttestationProviderData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AttestationProviderData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AttestationProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,13 +41,20 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="attestUri"> Gets the uri of attestation service. </param>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
-        internal AttestationProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string trustModel, AttestationServiceStatus? status, Uri attestUri, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string trustModel, AttestationServiceStatus? status, Uri attestUri, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TrustModel = trustModel;
             Status = status;
             AttestUri = attestUri;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderData"/> for deserialization. </summary>
+        internal AttestationProviderData()
+        {
         }
 
         /// <summary> Trust model for the attestation provider. </summary>

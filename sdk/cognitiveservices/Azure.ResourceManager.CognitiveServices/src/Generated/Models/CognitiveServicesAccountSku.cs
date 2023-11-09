@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Cognitive Services resource type and SKU. </summary>
     public partial class CognitiveServicesAccountSku
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountSku"/>. </summary>
         internal CognitiveServicesAccountSku()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountSku"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU of Cognitive Services account. </param>
-        internal CognitiveServicesAccountSku(ResourceType? resourceType, CognitiveServicesSku sku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountSku(ResourceType? resourceType, CognitiveServicesSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Namespace and Type. </summary>

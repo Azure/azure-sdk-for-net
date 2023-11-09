@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the activity parameter validation set. </summary>
     public partial class AutomationActivityParameterValidationSet
     {
-        /// <summary> Initializes a new instance of AutomationActivityParameterValidationSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterValidationSet"/>. </summary>
         internal AutomationActivityParameterValidationSet()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityParameterValidationSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterValidationSet"/>. </summary>
         /// <param name="memberValue"> Gets or sets the name of the activity parameter validation set member. </param>
-        internal AutomationActivityParameterValidationSet(string memberValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationActivityParameterValidationSet(string memberValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MemberValue = memberValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the activity parameter validation set member. </summary>

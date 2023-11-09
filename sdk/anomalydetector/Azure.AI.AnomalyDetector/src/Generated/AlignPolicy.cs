@@ -5,28 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Manner of aligning multiple variables. </summary>
     public partial class AlignPolicy
     {
-        /// <summary> Initializes a new instance of AlignPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlignPolicy"/>. </summary>
         public AlignPolicy()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AlignPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlignPolicy"/>. </summary>
         /// <param name="alignMode">
         /// Field that indicates how to align different variables to the same
         /// time range.
         /// </param>
         /// <param name="fillNAMethod"> Field that indicates how missing values will be filled. </param>
         /// <param name="paddingValue"> Field that's required when fillNAMethod is Fixed. </param>
-        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlignMode = alignMode;
             FillNAMethod = fillNAMethod;
             PaddingValue = paddingValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

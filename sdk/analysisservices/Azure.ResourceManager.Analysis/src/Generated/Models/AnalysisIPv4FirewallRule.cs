@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> The detail of firewall rule. </summary>
     public partial class AnalysisIPv4FirewallRule
     {
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisIPv4FirewallRule"/>. </summary>
         public AnalysisIPv4FirewallRule()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisIPv4FirewallRule"/>. </summary>
         /// <param name="firewallRuleName"> The rule name. </param>
         /// <param name="rangeStart"> The start range of IPv4. </param>
         /// <param name="rangeEnd"> The end range of IPv4. </param>
-        internal AnalysisIPv4FirewallRule(string firewallRuleName, string rangeStart, string rangeEnd)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisIPv4FirewallRule(string firewallRuleName, string rangeStart, string rangeEnd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirewallRuleName = firewallRuleName;
             RangeStart = rangeStart;
             RangeEnd = rangeEnd;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The rule name. </summary>

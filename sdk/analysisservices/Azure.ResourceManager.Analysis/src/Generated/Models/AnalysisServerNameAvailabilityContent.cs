@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Details of server name request body. </summary>
     public partial class AnalysisServerNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerNameAvailabilityContent"/>. </summary>
         public AnalysisServerNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name for checking availability. </param>
+        /// <param name="resourceType"> The resource type of azure analysis services. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisServerNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name for checking availability. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The CancelAddParticipantResponse. </summary>
     internal partial class CancelAddParticipantResponseInternal
     {
-        /// <summary> Initializes a new instance of CancelAddParticipantResponseInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantResponseInternal"/>. </summary>
         internal CancelAddParticipantResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CancelAddParticipantResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantResponseInternal"/>. </summary>
         /// <param name="invitationId"> Invitation ID used to cancel the add participant action. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal CancelAddParticipantResponseInternal(string invitationId, string operationContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CancelAddParticipantResponseInternal(string invitationId, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InvitationId = invitationId;
             OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Invitation ID used to cancel the add participant action. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -13,7 +14,10 @@ namespace Azure.Communication
     /// <summary> The CommunicationUserIdentifierModel. </summary>
     internal partial class CommunicationUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierModel"/>. </summary>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CommunicationUserIdentifierModel(string id)
@@ -21,6 +25,20 @@ namespace Azure.Communication
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierModel"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationUserIdentifierModel(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierModel"/> for deserialization. </summary>
+        internal CommunicationUserIdentifierModel()
+        {
         }
 
         /// <summary> Gets or sets the id. </summary>

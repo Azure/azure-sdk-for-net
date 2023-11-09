@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -12,9 +14,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameter supplied to the Apply Network configuration operation. </summary>
     public partial class ApiManagementServiceApplyNetworkConfigurationContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceApplyNetworkConfigurationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceApplyNetworkConfigurationContent"/>. </summary>
         public ApiManagementServiceApplyNetworkConfigurationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceApplyNetworkConfigurationContent"/>. </summary>
+        /// <param name="location"> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementServiceApplyNetworkConfigurationContent(AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </summary>

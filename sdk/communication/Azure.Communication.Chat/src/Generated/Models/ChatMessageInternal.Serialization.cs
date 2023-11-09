@@ -7,16 +7,101 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatMessageInternal
+    internal partial class ChatMessageInternal : IUtf8JsonSerializable, IJsonModel<ChatMessageInternal>
     {
-        internal static ChatMessageInternal DeserializeChatMessageInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatMessageInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ChatMessageInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("sequenceId"u8);
+            writer.WriteStringValue(SequenceId);
+            writer.WritePropertyName("version"u8);
+            writer.WriteStringValue(Version);
+            if (Optional.IsDefined(Content))
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteObjectValue(Content);
+            }
+            if (Optional.IsDefined(SenderDisplayName))
+            {
+                writer.WritePropertyName("senderDisplayName"u8);
+                writer.WriteStringValue(SenderDisplayName);
+            }
+            writer.WritePropertyName("createdOn"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            if (Optional.IsDefined(SenderCommunicationIdentifier))
+            {
+                writer.WritePropertyName("senderCommunicationIdentifier"u8);
+                writer.WriteObjectValue(SenderCommunicationIdentifier);
+            }
+            if (Optional.IsDefined(DeletedOn))
+            {
+                writer.WritePropertyName("deletedOn"u8);
+                writer.WriteStringValue(DeletedOn.Value, "O");
+            }
+            if (Optional.IsDefined(EditedOn))
+            {
+                writer.WritePropertyName("editedOn"u8);
+                writer.WriteStringValue(EditedOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ChatMessageInternal IJsonModel<ChatMessageInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatMessageInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatMessageInternal(document.RootElement, options);
+        }
+
+        internal static ChatMessageInternal DeserializeChatMessageInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +117,8 @@ namespace Azure.Communication.Chat
             Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> editedOn = default;
             Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,8 +201,38 @@ namespace Azure.Communication.Chat
                     metadata = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderCommunicationIdentifier.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn), Optional.ToDictionary(metadata));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderCommunicationIdentifier.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn), Optional.ToDictionary(metadata), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ChatMessageInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatMessageInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ChatMessageInternal IModel<ChatMessageInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatMessageInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeChatMessageInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ChatMessageInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

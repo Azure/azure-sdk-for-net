@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Reference to a Key Vault secret. </summary>
     public partial class SecretValueReference
     {
-        /// <summary> Initializes a new instance of SecretValueReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretValueReference"/>. </summary>
         /// <param name="keyVault"> Specifies the reference to a given Azure Key Vault. </param>
         /// <param name="secretName"> Name of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> or <paramref name="secretName"/> is null. </exception>
@@ -27,15 +31,22 @@ namespace Azure.ResourceManager.Blueprint.Models
             SecretName = secretName;
         }
 
-        /// <summary> Initializes a new instance of SecretValueReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretValueReference"/>. </summary>
         /// <param name="keyVault"> Specifies the reference to a given Azure Key Vault. </param>
         /// <param name="secretName"> Name of the secret. </param>
         /// <param name="secretVersion"> The version of the secret to use. If left blank, the latest version of the secret is used. </param>
-        internal SecretValueReference(WritableSubResource keyVault, string secretName, string secretVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretValueReference(WritableSubResource keyVault, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVault = keyVault;
             SecretName = secretName;
             SecretVersion = secretVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecretValueReference"/> for deserialization. </summary>
+        internal SecretValueReference()
+        {
         }
 
         /// <summary> Specifies the reference to a given Azure Key Vault. </summary>

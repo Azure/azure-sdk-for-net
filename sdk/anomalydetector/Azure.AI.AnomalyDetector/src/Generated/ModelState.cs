@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,16 +14,20 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Model status. </summary>
     public partial class ModelState
     {
-        /// <summary> Initializes a new instance of ModelState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
         public ModelState()
         {
             EpochIds = new ChangeTrackingList<int>();
             TrainLosses = new ChangeTrackingList<float>();
             ValidationLosses = new ChangeTrackingList<float>();
             LatenciesInSeconds = new ChangeTrackingList<float>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ModelState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
         /// <param name="epochIds">
         /// Number of passes of the entire training dataset that the
         /// algorithm has completed.
@@ -36,12 +41,14 @@ namespace Azure.AI.AnomalyDetector
         /// epoch.
         /// </param>
         /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
-        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EpochIds = epochIds;
             TrainLosses = trainLosses;
             ValidationLosses = validationLosses;
             LatenciesInSeconds = latenciesInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

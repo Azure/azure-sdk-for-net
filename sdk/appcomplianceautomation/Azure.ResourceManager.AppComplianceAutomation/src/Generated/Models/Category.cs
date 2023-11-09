@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the compliance category. </summary>
     public partial class Category
     {
-        /// <summary> Initializes a new instance of Category. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Category"/>. </summary>
         internal Category()
         {
             ControlFamilies = new ChangeTrackingList<ControlFamily>();
         }
 
-        /// <summary> Initializes a new instance of Category. </summary>
+        /// <summary> Initializes a new instance of <see cref="Category"/>. </summary>
         /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
         /// <param name="categoryType"> The category type. </param>
         /// <param name="categoryStatus"> Category status. </param>
         /// <param name="controlFamilies"> List of control families. </param>
-        internal Category(string categoryName, CategoryType? categoryType, CategoryStatus? categoryStatus, IReadOnlyList<ControlFamily> controlFamilies)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Category(string categoryName, CategoryType? categoryType, CategoryStatus? categoryStatus, IReadOnlyList<ControlFamily> controlFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CategoryName = categoryName;
             CategoryType = categoryType;
             CategoryStatus = categoryStatus;
             ControlFamilies = controlFamilies;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the compliance category. e.g. "Operational Security". </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The ApiManagementSkuLocationInfo. </summary>
     public partial class ApiManagementSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ApiManagementSkuLocationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuLocationInfo"/>. </summary>
         internal ApiManagementSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<ApiManagementSkuZoneDetails>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
-        internal ApiManagementSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ApiManagementSkuZoneDetails> zoneDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ApiManagementSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the SKU. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The result of the GetSupportedOptimizationTypes API. </summary>
     public partial class SupportedOptimizationTypesListResult
     {
-        /// <summary> Initializes a new instance of SupportedOptimizationTypesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportedOptimizationTypesListResult"/>. </summary>
         internal SupportedOptimizationTypesListResult()
         {
             SupportedOptimizationTypes = new ChangeTrackingList<OptimizationType>();
         }
 
-        /// <summary> Initializes a new instance of SupportedOptimizationTypesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedOptimizationTypesListResult"/>. </summary>
         /// <param name="supportedOptimizationTypes"> Supported optimization types for a profile. </param>
-        internal SupportedOptimizationTypesListResult(IReadOnlyList<OptimizationType> supportedOptimizationTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedOptimizationTypesListResult(IReadOnlyList<OptimizationType> supportedOptimizationTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportedOptimizationTypes = supportedOptimizationTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Supported optimization types for a profile. </summary>

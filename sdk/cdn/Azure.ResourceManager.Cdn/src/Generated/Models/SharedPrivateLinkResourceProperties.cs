@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,24 +15,29 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes the properties of an existing Shared Private Link Resource to use when connecting to a private origin. </summary>
     public partial class SharedPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceProperties"/>. </summary>
         public SharedPrivateLinkResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceProperties"/>. </summary>
         /// <param name="privateLink"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="privateLinkLocation"> The location of the shared private link resource. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout. </param>
-        internal SharedPrivateLinkResourceProperties(WritableSubResource privateLink, string privateLinkLocation, string groupId, string requestMessage, SharedPrivateLinkResourceStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedPrivateLinkResourceProperties(WritableSubResource privateLink, string privateLinkLocation, string groupId, string requestMessage, SharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateLink = privateLink;
             PrivateLinkLocation = privateLinkLocation;
             GroupId = groupId;
             RequestMessage = requestMessage;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>

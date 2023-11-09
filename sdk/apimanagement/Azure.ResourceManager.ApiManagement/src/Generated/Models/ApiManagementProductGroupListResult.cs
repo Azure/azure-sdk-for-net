@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Group list representation. </summary>
     internal partial class ApiManagementProductGroupListResult
     {
-        /// <summary> Initializes a new instance of ApiManagementProductGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductGroupListResult"/>. </summary>
         internal ApiManagementProductGroupListResult()
         {
             Value = new ChangeTrackingList<ProductGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementProductGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductGroupListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal ApiManagementProductGroupListResult(IReadOnlyList<ProductGroupData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementProductGroupListResult(IReadOnlyList<ProductGroupData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page values. </summary>
