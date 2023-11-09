@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
         public TimeSpan InitialSilenceTimeout { get; set; } = _defaultInitialSilenceTimeout;
 
         /// <summary>
-        /// Target participant of DTFM tone recognition.
+        /// Target participant of DTMF tone recognition.
         /// </summary>
         public CommunicationIdentifier TargetParticipant { get; }
 

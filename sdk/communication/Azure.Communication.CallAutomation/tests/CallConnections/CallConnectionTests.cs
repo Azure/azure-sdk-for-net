@@ -456,7 +456,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
             var invitationId = "invitationId";
 
-            var response = await callConnection.CancelAddParticipantAsync(invitationId).ConfigureAwait(false);
+            var response = await callConnection.CancelAddParticipantOperationAsync(invitationId).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(invitationId, response.Value.InvitationId);
         }

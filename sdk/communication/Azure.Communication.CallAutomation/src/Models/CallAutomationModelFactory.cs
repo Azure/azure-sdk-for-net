@@ -86,10 +86,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CancelAddParticipantResult. </summary>
         /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantResult"/> instance for mocking. </returns>
-        public static CancelAddParticipantResult CancelAddParticipantResult(string invitationId = default, string operationContext = default)
+        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantOperationResult"/> instance for mocking. </returns>
+        public static CancelAddParticipantOperationResult CancelAddParticipantResult(string invitationId = default, string operationContext = default)
         {
-            return new CancelAddParticipantResult(invitationId, operationContext);
+            return new CancelAddParticipantOperationResult(invitationId, operationContext);
         }
 
         /// <summary> Create an EventSource. </summary>

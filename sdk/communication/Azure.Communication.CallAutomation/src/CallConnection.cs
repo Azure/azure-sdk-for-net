@@ -751,9 +751,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="invitationId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<Response<CancelAddParticipantResult>> CancelAddParticipantAsync(string invitationId, CancellationToken cancellationToken = default)
+        public virtual Task<Response<CancelAddParticipantOperationResult>> CancelAddParticipantOperationAsync(string invitationId, CancellationToken cancellationToken = default)
         {
-            return CancelAddParticipantAsync(new CancelAddParticipantOptions(invitationId), cancellationToken);
+            return CancelAddParticipantOperationAsync(new CancelAddParticipantOperationOptions(invitationId), cancellationToken);
         }
 
         /// <summary>
@@ -762,9 +762,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async virtual Task<Response<CancelAddParticipantResult>> CancelAddParticipantAsync(CancelAddParticipantOptions options, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CancelAddParticipantOperationResult>> CancelAddParticipantOperationAsync(CancelAddParticipantOperationOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipantOperation)}");
             scope.Start();
 
             try
@@ -780,7 +780,7 @@ namespace Azure.Communication.CallAutomation
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
                 };
                 var response = await RestClient.CancelAddParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-                var result = new CancelAddParticipantResult(response);
+                var result = new CancelAddParticipantOperationResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -798,9 +798,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="invitationId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<CancelAddParticipantResult> CancelAddParticipant(string invitationId, CancellationToken cancellationToken = default)
+        public virtual Response<CancelAddParticipantOperationResult> CancelAddParticipantOperation(string invitationId, CancellationToken cancellationToken = default)
         {
-            return CancelAddParticipant(new CancelAddParticipantOptions(invitationId), cancellationToken);
+            return CancelAddParticipantOperation(new CancelAddParticipantOperationOptions(invitationId), cancellationToken);
         }
 
         /// <summary>
@@ -809,9 +809,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<CancelAddParticipantResult> CancelAddParticipant(CancelAddParticipantOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<CancelAddParticipantOperationResult> CancelAddParticipantOperation(CancelAddParticipantOperationOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipantOperation)}");
             scope.Start();
 
             try
@@ -827,7 +827,7 @@ namespace Azure.Communication.CallAutomation
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
                 };
                 var response = RestClient.CancelAddParticipant(CallConnectionId, request, cancellationToken);
-                var result = new CancelAddParticipantResult(response);
+                var result = new CancelAddParticipantOperationResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
