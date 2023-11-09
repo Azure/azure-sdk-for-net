@@ -4202,7 +4202,7 @@
        "Type": {
         "$id": "506",
         "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4291,8 +4291,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "515",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -4328,8 +4328,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "520",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -4440,8 +4440,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "531",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -4725,7 +4725,7 @@
        "Type": {
         "$id": "557",
         "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -4814,8 +4814,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "566",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -4851,8 +4851,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "571",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -4963,8 +4963,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "582",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -5248,7 +5248,7 @@
        "Type": {
         "$id": "608",
         "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5337,8 +5337,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "617",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -5374,8 +5374,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "622",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -5486,8 +5486,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "633",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -5771,7 +5771,7 @@
        "Type": {
         "$id": "659",
         "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -5860,8 +5860,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "668",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -5897,8 +5897,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "673",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -6009,8 +6009,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "684",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -6305,7 +6305,7 @@
        "Type": {
         "$id": "712",
         "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -6394,8 +6394,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "721",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -6431,8 +6431,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "726",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -6543,8 +6543,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "737",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -8106,7 +8106,7 @@
        "Type": {
         "$id": "871",
         "Name": "utcDateTime",
-        "Kind": "DateTime",
+        "Kind": "DateTimeRFC7231",
         "IsNullable": false
        },
        "Location": "Header",
@@ -8195,8 +8195,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "880",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -8232,8 +8232,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "885",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }
@@ -8344,8 +8344,8 @@
          "Description": "The last modified timestamp.",
          "Type": {
           "$id": "896",
-          "Name": "string",
-          "Kind": "String",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
           "IsNullable": false
          }
         }

@@ -112,7 +112,6 @@ namespace Azure.MixedReality.Authentication
             MixedRealityTokenRequestOptions headerOptions = MixedRealityTokenRequestOptions.GenerateNew();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MixedRealityStsClient)}.{nameof(GetToken)}");
-            scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
             scope.Start();
 
             try
@@ -138,7 +137,6 @@ namespace Azure.MixedReality.Authentication
             MixedRealityTokenRequestOptions headerOptions = MixedRealityTokenRequestOptions.GenerateNew();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MixedRealityStsClient)}.{nameof(GetToken)}");
-            scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
             scope.Start();
 
             try
