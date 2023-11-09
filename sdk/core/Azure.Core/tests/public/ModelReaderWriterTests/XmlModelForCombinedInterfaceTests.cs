@@ -23,20 +23,20 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override Func<Response, XmlModelForCombinedInterface> FromResponse => response => (XmlModelForCombinedInterface)response;
 
-        protected override string GetExpectedResult(ModelReaderWriterFormat format)
+        protected override string GetExpectedResult(string format)
         {
-            if (format == ModelReaderWriterFormat.Wire)
+            if (format == "W")
             {
                 var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-                if (format.Equals(ModelReaderWriterFormat.Json))
+                if (format.Equals("J"))
                     expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
                 expectedSerializedString += "</Tag>";
                 return expectedSerializedString;
             }
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 var expectedSerializedString = "{\"key\":\"Color\",\"value\":\"Red\"";
-                if (format.Equals(ModelReaderWriterFormat.Json))
+                if (format.Equals("J"))
                     expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
                 expectedSerializedString += "}";
                 return expectedSerializedString;
@@ -44,19 +44,19 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             throw new InvalidOperationException($"Unknown format used in test {format}");
         }
 
-        protected override void VerifyModel(XmlModelForCombinedInterface model, ModelReaderWriterFormat format)
+        protected override void VerifyModel(XmlModelForCombinedInterface model, string format)
         {
             Assert.AreEqual("Color", model.Key);
             Assert.AreEqual("Red", model.Value);
-            if (format.Equals(ModelReaderWriterFormat.Json))
+            if (format.Equals("J"))
                 Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
         }
 
-        protected override void CompareModels(XmlModelForCombinedInterface model, XmlModelForCombinedInterface model2, ModelReaderWriterFormat format)
+        protected override void CompareModels(XmlModelForCombinedInterface model, XmlModelForCombinedInterface model2, string format)
         {
             Assert.AreEqual(model.Key, model2.Key);
             Assert.AreEqual(model.Value, model2.Value);
-            if (format.Equals(ModelReaderWriterFormat.Json))
+            if (format.Equals("J"))
                 Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
         }
     }

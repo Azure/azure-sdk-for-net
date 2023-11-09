@@ -15,19 +15,13 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
-        /// <param name="workerSelector">
-        /// Describes a condition that must be met against a set of labels for worker
-        /// selection
-        /// </param>
+        /// <param name="workerSelector"> The worker selector to attach. </param>
         internal StaticWorkerSelectorAttachment(string kind, RouterWorkerSelector workerSelector) : base(kind)
         {
             WorkerSelector = workerSelector;
         }
 
-        /// <summary>
-        /// Describes a condition that must be met against a set of labels for worker
-        /// selection
-        /// </summary>
+        /// <summary> The worker selector to attach. </summary>
         public RouterWorkerSelector WorkerSelector { get; }
     }
 }

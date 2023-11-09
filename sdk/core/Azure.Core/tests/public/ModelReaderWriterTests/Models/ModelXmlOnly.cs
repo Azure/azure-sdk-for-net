@@ -51,19 +51,19 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(modelXml, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(modelXml, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelXmlOnly(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeModelXmlOnly(XElement.Load(response.ContentStream), ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeModelXmlOnly(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static ModelXmlOnly DeserializeModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -129,13 +129,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
         }
 
-        ModelXmlOnly IModel<ModelXmlOnly>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelXmlOnly IModel<ModelXmlOnly>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeModelXmlOnly(XElement.Load(data.ToStream()), options);
         }
 
-        ModelReaderWriterFormat IModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

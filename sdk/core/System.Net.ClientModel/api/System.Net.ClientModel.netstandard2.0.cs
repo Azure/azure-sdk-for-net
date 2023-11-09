@@ -1,5 +1,13 @@
 namespace System.Net.ClientModel
 {
+    public partial class ClientRequestException : System.Exception
+    {
+        public ClientRequestException(System.Net.ClientModel.Core.MessageResponse response) { }
+        protected ClientRequestException(System.Net.ClientModel.Core.MessageResponse response, string message, System.Exception? innerException) { }
+        protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public int Status { get { throw null; } }
+        public virtual System.Net.ClientModel.Core.MessageResponse? GetRawResponse() { throw null; }
+    }
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
@@ -8,40 +16,18 @@ namespace System.Net.ClientModel
     }
     public static partial class ModelReaderWriter
     {
-        public static object? Read(System.BinaryData data, System.Type returnType, System.Net.ClientModel.ModelReaderWriterFormat format) { throw null; }
         public static object? Read(System.BinaryData data, System.Type returnType, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static T? Read<T>(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterFormat format) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
         public static T? Read<T>(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions? options = null) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
-        public static System.BinaryData Write(object model, System.Net.ClientModel.ModelReaderWriterFormat format) { throw null; }
         public static System.BinaryData Write(object model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static System.BinaryData Write<T>(T model, System.Net.ClientModel.ModelReaderWriterFormat format) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
         public static System.BinaryData Write<T>(T model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ModelReaderWriterFormat : System.IEquatable<System.Net.ClientModel.ModelReaderWriterFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ModelReaderWriterFormat(string value) { throw null; }
-        public static System.Net.ClientModel.ModelReaderWriterFormat Json { get { throw null; } }
-        public static System.Net.ClientModel.ModelReaderWriterFormat Wire { get { throw null; } }
-        public static System.Net.ClientModel.ModelReaderWriterFormat Xml { get { throw null; } }
-        public bool Equals(System.Net.ClientModel.ModelReaderWriterFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(System.Net.ClientModel.ModelReaderWriterFormat left, System.Net.ClientModel.ModelReaderWriterFormat right) { throw null; }
-        public static implicit operator System.Net.ClientModel.ModelReaderWriterFormat (string value) { throw null; }
-        public static bool operator !=(System.Net.ClientModel.ModelReaderWriterFormat left, System.Net.ClientModel.ModelReaderWriterFormat right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {
-        public ModelReaderWriterOptions() { }
-        public ModelReaderWriterOptions(System.Net.ClientModel.ModelReaderWriterFormat format) { }
-        public static System.Net.ClientModel.ModelReaderWriterOptions DefaultWireOptions { get { throw null; } }
-        public System.Net.ClientModel.ModelReaderWriterFormat Format { get { throw null; } }
+        public ModelReaderWriterOptions(string format) { }
+        public string Format { get { throw null; } }
+        public static System.Net.ClientModel.ModelReaderWriterOptions Json { get { throw null; } }
+        public static System.Net.ClientModel.ModelReaderWriterOptions Wire { get { throw null; } }
+        public static System.Net.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
     public partial class NullableResult<T> : System.Net.ClientModel.Result
     {
@@ -50,16 +36,13 @@ namespace System.Net.ClientModel
         public virtual T? Value { get { throw null; } }
         public override System.Net.ClientModel.Core.MessageResponse GetRawResponse() { throw null; }
     }
-    public partial class RequestOptions
+    public partial class RequestOptions : System.Net.ClientModel.Core.PipelineOptions
     {
         public RequestOptions() { }
-        public RequestOptions(System.Net.ClientModel.Core.PipelineOptions pipelineOptions) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.PipelineOptions PipelineOptions { get { throw null; } }
-        public void AddPolicy(System.Net.ClientModel.Core.PipelinePolicy policy, System.Net.ClientModel.Core.PipelinePosition position) { }
-        protected internal virtual void Apply(System.Net.ClientModel.Core.ClientMessage message) { }
+        public virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
     }
     public abstract partial class Result
     {
@@ -76,28 +59,16 @@ namespace System.Net.ClientModel
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
     }
-    public partial class UnsuccessfulRequestException : System.Exception
-    {
-        public UnsuccessfulRequestException(System.Net.ClientModel.Core.MessageResponse response) { }
-        protected UnsuccessfulRequestException(System.Net.ClientModel.Core.MessageResponse response, string message, System.Exception? innerException) { }
-        protected UnsuccessfulRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public int Status { get { throw null; } }
-    }
 }
 namespace System.Net.ClientModel.Core
 {
-    public partial class ClientMessage : System.IDisposable
+    public partial class ClientPipeline
     {
-        protected internal ClientMessage(System.Net.ClientModel.Core.MessageRequest request) { }
-        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public bool HasResponse { get { throw null; } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageRequest Request { get { throw null; } }
-        public virtual System.Net.ClientModel.Core.MessageResponse Response { get { throw null; } protected internal set { } }
-        public virtual void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        public void SetProperty(System.Type type, object value) { }
-        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+        public ClientPipeline(System.Net.ClientModel.Core.PipelineTransport transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
+        public static System.Net.ClientModel.Core.ClientPipeline Create(System.Net.ClientModel.Core.PipelineOptions options) { throw null; }
+        public System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
+        public void Send(System.Net.ClientModel.Core.PipelineMessage message) { }
+        public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ErrorBehavior
@@ -107,25 +78,25 @@ namespace System.Net.ClientModel.Core
     }
     public partial interface IJsonModel<out T> : System.Net.ClientModel.Core.IModel<T>
     {
-        T Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options);
+        T Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options);
         void Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options);
     }
     public partial interface IModel<out T>
     {
-        System.Net.ClientModel.ModelReaderWriterFormat GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options);
-        T Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options);
+        T Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options);
+        string GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options);
         System.BinaryData Write(System.Net.ClientModel.ModelReaderWriterOptions options);
     }
     public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
         public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string headerName, string? keyPrefix = null) { }
-        public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline) { throw null; }
     }
     public partial class MessageClassifier
     {
         protected internal MessageClassifier() { }
-        public virtual bool IsError(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
+        public virtual bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     public abstract partial class MessageHeaders
     {
@@ -138,17 +109,6 @@ namespace System.Net.ClientModel.Core
         public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
         public abstract bool TryGetValue(string name, out string? value);
         public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
-    }
-    public partial class MessagePipeline
-    {
-        internal MessagePipeline() { }
-        public System.Net.ClientModel.Core.ClientMessage CreateMessage(System.Net.ClientModel.RequestOptions options) { throw null; }
-        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.RequestOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.MessagePipeline GetPipeline(System.Net.ClientModel.RequestOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
-        public void Send(System.Net.ClientModel.Core.ClientMessage message) { }
-        public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
     }
     public abstract partial class MessageRequest : System.IDisposable
     {
@@ -173,9 +133,8 @@ namespace System.Net.ClientModel.Core
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<System.Net.ClientModel.Core.IJsonModel<object>>
     {
         public ModelJsonConverter() { }
-        public ModelJsonConverter(System.Net.ClientModel.ModelReaderWriterFormat format) { }
         public ModelJsonConverter(System.Net.ClientModel.ModelReaderWriterOptions options) { }
-        public System.Net.ClientModel.ModelReaderWriterOptions ModelReaderWriterOptions { get { throw null; } }
+        public System.Net.ClientModel.ModelReaderWriterOptions Options { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.Net.ClientModel.Core.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.Core.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
@@ -186,44 +145,51 @@ namespace System.Net.ClientModel.Core
         public ModelReaderProxyAttribute(System.Type proxyType) { }
         public System.Type ProxyType { get { throw null; } }
     }
-    public abstract partial class PipelineEnumerator
+    public partial class PipelineMessage : System.IDisposable
     {
-        protected PipelineEnumerator() { }
-        public abstract int Length { get; }
-        public abstract bool ProcessNext();
-        public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
+        protected internal PipelineMessage(System.Net.ClientModel.Core.MessageRequest request) { }
+        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public bool HasResponse { get { throw null; } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageRequest Request { get { throw null; } }
+        public virtual System.Net.ClientModel.Core.MessageResponse Response { get { throw null; } protected internal set { } }
+        public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public void SetProperty(System.Type type, object value) { }
+        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
-        public PipelineOptions(System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
+        public System.Net.ClientModel.Core.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
-        public string? ServiceVersion { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelineTransport? Transport { get { throw null; } set { } }
     }
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
-        public abstract void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline);
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline);
+        public abstract void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline);
     }
-    public enum PipelinePosition
+    public abstract partial class PipelineProcessor
     {
-        PerCall = 0,
-        PerTry = 1,
+        protected PipelineProcessor() { }
+        public abstract int Length { get; }
+        public abstract bool ProcessNext();
+        public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
     }
     public abstract partial class PipelineTransport : System.Net.ClientModel.Core.PipelinePolicy
     {
         protected PipelineTransport() { }
-        public abstract System.Net.ClientModel.Core.ClientMessage CreateMessage();
-        public abstract void Process(System.Net.ClientModel.Core.ClientMessage message);
-        public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message);
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
+        public abstract System.Net.ClientModel.Core.PipelineMessage CreateMessage();
+        public abstract void Process(System.Net.ClientModel.Core.PipelineMessage message);
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline) { }
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message);
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline) { throw null; }
     }
     public abstract partial class RequestBodyContent : System.IDisposable
     {
@@ -238,17 +204,17 @@ namespace System.Net.ClientModel.Core
     public partial class ResponseBufferingPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
-        public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
-        public static void SetBufferResponse(System.Net.ClientModel.Core.ClientMessage message, bool bufferResponse) { }
-        public static void SetNetworkTimeout(System.Net.ClientModel.Core.ClientMessage message, System.TimeSpan networkTimeout) { }
-        public static bool TryGetBufferResponse(System.Net.ClientModel.Core.ClientMessage message, out bool bufferResponse) { throw null; }
-        public static bool TryGetNetworkTimeout(System.Net.ClientModel.Core.ClientMessage message, out System.TimeSpan networkTimeout) { throw null; }
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineProcessor pipeline) { throw null; }
+        public static void SetBufferResponse(System.Net.ClientModel.Core.PipelineMessage message, bool bufferResponse) { }
+        public static void SetNetworkTimeout(System.Net.ClientModel.Core.PipelineMessage message, System.TimeSpan networkTimeout) { }
+        public static bool TryGetBufferResponse(System.Net.ClientModel.Core.PipelineMessage message, out bool bufferResponse) { throw null; }
+        public static bool TryGetNetworkTimeout(System.Net.ClientModel.Core.PipelineMessage message, out System.TimeSpan networkTimeout) { throw null; }
     }
     public partial class ResponseStatusClassifier : System.Net.ClientModel.Core.MessageClassifier
     {
         public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
-        public override bool IsError(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
+        public override bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
 }
 namespace System.Net.ClientModel.Internal
@@ -288,8 +254,8 @@ namespace System.Net.ClientModel.Internal
     }
     public static partial class ModelReaderWriterHelper
     {
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterFormat format) { }
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat<T>(System.Net.ClientModel.Core.IModel<T> model, System.Net.ClientModel.ModelReaderWriterFormat format) { }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat(System.Net.ClientModel.Core.IModel<object> model, string format) { }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat<T>(System.Net.ClientModel.Core.IModel<T> model, string format) { }
     }
     public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
     {
@@ -366,10 +332,10 @@ namespace System.Net.ClientModel.Internal
     }
     public static partial class PipelineProtocolExtensions
     {
-        public static System.Net.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.Net.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.Net.ClientModel.Core.MessageResponse ProcessMessage(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.Net.ClientModel.Core.MessageResponse> ProcessMessageAsync(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Net.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.Net.ClientModel.Core.ClientPipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.Net.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.Net.ClientModel.Core.ClientPipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
+        public static System.Net.ClientModel.Core.MessageResponse ProcessMessage(this System.Net.ClientModel.Core.ClientPipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.Net.ClientModel.Core.MessageResponse> ProcessMessageAsync(this System.Net.ClientModel.Core.ClientPipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class Utf8JsonContentWriter : System.IDisposable
     {
@@ -386,13 +352,13 @@ namespace System.Net.ClientModel.Internal.Core
     {
         public HttpClientPipelineTransport() { }
         public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
-        public override System.Net.ClientModel.Core.ClientMessage CreateMessage() { throw null; }
+        public override System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        protected virtual void OnReceivedResponse(System.Net.ClientModel.Core.ClientMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
-        protected virtual void OnSendingRequest(System.Net.ClientModel.Core.ClientMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
-        public override void Process(System.Net.ClientModel.Core.ClientMessage message) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
+        protected virtual void OnReceivedResponse(System.Net.ClientModel.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
+        protected virtual void OnSendingRequest(System.Net.ClientModel.Core.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     public partial class HttpMessageRequest : System.Net.ClientModel.Core.MessageRequest, System.IDisposable
     {

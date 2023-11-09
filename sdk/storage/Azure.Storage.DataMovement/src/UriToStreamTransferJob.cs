@@ -169,7 +169,8 @@ namespace Azure.Storage.DataMovement
                 }
 
                 StorageResource current = enumerator.Current;
-                if (!existingSources.Contains(current.Uri))
+                if (!current.IsContainer &&
+                    !existingSources.Contains(current.Uri))
                 {
                     string containerUriPath = _sourceResourceContainer.Uri.GetPath();
                     string sourceName = string.IsNullOrEmpty(containerUriPath)

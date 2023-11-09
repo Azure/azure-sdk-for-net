@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class InstanceViewStatus : IUtf8JsonSerializable, IJsonModel<InstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceViewStatus>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceViewStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<InstanceViewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,7 +112,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             public Optional<DateTimeOffset> Time { get; set; }
         }
 
-        InstanceViewStatus IJsonModel<InstanceViewStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InstanceViewStatus IJsonModel<InstanceViewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInstanceViewStatus(doc.RootElement, options);
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             reader.Skip();
         }
 
-        InstanceViewStatus IModel<InstanceViewStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        InstanceViewStatus IModel<InstanceViewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeInstanceViewStatus(doc.RootElement, options);
@@ -171,6 +171,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

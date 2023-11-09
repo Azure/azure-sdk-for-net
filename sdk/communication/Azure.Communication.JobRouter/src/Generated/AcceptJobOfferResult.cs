@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// Response containing Id's for the worker, job, and assignment from an accepted
-    /// offer
-    /// </summary>
+    /// <summary> Response containing Id's for the worker, job, and assignment from an accepted offer. </summary>
     public partial class AcceptJobOfferResult
     {
         /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>

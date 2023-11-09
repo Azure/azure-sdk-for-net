@@ -18,32 +18,32 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override Func<Response, ModelAsStruct> FromResponse => response => (ModelAsStruct)response;
 
-        protected override void CompareModels(ModelAsStruct model, ModelAsStruct model2, ModelReaderWriterFormat format)
+        protected override void CompareModels(ModelAsStruct model, ModelAsStruct model2, string format)
         {
             Assert.AreEqual(model.Id, model2.Id);
             var rawData1 = GetRawData(model);
             var rawData2 = GetRawData(model2);
             Assert.IsNotNull(rawData1);
             Assert.IsNotNull(rawData2);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 Assert.AreEqual(rawData1["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
         }
 
-        protected override string GetExpectedResult(ModelReaderWriterFormat format)
+        protected override string GetExpectedResult(string format)
         {
             string expected = "{\"id\":5";
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 expected += ",\"extra\":\"stuff\"";
             expected += "}";
             return expected;
         }
 
-        protected override void VerifyModel(ModelAsStruct model, ModelReaderWriterFormat format)
+        protected override void VerifyModel(ModelAsStruct model, string format)
         {
             Assert.AreEqual(5, model.Id);
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
         }
     }

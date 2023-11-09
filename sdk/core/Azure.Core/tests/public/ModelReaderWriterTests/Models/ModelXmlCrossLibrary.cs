@@ -17,7 +17,7 @@ using Azure.Core.Tests.ModelReaderWriterTests.Models;
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 {
     [XmlRoot("Tag")]
-    public class ModelXmlCrossLibrary : IXmlSerializable, IModel<ModelXmlCrossLibrary>, IJsonModel<ModelXmlCrossLibrary>, IUtf8JsonSerializable
+    public class ModelXmlCrossLibrary : IXmlSerializable, IJsonModel<ModelXmlCrossLibrary>, IUtf8JsonSerializable
     {
         internal ModelXmlCrossLibrary() { }
 
@@ -55,19 +55,19 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create((IModel<ModelXmlCrossLibrary>)modelXmlCrossLibrary, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(modelXmlCrossLibrary, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelXmlCrossLibrary(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeModelXmlCrossLibrary(XElement.Load(response.ContentStream), ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeModelXmlCrossLibrary(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static ModelXmlCrossLibrary DeserializeModelXmlCrossLibrary(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -145,13 +145,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 return ModelReaderWriter.Write(this, options);
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.Wire;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -169,7 +169,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static ModelXmlCrossLibrary DeserializeModelXmlCrossLibrary(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -203,11 +203,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new ModelXmlCrossLibrary(key, value, readOnlyProperty, childModelXml);
         }
 
-        ModelXmlCrossLibrary IModel<ModelXmlCrossLibrary>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelXmlCrossLibrary IModel<ModelXmlCrossLibrary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 using var doc = JsonDocument.Parse(data);
                 return DeserializeModelXmlCrossLibrary(doc.RootElement, options);
@@ -222,23 +222,23 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format != ModelReaderWriterFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");
+            if (options.Format != "J")
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");
             Serialize(writer, options);
         }
 
-        ModelXmlCrossLibrary IJsonModel<ModelXmlCrossLibrary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelXmlCrossLibrary IJsonModel<ModelXmlCrossLibrary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format != ModelReaderWriterFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");
+            if (options.Format != "J")
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelXmlCrossLibrary(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        ModelReaderWriterFormat IModel<ModelXmlCrossLibrary>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        string IModel<ModelXmlCrossLibrary>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

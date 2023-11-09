@@ -39,7 +39,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteNumberValue(Id);
-            if (_rawData is not null && options.Format == ModelReaderWriterFormat.Json)
+            if (_rawData is not null && options.Format == "J")
             {
                 foreach (var property in _rawData)
                 {
@@ -63,10 +63,10 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static implicit operator RequestBodyContent(ModelAsStruct model)
         {
-            return RequestBodyContent.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBodyContent.Create(model, ModelReaderWriterOptions.Wire);
         }
 
-        ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelAsStruct IModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -76,7 +76,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             int id = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -87,7 +87,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     id = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                     continue;
@@ -96,7 +96,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new ModelAsStruct(id, rawData);
         }
 
-        ModelAsStruct IJsonModel<ModelAsStruct>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelAsStruct IJsonModel<ModelAsStruct>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -109,12 +109,12 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             ClientUtilities.AssertNotNull(result, nameof(result));
 
             using JsonDocument doc = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
-        object IJsonModel<object>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -129,7 +129,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options)
+        object IModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -137,8 +137,8 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
-        ModelReaderWriterFormat IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

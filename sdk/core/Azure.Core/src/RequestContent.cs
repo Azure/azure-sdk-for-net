@@ -90,7 +90,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IModel{T}"/>.</returns>
         public static new RequestContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
-            => new AzureRequestBodyContent(RequestBodyContent.Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+            => new AzureRequestBodyContent(RequestBodyContent.Create(model, options ?? ModelReaderWriterOptions.Wire));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.

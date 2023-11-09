@@ -38,16 +38,16 @@ public class CountryRegion : IJsonModel<CountryRegion>
         return new CountryRegion(isoCode);
     }
 
-    public ModelReaderWriterFormat GetWireFormat(ModelReaderWriterOptions options)
-        => ModelReaderWriterFormat.Json;
+    public string GetWireFormat(ModelReaderWriterOptions options)
+        => "J";
 
-    public CountryRegion Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    public CountryRegion Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
         using var document = JsonDocument.ParseValue(ref reader);
         return FromJson(document.RootElement);
     }
 
-    public CountryRegion Read(BinaryData data, ModelReaderWriterOptions options)
+    public CountryRegion Create(BinaryData data, ModelReaderWriterOptions options)
     {
         using var document = JsonDocument.Parse(data.ToString());
         return FromJson(document.RootElement);

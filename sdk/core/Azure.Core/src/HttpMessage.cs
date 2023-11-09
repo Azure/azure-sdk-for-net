@@ -13,7 +13,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : ClientMessage
+    public sealed class HttpMessage : PipelineMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;

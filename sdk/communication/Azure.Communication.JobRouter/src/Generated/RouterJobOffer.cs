@@ -14,16 +14,13 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJobOffer
     {
         /// <summary> Initializes a new instance of RouterJobOffer. </summary>
-        /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="jobId"> The Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="jobId"/> is null. </exception>
-        internal RouterJobOffer(string offerId, string jobId, int capacityCost)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        internal RouterJobOffer(string jobId, int capacityCost)
         {
-            Argument.AssertNotNull(offerId, nameof(offerId));
             Argument.AssertNotNull(jobId, nameof(jobId));
 
-            OfferId = offerId;
             JobId = jobId;
             CapacityCost = capacityCost;
         }

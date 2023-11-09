@@ -53,19 +53,19 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(modelXml, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelXml(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);
@@ -93,7 +93,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static ModelXml DeserializeModelXml(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -134,13 +134,13 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 return ModelReaderWriter.Write(this, options);
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.Wire;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelXml DeserializeModelXml(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -192,11 +192,11 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new ModelXml(key, value, readOnlyProperty, childModelXml);
         }
 
-        ModelXml IModel<ModelXml>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelXml IModel<ModelXml>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 using var doc = JsonDocument.Parse(data);
                 return DeserializeModelXml(doc.RootElement, options);
@@ -211,23 +211,23 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format != ModelReaderWriterFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXml>)} interface");
+            if (options.Format != "J")
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelXml>)} interface");
             Serialize(writer, options);
         }
 
-        ModelXml IJsonModel<ModelXml>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelXml IJsonModel<ModelXml>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format != ModelReaderWriterFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXml>)} interface");
+            if (options.Format != "J")
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelXml>)} interface");
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelXml(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        ModelReaderWriterFormat IModel<ModelXml>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        string IModel<ModelXml>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

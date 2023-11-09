@@ -38,12 +38,12 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("yProperty"u8);
                 writer.WriteStringValue(YProperty);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 SerializeRawData(writer);
             }
@@ -52,7 +52,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     yProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -88,12 +88,12 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new ModelY(kind, name, yProperty, rawData);
         }
 
-        ModelY IModel<ModelY>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelY IModel<ModelY>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeModelY(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        ModelY IJsonModel<ModelY>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelY IJsonModel<ModelY>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelY(doc.RootElement, options);
@@ -106,6 +106,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,11 +19,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
-        protected override void CompareModels(BaseModel model, BaseModel model2, ModelReaderWriterFormat format)
+        protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {
             Assert.AreEqual(model.Name, model2.Name);
             Assert.AreEqual(model.Kind, model2.Kind);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 var rawData = GetRawData(model);
                 var rawData2 = GetRawData(model2);
@@ -34,24 +34,24 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
             }
         }
 
-        protected override string GetExpectedResult(ModelReaderWriterFormat format)
+        protected override string GetExpectedResult(string format)
         {
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 expected += ",\"xProperty\":100";
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 expected += ",\"extra\":\"stuff\"";
             expected += "}";
             return expected;
         }
 
-        protected override void VerifyModel(BaseModel model, ModelReaderWriterFormat format)
+        protected override void VerifyModel(BaseModel model, string format)
         {
             Assert.AreEqual("X", model.Kind);
             Assert.AreEqual("xmodel", model.Name);
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());
             }

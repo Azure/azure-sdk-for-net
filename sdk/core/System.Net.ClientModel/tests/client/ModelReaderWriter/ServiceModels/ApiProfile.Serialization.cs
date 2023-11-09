@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -63,7 +63,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<string> ApiVersion { get; set; }
         }
 
-        ApiProfile IJsonModel<ApiProfile>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiProfile IJsonModel<ApiProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeApiProfile(doc.RootElement, options);
@@ -88,7 +88,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        ApiProfile IModel<ApiProfile>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ApiProfile IModel<ApiProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeApiProfile(doc.RootElement, options);
@@ -101,6 +101,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,10 +1,22 @@
 # Release History
 
-## 5.10.0-beta.1 (Unreleased)
+## 5.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.10.0 (2023-11-07)
+
+### Breaking Changes
+
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`
+  and message `Activity` name from `EventHubs.Message` to `Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
 
 ### Bugs Fixed
 

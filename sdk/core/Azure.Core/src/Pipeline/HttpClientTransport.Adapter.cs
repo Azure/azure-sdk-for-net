@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            protected override void OnSendingRequest(ClientMessage message, HttpRequestMessage httpRequest)
+            protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
             {
                 if (message is not HttpMessage httpMessage)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            protected override void OnReceivedResponse(ClientMessage message, HttpResponseMessage httpResponse)
+            protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
             {
                 if (message is not HttpMessage httpMessage)
                 {

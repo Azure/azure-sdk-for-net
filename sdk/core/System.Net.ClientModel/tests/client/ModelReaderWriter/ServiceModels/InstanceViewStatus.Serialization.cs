@@ -49,7 +49,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +108,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             public OptionalProperty<DateTimeOffset> Time { get; set; }
         }
 
-        InstanceViewStatus IJsonModel<InstanceViewStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InstanceViewStatus IJsonModel<InstanceViewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInstanceViewStatus(doc.RootElement, options);
@@ -154,7 +154,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             reader.Skip();
         }
 
-        InstanceViewStatus IModel<InstanceViewStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        InstanceViewStatus IModel<InstanceViewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeInstanceViewStatus(doc.RootElement, options);
@@ -167,6 +167,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

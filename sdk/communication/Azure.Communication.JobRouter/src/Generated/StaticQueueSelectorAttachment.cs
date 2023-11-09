@@ -15,19 +15,13 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
-        /// <param name="queueSelector">
-        /// Describes a condition that must be met against a set of labels for queue
-        /// selection
-        /// </param>
+        /// <param name="queueSelector"> The queue selector to attach. </param>
         internal StaticQueueSelectorAttachment(string kind, RouterQueueSelector queueSelector) : base(kind)
         {
             QueueSelector = queueSelector;
         }
 
-        /// <summary>
-        /// Describes a condition that must be met against a set of labels for queue
-        /// selection
-        /// </summary>
+        /// <summary> The queue selector to attach. </summary>
         public RouterQueueSelector QueueSelector { get; }
     }
 }

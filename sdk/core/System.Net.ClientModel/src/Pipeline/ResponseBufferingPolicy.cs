@@ -33,16 +33,16 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _networkTimeout = networkTimeout;
     }
 
-    public override void Process(ClientMessage message, PipelineEnumerator pipeline)
+    public override void Process(PipelineMessage message, PipelineProcessor pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public override async ValueTask ProcessAsync(ClientMessage message, PipelineEnumerator pipeline)
+    public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(ClientMessage message, PipelineEnumerator pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineProcessor pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
@@ -196,10 +196,10 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
     #region Buffer Response Override
 
-    public static void SetBufferResponse(ClientMessage message, bool bufferResponse)
+    public static void SetBufferResponse(PipelineMessage message, bool bufferResponse)
         => message.SetProperty(typeof(BufferResponsePropertyKey), bufferResponse);
 
-    public static bool TryGetBufferResponse(ClientMessage message, out bool bufferResponse)
+    public static bool TryGetBufferResponse(PipelineMessage message, out bool bufferResponse)
     {
         if (message.TryGetProperty(typeof(BufferResponsePropertyKey), out object? value) &&
             value is bool doBuffer)
@@ -219,10 +219,10 @@ public class ResponseBufferingPolicy : PipelinePolicy
     // TODO: remove this and make it settable only via the request options
     #region Network Timeout Override
 
-    public static void SetNetworkTimeout(ClientMessage message, TimeSpan networkTimeout)
+    public static void SetNetworkTimeout(PipelineMessage message, TimeSpan networkTimeout)
         => message.SetProperty(typeof(NetworkTimeoutPropertyKey), networkTimeout);
 
-    public static bool TryGetNetworkTimeout(ClientMessage message, out TimeSpan networkTimeout)
+    public static bool TryGetNetworkTimeout(PipelineMessage message, out TimeSpan networkTimeout)
     {
         if (message.TryGetProperty(typeof(NetworkTimeoutPropertyKey), out object? value) &&
             value is TimeSpan timeout)
