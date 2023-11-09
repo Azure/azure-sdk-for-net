@@ -6,16 +6,67 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class AnomalyDetectionModel
+    public partial class AnomalyDetectionModel : IUtf8JsonSerializable, IJsonModel<AnomalyDetectionModel>
     {
-        internal static AnomalyDetectionModel DeserializeAnomalyDetectionModel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnomalyDetectionModel>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AnomalyDetectionModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("modelId"u8);
+            writer.WriteStringValue(ModelId);
+            writer.WritePropertyName("createdTime"u8);
+            writer.WriteStringValue(CreatedTime, "O");
+            writer.WritePropertyName("lastUpdatedTime"u8);
+            writer.WriteStringValue(LastUpdatedTime, "O");
+            if (Optional.IsDefined(ModelInfo))
+            {
+                writer.WritePropertyName("modelInfo"u8);
+                writer.WriteObjectValue(ModelInfo);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnomalyDetectionModel IJsonModel<AnomalyDetectionModel>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyDetectionModel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyDetectionModel(document.RootElement, options);
+        }
+
+        internal static AnomalyDetectionModel DeserializeAnomalyDetectionModel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +75,8 @@ namespace Azure.AI.AnomalyDetector
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdatedTime = default;
             Optional<ModelInfo> modelInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -50,16 +103,54 @@ namespace Azure.AI.AnomalyDetector
                     modelInfo = ModelInfo.DeserializeModelInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AnomalyDetectionModel>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyDetectionModel)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnomalyDetectionModel IModel<AnomalyDetectionModel>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnomalyDetectionModel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnomalyDetectionModel(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AnomalyDetectionModel>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AnomalyDetectionModel FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAnomalyDetectionModel(document.RootElement);
+            return DeserializeAnomalyDetectionModel(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

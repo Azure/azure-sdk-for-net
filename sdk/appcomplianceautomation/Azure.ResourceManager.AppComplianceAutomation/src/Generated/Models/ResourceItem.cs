@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> Resource Id. </summary>
     public partial class ResourceItem
     {
-        /// <summary> Initializes a new instance of ResourceItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceItem"/>. </summary>
         internal ResourceItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceItem"/>. </summary>
         /// <param name="subscriptionId"> The subscription Id of this resource. </param>
         /// <param name="resourceGroup"> The resource group name of this resource. </param>
         /// <param name="resourceType"> The resource type of this resource. </param>
         /// <param name="resourceId"> The resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
-        internal ResourceItem(string subscriptionId, string resourceGroup, string resourceType, string resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceItem(string subscriptionId, string resourceGroup, string resourceType, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
             ResourceType = resourceType;
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subscription Id of this resource. </summary>

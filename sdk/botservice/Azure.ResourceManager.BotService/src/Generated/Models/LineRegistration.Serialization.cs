@@ -5,16 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class LineRegistration : IUtf8JsonSerializable
+    public partial class LineRegistration : IUtf8JsonSerializable, IJsonModel<LineRegistration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LineRegistration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LineRegistration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(GeneratedId))
+                {
+                    writer.WritePropertyName("generatedId"u8);
+                    writer.WriteStringValue(GeneratedId);
+                }
+            }
             if (Optional.IsDefined(ChannelSecret))
             {
                 writer.WritePropertyName("channelSecret"u8);
@@ -25,11 +39,40 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("channelAccessToken"u8);
                 writer.WriteStringValue(ChannelAccessToken);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LineRegistration DeserializeLineRegistration(JsonElement element)
+        LineRegistration IJsonModel<LineRegistration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LineRegistration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLineRegistration(document.RootElement, options);
+        }
+
+        internal static LineRegistration DeserializeLineRegistration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +80,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> generatedId = default;
             Optional<string> channelSecret = default;
             Optional<string> channelAccessToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generatedId"u8))
@@ -54,8 +99,38 @@ namespace Azure.ResourceManager.BotService.Models
                     channelAccessToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LineRegistration(generatedId.Value, channelSecret.Value, channelAccessToken.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LineRegistration(generatedId.Value, channelSecret.Value, channelAccessToken.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LineRegistration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LineRegistration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LineRegistration IModel<LineRegistration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LineRegistration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLineRegistration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LineRegistration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

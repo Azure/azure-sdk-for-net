@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> SSL certificate information. </summary>
     public partial class CertificateInformation
     {
-        /// <summary> Initializes a new instance of CertificateInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateInformation"/>. </summary>
         /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="subject"> Subject of the certificate. </param>
@@ -26,6 +30,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ExpireOn = expireOn;
             Thumbprint = thumbprint;
             Subject = subject;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CertificateInformation"/>. </summary>
+        /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="thumbprint"> Thumbprint of the certificate. </param>
+        /// <param name="subject"> Subject of the certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateInformation(DateTimeOffset expireOn, string thumbprint, string subject, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExpireOn = expireOn;
+            Thumbprint = thumbprint;
+            Subject = subject;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CertificateInformation"/> for deserialization. </summary>
+        internal CertificateInformation()
+        {
         }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>

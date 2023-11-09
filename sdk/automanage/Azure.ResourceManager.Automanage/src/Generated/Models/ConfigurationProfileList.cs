@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automanage;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The response of the list configuration profile operation. </summary>
     internal partial class ConfigurationProfileList
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileList"/>. </summary>
         internal ConfigurationProfileList()
         {
             Value = new ChangeTrackingList<AutomanageConfigurationProfileData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileList"/>. </summary>
         /// <param name="value"> Result of the list ConfigurationProfile operation. </param>
-        internal ConfigurationProfileList(IReadOnlyList<AutomanageConfigurationProfileData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationProfileList(IReadOnlyList<AutomanageConfigurationProfileData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the list ConfigurationProfile operation. </summary>

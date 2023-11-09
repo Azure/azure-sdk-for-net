@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentQuotaStatus
+    public partial class ApplicationInsightsComponentQuotaStatus : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentQuotaStatus>
     {
-        internal static ApplicationInsightsComponentQuotaStatus DeserializeApplicationInsightsComponentQuotaStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentQuotaStatus>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ApplicationInsightsComponentQuotaStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(AppId))
+                {
+                    writer.WritePropertyName("AppId"u8);
+                    writer.WriteStringValue(AppId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ShouldBeThrottled))
+                {
+                    writer.WritePropertyName("ShouldBeThrottled"u8);
+                    writer.WriteBooleanValue(ShouldBeThrottled.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExpirationTime))
+                {
+                    writer.WritePropertyName("ExpirationTime"u8);
+                    writer.WriteStringValue(ExpirationTime);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApplicationInsightsComponentQuotaStatus IJsonModel<ApplicationInsightsComponentQuotaStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentQuotaStatus(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentQuotaStatus DeserializeApplicationInsightsComponentQuotaStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +86,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> appId = default;
             Optional<bool> shouldBeThrottled = default;
             Optional<string> expirationTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("AppId"u8))
@@ -42,8 +109,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     expirationTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentQuotaStatus(appId.Value, Optional.ToNullable(shouldBeThrottled), expirationTime.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationInsightsComponentQuotaStatus(appId.Value, Optional.ToNullable(shouldBeThrottled), expirationTime.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ApplicationInsightsComponentQuotaStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplicationInsightsComponentQuotaStatus IModel<ApplicationInsightsComponentQuotaStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentQuotaStatus(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ApplicationInsightsComponentQuotaStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

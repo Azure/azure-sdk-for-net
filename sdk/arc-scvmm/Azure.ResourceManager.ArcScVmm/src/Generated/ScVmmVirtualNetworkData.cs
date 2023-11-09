@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmVirtualNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.ArcScVmm
             ExtendedLocation = extendedLocation;
         }
 
-        /// <summary> Initializes a new instance of ScVmmVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
         /// <param name="networkName"> Name of the virtual network in vmmServer. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, string networkName, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, string networkName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             InventoryItemId = inventoryItemId;
@@ -51,6 +55,12 @@ namespace Azure.ResourceManager.ArcScVmm
             VmmServerId = vmmServerId;
             NetworkName = networkName;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualNetworkData"/> for deserialization. </summary>
+        internal ScVmmVirtualNetworkData()
+        {
         }
 
         /// <summary> The extended location. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Prompt for an answer. </summary>
     public partial class KnowledgeBaseAnswerPrompt
     {
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerPrompt. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerPrompt"/>. </summary>
         internal KnowledgeBaseAnswerPrompt()
         {
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerPrompt. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        internal KnowledgeBaseAnswerPrompt(int? displayOrder, int? qnaId, string displayText)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseAnswerPrompt(int? displayOrder, int? qnaId, string displayText, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayOrder = displayOrder;
             QnaId = qnaId;
             DisplayText = displayText;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Index of the prompt - used in ordering of the prompts. </summary>

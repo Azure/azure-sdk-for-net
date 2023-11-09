@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of clusters. </summary>
     internal partial class ClusterList
     {
-        /// <summary> Initializes a new instance of ClusterList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterList"/>. </summary>
         internal ClusterList()
         {
             Value = new ChangeTrackingList<AvsPrivateCloudClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal ClusterList(IReadOnlyList<AvsPrivateCloudClusterData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterList(IReadOnlyList<AvsPrivateCloudClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The items on a page. </summary>

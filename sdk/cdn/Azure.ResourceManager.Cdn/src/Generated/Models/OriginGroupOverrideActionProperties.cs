@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the origin group override action. </summary>
     public partial class OriginGroupOverrideActionProperties
     {
-        /// <summary> Initializes a new instance of OriginGroupOverrideActionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
             ActionType = actionType;
             OriginGroup = originGroup;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
+        /// <param name="actionType"></param>
+        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ActionType = actionType;
+            OriginGroup = originGroup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/> for deserialization. </summary>
+        internal OriginGroupOverrideActionProperties()
+        {
         }
 
         /// <summary> Gets or sets the action type. </summary>

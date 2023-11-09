@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleManagementPolicyAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentData"/>. </summary>
         public RoleManagementPolicyAssignmentData()
         {
             EffectiveRules = new ChangeTrackingList<RoleManagementPolicyRule>();
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,13 +42,15 @@ namespace Azure.ResourceManager.Authorization
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="policyAssignmentProperties"> Additional properties of scope, role definition and policy. </param>
-        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, ResourceIdentifier policyId, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyAssignmentProperties policyAssignmentProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, ResourceIdentifier policyId, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyAssignmentProperties policyAssignmentProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
             PolicyId = policyId;
             EffectiveRules = effectiveRules;
             PolicyAssignmentProperties = policyAssignmentProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role management policy scope. </summary>

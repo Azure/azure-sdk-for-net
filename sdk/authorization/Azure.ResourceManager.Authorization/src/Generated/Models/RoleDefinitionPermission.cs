@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role definition permissions. </summary>
     public partial class RoleDefinitionPermission
     {
-        /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermission"/>. </summary>
         public RoleDefinitionPermission()
         {
             Actions = new ChangeTrackingList<string>();
@@ -22,17 +26,19 @@ namespace Azure.ResourceManager.Authorization.Models
             NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermission"/>. </summary>
         /// <param name="actions"> Allowed actions. </param>
         /// <param name="notActions"> Denied actions. </param>
         /// <param name="dataActions"> Allowed Data actions. </param>
         /// <param name="notDataActions"> Denied Data actions. </param>
-        internal RoleDefinitionPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleDefinitionPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Actions = actions;
             NotActions = notActions;
             DataActions = dataActions;
             NotDataActions = notDataActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allowed actions. </summary>

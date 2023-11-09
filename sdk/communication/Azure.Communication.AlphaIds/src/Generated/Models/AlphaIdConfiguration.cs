@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.AlphaIds.Models
 {
     /// <summary>
@@ -15,11 +18,28 @@ namespace Azure.Communication.AlphaIds.Models
     /// </summary>
     public partial class AlphaIdConfiguration
     {
-        /// <summary> Initializes a new instance of AlphaIdConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlphaIdConfiguration"/>. </summary>
         /// <param name="enabled"> Indicates whether the use of Alpha IDs is supported for a specific resource. </param>
         public AlphaIdConfiguration(bool enabled)
         {
             Enabled = enabled;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlphaIdConfiguration"/>. </summary>
+        /// <param name="enabled"> Indicates whether the use of Alpha IDs is supported for a specific resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlphaIdConfiguration(bool enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlphaIdConfiguration"/> for deserialization. </summary>
+        internal AlphaIdConfiguration()
+        {
         }
 
         /// <summary> Indicates whether the use of Alpha IDs is supported for a specific resource. </summary>

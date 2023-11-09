@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for IsDevice match conditions. </summary>
     public partial class IsDeviceMatchCondition
     {
-        /// <summary> Initializes a new instance of IsDeviceMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="isDeviceOperator"> Describes operator to be matched. </param>
         public IsDeviceMatchCondition(IsDeviceMatchConditionType conditionType, IsDeviceOperator isDeviceOperator)
@@ -24,19 +28,26 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of IsDeviceMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="isDeviceOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal IsDeviceMatchCondition(IsDeviceMatchConditionType conditionType, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IsDeviceMatchCondition(IsDeviceMatchConditionType conditionType, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             IsDeviceOperator = isDeviceOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/> for deserialization. </summary>
+        internal IsDeviceMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

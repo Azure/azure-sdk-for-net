@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ContinuousDtmfRecognitionRequest. </summary>
     internal partial class ContinuousDtmfRecognitionRequestInternal
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant)
@@ -22,6 +26,24 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> Defines options for recognition. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, string callbackUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetParticipant = targetParticipant;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionRequestInternal"/> for deserialization. </summary>
+        internal ContinuousDtmfRecognitionRequestInternal()
+        {
         }
 
         /// <summary> Defines options for recognition. </summary>

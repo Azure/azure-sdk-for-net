@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateListPlansByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CognitiveServicesCommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, "CognitiveServicesCommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

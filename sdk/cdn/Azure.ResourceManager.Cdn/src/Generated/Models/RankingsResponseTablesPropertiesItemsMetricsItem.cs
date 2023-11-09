@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
     public partial class RankingsResponseTablesPropertiesItemsMetricsItem
     {
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
         internal RankingsResponseTablesPropertiesItemsMetricsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="value"></param>
         /// <param name="percentage"></param>
-        internal RankingsResponseTablesPropertiesItemsMetricsItem(string metric, long? value, float? percentage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RankingsResponseTablesPropertiesItemsMetricsItem(string metric, long? value, float? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metric = metric;
             Value = value;
             Percentage = percentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the metric. </summary>

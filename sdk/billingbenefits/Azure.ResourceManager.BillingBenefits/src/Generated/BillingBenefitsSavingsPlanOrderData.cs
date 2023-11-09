@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.BillingBenefits
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderData"/>. </summary>
         /// <param name="sku"> Savings plan SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public BillingBenefitsSavingsPlanOrderData(BillingBenefitsSku sku)
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.BillingBenefits
             SavingsPlans = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +52,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
         /// <param name="savingsPlans"></param>
         /// <param name="extendedStatusInfo"></param>
-        internal BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, string customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, BillingPlanInformation planInformation, IList<string> savingsPlans, BillingBenefitsExtendedStatusInfo extendedStatusInfo) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, string customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, BillingPlanInformation planInformation, IList<string> savingsPlans, BillingBenefitsExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -65,6 +69,12 @@ namespace Azure.ResourceManager.BillingBenefits
             PlanInformation = planInformation;
             SavingsPlans = savingsPlans;
             ExtendedStatusInfo = extendedStatusInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderData"/> for deserialization. </summary>
+        internal BillingBenefitsSavingsPlanOrderData()
+        {
         }
 
         /// <summary> Savings plan SKU. </summary>

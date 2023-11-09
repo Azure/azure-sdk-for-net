@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An object that represents SKU details for existing resources. </summary>
     public partial class AnalysisExistingSku
     {
-        /// <summary> Initializes a new instance of AnalysisExistingSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisExistingSku"/>. </summary>
         internal AnalysisExistingSku()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisExistingSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisExistingSku"/>. </summary>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <param name="resourceType"> The resource type. </param>
-        internal AnalysisExistingSku(AnalysisResourceSku sku, ResourceType? resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisExistingSku(AnalysisResourceSku sku, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU in SKU details for existing resources. </summary>

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class AnswersOptions : IUtf8JsonSerializable
+    public partial class AnswersOptions : IUtf8JsonSerializable, IJsonModel<AnswersOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnswersOptions>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AnswersOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(QnaId))
@@ -65,7 +71,172 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WritePropertyName("includeUnstructuredSources"u8);
                 writer.WriteBooleanValue(IncludeUnstructuredSources.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AnswersOptions IJsonModel<AnswersOptions>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnswersOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnswersOptions(document.RootElement, options);
+        }
+
+        internal static AnswersOptions DeserializeAnswersOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> qnaId = default;
+            Optional<string> question = default;
+            Optional<int> top = default;
+            Optional<string> userId = default;
+            Optional<double> confidenceScoreThreshold = default;
+            Optional<KnowledgeBaseAnswerContext> context = default;
+            Optional<RankerKind> rankerType = default;
+            Optional<QueryFilters> filters = default;
+            Optional<ShortAnswerOptions> answerSpanRequest = default;
+            Optional<bool> includeUnstructuredSources = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("qnaId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    qnaId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("question"u8))
+                {
+                    question = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("top"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    top = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("userId"u8))
+                {
+                    userId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("confidenceScoreThreshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidenceScoreThreshold = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("context"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    context = KnowledgeBaseAnswerContext.DeserializeKnowledgeBaseAnswerContext(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("rankerType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rankerType = new RankerKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("filters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    filters = QueryFilters.DeserializeQueryFilters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("answerSpanRequest"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    answerSpanRequest = ShortAnswerOptions.DeserializeShortAnswerOptions(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("includeUnstructuredSources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeUnstructuredSources = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnswersOptions(Optional.ToNullable(qnaId), question.Value, Optional.ToNullable(top), userId.Value, Optional.ToNullable(confidenceScoreThreshold), context.Value, Optional.ToNullable(rankerType), filters.Value, answerSpanRequest.Value, Optional.ToNullable(includeUnstructuredSources), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<AnswersOptions>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnswersOptions)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnswersOptions IModel<AnswersOptions>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnswersOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnswersOptions(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AnswersOptions>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

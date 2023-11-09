@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.Communication.Chat
     /// <summary> A participant of the chat thread. </summary>
     internal partial class ChatParticipantInternal
     {
-        /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatParticipantInternal"/>. </summary>
         /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
         public ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier)
@@ -24,15 +28,22 @@ namespace Azure.Communication.Chat
             CommunicationIdentifier = communicationIdentifier;
         }
 
-        /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatParticipantInternal"/>. </summary>
         /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommunicationIdentifier = communicationIdentifier;
             DisplayName = displayName;
             ShareHistoryTime = shareHistoryTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatParticipantInternal"/> for deserialization. </summary>
+        internal ChatParticipantInternal()
+        {
         }
 
         /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>

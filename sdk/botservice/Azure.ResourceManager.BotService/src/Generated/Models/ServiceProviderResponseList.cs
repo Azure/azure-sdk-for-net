@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The list of bot service providers response. </summary>
     internal partial class ServiceProviderResponseList
     {
-        /// <summary> Initializes a new instance of ServiceProviderResponseList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderResponseList"/>. </summary>
         internal ServiceProviderResponseList()
         {
             Value = new ChangeTrackingList<BotServiceProvider>();
         }
 
-        /// <summary> Initializes a new instance of ServiceProviderResponseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderResponseList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of bot service providers. </param>
         /// <param name="value"> Gets the list of bot service providers and their properties. </param>
-        internal ServiceProviderResponseList(string nextLink, IReadOnlyList<BotServiceProvider> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceProviderResponseList(string nextLink, IReadOnlyList<BotServiceProvider> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of bot service providers. </summary>

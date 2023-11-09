@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm.Models;
@@ -14,9 +17,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmVirtualMachineTemplateData : IUtf8JsonSerializable
+    public partial class ScVmmVirtualMachineTemplateData : IUtf8JsonSerializable, IJsonModel<ScVmmVirtualMachineTemplateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmVirtualMachineTemplateData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ScVmmVirtualMachineTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
@@ -34,6 +39,29 @@ namespace Azure.ResourceManager.ArcScVmm
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(InventoryItemId))
@@ -51,12 +79,171 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    writer.WritePropertyName("osType"u8);
+                    writer.WriteStringValue(OSType.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(OSName))
+                {
+                    writer.WritePropertyName("osName"u8);
+                    writer.WriteStringValue(OSName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ComputerName))
+                {
+                    writer.WritePropertyName("computerName"u8);
+                    writer.WriteStringValue(ComputerName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MemoryMB))
+                {
+                    writer.WritePropertyName("memoryMB"u8);
+                    writer.WriteNumberValue(MemoryMB.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CpuCount))
+                {
+                    writer.WritePropertyName("cpuCount"u8);
+                    writer.WriteNumberValue(CpuCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LimitCpuForMigration))
+                {
+                    writer.WritePropertyName("limitCpuForMigration"u8);
+                    writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DynamicMemoryEnabled))
+                {
+                    writer.WritePropertyName("dynamicMemoryEnabled"u8);
+                    writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsCustomizable))
+                {
+                    writer.WritePropertyName("isCustomizable"u8);
+                    writer.WriteStringValue(IsCustomizable.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DynamicMemoryMaxMB))
+                {
+                    writer.WritePropertyName("dynamicMemoryMaxMB"u8);
+                    writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DynamicMemoryMinMB))
+                {
+                    writer.WritePropertyName("dynamicMemoryMinMB"u8);
+                    writer.WriteNumberValue(DynamicMemoryMinMB.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsHighlyAvailable))
+                {
+                    writer.WritePropertyName("isHighlyAvailable"u8);
+                    writer.WriteStringValue(IsHighlyAvailable);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Generation))
+                {
+                    writer.WritePropertyName("generation"u8);
+                    writer.WriteNumberValue(Generation.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(NetworkInterfaces))
+                {
+                    writer.WritePropertyName("networkInterfaces"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NetworkInterfaces)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Disks))
+                {
+                    writer.WritePropertyName("disks"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Disks)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScVmmVirtualMachineTemplateData DeserializeScVmmVirtualMachineTemplateData(JsonElement element)
+        ScVmmVirtualMachineTemplateData IJsonModel<ScVmmVirtualMachineTemplateData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScVmmVirtualMachineTemplateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScVmmVirtualMachineTemplateData(document.RootElement, options);
+        }
+
+        internal static ScVmmVirtualMachineTemplateData DeserializeScVmmVirtualMachineTemplateData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +273,8 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<IReadOnlyList<NetworkInterfaces>> networkInterfaces = default;
             Optional<IReadOnlyList<VirtualDisk>> disks = default;
             Optional<string> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -292,8 +481,38 @@ namespace Azure.ResourceManager.ArcScVmm
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Optional.ToNullable(osType), osName.Value, computerName.Value, Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(isCustomizable), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, Optional.ToNullable(generation), Optional.ToList(networkInterfaces), Optional.ToList(disks), provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Optional.ToNullable(osType), osName.Value, computerName.Value, Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(isCustomizable), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, Optional.ToNullable(generation), Optional.ToList(networkInterfaces), Optional.ToList(disks), provisioningState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ScVmmVirtualMachineTemplateData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScVmmVirtualMachineTemplateData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ScVmmVirtualMachineTemplateData IModel<ScVmmVirtualMachineTemplateData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ScVmmVirtualMachineTemplateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeScVmmVirtualMachineTemplateData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ScVmmVirtualMachineTemplateData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

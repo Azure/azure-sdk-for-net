@@ -7,15 +7,79 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class WafMetricsResponse
+    public partial class WafMetricsResponse : IUtf8JsonSerializable, IJsonModel<WafMetricsResponse>
     {
-        internal static WafMetricsResponse DeserializeWafMetricsResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafMetricsResponse>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<WafMetricsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DateTimeBegin))
+            {
+                writer.WritePropertyName("dateTimeBegin"u8);
+                writer.WriteStringValue(DateTimeBegin.Value, "O");
+            }
+            if (Optional.IsDefined(DateTimeEnd))
+            {
+                writer.WritePropertyName("dateTimeEnd"u8);
+                writer.WriteStringValue(DateTimeEnd.Value, "O");
+            }
+            if (Optional.IsDefined(Granularity))
+            {
+                writer.WritePropertyName("granularity"u8);
+                writer.WriteStringValue(Granularity.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Series))
+            {
+                writer.WritePropertyName("series"u8);
+                writer.WriteStartArray();
+                foreach (var item in Series)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WafMetricsResponse IJsonModel<WafMetricsResponse>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWafMetricsResponse(document.RootElement, options);
+        }
+
+        internal static WafMetricsResponse DeserializeWafMetricsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +88,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<WafMetricsResponseGranularity> granularity = default;
             Optional<IReadOnlyList<WafMetricsResponseSeriesItem>> series = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -67,8 +133,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     series = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WafMetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WafMetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<WafMetricsResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WafMetricsResponse IModel<WafMetricsResponse>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWafMetricsResponse(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<WafMetricsResponse>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

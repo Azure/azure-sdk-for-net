@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Annotations list result. </summary>
     internal partial class AnnotationsListResult
     {
-        /// <summary> Initializes a new instance of AnnotationsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnnotationsListResult"/>. </summary>
         internal AnnotationsListResult()
         {
             Value = new ChangeTrackingList<Annotation>();
         }
 
-        /// <summary> Initializes a new instance of AnnotationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnnotationsListResult"/>. </summary>
         /// <param name="value"> An array of annotations. </param>
-        internal AnnotationsListResult(IReadOnlyList<Annotation> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnnotationsListResult(IReadOnlyList<Annotation> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of annotations. </summary>

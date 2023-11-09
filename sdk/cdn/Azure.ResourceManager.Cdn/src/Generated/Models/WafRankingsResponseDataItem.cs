@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The WafRankingsResponseDataItem. </summary>
     public partial class WafRankingsResponseDataItem
     {
-        /// <summary> Initializes a new instance of WafRankingsResponseDataItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponseDataItem"/>. </summary>
         internal WafRankingsResponseDataItem()
         {
             GroupValues = new ChangeTrackingList<string>();
             Metrics = new ChangeTrackingList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>();
         }
 
-        /// <summary> Initializes a new instance of WafRankingsResponseDataItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponseDataItem"/>. </summary>
         /// <param name="groupValues"></param>
         /// <param name="metrics"></param>
-        internal WafRankingsResponseDataItem(IReadOnlyList<string> groupValues, IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WafRankingsResponseDataItem(IReadOnlyList<string> groupValues, IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupValues = groupValues;
             Metrics = metrics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the group values. </summary>

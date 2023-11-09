@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformConfigurationServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceData"/>. </summary>
         public AppPlatformConfigurationServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Application Configuration Service properties payload. </param>
-        internal AppPlatformConfigurationServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformConfigurationServiceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformConfigurationServiceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application Configuration Service properties payload. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// </summary>
     public partial class SnapshotResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SnapshotResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
         public SnapshotResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Snapshot's property'. </param>
-        internal SnapshotResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Snapshot's property'. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
     internal partial class AttestationServicePatchSpecificParams
     {
-        /// <summary> Initializes a new instance of AttestationServicePatchSpecificParams. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
         public AttestationServicePatchSpecificParams()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationServicePatchSpecificParams(PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>

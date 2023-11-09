@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged TagDescription list representation. </summary>
     internal partial class TagDescriptionListResult
     {
-        /// <summary> Initializes a new instance of TagDescriptionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagDescriptionListResult"/>. </summary>
         internal TagDescriptionListResult()
         {
             Value = new ChangeTrackingList<ApiTagDescriptionData>();
         }
 
-        /// <summary> Initializes a new instance of TagDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagDescriptionListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal TagDescriptionListResult(IReadOnlyList<ApiTagDescriptionData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagDescriptionListResult(IReadOnlyList<ApiTagDescriptionData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page values. </summary>

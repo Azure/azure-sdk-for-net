@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Geo-physical location to run a WebTest from. You must specify one or more locations for the test to run from. </summary>
     public partial class WebTestGeolocation
     {
-        /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebTestGeolocation"/>. </summary>
         public WebTestGeolocation()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestGeolocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestGeolocation"/>. </summary>
         /// <param name="location"> Location ID for the WebTest to run from. </param>
-        internal WebTestGeolocation(AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestGeolocation(AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location ID for the WebTest to run from. </summary>

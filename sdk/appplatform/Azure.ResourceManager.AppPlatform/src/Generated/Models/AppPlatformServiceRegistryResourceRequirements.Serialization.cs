@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformServiceRegistryResourceRequirements
+    public partial class AppPlatformServiceRegistryResourceRequirements : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceRegistryResourceRequirements>
     {
-        internal static AppPlatformServiceRegistryResourceRequirements DeserializeAppPlatformServiceRegistryResourceRequirements(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceRegistryResourceRequirements>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AppPlatformServiceRegistryResourceRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Cpu))
+                {
+                    writer.WritePropertyName("cpu"u8);
+                    writer.WriteStringValue(Cpu);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Memory))
+                {
+                    writer.WritePropertyName("memory"u8);
+                    writer.WriteStringValue(Memory);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(InstanceCount))
+                {
+                    writer.WritePropertyName("instanceCount"u8);
+                    writer.WriteNumberValue(InstanceCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppPlatformServiceRegistryResourceRequirements IJsonModel<AppPlatformServiceRegistryResourceRequirements>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceRegistryResourceRequirements)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformServiceRegistryResourceRequirements(document.RootElement, options);
+        }
+
+        internal static AppPlatformServiceRegistryResourceRequirements DeserializeAppPlatformServiceRegistryResourceRequirements(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +86,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> cpu = default;
             Optional<string> memory = default;
             Optional<int> instanceCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))
@@ -42,8 +109,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     instanceCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformServiceRegistryResourceRequirements(cpu.Value, memory.Value, Optional.ToNullable(instanceCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformServiceRegistryResourceRequirements(cpu.Value, memory.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AppPlatformServiceRegistryResourceRequirements>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceRegistryResourceRequirements)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppPlatformServiceRegistryResourceRequirements IModel<AppPlatformServiceRegistryResourceRequirements>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceRegistryResourceRequirements)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppPlatformServiceRegistryResourceRequirements(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AppPlatformServiceRegistryResourceRequirements>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

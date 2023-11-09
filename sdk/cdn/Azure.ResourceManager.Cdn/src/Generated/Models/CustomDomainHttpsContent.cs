@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
@@ -14,22 +17,32 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public abstract partial class CustomDomainHttpsContent
     {
-        /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         protected CustomDomainHttpsContent(SecureDeliveryProtocolType protocolType)
         {
             ProtocolType = protocolType;
         }
 
-        /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
-        internal CustomDomainHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomDomainHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateSource = certificateSource;
             ProtocolType = protocolType;
             MinimumTlsVersion = minimumTlsVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/> for deserialization. </summary>
+        internal CustomDomainHttpsContent()
+        {
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>

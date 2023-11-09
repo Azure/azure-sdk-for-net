@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementNotificationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementNotificationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNotificationData"/>. </summary>
         public ApiManagementNotificationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementNotificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNotificationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +35,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="title"> Title of the Notification. </param>
         /// <param name="description"> Description of the Notification. </param>
         /// <param name="recipients"> Recipient Parameter values. </param>
-        internal ApiManagementNotificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, RecipientsContractProperties recipients) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementNotificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, RecipientsContractProperties recipients, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Title = title;
             Description = description;
             Recipients = recipients;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Title of the Notification. </summary>

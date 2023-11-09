@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Custom domain of app resource payload. </summary>
     public partial class AppPlatformCustomDomainProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainProperties"/>. </summary>
         public AppPlatformCustomDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         /// <param name="appName"> The app name of domain. </param>
         /// <param name="certName"> The bound certificate name of domain. </param>
         /// <param name="provisioningState"> Provisioning state of the Domain. </param>
-        internal AppPlatformCustomDomainProperties(string thumbprint, string appName, string certName, AppPlatformCustomDomainProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformCustomDomainProperties(string thumbprint, string appName, string certName, AppPlatformCustomDomainProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Thumbprint = thumbprint;
             AppName = appName;
             CertName = certName;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The thumbprint of bound certificate. </summary>

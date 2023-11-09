@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppCustomPersistentDisk : IUtf8JsonSerializable
+    public partial class AppCustomPersistentDisk : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDisk>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AppCustomPersistentDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomPersistentDiskProperties))
@@ -22,17 +28,48 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppCustomPersistentDisk DeserializeAppCustomPersistentDisk(JsonElement element)
+        AppCustomPersistentDisk IJsonModel<AppCustomPersistentDisk>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppCustomPersistentDisk(document.RootElement, options);
+        }
+
+        internal static AppCustomPersistentDisk DeserializeAppCustomPersistentDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AppCustomPersistentDiskProperties> customPersistentDiskProperties = default;
             string storageId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customPersistentDiskProperties"u8))
@@ -49,8 +86,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     storageId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppCustomPersistentDisk(customPersistentDiskProperties.Value, storageId);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppCustomPersistentDisk(customPersistentDiskProperties.Value, storageId, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AppCustomPersistentDisk>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppCustomPersistentDisk IModel<AppCustomPersistentDisk>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppCustomPersistentDisk(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AppCustomPersistentDisk>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

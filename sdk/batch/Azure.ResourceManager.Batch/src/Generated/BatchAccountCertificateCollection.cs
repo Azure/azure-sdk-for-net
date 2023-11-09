@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountCertificateCertificateRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchAccountCertificateResource(Client, BatchAccountCertificateData.DeserializeBatchAccountCertificateData(e)), _batchAccountCertificateCertificateClientDiagnostics, Pipeline, "BatchAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

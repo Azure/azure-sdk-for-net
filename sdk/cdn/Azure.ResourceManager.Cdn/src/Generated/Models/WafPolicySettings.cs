@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines contents of a web application firewall global configuration. </summary>
     public partial class WafPolicySettings
     {
-        /// <summary> Initializes a new instance of WafPolicySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WafPolicySettings"/>. </summary>
         public WafPolicySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WafPolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafPolicySettings"/>. </summary>
         /// <param name="enabledState"> describes if the policy is in enabled state or disabled state. </param>
         /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
         /// <param name="defaultRedirectUri"> If action type is redirect, this field represents the default redirect URL for the client. </param>
         /// <param name="defaultCustomBlockResponseStatusCode"> If the action type is block, this field defines the default customer overridable http response status code. </param>
         /// <param name="defaultCustomBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
-        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, BinaryData defaultCustomBlockResponseBody)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, BinaryData defaultCustomBlockResponseBody, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnabledState = enabledState;
             Mode = mode;
             DefaultRedirectUri = defaultRedirectUri;
             DefaultCustomBlockResponseStatusCode = defaultCustomBlockResponseStatusCode;
             DefaultCustomBlockResponseBody = defaultCustomBlockResponseBody;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> describes if the policy is in enabled state or disabled state. </summary>

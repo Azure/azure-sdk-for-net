@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Properties that define a web test location available to an Application Insights Component. </summary>
     public partial class ApplicationInsightsComponentWebTestLocation
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentWebTestLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentWebTestLocation"/>. </summary>
         internal ApplicationInsightsComponentWebTestLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentWebTestLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentWebTestLocation"/>. </summary>
         /// <param name="displayName"> The display name of the web test location. </param>
         /// <param name="tag"> Internally defined geographic location tag. </param>
-        internal ApplicationInsightsComponentWebTestLocation(string displayName, string tag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentWebTestLocation(string displayName, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Tag = tag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The display name of the web test location. </summary>

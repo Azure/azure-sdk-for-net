@@ -5,15 +5,202 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentExportConfiguration
+    public partial class ApplicationInsightsComponentExportConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentExportConfiguration>
     {
-        internal static ApplicationInsightsComponentExportConfiguration DeserializeApplicationInsightsComponentExportConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentExportConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ApplicationInsightsComponentExportConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExportId))
+                {
+                    writer.WritePropertyName("ExportId"u8);
+                    writer.WriteStringValue(ExportId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(InstrumentationKey))
+                {
+                    writer.WritePropertyName("InstrumentationKey"u8);
+                    writer.WriteStringValue(InstrumentationKey);
+                }
+            }
+            if (Optional.IsDefined(RecordTypes))
+            {
+                writer.WritePropertyName("RecordTypes"u8);
+                writer.WriteStringValue(RecordTypes);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ApplicationName))
+                {
+                    writer.WritePropertyName("ApplicationName"u8);
+                    writer.WriteStringValue(ApplicationName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("SubscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ResourceGroup))
+                {
+                    writer.WritePropertyName("ResourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DestinationStorageSubscriptionId))
+                {
+                    writer.WritePropertyName("DestinationStorageSubscriptionId"u8);
+                    writer.WriteStringValue(DestinationStorageSubscriptionId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DestinationStorageLocationId))
+                {
+                    writer.WritePropertyName("DestinationStorageLocationId"u8);
+                    writer.WriteStringValue(DestinationStorageLocationId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DestinationAccountId))
+                {
+                    writer.WritePropertyName("DestinationAccountId"u8);
+                    writer.WriteStringValue(DestinationAccountId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DestinationType))
+                {
+                    writer.WritePropertyName("DestinationType"u8);
+                    writer.WriteStringValue(DestinationType);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsUserEnabled))
+                {
+                    writer.WritePropertyName("IsUserEnabled"u8);
+                    writer.WriteStringValue(IsUserEnabled);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastUserUpdate))
+                {
+                    writer.WritePropertyName("LastUserUpdate"u8);
+                    writer.WriteStringValue(LastUserUpdate);
+                }
+            }
+            if (Optional.IsDefined(NotificationQueueEnabled))
+            {
+                writer.WritePropertyName("NotificationQueueEnabled"u8);
+                writer.WriteStringValue(NotificationQueueEnabled);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExportStatus))
+                {
+                    writer.WritePropertyName("ExportStatus"u8);
+                    writer.WriteStringValue(ExportStatus);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastSuccessTime))
+                {
+                    writer.WritePropertyName("LastSuccessTime"u8);
+                    writer.WriteStringValue(LastSuccessTime);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastGapTime))
+                {
+                    writer.WritePropertyName("LastGapTime"u8);
+                    writer.WriteStringValue(LastGapTime);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PermanentErrorReason))
+                {
+                    writer.WritePropertyName("PermanentErrorReason"u8);
+                    writer.WriteStringValue(PermanentErrorReason);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StorageName))
+                {
+                    writer.WritePropertyName("StorageName"u8);
+                    writer.WriteStringValue(StorageName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ContainerName))
+                {
+                    writer.WritePropertyName("ContainerName"u8);
+                    writer.WriteStringValue(ContainerName);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApplicationInsightsComponentExportConfiguration IJsonModel<ApplicationInsightsComponentExportConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentExportConfiguration DeserializeApplicationInsightsComponentExportConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +224,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> permanentErrorReason = default;
             Optional<string> storageName = default;
             Optional<string> containerName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ExportId"u8))
@@ -134,8 +323,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     containerName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentExportConfiguration(exportId.Value, instrumentationKey.Value, recordTypes.Value, applicationName.Value, subscriptionId.Value, resourceGroup.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, destinationType.Value, isUserEnabled.Value, lastUserUpdate.Value, notificationQueueEnabled.Value, exportStatus.Value, lastSuccessTime.Value, lastGapTime.Value, permanentErrorReason.Value, storageName.Value, containerName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationInsightsComponentExportConfiguration(exportId.Value, instrumentationKey.Value, recordTypes.Value, applicationName.Value, subscriptionId.Value, resourceGroup.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, destinationType.Value, isUserEnabled.Value, lastUserUpdate.Value, notificationQueueEnabled.Value, exportStatus.Value, lastSuccessTime.Value, lastGapTime.Value, permanentErrorReason.Value, storageName.Value, containerName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ApplicationInsightsComponentExportConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplicationInsightsComponentExportConfiguration IModel<ApplicationInsightsComponentExportConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ApplicationInsightsComponentExportConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

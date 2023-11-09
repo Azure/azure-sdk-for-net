@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotChannelSettings : IUtf8JsonSerializable
+    public partial class BotChannelSettings : IUtf8JsonSerializable, IJsonModel<BotChannelSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BotChannelSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtensionKey1))
@@ -72,11 +76,40 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("requireTermsAgreement"u8);
                 writer.WriteBooleanValue(RequireTermsAgreement.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BotChannelSettings DeserializeBotChannelSettings(JsonElement element)
+        BotChannelSettings IJsonModel<BotChannelSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotChannelSettings(document.RootElement, options);
+        }
+
+        internal static BotChannelSettings DeserializeBotChannelSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +124,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> isEnabled = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> requireTermsAgreement = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensionKey1"u8))
@@ -168,8 +203,38 @@ namespace Azure.ResourceManager.BotService.Models
                     requireTermsAgreement = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<BotChannelSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BotChannelSettings IModel<BotChannelSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBotChannelSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BotChannelSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

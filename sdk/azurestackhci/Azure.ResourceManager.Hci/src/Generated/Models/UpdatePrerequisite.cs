@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
     public partial class UpdatePrerequisite
     {
-        /// <summary> Initializes a new instance of UpdatePrerequisite. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdatePrerequisite"/>. </summary>
         public UpdatePrerequisite()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdatePrerequisite. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdatePrerequisite"/>. </summary>
         /// <param name="updateType"> Updatable component type. </param>
         /// <param name="version"> Version of the prerequisite. </param>
         /// <param name="packageName"> Friendly name of the prerequisite. </param>
-        internal UpdatePrerequisite(string updateType, string version, string packageName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdatePrerequisite(string updateType, string version, string packageName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateType = updateType;
             Version = version;
             PackageName = packageName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Updatable component type. </summary>

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class StartCallRecordingRequestInternal : IUtf8JsonSerializable
+    internal partial class StartCallRecordingRequestInternal : IUtf8JsonSerializable, IJsonModel<StartCallRecordingRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StartCallRecordingRequestInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<StartCallRecordingRequestInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
@@ -47,7 +53,137 @@ namespace Azure.Communication.CallingServer
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        StartCallRecordingRequestInternal IJsonModel<StartCallRecordingRequestInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StartCallRecordingRequestInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStartCallRecordingRequestInternal(document.RootElement, options);
+        }
+
+        internal static StartCallRecordingRequestInternal DeserializeStartCallRecordingRequestInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CallLocatorInternal callLocator = default;
+            Optional<string> recordingStateCallbackUri = default;
+            Optional<RecordingContent> recordingContentType = default;
+            Optional<RecordingChannel> recordingChannelType = default;
+            Optional<RecordingFormat> recordingFormatType = default;
+            Optional<IList<ChannelAffinityInternal>> channelAffinity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("callLocator"u8))
+                {
+                    callLocator = CallLocatorInternal.DeserializeCallLocatorInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recordingStateCallbackUri"u8))
+                {
+                    recordingStateCallbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recordingContentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingContentType = new RecordingContent(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingChannelType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingChannelType = new RecordingChannel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingFormatType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingFormatType = new RecordingFormat(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("channelAffinity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ChannelAffinityInternal> array = new List<ChannelAffinityInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChannelAffinityInternal.DeserializeChannelAffinityInternal(item));
+                    }
+                    channelAffinity = array;
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StartCallRecordingRequestInternal(callLocator, recordingStateCallbackUri.Value, Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), Optional.ToList(channelAffinity), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<StartCallRecordingRequestInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StartCallRecordingRequestInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StartCallRecordingRequestInternal IModel<StartCallRecordingRequestInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StartCallRecordingRequestInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStartCallRecordingRequestInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<StartCallRecordingRequestInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

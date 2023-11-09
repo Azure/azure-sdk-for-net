@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Deployment configuration properties. </summary>
     public partial class BatchDeploymentConfiguration
     {
-        /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchDeploymentConfiguration"/>. </summary>
         public BatchDeploymentConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchDeploymentConfiguration"/>. </summary>
         /// <param name="cloudServiceConfiguration"> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="vmConfiguration"> This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </param>
-        internal BatchDeploymentConfiguration(BatchCloudServiceConfiguration cloudServiceConfiguration, BatchVmConfiguration vmConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchDeploymentConfiguration(BatchCloudServiceConfiguration cloudServiceConfiguration, BatchVmConfiguration vmConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CloudServiceConfiguration = cloudServiceConfiguration;
             VmConfiguration = vmConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </summary>

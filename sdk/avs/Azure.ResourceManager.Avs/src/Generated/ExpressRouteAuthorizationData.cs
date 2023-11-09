@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class ExpressRouteAuthorizationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteAuthorizationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteAuthorizationData"/>. </summary>
         public ExpressRouteAuthorizationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteAuthorizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteAuthorizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +36,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="expressRouteAuthorizationId"> The ID of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
-        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProvisioningState? provisioningState, ResourceIdentifier expressRouteAuthorizationId, string expressRouteAuthorizationKey, ResourceIdentifier expressRouteId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProvisioningState? provisioningState, ResourceIdentifier expressRouteAuthorizationId, string expressRouteAuthorizationKey, ResourceIdentifier expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ExpressRouteAuthorizationId = expressRouteAuthorizationId;
             ExpressRouteAuthorizationKey = expressRouteAuthorizationKey;
             ExpressRouteId = expressRouteId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the  ExpressRoute Circuit Authorization provisioning. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> SkuCapability indicates the capability of a certain feature. </summary>
     public partial class CognitiveServicesSkuCapability
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuCapability"/>. </summary>
         internal CognitiveServicesSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuCapability"/>. </summary>
         /// <param name="name"> The name of the SkuCapability. </param>
         /// <param name="value"> The value of the SkuCapability. </param>
-        internal CognitiveServicesSkuCapability(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesSkuCapability(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the SkuCapability. </summary>

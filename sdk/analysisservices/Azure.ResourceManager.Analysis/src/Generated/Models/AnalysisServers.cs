@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An array of Analysis Services resources. </summary>
     internal partial class AnalysisServers
     {
-        /// <summary> Initializes a new instance of AnalysisServers. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisServers"/>. </summary>
         /// <param name="analysisResources"> An array of Analysis Services resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisResources"/> is null. </exception>
         internal AnalysisServers(IEnumerable<AnalysisServerData> analysisResources)
@@ -26,11 +29,18 @@ namespace Azure.ResourceManager.Analysis.Models
             AnalysisResources = analysisResources.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnalysisServers. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisServers"/>. </summary>
         /// <param name="analysisResources"> An array of Analysis Services resources. </param>
-        internal AnalysisServers(IReadOnlyList<AnalysisServerData> analysisResources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisServers(IReadOnlyList<AnalysisServerData> analysisResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AnalysisResources = analysisResources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisServers"/> for deserialization. </summary>
+        internal AnalysisServers()
+        {
         }
 
         /// <summary> An array of Analysis Services resources. </summary>

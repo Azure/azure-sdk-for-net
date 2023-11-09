@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The StopTranscriptionRequest. </summary>
     internal partial class StopTranscriptionRequestInternal
     {
-        /// <summary> Initializes a new instance of StopTranscriptionRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StopTranscriptionRequestInternal"/>. </summary>
         public StopTranscriptionRequestInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StopTranscriptionRequestInternal"/>. </summary>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StopTranscriptionRequestInternal(string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value to identify context of the operation. </summary>

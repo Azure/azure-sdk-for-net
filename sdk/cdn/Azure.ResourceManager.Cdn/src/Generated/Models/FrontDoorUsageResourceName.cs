@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The usage names. </summary>
     public partial class FrontDoorUsageResourceName
     {
-        /// <summary> Initializes a new instance of FrontDoorUsageResourceName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsageResourceName"/>. </summary>
         internal FrontDoorUsageResourceName()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorUsageResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsageResourceName"/>. </summary>
         /// <param name="value"> A string describing the resource name. </param>
         /// <param name="localizedValue"> A localized string describing the resource name. </param>
-        internal FrontDoorUsageResourceName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorUsageResourceName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A string describing the resource name. </summary>

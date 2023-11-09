@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services account commitment period. </summary>
     public partial class CommitmentPeriod
     {
-        /// <summary> Initializes a new instance of CommitmentPeriod. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommitmentPeriod"/>. </summary>
         public CommitmentPeriod()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentPeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPeriod"/>. </summary>
         /// <param name="tier"> Commitment period commitment tier. </param>
         /// <param name="count"> Commitment period commitment count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
         /// <param name="startOn"> Commitment period start date. </param>
         /// <param name="endOn"> Commitment period end date. </param>
-        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tier = tier;
             Count = count;
             Quota = quota;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Commitment period commitment tier. </summary>

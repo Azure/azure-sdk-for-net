@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
     public partial class Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems
     {
-        /// <summary> Initializes a new instance of Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
         internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems()
         {
         }
 
-        /// <summary> Initializes a new instance of Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
         /// <param name="dateOn"></param>
         /// <param name="value"></param>
-        internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn, float? value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn, float? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DateOn = dateOn;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the date on. </summary>

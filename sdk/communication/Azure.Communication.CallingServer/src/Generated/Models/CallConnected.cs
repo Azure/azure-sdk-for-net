@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallConnectedEvent. </summary>
     public partial class CallConnected
     {
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CallConnected"/>. </summary>
         internal CallConnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnected"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
@@ -24,7 +30,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
-        internal CallConnected(string eventSource, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CallConnected(string eventSource, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventSource = eventSource;
             Version = version;
@@ -34,6 +41,7 @@ namespace Azure.Communication.CallingServer
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the event source. </summary>

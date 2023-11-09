@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Result of the transfer eligibility validation. </summary>
     public partial class BillingSubscriptionValidateMoveEligibilityResult
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityResult"/>. </summary>
         internal BillingSubscriptionValidateMoveEligibilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityResult"/>. </summary>
         /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to move. </param>
         /// <param name="errorDetails"> Validation error details. </param>
-        internal BillingSubscriptionValidateMoveEligibilityResult(bool? isMoveEligible, BillingSubscriptionValidateMoveEligibilityError errorDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionValidateMoveEligibilityResult(bool? isMoveEligible, BillingSubscriptionValidateMoveEligibilityError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsMoveEligible = isMoveEligible;
             ErrorDetails = errorDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether the subscription is eligible to move. </summary>

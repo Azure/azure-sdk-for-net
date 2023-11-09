@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,17 +14,26 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Model factory for models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
-        /// <summary> Initializes a new instance of AnswersResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/>. </summary>
+        /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
+        /// <param name="previousQuestion"> Previous user query. </param>
+        /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = null)
+        {
+            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, new Dictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersResult"/>. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
         /// <returns> A new <see cref="QuestionAnswering.AnswersResult"/> instance for mocking. </returns>
         public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = null)
         {
             answers ??= new List<KnowledgeBaseAnswer>();
 
-            return new AnswersResult(answers?.ToList());
+            return new AnswersResult(answers?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswer"/>. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -38,10 +48,10 @@ namespace Azure.AI.Language.QuestionAnswering
             questions ??= new List<string>();
             metadata ??= new Dictionary<string, string>();
 
-            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidence, qnaId, source, metadata, dialog, shortAnswer);
+            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidence, qnaId, source, metadata, dialog, shortAnswer, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/>. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
         /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
@@ -49,20 +59,20 @@ namespace Azure.AI.Language.QuestionAnswering
         {
             prompts ??= new List<KnowledgeBaseAnswerPrompt>();
 
-            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList());
+            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerPrompt. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? qnaId = null, string displayText = null)
         {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of AnswerSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswerSpan"/>. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
         /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
@@ -70,20 +80,20 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns> A new <see cref="QuestionAnswering.AnswerSpan"/> instance for mocking. </returns>
         public static AnswerSpan AnswerSpan(string text = null, double? confidence = null, int? offset = null, int? length = null)
         {
-            return new AnswerSpan(text, confidence, offset, length);
+            return new AnswerSpan(text, confidence, offset, length, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersFromTextResult"/>. </summary>
         /// <param name="answers"> Represents the answer results. </param>
         /// <returns> A new <see cref="QuestionAnswering.AnswersFromTextResult"/> instance for mocking. </returns>
         public static AnswersFromTextResult AnswersFromTextResult(IEnumerable<TextAnswer> answers = null)
         {
             answers ??= new List<TextAnswer>();
 
-            return new AnswersFromTextResult(answers?.ToList());
+            return new AnswersFromTextResult(answers?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of TextAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.TextAnswer"/>. </summary>
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>
@@ -93,7 +103,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns> A new <see cref="QuestionAnswering.TextAnswer"/> instance for mocking. </returns>
         public static TextAnswer TextAnswer(string answer = null, double? confidence = null, string id = null, AnswerSpan shortAnswer = null, int? offset = null, int? length = null)
         {
-            return new TextAnswer(answer, confidence, id, shortAnswer, offset, length);
+            return new TextAnswer(answer, confidence, id, shortAnswer, offset, length, new Dictionary<string, BinaryData>());
         }
     }
 }

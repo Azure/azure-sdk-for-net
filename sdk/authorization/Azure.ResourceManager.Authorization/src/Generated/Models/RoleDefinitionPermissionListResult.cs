@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Permissions information. </summary>
     internal partial class RoleDefinitionPermissionListResult
     {
-        /// <summary> Initializes a new instance of RoleDefinitionPermissionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermissionListResult"/>. </summary>
         internal RoleDefinitionPermissionListResult()
         {
             Value = new ChangeTrackingList<RoleDefinitionPermission>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionPermissionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermissionListResult"/>. </summary>
         /// <param name="value"> An array of permissions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal RoleDefinitionPermissionListResult(IReadOnlyList<RoleDefinitionPermission> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleDefinitionPermissionListResult(IReadOnlyList<RoleDefinitionPermission> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of permissions. </summary>

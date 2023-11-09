@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationSourceControlData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationSourceControlData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlData"/>. </summary>
         public AutomationSourceControlData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="description"> The description. </param>
         /// <param name="createdOn"> The creation time. </param>
         /// <param name="lastModifiedOn"> The last modified time. </param>
-        internal AutomationSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSourceType? sourceType, string description, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSourceType? sourceType, string description, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RepoUri = repoUri;
             Branch = branch;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.Automation
             Description = description;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The repo url of the source control. </summary>

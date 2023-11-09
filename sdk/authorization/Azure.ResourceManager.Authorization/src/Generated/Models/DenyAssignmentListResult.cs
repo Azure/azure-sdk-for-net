@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Deny assignment list operation result. </summary>
     internal partial class DenyAssignmentListResult
     {
-        /// <summary> Initializes a new instance of DenyAssignmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentListResult"/>. </summary>
         internal DenyAssignmentListResult()
         {
             Value = new ChangeTrackingList<DenyAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentListResult"/>. </summary>
         /// <param name="value"> Deny assignment list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal DenyAssignmentListResult(IReadOnlyList<DenyAssignmentData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DenyAssignmentListResult(IReadOnlyList<DenyAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Deny assignment list. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ResultInformation. </summary>
     public partial class ResultInformation
     {
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResultInformation"/>. </summary>
         internal ResultInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResultInformation"/>. </summary>
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
-        internal ResultInformation(int? code, int? subCode, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResultInformation(int? code, int? subCode, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             SubCode = subCode;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </summary>

@@ -6,16 +6,69 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatThreadPropertiesInternal
+    internal partial class ChatThreadPropertiesInternal : IUtf8JsonSerializable, IJsonModel<ChatThreadPropertiesInternal>
     {
-        internal static ChatThreadPropertiesInternal DeserializeChatThreadPropertiesInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatThreadPropertiesInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ChatThreadPropertiesInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("topic"u8);
+            writer.WriteStringValue(Topic);
+            writer.WritePropertyName("createdOn"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("createdByCommunicationIdentifier"u8);
+            writer.WriteObjectValue(CreatedByCommunicationIdentifier);
+            if (Optional.IsDefined(DeletedOn))
+            {
+                writer.WritePropertyName("deletedOn"u8);
+                writer.WriteStringValue(DeletedOn.Value, "O");
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ChatThreadPropertiesInternal IJsonModel<ChatThreadPropertiesInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatThreadPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatThreadPropertiesInternal(document.RootElement, options);
+        }
+
+        internal static ChatThreadPropertiesInternal DeserializeChatThreadPropertiesInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +78,8 @@ namespace Azure.Communication.Chat
             DateTimeOffset createdOn = default;
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             Optional<DateTimeOffset> deletedOn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,8 +111,38 @@ namespace Azure.Communication.Chat
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ChatThreadPropertiesInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatThreadPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ChatThreadPropertiesInternal IModel<ChatThreadPropertiesInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatThreadPropertiesInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeChatThreadPropertiesInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ChatThreadPropertiesInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

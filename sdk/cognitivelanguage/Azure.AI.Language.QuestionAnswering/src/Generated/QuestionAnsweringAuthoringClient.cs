@@ -816,7 +816,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -837,7 +837,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -863,7 +863,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -889,7 +889,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -915,7 +915,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -941,7 +941,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -967,7 +967,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -993,7 +993,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1020,7 +1020,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, source, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1047,7 +1047,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, source, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1382,7 +1382,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await GeneratorPageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context).ConfigureAwait(false);
+                return await GeneratorPageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1421,7 +1421,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return GeneratorPageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context);
+                return GeneratorPageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context);
             }
             catch (Exception e)
             {
@@ -1460,7 +1460,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await GeneratorPageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context).ConfigureAwait(false);
+                return await GeneratorPageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1499,7 +1499,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return GeneratorPageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context);
+                return GeneratorPageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context);
             }
             catch (Exception e)
             {

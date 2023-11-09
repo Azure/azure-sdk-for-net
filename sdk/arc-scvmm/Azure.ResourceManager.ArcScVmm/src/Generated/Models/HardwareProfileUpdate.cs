@@ -5,14 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class HardwareProfileUpdate
     {
-        /// <summary> Initializes a new instance of HardwareProfileUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareProfileUpdate"/>. </summary>
         public HardwareProfileUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HardwareProfileUpdate"/>. </summary>
+        /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
+        /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
+        /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
+        /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
+        /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
+        /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareProfileUpdate(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MemoryMB = memoryMB;
+            CpuCount = cpuCount;
+            LimitCpuForMigration = limitCpuForMigration;
+            DynamicMemoryEnabled = dynamicMemoryEnabled;
+            DynamicMemoryMaxMB = dynamicMemoryMaxMB;
+            DynamicMemoryMinMB = dynamicMemoryMinMB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> MemoryMB is the size of a virtual machine's memory, in MB. </summary>

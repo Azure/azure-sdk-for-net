@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformDeploymentSettings : IUtf8JsonSerializable
+    public partial class AppPlatformDeploymentSettings : IUtf8JsonSerializable, IJsonModel<AppPlatformDeploymentSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformDeploymentSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AppPlatformDeploymentSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceRequests))
@@ -92,11 +96,40 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("containerProbeSettings"u8);
                 writer.WriteObjectValue(ContainerProbeSettings);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformDeploymentSettings DeserializeAppPlatformDeploymentSettings(JsonElement element)
+        AppPlatformDeploymentSettings IJsonModel<AppPlatformDeploymentSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformDeploymentSettings(document.RootElement, options);
+        }
+
+        internal static AppPlatformDeploymentSettings DeserializeAppPlatformDeploymentSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +142,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppInstanceProbe> startupProbe = default;
             Optional<int> terminationGracePeriodSeconds = default;
             Optional<ContainerProbeSettings> containerProbeSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceRequests"u8))
@@ -212,8 +247,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformDeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformDeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AppPlatformDeploymentSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppPlatformDeploymentSettings IModel<AppPlatformDeploymentSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppPlatformDeploymentSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AppPlatformDeploymentSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

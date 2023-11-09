@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,25 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The CustomContext. </summary>
     internal partial class CustomContextInternal
     {
-        /// <summary> Initializes a new instance of CustomContextInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomContextInternal"/>. </summary>
         public CustomContextInternal()
         {
             VoipHeaders = new ChangeTrackingDictionary<string, string>();
             SipHeaders = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomContextInternal"/>. </summary>
+        /// <param name="voipHeaders"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="sipHeaders"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomContextInternal(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VoipHeaders = voipHeaders;
+            SipHeaders = sipHeaders;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the Simple filter parameters. </summary>
     internal partial class SimpleFilterParameters
     {
-        /// <summary> Initializes a new instance of SimpleFilterParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SimpleFilterParameters"/>. </summary>
         public SimpleFilterParameters()
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SimpleFilterParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleFilterParameters"/>. </summary>
         /// <param name="zones"> List of Azure availability zones to filter targets by. </param>
-        internal SimpleFilterParameters(IList<string> zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimpleFilterParameters(IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Azure availability zones to filter targets by. </summary>

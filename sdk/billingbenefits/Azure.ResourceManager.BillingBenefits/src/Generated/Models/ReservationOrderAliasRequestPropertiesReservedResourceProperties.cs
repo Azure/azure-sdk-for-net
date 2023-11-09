@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
     internal partial class ReservationOrderAliasRequestPropertiesReservedResourceProperties
     {
-        /// <summary> Initializes a new instance of ReservationOrderAliasRequestPropertiesReservedResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderAliasRequestPropertiesReservedResourceProperties"/>. </summary>
         public ReservationOrderAliasRequestPropertiesReservedResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderAliasRequestPropertiesReservedResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderAliasRequestPropertiesReservedResourceProperties"/>. </summary>
         /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. </param>
-        internal ReservationOrderAliasRequestPropertiesReservedResourceProperties(BillingBenefitsInstanceFlexibility? instanceFlexibility)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationOrderAliasRequestPropertiesReservedResourceProperties(BillingBenefitsInstanceFlexibility? instanceFlexibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceFlexibility = instanceFlexibility;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>

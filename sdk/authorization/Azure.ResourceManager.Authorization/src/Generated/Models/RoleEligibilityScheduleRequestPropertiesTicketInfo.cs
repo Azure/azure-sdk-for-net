@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Ticket Info of the role eligibility. </summary>
     public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo
     {
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesTicketInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestPropertiesTicketInfo"/>. </summary>
         public RoleEligibilityScheduleRequestPropertiesTicketInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesTicketInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestPropertiesTicketInfo"/>. </summary>
         /// <param name="ticketNumber"> Ticket number for the role eligibility. </param>
         /// <param name="ticketSystem"> Ticket system name for the role eligibility. </param>
-        internal RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TicketNumber = ticketNumber;
             TicketSystem = ticketSystem;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Ticket number for the role eligibility. </summary>

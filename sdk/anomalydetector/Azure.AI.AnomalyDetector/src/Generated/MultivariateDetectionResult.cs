@@ -15,7 +15,10 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Detection results for the resultId value. </summary>
     public partial class MultivariateDetectionResult
     {
-        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/>. </summary>
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
@@ -28,17 +31,25 @@ namespace Azure.AI.AnomalyDetector
             ResultId = resultId;
             Summary = summary;
             Results = results.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/>. </summary>
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
-        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResultId = resultId;
             Summary = summary;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/> for deserialization. </summary>
+        internal MultivariateDetectionResult()
+        {
         }
 
         /// <summary> Result identifier that's used to fetch the results of an inference call. </summary>

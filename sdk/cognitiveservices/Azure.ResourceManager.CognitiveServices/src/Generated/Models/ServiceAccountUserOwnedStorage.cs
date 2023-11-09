@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -13,18 +14,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The user owned storage for Cognitive Services account. </summary>
     public partial class ServiceAccountUserOwnedStorage
     {
-        /// <summary> Initializes a new instance of ServiceAccountUserOwnedStorage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUserOwnedStorage"/>. </summary>
         public ServiceAccountUserOwnedStorage()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUserOwnedStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUserOwnedStorage"/>. </summary>
         /// <param name="resourceId"> Full resource id of a Microsoft.Storage resource. </param>
         /// <param name="identityClientId"></param>
-        internal ServiceAccountUserOwnedStorage(ResourceIdentifier resourceId, Guid? identityClientId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountUserOwnedStorage(ResourceIdentifier resourceId, Guid? identityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             IdentityClientId = identityClientId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Full resource id of a Microsoft.Storage resource. </summary>

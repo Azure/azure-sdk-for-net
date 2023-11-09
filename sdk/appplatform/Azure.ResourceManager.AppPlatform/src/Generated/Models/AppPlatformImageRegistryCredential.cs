@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Credential of the image registry. </summary>
     public partial class AppPlatformImageRegistryCredential
     {
-        /// <summary> Initializes a new instance of AppPlatformImageRegistryCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformImageRegistryCredential"/>. </summary>
         public AppPlatformImageRegistryCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformImageRegistryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformImageRegistryCredential"/>. </summary>
         /// <param name="username"> The username of the image registry credential. </param>
         /// <param name="password"> The password of the image registry credential. </param>
-        internal AppPlatformImageRegistryCredential(string username, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformImageRegistryCredential(string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The username of the image registry credential. </summary>

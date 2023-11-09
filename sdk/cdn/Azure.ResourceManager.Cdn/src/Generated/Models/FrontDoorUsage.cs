@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes resource usage. </summary>
     public partial class FrontDoorUsage
     {
-        /// <summary> Initializes a new instance of FrontDoorUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
@@ -29,19 +33,26 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of FrontDoorUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/>. </summary>
         /// <param name="id"> Resource identifier. </param>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal FrontDoorUsage(ResourceIdentifier id, FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorUsage(ResourceIdentifier id, FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/> for deserialization. </summary>
+        internal FrontDoorUsage()
+        {
         }
 
         /// <summary> Resource identifier. </summary>

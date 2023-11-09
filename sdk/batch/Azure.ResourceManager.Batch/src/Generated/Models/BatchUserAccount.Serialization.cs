@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchUserAccount : IUtf8JsonSerializable
+    public partial class BatchUserAccount : IUtf8JsonSerializable, IJsonModel<BatchUserAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchUserAccount>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BatchUserAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -34,11 +40,40 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("windowsUserConfiguration"u8);
                 writer.WriteObjectValue(WindowsUserConfiguration);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchUserAccount DeserializeBatchUserAccount(JsonElement element)
+        BatchUserAccount IJsonModel<BatchUserAccount>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchUserAccount)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchUserAccount(document.RootElement, options);
+        }
+
+        internal static BatchUserAccount DeserializeBatchUserAccount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchUserAccountElevationLevel> elevationLevel = default;
             Optional<BatchLinuxUserConfiguration> linuxUserConfiguration = default;
             Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,8 +124,38 @@ namespace Azure.ResourceManager.Batch.Models
                     windowsUserConfiguration = BatchWindowsUserConfiguration.DeserializeBatchWindowsUserConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchUserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchUserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<BatchUserAccount>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchUserAccount)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BatchUserAccount IModel<BatchUserAccount>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchUserAccount)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBatchUserAccount(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BatchUserAccount>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,15 +5,128 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    internal partial class SavingsPlanSummaryCount
+    internal partial class SavingsPlanSummaryCount : IUtf8JsonSerializable, IJsonModel<SavingsPlanSummaryCount>
     {
-        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanSummaryCount>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SavingsPlanSummaryCount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SucceededCount))
+                {
+                    writer.WritePropertyName("succeededCount"u8);
+                    writer.WriteNumberValue(SucceededCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FailedCount))
+                {
+                    writer.WritePropertyName("failedCount"u8);
+                    writer.WriteNumberValue(FailedCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExpiringCount))
+                {
+                    writer.WritePropertyName("expiringCount"u8);
+                    writer.WriteNumberValue(ExpiringCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExpiredCount))
+                {
+                    writer.WritePropertyName("expiredCount"u8);
+                    writer.WriteNumberValue(ExpiredCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PendingCount))
+                {
+                    writer.WritePropertyName("pendingCount"u8);
+                    writer.WriteNumberValue(PendingCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CancelledCount))
+                {
+                    writer.WritePropertyName("cancelledCount"u8);
+                    writer.WriteNumberValue(CancelledCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProcessingCount))
+                {
+                    writer.WritePropertyName("processingCount"u8);
+                    writer.WriteNumberValue(ProcessingCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(NoBenefitCount))
+                {
+                    writer.WritePropertyName("noBenefitCount"u8);
+                    writer.WriteNumberValue(NoBenefitCount.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(WarningCount))
+                {
+                    writer.WritePropertyName("warningCount"u8);
+                    writer.WriteNumberValue(WarningCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SavingsPlanSummaryCount IJsonModel<SavingsPlanSummaryCount>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanSummaryCount(document.RootElement, options);
+        }
+
+        internal static SavingsPlanSummaryCount DeserializeSavingsPlanSummaryCount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +140,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<float> processingCount = default;
             Optional<float> noBenefitCount = default;
             Optional<float> warningCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeededCount"u8))
@@ -110,8 +225,38 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     warningCount = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SavingsPlanSummaryCount>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SavingsPlanSummaryCount IModel<SavingsPlanSummaryCount>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSavingsPlanSummaryCount(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SavingsPlanSummaryCount>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

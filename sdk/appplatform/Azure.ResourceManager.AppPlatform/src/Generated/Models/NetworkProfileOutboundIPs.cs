@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Desired outbound IP resources for Azure Spring Apps resource. </summary>
     internal partial class NetworkProfileOutboundIPs
     {
-        /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileOutboundIPs"/>. </summary>
         internal NetworkProfileOutboundIPs()
         {
             PublicIPs = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileOutboundIPs"/>. </summary>
         /// <param name="publicIPs"> A list of public IP addresses. </param>
-        internal NetworkProfileOutboundIPs(IReadOnlyList<IPAddress> publicIPs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkProfileOutboundIPs(IReadOnlyList<IPAddress> publicIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicIPs = publicIPs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of public IP addresses. </summary>

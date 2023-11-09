@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,12 +14,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Report data. </summary>
     public partial class ReportRecordContract
     {
-        /// <summary> Initializes a new instance of ReportRecordContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReportRecordContract"/>. </summary>
         internal ReportRecordContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ReportRecordContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportRecordContract"/>. </summary>
         /// <param name="name"> Name depending on report endpoint specifies product, API, operation or developer name. </param>
         /// <param name="timestamp">
         /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="serviceTimeAvg"> Average time it took to process request on backend. </param>
         /// <param name="serviceTimeMin"> Minimum time it took to process request on backend. </param>
         /// <param name="serviceTimeMax"> Maximum time it took to process request on backend. </param>
-        internal ReportRecordContract(string name, DateTimeOffset? timestamp, string interval, string country, string region, string zip, string userId, string productId, string apiId, string operationId, string apiRegion, ResourceIdentifier subscriptionResourceId, int? callCountSuccess, int? callCountBlocked, int? callCountFailed, int? callCountOther, int? callCountTotal, long? bandwidth, int? cacheHitCount, int? cacheMissCount, double? apiTimeAvg, double? apiTimeMin, double? apiTimeMax, double? serviceTimeAvg, double? serviceTimeMin, double? serviceTimeMax)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportRecordContract(string name, DateTimeOffset? timestamp, string interval, string country, string region, string zip, string userId, string productId, string apiId, string operationId, string apiRegion, ResourceIdentifier subscriptionResourceId, int? callCountSuccess, int? callCountBlocked, int? callCountFailed, int? callCountOther, int? callCountTotal, long? bandwidth, int? cacheHitCount, int? cacheMissCount, double? apiTimeAvg, double? apiTimeMin, double? apiTimeMax, double? serviceTimeAvg, double? serviceTimeMin, double? serviceTimeMax, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Timestamp = timestamp;
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ServiceTimeAvg = serviceTimeAvg;
             ServiceTimeMin = serviceTimeMin;
             ServiceTimeMax = serviceTimeMax;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name depending on report endpoint specifies product, API, operation or developer name. </summary>

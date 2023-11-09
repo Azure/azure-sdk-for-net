@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.BillingBenefits
     /// </summary>
     public partial class BillingBenefitsReservationOrderAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/>. </summary>
         /// <param name="sku"> Reservation order SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public BillingBenefitsReservationOrderAliasData(BillingBenefitsSku sku)
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
         /// <param name="reviewOn"> This is the date-time when the Reservation needs to be reviewed. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal BillingBenefitsReservationOrderAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, ResourceIdentifier reservationOrderId, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, int? quantity, bool? isRenewed, BillingBenefitsReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasResponsePropertiesReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsReservationOrderAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, ResourceIdentifier reservationOrderId, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, int? quantity, bool? isRenewed, BillingBenefitsReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasResponsePropertiesReservedResourceProperties reservedResourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Location = location;
@@ -65,6 +70,12 @@ namespace Azure.ResourceManager.BillingBenefits
             ReservedResourceType = reservedResourceType;
             ReviewOn = reviewOn;
             ReservedResourceProperties = reservedResourceProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasData"/> for deserialization. </summary>
+        internal BillingBenefitsReservationOrderAliasData()
+        {
         }
 
         /// <summary> Reservation order SKU. </summary>

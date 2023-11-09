@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of RunAs credential to use for hybrid worker. </summary>
     internal partial class RunAsCredentialAssociationProperty
     {
-        /// <summary> Initializes a new instance of RunAsCredentialAssociationProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunAsCredentialAssociationProperty"/>. </summary>
         public RunAsCredentialAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of RunAsCredentialAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunAsCredentialAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the credential. </param>
-        internal RunAsCredentialAssociationProperty(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunAsCredentialAssociationProperty(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the credential. </summary>

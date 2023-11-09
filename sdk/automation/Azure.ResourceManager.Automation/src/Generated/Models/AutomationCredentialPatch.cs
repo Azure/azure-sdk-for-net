@@ -5,14 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the Update credential operation. </summary>
     public partial class AutomationCredentialPatch
     {
-        /// <summary> Initializes a new instance of AutomationCredentialPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialPatch"/>. </summary>
         public AutomationCredentialPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the credential. </param>
+        /// <param name="userName"> Gets or sets the user name of the credential. </param>
+        /// <param name="password"> Gets or sets the password of the credential. </param>
+        /// <param name="description"> Gets or sets the description of the credential. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationCredentialPatch(string name, string userName, string password, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            UserName = userName;
+            Password = password;
+            Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the credential. </summary>

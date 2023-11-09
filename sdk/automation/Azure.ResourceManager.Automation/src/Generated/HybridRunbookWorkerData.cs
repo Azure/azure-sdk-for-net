@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class HybridRunbookWorkerData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>
         public HybridRunbookWorkerData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridRunbookWorkerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="vmResourceId"> Azure Resource Manager Id for a virtual machine. </param>
         /// <param name="workerType"> Type of the HybridWorker. </param>
         /// <param name="workerName"> Name of the HybridWorker. </param>
-        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, ResourceIdentifier vmResourceId, HybridWorkerType? workerType, string workerName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, ResourceIdentifier vmResourceId, HybridWorkerType? workerType, string workerName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IP = ip;
             RegisteredOn = registeredOn;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.Automation
             VmResourceId = vmResourceId;
             WorkerType = workerType;
             WorkerName = workerName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the assigned machine IP address. </summary>

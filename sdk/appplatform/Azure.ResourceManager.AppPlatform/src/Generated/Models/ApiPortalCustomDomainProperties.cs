@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The properties of custom domain for API portal. </summary>
     internal partial class ApiPortalCustomDomainProperties
     {
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiPortalCustomDomainProperties"/>. </summary>
         public ApiPortalCustomDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiPortalCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
-        internal ApiPortalCustomDomainProperties(string thumbprint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiPortalCustomDomainProperties(string thumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Thumbprint = thumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The thumbprint of bound certificate. </summary>

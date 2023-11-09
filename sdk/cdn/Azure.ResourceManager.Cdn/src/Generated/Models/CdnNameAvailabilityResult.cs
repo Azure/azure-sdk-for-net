@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Output of check name availability API. </summary>
     public partial class CdnNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CdnNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityResult"/>. </summary>
         internal CdnNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. </param>
         /// <param name="message"> The detailed error message describing why the name is not available. </param>
-        internal CdnNameAvailabilityResult(bool? nameAvailable, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnNameAvailabilityResult(bool? nameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the name is available. </summary>

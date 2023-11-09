@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Information about the restriction where the SKU cannot be used. </summary>
     public partial class AppPlatformSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuRestrictionInfo"/>. </summary>
         internal AppPlatformSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Gets locations where the SKU is restricted. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is restricted. </param>
-        internal AppPlatformSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Locations = locations;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets locations where the SKU is restricted. </summary>

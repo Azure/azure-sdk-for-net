@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class TargetData : ResourceData
     {
-        /// <summary> Initializes a new instance of TargetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetData"/>. </summary>
         /// <param name="properties"> The properties of the target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TargetData(IDictionary<string, BinaryData> properties)
@@ -28,17 +31,24 @@ namespace Azure.ResourceManager.Chaos
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of TargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Location of the target resource. </param>
         /// <param name="properties"> The properties of the target resource. </param>
-        internal TargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, BinaryData> properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetData"/> for deserialization. </summary>
+        internal TargetData()
+        {
         }
 
         /// <summary> Location of the target resource. </summary>

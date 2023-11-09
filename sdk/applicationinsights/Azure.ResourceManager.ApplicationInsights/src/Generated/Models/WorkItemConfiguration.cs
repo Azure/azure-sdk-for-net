@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Work item configuration associated with an application insights resource. </summary>
     public partial class WorkItemConfiguration
     {
-        /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfiguration"/>. </summary>
         internal WorkItemConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfiguration"/>. </summary>
         /// <param name="connectorId"> Connector identifier where work item is created. </param>
         /// <param name="configDisplayName"> Configuration friendly name. </param>
         /// <param name="isDefault"> Boolean value indicating whether configuration is default. </param>
         /// <param name="id"> Unique Id for work item. </param>
         /// <param name="configProperties"> Serialized JSON object for detailed properties. </param>
-        internal WorkItemConfiguration(string connectorId, string configDisplayName, bool? isDefault, string id, string configProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkItemConfiguration(string connectorId, string configDisplayName, bool? isDefault, string id, string configProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectorId = connectorId;
             ConfigDisplayName = configDisplayName;
             IsDefault = isDefault;
             Id = id;
             ConfigProperties = configProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Connector identifier where work item is created. </summary>

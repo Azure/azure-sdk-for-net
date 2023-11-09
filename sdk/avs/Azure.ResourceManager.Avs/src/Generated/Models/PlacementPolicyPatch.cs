@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,31 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An update of a DRS placement policy resource. </summary>
     public partial class PlacementPolicyPatch
     {
-        /// <summary> Initializes a new instance of PlacementPolicyPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
         public PlacementPolicyPatch()
         {
             VmMembers = new ChangeTrackingList<ResourceIdentifier>();
             HostMembers = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
+        /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
+        /// <param name="vmMembers"> Virtual machine members list. </param>
+        /// <param name="hostMembers"> Host members list. </param>
+        /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
+        /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            State = state;
+            VmMembers = vmMembers;
+            HostMembers = hostMembers;
+            AffinityStrength = affinityStrength;
+            AzureHybridBenefitType = azureHybridBenefitType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether the placement policy is enabled or disabled. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the a list of branches and branch statuses. </summary>
     public partial class StepStatus
     {
-        /// <summary> Initializes a new instance of StepStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StepStatus"/>. </summary>
         internal StepStatus()
         {
             Branches = new ChangeTrackingList<BranchStatus>();
         }
 
-        /// <summary> Initializes a new instance of StepStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepStatus"/>. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="stepId"> The id of the step. </param>
         /// <param name="status"> The value of the status of the step. </param>
         /// <param name="branches"> The array of branches. </param>
-        internal StepStatus(string stepName, string stepId, string status, IReadOnlyList<BranchStatus> branches)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StepStatus(string stepName, string stepId, string status, IReadOnlyList<BranchStatus> branches, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StepName = stepName;
             StepId = stepId;
             Status = status;
             Branches = branches;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the step. </summary>

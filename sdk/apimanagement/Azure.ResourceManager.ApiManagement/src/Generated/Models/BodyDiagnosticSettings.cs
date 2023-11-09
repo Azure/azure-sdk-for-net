@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Body logging settings. </summary>
     internal partial class BodyDiagnosticSettings
     {
-        /// <summary> Initializes a new instance of BodyDiagnosticSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BodyDiagnosticSettings"/>. </summary>
         public BodyDiagnosticSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BodyDiagnosticSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BodyDiagnosticSettings"/>. </summary>
         /// <param name="bytes"> Number of request body bytes to log. </param>
-        internal BodyDiagnosticSettings(int? bytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BodyDiagnosticSettings(int? bytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bytes = bytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of request body bytes to log. </summary>

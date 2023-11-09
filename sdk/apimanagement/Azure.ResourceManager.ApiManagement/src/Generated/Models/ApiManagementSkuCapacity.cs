@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Describes scaling information of a SKU. </summary>
     public partial class ApiManagementSkuCapacity
     {
-        /// <summary> Initializes a new instance of ApiManagementSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuCapacity"/>. </summary>
         internal ApiManagementSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity that can be set. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        internal ApiManagementSkuCapacity(int? minimum, int? maximum, int? @default, ApiManagementSkuCapacityScaleType? scaleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSkuCapacity(int? minimum, int? maximum, int? @default, ApiManagementSkuCapacityScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
             ScaleType = scaleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum capacity. </summary>

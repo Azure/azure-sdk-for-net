@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _updateRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _updateRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

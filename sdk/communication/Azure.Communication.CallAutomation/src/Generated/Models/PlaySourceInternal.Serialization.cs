@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlaySourceInternal : IUtf8JsonSerializable
+    internal partial class PlaySourceInternal : IUtf8JsonSerializable, IJsonModel<PlaySourceInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaySourceInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PlaySourceInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
@@ -37,7 +43,122 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("ssmlSource"u8);
                 writer.WriteObjectValue(SsmlSource);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PlaySourceInternal IJsonModel<PlaySourceInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlaySourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlaySourceInternal(document.RootElement, options);
+        }
+
+        internal static PlaySourceInternal DeserializePlaySourceInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PlaySourceTypeInternal sourceType = default;
+            Optional<string> playSourceId = default;
+            Optional<FileSourceInternal> fileSource = default;
+            Optional<TextSourceInternal> textSource = default;
+            Optional<SsmlSourceInternal> ssmlSource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceType"u8))
+                {
+                    sourceType = new PlaySourceTypeInternal(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("playSourceId"u8))
+                {
+                    playSourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileSource = FileSourceInternal.DeserializeFileSourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("textSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    textSource = TextSourceInternal.DeserializeTextSourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("ssmlSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ssmlSource = SsmlSourceInternal.DeserializeSsmlSourceInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PlaySourceInternal(sourceType, playSourceId.Value, fileSource.Value, textSource.Value, ssmlSource.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<PlaySourceInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlaySourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PlaySourceInternal IModel<PlaySourceInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlaySourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePlaySourceInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PlaySourceInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

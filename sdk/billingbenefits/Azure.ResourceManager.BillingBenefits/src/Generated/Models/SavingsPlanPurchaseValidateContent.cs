@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits;
@@ -14,10 +15,22 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanPurchaseValidateContent. </summary>
     public partial class SavingsPlanPurchaseValidateContent
     {
-        /// <summary> Initializes a new instance of SavingsPlanPurchaseValidateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchaseValidateContent"/>. </summary>
         public SavingsPlanPurchaseValidateContent()
         {
             Benefits = new ChangeTrackingList<BillingBenefitsSavingsPlanOrderAliasData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchaseValidateContent"/>. </summary>
+        /// <param name="benefits"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanPurchaseValidateContent(IList<BillingBenefitsSavingsPlanOrderAliasData> benefits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Benefits = benefits;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the benefits. </summary>

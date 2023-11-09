@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a branch in the step. </summary>
     public partial class Branch
     {
-        /// <summary> Initializes a new instance of Branch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Branch"/>. </summary>
         /// <param name="name"> String of the branch name. </param>
         /// <param name="actions">
         /// List of actions.
@@ -32,17 +35,24 @@ namespace Azure.ResourceManager.Chaos.Models
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of Branch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Branch"/>. </summary>
         /// <param name="name"> String of the branch name. </param>
         /// <param name="actions">
         /// List of actions.
         /// Please note <see cref="Action"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
         /// </param>
-        internal Branch(string name, IList<Action> actions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Branch(string name, IList<Action> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Branch"/> for deserialization. </summary>
+        internal Branch()
+        {
         }
 
         /// <summary> String of the branch name. </summary>

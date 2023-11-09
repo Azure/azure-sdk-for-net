@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The call connected event. </summary>
     public partial class CallConnected
     {
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CallConnected"/>. </summary>
         internal CallConnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnected"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
-        internal CallConnected(string callConnectionId, string serverCallId, string correlationId, string operationContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CallConnected(string callConnectionId, string serverCallId, string correlationId, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> The ServiceAlertCollectionGetAllOptions. </summary>
     public partial class ServiceAlertCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of ServiceAlertCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertCollectionGetAllOptions"/>. </summary>
         public ServiceAlertCollectionGetAllOptions()
         {
         }

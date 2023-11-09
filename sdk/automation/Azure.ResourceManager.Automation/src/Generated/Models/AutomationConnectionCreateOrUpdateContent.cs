@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update connection operation. </summary>
     public partial class AutomationConnectionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationConnectionCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection. </param>
         /// <param name="connectionType"> Gets or sets the connectionType of the connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="connectionType"/> is null. </exception>
@@ -26,6 +29,26 @@ namespace Azure.ResourceManager.Automation.Models
             Name = name;
             ConnectionType = connectionType;
             FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the connection. </param>
+        /// <param name="description"> Gets or sets the description of the connection. </param>
+        /// <param name="connectionType"> Gets or sets the connectionType of the connection. </param>
+        /// <param name="fieldDefinitionValues"> Gets or sets the field definition properties of the connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationConnectionCreateOrUpdateContent(string name, string description, ConnectionTypeAssociationProperty connectionType, IDictionary<string, string> fieldDefinitionValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Description = description;
+            ConnectionType = connectionType;
+            FieldDefinitionValues = fieldDefinitionValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationConnectionCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the name of the connection. </summary>

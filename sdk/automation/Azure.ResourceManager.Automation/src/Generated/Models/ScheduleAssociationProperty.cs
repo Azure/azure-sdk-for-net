@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The schedule property associated with the entity. </summary>
     public partial class ScheduleAssociationProperty
     {
-        /// <summary> Initializes a new instance of ScheduleAssociationProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAssociationProperty"/>. </summary>
         public ScheduleAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of ScheduleAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the Schedule. </param>
-        internal ScheduleAssociationProperty(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduleAssociationProperty(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the Schedule. </summary>

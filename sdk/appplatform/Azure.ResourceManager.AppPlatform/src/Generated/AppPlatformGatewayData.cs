@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayData"/>. </summary>
         public AppPlatformGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Spring Cloud Gateway properties payload. </param>
         /// <param name="sku"> Sku of the Spring Cloud Gateway resource. </param>
-        internal AppPlatformGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformGatewayProperties properties, AppPlatformSku sku) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformGatewayProperties properties, AppPlatformSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Spring Cloud Gateway properties payload. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Represents an Azure resource group. </summary>
     public partial class ResourceGroupValue
     {
-        /// <summary> Initializes a new instance of ResourceGroupValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupValue"/>. </summary>
         public ResourceGroupValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupValue"/>. </summary>
         /// <param name="name"> Name of the resource group. </param>
         /// <param name="location"> Location of the resource group. </param>
-        internal ResourceGroupValue(string name, AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGroupValue(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the resource group. </summary>

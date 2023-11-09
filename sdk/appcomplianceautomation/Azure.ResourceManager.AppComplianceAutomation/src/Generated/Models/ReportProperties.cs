@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Report's properties. </summary>
     public partial class ReportProperties
     {
-        /// <summary> Initializes a new instance of ReportProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReportProperties"/>. </summary>
         /// <param name="timeZone">
         /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
         /// An example of valid timezone id is "Pacific Standard Time".
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Resources = resources.ToList();
         }
 
-        /// <summary> Initializes a new instance of ReportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportProperties"/>. </summary>
         /// <param name="id"> Report id in database. </param>
         /// <param name="status"> Report status. </param>
         /// <param name="tenantId"> Report's tenant id. </param>
@@ -51,7 +54,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="resources"> List of resource data. </param>
         /// <param name="complianceStatus"> Report compliance status. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal ReportProperties(string id, ReportStatus? status, Guid? tenantId, string reportName, string offerGuid, string timeZone, DateTimeOffset triggerOn, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, IList<ResourceMetadata> resources, ReportComplianceStatus complianceStatus, ProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportProperties(string id, ReportStatus? status, Guid? tenantId, string reportName, string offerGuid, string timeZone, DateTimeOffset triggerOn, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, IList<ResourceMetadata> resources, ReportComplianceStatus complianceStatus, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Status = status;
@@ -66,6 +70,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Resources = resources;
             ComplianceStatus = complianceStatus;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReportProperties"/> for deserialization. </summary>
+        internal ReportProperties()
+        {
         }
 
         /// <summary> Report id in database. </summary>

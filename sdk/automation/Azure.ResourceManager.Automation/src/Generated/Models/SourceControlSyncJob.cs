@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the source control sync job. </summary>
     public partial class SourceControlSyncJob : ResourceData
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJob"/>. </summary>
         internal SourceControlSyncJob()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJob"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The end time of the job. </param>
         /// <param name="syncType"> The sync type. </param>
-        internal SourceControlSyncJob(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlSyncJob(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SourceControlSyncJobId = sourceControlSyncJobId;
             CreatedOn = createdOn;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
             StartOn = startOn;
             EndOn = endOn;
             SyncType = syncType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The source control sync job id. </summary>

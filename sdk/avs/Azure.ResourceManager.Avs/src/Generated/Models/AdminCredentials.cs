@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Administrative credentials for accessing vCenter and NSX-T. </summary>
     public partial class AdminCredentials
     {
-        /// <summary> Initializes a new instance of AdminCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdminCredentials"/>. </summary>
         internal AdminCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of AdminCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdminCredentials"/>. </summary>
         /// <param name="nsxtUsername"> NSX-T Manager username. </param>
         /// <param name="nsxtPassword"> NSX-T Manager password. </param>
         /// <param name="vCenterUsername"> vCenter admin username. </param>
         /// <param name="vCenterPassword"> vCenter admin password. </param>
-        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vCenterUsername, string vCenterPassword)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vCenterUsername, string vCenterPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NsxtUsername = nsxtUsername;
             NsxtPassword = nsxtPassword;
             VCenterUsername = vCenterUsername;
             VCenterPassword = vCenterPassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> NSX-T Manager username. </summary>

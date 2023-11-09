@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The error code compose of code and message. </summary>
     public partial class AppPlatformErrorInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformErrorInfo"/>. </summary>
         public AppPlatformErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformErrorInfo"/>. </summary>
         /// <param name="code"> The code of error. </param>
         /// <param name="message"> The message of error. </param>
-        internal AppPlatformErrorInfo(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformErrorInfo(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The code of error. </summary>

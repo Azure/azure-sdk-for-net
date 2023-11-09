@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the cache-key query string action. </summary>
     public partial class CacheKeyQueryStringActionProperties
     {
-        /// <summary> Initializes a new instance of CacheKeyQueryStringActionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         public CacheKeyQueryStringActionProperties(CacheKeyQueryStringActionType actionType, QueryStringBehavior queryStringBehavior)
@@ -19,15 +25,22 @@ namespace Azure.ResourceManager.Cdn.Models
             QueryStringBehavior = queryStringBehavior;
         }
 
-        /// <summary> Initializes a new instance of CacheKeyQueryStringActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        internal CacheKeyQueryStringActionProperties(CacheKeyQueryStringActionType actionType, QueryStringBehavior queryStringBehavior, string queryParameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CacheKeyQueryStringActionProperties(CacheKeyQueryStringActionType actionType, QueryStringBehavior queryStringBehavior, string queryParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             QueryStringBehavior = queryStringBehavior;
             QueryParameters = queryParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/> for deserialization. </summary>
+        internal CacheKeyQueryStringActionProperties()
+        {
         }
 
         /// <summary> Gets or sets the action type. </summary>

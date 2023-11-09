@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Advisor.Models;
@@ -14,11 +16,36 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
-    public partial class ResourceRecommendationBaseData : IUtf8JsonSerializable
+    public partial class ResourceRecommendationBaseData : IUtf8JsonSerializable, IJsonModel<ResourceRecommendationBaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceRecommendationBaseData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ResourceRecommendationBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Category))
@@ -210,11 +237,40 @@ namespace Azure.ResourceManager.Advisor
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceRecommendationBaseData DeserializeResourceRecommendationBaseData(JsonElement element)
+        ResourceRecommendationBaseData IJsonModel<ResourceRecommendationBaseData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceRecommendationBaseData(document.RootElement, options);
+        }
+
+        internal static ResourceRecommendationBaseData DeserializeResourceRecommendationBaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -242,6 +298,8 @@ namespace Azure.ResourceManager.Advisor
             Optional<IList<IDictionary<string, BinaryData>>> actions = default;
             Optional<IDictionary<string, BinaryData>> remediation = default;
             Optional<IDictionary<string, BinaryData>> exposedMetadataProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -493,8 +551,38 @@ namespace Azure.ResourceManager.Advisor
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceRecommendationBaseData IModel<ResourceRecommendationBaseData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceRecommendationBaseData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ResourceRecommendationBaseData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }
