@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 #if AZURE_MONITOR_EXPORTER
                     AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
 #elif LIVE_METRICS_EXPORTER
-                LiveMetricsExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
+                    LiveMetricsExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
 #endif
                     return shortVersion.Substring(0, 20);
                 }
