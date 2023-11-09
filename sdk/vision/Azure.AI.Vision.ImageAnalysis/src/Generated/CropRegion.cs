@@ -17,7 +17,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="aspectRatio"> The aspect ratio of the crop region. </param>
         /// <param name="boundingBox"> The bounding box of the crop region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
-        internal CropRegion(float aspectRatio, BoundingBox boundingBox)
+        internal CropRegion(float aspectRatio, ImageBoundingBox boundingBox)
         {
             Argument.AssertNotNull(boundingBox, nameof(boundingBox));
 
@@ -28,6 +28,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> The aspect ratio of the crop region. </summary>
         public float AspectRatio { get; }
         /// <summary> The bounding box of the crop region. </summary>
-        public BoundingBox BoundingBox { get; }
+        public ImageBoundingBox BoundingBox { get; }
     }
 }

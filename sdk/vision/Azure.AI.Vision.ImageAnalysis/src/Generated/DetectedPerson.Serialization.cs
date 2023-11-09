@@ -18,13 +18,13 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            BoundingBox boundingBox = default;
+            ImageBoundingBox boundingBox = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = BoundingBox.DeserializeBoundingBox(property.Value);
+                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

@@ -20,7 +20,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
             float confidence = default;
             string text = default;
-            BoundingBox boundingBox = default;
+            ImageBoundingBox boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidence"u8))
@@ -35,7 +35,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (property.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = BoundingBox.DeserializeBoundingBox(property.Value);
+                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value);
                     continue;
                 }
             }

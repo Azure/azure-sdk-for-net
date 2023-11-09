@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> A JSON document with a URL pointing to the image that is to be analyzed. </summary>
-    public partial class ImageUrl
+    internal partial class ImageUrl
     {
         /// <summary> Initializes a new instance of ImageUrl. </summary>
         /// <param name="url"> Publicly reachable URL of an image. </param>

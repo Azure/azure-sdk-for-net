@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual Task<Response<ImageAnalysisResult>> AnalyzeAsync(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromStreamAsync(imageContent, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
+            => AnalyzeFromStreamAsync(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual Response<ImageAnalysisResult> Analyze(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromStream(imageContent, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
+            => AnalyzeFromStream(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
@@ -55,8 +55,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImageAnalysisResult>> AnalyzeAsync(ImageUrl imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => await AnalyzeFromUrlAsync(imageContent, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<ImageAnalysisResult>> AnalyzeAsync(Uri imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
+            => await AnalyzeFromUrlAsync(visualFeatures, new ImageUrl(imageContent), language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
@@ -68,43 +68,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageAnalysisResult> Analyze(ImageUrl imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromUrl(imageContent, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
-
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BinaryData>> SegmentAsync(SegmentationMode mode, ImageUrl imageContent, CancellationToken cancellationToken = default)
-            => await SegmentFromUrlAsync(mode, imageContent, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BinaryData> Segment(SegmentationMode mode, ImageUrl imageContent, CancellationToken cancellationToken = default)
-            => SegmentFromUrl(mode, imageContent, cancellationToken);
-
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BinaryData>> SegmentAsync(SegmentationMode mode, BinaryData imageContent, CancellationToken cancellationToken = default)
-            => await SegmentFromStreamAsync(mode, imageContent, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BinaryData> Segment(SegmentationMode mode, BinaryData imageContent, CancellationToken cancellationToken = default)
-            => SegmentFromStream(mode, imageContent, cancellationToken);
+        public virtual Response<ImageAnalysisResult> Analyze(Uri imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
+            => AnalyzeFromUrl(visualFeatures, new ImageUrl(imageContent), language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingBox"> Gets a rectangular boundary within which the object was detected. </param>
         /// <param name="tags"> Classification confidences of the detected object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> or <paramref name="tags"/> is null. </exception>
-        internal DetectedObject(BoundingBox boundingBox, IEnumerable<DetectedTag> tags)
+        internal DetectedObject(ImageBoundingBox boundingBox, IEnumerable<DetectedTag> tags)
         {
             Argument.AssertNotNull(boundingBox, nameof(boundingBox));
             Argument.AssertNotNull(tags, nameof(tags));
@@ -31,14 +31,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of DetectedObject. </summary>
         /// <param name="boundingBox"> Gets a rectangular boundary within which the object was detected. </param>
         /// <param name="tags"> Classification confidences of the detected object. </param>
-        internal DetectedObject(BoundingBox boundingBox, IReadOnlyList<DetectedTag> tags)
+        internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<DetectedTag> tags)
         {
             BoundingBox = boundingBox;
             Tags = tags;
         }
 
         /// <summary> Gets a rectangular boundary within which the object was detected. </summary>
-        public BoundingBox BoundingBox { get; }
+        public ImageBoundingBox BoundingBox { get; }
         /// <summary> Classification confidences of the detected object. </summary>
         public IReadOnlyList<DetectedTag> Tags { get; }
     }

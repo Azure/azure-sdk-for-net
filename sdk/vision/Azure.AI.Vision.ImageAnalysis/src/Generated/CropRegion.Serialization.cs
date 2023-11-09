@@ -19,7 +19,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 return null;
             }
             float aspectRatio = default;
-            BoundingBox boundingBox = default;
+            ImageBoundingBox boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aspectRatio"u8))
@@ -29,7 +29,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (property.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = BoundingBox.DeserializeBoundingBox(property.Value);
+                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value);
                     continue;
                 }
             }

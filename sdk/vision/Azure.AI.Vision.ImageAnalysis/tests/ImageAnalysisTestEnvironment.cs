@@ -17,8 +17,8 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
     {
         private static class Constants
         {
-            public const string EndpointVariable = "IMAGEANALYSIS_ENDPOINT";
-            public const string CogServicesVisionKeyVariable = "IMAGEANALYSIS_KEY";
+            public const string EndpointVariable = "VISION_ENDPOINT";
+            public const string CogServicesVisionKeyVariable = "VISION_KEY";
             public const string ImageInputPathVariable = "IMAGEANALYSIS_TEST_IMAGE_INPUT_PATH";
             public const string ImageInputUrlVariable = "IMAGEANALYSIS_TEST_IMAGE_INPUT_URL";
 

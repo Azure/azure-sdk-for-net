@@ -20,7 +20,6 @@ namespace Azure.AI.Vision.ImageAnalysis
                 return null;
             }
             Optional<CaptionResult> captionResult = default;
-            Optional<CustomModelResult> customModelResult = default;
             Optional<DenseCaptionsResult> denseCaptionsResult = default;
             ImageMetadata metadata = default;
             string modelVersion = default;
@@ -38,15 +37,6 @@ namespace Azure.AI.Vision.ImageAnalysis
                         continue;
                     }
                     captionResult = CaptionResult.DeserializeCaptionResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("customModelResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    customModelResult = CustomModelResult.DeserializeCustomModelResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("denseCaptionsResult"u8))
@@ -114,7 +104,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     continue;
                 }
             }
-            return new ImageAnalysisResult(captionResult.Value, customModelResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value);
+            return new ImageAnalysisResult(captionResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

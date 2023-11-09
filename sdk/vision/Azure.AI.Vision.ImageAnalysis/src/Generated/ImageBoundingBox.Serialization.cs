@@ -10,9 +10,9 @@ using Azure;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    public partial class BoundingBox
+    public partial class ImageBoundingBox
     {
-        internal static BoundingBox DeserializeBoundingBox(JsonElement element)
+        internal static ImageBoundingBox DeserializeImageBoundingBox(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -45,15 +45,15 @@ namespace Azure.AI.Vision.ImageAnalysis
                     continue;
                 }
             }
-            return new BoundingBox(x, y, w, h);
+            return new ImageBoundingBox(x, y, w, h);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BoundingBox FromResponse(Response response)
+        internal static ImageBoundingBox FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBoundingBox(document.RootElement);
+            return DeserializeImageBoundingBox(document.RootElement);
         }
     }
 }

@@ -15,20 +15,19 @@ namespace Azure.AI.Vision.ImageAnalysis
     public static partial class AIVisionImageAnalysisModelFactory
     {
         /// <summary> Initializes a new instance of ImageAnalysisResult. </summary>
-        /// <param name="captionResult"> A CaptionResult for the image. </param>
-        /// <param name="customModelResult"> A list of categories for the image. </param>
-        /// <param name="denseCaptionsResult"> A denseCaptionsResult for the image. </param>
+        /// <param name="caption"> A CaptionResult for the image. </param>
+        /// <param name="denseCaptions"> A denseCaptionsResult for the image. </param>
         /// <param name="metadata"> The model used for the analysis. </param>
         /// <param name="modelVersion"> The model used for the analysis. </param>
-        /// <param name="objectsResult"> A list of objects for the image. </param>
-        /// <param name="peopleResult"> A list of people for the image. </param>
-        /// <param name="readResult"> A readResult for the image. </param>
-        /// <param name="smartCropsResult"> A list of regions for the image. </param>
-        /// <param name="tagsResult"> A list of tags for the image. </param>
+        /// <param name="objects"> A list of objects for the image. </param>
+        /// <param name="people"> A list of people for the image. </param>
+        /// <param name="read"> A readResult for the image. </param>
+        /// <param name="smartCrops"> A list of regions for the image. </param>
+        /// <param name="tags"> A list of tags for the image. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImageAnalysisResult"/> instance for mocking. </returns>
-        public static ImageAnalysisResult ImageAnalysisResult(CaptionResult captionResult = null, CustomModelResult customModelResult = null, DenseCaptionsResult denseCaptionsResult = null, ImageMetadata metadata = null, string modelVersion = null, ObjectsResult objectsResult = null, PeopleResult peopleResult = null, ReadResult readResult = null, SmartCropsResult smartCropsResult = null, TagsResult tagsResult = null)
+        public static ImageAnalysisResult ImageAnalysisResult(CaptionResult caption = null, DenseCaptionsResult denseCaptions = null, ImageMetadata metadata = null, string modelVersion = null, ObjectsResult objects = null, PeopleResult people = null, ReadResult read = null, SmartCropsResult smartCrops = null, TagsResult tags = null)
         {
-            return new ImageAnalysisResult(captionResult, customModelResult, denseCaptionsResult, metadata, modelVersion, objectsResult, peopleResult, readResult, smartCropsResult, tagsResult);
+            return new ImageAnalysisResult(caption, denseCaptions, metadata, modelVersion, objects, people, read, smartCrops, tags);
         }
 
         /// <summary> Initializes a new instance of CaptionResult. </summary>
@@ -44,82 +43,6 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
 
             return new CaptionResult(confidence, text);
-        }
-
-        /// <summary> Initializes a new instance of CustomModelResult. </summary>
-        /// <param name="objectsResult"> The list of predicted objects. </param>
-        /// <param name="tagsResult"> The list of predicted tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectsResult"/> or <paramref name="tagsResult"/> is null. </exception>
-        /// <returns> A new <see cref="ImageAnalysis.CustomModelResult"/> instance for mocking. </returns>
-        public static CustomModelResult CustomModelResult(ObjectsResult objectsResult = null, TagsResult tagsResult = null)
-        {
-            if (objectsResult == null)
-            {
-                throw new ArgumentNullException(nameof(objectsResult));
-            }
-            if (tagsResult == null)
-            {
-                throw new ArgumentNullException(nameof(tagsResult));
-            }
-
-            return new CustomModelResult(objectsResult, tagsResult);
-        }
-
-        /// <summary> Initializes a new instance of ObjectsResult. </summary>
-        /// <param name="values"> An array of detected objects. </param>
-        /// <returns> A new <see cref="ImageAnalysis.ObjectsResult"/> instance for mocking. </returns>
-        public static ObjectsResult ObjectsResult(IEnumerable<DetectedObject> values = null)
-        {
-            values ??= new List<DetectedObject>();
-
-            return new ObjectsResult(values?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DetectedObject. </summary>
-        /// <param name="boundingBox"> Gets a rectangular boundary within which the object was detected. </param>
-        /// <param name="tags"> Classification confidences of the detected object. </param>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedObject"/> instance for mocking. </returns>
-        public static DetectedObject DetectedObject(BoundingBox boundingBox = null, IEnumerable<DetectedTag> tags = null)
-        {
-            tags ??= new List<DetectedTag>();
-
-            return new DetectedObject(boundingBox, tags?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of BoundingBox. </summary>
-        /// <param name="x"> X coordinate. </param>
-        /// <param name="y"> Y coordinate. </param>
-        /// <param name="w"> Width of the box. </param>
-        /// <param name="h"> Height of the box. </param>
-        /// <returns> A new <see cref="ImageAnalysis.BoundingBox"/> instance for mocking. </returns>
-        public static BoundingBox BoundingBox(int x = default, int y = default, int w = default, int h = default)
-        {
-            return new BoundingBox(x, y, w, h);
-        }
-
-        /// <summary> Initializes a new instance of DetectedTag. </summary>
-        /// <param name="confidence"> The level of confidence that the entity was observed. </param>
-        /// <param name="name"> Name of the entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <returns> A new <see cref="ImageAnalysis.DetectedTag"/> instance for mocking. </returns>
-        public static DetectedTag DetectedTag(float confidence = default, string name = null)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return new DetectedTag(confidence, name);
-        }
-
-        /// <summary> Initializes a new instance of TagsResult. </summary>
-        /// <param name="values"> A list of tags with confidence level. </param>
-        /// <returns> A new <see cref="ImageAnalysis.TagsResult"/> instance for mocking. </returns>
-        public static TagsResult TagsResult(IEnumerable<DetectedTag> values = null)
-        {
-            values ??= new List<DetectedTag>();
-
-            return new TagsResult(values?.ToList());
         }
 
         /// <summary> Initializes a new instance of DenseCaptionsResult. </summary>
@@ -138,7 +61,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingBox"> The bounding box of the caption. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         /// <returns> A new <see cref="ImageAnalysis.DenseCaption"/> instance for mocking. </returns>
-        public static DenseCaption DenseCaption(float confidence = default, string text = null, BoundingBox boundingBox = null)
+        public static DenseCaption DenseCaption(float confidence = default, string text = null, ImageBoundingBox boundingBox = null)
         {
             if (text == null)
             {
@@ -152,6 +75,17 @@ namespace Azure.AI.Vision.ImageAnalysis
             return new DenseCaption(confidence, text, boundingBox);
         }
 
+        /// <summary> Initializes a new instance of ImageBoundingBox. </summary>
+        /// <param name="x"> X coordinate. </param>
+        /// <param name="y"> Y coordinate. </param>
+        /// <param name="width"> Width of the box. </param>
+        /// <param name="height"> Height of the box. </param>
+        /// <returns> A new <see cref="ImageAnalysis.ImageBoundingBox"/> instance for mocking. </returns>
+        public static ImageBoundingBox ImageBoundingBox(int x = default, int y = default, int width = default, int height = default)
+        {
+            return new ImageBoundingBox(x, y, width, height);
+        }
+
         /// <summary> Initializes a new instance of ImageMetadata. </summary>
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
@@ -159,6 +93,42 @@ namespace Azure.AI.Vision.ImageAnalysis
         public static ImageMetadata ImageMetadata(int height = default, int width = default)
         {
             return new ImageMetadata(height, width);
+        }
+
+        /// <summary> Initializes a new instance of ObjectsResult. </summary>
+        /// <param name="values"> An array of detected objects. </param>
+        /// <returns> A new <see cref="ImageAnalysis.ObjectsResult"/> instance for mocking. </returns>
+        public static ObjectsResult ObjectsResult(IEnumerable<DetectedObject> values = null)
+        {
+            values ??= new List<DetectedObject>();
+
+            return new ObjectsResult(values?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DetectedObject. </summary>
+        /// <param name="boundingBox"> Gets a rectangular boundary within which the object was detected. </param>
+        /// <param name="tags"> Classification confidences of the detected object. </param>
+        /// <returns> A new <see cref="ImageAnalysis.DetectedObject"/> instance for mocking. </returns>
+        public static DetectedObject DetectedObject(ImageBoundingBox boundingBox = null, IEnumerable<DetectedTag> tags = null)
+        {
+            tags ??= new List<DetectedTag>();
+
+            return new DetectedObject(boundingBox, tags?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DetectedTag. </summary>
+        /// <param name="confidence"> The level of confidence that the entity was observed. </param>
+        /// <param name="name"> Name of the entity. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <returns> A new <see cref="ImageAnalysis.DetectedTag"/> instance for mocking. </returns>
+        public static DetectedTag DetectedTag(float confidence = default, string name = null)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return new DetectedTag(confidence, name);
         }
 
         /// <summary> Initializes a new instance of PeopleResult. </summary>
@@ -175,7 +145,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingBox"> Gets a rectangular boundary within which the person was detected. </param>
         /// <param name="confidence"> Gets the confidence value of the detected person. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedPerson"/> instance for mocking. </returns>
-        public static DetectedPerson DetectedPerson(BoundingBox boundingBox = null, float confidence = default)
+        public static DetectedPerson DetectedPerson(ImageBoundingBox boundingBox = null, float confidence = default)
         {
             return new DetectedPerson(boundingBox, confidence);
         }
@@ -275,7 +245,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingBox"> The bounding box of the crop region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         /// <returns> A new <see cref="ImageAnalysis.CropRegion"/> instance for mocking. </returns>
-        public static CropRegion CropRegion(float aspectRatio = default, BoundingBox boundingBox = null)
+        public static CropRegion CropRegion(float aspectRatio = default, ImageBoundingBox boundingBox = null)
         {
             if (boundingBox == null)
             {
@@ -283,6 +253,16 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
 
             return new CropRegion(aspectRatio, boundingBox);
+        }
+
+        /// <summary> Initializes a new instance of TagsResult. </summary>
+        /// <param name="values"> A list of tags with confidence level. </param>
+        /// <returns> A new <see cref="ImageAnalysis.TagsResult"/> instance for mocking. </returns>
+        public static TagsResult TagsResult(IEnumerable<DetectedTag> values = null)
+        {
+            values ??= new List<DetectedTag>();
+
+            return new TagsResult(values?.ToList());
         }
     }
 }

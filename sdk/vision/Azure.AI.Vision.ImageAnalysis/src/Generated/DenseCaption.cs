@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="text"> The text of the caption. </param>
         /// <param name="boundingBox"> The bounding box of the caption. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
-        internal DenseCaption(float confidence, string text, BoundingBox boundingBox)
+        internal DenseCaption(float confidence, string text, ImageBoundingBox boundingBox)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(boundingBox, nameof(boundingBox));
@@ -33,6 +33,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> The text of the caption. </summary>
         public string Text { get; }
         /// <summary> The bounding box of the caption. </summary>
-        public BoundingBox BoundingBox { get; }
+        public ImageBoundingBox BoundingBox { get; }
     }
 }

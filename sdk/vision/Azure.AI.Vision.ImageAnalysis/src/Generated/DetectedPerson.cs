@@ -18,14 +18,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of DetectedPerson. </summary>
         /// <param name="boundingBox"> Gets a rectangular boundary within which the person was detected. </param>
         /// <param name="confidence"> Gets the confidence value of the detected person. </param>
-        internal DetectedPerson(BoundingBox boundingBox, float confidence)
+        internal DetectedPerson(ImageBoundingBox boundingBox, float confidence)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;
         }
 
         /// <summary> Gets a rectangular boundary within which the person was detected. </summary>
-        public BoundingBox BoundingBox { get; }
+        public ImageBoundingBox BoundingBox { get; }
         /// <summary> Gets the confidence value of the detected person. </summary>
         public float Confidence { get; }
     }

@@ -27,49 +27,45 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of ImageAnalysisResult. </summary>
-        /// <param name="captionResult"> A CaptionResult for the image. </param>
-        /// <param name="customModelResult"> A list of categories for the image. </param>
-        /// <param name="denseCaptionsResult"> A denseCaptionsResult for the image. </param>
+        /// <param name="caption"> A CaptionResult for the image. </param>
+        /// <param name="denseCaptions"> A denseCaptionsResult for the image. </param>
         /// <param name="metadata"> The model used for the analysis. </param>
         /// <param name="modelVersion"> The model used for the analysis. </param>
-        /// <param name="objectsResult"> A list of objects for the image. </param>
-        /// <param name="peopleResult"> A list of people for the image. </param>
-        /// <param name="readResult"> A readResult for the image. </param>
-        /// <param name="smartCropsResult"> A list of regions for the image. </param>
-        /// <param name="tagsResult"> A list of tags for the image. </param>
-        internal ImageAnalysisResult(CaptionResult captionResult, CustomModelResult customModelResult, DenseCaptionsResult denseCaptionsResult, ImageMetadata metadata, string modelVersion, ObjectsResult objectsResult, PeopleResult peopleResult, ReadResult readResult, SmartCropsResult smartCropsResult, TagsResult tagsResult)
+        /// <param name="objects"> A list of objects for the image. </param>
+        /// <param name="people"> A list of people for the image. </param>
+        /// <param name="read"> A readResult for the image. </param>
+        /// <param name="smartCrops"> A list of regions for the image. </param>
+        /// <param name="tags"> A list of tags for the image. </param>
+        internal ImageAnalysisResult(CaptionResult caption, DenseCaptionsResult denseCaptions, ImageMetadata metadata, string modelVersion, ObjectsResult objects, PeopleResult people, ReadResult read, SmartCropsResult smartCrops, TagsResult tags)
         {
-            CaptionResult = captionResult;
-            CustomModelResult = customModelResult;
-            DenseCaptionsResult = denseCaptionsResult;
+            Caption = caption;
+            DenseCaptions = denseCaptions;
             Metadata = metadata;
             ModelVersion = modelVersion;
-            ObjectsResult = objectsResult;
-            PeopleResult = peopleResult;
-            ReadResult = readResult;
-            SmartCropsResult = smartCropsResult;
-            TagsResult = tagsResult;
+            Objects = objects;
+            People = people;
+            Read = read;
+            SmartCrops = smartCrops;
+            Tags = tags;
         }
 
         /// <summary> A CaptionResult for the image. </summary>
-        public CaptionResult CaptionResult { get; }
-        /// <summary> A list of categories for the image. </summary>
-        public CustomModelResult CustomModelResult { get; }
+        public CaptionResult Caption { get; }
         /// <summary> A denseCaptionsResult for the image. </summary>
-        public DenseCaptionsResult DenseCaptionsResult { get; }
+        public DenseCaptionsResult DenseCaptions { get; }
         /// <summary> The model used for the analysis. </summary>
         public ImageMetadata Metadata { get; }
         /// <summary> The model used for the analysis. </summary>
         public string ModelVersion { get; }
         /// <summary> A list of objects for the image. </summary>
-        public ObjectsResult ObjectsResult { get; }
+        public ObjectsResult Objects { get; }
         /// <summary> A list of people for the image. </summary>
-        public PeopleResult PeopleResult { get; }
+        public PeopleResult People { get; }
         /// <summary> A readResult for the image. </summary>
-        public ReadResult ReadResult { get; }
+        public ReadResult Read { get; }
         /// <summary> A list of regions for the image. </summary>
-        public SmartCropsResult SmartCropsResult { get; }
+        public SmartCropsResult SmartCrops { get; }
         /// <summary> A list of tags for the image. </summary>
-        public TagsResult TagsResult { get; }
+        public TagsResult Tags { get; }
     }
 }

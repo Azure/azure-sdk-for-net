@@ -69,38 +69,50 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromStreamAsync(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromStreamAsync(IEnumerable<VisualFeatures> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeFromStreamAsync(RequestContentHelper.FromObject(imageContent), visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromObject(imageContent);
+            Response response = await AnalyzeFromStreamAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromStream(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromStream(IEnumerable<VisualFeatures> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeFromStream(RequestContentHelper.FromObject(imageContent), visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context);
+            using RequestContent content = RequestContentHelper.FromObject(imageContent);
+            Response response = AnalyzeFromStream(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
@@ -114,30 +126,35 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromStreamAsync(BinaryData,IEnumerable{VisualFeatures},string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromStreamAsync(IEnumerable{VisualFeatures},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromStreamAsync(RequestContent content, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, RequestContext context = null)
+        internal virtual async Task<Response> AnalyzeFromStreamAsync(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromStream");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromStreamRequest(content, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context);
+                using HttpMessage message = CreateAnalyzeFromStreamRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -157,30 +174,35 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromStream(BinaryData,IEnumerable{VisualFeatures},string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromStream(IEnumerable{VisualFeatures},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromStream(RequestContent content, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, RequestContext context = null)
+        internal virtual Response AnalyzeFromStream(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromStream");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromStreamRequest(content, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context);
+                using HttpMessage message = CreateAnalyzeFromStreamRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -191,38 +213,50 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(ImageUrl imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeatures> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeFromUrlAsync(imageContent.ToRequestContent(), visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context).ConfigureAwait(false);
+            using RequestContent content = imageContent.ToRequestContent();
+            Response response = await AnalyzeFromUrlAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
         /// <summary> Performs a single Image Analysis operation. </summary>
-        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(ImageUrl imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeatures> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeFromUrl(imageContent.ToRequestContent(), visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context);
+            using RequestContent content = imageContent.ToRequestContent();
+            Response response = AnalyzeFromUrl(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
@@ -236,30 +270,35 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromUrlAsync(ImageUrl,IEnumerable{VisualFeatures},string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromUrlAsync(IEnumerable{VisualFeatures},ImageUrl,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromUrlAsync(RequestContent content, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, RequestContext context = null)
+        internal virtual async Task<Response> AnalyzeFromUrlAsync(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromUrlRequest(content, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context);
+                using HttpMessage message = CreateAnalyzeFromUrlRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -279,30 +318,35 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromUrl(ImageUrl,IEnumerable{VisualFeatures},string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromUrl(IEnumerable{VisualFeatures},ImageUrl,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
         /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
         /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="modelVersion">
+        /// The version of cloud AI-model used for analysis.
+        /// The format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where `YYYY`, `MM`, `DD` are the year, month and day.
+        /// Only relevant when doing analysis with standard models. Not relevant when doing analysis with a custom-trained AI model.
+        /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromUrl(RequestContent content, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, RequestContext context = null)
+        internal virtual Response AnalyzeFromUrl(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromUrlRequest(content, visualFeatures, language, genderNeutralCaption, smartCropsAspectRatios, modelName, context);
+                using HttpMessage message = CreateAnalyzeFromUrlRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -312,223 +356,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
         }
 
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<BinaryData>> SegmentFromUrlAsync(SegmentationMode mode, ImageUrl imageContent, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SegmentFromUrlAsync(mode.ToString(), imageContent.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<BinaryData> SegmentFromUrl(SegmentationMode mode, ImageUrl imageContent, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = SegmentFromUrl(mode.ToString(), imageContent.ToRequestContent(), context);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SegmentFromUrlAsync(SegmentationMode,ImageUrl,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="mode"> The type of segmentation to perform. Allowed values: "backgroundRemoval" | "foregroundMatting". </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SegmentFromUrlAsync(string mode, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(mode, nameof(mode));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.SegmentFromUrl");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSegmentFromUrlRequest(mode, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SegmentFromUrl(SegmentationMode,ImageUrl,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="mode"> The type of segmentation to perform. Allowed values: "backgroundRemoval" | "foregroundMatting". </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response SegmentFromUrl(string mode, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(mode, nameof(mode));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.SegmentFromUrl");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSegmentFromUrlRequest(mode, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<BinaryData>> SegmentFromStreamAsync(SegmentationMode mode, BinaryData imageContent, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SegmentFromStreamAsync(mode.ToString(), RequestContentHelper.FromObject(imageContent), context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval. </summary>
-        /// <param name="mode"> The type of segmentation to perform. </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<BinaryData> SegmentFromStream(SegmentationMode mode, BinaryData imageContent, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageContent, nameof(imageContent));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = SegmentFromStream(mode.ToString(), RequestContentHelper.FromObject(imageContent), context);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SegmentFromStreamAsync(SegmentationMode,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="mode"> The type of segmentation to perform. Allowed values: "backgroundRemoval" | "foregroundMatting". </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SegmentFromStreamAsync(string mode, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(mode, nameof(mode));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.SegmentFromStream");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSegmentFromStreamRequest(mode, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Segment the input image. An image stream of content type 'image/png' is returned, where the pixel values depend on the analysis mode. The returned image has the same dimensions as the input image for modes: foregroundMatting. The returned image has the same aspect ratio and same dimensions as the input image up to a limit of 16 megapixels for modes: backgroundRemoval.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SegmentFromStream(SegmentationMode,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="mode"> The type of segmentation to perform. Allowed values: "backgroundRemoval" | "foregroundMatting". </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response SegmentFromStream(string mode, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(mode, nameof(mode));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.SegmentFromStream");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSegmentFromStreamRequest(mode, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateAnalyzeFromStreamRequest(RequestContent content, IEnumerable<VisualFeatures> visualFeatures, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelName, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromStreamRequest(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -537,11 +365,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
@@ -554,9 +382,9 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
             }
-            if (modelName != null)
+            if (modelVersion != null)
             {
-                uri.AppendQuery("model-name", modelName, true);
+                uri.AppendQuery("model-version", modelVersion, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -565,7 +393,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeFromUrlRequest(RequestContent content, IEnumerable<VisualFeatures> visualFeatures, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelName, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromUrlRequest(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -574,11 +402,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
@@ -591,49 +419,13 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
             }
-            if (modelName != null)
+            if (modelVersion != null)
             {
-                uri.AppendQuery("model-name", modelName, true);
+                uri.AppendQuery("model-version", modelVersion, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("content-type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateSegmentFromUrlRequest(string mode, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/computervision", false);
-            uri.AppendPath("/imageanalysis:segment", false);
-            uri.AppendQuery("mode", mode, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateSegmentFromStreamRequest(string mode, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/computervision", false);
-            uri.AppendPath("/imageanalysis:segment", false);
-            uri.AppendQuery("mode", mode, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/octet-stream");
             request.Content = content;
             return message;
         }

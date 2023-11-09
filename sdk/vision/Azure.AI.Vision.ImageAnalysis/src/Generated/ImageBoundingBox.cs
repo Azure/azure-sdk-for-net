@@ -7,20 +7,20 @@
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> A basic rectangle. </summary>
-    public partial class BoundingBox
+    /// <summary> A basic rectangle specifying a sub-region of the image. </summary>
+    public partial class ImageBoundingBox
     {
-        /// <summary> Initializes a new instance of BoundingBox. </summary>
+        /// <summary> Initializes a new instance of ImageBoundingBox. </summary>
         /// <param name="x"> X coordinate. </param>
         /// <param name="y"> Y coordinate. </param>
-        /// <param name="w"> Width of the box. </param>
-        /// <param name="h"> Height of the box. </param>
-        internal BoundingBox(int x, int y, int w, int h)
+        /// <param name="width"> Width of the box. </param>
+        /// <param name="height"> Height of the box. </param>
+        internal ImageBoundingBox(int x, int y, int width, int height)
         {
             X = x;
             Y = y;
-            W = w;
-            H = h;
+            Width = width;
+            Height = height;
         }
 
         /// <summary> X coordinate. </summary>
@@ -28,8 +28,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Y coordinate. </summary>
         public int Y { get; }
         /// <summary> Width of the box. </summary>
-        public int W { get; }
+        public int Width { get; }
         /// <summary> Height of the box. </summary>
-        public int H { get; }
+        public int Height { get; }
     }
 }
