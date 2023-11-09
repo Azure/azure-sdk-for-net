@@ -90,8 +90,12 @@ namespace Azure.Storage.DataMovement
             && InitialTransferSize == obj?.InitialTransferSize;
 
         /// <summary>
-        /// Optional <see cref="StorageResourceCreationPreference"/> to configure overwrite
-        /// behavior. Will default to <see cref="StorageResourceCreationPreference.OverwriteIfExists"/>.
+        /// Configures the behavior when a transfer encounters a resource that
+        /// already exists.
+        /// <para/>
+        /// Will default to <see cref="StorageResourceCreationPreference.Default"/>
+        /// which will be <see cref="StorageResourceCreationPreference.FailIfExists"/> when
+        /// starting a new transfer and the value used to start a transfer when resuming a transfer.
         /// </summary>
         public StorageResourceCreationPreference CreationPreference { get; set; }
 

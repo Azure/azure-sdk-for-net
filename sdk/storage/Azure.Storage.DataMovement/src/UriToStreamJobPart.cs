@@ -63,8 +63,8 @@ namespace Azure.Storage.DataMovement
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
-                  transferChunkSize: job._maximumTransferChunkSize,
-                  initialTransferSize: job._initialTransferSize,
+                  transferChunkSize: transferChunkSize ?? job._maximumTransferChunkSize,
+                  initialTransferSize: initialTransferSize ?? job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
@@ -80,17 +80,6 @@ namespace Azure.Storage.DataMovement
                   jobPartStatus: jobPartStatus,
                   length: length)
         {
-            // If transfer sizes null at the job level (from options bag) then
-            // override the default with the provided values if present.
-            // Else, they were set correctly by the base constructor.
-            if (!job._maximumTransferChunkSize.HasValue && transferChunkSize.HasValue)
-            {
-                _transferChunkSize = transferChunkSize.Value;
-            }
-            if (!job._initialTransferSize.HasValue && initialTransferSize.HasValue)
-            {
-                _initialTransferSize = initialTransferSize.Value;
-            }
         }
 
         public async ValueTask DisposeAsync()

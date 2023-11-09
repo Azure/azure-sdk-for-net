@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
@@ -28,15 +27,18 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+
             StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -53,15 +55,18 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+
             ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -78,15 +83,18 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+
             UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -107,15 +115,18 @@ namespace Azure.Storage.DataMovement
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+
             StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -134,15 +145,18 @@ namespace Azure.Storage.DataMovement
 
             string childSourcePath = header.SourcePath;
             string childDestinationPath = header.DestinationPath;
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+
             ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -164,15 +178,18 @@ namespace Azure.Storage.DataMovement
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+
             UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
