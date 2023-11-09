@@ -99,7 +99,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 foreach (string directoryName in pathSegments.Take(pathSegments.Length - 1))
                 {
-                    currRelPath = string.Join("/", currRelPath, directoryName).Trim('/');
+                    currRelPath = string.Join(Path.DirectorySeparatorChar.ToString(), currRelPath, directoryName).Trim('/');
                     string currAbsPath = Path.Combine(directoryPath, currRelPath);
                     if (!Directory.Exists(currAbsPath))
                     {
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                 }
 
-                currRelPath = string.Join("/", currRelPath, pathSegments.Last()).Trim('/');
+                currRelPath = string.Join(Path.DirectorySeparatorChar.ToString(), currRelPath, pathSegments.Last()).Trim('/');
                 if (size < 0)
                 {
                     Directory.CreateDirectory(Path.Combine(directoryPath, currRelPath));
@@ -467,7 +467,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<string> files = new()
             {
-                string.Join("/", Enumerable.Range(0, folderDepth).Select(_ => GetNewObjectName()).ToList())
+                string.Join(Path.DirectorySeparatorChar.ToString(), Enumerable.Range(0, folderDepth).Select(_ => GetNewObjectName()).ToList())
             };
 
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
