@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IJsonModel<ProviderExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderExtendedLocation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderExtendedLocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,25 +98,25 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public Optional<IReadOnlyList<string>> ExtendedLocations { get; set; }
         }
 
-        ProviderExtendedLocation IJsonModel<ProviderExtendedLocation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderExtendedLocation IJsonModel<ProviderExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        ProviderExtendedLocation IModel<ProviderExtendedLocation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ProviderExtendedLocation IPersistableModel<ProviderExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        BinaryData IModel<ProviderExtendedLocation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderExtendedLocation>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IPersistableModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,7 +8,7 @@ namespace System.Net.ClientModel.Core
     /// The format is determined by the implementer.
     /// </summary>
     /// <typeparam name="T">The type the model can be converted into.</typeparam>
-    public interface IModel<out T>
+    public interface IPersistableModel<out T>
     {
         /// <summary>
         /// Writes the model into a <see cref="BinaryData"/>.
@@ -25,13 +25,13 @@ namespace System.Net.ClientModel.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the data.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
-        T Read(BinaryData data, ModelReaderWriterOptions options);
+        T Create(BinaryData data, ModelReaderWriterOptions options);
 
         /// <summary>
-        /// Gets the data interchange format (JSON, Xml, etc) that the model uses for its wire format.
+        /// Gets the data interchange format (JSON, Xml, etc) that the model uses when communicating with the service.
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// </summary>
-        /// <returns>The <see cref="ModelReaderWriterFormat"/> that the model uses for its wire format.</returns>
-        ModelReaderWriterFormat GetWireFormat(ModelReaderWriterOptions options);
+        /// <returns>The format that the model uses when communicating with the serivce.</returns>
+        string GetWireFormat(ModelReaderWriterOptions options);
     }
 }

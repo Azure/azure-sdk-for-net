@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             public OptionalProperty<long> Capacity { get; set; }
         }
 
-        ComputeSku IJsonModel<ComputeSku>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeSku IJsonModel<ComputeSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeSku(doc.RootElement, options);
@@ -110,19 +110,19 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             reader.Skip();
         }
 
-        ComputeSku IModel<ComputeSku>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ComputeSku IPersistableModel<ComputeSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeComputeSku(doc.RootElement, options);
         }
 
-        BinaryData IModel<ComputeSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeSku>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IPersistableModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

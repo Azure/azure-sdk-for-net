@@ -31,7 +31,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
             _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
             _model = ModelReaderWriter.Read<T>(_data);
-            _options = ModelReaderWriterOptions.DefaultWireOptions;
+            _options = ModelReaderWriterOptions.Wire;
             _jsonSerializerResult = BinaryData.FromString(JsonSerializer.Serialize(_model));
         }
 
@@ -58,7 +58,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public string Write_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterFormat.Wire));
+            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterOptions.Wire));
             return JsonSerializer.Serialize(_model, options);
         }
 
@@ -119,7 +119,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public T Read_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterFormat.Wire));
+            options.Converters.Add(new ModelJsonConverter(ModelReaderWriterOptions.Wire));
             return JsonSerializer.Deserialize<T>(_json, options);
         }
 
@@ -141,7 +141,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         [BenchmarkCategory("PublicInterface")]
         public T Read_PublicInterfaceFromBinaryData()
         {
-            return _model.Read(_data, _options);
+            return _model.Create(_data, _options);
         }
 
         [Benchmark]
@@ -149,7 +149,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public T Read_Utf8JsonReaderFromBinaryData()
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
-            return _model.Read(ref reader, _options);
+            return _model.Create(ref reader, _options);
         }
     }
 }

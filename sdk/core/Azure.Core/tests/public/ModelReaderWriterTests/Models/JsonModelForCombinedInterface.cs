@@ -43,11 +43,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonModelForCombinedInterface>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonModelForCombinedInterface>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                     readOnlyProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -89,12 +89,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -110,24 +110,24 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        JsonModelForCombinedInterface IModel<JsonModelForCombinedInterface>.Read(BinaryData data, ModelReaderWriterOptions options)
+        JsonModelForCombinedInterface IPersistableModel<JsonModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeJsonModelForCombinedInterface(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        JsonModelForCombinedInterface IJsonModel<JsonModelForCombinedInterface>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        JsonModelForCombinedInterface IJsonModel<JsonModelForCombinedInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
         }
 
-        BinaryData IModel<JsonModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<JsonModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<JsonModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IPersistableModel<JsonModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

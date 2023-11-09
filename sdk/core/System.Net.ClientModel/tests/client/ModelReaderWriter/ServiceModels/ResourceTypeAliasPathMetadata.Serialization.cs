@@ -14,7 +14,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ResourceTypeAliasPathMetadata DeserializeResourceTypeAliasPathMetadata(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,7 +70,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<ResourceTypeAliasPathAttributes> Attributes { get; set; }
         }
 
-        ResourceTypeAliasPathMetadata IJsonModel<ResourceTypeAliasPathMetadata>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeAliasPathMetadata IJsonModel<ResourceTypeAliasPathMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);
@@ -95,19 +95,19 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        ResourceTypeAliasPathMetadata IModel<ResourceTypeAliasPathMetadata>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ResourceTypeAliasPathMetadata IPersistableModel<ResourceTypeAliasPathMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);
         }
 
-        BinaryData IModel<ResourceTypeAliasPathMetadata>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResourceTypeAliasPathMetadata>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ResourceTypeAliasPathMetadata>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IPersistableModel<ResourceTypeAliasPathMetadata>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

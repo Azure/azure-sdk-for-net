@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Net.ClientModel;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
 using NUnit.Framework;
 
@@ -21,7 +20,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override string WirePayload => "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"extra\":\"stuff\"}";
 
-        protected override void CompareModels(BaseModel model, BaseModel model2, ModelReaderWriterFormat format)
+        protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {
             Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
             Assert.AreEqual("UnknownBaseModel", model2.GetType().Name);
@@ -31,7 +30,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             var rawData2 = GetRawData(model2);
             Assert.IsNotNull(rawData);
             Assert.IsNotNull(rawData2);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 Assert.AreEqual(rawData.Count, rawData2.Count);
                 Assert.AreEqual(rawData["zProperty"].ToObjectFromJson<double>(), rawData2["zProperty"].ToObjectFromJson<double>());
@@ -39,23 +38,23 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             }
         }
 
-        protected override string GetExpectedResult(ModelReaderWriterFormat format)
+        protected override string GetExpectedResult(string format)
         {
             string expected = "{\"kind\":\"Z\",\"name\":\"zmodel\"";
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
                 expected += ",\"zProperty\":1.5,\"extra\":\"stuff\"";
             expected += "}";
             return expected;
         }
 
-        protected override void VerifyModel(BaseModel model, ModelReaderWriterFormat format)
+        protected override void VerifyModel(BaseModel model, string format)
         {
             Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
             Assert.AreEqual("Z", model.Kind);
             Assert.AreEqual("zmodel", model.Name);
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
-            if (format == ModelReaderWriterFormat.Json)
+            if (format == "J")
             {
                 Assert.AreEqual(1.5, rawData["zProperty"].ToObjectFromJson<double>());
                 Assert.AreEqual("stuff", rawData["extra"].ToObjectFromJson<string>());

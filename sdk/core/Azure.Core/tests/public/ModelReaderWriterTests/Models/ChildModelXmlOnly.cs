@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 {
     [XmlRoot("ChildTag")]
-    public class ChildModelXmlOnly : IXmlSerializable, IModel<ChildModelXmlOnly>
+    public class ChildModelXmlOnly : IXmlSerializable, IPersistableModel<ChildModelXmlOnly>
     {
         internal ChildModelXmlOnly() { }
 
@@ -35,18 +35,18 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
-            if (options.Format != ModelReaderWriterFormat.Wire)
+            if (options.Format != "W")
                 throw new NotSupportedException($"{nameof(ChildModelXmlOnly)} does not support '{options.Format}' format");
 
             writer.WriteStartElement(nameHint ?? "ChildTag");
             writer.WriteStartElement("ChildValue");
             writer.WriteValue(ChildValue);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "X")
             {
                 writer.WriteStartElement("ChildReadOnlyProperty");
                 writer.WriteValue(ChildReadOnlyProperty);
@@ -57,9 +57,9 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static ChildModelXmlOnly DeserializeChildModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
-            if (options.Format != ModelReaderWriterFormat.Wire)
+            if (options.Format != "W")
                 throw new NotSupportedException($"{nameof(ChildModelXmlOnly)} does not support '{options.Format}' format");
 
             string value = default;
@@ -75,12 +75,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new ChildModelXmlOnly(value, readonlyProperty);
         }
 
-        ChildModelXmlOnly IModel<ChildModelXmlOnly>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ChildModelXmlOnly IPersistableModel<ChildModelXmlOnly>.Create(BinaryData data, ModelReaderWriterOptions options)
             => DeserializeChildModelXmlOnly(XElement.Load(data.ToStream()), options);
 
-        BinaryData IModel<ChildModelXmlOnly>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChildModelXmlOnly>.Write(ModelReaderWriterOptions options)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream);
             Serialize(writer, options, null);
@@ -95,6 +95,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
         }
 
-        ModelReaderWriterFormat IModel<ChildModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        string IPersistableModel<ChildModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

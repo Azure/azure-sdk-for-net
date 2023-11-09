@@ -5,7 +5,7 @@ using System.Net.ClientModel.Core;
 
 namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    [ModelReaderProxy(typeof(ModelX))]
+    [PersistableModelProxy(typeof(ModelX))]
     public class ModelXDeserializationProxy
     {
     }

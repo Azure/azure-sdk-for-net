@@ -35,14 +35,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DogListProperty>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DogListProperty>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<DogListProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -65,7 +65,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 writer.WriteEndArray();
             }
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             double weight = default;
             string name = "";
@@ -122,7 +122,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                     }
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -152,27 +152,27 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                return modelConverter is not null ? modelConverter.ModelReaderWriterOptions : ModelReaderWriterOptions.DefaultWireOptions;
+                return modelConverter is not null ? modelConverter.Options : ModelReaderWriterOptions.Wire;
             }
         }
-        DogListProperty IModel<DogListProperty>.Read(BinaryData data, ModelReaderWriterOptions options)
+        DogListProperty IPersistableModel<DogListProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeDogListProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        DogListProperty IJsonModel<DogListProperty>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DogListProperty IJsonModel<DogListProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeDogListProperty(doc.RootElement, options);
         }
 
-        BinaryData IModel<DogListProperty>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DogListProperty>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<DogListProperty>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IPersistableModel<DogListProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

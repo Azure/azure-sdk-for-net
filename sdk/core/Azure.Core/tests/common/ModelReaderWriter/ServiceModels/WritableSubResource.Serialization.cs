@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
     [JsonConverter(typeof(WritableSubResourceConverter))]
     public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModel<WritableSubResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WritableSubResource>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WritableSubResource>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<WritableSubResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public ResourceIdentifier Id { get; set; }
         }
 
-        WritableSubResource IJsonModel<WritableSubResource>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WritableSubResource IJsonModel<WritableSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeWritableSubResource(doc.RootElement, options);
@@ -88,7 +88,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        WritableSubResource IModel<WritableSubResource>.Read(BinaryData data, ModelReaderWriterOptions options)
+        WritableSubResource IPersistableModel<WritableSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeWritableSubResource(doc.RootElement, options);
@@ -103,17 +103,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.Wire);
             }
         }
 
-        BinaryData IModel<WritableSubResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WritableSubResource>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IPersistableModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

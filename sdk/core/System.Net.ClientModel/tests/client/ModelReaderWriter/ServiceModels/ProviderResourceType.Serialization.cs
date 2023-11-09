@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -258,25 +258,25 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<IReadOnlyDictionary<string, string>> Properties { get; set; }
         }
 
-        ProviderResourceType IJsonModel<ProviderResourceType>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderResourceType IJsonModel<ProviderResourceType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        ProviderResourceType IModel<ProviderResourceType>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ProviderResourceType IPersistableModel<ProviderResourceType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        BinaryData IModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ProviderResourceType>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IPersistableModel<ProviderResourceType>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

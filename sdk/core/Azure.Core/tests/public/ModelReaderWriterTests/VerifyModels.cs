@@ -18,12 +18,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         private static void VerifyProperties(Animal x, Animal y, ModelReaderWriterOptions options)
         {
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
                 Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
             Assert.That(x.Name, Is.EqualTo(y.Name));
             Assert.That(x.Weight, Is.EqualTo(y.Weight));
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 var additionalPropertiesX = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
                 var additionalPropertiesY = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;
