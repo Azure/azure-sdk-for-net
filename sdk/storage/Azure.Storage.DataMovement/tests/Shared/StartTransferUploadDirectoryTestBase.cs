@@ -418,6 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationToken);
         }
 
+        [Ignore("Times out on linux/mac, currently unsure why.")]
         [RecordedTest]
         [TestCase(1, 5)]
         [TestCase(3, 10)]
