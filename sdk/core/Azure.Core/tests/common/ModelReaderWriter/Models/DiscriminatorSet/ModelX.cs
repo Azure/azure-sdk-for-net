@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(modelX, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelX(Response response)
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         void IJsonModel<ModelX>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

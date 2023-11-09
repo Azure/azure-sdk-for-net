@@ -53,14 +53,14 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelXml(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
         }
 
         public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);

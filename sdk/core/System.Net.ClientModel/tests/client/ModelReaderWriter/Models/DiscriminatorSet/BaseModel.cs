@@ -20,7 +20,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestBodyContent.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBodyContent.Create(baseModel, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator BaseModel(Result result)
@@ -28,7 +28,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             ClientUtilities.AssertNotNull(result, nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         protected internal BaseModel(Dictionary<string, BinaryData> rawData)

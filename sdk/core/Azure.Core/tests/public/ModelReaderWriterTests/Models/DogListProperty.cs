@@ -38,12 +38,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public static explicit operator DogListProperty(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDogListProperty(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeDogListProperty(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         public static implicit operator RequestContent(DogListProperty dog)
         {
-            return RequestContent.Create(dog, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(dog, ModelReaderWriterOptions.Wire);
         }
 
         #region Serialization

@@ -55,11 +55,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write(model, options.Format);
+            return ModelReaderWriter.Write(model, options);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options.Format) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }
 

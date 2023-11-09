@@ -63,7 +63,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static implicit operator RequestBodyContent(ModelAsStruct model)
         {
-            return RequestBodyContent.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBodyContent.Create(model, ModelReaderWriterOptions.Wire);
         }
 
         ModelAsStruct IModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             ClientUtilities.AssertNotNull(result, nameof(result));
 
             using JsonDocument doc = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);

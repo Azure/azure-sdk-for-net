@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(envelope, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(envelope, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator Envelope<T>(Response response)
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeEnvelope(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeEnvelope(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         #region Serialization

@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static implicit operator RequestContent(ModelAsStruct model)
         {
-            return RequestContent.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(model, ModelReaderWriterOptions.Wire);
         }
 
         ModelAsStruct IModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);

@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create(baseModel, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator BaseModel(Response response)
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         protected internal BaseModel(Dictionary<string, BinaryData> rawData)

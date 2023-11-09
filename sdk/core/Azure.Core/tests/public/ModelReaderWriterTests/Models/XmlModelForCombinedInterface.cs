@@ -50,22 +50,22 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create((IModel<XmlModelForCombinedInterface>)xmlModelForCombinedInterface, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContent.Create((IModel<XmlModelForCombinedInterface>)xmlModelForCombinedInterface, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator XmlModelForCombinedInterface(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelReaderWriterOptions.DefaultWireOptions);
+            return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
         }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
