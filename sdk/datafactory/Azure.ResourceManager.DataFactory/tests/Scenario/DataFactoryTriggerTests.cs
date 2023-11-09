@@ -445,8 +445,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await state1.Value.StartAsync(WaitUntil.Completed);
             DataFactoryTriggerData data = new DataFactoryTriggerData(new RerunTumblingWindowTrigger(
                 BinaryData.FromString($"{{\"type\": \"TriggerReference\",\"referenceName\": \"{referenceTriggerName}\"}}"),
-                DateTimeOffset.Parse("11-01-2023 00:00:00"),
-                DateTimeOffset.Parse("11-02-2023 12:00:00"), 50));
+                DateTimeOffset.Parse("2023-11-01T00:00:00.0000000Z"),
+                DateTimeOffset.Parse("2023-11-02T12:00:00.0000000Z"), 50));
             var result = await _dataFactory.GetDataFactoryTriggers().CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
         }
 
