@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
         }
 
-        ResourceProviderData IModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ResourceProviderData IPersistableModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -162,13 +162,13 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        BinaryData IModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

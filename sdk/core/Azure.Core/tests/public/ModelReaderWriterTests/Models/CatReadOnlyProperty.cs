@@ -116,7 +116,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new CatReadOnlyProperty(weight, latinName, name, isHungry, hasWhiskers, rawData);
         }
 
-        CatReadOnlyProperty IModel<CatReadOnlyProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CatReadOnlyProperty IPersistableModel<CatReadOnlyProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeCatReadOnlyProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
@@ -127,14 +127,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeCatReadOnlyProperty(doc.RootElement, options);
         }
 
-        BinaryData IModel<CatReadOnlyProperty>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CatReadOnlyProperty>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<CatReadOnlyProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CatReadOnlyProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         #endregion
     }

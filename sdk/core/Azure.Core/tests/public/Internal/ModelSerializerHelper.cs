@@ -11,7 +11,7 @@ namespace Azure.Core.Tests.Public
     internal static class ModelSerializerHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ValidateFormat<T>(IModel<T> model, string format)
+        public static void ValidateFormat<T>(IPersistableModel<T> model, string format)
         {
             bool implementsJson = model is IJsonModel<T>;
             bool isValid = (format == "J" && implementsJson) || format == "W";
@@ -22,6 +22,6 @@ namespace Azure.Core.Tests.Public
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ValidateFormat(IModel<object> model, string format) => ValidateFormat<object>(model, format);
+        public static void ValidateFormat(IPersistableModel<object> model, string format) => ValidateFormat<object>(model, format);
     }
 }

@@ -155,7 +155,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return modelConverter is not null ? modelConverter.Options : ModelReaderWriterOptions.Wire;
             }
         }
-        DogListProperty IModel<DogListProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DogListProperty IPersistableModel<DogListProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeDogListProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
@@ -166,13 +166,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeDogListProperty(doc.RootElement, options);
         }
 
-        BinaryData IModel<DogListProperty>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DogListProperty>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<DogListProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DogListProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

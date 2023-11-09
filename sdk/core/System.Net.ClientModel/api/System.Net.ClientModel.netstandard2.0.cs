@@ -3,9 +3,9 @@ namespace System.Net.ClientModel
     public static partial class ModelReaderWriter
     {
         public static object? Read(System.BinaryData data, System.Type returnType, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static T? Read<T>(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions? options = null) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
+        public static T? Read<T>(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions? options = null) where T : System.Net.ClientModel.Core.IPersistableModel<T> { throw null; }
         public static System.BinaryData Write(object model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static System.BinaryData Write<T>(T model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
+        public static System.BinaryData Write<T>(T model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) where T : System.Net.ClientModel.Core.IPersistableModel<T> { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {
@@ -18,12 +18,12 @@ namespace System.Net.ClientModel
 }
 namespace System.Net.ClientModel.Core
 {
-    public partial interface IJsonModel<out T> : System.Net.ClientModel.Core.IModel<T>
+    public partial interface IJsonModel<out T> : System.Net.ClientModel.Core.IPersistableModel<T>
     {
         T Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options);
         void Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options);
     }
-    public partial interface IModel<out T>
+    public partial interface IPersistableModel<out T>
     {
         T Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options);
         string GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options);
@@ -39,9 +39,9 @@ namespace System.Net.ClientModel.Core
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.Core.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
-    public sealed partial class ModelReaderProxyAttribute : System.Attribute
+    public sealed partial class PersistableModelProxyAttribute : System.Attribute
     {
-        public ModelReaderProxyAttribute(System.Type proxyType) { }
+        public PersistableModelProxyAttribute(System.Type proxyType) { }
         public System.Type ProxyType { get { throw null; } }
     }
 }

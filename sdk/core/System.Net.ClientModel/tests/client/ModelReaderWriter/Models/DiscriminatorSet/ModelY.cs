@@ -87,7 +87,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new ModelY(kind, name, yProperty, rawData);
         }
 
-        ModelY IModel<ModelY>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ModelY IPersistableModel<ModelY>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeModelY(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
@@ -98,13 +98,13 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeModelY(doc.RootElement, options);
         }
 
-        BinaryData IModel<ModelY>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ModelY>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 {
-    public abstract class ModelTests<T> where T : IModel<T>
+    public abstract class ModelTests<T> where T : IPersistableModel<T>
     {
         private T _modelInstance;
         private T ModelInstance => _modelInstance ??= GetModelInstance();
@@ -129,7 +129,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IModel<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
             Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IJsonModel<T> jsonModel)
             {

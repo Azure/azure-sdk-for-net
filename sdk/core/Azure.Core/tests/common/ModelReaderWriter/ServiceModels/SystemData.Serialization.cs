@@ -157,7 +157,7 @@ namespace Azure.Core.Tests.Models.ResourceManager
             reader.Skip();
         }
 
-        SystemData IModel<SystemData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SystemData IPersistableModel<SystemData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeSystemData(doc.RootElement, options);
@@ -176,13 +176,13 @@ namespace Azure.Core.Tests.Models.ResourceManager
             }
         }
 
-        BinaryData IModel<SystemData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -48,7 +48,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static BaseModel DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions options = default) => DeserializeBaseModel(element, options);
 
-        BaseModel IModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -63,7 +63,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeUnknownBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IModel<BaseModel>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 

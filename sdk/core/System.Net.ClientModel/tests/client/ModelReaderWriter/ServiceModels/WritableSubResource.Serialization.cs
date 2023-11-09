@@ -83,7 +83,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        WritableSubResource IModel<WritableSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WritableSubResource IPersistableModel<WritableSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeWritableSubResource(doc.RootElement, options);
@@ -102,13 +102,13 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             }
         }
 
-        BinaryData IModel<WritableSubResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WritableSubResource>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
