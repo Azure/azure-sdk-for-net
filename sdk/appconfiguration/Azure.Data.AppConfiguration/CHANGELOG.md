@@ -16,6 +16,14 @@
 
 - Added configuration settings snapshot feature which allow users to create a point-in-time snapshot of their configuration store.
 
+### Breaking Changes
+
+- Renamed `key` tag reported on `ConfigurationClient` activities to `az.appconfiguration.key` following OpenTelemetry attribute naming conventions.
+  
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.0-beta.3 (2023-10-09)
 
 ### Features Added

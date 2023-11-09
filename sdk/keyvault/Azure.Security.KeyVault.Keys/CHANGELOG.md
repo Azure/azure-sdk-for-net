@@ -9,6 +9,10 @@
 
 ### Breaking Changes
 
+- Renamed tags reported on `KeyClient`, `KeyResolver`, `CryptographyClient`, and `RemoteCryptographyClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `key` to `az.keyvault.key.id` or `az.keyvault.key.name` depending on the value being reported
+  - `version` to `az.keyvault.key.version`
+
 ### Bugs Fixed
 
 - When a Key Vault is moved to another tenant, the client is reauthenticated.
