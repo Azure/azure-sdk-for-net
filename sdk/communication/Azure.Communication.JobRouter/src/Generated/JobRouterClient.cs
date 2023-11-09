@@ -51,7 +51,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -91,7 +90,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -331,11 +329,6 @@ namespace Azure.Communication.JobRouter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReclassifyJobAsync(string,ReclassifyJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The id of the job. </param>
@@ -369,11 +362,6 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReclassifyJob(string,ReclassifyJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -443,11 +431,6 @@ namespace Azure.Communication.JobRouter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CancelJobAsync(string,CancelJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The id of the job. </param>
@@ -481,11 +464,6 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CancelJob(string,CancelJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -559,11 +537,6 @@ namespace Azure.Communication.JobRouter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CompleteJobAsync(string,string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The id of the job. </param>
@@ -599,11 +572,6 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CompleteJob(string,string,CompleteJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -679,11 +647,6 @@ namespace Azure.Communication.JobRouter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CloseJobAsync(string,string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The id of the job. </param>
@@ -719,11 +682,6 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CloseJob(string,string,CloseJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -909,11 +867,6 @@ namespace Azure.Communication.JobRouter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UnassignJobAsync(string,string,UnassignJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The id of the job. </param>
@@ -949,11 +902,6 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UnassignJob(string,string,UnassignJobOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1147,11 +1095,6 @@ namespace Azure.Communication.JobRouter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DeclineJobOfferAsync(string,string,DeclineJobOfferOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workerId"> Id of the worker. </param>
@@ -1187,11 +1130,6 @@ namespace Azure.Communication.JobRouter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DeclineJobOffer(string,string,DeclineJobOfferOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1355,7 +1293,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -1395,7 +1332,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
