@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement
                 destinationTypeId: jobPart._destinationResource.ResourceId,
                 sourcePath: sourcePath,
                 destinationPath: destinationPath,
-                overwrite: jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                createPreference: jobPart._createMode,
                 initialTransferSize: jobPart._initialTransferSize,
                 chunkSize: jobPart._transferChunkSize,
                 priority: 0, // TODO: add priority feature
@@ -253,13 +253,6 @@ namespace Azure.Storage.DataMovement
             if (!header.DestinationPath.StartsWith(passedDestinationPath))
             {
                 throw Errors.MismatchResumeTransferArguments(nameof(header.DestinationPath), header.DestinationPath, passedDestinationPath);
-            }
-
-            // Check CreateMode / Overwrite
-            if ((header.Overwrite && jobPart._createMode != StorageResourceCreationPreference.OverwriteIfExists) ||
-                (!header.Overwrite && jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists))
-            {
-                throw Errors.MismatchResumeCreateMode(header.Overwrite, jobPart._createMode);
             }
         }
     }
