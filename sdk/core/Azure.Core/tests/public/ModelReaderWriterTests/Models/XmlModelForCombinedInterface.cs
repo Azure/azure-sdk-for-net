@@ -94,7 +94,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);
@@ -110,7 +110,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
@@ -122,13 +122,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 return ModelReaderWriter.Write(this, options);
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.Wire;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string key = default;
             string value = default;
@@ -174,11 +174,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        XmlModelForCombinedInterface IModel<XmlModelForCombinedInterface>.Read(BinaryData data, ModelReaderWriterOptions options)
+        XmlModelForCombinedInterface IModel<XmlModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 using var doc = JsonDocument.Parse(data);
                 return DeserializeXmlModelForCombinedInterface(doc.RootElement, options);
@@ -193,26 +193,26 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format != ModelReaderWriterFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");
+            if (options.Format != "J")
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");
 
             Serialize(writer, options);
         }
 
-        XmlModelForCombinedInterface IJsonModel<XmlModelForCombinedInterface>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        XmlModelForCombinedInterface IJsonModel<XmlModelForCombinedInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format != ModelReaderWriterFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");
+            if (options.Format != "J")
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeXmlModelForCombinedInterface(doc.RootElement, options);
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+            Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        ModelReaderWriterFormat IModel<XmlModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        string IModel<XmlModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

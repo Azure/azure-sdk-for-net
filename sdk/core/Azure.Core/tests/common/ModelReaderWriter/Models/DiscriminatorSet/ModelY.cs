@@ -28,7 +28,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public string YProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelY>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelY>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<ModelY>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 writer.WritePropertyName("yProperty"u8);
                 writer.WriteStringValue(YProperty);
             }
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 SerializeRawData(writer);
             }
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                     yProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -92,12 +92,12 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new ModelY(kind, name, yProperty, rawData);
         }
 
-        ModelY IModel<ModelY>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ModelY IModel<ModelY>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeModelY(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        ModelY IJsonModel<ModelY>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelY IJsonModel<ModelY>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelY(doc.RootElement, options);
@@ -110,6 +110,6 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -46,14 +46,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Animal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Animal>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         void IJsonModel<Animal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -65,7 +65,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static Animal DeserializeAnimal(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             double weight = default;
             string name = "";
@@ -114,7 +114,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                     continue;
                 }
 
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -126,12 +126,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         #region InterfaceImplementation
 
-        Animal IModel<Animal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        Animal IModel<Animal>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeAnimal(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        Animal IJsonModel<Animal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Animal IJsonModel<Animal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeAnimal(doc.RootElement, options);
@@ -144,7 +144,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<Animal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<Animal>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         #endregion
     }

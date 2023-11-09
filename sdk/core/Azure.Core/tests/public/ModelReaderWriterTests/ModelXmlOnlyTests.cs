@@ -21,10 +21,10 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         protected override Func<Response, ModelXmlOnly> FromResponse => response => (ModelXmlOnly)response;
 
-        protected override string GetExpectedResult(ModelReaderWriterFormat format)
+        protected override string GetExpectedResult(string format)
         {
             var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-            if (format.Equals(ModelReaderWriterFormat.Json))
+            if (format.Equals("J"))
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "<RenamedChildModelXml><ChildValue>ChildRed</ChildValue></RenamedChildModelXml>";
             //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             return expectedSerializedString;
         }
 
-        protected override void VerifyModel(ModelXmlOnly model, ModelReaderWriterFormat format)
+        protected override void VerifyModel(ModelXmlOnly model, string format)
         {
             Assert.AreEqual("Color", model.Key);
             Assert.AreEqual("Red", model.Value);
@@ -44,11 +44,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             Assert.AreEqual("ChildReadOnly", model.RenamedChildModelXml.ChildReadOnlyProperty);
         }
 
-        protected override void CompareModels(ModelXmlOnly model, ModelXmlOnly model2, ModelReaderWriterFormat format)
+        protected override void CompareModels(ModelXmlOnly model, ModelXmlOnly model2, string format)
         {
             Assert.AreEqual(model.Key, model2.Key);
             Assert.AreEqual(model.Value, model2.Value);
-            if (format.Equals(ModelReaderWriterFormat.Json))
+            if (format.Equals("J"))
                 Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
             Assert.AreEqual(model.RenamedChildModelXml.ChildValue, model2.RenamedChildModelXml.ChildValue);
             //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
