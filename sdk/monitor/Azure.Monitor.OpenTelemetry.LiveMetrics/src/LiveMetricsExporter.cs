@@ -61,35 +61,37 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
             foreach (var metric in batch)
             {
-                if (LiveMetricsExtractionProcessor.s_liveMetricNameMapping.TryGetValue(metric.Name, out var metricName))
+                if (!LiveMetricsExtractionProcessor.s_liveMetricNameMapping.TryGetValue(metric.Name, out var metricName))
                 {
-                    var liveMetricPoint = new Models.MetricPoint
-                    {
-                        Name = metricName
-                    };
+                    continue;
+                }
 
-                    foreach (ref readonly var metricPoint in metric.GetMetricPoints())
-                    {
-                        switch (metric.MetricType)
-                        {
-                            case MetricType.LongSum:
-                                // potential for minor precision loss implicitly going from long->double
-                                // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
-                                liveMetricPoint.Value = metricPoint.GetSumLong();
-                                liveMetricPoint.Weight = 1;
-                                break;
-                            case MetricType.Histogram:
-                                long histogramCount = metricPoint.GetHistogramCount();
-                                // When you convert double to float, the double value is rounded to the nearest float value.
-                                // If the double value is too small or too large to fit into the float type, the result is zero or infinity.
-                                // see: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#explicit-numeric-conversions
-                                liveMetricPoint.Value = (float)(metricPoint.GetHistogramSum() / histogramCount);
-                                liveMetricPoint.Weight = histogramCount <= int.MaxValue ? (int?)histogramCount : null;
-                                break;
-                        }
+                var liveMetricPoint = new Models.MetricPoint
+                {
+                    Name = metricName
+                };
 
-                        monitoringDataPoint.Metrics.Add(liveMetricPoint);
+                foreach (ref readonly var metricPoint in metric.GetMetricPoints())
+                {
+                    switch (metric.MetricType)
+                    {
+                        case MetricType.LongSum:
+                            // potential for minor precision loss implicitly going from long->double
+                            // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
+                            liveMetricPoint.Value = metricPoint.GetSumLong();
+                            liveMetricPoint.Weight = 1;
+                            break;
+                        case MetricType.Histogram:
+                            long histogramCount = metricPoint.GetHistogramCount();
+                            // When you convert double to float, the double value is rounded to the nearest float value.
+                            // If the double value is too small or too large to fit into the float type, the result is zero or infinity.
+                            // see: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#explicit-numeric-conversions
+                            liveMetricPoint.Value = (float)(metricPoint.GetHistogramSum() / histogramCount);
+                            liveMetricPoint.Weight = histogramCount <= int.MaxValue ? (int?)histogramCount : null;
+                            break;
                     }
+
+                    monitoringDataPoint.Metrics.Add(liveMetricPoint);
                 }
             }
 
