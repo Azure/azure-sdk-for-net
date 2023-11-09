@@ -21,10 +21,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="state"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="state"/> or <paramref name="span"/> is null. </exception>
-        internal DocumentSelectionMark(string state, DocumentSpan span, float confidence)
+        /// <exception cref="ArgumentNullException"> <paramref name="span"/> is null. </exception>
+        internal DocumentSelectionMark(DocumentSelectionMarkState state, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(state, nameof(state));
             Argument.AssertNotNull(span, nameof(span));
 
             State = state;
@@ -43,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        internal DocumentSelectionMark(string state, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
+        internal DocumentSelectionMark(DocumentSelectionMarkState state, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
         {
             State = state;
             Polygon = polygon;
@@ -52,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> State of the selection mark. </summary>
-        public string State { get; }
+        public DocumentSelectionMarkState State { get; }
         /// <summary>
         /// Bounding polygon of the selection mark, with coordinates specified relative
         /// to the top-left of the page. The numbers represent the x, y values of the

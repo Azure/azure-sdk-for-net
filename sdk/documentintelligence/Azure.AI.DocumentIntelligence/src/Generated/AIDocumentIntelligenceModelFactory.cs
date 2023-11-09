@@ -14,6 +14,475 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Model factory for models. </summary>
     public static partial class AIDocumentIntelligenceModelFactory
     {
+        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
+        /// <param name="apiVersion"> API version used to produce this result. </param>
+        /// <param name="modelId"> Document model ID used to produce this result. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="contentFormat"> Format of the analyze result top-level content. </param>
+        /// <param name="content">
+        /// Concatenate string representation of all textual and visual elements in reading
+        /// order.
+        /// </param>
+        /// <param name="pages"> Analyzed pages. </param>
+        /// <param name="paragraphs"> Extracted paragraphs. </param>
+        /// <param name="tables"> Extracted tables. </param>
+        /// <param name="figures"> Extracted figures. </param>
+        /// <param name="lists"> Extracted lists. </param>
+        /// <param name="sections"> Extracted sections. </param>
+        /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
+        /// <param name="styles"> Extracted font styles. </param>
+        /// <param name="languages"> Detected languages. </param>
+        /// <param name="documents"> Extracted documents. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeResult"/> instance for mocking. </returns>
+        public static AnalyzeResult AnalyzeResult(string apiVersion = null, string modelId = null, StringIndexType stringIndexType = default, ContentFormat? contentFormat = null, string content = null, IEnumerable<DocumentPage> pages = null, IEnumerable<DocumentParagraph> paragraphs = null, IEnumerable<DocumentTable> tables = null, IEnumerable<DocumentFigure> figures = null, IEnumerable<DocumentList> lists = null, IEnumerable<DocumentSection> sections = null, IEnumerable<DocumentKeyValuePair> keyValuePairs = null, IEnumerable<DocumentStyle> styles = null, IEnumerable<DocumentLanguage> languages = null, IEnumerable<AnalyzedDocument> documents = null)
+        {
+            pages ??= new List<DocumentPage>();
+            paragraphs ??= new List<DocumentParagraph>();
+            tables ??= new List<DocumentTable>();
+            figures ??= new List<DocumentFigure>();
+            lists ??= new List<DocumentList>();
+            sections ??= new List<DocumentSection>();
+            keyValuePairs ??= new List<DocumentKeyValuePair>();
+            styles ??= new List<DocumentStyle>();
+            languages ??= new List<DocumentLanguage>();
+            documents ??= new List<AnalyzedDocument>();
+
+            return new AnalyzeResult(apiVersion, modelId, stringIndexType, contentFormat, content, pages?.ToList(), paragraphs?.ToList(), tables?.ToList(), figures?.ToList(), lists?.ToList(), sections?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <param name="pageNumber"> 1-based page number in the input document. </param>
+        /// <param name="angle">
+        /// The general orientation of the content in clockwise direction, measured in
+        /// degrees between (-180, 180].
+        /// </param>
+        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="unit">
+        /// The unit used by the width, height, and polygon properties. For images, the
+        /// unit is "pixel". For PDF, the unit is "inch".
+        /// </param>
+        /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
+        /// <param name="words"> Extracted words from the page. </param>
+        /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
+        /// <param name="lines">
+        /// Extracted lines from the page, potentially containing both textual and visual
+        /// elements.
+        /// </param>
+        /// <param name="barcodes"> Extracted barcodes from the page. </param>
+        /// <param name="formulas"> Extracted formulas from the page. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentPage"/> instance for mocking. </returns>
+        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, LengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null, IEnumerable<DocumentBarcode> barcodes = null, IEnumerable<DocumentFormula> formulas = null)
+        {
+            spans ??= new List<DocumentSpan>();
+            words ??= new List<DocumentWord>();
+            selectionMarks ??= new List<DocumentSelectionMark>();
+            lines ??= new List<DocumentLine>();
+            barcodes ??= new List<DocumentBarcode>();
+            formulas ??= new List<DocumentFormula>();
+
+            return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), barcodes?.ToList(), formulas?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentSpan. </summary>
+        /// <param name="offset"> Zero-based index of the content represented by the span. </param>
+        /// <param name="length"> Number of characters in the content represented by the span. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentSpan"/> instance for mocking. </returns>
+        public static DocumentSpan DocumentSpan(int offset = default, int length = default)
+        {
+            return new DocumentSpan(offset, length);
+        }
+
+        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <param name="content"> Text content of the word. </param>
+        /// <param name="polygon">
+        /// Bounding polygon of the word, with coordinates specified relative to the
+        /// top-left of the page. The numbers represent the x, y values of the polygon
+        /// vertices, clockwise from the left (-180 degrees inclusive) relative to the
+        /// element orientation.
+        /// </param>
+        /// <param name="span"> Location of the word in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the word. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentWord"/> instance for mocking. </returns>
+        public static DocumentWord DocumentWord(string content = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        {
+            polygon ??= new List<float>();
+
+            return new DocumentWord(content, polygon?.ToList(), span, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <param name="state"> State of the selection mark. </param>
+        /// <param name="polygon">
+        /// Bounding polygon of the selection mark, with coordinates specified relative
+        /// to the top-left of the page. The numbers represent the x, y values of the
+        /// polygon vertices, clockwise from the left (-180 degrees inclusive) relative
+        /// to the element orientation.
+        /// </param>
+        /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentSelectionMark"/> instance for mocking. </returns>
+        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        {
+            polygon ??= new List<float>();
+
+            return new DocumentSelectionMark(state, polygon?.ToList(), span, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
+        /// <param name="polygon">
+        /// Bounding polygon of the line, with coordinates specified relative to the
+        /// top-left of the page. The numbers represent the x, y values of the polygon
+        /// vertices, clockwise from the left (-180 degrees inclusive) relative to the
+        /// element orientation.
+        /// </param>
+        /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentLine"/> instance for mocking. </returns>
+        public static DocumentLine DocumentLine(string content = null, IEnumerable<float> polygon = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            polygon ??= new List<float>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentLine(content, polygon?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentBarcode. </summary>
+        /// <param name="kind"> Barcode kind. </param>
+        /// <param name="value"> Barcode value. </param>
+        /// <param name="polygon">
+        /// Bounding polygon of the barcode, with coordinates specified relative to the
+        /// top-left of the page. The numbers represent the x, y values of the polygon
+        /// vertices, clockwise from the left (-180 degrees inclusive) relative to the
+        /// element orientation.
+        /// </param>
+        /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentBarcode"/> instance for mocking. </returns>
+        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        {
+            polygon ??= new List<float>();
+
+            return new DocumentBarcode(kind, value, polygon?.ToList(), span, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentFormula. </summary>
+        /// <param name="kind"> Formula kind. </param>
+        /// <param name="value"> LaTex expression describing the formula. </param>
+        /// <param name="polygon">
+        /// Bounding polygon of the formula, with coordinates specified relative to the
+        /// top-left of the page. The numbers represent the x, y values of the polygon
+        /// vertices, clockwise from the left (-180 degrees inclusive) relative to the
+        /// element orientation.
+        /// </param>
+        /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentFormula"/> instance for mocking. </returns>
+        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        {
+            polygon ??= new List<float>();
+
+            return new DocumentFormula(kind, value, polygon?.ToList(), span, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentParagraph. </summary>
+        /// <param name="role"> Semantic role of the paragraph. </param>
+        /// <param name="content"> Concatenated content of the paragraph in reading order. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the paragraph. </param>
+        /// <param name="spans"> Location of the paragraph in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentParagraph"/> instance for mocking. </returns>
+        public static DocumentParagraph DocumentParagraph(ParagraphRole? role = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of BoundingRegion. </summary>
+        /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
+        /// <param name="polygon">
+        /// Bounding polygon on the page, or the entire page if not specified.
+        /// Coordinates specified relative to the top-left of the page. The numbers
+        /// represent the x, y values of the polygon vertices, clockwise from the left
+        /// (-180 degrees inclusive) relative to the element orientation.
+        /// </param>
+        /// <returns> A new <see cref="DocumentIntelligence.BoundingRegion"/> instance for mocking. </returns>
+        public static BoundingRegion BoundingRegion(int pageNumber = default, IEnumerable<float> polygon = null)
+        {
+            polygon ??= new List<float>();
+
+            return new BoundingRegion(pageNumber, polygon?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        /// <param name="rowCount"> Number of rows in the table. </param>
+        /// <param name="columnCount"> Number of columns in the table. </param>
+        /// <param name="cells"> Cells contained within the table. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the table. </param>
+        /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
+        /// <param name="caption"> Caption associated with the table. </param>
+        /// <param name="footnotes"> List of footnotes associated with the table. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentTable"/> instance for mocking. </returns>
+        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null)
+        {
+            cells ??= new List<DocumentTableCell>();
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            footnotes ??= new List<DocumentFootnote>();
+
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList(), caption, footnotes?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <param name="kind"> Table cell kind. </param>
+        /// <param name="rowIndex"> Row index of the cell. </param>
+        /// <param name="columnIndex"> Column index of the cell. </param>
+        /// <param name="rowSpan"> Number of rows spanned by this cell. </param>
+        /// <param name="columnSpan"> Number of columns spanned by this cell. </param>
+        /// <param name="content"> Concatenated content of the table cell in reading order. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
+        /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
+        /// <param name="elements"> Child elements of the table cell. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentTableCell"/> instance for mocking. </returns>
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = null, int rowIndex = default, int columnIndex = default, int? rowSpan = null, int? columnSpan = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            elements ??= new List<object>();
+
+            return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentCaption. </summary>
+        /// <param name="content"> Content of the caption. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the caption. </param>
+        /// <param name="spans"> Location of the caption in the reading order concatenated content. </param>
+        /// <param name="elements"> Child elements of the caption. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentCaption"/> instance for mocking. </returns>
+        public static DocumentCaption DocumentCaption(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            elements ??= new List<object>();
+
+            return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
+        /// <param name="content"> Content of the footnote. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the footnote. </param>
+        /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
+        /// <param name="elements"> Child elements of the footnote. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentFootnote"/> instance for mocking. </returns>
+        public static DocumentFootnote DocumentFootnote(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            elements ??= new List<object>();
+
+            return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentFigure. </summary>
+        /// <param name="boundingRegions"> Bounding regions covering the figure. </param>
+        /// <param name="spans"> Location of the figure in the reading order concatenated content. </param>
+        /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
+        /// <param name="caption"> Caption associated with the figure. </param>
+        /// <param name="footnotes"> List of footnotes associated with the figure. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentFigure"/> instance for mocking. </returns>
+        public static DocumentFigure DocumentFigure(IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            elements ??= new List<object>();
+            footnotes ??= new List<DocumentFootnote>();
+
+            return new DocumentFigure(boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), caption, footnotes?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentList. </summary>
+        /// <param name="spans"> Location of the list in the reading order concatenated content. </param>
+        /// <param name="items"> Items in the list. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentList"/> instance for mocking. </returns>
+        public static DocumentList DocumentList(IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentListItem> items = null)
+        {
+            spans ??= new List<DocumentSpan>();
+            items ??= new List<DocumentListItem>();
+
+            return new DocumentList(spans?.ToList(), items?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentListItem. </summary>
+        /// <param name="level"> Level of the list item (1-indexed). </param>
+        /// <param name="content"> Content of the list item. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the list item. </param>
+        /// <param name="spans"> Location of the list item in the reading order concatenated content. </param>
+        /// <param name="elements"> Child elements of the list item. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentListItem"/> instance for mocking. </returns>
+        public static DocumentListItem DocumentListItem(int level = default, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            elements ??= new List<object>();
+
+            return new DocumentListItem(level, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentSection. </summary>
+        /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
+        /// <param name="elements"> Child elements of the section. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentSection"/> instance for mocking. </returns>
+        public static DocumentSection DocumentSection(IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        {
+            spans ??= new List<DocumentSpan>();
+            elements ??= new List<object>();
+
+            return new DocumentSection(spans?.ToList(), elements?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <param name="key"> Field label of the key-value pair. </param>
+        /// <param name="value"> Field value of the key-value pair. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentKeyValuePair"/> instance for mocking. </returns>
+        public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default)
+        {
+            return new DocumentKeyValuePair(key, value, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
+        /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
+        /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentKeyValueElement"/> instance for mocking. </returns>
+        public static DocumentKeyValueElement DocumentKeyValueElement(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <param name="isHandwritten"> Is content handwritten?. </param>
+        /// <param name="similarFontFamily">
+        /// Visually most similar font from among the set of supported font families, with
+        /// fallback fonts following CSS convention (ex. 'Arial, sans-serif').
+        /// </param>
+        /// <param name="fontStyle"> Font style. </param>
+        /// <param name="fontWeight"> Font weight. </param>
+        /// <param name="color"> Foreground color in #rrggbb hexadecimal format. </param>
+        /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format.. </param>
+        /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
+        /// <param name="confidence"> Confidence of correctly identifying the style. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentStyle"/> instance for mocking. </returns>
+        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, string similarFontFamily = null, FontStyle? fontStyle = null, FontWeight? fontWeight = null, string color = null, string backgroundColor = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        {
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentLanguage. </summary>
+        /// <param name="locale">
+        /// Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr")
+        /// or BCP 47 language tag (ex. "zh-Hans").
+        /// </param>
+        /// <param name="spans">
+        /// Location of the text elements in the concatenated content the language applies
+        /// to.
+        /// </param>
+        /// <param name="confidence"> Confidence of correctly identifying the language. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentLanguage"/> instance for mocking. </returns>
+        public static DocumentLanguage DocumentLanguage(string locale = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        {
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentLanguage(locale, spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
+        /// <param name="docType"> Document type. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the document. </param>
+        /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
+        /// <param name="fields"> Dictionary of named field values. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the document. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
+        public static AnalyzedDocument AnalyzedDocument(string docType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IReadOnlyDictionary<string, DocumentField> fields = null, float confidence = default)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+            fields ??= new Dictionary<string, DocumentField>();
+
+            return new AnalyzedDocument(docType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentField. </summary>
+        /// <param name="type"> Data type of the field value. </param>
+        /// <param name="valueString"> String value. </param>
+        /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
+        /// <param name="valueTime"> Time value in hh:mm:ss format (ISO 8601). </param>
+        /// <param name="valuePhoneNumber"> Phone number value in E.164 format (ex. +19876543210). </param>
+        /// <param name="valueNumber"> Floating point value. </param>
+        /// <param name="valueInteger"> Integer value. </param>
+        /// <param name="valueSelectionMark"> Selection mark value. </param>
+        /// <param name="valueSignature"> Presence of signature. </param>
+        /// <param name="valueCountryRegion"> 3-letter country code value (ISO 3166-1 alpha-3). </param>
+        /// <param name="valueArray"> Array of field values. </param>
+        /// <param name="valueObject"> Dictionary of named field values. </param>
+        /// <param name="valueCurrency"> Currency value. </param>
+        /// <param name="valueAddress"> Address value. </param>
+        /// <param name="valueBoolean"> Boolean value. </param>
+        /// <param name="content"> Field content. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the field. </param>
+        /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the field. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
+        public static DocumentField DocumentField(DocumentFieldType type = default, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, DocumentSelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IEnumerable<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float? confidence = null)
+        {
+            valueArray ??= new List<DocumentField>();
+            valueObject ??= new Dictionary<string, DocumentField>();
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentField(type, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMark, valueSignature, valueCountryRegion, valueArray?.ToList(), valueObject, valueCurrency, valueAddress, valueBoolean, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of CurrencyValue. </summary>
+        /// <param name="amount"> Currency amount. </param>
+        /// <param name="currencySymbol"> Currency symbol label, if any. </param>
+        /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.CurrencyValue"/> instance for mocking. </returns>
+        public static CurrencyValue CurrencyValue(double amount = default, string currencySymbol = null, string currencyCode = null)
+        {
+            return new CurrencyValue(amount, currencySymbol, currencyCode);
+        }
+
+        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <param name="houseNumber"> House or building number. </param>
+        /// <param name="poBox"> Post office box number. </param>
+        /// <param name="road"> Street name. </param>
+        /// <param name="city"> Name of city, town, village, etc. </param>
+        /// <param name="state"> First-level administrative division. </param>
+        /// <param name="postalCode"> Postal code used for mail sorting. </param>
+        /// <param name="countryRegion"> Country/region. </param>
+        /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
+        /// <param name="unit"> Apartment or office number. </param>
+        /// <param name="cityDistrict">
+        /// Districts or boroughs within a city, such as Brooklyn in New York City or City
+        /// of Westminster in London.
+        /// </param>
+        /// <param name="stateDistrict"> Second-level administrative division used in certain locales. </param>
+        /// <param name="suburb"> Unofficial neighborhood name, like Chinatown. </param>
+        /// <param name="house"> Build name, such as World Trade Center. </param>
+        /// <param name="level"> Floor number, such as 3F. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AddressValue"/> instance for mocking. </returns>
+        public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null, string unit = null, string cityDistrict = null, string stateDistrict = null, string suburb = null, string house = null, string level = null)
+        {
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level);
+        }
+
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>

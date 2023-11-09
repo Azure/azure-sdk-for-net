@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format.. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, string fontStyle, string fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence)
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, FontStyle? fontStyle, FontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence)
         {
             IsHandwritten = isHandwritten;
             SimilarFontFamily = similarFontFamily;
@@ -59,9 +59,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         public string SimilarFontFamily { get; }
         /// <summary> Font style. </summary>
-        public string FontStyle { get; }
+        public FontStyle? FontStyle { get; }
         /// <summary> Font weight. </summary>
-        public string FontWeight { get; }
+        public FontWeight? FontWeight { get; }
         /// <summary> Foreground color in #rrggbb hexadecimal format. </summary>
         public string Color { get; }
         /// <summary> Background color in #rrggbb hexadecimal format.. </summary>

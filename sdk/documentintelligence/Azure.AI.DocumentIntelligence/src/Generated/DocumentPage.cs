@@ -53,7 +53,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="barcodes"> Extracted barcodes from the page. </param>
         /// <param name="formulas"> Extracted formulas from the page. </param>
-        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, string unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas)
+        internal DocumentPage(int pageNumber, float? angle, float? width, float? height, LengthUnit? unit, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentWord> words, IReadOnlyList<DocumentSelectionMark> selectionMarks, IReadOnlyList<DocumentLine> lines, IReadOnlyList<DocumentBarcode> barcodes, IReadOnlyList<DocumentFormula> formulas)
         {
             PageNumber = pageNumber;
             Angle = angle;
@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
         /// The unit used by the width, height, and polygon properties. For images, the
         /// unit is "pixel". For PDF, the unit is "inch".
         /// </summary>
-        public string Unit { get; }
+        public LengthUnit? Unit { get; }
         /// <summary> Location of the page in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
         /// <summary> Extracted words from the page. </summary>

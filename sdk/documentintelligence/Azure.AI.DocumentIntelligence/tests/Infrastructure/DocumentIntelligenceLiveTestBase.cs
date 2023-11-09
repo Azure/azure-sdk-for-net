@@ -35,6 +35,16 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         protected string ServiceVersionString { get; } = "2023-07-31";
 
+        protected DocumentAnalysisClient CreateDocumentAnalysisClient()
+        {
+            var endpoint = new Uri(TestEnvironment.Endpoint);
+            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+
+            var nonInstrumentedClient = new DocumentAnalysisClient(endpoint, credential, _clientOptions);
+
+            return InstrumentClient(nonInstrumentedClient);
+        }
+
         protected DocumentModelAdministrationClient CreateDocumentModelAdministrationClient()
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);

@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
-        internal DocumentTableCell(string kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<object> elements)
+        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<object> elements)
         {
             Kind = kind;
             RowIndex = rowIndex;
@@ -58,7 +58,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Table cell kind. </summary>
-        public string Kind { get; }
+        public DocumentTableCellKind? Kind { get; }
         /// <summary> Row index of the cell. </summary>
         public int RowIndex { get; }
         /// <summary> Column index of the cell. </summary>

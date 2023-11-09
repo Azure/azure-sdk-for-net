@@ -19,10 +19,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="value"> LaTex expression describing the formula. </param>
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kind"/>, <paramref name="value"/> or <paramref name="span"/> is null. </exception>
-        internal DocumentFormula(string kind, string value, DocumentSpan span, float confidence)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="span"/> is null. </exception>
+        internal DocumentFormula(DocumentFormulaKind kind, string value, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(kind, nameof(kind));
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(span, nameof(span));
 
@@ -44,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
-        internal DocumentFormula(string kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
+        internal DocumentFormula(DocumentFormulaKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
         {
             Kind = kind;
             Value = value;
@@ -54,7 +53,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Formula kind. </summary>
-        public string Kind { get; }
+        public DocumentFormulaKind Kind { get; }
         /// <summary> LaTex expression describing the formula. </summary>
         public string Value { get; }
         /// <summary>

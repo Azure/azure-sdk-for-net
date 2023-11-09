@@ -8,7 +8,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     internal static class DeserializationHelpers
     {
-        internal static T FromOperationResponse<T>(Response response, Func<JsonElement, T> deserializationFunc)
+        internal static T FromOperationResponse<T>(Response response, Func<JsonElement, T> deserializationFunc, string resultPropertyName)
         {
             using var document = JsonDocument.Parse(response.Content);
 
@@ -16,7 +16,7 @@ namespace Azure.AI.DocumentIntelligence
             // needs to be deserialized from the "result" property instead of the root element. Without
             // this workaround, the generated code fails for long-running operations.
 
-            if (document.RootElement.TryGetProperty("result", out var result))
+            if (document.RootElement.TryGetProperty(resultPropertyName, out var result))
             {
                 return deserializationFunc(result);
             }

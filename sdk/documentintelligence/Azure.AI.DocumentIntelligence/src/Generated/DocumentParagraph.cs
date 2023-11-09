@@ -37,7 +37,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="content"> Concatenated content of the paragraph in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the paragraph. </param>
         /// <param name="spans"> Location of the paragraph in the reading order concatenated content. </param>
-        internal DocumentParagraph(string role, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
+        internal DocumentParagraph(ParagraphRole? role, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
         {
             Role = role;
             Content = content;
@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Semantic role of the paragraph. </summary>
-        public string Role { get; }
+        public ParagraphRole? Role { get; }
         /// <summary> Concatenated content of the paragraph in reading order. </summary>
         public string Content { get; }
         /// <summary> Bounding regions covering the paragraph. </summary>

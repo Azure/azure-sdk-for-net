@@ -19,10 +19,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="value"> Barcode value. </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kind"/>, <paramref name="value"/> or <paramref name="span"/> is null. </exception>
-        internal DocumentBarcode(string kind, string value, DocumentSpan span, float confidence)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="span"/> is null. </exception>
+        internal DocumentBarcode(DocumentBarcodeKind kind, string value, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(kind, nameof(kind));
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(span, nameof(span));
 
@@ -44,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
-        internal DocumentBarcode(string kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
+        internal DocumentBarcode(DocumentBarcodeKind kind, string value, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
         {
             Kind = kind;
             Value = value;
@@ -54,7 +53,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Barcode kind. </summary>
-        public string Kind { get; }
+        public DocumentBarcodeKind Kind { get; }
         /// <summary> Barcode value. </summary>
         public string Value { get; }
         /// <summary>

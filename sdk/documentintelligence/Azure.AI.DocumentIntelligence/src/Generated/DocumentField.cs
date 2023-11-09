@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the field. </param>
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        internal DocumentField(DocumentFieldType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, string valueSelectionMark, string valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        internal DocumentField(DocumentFieldType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
             Type = type;
             ValueString = valueString;
@@ -83,9 +83,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Integer value. </summary>
         public long? ValueInteger { get; }
         /// <summary> Selection mark value. </summary>
-        public string ValueSelectionMark { get; }
+        public DocumentSelectionMarkState? ValueSelectionMark { get; }
         /// <summary> Presence of signature. </summary>
-        public string ValueSignature { get; }
+        public DocumentSignatureType? ValueSignature { get; }
         /// <summary> 3-letter country code value (ISO 3166-1 alpha-3). </summary>
         public string ValueCountryRegion { get; }
         /// <summary> Array of field values. </summary>
