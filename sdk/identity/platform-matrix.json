@@ -17,7 +17,7 @@
         }
       },
       "TestTargetFramework": "net6.0",
-      "SupportedClouds": "Public,Preview,Canary"
+      "SupportedClouds": "Public,Preview,Canary,China"
     }
   ]
 }
