@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MixedReality.Tests
     {
         private SubscriptionResource _subscription;
         private ResourceGroupResource _resourceGroup;
-        private readonly AzureLocation _location = AzureLocation.EastUS; //List of available regions for the resource type is 'eastus2,eastus,southeastasia,westeurope,westus2,japaneast,australiaeast,northeurope,southcentralus,uksouth'.
+        private readonly AzureLocation _location = AzureLocation.EastUS;
         private RemoteRenderingAccountCollection _accountcollection;
         public RemoteRenderingAccountTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         { }
