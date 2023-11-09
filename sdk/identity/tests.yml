@@ -4,6 +4,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     TimeoutInMinutes: 120
+    SupportedClouds: 'Public,China'
     AdditionalMatrixConfigs:
       - Name: identity_msi
         Path: sdk/identity/platform-matrix.json
