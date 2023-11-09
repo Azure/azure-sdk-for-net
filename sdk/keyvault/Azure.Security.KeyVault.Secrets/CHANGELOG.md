@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- Renamed tags reported on `SecretClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `secret` to `az.keyvault.secret.name`
+  - `version` to `az.keyvault.secret.version`
+
 ### Bugs Fixed
 
 - When a Key Vault is moved to another tenant, the client is reauthenticated.

@@ -16,6 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClient
     {
+        private const string OTelAttributeKey = "az.appconfiguration.key";
         private readonly SyncTokenPolicy _syncTokenPolicy;
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -219,7 +220,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -291,7 +292,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(setting, nameof(setting));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -333,7 +334,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(setting, nameof(setting));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
-            scope.AddAttribute("key", setting?.Key);
+            scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
 
             try
@@ -425,7 +426,7 @@ namespace Azure.Data.AppConfiguration
         private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
-            scope.AddAttribute("key", key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -454,7 +455,7 @@ namespace Azure.Data.AppConfiguration
         private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
-            scope.AddAttribute("key", key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -578,7 +579,7 @@ namespace Azure.Data.AppConfiguration
         internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
-            scope.AddAttribute(nameof(key), key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -614,7 +615,7 @@ namespace Azure.Data.AppConfiguration
         internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
-            scope.AddAttribute(nameof(key), key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -1356,7 +1357,7 @@ namespace Azure.Data.AppConfiguration
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
-            scope.AddAttribute("key", key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
