@@ -3020,7 +3020,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
@@ -3046,7 +3046,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedSiteResource> GetDeletedSitesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
@@ -3072,7 +3072,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3100,7 +3100,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3178,7 +3178,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
@@ -3204,7 +3204,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
@@ -4136,7 +4136,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
@@ -4162,7 +4162,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
