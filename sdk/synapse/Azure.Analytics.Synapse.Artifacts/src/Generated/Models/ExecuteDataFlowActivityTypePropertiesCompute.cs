@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Compute properties for data flow activity. </summary>
     public partial class ExecuteDataFlowActivityTypePropertiesCompute
     {
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivityTypePropertiesCompute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivityTypePropertiesCompute"/>. </summary>
         public ExecuteDataFlowActivityTypePropertiesCompute()
         {
         }
 
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivityTypePropertiesCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivityTypePropertiesCompute"/>. </summary>
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
-        internal ExecuteDataFlowActivityTypePropertiesCompute(DataFlowComputeType? computeType, int? coreCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExecuteDataFlowActivityTypePropertiesCompute(DataFlowComputeType? computeType, int? coreCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Compute type of the cluster which will execute data flow job. </summary>

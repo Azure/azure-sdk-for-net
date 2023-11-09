@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </summary>
     public partial class DatasetFolder
     {
-        /// <summary> Initializes a new instance of DatasetFolder. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatasetFolder"/>. </summary>
         public DatasetFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of DatasetFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this Dataset is in. </param>
-        internal DatasetFolder(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatasetFolder(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the folder that this Dataset is in. </summary>

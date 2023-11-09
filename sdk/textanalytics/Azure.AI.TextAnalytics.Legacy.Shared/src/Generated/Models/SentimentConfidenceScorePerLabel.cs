@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> Represents the confidence scores between 0 and 1 across all sentiment classes: positive, neutral, negative. </summary>
     internal partial class SentimentConfidenceScorePerLabel
     {
-        /// <summary> Initializes a new instance of SentimentConfidenceScorePerLabel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SentimentConfidenceScorePerLabel"/>. </summary>
         /// <param name="positive"></param>
         /// <param name="neutral"></param>
         /// <param name="negative"></param>
@@ -19,6 +25,24 @@ namespace Azure.AI.TextAnalytics.Legacy
             Positive = positive;
             Neutral = neutral;
             Negative = negative;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentConfidenceScorePerLabel"/>. </summary>
+        /// <param name="positive"></param>
+        /// <param name="neutral"></param>
+        /// <param name="negative"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentimentConfidenceScorePerLabel(double positive, double neutral, double negative, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Positive = positive;
+            Neutral = neutral;
+            Negative = negative;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentConfidenceScorePerLabel"/> for deserialization. </summary>
+        internal SentimentConfidenceScorePerLabel()
+        {
         }
 
         /// <summary> Gets the positive. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseMetadataSyncConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseMetadataSyncConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseMetadataSyncConfigurationData"/>. </summary>
         public SynapseMetadataSyncConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseMetadataSyncConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseMetadataSyncConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isEnabled"> Indicates whether the metadata sync is enabled or disabled. </param>
         /// <param name="syncIntervalInMinutes"> The Sync Interval in minutes. </param>
-        internal SynapseMetadataSyncConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, int? syncIntervalInMinutes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseMetadataSyncConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, int? syncIntervalInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             SyncIntervalInMinutes = syncIntervalInMinutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the metadata sync is enabled or disabled. </summary>

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbSqlApiCollectionDatasetConverter))]
-    public partial class CosmosDbSqlApiCollectionDataset : IUtf8JsonSerializable
+    public partial class CosmosDbSqlApiCollectionDataset : IUtf8JsonSerializable, IJsonModel<CosmosDbSqlApiCollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDbSqlApiCollectionDataset>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CosmosDbSqlApiCollectionDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -82,8 +86,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbSqlApiCollectionDataset DeserializeCosmosDbSqlApiCollectionDataset(JsonElement element)
+        CosmosDbSqlApiCollectionDataset IJsonModel<CosmosDbSqlApiCollectionDataset>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbSqlApiCollectionDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbSqlApiCollectionDataset(document.RootElement, options);
+        }
+
+        internal static CosmosDbSqlApiCollectionDataset DeserializeCosmosDbSqlApiCollectionDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -200,6 +218,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbSqlApiCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collectionName);
         }
+
+        BinaryData IModel<CosmosDbSqlApiCollectionDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbSqlApiCollectionDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDbSqlApiCollectionDataset IModel<CosmosDbSqlApiCollectionDataset>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDbSqlApiCollectionDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDbSqlApiCollectionDataset(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CosmosDbSqlApiCollectionDataset>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class CosmosDbSqlApiCollectionDatasetConverter : JsonConverter<CosmosDbSqlApiCollectionDataset>
         {

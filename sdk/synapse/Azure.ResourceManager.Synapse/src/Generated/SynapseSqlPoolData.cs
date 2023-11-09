@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseSqlPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSqlPoolData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SynapseSqlPoolData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +57,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="createdOn"> Date the SQL pool was created. </param>
         /// <param name="storageAccountType"> The storage account type used to store backups for this sql pool. </param>
         /// <param name="sourceDatabaseDeletionOn"> Specifies the time that the sql pool was deleted. </param>
-        internal SynapseSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseSku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, SqlPoolCreateMode? createMode, DateTimeOffset? createdOn, SqlPoolStorageAccountType? storageAccountType, DateTimeOffset? sourceDatabaseDeletionOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseSku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, SqlPoolCreateMode? createMode, DateTimeOffset? createdOn, SqlPoolStorageAccountType? storageAccountType, DateTimeOffset? sourceDatabaseDeletionOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -68,6 +72,12 @@ namespace Azure.ResourceManager.Synapse
             CreatedOn = createdOn;
             StorageAccountType = storageAccountType;
             SourceDatabaseDeletionOn = sourceDatabaseDeletionOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolData"/> for deserialization. </summary>
+        internal SynapseSqlPoolData()
+        {
         }
 
         /// <summary> SQL pool SKU. </summary>

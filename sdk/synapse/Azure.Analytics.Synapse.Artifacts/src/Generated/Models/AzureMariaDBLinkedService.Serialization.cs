@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureMariaDBLinkedServiceConverter))]
-    public partial class AzureMariaDBLinkedService : IUtf8JsonSerializable
+    public partial class AzureMariaDBLinkedService : IUtf8JsonSerializable, IJsonModel<AzureMariaDBLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMariaDBLinkedService>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AzureMariaDBLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -83,8 +87,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMariaDBLinkedService DeserializeAzureMariaDBLinkedService(JsonElement element)
+        AzureMariaDBLinkedService IJsonModel<AzureMariaDBLinkedService>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMariaDBLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMariaDBLinkedService(document.RootElement, options);
+        }
+
+        internal static AzureMariaDBLinkedService DeserializeAzureMariaDBLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -199,6 +217,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMariaDBLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, pwd.Value, encryptedCredential.Value);
         }
+
+        BinaryData IModel<AzureMariaDBLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMariaDBLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureMariaDBLinkedService IModel<AzureMariaDBLinkedService>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMariaDBLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureMariaDBLinkedService(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AzureMariaDBLinkedService>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class AzureMariaDBLinkedServiceConverter : JsonConverter<AzureMariaDBLinkedService>
         {

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class EndpointBaseUpdateProperties : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownEndpointBaseUpdateProperties))]
+    public partial class EndpointBaseUpdateProperties : IUtf8JsonSerializable, IJsonModel<EndpointBaseUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointBaseUpdateProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EndpointBaseUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
@@ -22,7 +28,80 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EndpointBaseUpdateProperties IJsonModel<EndpointBaseUpdateProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEndpointBaseUpdateProperties(document.RootElement, options);
+        }
+
+        internal static EndpointBaseUpdateProperties DeserializeEndpointBaseUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("endpointType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element);
+                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element);
+                    case "NfsMount": return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element);
+                    case "SmbMount": return SmbMountEndpointUpdateProperties.DeserializeSmbMountEndpointUpdateProperties(element);
+                }
+            }
+            return UnknownEndpointBaseUpdateProperties.DeserializeUnknownEndpointBaseUpdateProperties(element);
+        }
+
+        BinaryData IModel<EndpointBaseUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EndpointBaseUpdateProperties IModel<EndpointBaseUpdateProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEndpointBaseUpdateProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EndpointBaseUpdateProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class VirtualApplication : IUtf8JsonSerializable
+    public partial class VirtualApplication : IUtf8JsonSerializable, IJsonModel<VirtualApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualApplication>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VirtualApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualPath))
@@ -41,11 +46,40 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualApplication DeserializeVirtualApplication(JsonElement element)
+        VirtualApplication IJsonModel<VirtualApplication>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualApplication(document.RootElement, options);
+        }
+
+        internal static VirtualApplication DeserializeVirtualApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +88,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> physicalPath = default;
             Optional<bool> preloadEnabled = default;
             Optional<IList<VirtualDirectory>> virtualDirectories = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualPath"u8))
@@ -89,8 +125,38 @@ namespace Azure.ResourceManager.AppService.Models
                     virtualDirectories = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), Optional.ToList(virtualDirectories));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), Optional.ToList(virtualDirectories), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<VirtualApplication>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualApplication IModel<VirtualApplication>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualApplication(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VirtualApplication>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

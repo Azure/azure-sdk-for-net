@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,13 +14,32 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The TaskState. </summary>
     internal partial class TaskState
     {
-        /// <summary> Initializes a new instance of TaskState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TaskState"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         public TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TaskState"/>. </summary>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LastUpdateDateTime = lastUpdateDateTime;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TaskState"/> for deserialization. </summary>
+        internal TaskState()
+        {
         }
 
         /// <summary> Gets or sets the last update date time. </summary>

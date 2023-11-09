@@ -7,16 +7,95 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class AnalyzeJobState
+    internal partial class AnalyzeJobState : IUtf8JsonSerializable, IJsonModel<AnalyzeJobState>
     {
-        internal static AnalyzeJobState DeserializeAnalyzeJobState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeJobState>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AnalyzeJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("tasks"u8);
+            writer.WriteObjectValue(Tasks);
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue(Statistics);
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("@nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedDateTime, "O");
+            if (Optional.IsDefined(ExpirationDateTime))
+            {
+                writer.WritePropertyName("expirationDateTime"u8);
+                writer.WriteStringValue(ExpirationDateTime.Value, "O");
+            }
+            writer.WritePropertyName("jobId"u8);
+            writer.WriteStringValue(JobId);
+            writer.WritePropertyName("lastUpdateDateTime"u8);
+            writer.WriteStringValue(LastUpdateDateTime, "O");
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeJobState IJsonModel<AnalyzeJobState>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeJobState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeJobState(document.RootElement, options);
+        }
+
+        internal static AnalyzeJobState DeserializeAnalyzeJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +110,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             Guid jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             State status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tasks"u8))
@@ -100,8 +181,38 @@ namespace Azure.AI.TextAnalytics.Legacy
                     status = property.Value.GetString().ToState();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value, tasks, Optional.ToList(errors), statistics.Value, nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, serializedAdditionalRawData, displayName.Value, tasks, Optional.ToList(errors), statistics.Value, nextLink.Value);
         }
+
+        BinaryData IModel<AnalyzeJobState>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeJobState)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnalyzeJobState IModel<AnalyzeJobState>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeJobState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnalyzeJobState(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AnalyzeJobState>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

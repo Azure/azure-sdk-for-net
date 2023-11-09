@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SnowflakeImportCopyCommandConverter))]
-    public partial class SnowflakeImportCopyCommand : IUtf8JsonSerializable
+    public partial class SnowflakeImportCopyCommand : IUtf8JsonSerializable, IJsonModel<SnowflakeImportCopyCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeImportCopyCommand>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SnowflakeImportCopyCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdditionalCopyOptions))
@@ -61,8 +65,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SnowflakeImportCopyCommand DeserializeSnowflakeImportCopyCommand(JsonElement element)
+        SnowflakeImportCopyCommand IJsonModel<SnowflakeImportCopyCommand>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnowflakeImportCopyCommand(document.RootElement, options);
+        }
+
+        internal static SnowflakeImportCopyCommand DeserializeSnowflakeImportCopyCommand(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,6 +144,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SnowflakeImportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
         }
+
+        BinaryData IModel<SnowflakeImportCopyCommand>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SnowflakeImportCopyCommand IModel<SnowflakeImportCopyCommand>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SnowflakeImportCopyCommand)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSnowflakeImportCopyCommand(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SnowflakeImportCopyCommand>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class SnowflakeImportCopyCommandConverter : JsonConverter<SnowflakeImportCopyCommand>
         {

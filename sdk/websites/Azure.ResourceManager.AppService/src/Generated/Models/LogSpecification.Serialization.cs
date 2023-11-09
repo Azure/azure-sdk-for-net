@@ -6,15 +6,75 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LogSpecification
+    public partial class LogSpecification : IUtf8JsonSerializable, IJsonModel<LogSpecification>
     {
-        internal static LogSpecification DeserializeLogSpecification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogSpecification>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LogSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(BlobDuration))
+            {
+                writer.WritePropertyName("blobDuration"u8);
+                writer.WriteStringValue(BlobDuration.Value, "P");
+            }
+            if (Optional.IsDefined(LogFilterPattern))
+            {
+                writer.WritePropertyName("logFilterPattern"u8);
+                writer.WriteStringValue(LogFilterPattern);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LogSpecification IJsonModel<LogSpecification>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogSpecification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogSpecification(document.RootElement, options);
+        }
+
+        internal static LogSpecification DeserializeLogSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +83,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayName = default;
             Optional<TimeSpan> blobDuration = default;
             Optional<string> logFilterPattern = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,8 +111,38 @@ namespace Azure.ResourceManager.AppService.Models
                     logFilterPattern = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LogSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogSpecification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogSpecification IModel<LogSpecification>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogSpecification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogSpecification(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LogSpecification>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

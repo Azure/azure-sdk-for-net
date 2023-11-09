@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Synapse expression definition. </summary>
     public partial class Expression
     {
-        /// <summary> Initializes a new instance of Expression. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Expression"/>. </summary>
         /// <param name="type"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Expression"/>. </summary>
+        /// <param name="type"> Expression type. </param>
+        /// <param name="value"> Expression value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Expression(ExpressionType type, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Type = type;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Expression"/> for deserialization. </summary>
+        internal Expression()
+        {
         }
 
         /// <summary> Expression type. </summary>

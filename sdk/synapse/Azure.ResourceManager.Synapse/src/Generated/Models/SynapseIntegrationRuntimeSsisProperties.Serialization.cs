@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeSsisProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeSsisProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SynapseIntegrationRuntimeSsisProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogInfo))
@@ -67,8 +71,22 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element)
+        SynapseIntegrationRuntimeSsisProperties IJsonModel<SynapseIntegrationRuntimeSsisProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeSsisProperties(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,5 +165,30 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
         }
+
+        BinaryData IModel<SynapseIntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseIntegrationRuntimeSsisProperties IModel<SynapseIntegrationRuntimeSsisProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeSsisProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SynapseIntegrationRuntimeSsisProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

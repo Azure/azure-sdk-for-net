@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Log settings. </summary>
     public partial class LogSettings
     {
-        /// <summary> Initializes a new instance of LogSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logLocationSettings"/> is null. </exception>
         public LogSettings(LogLocationSettings logLocationSettings)
@@ -23,15 +27,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LogLocationSettings = logLocationSettings;
         }
 
-        /// <summary> Initializes a new instance of LogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
         /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyActivityLogSettings"> Specifies settings for copy activity log. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
-        internal LogSettings(object enableCopyActivityLog, CopyActivityLogSettings copyActivityLogSettings, LogLocationSettings logLocationSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogSettings(object enableCopyActivityLog, CopyActivityLogSettings copyActivityLogSettings, LogLocationSettings logLocationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableCopyActivityLog = enableCopyActivityLog;
             CopyActivityLogSettings = copyActivityLogSettings;
             LogLocationSettings = logLocationSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/> for deserialization. </summary>
+        internal LogSettings()
+        {
         }
 
         /// <summary> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </summary>

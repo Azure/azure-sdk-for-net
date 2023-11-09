@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimePatch : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimePatch : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimePatch>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SynapseIntegrationRuntimePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoUpdate))
@@ -25,7 +31,96 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SynapseIntegrationRuntimePatch IJsonModel<SynapseIntegrationRuntimePatch>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimePatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimePatch(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimePatch DeserializeSynapseIntegrationRuntimePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SynapseIntegrationRuntimeAutoUpdate> autoUpdate = default;
+            Optional<string> updateDelayOffset = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("autoUpdate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpdate = new SynapseIntegrationRuntimeAutoUpdate(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("updateDelayOffset"u8))
+                {
+                    updateDelayOffset = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseIntegrationRuntimePatch(Optional.ToNullable(autoUpdate), updateDelayOffset.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<SynapseIntegrationRuntimePatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimePatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseIntegrationRuntimePatch IModel<SynapseIntegrationRuntimePatch>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimePatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimePatch(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SynapseIntegrationRuntimePatch>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteMachineKey
+    public partial class SiteMachineKey : IUtf8JsonSerializable, IJsonModel<SiteMachineKey>
     {
-        internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteMachineKey>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SiteMachineKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Validation))
+            {
+                writer.WritePropertyName("validation"u8);
+                writer.WriteStringValue(Validation);
+            }
+            if (Optional.IsDefined(ValidationKey))
+            {
+                writer.WritePropertyName("validationKey"u8);
+                writer.WriteStringValue(ValidationKey);
+            }
+            if (Optional.IsDefined(Decryption))
+            {
+                writer.WritePropertyName("decryption"u8);
+                writer.WriteStringValue(Decryption);
+            }
+            if (Optional.IsDefined(DecryptionKey))
+            {
+                writer.WritePropertyName("decryptionKey"u8);
+                writer.WriteStringValue(DecryptionKey);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteMachineKey IJsonModel<SiteMachineKey>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteMachineKey(document.RootElement, options);
+        }
+
+        internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +83,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> validationKey = default;
             Optional<string> decryption = default;
             Optional<string> decryptionKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validation"u8))
@@ -44,8 +107,38 @@ namespace Azure.ResourceManager.AppService.Models
                     decryptionKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteMachineKey IModel<SiteMachineKey>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteMachineKey(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SiteMachineKey>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

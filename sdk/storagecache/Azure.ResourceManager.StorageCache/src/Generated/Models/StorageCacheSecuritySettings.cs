@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Cache security settings. </summary>
     internal partial class StorageCacheSecuritySettings
     {
-        /// <summary> Initializes a new instance of StorageCacheSecuritySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSecuritySettings"/>. </summary>
         public StorageCacheSecuritySettings()
         {
             AccessPolicies = new ChangeTrackingList<NfsAccessPolicy>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSecuritySettings"/>. </summary>
         /// <param name="accessPolicies"> NFS access policies defined for this cache. </param>
-        internal StorageCacheSecuritySettings(IList<NfsAccessPolicy> accessPolicies)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheSecuritySettings(IList<NfsAccessPolicy> accessPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessPolicies = accessPolicies;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> NFS access policies defined for this cache. </summary>

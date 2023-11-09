@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,67 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkTableResourceConverter))]
-    public partial class LinkTableResource
+    public partial class LinkTableResource : IUtf8JsonSerializable, IJsonModel<LinkTableResource>
     {
-        internal static LinkTableResource DeserializeLinkTableResource(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkTableResource>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LinkTableResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source);
+            }
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteObjectValue(Target);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkTableResource IJsonModel<LinkTableResource>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkTableResource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkTableResource(document.RootElement, options);
+        }
+
+        internal static LinkTableResource DeserializeLinkTableResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +85,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> name = default;
             Optional<LinkTableRequestSource> source = default;
             Optional<LinkTableRequestTarget> target = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -55,15 +117,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     target = LinkTableRequestTarget.DeserializeLinkTableRequestTarget(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkTableResource(id.Value, name.Value, source.Value, target.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkTableResource(id.Value, name.Value, source.Value, target.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LinkTableResource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkTableResource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkTableResource IModel<LinkTableResource>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkTableResource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkTableResource(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LinkTableResource>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class LinkTableResourceConverter : JsonConverter<LinkTableResource>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableResource model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override LinkTableResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

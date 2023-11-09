@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network trace. </summary>
     public partial class WebAppNetworkTrace
     {
-        /// <summary> Initializes a new instance of WebAppNetworkTrace. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppNetworkTrace"/>. </summary>
         internal WebAppNetworkTrace()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppNetworkTrace. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppNetworkTrace"/>. </summary>
         /// <param name="path"> Local file path for the captured network trace file. </param>
         /// <param name="status"> Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed). </param>
         /// <param name="message"> Detailed message of a network trace operation, e.g. error message in case of failure. </param>
-        internal WebAppNetworkTrace(string path, string status, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppNetworkTrace(string path, string status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Status = status;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Local file path for the captured network trace file. </summary>

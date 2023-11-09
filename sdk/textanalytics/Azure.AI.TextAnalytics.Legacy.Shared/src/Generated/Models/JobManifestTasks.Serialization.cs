@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class JobManifestTasks : IUtf8JsonSerializable
+    internal partial class JobManifestTasks : IUtf8JsonSerializable, IJsonModel<JobManifestTasks>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobManifestTasks>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<JobManifestTasks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EntityRecognitionTasks))
@@ -65,7 +71,155 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        JobManifestTasks IJsonModel<JobManifestTasks>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobManifestTasks)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobManifestTasks(document.RootElement, options);
+        }
+
+        internal static JobManifestTasks DeserializeJobManifestTasks(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<EntitiesTask>> entityRecognitionTasks = default;
+            Optional<IList<PiiTask>> entityRecognitionPiiTasks = default;
+            Optional<IList<KeyPhrasesTask>> keyPhraseExtractionTasks = default;
+            Optional<IList<EntityLinkingTask>> entityLinkingTasks = default;
+            Optional<IList<SentimentAnalysisTask>> sentimentAnalysisTasks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("entityRecognitionTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EntitiesTask> array = new List<EntitiesTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntitiesTask.DeserializeEntitiesTask(item));
+                    }
+                    entityRecognitionTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("entityRecognitionPiiTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PiiTask> array = new List<PiiTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PiiTask.DeserializePiiTask(item));
+                    }
+                    entityRecognitionPiiTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("keyPhraseExtractionTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KeyPhrasesTask> array = new List<KeyPhrasesTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(KeyPhrasesTask.DeserializeKeyPhrasesTask(item));
+                    }
+                    keyPhraseExtractionTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("entityLinkingTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EntityLinkingTask> array = new List<EntityLinkingTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntityLinkingTask.DeserializeEntityLinkingTask(item));
+                    }
+                    entityLinkingTasks = array;
+                    continue;
+                }
+                if (property.NameEquals("sentimentAnalysisTasks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SentimentAnalysisTask> array = new List<SentimentAnalysisTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SentimentAnalysisTask.DeserializeSentimentAnalysisTask(item));
+                    }
+                    sentimentAnalysisTasks = array;
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JobManifestTasks(Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<JobManifestTasks>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobManifestTasks)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JobManifestTasks IModel<JobManifestTasks>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobManifestTasks)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJobManifestTasks(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<JobManifestTasks>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

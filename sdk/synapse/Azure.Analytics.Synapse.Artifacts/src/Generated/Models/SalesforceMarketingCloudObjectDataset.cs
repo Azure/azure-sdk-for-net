@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Salesforce Marketing Cloud dataset. </summary>
     public partial class SalesforceMarketingCloudObjectDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SalesforceMarketingCloudObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SalesforceMarketingCloudObject";
         }
 
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudObjectDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -39,6 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             TableName = tableName;
             Type = type ?? "SalesforceMarketingCloudObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudObjectDataset"/> for deserialization. </summary>
+        internal SalesforceMarketingCloudObjectDataset()
+        {
         }
 
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>

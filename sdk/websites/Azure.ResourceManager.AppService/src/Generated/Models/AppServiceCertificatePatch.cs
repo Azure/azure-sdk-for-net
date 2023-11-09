@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Key Vault container ARM resource for a certificate that is purchased through Azure. </summary>
     public partial class AppServiceCertificatePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificatePatch"/>. </summary>
         public AppServiceCertificatePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,12 +32,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             ProvisioningState = provisioningState;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key Vault resource Id. </summary>

@@ -5,15 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsQueryCompilationError
+    public partial class StreamAnalyticsQueryCompilationError : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsQueryCompilationError>
     {
-        internal static StreamAnalyticsQueryCompilationError DeserializeStreamAnalyticsQueryCompilationError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsQueryCompilationError>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<StreamAnalyticsQueryCompilationError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartLine))
+                {
+                    writer.WritePropertyName("startLine"u8);
+                    writer.WriteNumberValue(StartLine.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StartColumn))
+                {
+                    writer.WritePropertyName("startColumn"u8);
+                    writer.WriteNumberValue(StartColumn.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndLine))
+                {
+                    writer.WritePropertyName("endLine"u8);
+                    writer.WriteNumberValue(EndLine.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EndColumn))
+                {
+                    writer.WritePropertyName("endColumn"u8);
+                    writer.WriteNumberValue(EndColumn.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IsGlobal))
+                {
+                    writer.WritePropertyName("isGlobal"u8);
+                    writer.WriteBooleanValue(IsGlobal.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StreamAnalyticsQueryCompilationError IJsonModel<StreamAnalyticsQueryCompilationError>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsQueryCompilationError(document.RootElement, options);
+        }
+
+        internal static StreamAnalyticsQueryCompilationError DeserializeStreamAnalyticsQueryCompilationError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +113,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> endLine = default;
             Optional<int> endColumn = default;
             Optional<bool> isGlobal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -76,8 +167,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     isGlobal = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<StreamAnalyticsQueryCompilationError>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamAnalyticsQueryCompilationError IModel<StreamAnalyticsQueryCompilationError>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsQueryCompilationError(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<StreamAnalyticsQueryCompilationError>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

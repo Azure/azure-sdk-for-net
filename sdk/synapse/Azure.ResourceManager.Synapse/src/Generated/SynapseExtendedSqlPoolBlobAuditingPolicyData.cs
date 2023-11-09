@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyData"/>. </summary>
         public SynapseExtendedSqlPoolBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -121,7 +124,8 @@ namespace Azure.ResourceManager.Synapse
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
-        internal SynapseExtendedSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string predicateExpression, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseExtendedSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string predicateExpression, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PredicateExpression = predicateExpression;
             State = state;
@@ -133,6 +137,7 @@ namespace Azure.ResourceManager.Synapse
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             QueueDelayMs = queueDelayMs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies condition of where clause when creating an audit. </summary>

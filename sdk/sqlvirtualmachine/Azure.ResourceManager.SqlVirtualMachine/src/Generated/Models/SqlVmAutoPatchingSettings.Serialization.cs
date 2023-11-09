@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAutoPatchingSettings : IUtf8JsonSerializable
+    public partial class SqlVmAutoPatchingSettings : IUtf8JsonSerializable, IJsonModel<SqlVmAutoPatchingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmAutoPatchingSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SqlVmAutoPatchingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
@@ -35,11 +41,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("maintenanceWindowDuration"u8);
                 writer.WriteNumberValue(MaintenanceWindowDurationInMinutes.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmAutoPatchingSettings DeserializeSqlVmAutoPatchingSettings(JsonElement element)
+        SqlVmAutoPatchingSettings IJsonModel<SqlVmAutoPatchingSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmAutoPatchingSettings(document.RootElement, options);
+        }
+
+        internal static SqlVmAutoPatchingSettings DeserializeSqlVmAutoPatchingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<SqlVmAutoPatchingDayOfWeek> dayOfWeek = default;
             Optional<int> maintenanceWindowStartingHour = default;
             Optional<int> maintenanceWindowDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -86,8 +123,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     maintenanceWindowDuration = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlVmAutoPatchingSettings(Optional.ToNullable(enable), Optional.ToNullable(dayOfWeek), Optional.ToNullable(maintenanceWindowStartingHour), Optional.ToNullable(maintenanceWindowDuration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlVmAutoPatchingSettings(Optional.ToNullable(enable), Optional.ToNullable(dayOfWeek), Optional.ToNullable(maintenanceWindowStartingHour), Optional.ToNullable(maintenanceWindowDuration), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SqlVmAutoPatchingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlVmAutoPatchingSettings IModel<SqlVmAutoPatchingSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlVmAutoPatchingSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SqlVmAutoPatchingSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

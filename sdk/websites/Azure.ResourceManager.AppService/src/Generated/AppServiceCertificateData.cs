@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceCertificateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceCertificateData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +39,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             ProvisioningState = provisioningState;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateData"/> for deserialization. </summary>
+        internal AppServiceCertificateData()
+        {
         }
 
         /// <summary> Key Vault resource Id. </summary>

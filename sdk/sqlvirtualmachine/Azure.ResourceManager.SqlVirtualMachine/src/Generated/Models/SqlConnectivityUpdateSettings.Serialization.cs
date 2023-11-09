@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlConnectivityUpdateSettings : IUtf8JsonSerializable
+    public partial class SqlConnectivityUpdateSettings : IUtf8JsonSerializable, IJsonModel<SqlConnectivityUpdateSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlConnectivityUpdateSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SqlConnectivityUpdateSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectivityType))
@@ -35,11 +41,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("sqlAuthUpdatePassword"u8);
                 writer.WriteStringValue(SqlAuthUpdatePassword);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlConnectivityUpdateSettings DeserializeSqlConnectivityUpdateSettings(JsonElement element)
+        SqlConnectivityUpdateSettings IJsonModel<SqlConnectivityUpdateSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlConnectivityUpdateSettings(document.RootElement, options);
+        }
+
+        internal static SqlConnectivityUpdateSettings DeserializeSqlConnectivityUpdateSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<int> port = default;
             Optional<string> sqlAuthUpdateUserName = default;
             Optional<string> sqlAuthUpdatePassword = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectivityType"u8))
@@ -78,8 +115,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlAuthUpdatePassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlConnectivityUpdateSettings(Optional.ToNullable(connectivityType), Optional.ToNullable(port), sqlAuthUpdateUserName.Value, sqlAuthUpdatePassword.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlConnectivityUpdateSettings(Optional.ToNullable(connectivityType), Optional.ToNullable(port), sqlAuthUpdateUserName.Value, sqlAuthUpdatePassword.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SqlConnectivityUpdateSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlConnectivityUpdateSettings IModel<SqlConnectivityUpdateSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlConnectivityUpdateSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SqlConnectivityUpdateSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

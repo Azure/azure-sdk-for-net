@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseRecoverableSqlPoolData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRecoverableSqlPoolData"/>. </summary>
         public SynapseRecoverableSqlPoolData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRecoverableSqlPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +35,14 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="serviceLevelObjective"> The service level objective name of the database. </param>
         /// <param name="elasticPoolName"> The elastic pool name of the database. </param>
         /// <param name="lastAvailableBackupOn"> The last available backup date of the database (ISO8601 format). </param>
-        internal SynapseRecoverableSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseRecoverableSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Edition = edition;
             ServiceLevelObjective = serviceLevelObjective;
             ElasticPoolName = elasticPoolName;
             LastAvailableBackupOn = lastAvailableBackupOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The edition of the database. </summary>

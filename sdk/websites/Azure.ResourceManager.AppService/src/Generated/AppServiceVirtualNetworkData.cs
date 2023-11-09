@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceVirtualNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkData"/>. </summary>
         public AppServiceVirtualNetworkData()
         {
             Routes = new ChangeTrackingList<AppServiceVirtualNetworkRoute>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprintString, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprintString, string certBlob, IReadOnlyList<AppServiceVirtualNetworkRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprintString = certThumbprintString;
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.AppService
             DnsServers = dnsServers;
             IsSwift = isSwift;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Virtual Network's resource ID. </summary>

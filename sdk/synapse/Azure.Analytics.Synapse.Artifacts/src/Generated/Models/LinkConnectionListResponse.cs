@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionListResponse. </summary>
     internal partial class LinkConnectionListResponse
     {
-        /// <summary> Initializes a new instance of LinkConnectionListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionListResponse"/>. </summary>
         /// <param name="value"> List link connection value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LinkConnectionListResponse(IEnumerable<LinkConnectionResource> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionListResponse"/>. </summary>
         /// <param name="value"> List link connection value. </param>
         /// <param name="nextLink"> List link connections next link. </param>
-        internal LinkConnectionListResponse(IReadOnlyList<LinkConnectionResource> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkConnectionListResponse(IReadOnlyList<LinkConnectionResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionListResponse"/> for deserialization. </summary>
+        internal LinkConnectionListResponse()
+        {
         }
 
         /// <summary> List link connection value. </summary>

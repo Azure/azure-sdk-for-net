@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowFieldInternal : IXmlSerializable
+    internal partial class ArrowFieldInternal : IXmlSerializable, IModel<ArrowFieldInternal>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -38,5 +43,66 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        internal static ArrowFieldInternal DeserializeArrowFieldInternal(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string type = default;
+            string name = default;
+            int? precision = default;
+            int? scale = default;
+            if (element.Element("Type") is XElement typeElement)
+            {
+                type = (string)typeElement;
+            }
+            if (element.Element("Name") is XElement nameElement)
+            {
+                name = (string)nameElement;
+            }
+            if (element.Element("Precision") is XElement precisionElement)
+            {
+                precision = (int?)precisionElement;
+            }
+            if (element.Element("Scale") is XElement scaleElement)
+            {
+                scale = (int?)scaleElement;
+            }
+            return new ArrowFieldInternal(type, name, precision, scale, default);
+        }
+
+        BinaryData IModel<ArrowFieldInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ArrowFieldInternal>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ArrowFieldInternal IModel<ArrowFieldInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArrowFieldInternal)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeArrowFieldInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<ArrowFieldInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

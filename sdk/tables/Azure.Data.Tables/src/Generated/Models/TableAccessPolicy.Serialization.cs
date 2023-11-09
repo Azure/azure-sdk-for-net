@@ -6,13 +6,16 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableAccessPolicy : IXmlSerializable
+    public partial class TableAccessPolicy : IXmlSerializable, IModel<TableAccessPolicy>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -38,7 +41,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element)
+        internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             DateTimeOffset? startsOn = default;
             DateTimeOffset? expiresOn = default;
@@ -55,7 +58,43 @@ namespace Azure.Data.Tables.Models
             {
                 permission = (string)permissionElement;
             }
-            return new TableAccessPolicy(startsOn, expiresOn, permission);
+            return new TableAccessPolicy(startsOn, expiresOn, permission, default);
         }
+
+        BinaryData IModel<TableAccessPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableAccessPolicy>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableAccessPolicy IModel<TableAccessPolicy>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableAccessPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableAccessPolicy(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<TableAccessPolicy>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

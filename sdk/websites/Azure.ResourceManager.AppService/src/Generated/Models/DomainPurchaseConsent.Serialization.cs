@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DomainPurchaseConsent : IUtf8JsonSerializable
+    public partial class DomainPurchaseConsent : IUtf8JsonSerializable, IJsonModel<DomainPurchaseConsent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainPurchaseConsent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DomainPurchaseConsent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AgreementKeys))
@@ -37,11 +41,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("agreedAt"u8);
                 writer.WriteStringValue(AgreedOn.Value, "O");
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DomainPurchaseConsent DeserializeDomainPurchaseConsent(JsonElement element)
+        DomainPurchaseConsent IJsonModel<DomainPurchaseConsent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainPurchaseConsent(document.RootElement, options);
+        }
+
+        internal static DomainPurchaseConsent DeserializeDomainPurchaseConsent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +82,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<string>> agreementKeys = default;
             Optional<string> agreedBy = default;
             Optional<DateTimeOffset> agreedAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agreementKeys"u8))
@@ -79,8 +114,38 @@ namespace Azure.ResourceManager.AppService.Models
                     agreedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DomainPurchaseConsent(Optional.ToList(agreementKeys), agreedBy.Value, Optional.ToNullable(agreedAt));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DomainPurchaseConsent(Optional.ToList(agreementKeys), agreedBy.Value, Optional.ToNullable(agreedAt), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DomainPurchaseConsent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DomainPurchaseConsent IModel<DomainPurchaseConsent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDomainPurchaseConsent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DomainPurchaseConsent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

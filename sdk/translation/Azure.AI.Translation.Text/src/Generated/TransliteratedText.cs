@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,7 +14,10 @@ namespace Azure.AI.Translation.Text
     /// <summary> Transliterated text element. </summary>
     public partial class TransliteratedText
     {
-        /// <summary> Initializes a new instance of TransliteratedText. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransliteratedText"/>. </summary>
         /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
         /// <param name="script"> A string specifying the script used in the output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="script"/> is null. </exception>
@@ -24,6 +28,23 @@ namespace Azure.AI.Translation.Text
 
             Text = text;
             Script = script;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransliteratedText"/>. </summary>
+        /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
+        /// <param name="script"> A string specifying the script used in the output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransliteratedText(string text, string script, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            Script = script;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransliteratedText"/> for deserialization. </summary>
+        internal TransliteratedText()
+        {
         }
 
         /// <summary> A string which is the result of converting the input string to the output script. </summary>

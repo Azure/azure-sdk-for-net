@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,17 +16,63 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class WebPubSubPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class WebPubSubPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<WebPubSubPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubPrivateEndpointConnectionData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<WebPubSubPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(GroupIds))
+                {
+                    writer.WritePropertyName("groupIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in GroupIds)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(ConnectionState))
             {
@@ -31,11 +80,40 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebPubSubPrivateEndpointConnectionData DeserializeWebPubSubPrivateEndpointConnectionData(JsonElement element)
+        WebPubSubPrivateEndpointConnectionData IJsonModel<WebPubSubPrivateEndpointConnectionData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebPubSubPrivateEndpointConnectionData(document.RootElement, options);
+        }
+
+        internal static WebPubSubPrivateEndpointConnectionData DeserializeWebPubSubPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +126,8 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<PrivateEndpoint> privateEndpoint = default;
             Optional<IReadOnlyList<string>> groupIds = default;
             Optional<WebPubSubPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,8 +207,38 @@ namespace Azure.ResourceManager.WebPubSub
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint.Value, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint.Value, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<WebPubSubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WebPubSubPrivateEndpointConnectionData IModel<WebPubSubPrivateEndpointConnectionData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWebPubSubPrivateEndpointConnectionData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<WebPubSubPrivateEndpointConnectionData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

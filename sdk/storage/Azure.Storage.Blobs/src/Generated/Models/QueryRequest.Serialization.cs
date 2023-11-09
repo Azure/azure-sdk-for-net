@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryRequest : IXmlSerializable
+    internal partial class QueryRequest : IXmlSerializable, IModel<QueryRequest>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -31,5 +36,66 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        internal static QueryRequest DeserializeQueryRequest(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string queryType = default;
+            string expression = default;
+            QuerySerialization inputSerialization = default;
+            QuerySerialization outputSerialization = default;
+            if (element.Element("QueryType") is XElement queryTypeElement)
+            {
+                queryType = (string)queryTypeElement;
+            }
+            if (element.Element("Expression") is XElement expressionElement)
+            {
+                expression = (string)expressionElement;
+            }
+            if (element.Element("InputSerialization") is XElement inputSerializationElement)
+            {
+                inputSerialization = QuerySerialization.DeserializeQuerySerialization(inputSerializationElement);
+            }
+            if (element.Element("OutputSerialization") is XElement outputSerializationElement)
+            {
+                outputSerialization = QuerySerialization.DeserializeQuerySerialization(outputSerializationElement);
+            }
+            return new QueryRequest(queryType, expression, inputSerialization, outputSerialization, default);
+        }
+
+        BinaryData IModel<QueryRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<QueryRequest>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueryRequest IModel<QueryRequest>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryRequest)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeQueryRequest(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<QueryRequest>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

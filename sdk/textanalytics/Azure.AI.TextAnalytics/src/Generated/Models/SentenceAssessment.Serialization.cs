@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentenceAssessment : IUtf8JsonSerializable
+    internal partial class SentenceAssessment : IUtf8JsonSerializable, IJsonModel<SentenceAssessment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentenceAssessment>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SentenceAssessment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sentiment"u8);
@@ -27,11 +33,40 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Text);
             writer.WritePropertyName("isNegated"u8);
             writer.WriteBooleanValue(IsNegated);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element)
+        SentenceAssessment IJsonModel<SentenceAssessment>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SentenceAssessment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentenceAssessment(document.RootElement, options);
+        }
+
+        internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.AI.TextAnalytics.Models
             int length = default;
             string text = default;
             bool isNegated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"u8))
@@ -74,8 +111,38 @@ namespace Azure.AI.TextAnalytics.Models
                     isNegated = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SentenceAssessment(sentiment, confidenceScores, offset, length, text, isNegated);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SentenceAssessment(sentiment, confidenceScores, offset, length, text, isNegated, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SentenceAssessment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SentenceAssessment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SentenceAssessment IModel<SentenceAssessment>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SentenceAssessment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSentenceAssessment(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SentenceAssessment>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

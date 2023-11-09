@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for data flow statistics. </summary>
     public partial class DataFlowDebugStatisticsRequest
     {
-        /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugStatisticsRequest"/>. </summary>
         public DataFlowDebugStatisticsRequest()
         {
             Columns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugStatisticsRequest"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
         /// <param name="streamName"> The output stream name. </param>
         /// <param name="columns"> List of column names. </param>
-        internal DataFlowDebugStatisticsRequest(string sessionId, string dataFlowName, string streamName, IList<string> columns)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowDebugStatisticsRequest(string sessionId, string dataFlowName, string streamName, IList<string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             DataFlowName = dataFlowName;
             StreamName = streamName;
             Columns = columns;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

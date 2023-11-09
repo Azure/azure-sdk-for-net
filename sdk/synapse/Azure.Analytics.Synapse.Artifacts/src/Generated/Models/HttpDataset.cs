@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A file in an HTTP web server. </summary>
     public partial class HttpDataset : Dataset
     {
-        /// <summary> Initializes a new instance of HttpDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public HttpDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HttpFile";
         }
 
-        /// <summary> Initializes a new instance of HttpDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Format = format;
             Compression = compression;
             Type = type ?? "HttpFile";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HttpDataset"/> for deserialization. </summary>
+        internal HttpDataset()
+        {
         }
 
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>

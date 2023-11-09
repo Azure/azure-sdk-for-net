@@ -6,15 +6,95 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LegalHoldTag
+    public partial class LegalHoldTag : IUtf8JsonSerializable, IJsonModel<LegalHoldTag>
     {
-        internal static LegalHoldTag DeserializeLegalHoldTag(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LegalHoldTag>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<LegalHoldTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Tag))
+                {
+                    writer.WritePropertyName("tag"u8);
+                    writer.WriteStringValue(Tag);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("timestamp"u8);
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ObjectIdentifier))
+                {
+                    writer.WritePropertyName("objectIdentifier"u8);
+                    writer.WriteStringValue(ObjectIdentifier);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Upn))
+                {
+                    writer.WritePropertyName("upn"u8);
+                    writer.WriteStringValue(Upn);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LegalHoldTag IJsonModel<LegalHoldTag>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LegalHoldTag)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLegalHoldTag(document.RootElement, options);
+        }
+
+        internal static LegalHoldTag DeserializeLegalHoldTag(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +104,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> objectIdentifier = default;
             Optional<Guid> tenantId = default;
             Optional<string> upn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tag"u8))
@@ -59,8 +141,38 @@ namespace Azure.ResourceManager.Storage.Models
                     upn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LegalHoldTag(tag.Value, Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LegalHoldTag(tag.Value, Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<LegalHoldTag>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LegalHoldTag)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LegalHoldTag IModel<LegalHoldTag>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LegalHoldTag)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLegalHoldTag(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<LegalHoldTag>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Server endpoint recall error object. </summary>
     public partial class ServerEndpointRecallError
     {
-        /// <summary> Initializes a new instance of ServerEndpointRecallError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallError"/>. </summary>
         internal ServerEndpointRecallError()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointRecallError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="count"> Count of occurences of the error. </param>
-        internal ServerEndpointRecallError(int? errorCode, long? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEndpointRecallError(int? errorCode, long? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code (HResult). </summary>

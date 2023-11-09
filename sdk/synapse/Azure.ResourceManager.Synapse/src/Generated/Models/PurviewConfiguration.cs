@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Purview Configuration. </summary>
     internal partial class PurviewConfiguration
     {
-        /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewConfiguration"/>. </summary>
         public PurviewConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewConfiguration"/>. </summary>
         /// <param name="purviewResourceId"> Purview Resource ID. </param>
-        internal PurviewConfiguration(ResourceIdentifier purviewResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewConfiguration(ResourceIdentifier purviewResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PurviewResourceId = purviewResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Purview Resource ID. </summary>

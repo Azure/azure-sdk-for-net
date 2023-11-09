@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Azure Synapse nested debug resource. </summary>
     public partial class SubResourceDebugResource
     {
-        /// <summary> Initializes a new instance of SubResourceDebugResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubResourceDebugResource"/>. </summary>
         public SubResourceDebugResource()
         {
         }
 
-        /// <summary> Initializes a new instance of SubResourceDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubResourceDebugResource"/>. </summary>
         /// <param name="name"> The resource name. </param>
-        internal SubResourceDebugResource(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubResourceDebugResource(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource name. </summary>

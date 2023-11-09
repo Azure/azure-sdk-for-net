@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </summary>
     public partial class LivePipeline
     {
-        /// <summary> Initializes a new instance of LivePipeline. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LivePipeline"/>. </summary>
         /// <param name="name"> Live pipeline unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipeline(string name)
@@ -23,15 +27,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of LivePipeline. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipeline"/>. </summary>
         /// <param name="name"> Live pipeline unique identifier. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Live pipeline properties. </param>
-        internal LivePipeline(string name, SystemData systemData, LivePipelineProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LivePipeline(string name, SystemData systemData, LivePipelineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SystemData = systemData;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LivePipeline"/> for deserialization. </summary>
+        internal LivePipeline()
+        {
         }
 
         /// <summary> Live pipeline unique identifier. </summary>

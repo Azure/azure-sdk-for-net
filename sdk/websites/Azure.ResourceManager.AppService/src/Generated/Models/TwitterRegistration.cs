@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
     public partial class TwitterRegistration
     {
-        /// <summary> Initializes a new instance of TwitterRegistration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TwitterRegistration"/>. </summary>
         public TwitterRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of TwitterRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwitterRegistration"/>. </summary>
         /// <param name="consumerKey">
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
@@ -25,10 +31,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
         /// </param>
-        internal TwitterRegistration(string consumerKey, string consumerSecretSettingName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TwitterRegistration(string consumerKey, string consumerSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConsumerKey = consumerKey;
             ConsumerSecretSettingName = consumerSecretSettingName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

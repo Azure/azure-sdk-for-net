@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Dynamic Executor Allocation Properties. </summary>
     public partial class DynamicExecutorAllocation
     {
-        /// <summary> Initializes a new instance of DynamicExecutorAllocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynamicExecutorAllocation"/>. </summary>
         public DynamicExecutorAllocation()
         {
         }
 
-        /// <summary> Initializes a new instance of DynamicExecutorAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicExecutorAllocation"/>. </summary>
         /// <param name="enabled"> Indicates whether Dynamic Executor Allocation is enabled or not. </param>
-        internal DynamicExecutorAllocation(bool? enabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynamicExecutorAllocation(bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether Dynamic Executor Allocation is enabled or not. </summary>

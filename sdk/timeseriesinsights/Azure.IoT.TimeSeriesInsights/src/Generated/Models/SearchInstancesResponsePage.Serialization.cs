@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class SearchInstancesResponsePage
+    internal partial class SearchInstancesResponsePage : IUtf8JsonSerializable, IJsonModel<SearchInstancesResponsePage>
     {
-        internal static SearchInstancesResponsePage DeserializeSearchInstancesResponsePage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchInstancesResponsePage>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SearchInstancesResponsePage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Instances))
+                {
+                    writer.WritePropertyName("instances"u8);
+                    writer.WriteObjectValue(Instances);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(HierarchyNodes))
+                {
+                    writer.WritePropertyName("hierarchyNodes"u8);
+                    writer.WriteObjectValue(HierarchyNodes);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SearchInstancesResponsePage IJsonModel<SearchInstancesResponsePage>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchInstancesResponsePage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchInstancesResponsePage(document.RootElement, options);
+        }
+
+        internal static SearchInstancesResponsePage DeserializeSearchInstancesResponsePage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SearchInstancesResponse> instances = default;
             Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instances"u8))
@@ -40,8 +99,38 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchyNodes = SearchHierarchyNodesResponse.DeserializeSearchHierarchyNodesResponse(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchInstancesResponsePage(instances.Value, hierarchyNodes.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchInstancesResponsePage(instances.Value, hierarchyNodes.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SearchInstancesResponsePage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchInstancesResponsePage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SearchInstancesResponsePage IModel<SearchInstancesResponsePage>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchInstancesResponsePage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSearchInstancesResponsePage(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SearchInstancesResponsePage>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

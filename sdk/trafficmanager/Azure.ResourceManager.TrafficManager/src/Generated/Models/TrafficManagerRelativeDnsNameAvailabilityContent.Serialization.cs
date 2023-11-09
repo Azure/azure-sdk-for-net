@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerRelativeDnsNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class TrafficManagerRelativeDnsNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<TrafficManagerRelativeDnsNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerRelativeDnsNameAvailabilityContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -25,7 +31,96 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        TrafficManagerRelativeDnsNameAvailabilityContent IJsonModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerRelativeDnsNameAvailabilityContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerRelativeDnsNameAvailabilityContent(document.RootElement, options);
+        }
+
+        internal static TrafficManagerRelativeDnsNameAvailabilityContent DeserializeTrafficManagerRelativeDnsNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TrafficManagerRelativeDnsNameAvailabilityContent(name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerRelativeDnsNameAvailabilityContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TrafficManagerRelativeDnsNameAvailabilityContent IModel<TrafficManagerRelativeDnsNameAvailabilityContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerRelativeDnsNameAvailabilityContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerRelativeDnsNameAvailabilityContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<TrafficManagerRelativeDnsNameAvailabilityContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

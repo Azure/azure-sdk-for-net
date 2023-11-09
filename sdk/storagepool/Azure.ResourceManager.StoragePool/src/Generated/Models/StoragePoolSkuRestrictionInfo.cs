@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Describes an available Compute SKU Restriction Information. </summary>
     public partial class StoragePoolSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictionInfo"/>. </summary>
         internal StoragePoolSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
-        internal StoragePoolSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePoolSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Locations = locations;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>

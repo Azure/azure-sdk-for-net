@@ -5,13 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileRange
+    internal partial class FileRange : IXmlSerializable, IModel<FileRange>
     {
-        internal static FileRange DeserializeFileRange(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Range");
+            writer.WriteStartElement("Start");
+            writer.WriteValue(Start);
+            writer.WriteEndElement();
+            writer.WriteStartElement("End");
+            writer.WriteValue(End);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static FileRange DeserializeFileRange(XElement element, ModelReaderWriterOptions options = null)
         {
             long start = default;
             long end = default;
@@ -23,7 +41,43 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 end = (long)endElement;
             }
-            return new FileRange(start, end);
+            return new FileRange(start, end, default);
         }
+
+        BinaryData IModel<FileRange>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<FileRange>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FileRange IModel<FileRange>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FileRange)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeFileRange(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<FileRange>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class IotHubDeviceConnection : IUtf8JsonSerializable
+    public partial class IotHubDeviceConnection : IUtf8JsonSerializable, IJsonModel<IotHubDeviceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubDeviceConnection>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<IotHubDeviceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deviceId"u8);
@@ -22,17 +28,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotHubDeviceConnection DeserializeIotHubDeviceConnection(JsonElement element)
+        IotHubDeviceConnection IJsonModel<IotHubDeviceConnection>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotHubDeviceConnection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubDeviceConnection(document.RootElement, options);
+        }
+
+        internal static IotHubDeviceConnection DeserializeIotHubDeviceConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string deviceId = default;
             Optional<CredentialsBase> credentials = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -49,8 +86,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubDeviceConnection(deviceId, credentials.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IotHubDeviceConnection(deviceId, credentials.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<IotHubDeviceConnection>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotHubDeviceConnection)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IotHubDeviceConnection IModel<IotHubDeviceConnection>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotHubDeviceConnection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIotHubDeviceConnection(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<IotHubDeviceConnection>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A stream analytics output. </summary>
     public partial class StreamAnalyticsTestOutput
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsTestOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestOutput"/>. </summary>
         /// <param name="output"> The stream analytics output to test. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
         public StreamAnalyticsTestOutput(StreamingJobOutputData output)
@@ -22,6 +26,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Argument.AssertNotNull(output, nameof(output));
 
             Output = output;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestOutput"/>. </summary>
+        /// <param name="output"> The stream analytics output to test. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsTestOutput(StreamingJobOutputData output, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Output = output;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestOutput"/> for deserialization. </summary>
+        internal StreamAnalyticsTestOutput()
+        {
         }
 
         /// <summary> The stream analytics output to test. </summary>

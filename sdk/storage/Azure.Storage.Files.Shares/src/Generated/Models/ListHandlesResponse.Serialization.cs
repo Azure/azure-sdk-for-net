@@ -5,14 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ListHandlesResponse
+    internal partial class ListHandlesResponse : IXmlSerializable, IModel<ListHandlesResponse>
     {
-        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(HandleList))
+            {
+                writer.WriteStartElement("Entries");
+                foreach (var item in HandleList)
+                {
+                    writer.WriteObjectValue(item, "Handle");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string nextMarker = default;
             IReadOnlyList<HandleItem> handleList = default;
@@ -29,7 +53,43 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 handleList = array;
             }
-            return new ListHandlesResponse(handleList, nextMarker);
+            return new ListHandlesResponse(handleList, nextMarker, default);
         }
+
+        BinaryData IModel<ListHandlesResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ListHandlesResponse>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListHandlesResponse IModel<ListHandlesResponse>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ListHandlesResponse)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeListHandlesResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<ListHandlesResponse>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RampUpRule : IUtf8JsonSerializable
+    public partial class RampUpRule : IUtf8JsonSerializable, IJsonModel<RampUpRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RampUpRule>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<RampUpRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionHostName))
@@ -56,11 +61,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RampUpRule DeserializeRampUpRule(JsonElement element)
+        RampUpRule IJsonModel<RampUpRule>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RampUpRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRampUpRule(document.RootElement, options);
+        }
+
+        internal static RampUpRule DeserializeRampUpRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +107,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<double> maxReroutePercentage = default;
             Optional<Uri> changeDecisionCallbackUrl = default;
             Optional<string> name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionHostName"u8))
@@ -139,8 +175,38 @@ namespace Azure.ResourceManager.AppService.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RampUpRule(actionHostName.Value, Optional.ToNullable(reroutePercentage), Optional.ToNullable(changeStep), Optional.ToNullable(changeIntervalInMinutes), Optional.ToNullable(minReroutePercentage), Optional.ToNullable(maxReroutePercentage), changeDecisionCallbackUrl.Value, name.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RampUpRule(actionHostName.Value, Optional.ToNullable(reroutePercentage), Optional.ToNullable(changeStep), Optional.ToNullable(changeIntervalInMinutes), Optional.ToNullable(minReroutePercentage), Optional.ToNullable(maxReroutePercentage), changeDecisionCallbackUrl.Value, name.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<RampUpRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RampUpRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RampUpRule IModel<RampUpRule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RampUpRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRampUpRule(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<RampUpRule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

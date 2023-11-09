@@ -5,20 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableServiceStatistics
+    public partial class TableServiceStatistics : IXmlSerializable, IModel<TableServiceStatistics>
     {
-        internal static TableServiceStatistics DeserializeTableServiceStatistics(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "StorageServiceStats");
+            if (Optional.IsDefined(GeoReplication))
+            {
+                writer.WriteObjectValue(GeoReplication, "GeoReplication");
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static TableServiceStatistics DeserializeTableServiceStatistics(XElement element, ModelReaderWriterOptions options = null)
         {
             TableGeoReplicationInfo geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)
             {
                 geoReplication = TableGeoReplicationInfo.DeserializeTableGeoReplicationInfo(geoReplicationElement);
             }
-            return new TableServiceStatistics(geoReplication);
+            return new TableServiceStatistics(geoReplication, default);
         }
+
+        BinaryData IModel<TableServiceStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableServiceStatistics>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableServiceStatistics IModel<TableServiceStatistics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableServiceStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableServiceStatistics(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<TableServiceStatistics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

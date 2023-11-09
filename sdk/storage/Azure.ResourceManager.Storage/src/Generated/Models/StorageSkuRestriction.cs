@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The restriction because of which SKU cannot be used. </summary>
     public partial class StorageSkuRestriction
     {
-        /// <summary> Initializes a new instance of StorageSkuRestriction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSkuRestriction"/>. </summary>
         internal StorageSkuRestriction()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StorageSkuRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSkuRestriction"/>. </summary>
         /// <param name="restrictionType"> The type of restrictions. As of now only possible value for this is location. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC. </param>
-        internal StorageSkuRestriction(string restrictionType, IReadOnlyList<string> values, StorageRestrictionReasonCode? reasonCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSkuRestriction(string restrictionType, IReadOnlyList<string> values, StorageRestrictionReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestrictionType = restrictionType;
             Values = values;
             ReasonCode = reasonCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of restrictions. As of now only possible value for this is location. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapMonitorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapMonitorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapMonitorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SapMonitorData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SapMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +47,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="monitorSubnetId"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
         /// <param name="storageAccountArmId"> The ARM ID of the Storage account used for SAP monitoring. </param>
-        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, SapRoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, ResourceIdentifier msiArmId, ResourceIdentifier storageAccountArmId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, SapRoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, ResourceIdentifier msiArmId, ResourceIdentifier storageAccountArmId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -56,6 +61,12 @@ namespace Azure.ResourceManager.Workloads
             MonitorSubnetId = monitorSubnetId;
             MsiArmId = msiArmId;
             StorageAccountArmId = storageAccountArmId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapMonitorData"/> for deserialization. </summary>
+        internal SapMonitorData()
+        {
         }
 
         /// <summary> [currently not in use] Managed service identity(user assigned identities). </summary>

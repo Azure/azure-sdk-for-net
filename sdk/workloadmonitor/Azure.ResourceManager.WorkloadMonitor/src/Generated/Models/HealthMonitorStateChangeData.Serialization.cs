@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,10 +16,138 @@ using Azure.ResourceManager.WorkloadMonitor.Models;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
-    public partial class HealthMonitorStateChangeData
+    public partial class HealthMonitorStateChangeData : IUtf8JsonSerializable, IJsonModel<HealthMonitorStateChangeData>
     {
-        internal static HealthMonitorStateChangeData DeserializeHealthMonitorStateChangeData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthMonitorStateChangeData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HealthMonitorStateChangeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MonitorName))
+            {
+                writer.WritePropertyName("monitorName"u8);
+                writer.WriteStringValue(MonitorName);
+            }
+            if (Optional.IsDefined(MonitorType))
+            {
+                writer.WritePropertyName("monitorType"u8);
+                writer.WriteStringValue(MonitorType);
+            }
+            if (Optional.IsDefined(MonitoredObject))
+            {
+                writer.WritePropertyName("monitoredObject"u8);
+                writer.WriteStringValue(MonitoredObject);
+            }
+            if (Optional.IsDefined(EvaluationTimestamp))
+            {
+                writer.WritePropertyName("evaluationTimestamp"u8);
+                writer.WriteStringValue(EvaluationTimestamp);
+            }
+            if (Optional.IsDefined(CurrentStateFirstObservedTimestamp))
+            {
+                writer.WritePropertyName("currentStateFirstObservedTimestamp"u8);
+                writer.WriteStringValue(CurrentStateFirstObservedTimestamp);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PreviousMonitorState))
+                {
+                    writer.WritePropertyName("previousMonitorState"u8);
+                    writer.WriteStringValue(PreviousMonitorState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CurrentMonitorState))
+                {
+                    writer.WritePropertyName("currentMonitorState"u8);
+                    writer.WriteStringValue(CurrentMonitorState.Value.ToString());
+                }
+            }
+            if (Optional.IsDefined(Evidence))
+            {
+                writer.WritePropertyName("evidence"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Evidence);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Evidence))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(MonitorConfiguration))
+            {
+                writer.WritePropertyName("monitorConfiguration"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MonitorConfiguration);
+#else
+                using (JsonDocument document = JsonDocument.Parse(MonitorConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HealthMonitorStateChangeData IJsonModel<HealthMonitorStateChangeData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthMonitorStateChangeData(document.RootElement, options);
+        }
+
+        internal static HealthMonitorStateChangeData DeserializeHealthMonitorStateChangeData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +165,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
             Optional<HealthState> currentMonitorState = default;
             Optional<BinaryData> evidence = default;
             Optional<BinaryData> monitorConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -133,8 +266,38 @@ namespace Azure.ResourceManager.WorkloadMonitor
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthMonitorStateChangeData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evidence.Value, monitorConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthMonitorStateChangeData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evidence.Value, monitorConfiguration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HealthMonitorStateChangeData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthMonitorStateChangeData IModel<HealthMonitorStateChangeData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthMonitorStateChangeData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HealthMonitorStateChangeData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

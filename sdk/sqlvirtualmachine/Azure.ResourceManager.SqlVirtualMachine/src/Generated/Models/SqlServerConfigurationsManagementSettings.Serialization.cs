@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable
+    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable, IJsonModel<SqlServerConfigurationsManagementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerConfigurationsManagementSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SqlServerConfigurationsManagementSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlConnectivityUpdateSettings))
@@ -40,11 +46,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("sqlInstanceSettings"u8);
                 writer.WriteObjectValue(SqlInstanceSettings);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element)
+        SqlServerConfigurationsManagementSettings IJsonModel<SqlServerConfigurationsManagementSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerConfigurationsManagementSettings(document.RootElement, options);
+        }
+
+        internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +89,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
             Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
             Optional<SqlInstanceSettings> sqlInstanceSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlConnectivityUpdateSettings"u8))
@@ -101,8 +138,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SqlServerConfigurationsManagementSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlServerConfigurationsManagementSettings IModel<SqlServerConfigurationsManagementSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlServerConfigurationsManagementSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SqlServerConfigurationsManagementSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

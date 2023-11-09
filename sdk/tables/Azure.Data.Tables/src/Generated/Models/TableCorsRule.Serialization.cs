@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableCorsRule : IXmlSerializable
+    public partial class TableCorsRule : IXmlSerializable, IModel<TableCorsRule>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -34,7 +38,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableCorsRule DeserializeTableCorsRule(XElement element)
+        internal static TableCorsRule DeserializeTableCorsRule(XElement element, ModelReaderWriterOptions options = null)
         {
             string allowedOrigins = default;
             string allowedMethods = default;
@@ -61,7 +65,43 @@ namespace Azure.Data.Tables.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new TableCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new TableCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds, default);
         }
+
+        BinaryData IModel<TableCorsRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableCorsRule>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableCorsRule IModel<TableCorsRule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableCorsRule)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableCorsRule(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<TableCorsRule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

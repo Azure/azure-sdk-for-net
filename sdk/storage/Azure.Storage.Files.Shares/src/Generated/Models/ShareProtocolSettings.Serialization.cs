@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareProtocolSettings : IXmlSerializable
+    public partial class ShareProtocolSettings : IXmlSerializable, IModel<ShareProtocolSettings>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -23,14 +27,50 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element)
+        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             ShareSmbSettings smb = default;
             if (element.Element("SMB") is XElement smbElement)
             {
                 smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
             }
-            return new ShareProtocolSettings(smb);
+            return new ShareProtocolSettings(smb, default);
         }
+
+        BinaryData IModel<ShareProtocolSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ShareProtocolSettings>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareProtocolSettings IModel<ShareProtocolSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareProtocolSettings)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeShareProtocolSettings(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<ShareProtocolSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(HDInsightHiveActivityConverter))]
-    public partial class HDInsightHiveActivity : IUtf8JsonSerializable
+    public partial class HDInsightHiveActivity : IUtf8JsonSerializable, IJsonModel<HDInsightHiveActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightHiveActivity>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HDInsightHiveActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
@@ -155,8 +159,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static HDInsightHiveActivity DeserializeHDInsightHiveActivity(JsonElement element)
+        HDInsightHiveActivity IJsonModel<HDInsightHiveActivity>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightHiveActivity(document.RootElement, options);
+        }
+
+        internal static HDInsightHiveActivity DeserializeHDInsightHiveActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -391,6 +409,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, Optional.ToDictionary(defines), Optional.ToList(variables), Optional.ToNullable(queryTimeout));
         }
+
+        BinaryData IModel<HDInsightHiveActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightHiveActivity IModel<HDInsightHiveActivity>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightHiveActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightHiveActivity(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HDInsightHiveActivity>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class HDInsightHiveActivityConverter : JsonConverter<HDInsightHiveActivity>
         {

@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> IoT Hub Message sink allows for pipeline messages to published into the IoT Edge Hub. Published messages can then be delivered to the cloud and other modules via routes declared in the IoT Edge deployment manifest. </summary>
     public partial class IotHubMessageSink : SinkNodeBase
     {
-        /// <summary> Initializes a new instance of IotHubMessageSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSink"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="hubOutputName"> Name of the Iot Edge Hub output to which the messages will be published. </param>
@@ -29,15 +29,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.IotHubMessageSink";
         }
 
-        /// <summary> Initializes a new instance of IotHubMessageSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSink"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hubOutputName"> Name of the Iot Edge Hub output to which the messages will be published. </param>
-        internal IotHubMessageSink(string type, string name, IList<NodeInput> inputs, string hubOutputName) : base(type, name, inputs)
+        internal IotHubMessageSink(string type, string name, IList<NodeInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string hubOutputName) : base(type, name, inputs, serializedAdditionalRawData)
         {
             HubOutputName = hubOutputName;
             Type = type ?? "#Microsoft.VideoAnalyzer.IotHubMessageSink";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSink"/> for deserialization. </summary>
+        internal IotHubMessageSink()
+        {
         }
 
         /// <summary> Name of the Iot Edge Hub output to which the messages will be published. </summary>

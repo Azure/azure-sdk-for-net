@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -13,5 +14,27 @@ namespace Azure.AI.TextAnalytics
     /// <summary> The Match. </summary>
     public readonly partial struct LinkedEntityMatch
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedEntityMatch"/>. </summary>
+        /// <param name="confidenceScore"> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </param>
+        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="offset"> Start position for the entity match text. </param>
+        /// <param name="length"> Length for the entity match text. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedEntityMatch(double confidenceScore, string text, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConfidenceScore = confidenceScore;
+            Text = text;
+            Offset = offset;
+            Length = length;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedEntityMatch"/> for deserialization. </summary>
+        public LinkedEntityMatch()
+        {
+        }
     }
 }

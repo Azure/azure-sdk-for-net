@@ -5,20 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The HealthcareAssertion. </summary>
     public partial class HealthcareEntityAssertion
     {
-        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntityAssertion"/>. </summary>
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
-        internal HealthcareEntityAssertion(EntityConditionality? conditionality, EntityCertainty? certainty, EntityAssociation? association)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareEntityAssertion(EntityConditionality? conditionality, EntityCertainty? certainty, EntityAssociation? association, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Conditionality = conditionality;
             Certainty = certainty;
             Association = association;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

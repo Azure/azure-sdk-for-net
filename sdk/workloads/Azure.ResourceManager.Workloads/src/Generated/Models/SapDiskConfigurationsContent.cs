@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP request to get list of disk configurations. </summary>
     public partial class SapDiskConfigurationsContent
     {
-        /// <summary> Initializes a new instance of SapDiskConfigurationsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
@@ -31,6 +35,30 @@ namespace Azure.ResourceManager.Workloads.Models
             DatabaseType = databaseType;
             DeploymentType = deploymentType;
             DBVmSku = dbVmSku;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/>. </summary>
+        /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
+        /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
+        /// <param name="sapProduct"> Defines the SAP Product type. </param>
+        /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
+        /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
+        /// <param name="dbVmSku"> The VM SKU for database instance. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AppLocation = appLocation;
+            Environment = environment;
+            SapProduct = sapProduct;
+            DatabaseType = databaseType;
+            DeploymentType = deploymentType;
+            DBVmSku = dbVmSku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/> for deserialization. </summary>
+        internal SapDiskConfigurationsContent()
+        {
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>

@@ -5,23 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobFunctionBinding : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownFunctionBinding))]
+    public partial class StreamingJobFunctionBinding : IUtf8JsonSerializable, IJsonModel<StreamingJobFunctionBinding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobFunctionBinding>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<StreamingJobFunctionBinding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingJobFunctionBinding DeserializeStreamingJobFunctionBinding(JsonElement element)
+        StreamingJobFunctionBinding IJsonModel<StreamingJobFunctionBinding>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingJobFunctionBinding(document.RootElement, options);
+        }
+
+        internal static StreamingJobFunctionBinding DeserializeStreamingJobFunctionBinding(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,5 +73,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             return UnknownFunctionBinding.DeserializeUnknownFunctionBinding(element);
         }
+
+        BinaryData IModel<StreamingJobFunctionBinding>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StreamingJobFunctionBinding IModel<StreamingJobFunctionBinding>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStreamingJobFunctionBinding(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<StreamingJobFunctionBinding>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

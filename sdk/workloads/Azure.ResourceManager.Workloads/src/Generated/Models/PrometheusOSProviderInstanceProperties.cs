@@ -6,25 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the PrometheusOS provider properties. </summary>
     public partial class PrometheusOSProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of PrometheusOSProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusOSProviderInstanceProperties"/>. </summary>
         public PrometheusOSProviderInstanceProperties()
         {
             ProviderType = "PrometheusOS";
         }
 
-        /// <summary> Initializes a new instance of PrometheusOSProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusOSProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sslCertificateUri"> Gets or sets the blob URI to SSL certificate for the prometheus node exporter. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal PrometheusOSProviderInstanceProperties(string providerType, Uri prometheusUri, SapSslPreference? sslPreference, Uri sslCertificateUri, string sapSid) : base(providerType)
+        internal PrometheusOSProviderInstanceProperties(string providerType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri prometheusUri, SapSslPreference? sslPreference, Uri sslCertificateUri, string sapSid) : base(providerType, serializedAdditionalRawData)
         {
             PrometheusUri = prometheusUri;
             SslPreference = sslPreference;

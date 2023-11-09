@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> A list of services that support encryption. </summary>
     public partial class StorageAccountEncryptionServices
     {
-        /// <summary> Initializes a new instance of StorageAccountEncryptionServices. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountEncryptionServices"/>. </summary>
         public StorageAccountEncryptionServices()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountEncryptionServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountEncryptionServices"/>. </summary>
         /// <param name="blob"> The encryption function of the blob storage service. </param>
         /// <param name="file"> The encryption function of the file storage service. </param>
         /// <param name="table"> The encryption function of the table storage service. </param>
         /// <param name="queue"> The encryption function of the queue storage service. </param>
-        internal StorageAccountEncryptionServices(StorageEncryptionService blob, StorageEncryptionService file, StorageEncryptionService table, StorageEncryptionService queue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountEncryptionServices(StorageEncryptionService blob, StorageEncryptionService file, StorageEncryptionService table, StorageEncryptionService queue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Blob = blob;
             File = file;
             Table = table;
             Queue = queue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The encryption function of the blob storage service. </summary>

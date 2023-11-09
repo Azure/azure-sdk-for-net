@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Response body structure of data flow result for data preview, statistics or expression preview. </summary>
     public partial class DataFlowDebugResultResponse
     {
-        /// <summary> Initializes a new instance of DataFlowDebugResultResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugResultResponse"/>. </summary>
         public DataFlowDebugResultResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugResultResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugResultResponse"/>. </summary>
         /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
         /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
-        internal DataFlowDebugResultResponse(string status, string data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowDebugResultResponse(string status, string data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The run status of data preview, statistics or expression preview. </summary>

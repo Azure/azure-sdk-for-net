@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a Service Bus Queue output data source. </summary>
     public partial class ServiceBusQueueOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of ServiceBusQueueOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusQueueOutputDataSource"/>. </summary>
         public ServiceBusQueueOutputDataSource()
         {
             PropertyColumns = new ChangeTrackingList<string>();
@@ -21,8 +22,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = "Microsoft.ServiceBus/Queue";
         }
 
-        /// <summary> Initializes a new instance of ServiceBusQueueOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusQueueOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serviceBusNamespace"> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyName"> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyKey"> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </param>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="queueName"> The name of the Service Bus Queue. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="propertyColumns"> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </param>
         /// <param name="systemPropertyColumns"> The system properties associated with the Service Bus Queue. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </param>
-        internal ServiceBusQueueOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string queueName, IList<string> propertyColumns, IDictionary<string, string> systemPropertyColumns) : base(outputDataSourceType)
+        internal ServiceBusQueueOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string queueName, IList<string> propertyColumns, IDictionary<string, string> systemPropertyColumns) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;

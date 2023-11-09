@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Update integration runtime node request. </summary>
     public partial class UpdateIntegrationRuntimeNodeContent
     {
-        /// <summary> Initializes a new instance of UpdateIntegrationRuntimeNodeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
         public UpdateIntegrationRuntimeNodeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
+        /// <param name="concurrentJobsLimit"> The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateIntegrationRuntimeNodeContent(int? concurrentJobsLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConcurrentJobsLimit = concurrentJobsLimit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed. </summary>

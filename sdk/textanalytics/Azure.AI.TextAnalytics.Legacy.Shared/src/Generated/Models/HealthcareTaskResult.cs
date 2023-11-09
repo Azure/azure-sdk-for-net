@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareTaskResult. </summary>
     internal partial class HealthcareTaskResult
     {
-        /// <summary> Initializes a new instance of HealthcareTaskResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskResult"/>. </summary>
         internal HealthcareTaskResult()
         {
             Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <param name="errors"></param>
-        internal HealthcareTaskResult(HealthcareResult results, IReadOnlyList<TextAnalyticsError> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareTaskResult(HealthcareResult results, IReadOnlyList<TextAnalyticsError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Results = results;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the results. </summary>

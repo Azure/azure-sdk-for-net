@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class MsSqlServerProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class MsSqlServerProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<MsSqlServerProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MsSqlServerProviderInstanceProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MsSqlServerProviderInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
@@ -58,11 +63,40 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MsSqlServerProviderInstanceProperties DeserializeMsSqlServerProviderInstanceProperties(JsonElement element)
+        MsSqlServerProviderInstanceProperties IJsonModel<MsSqlServerProviderInstanceProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MsSqlServerProviderInstanceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMsSqlServerProviderInstanceProperties(document.RootElement, options);
+        }
+
+        internal static MsSqlServerProviderInstanceProperties DeserializeMsSqlServerProviderInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +110,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SapSslPreference> sslPreference = default;
             Optional<Uri> sslCertificateUri = default;
             string providerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -135,8 +171,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MsSqlServerProviderInstanceProperties(providerType, hostname.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MsSqlServerProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
         }
+
+        BinaryData IModel<MsSqlServerProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MsSqlServerProviderInstanceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MsSqlServerProviderInstanceProperties IModel<MsSqlServerProviderInstanceProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MsSqlServerProviderInstanceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMsSqlServerProviderInstanceProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MsSqlServerProviderInstanceProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

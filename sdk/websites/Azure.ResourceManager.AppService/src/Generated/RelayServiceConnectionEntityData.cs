@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class RelayServiceConnectionEntityData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayServiceConnectionEntityData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelayServiceConnectionEntityData"/>. </summary>
         public RelayServiceConnectionEntityData()
         {
         }
 
-        /// <summary> Initializes a new instance of RelayServiceConnectionEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayServiceConnectionEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="port"></param>
         /// <param name="biztalkUri"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EntityName = entityName;
             EntityConnectionString = entityConnectionString;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.AppService
             Port = port;
             BiztalkUri = biztalkUri;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the entity name. </summary>

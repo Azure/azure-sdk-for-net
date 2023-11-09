@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyRule : IUtf8JsonSerializable
+    public partial class ManagementPolicyRule : IUtf8JsonSerializable, IJsonModel<ManagementPolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyRule>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ManagementPolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
@@ -26,11 +32,40 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagementPolicyRule DeserializeManagementPolicyRule(JsonElement element)
+        ManagementPolicyRule IJsonModel<ManagementPolicyRule>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicyRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementPolicyRule(document.RootElement, options);
+        }
+
+        internal static ManagementPolicyRule DeserializeManagementPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +74,8 @@ namespace Azure.ResourceManager.Storage.Models
             string name = default;
             ManagementPolicyRuleType type = default;
             ManagementPolicyDefinition definition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -65,8 +102,38 @@ namespace Azure.ResourceManager.Storage.Models
                     definition = ManagementPolicyDefinition.DeserializeManagementPolicyDefinition(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagementPolicyRule(Optional.ToNullable(enabled), name, type, definition);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagementPolicyRule(Optional.ToNullable(enabled), name, type, definition, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ManagementPolicyRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicyRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagementPolicyRule IModel<ManagementPolicyRule>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicyRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagementPolicyRule(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ManagementPolicyRule>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,8 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,9 +17,11 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    public partial class SqlVmData : IUtf8JsonSerializable
+    public partial class SqlVmData : IUtf8JsonSerializable, IJsonModel<SqlVmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SqlVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
@@ -37,12 +42,43 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualMachineResourceId))
             {
                 writer.WritePropertyName("virtualMachineResourceId"u8);
                 writer.WriteStringValue(VirtualMachineResourceId);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
             }
             if (Optional.IsDefined(SqlImageOffer))
             {
@@ -110,11 +146,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteObjectValue(AssessmentSettings);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmData DeserializeSqlVmData(JsonElement element)
+        SqlVmData IJsonModel<SqlVmData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmData(document.RootElement, options);
+        }
+
+        internal static SqlVmData DeserializeSqlVmData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,6 +206,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<SqlServerConfigurationsManagementSettings> serverConfigurationsManagementSettings = default;
             Optional<SqlVmStorageConfigurationSettings> storageConfigurationSettings = default;
             Optional<SqlVmAssessmentSettings> assessmentSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -334,8 +401,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SqlVmData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlVmData IModel<SqlVmData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlVmData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlVmData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SqlVmData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

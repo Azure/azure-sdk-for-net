@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceDetectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
         public AppServiceDetectorData()
         {
             Dataset = new ChangeTrackingList<DiagnosticDataset>();
             DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
         /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Metadata = metadata;
             Dataset = dataset;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.AppService
             DataProvidersMetadata = dataProvidersMetadata;
             SuggestedUtterances = suggestedUtterances;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> metadata for the detector. </summary>

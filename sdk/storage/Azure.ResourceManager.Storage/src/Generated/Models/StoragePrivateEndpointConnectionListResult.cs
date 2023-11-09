@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class StoragePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointConnectionListResult"/>. </summary>
         internal StoragePrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal StoragePrivateEndpointConnectionListResult(IReadOnlyList<StoragePrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePrivateEndpointConnectionListResult(IReadOnlyList<StoragePrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

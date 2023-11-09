@@ -5,13 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial struct PageRange
+    internal partial struct PageRange : IXmlSerializable, IModel<PageRange>
     {
-        internal static PageRange DeserializePageRange(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "PageRange");
+            writer.WriteStartElement("Start");
+            writer.WriteValue(Start);
+            writer.WriteEndElement();
+            writer.WriteStartElement("End");
+            writer.WriteValue(End);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static PageRange DeserializePageRange(XElement element, ModelReaderWriterOptions options = null)
         {
             long start = default;
             long end = default;
@@ -23,7 +41,49 @@ namespace Azure.Storage.Blobs.Models
             {
                 end = (long)endElement;
             }
-            return new PageRange(start, end);
+            return new PageRange(start, end, default);
         }
+
+        BinaryData IModel<PageRange>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<PageRange>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        PageRange IModel<PageRange>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PageRange)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializePageRange(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<PageRange>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+
+        BinaryData IModel<object>.Write(ModelReaderWriterOptions options) => ((IModel<PageRange>)this).Write(options);
+
+        object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options) => ((IModel<PageRange>)this).Read(data, options);
+
+        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ((IModel<PageRange>)this).GetWireFormat(options);
     }
 }

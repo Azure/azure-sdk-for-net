@@ -6,15 +6,173 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkSessionState
+    public partial class SparkSessionState : IUtf8JsonSerializable, IJsonModel<SparkSessionState>
     {
-        internal static SparkSessionState DeserializeSparkSessionState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkSessionState>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SparkSessionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NotStartedAt))
+            {
+                if (NotStartedAt != null)
+                {
+                    writer.WritePropertyName("notStartedAt"u8);
+                    writer.WriteStringValue(NotStartedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("notStartedAt");
+                }
+            }
+            if (Optional.IsDefined(StartingAt))
+            {
+                if (StartingAt != null)
+                {
+                    writer.WritePropertyName("startingAt"u8);
+                    writer.WriteStringValue(StartingAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startingAt");
+                }
+            }
+            if (Optional.IsDefined(IdleAt))
+            {
+                if (IdleAt != null)
+                {
+                    writer.WritePropertyName("idleAt"u8);
+                    writer.WriteStringValue(IdleAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("idleAt");
+                }
+            }
+            if (Optional.IsDefined(DeadAt))
+            {
+                if (DeadAt != null)
+                {
+                    writer.WritePropertyName("deadAt"u8);
+                    writer.WriteStringValue(DeadAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("deadAt");
+                }
+            }
+            if (Optional.IsDefined(ShuttingDownAt))
+            {
+                if (ShuttingDownAt != null)
+                {
+                    writer.WritePropertyName("shuttingDownAt"u8);
+                    writer.WriteStringValue(ShuttingDownAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("shuttingDownAt");
+                }
+            }
+            if (Optional.IsDefined(TerminatedAt))
+            {
+                if (TerminatedAt != null)
+                {
+                    writer.WritePropertyName("killedAt"u8);
+                    writer.WriteStringValue(TerminatedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("killedAt");
+                }
+            }
+            if (Optional.IsDefined(RecoveringAt))
+            {
+                if (RecoveringAt != null)
+                {
+                    writer.WritePropertyName("recoveringAt"u8);
+                    writer.WriteStringValue(RecoveringAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("recoveringAt");
+                }
+            }
+            if (Optional.IsDefined(BusyAt))
+            {
+                if (BusyAt != null)
+                {
+                    writer.WritePropertyName("busyAt"u8);
+                    writer.WriteStringValue(BusyAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("busyAt");
+                }
+            }
+            if (Optional.IsDefined(ErrorAt))
+            {
+                if (ErrorAt != null)
+                {
+                    writer.WritePropertyName("errorAt"u8);
+                    writer.WriteStringValue(ErrorAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("errorAt");
+                }
+            }
+            if (Optional.IsDefined(CurrentState))
+            {
+                writer.WritePropertyName("currentState"u8);
+                writer.WriteStringValue(CurrentState);
+            }
+            if (Optional.IsDefined(JobCreationRequest))
+            {
+                writer.WritePropertyName("jobCreationRequest"u8);
+                writer.WriteObjectValue(JobCreationRequest);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SparkSessionState IJsonModel<SparkSessionState>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkSessionState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkSessionState(document.RootElement, options);
+        }
+
+        internal static SparkSessionState DeserializeSparkSessionState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +188,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<DateTimeOffset?> errorAt = default;
             Optional<string> currentState = default;
             Optional<SparkRequest> jobCreationRequest = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"u8))
@@ -136,8 +296,38 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     jobCreationRequest = SparkRequest.DeserializeSparkRequest(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SparkSessionState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(idleAt), Optional.ToNullable(deadAt), Optional.ToNullable(shuttingDownAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), Optional.ToNullable(busyAt), Optional.ToNullable(errorAt), currentState.Value, jobCreationRequest.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SparkSessionState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(idleAt), Optional.ToNullable(deadAt), Optional.ToNullable(shuttingDownAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), Optional.ToNullable(busyAt), Optional.ToNullable(errorAt), currentState.Value, jobCreationRequest.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SparkSessionState>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkSessionState)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SparkSessionState IModel<SparkSessionState>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SparkSessionState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSparkSessionState(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SparkSessionState>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

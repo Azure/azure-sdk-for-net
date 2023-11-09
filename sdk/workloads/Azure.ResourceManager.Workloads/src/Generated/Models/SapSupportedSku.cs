@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The SAP supported SKU. </summary>
     public partial class SapSupportedSku
     {
-        /// <summary> Initializes a new instance of SapSupportedSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapSupportedSku"/>. </summary>
         internal SapSupportedSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SapSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSupportedSku"/>. </summary>
         /// <param name="vmSku"> The VM Sku. </param>
         /// <param name="isAppServerCertified"> True if the Sku is certified for App server in the SAP system. </param>
         /// <param name="isDatabaseCertified"> True if the Sku is certified for Database server in the SAP system. </param>
-        internal SapSupportedSku(string vmSku, bool? isAppServerCertified, bool? isDatabaseCertified)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapSupportedSku(string vmSku, bool? isAppServerCertified, bool? isDatabaseCertified, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSku = vmSku;
             IsAppServerCertified = isAppServerCertified;
             IsDatabaseCertified = isDatabaseCertified;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The VM Sku. </summary>

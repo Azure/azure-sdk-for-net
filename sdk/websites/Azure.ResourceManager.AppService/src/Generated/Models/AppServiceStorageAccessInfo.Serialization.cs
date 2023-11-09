@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceStorageAccessInfo : IUtf8JsonSerializable
+    public partial class AppServiceStorageAccessInfo : IUtf8JsonSerializable, IJsonModel<AppServiceStorageAccessInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceStorageAccessInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AppServiceStorageAccessInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageType))
@@ -40,11 +46,48 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToSerialString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceStorageAccessInfo DeserializeAppServiceStorageAccessInfo(JsonElement element)
+        AppServiceStorageAccessInfo IJsonModel<AppServiceStorageAccessInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceStorageAccessInfo(document.RootElement, options);
+        }
+
+        internal static AppServiceStorageAccessInfo DeserializeAppServiceStorageAccessInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +98,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> accessKey = default;
             Optional<string> mountPath = default;
             Optional<AppServiceStorageAccountState> state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -95,8 +140,38 @@ namespace Azure.ResourceManager.AppService.Models
                     state = property.Value.GetString().ToAppServiceStorageAccountState();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceStorageAccessInfo(Optional.ToNullable(type), accountName.Value, shareName.Value, accessKey.Value, mountPath.Value, Optional.ToNullable(state));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceStorageAccessInfo(Optional.ToNullable(type), accountName.Value, shareName.Value, accessKey.Value, mountPath.Value, Optional.ToNullable(state), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AppServiceStorageAccessInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceStorageAccessInfo IModel<AppServiceStorageAccessInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceStorageAccessInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AppServiceStorageAccessInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

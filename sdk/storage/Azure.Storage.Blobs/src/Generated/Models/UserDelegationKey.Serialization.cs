@@ -6,14 +6,45 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class UserDelegationKey
+    public partial class UserDelegationKey : IXmlSerializable, IModel<UserDelegationKey>
     {
-        internal static UserDelegationKey DeserializeUserDelegationKey(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "UserDelegationKey");
+            writer.WriteStartElement("SignedOid");
+            writer.WriteValue(SignedObjectId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedTid");
+            writer.WriteValue(SignedTenantId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedStart");
+            writer.WriteValue(SignedStartsOn, "O");
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedExpiry");
+            writer.WriteValue(SignedExpiresOn, "O");
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedService");
+            writer.WriteValue(SignedService);
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedVersion");
+            writer.WriteValue(SignedVersion);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Value");
+            writer.WriteValue(Value);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static UserDelegationKey DeserializeUserDelegationKey(XElement element, ModelReaderWriterOptions options = null)
         {
             string signedObjectId = default;
             string signedTenantId = default;
@@ -50,7 +81,43 @@ namespace Azure.Storage.Blobs.Models
             {
                 value = (string)valueElement;
             }
-            return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value);
+            return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value, default);
         }
+
+        BinaryData IModel<UserDelegationKey>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<UserDelegationKey>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        UserDelegationKey IModel<UserDelegationKey>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UserDelegationKey)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeUserDelegationKey(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<UserDelegationKey>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

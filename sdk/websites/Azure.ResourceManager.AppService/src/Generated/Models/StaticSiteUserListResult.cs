@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of static site custom users. </summary>
     internal partial class StaticSiteUserListResult
     {
-        /// <summary> Initializes a new instance of StaticSiteUserListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteUserListResult(IEnumerable<StaticSiteUser> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal StaticSiteUserListResult(IReadOnlyList<StaticSiteUser> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteUserListResult(IReadOnlyList<StaticSiteUser> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserListResult"/> for deserialization. </summary>
+        internal StaticSiteUserListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

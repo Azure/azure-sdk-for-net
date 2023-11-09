@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerMemoryStatistics : IUtf8JsonSerializable
+    public partial class ContainerMemoryStatistics : IUtf8JsonSerializable, IJsonModel<ContainerMemoryStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerMemoryStatistics>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContainerMemoryStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Usage))
@@ -30,11 +36,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerMemoryStatistics DeserializeContainerMemoryStatistics(JsonElement element)
+        ContainerMemoryStatistics IJsonModel<ContainerMemoryStatistics>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerMemoryStatistics(document.RootElement, options);
+        }
+
+        internal static ContainerMemoryStatistics DeserializeContainerMemoryStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> usage = default;
             Optional<long> maxUsage = default;
             Optional<long> limit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usage"u8))
@@ -71,8 +108,38 @@ namespace Azure.ResourceManager.AppService.Models
                     limit = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerMemoryStatistics(Optional.ToNullable(usage), Optional.ToNullable(maxUsage), Optional.ToNullable(limit));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerMemoryStatistics(Optional.ToNullable(usage), Optional.ToNullable(maxUsage), Optional.ToNullable(limit), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContainerMemoryStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerMemoryStatistics IModel<ContainerMemoryStatistics>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerMemoryStatistics(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContainerMemoryStatistics>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

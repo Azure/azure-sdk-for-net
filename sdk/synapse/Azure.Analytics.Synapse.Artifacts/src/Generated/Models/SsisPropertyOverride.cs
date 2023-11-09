@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS property override. </summary>
     public partial class SsisPropertyOverride
     {
-        /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisPropertyOverride"/>. </summary>
         /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SsisPropertyOverride(object value)
@@ -23,13 +27,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of SsisPropertyOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisPropertyOverride"/>. </summary>
         /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <param name="isSensitive"> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </param>
-        internal SsisPropertyOverride(object value, bool? isSensitive)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisPropertyOverride(object value, bool? isSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             IsSensitive = isSensitive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisPropertyOverride"/> for deserialization. </summary>
+        internal SsisPropertyOverride()
+        {
         }
 
         /// <summary> SSIS package property override value. Type: string (or Expression with resultType string). </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> The SparkStatementCancellationResult. </summary>
     public partial class SparkStatementCancellationResult
     {
-        /// <summary> Initializes a new instance of SparkStatementCancellationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCancellationResult"/>. </summary>
         internal SparkStatementCancellationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkStatementCancellationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCancellationResult"/>. </summary>
         /// <param name="message"> The msg property from the Livy API. The value is always "canceled". </param>
-        internal SparkStatementCancellationResult(string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkStatementCancellationResult(string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The msg property from the Livy API. The value is always "canceled". </summary>

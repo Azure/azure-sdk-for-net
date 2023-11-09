@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportFileDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportFileDetailData"/>. </summary>
         public SupportFileDetailData()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportFileDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +35,14 @@ namespace Azure.ResourceManager.Support
         /// <param name="chunkSize"> Size of each chunk. </param>
         /// <param name="fileSize"> Size of the file to be uploaded. </param>
         /// <param name="numberOfChunks"> Number of chunks to be uploaded. </param>
-        internal SupportFileDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, float? chunkSize, float? fileSize, float? numberOfChunks) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportFileDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, float? chunkSize, float? fileSize, float? numberOfChunks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             ChunkSize = chunkSize;
             FileSize = fileSize;
             NumberOfChunks = numberOfChunks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time in UTC (ISO 8601 format) when file workspace was created. </summary>

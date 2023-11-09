@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Payload for iSCSI Target update requests. </summary>
     public partial class DiskPoolIscsiTargetPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetPatch"/>. </summary>
         public DiskPoolIscsiTargetPatch()
         {
             ManagedByExtended = new ChangeTrackingList<string>();
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Luns = new ChangeTrackingList<ManagedDiskIscsiLun>();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +35,14 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="staticAcls"> Access Control List (ACL) for an iSCSI Target; defines LUN masking policy. </param>
         /// <param name="luns"> List of LUNs to be exposed through iSCSI Target. </param>
-        internal DiskPoolIscsiTargetPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IList<string> managedByExtended, IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls, IList<ManagedDiskIscsiLun> luns) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolIscsiTargetPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IList<string> managedByExtended, IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls, IList<ManagedDiskIscsiLun> luns, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
             StaticAcls = staticAcls;
             Luns = luns;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>

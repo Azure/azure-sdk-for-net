@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    public partial class VoiceServicesServiceRegionProperties : IUtf8JsonSerializable
+    public partial class VoiceServicesServiceRegionProperties : IUtf8JsonSerializable, IJsonModel<VoiceServicesServiceRegionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesServiceRegionProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<VoiceServicesServiceRegionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("primaryRegionProperties"u8);
             writer.WriteObjectValue(PrimaryRegionProperties);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VoiceServicesServiceRegionProperties DeserializeVoiceServicesServiceRegionProperties(JsonElement element)
+        VoiceServicesServiceRegionProperties IJsonModel<VoiceServicesServiceRegionProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVoiceServicesServiceRegionProperties(document.RootElement, options);
+        }
+
+        internal static VoiceServicesServiceRegionProperties DeserializeVoiceServicesServiceRegionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             VoiceServicesPrimaryRegionProperties primaryRegionProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +79,38 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     primaryRegionProperties = VoiceServicesPrimaryRegionProperties.DeserializeVoiceServicesPrimaryRegionProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VoiceServicesServiceRegionProperties(name, primaryRegionProperties);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VoiceServicesServiceRegionProperties(name, primaryRegionProperties, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<VoiceServicesServiceRegionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VoiceServicesServiceRegionProperties IModel<VoiceServicesServiceRegionProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VoiceServicesServiceRegionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVoiceServicesServiceRegionProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<VoiceServicesServiceRegionProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

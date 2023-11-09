@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Describes scaling information of a sku. </summary>
     public partial class WebPubSubSkuCapacity
     {
-        /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSkuCapacity"/>. </summary>
         internal WebPubSubSkuCapacity()
         {
             AllowedValues = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSkuCapacity"/>. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="allowedValues"> Allows capacity value list. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        internal WebPubSubSkuCapacity(int? minimum, int? maximum, int? @default, IReadOnlyList<int> allowedValues, WebPubSubScaleType? scaleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubSkuCapacity(int? minimum, int? maximum, int? @default, IReadOnlyList<int> allowedValues, WebPubSubScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
             AllowedValues = allowedValues;
             ScaleType = scaleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The lowest permitted capacity for this resource. </summary>

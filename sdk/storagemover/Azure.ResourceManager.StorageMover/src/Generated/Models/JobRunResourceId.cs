@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> Response that identifies a Job Run. </summary>
     public partial class JobRunResourceId
     {
-        /// <summary> Initializes a new instance of JobRunResourceId. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobRunResourceId"/>. </summary>
         internal JobRunResourceId()
         {
         }
 
-        /// <summary> Initializes a new instance of JobRunResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunResourceId"/>. </summary>
         /// <param name="jobRunResourceIdValue"> Fully qualified resource id of the Job Run. </param>
-        internal JobRunResourceId(ResourceIdentifier jobRunResourceIdValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobRunResourceId(ResourceIdentifier jobRunResourceIdValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobRunResourceIdValue = jobRunResourceIdValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fully qualified resource id of the Job Run. </summary>

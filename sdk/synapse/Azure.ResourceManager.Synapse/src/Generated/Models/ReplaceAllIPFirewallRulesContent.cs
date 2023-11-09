@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Replace all IP firewall rules request. </summary>
     public partial class ReplaceAllIPFirewallRulesContent
     {
-        /// <summary> Initializes a new instance of ReplaceAllIPFirewallRulesContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllIPFirewallRulesContent"/>. </summary>
         public ReplaceAllIPFirewallRulesContent()
         {
             IPFirewallRules = new ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllIPFirewallRulesContent"/>. </summary>
+        /// <param name="ipFirewallRules"> IP firewall rule properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplaceAllIPFirewallRulesContent(IDictionary<string, SynapseIPFirewallRuleProperties> ipFirewallRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IPFirewallRules = ipFirewallRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP firewall rule properties. </summary>

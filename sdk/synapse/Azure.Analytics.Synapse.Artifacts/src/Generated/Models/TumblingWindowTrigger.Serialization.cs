@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TumblingWindowTriggerConverter))]
-    public partial class TumblingWindowTrigger : IUtf8JsonSerializable
+    public partial class TumblingWindowTrigger : IUtf8JsonSerializable, IJsonModel<TumblingWindowTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TumblingWindowTrigger>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<TumblingWindowTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
@@ -27,6 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RuntimeState))
+                {
+                    writer.WritePropertyName("runtimeState"u8);
+                    writer.WriteStringValue(RuntimeState.Value.ToString());
+                }
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -87,8 +99,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element)
+        TumblingWindowTrigger IJsonModel<TumblingWindowTrigger>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTumblingWindowTrigger(document.RootElement, options);
+        }
+
+        internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -233,6 +259,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
         }
+
+        BinaryData IModel<TumblingWindowTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TumblingWindowTrigger IModel<TumblingWindowTrigger>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTumblingWindowTrigger(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<TumblingWindowTrigger>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class TumblingWindowTriggerConverter : JsonConverter<TumblingWindowTrigger>
         {

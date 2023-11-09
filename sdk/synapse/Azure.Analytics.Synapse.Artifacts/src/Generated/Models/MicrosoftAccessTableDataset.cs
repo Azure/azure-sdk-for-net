@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Microsoft Access table dataset. </summary>
     public partial class MicrosoftAccessTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of MicrosoftAccessTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public MicrosoftAccessTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "MicrosoftAccessTable";
         }
 
-        /// <summary> Initializes a new instance of MicrosoftAccessTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -39,6 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             TableName = tableName;
             Type = type ?? "MicrosoftAccessTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessTableDataset"/> for deserialization. </summary>
+        internal MicrosoftAccessTableDataset()
+        {
         }
 
         /// <summary> The Microsoft Access table name. Type: string (or Expression with resultType string). </summary>

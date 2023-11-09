@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsDataSerialization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsDataSerialization"/>. </summary>
         protected StreamAnalyticsDataSerialization()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsDataSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsDataSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
-        internal StreamAnalyticsDataSerialization(EventSerializationType eventSerializationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsDataSerialization(EventSerializationType eventSerializationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventSerializationType = eventSerializationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </summary>

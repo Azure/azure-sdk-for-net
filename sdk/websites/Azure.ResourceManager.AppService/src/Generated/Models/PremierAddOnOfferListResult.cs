@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of premier add-on offers. </summary>
     internal partial class PremierAddOnOfferListResult
     {
-        /// <summary> Initializes a new instance of PremierAddOnOfferListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnOfferListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PremierAddOnOfferListResult(IEnumerable<PremierAddOnOffer> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnOfferListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnOfferListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal PremierAddOnOfferListResult(IReadOnlyList<PremierAddOnOffer> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PremierAddOnOfferListResult(IReadOnlyList<PremierAddOnOffer> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnOfferListResult"/> for deserialization. </summary>
+        internal PremierAddOnOfferListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

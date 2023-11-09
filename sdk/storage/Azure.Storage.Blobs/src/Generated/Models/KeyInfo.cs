@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Key information. </summary>
     internal partial class KeyInfo
     {
-        /// <summary> Initializes a new instance of KeyInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expiry"/> is null. </exception>
         public KeyInfo(string expiry)
@@ -21,6 +25,22 @@ namespace Azure.Storage.Blobs.Models
             Argument.AssertNotNull(expiry, nameof(expiry));
 
             Expiry = expiry;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
+        /// <param name="start"> The date-time the key is active in ISO 8601 UTC time. </param>
+        /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyInfo(string start, string expiry, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Start = start;
+            Expiry = expiry;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyInfo"/> for deserialization. </summary>
+        internal KeyInfo()
+        {
         }
 
         /// <summary> The date-time the key is active in ISO 8601 UTC time. </summary>

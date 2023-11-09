@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class DeletedSiteData : IUtf8JsonSerializable
+    public partial class DeletedSiteData : IUtf8JsonSerializable, IJsonModel<DeletedSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedSiteData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DeletedSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
@@ -21,14 +27,130 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DeletedSiteId))
+                {
+                    writer.WritePropertyName("deletedSiteId"u8);
+                    writer.WriteNumberValue(DeletedSiteId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DeletedTimestamp))
+                {
+                    writer.WritePropertyName("deletedTimestamp"u8);
+                    writer.WriteStringValue(DeletedTimestamp);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Subscription))
+                {
+                    writer.WritePropertyName("subscription"u8);
+                    writer.WriteStringValue(Subscription);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ResourceGroup))
+                {
+                    writer.WritePropertyName("resourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(DeletedSiteName))
+                {
+                    writer.WritePropertyName("deletedSiteName"u8);
+                    writer.WriteStringValue(DeletedSiteName);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Slot))
+                {
+                    writer.WritePropertyName("slot"u8);
+                    writer.WriteStringValue(Slot);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(KindPropertiesKind))
+                {
+                    writer.WritePropertyName("kind"u8);
+                    writer.WriteStringValue(KindPropertiesKind);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(GeoRegionName))
+                {
+                    writer.WritePropertyName("geoRegionName"u8);
+                    writer.WriteStringValue(GeoRegionName);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element)
+        DeletedSiteData IJsonModel<DeletedSiteData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeletedSiteData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedSiteData(document.RootElement, options);
+        }
+
+        internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +168,8 @@ namespace Azure.ResourceManager.AppService
             Optional<string> slot = default;
             Optional<string> kind0 = default;
             Optional<string> geoRegionName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -133,8 +257,38 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DeletedSiteData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeletedSiteData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DeletedSiteData IModel<DeletedSiteData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeletedSiteData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDeletedSiteData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DeletedSiteData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

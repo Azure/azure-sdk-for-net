@@ -6,15 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointChangeEnumerationStatus
+    public partial class CloudEndpointChangeEnumerationStatus : IUtf8JsonSerializable, IJsonModel<CloudEndpointChangeEnumerationStatus>
     {
-        internal static CloudEndpointChangeEnumerationStatus DeserializeCloudEndpointChangeEnumerationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointChangeEnumerationStatus>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CloudEndpointChangeEnumerationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastUpdatedOn))
+                {
+                    writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                    writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastEnumerationStatus))
+                {
+                    writer.WritePropertyName("lastEnumerationStatus"u8);
+                    writer.WriteObjectValue(LastEnumerationStatus);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Activity))
+                {
+                    writer.WritePropertyName("activity"u8);
+                    writer.WriteObjectValue(Activity);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CloudEndpointChangeEnumerationStatus IJsonModel<CloudEndpointChangeEnumerationStatus>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudEndpointChangeEnumerationStatus(document.RootElement, options);
+        }
+
+        internal static CloudEndpointChangeEnumerationStatus DeserializeCloudEndpointChangeEnumerationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +86,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<CloudEndpointLastChangeEnumerationStatus> lastEnumerationStatus = default;
             Optional<CloudEndpointChangeEnumerationActivity> activity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -51,8 +117,38 @@ namespace Azure.ResourceManager.StorageSync.Models
                     activity = CloudEndpointChangeEnumerationActivity.DeserializeCloudEndpointChangeEnumerationActivity(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudEndpointChangeEnumerationStatus(Optional.ToNullable(lastUpdatedTimestamp), lastEnumerationStatus.Value, activity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudEndpointChangeEnumerationStatus(Optional.ToNullable(lastUpdatedTimestamp), lastEnumerationStatus.Value, activity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CloudEndpointChangeEnumerationStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CloudEndpointChangeEnumerationStatus IModel<CloudEndpointChangeEnumerationStatus>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCloudEndpointChangeEnumerationStatus(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CloudEndpointChangeEnumerationStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

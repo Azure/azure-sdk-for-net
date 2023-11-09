@@ -5,14 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class EntitiesTaskParameters : IUtf8JsonSerializable
+    internal partial class EntitiesTaskParameters : IUtf8JsonSerializable, IJsonModel<EntitiesTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntitiesTaskParameters>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EntitiesTaskParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelVersion))
@@ -30,7 +37,106 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EntitiesTaskParameters IJsonModel<EntitiesTaskParameters>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EntitiesTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEntitiesTaskParameters(document.RootElement, options);
+        }
+
+        internal static EntitiesTaskParameters DeserializeEntitiesTaskParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            Optional<StringIndexType> stringIndexType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("model-version"u8))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EntitiesTaskParameters(modelVersion.Value, Optional.ToNullable(loggingOptOut), Optional.ToNullable(stringIndexType), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<EntitiesTaskParameters>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EntitiesTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EntitiesTaskParameters IModel<EntitiesTaskParameters>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EntitiesTaskParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEntitiesTaskParameters(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EntitiesTaskParameters>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

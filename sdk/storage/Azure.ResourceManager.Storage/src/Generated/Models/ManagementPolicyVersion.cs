@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Management policy action for blob version. </summary>
     public partial class ManagementPolicyVersion
     {
-        /// <summary> Initializes a new instance of ManagementPolicyVersion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyVersion"/>. </summary>
         public ManagementPolicyVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyVersion"/>. </summary>
         /// <param name="tierToCool"> The function to tier blob version to cool storage. </param>
         /// <param name="tierToArchive"> The function to tier blob version to archive storage. </param>
         /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>
         /// <param name="tierToHot"> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </param>
         /// <param name="delete"> The function to delete the blob version. </param>
-        internal ManagementPolicyVersion(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation tierToCold, DateAfterCreation tierToHot, DateAfterCreation delete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyVersion(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation tierToCold, DateAfterCreation tierToHot, DateAfterCreation delete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
             TierToCold = tierToCold;
             TierToHot = tierToHot;
             Delete = delete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The function to tier blob version to cool storage. </summary>

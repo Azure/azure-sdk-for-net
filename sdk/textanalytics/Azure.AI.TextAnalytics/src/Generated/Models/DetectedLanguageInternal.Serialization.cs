@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial struct DetectedLanguageInternal : IUtf8JsonSerializable
+    internal partial struct DetectedLanguageInternal : IUtf8JsonSerializable, IJsonModel<DetectedLanguageInternal>, IJsonModel<object>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedLanguageInternal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DetectedLanguageInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Name != null)
@@ -35,14 +41,49 @@ namespace Azure.AI.TextAnalytics.Models
             }
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DetectedLanguageInternal DeserializeDetectedLanguageInternal(JsonElement element)
+        DetectedLanguageInternal IJsonModel<DetectedLanguageInternal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DetectedLanguageInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDetectedLanguageInternal(document.RootElement, options);
+        }
+
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DetectedLanguageInternal>)this).Write(writer, options);
+
+        object IJsonModel<object>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DetectedLanguageInternal>)this).Read(ref reader, options);
+
+        internal static DetectedLanguageInternal DeserializeDetectedLanguageInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             string name = default;
             string iso6391Name = default;
             double confidenceScore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,8 +111,44 @@ namespace Azure.AI.TextAnalytics.Models
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DetectedLanguageInternal(name, iso6391Name, confidenceScore);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DetectedLanguageInternal(name, iso6391Name, confidenceScore, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DetectedLanguageInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DetectedLanguageInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DetectedLanguageInternal IModel<DetectedLanguageInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DetectedLanguageInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDetectedLanguageInternal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DetectedLanguageInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+
+        BinaryData IModel<object>.Write(ModelReaderWriterOptions options) => ((IModel<DetectedLanguageInternal>)this).Write(options);
+
+        object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options) => ((IModel<DetectedLanguageInternal>)this).Read(data, options);
+
+        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ((IModel<DetectedLanguageInternal>)this).GetWireFormat(options);
     }
 }

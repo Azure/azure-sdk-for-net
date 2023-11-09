@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// </summary>
     public abstract partial class EndpointBaseProperties
     {
-        /// <summary> Initializes a new instance of EndpointBaseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseProperties"/>. </summary>
         protected EndpointBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal EndpointBaseProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointBaseProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
             Description = description;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Endpoint resource type. </summary>

@@ -7,16 +7,100 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceOperation
+    public partial class AppServiceOperation : IUtf8JsonSerializable, IJsonModel<AppServiceOperation>
     {
-        internal static AppServiceOperation DeserializeAppServiceOperation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceOperation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AppServiceOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("modifiedTime"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expirationTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(GeoMasterOperationId))
+            {
+                writer.WritePropertyName("geoMasterOperationId"u8);
+                writer.WriteStringValue(GeoMasterOperationId.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppServiceOperation IJsonModel<AppServiceOperation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceOperation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceOperation(document.RootElement, options);
+        }
+
+        internal static AppServiceOperation DeserializeAppServiceOperation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +113,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> modifiedTime = default;
             Optional<DateTimeOffset> expirationTime = default;
             Optional<Guid> geoMasterOperationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -100,8 +186,38 @@ namespace Azure.ResourceManager.AppService.Models
                     geoMasterOperationId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AppServiceOperation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceOperation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceOperation IModel<AppServiceOperation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceOperation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceOperation(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AppServiceOperation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

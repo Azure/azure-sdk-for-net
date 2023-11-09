@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Single page of the search results. </summary>
     internal partial class SearchInstancesResponsePage
     {
-        /// <summary> Initializes a new instance of SearchInstancesResponsePage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchInstancesResponsePage"/>. </summary>
         internal SearchInstancesResponsePage()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchInstancesResponsePage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchInstancesResponsePage"/>. </summary>
         /// <param name="instances"> The instances matching the query based on the input. May be empty or null. </param>
         /// <param name="hierarchyNodes"> The hierarchy nodes which contains the instances matching the query based on the input. May be empty or null. </param>
-        internal SearchInstancesResponsePage(SearchInstancesResponse instances, SearchHierarchyNodesResponse hierarchyNodes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchInstancesResponsePage(SearchInstancesResponse instances, SearchHierarchyNodesResponse hierarchyNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Instances = instances;
             HierarchyNodes = hierarchyNodes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The instances matching the query based on the input. May be empty or null. </summary>

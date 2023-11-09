@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowStagingInfoConverter))]
-    public partial class DataFlowStagingInfo : IUtf8JsonSerializable
+    public partial class DataFlowStagingInfo : IUtf8JsonSerializable, IJsonModel<DataFlowStagingInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowStagingInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataFlowStagingInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
@@ -28,17 +33,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
+        DataFlowStagingInfo IJsonModel<DataFlowStagingInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowStagingInfo(document.RootElement, options);
+        }
+
+        internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<LinkedServiceReference> linkedService = default;
             Optional<object> folderPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -59,9 +95,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     folderPath = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DataFlowStagingInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFlowStagingInfo IModel<DataFlowStagingInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFlowStagingInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataFlowStagingInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class DataFlowStagingInfoConverter : JsonConverter<DataFlowStagingInfo>
         {

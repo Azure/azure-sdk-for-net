@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set disk storage settings for SQL Server. </summary>
     public partial class SqlStorageSettings
     {
-        /// <summary> Initializes a new instance of SqlStorageSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlStorageSettings"/>. </summary>
         public SqlStorageSettings()
         {
             Luns = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SqlStorageSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStorageSettings"/>. </summary>
         /// <param name="luns"> Logical Unit Numbers for the disks. </param>
         /// <param name="defaultFilePath"> SQL Server default file path. </param>
-        internal SqlStorageSettings(IList<int> luns, string defaultFilePath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlStorageSettings(IList<int> luns, string defaultFilePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Luns = luns;
             DefaultFilePath = defaultFilePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Logical Unit Numbers for the disks. </summary>

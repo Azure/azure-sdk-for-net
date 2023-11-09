@@ -5,14 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </summary>
     internal partial class DelimitedTextConfigurationInternal
     {
-        /// <summary> Initializes a new instance of DelimitedTextConfigurationInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextConfigurationInternal"/>. </summary>
         public DelimitedTextConfigurationInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextConfigurationInternal"/>. </summary>
+        /// <param name="columnSeparator"> The string used to separate columns. </param>
+        /// <param name="fieldQuote"> The string used to quote a specific field. </param>
+        /// <param name="recordSeparator"> The string used to separate records. </param>
+        /// <param name="escapeChar"> The string used as an escape character. </param>
+        /// <param name="headersPresent"> Represents whether the data has headers. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DelimitedTextConfigurationInternal(string columnSeparator, string fieldQuote, string recordSeparator, string escapeChar, bool? headersPresent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ColumnSeparator = columnSeparator;
+            FieldQuote = fieldQuote;
+            RecordSeparator = recordSeparator;
+            EscapeChar = escapeChar;
+            HeadersPresent = headersPresent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The string used to separate columns. </summary>

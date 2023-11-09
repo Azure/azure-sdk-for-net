@@ -5,16 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class HealthcareAssertion
+    internal partial class HealthcareAssertion : IUtf8JsonSerializable, IJsonModel<HealthcareAssertion>
     {
-        internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareAssertion>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HealthcareAssertion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Conditionality))
+            {
+                writer.WritePropertyName("conditionality"u8);
+                writer.WriteStringValue(Conditionality.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Certainty))
+            {
+                writer.WritePropertyName("certainty"u8);
+                writer.WriteStringValue(Certainty.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Association))
+            {
+                writer.WritePropertyName("association"u8);
+                writer.WriteStringValue(Association.Value.ToSerialString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HealthcareAssertion IJsonModel<HealthcareAssertion>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareAssertion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareAssertion(document.RootElement, options);
+        }
+
+        internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +78,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<Conditionality> conditionality = default;
             Optional<Certainty> certainty = default;
             Optional<Association> association = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -51,8 +109,38 @@ namespace Azure.AI.TextAnalytics.Legacy
                     association = property.Value.GetString().ToAssociation();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthcareAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthcareAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HealthcareAssertion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareAssertion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthcareAssertion IModel<HealthcareAssertion>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareAssertion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthcareAssertion(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HealthcareAssertion>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

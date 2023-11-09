@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable
+    public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<ServiceInitiatedSoftwareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceInitiatedSoftwareConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ServiceInitiatedSoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bomUrl"u8);
@@ -33,11 +38,40 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceInitiatedSoftwareConfiguration DeserializeServiceInitiatedSoftwareConfiguration(JsonElement element)
+        ServiceInitiatedSoftwareConfiguration IJsonModel<ServiceInitiatedSoftwareConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceInitiatedSoftwareConfiguration(document.RootElement, options);
+        }
+
+        internal static ServiceInitiatedSoftwareConfiguration DeserializeServiceInitiatedSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +83,8 @@ namespace Azure.ResourceManager.Workloads.Models
             string sshPrivateKey = default;
             Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bomUrl"u8))
@@ -90,8 +126,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceInitiatedSoftwareConfiguration(softwareInstallationType, bomUrl, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceInitiatedSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, bomUrl, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration.Value);
         }
+
+        BinaryData IModel<ServiceInitiatedSoftwareConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceInitiatedSoftwareConfiguration IModel<ServiceInitiatedSoftwareConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceInitiatedSoftwareConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ServiceInitiatedSoftwareConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowDebugPackageConverter))]
-    public partial class DataFlowDebugPackage : IUtf8JsonSerializable
+    public partial class DataFlowDebugPackage : IUtf8JsonSerializable, IJsonModel<DataFlowDebugPackage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowDebugPackage>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataFlowDebugPackage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
@@ -77,8 +81,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFlowDebugPackage DeserializeDataFlowDebugPackage(JsonElement element)
+        DataFlowDebugPackage IJsonModel<DataFlowDebugPackage>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowDebugPackage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowDebugPackage(document.RootElement, options);
+        }
+
+        internal static DataFlowDebugPackage DeserializeDataFlowDebugPackage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -173,6 +191,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
         }
+
+        BinaryData IModel<DataFlowDebugPackage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowDebugPackage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFlowDebugPackage IModel<DataFlowDebugPackage>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFlowDebugPackage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFlowDebugPackage(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataFlowDebugPackage>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class DataFlowDebugPackageConverter : JsonConverter<DataFlowDebugPackage>
         {

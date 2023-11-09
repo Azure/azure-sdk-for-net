@@ -5,14 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueItem
+    public partial class QueueItem : IXmlSerializable, IModel<QueueItem>
     {
-        internal static QueueItem DeserializeQueueItem(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Queue");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                foreach (var pair in Metadata)
+                {
+                    writer.WriteStartElement("String");
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static QueueItem DeserializeQueueItem(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             IDictionary<string, string> metadata = default;
@@ -29,7 +53,43 @@ namespace Azure.Storage.Queues.Models
                 }
                 metadata = dictionary;
             }
-            return new QueueItem(name, metadata);
+            return new QueueItem(name, metadata, default);
         }
+
+        BinaryData IModel<QueueItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<QueueItem>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueItem IModel<QueueItem>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueueItem)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeQueueItem(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<QueueItem>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

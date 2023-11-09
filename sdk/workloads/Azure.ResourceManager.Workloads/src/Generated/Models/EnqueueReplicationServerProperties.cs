@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the SAP Enqueue Replication Server (ERS) properties. </summary>
     public partial class EnqueueReplicationServerProperties
     {
-        /// <summary> Initializes a new instance of EnqueueReplicationServerProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnqueueReplicationServerProperties"/>. </summary>
         public EnqueueReplicationServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EnqueueReplicationServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnqueueReplicationServerProperties"/>. </summary>
         /// <param name="ersVersion"> Defines the type of Enqueue Replication Server. </param>
         /// <param name="instanceNo"> ERS Instance Number. </param>
         /// <param name="hostname"> ERS SAP Hostname. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="kernelPatch"> ERS SAP Kernel Patch level. </param>
         /// <param name="ipAddress"> ERS SAP IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
-        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, string ipAddress, SapHealthState? health)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, string ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErsVersion = ersVersion;
             InstanceNo = instanceNo;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             KernelPatch = kernelPatch;
             IPAddress = ipAddress;
             Health = health;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the type of Enqueue Replication Server. </summary>

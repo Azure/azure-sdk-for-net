@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class AdditionalFeaturesServerConfigurations : IUtf8JsonSerializable
+    internal partial class AdditionalFeaturesServerConfigurations : IUtf8JsonSerializable, IJsonModel<AdditionalFeaturesServerConfigurations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalFeaturesServerConfigurations>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AdditionalFeaturesServerConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(IsRServicesEnabled))
@@ -20,16 +26,47 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("isRServicesEnabled"u8);
                 writer.WriteBooleanValue(IsRServicesEnabled.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdditionalFeaturesServerConfigurations DeserializeAdditionalFeaturesServerConfigurations(JsonElement element)
+        AdditionalFeaturesServerConfigurations IJsonModel<AdditionalFeaturesServerConfigurations>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdditionalFeaturesServerConfigurations)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdditionalFeaturesServerConfigurations(document.RootElement, options);
+        }
+
+        internal static AdditionalFeaturesServerConfigurations DeserializeAdditionalFeaturesServerConfigurations(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isRServicesEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isRServicesEnabled"u8))
@@ -41,8 +78,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     isRServicesEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AdditionalFeaturesServerConfigurations(Optional.ToNullable(isRServicesEnabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AdditionalFeaturesServerConfigurations(Optional.ToNullable(isRServicesEnabled), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AdditionalFeaturesServerConfigurations>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdditionalFeaturesServerConfigurations)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AdditionalFeaturesServerConfigurations IModel<AdditionalFeaturesServerConfigurations>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AdditionalFeaturesServerConfigurations)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAdditionalFeaturesServerConfigurations(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AdditionalFeaturesServerConfigurations>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

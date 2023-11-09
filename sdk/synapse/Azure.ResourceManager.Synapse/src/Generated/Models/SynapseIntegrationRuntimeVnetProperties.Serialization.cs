@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeVnetProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeVnetProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeVnetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeVnetProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SynapseIntegrationRuntimeVnetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(VnetId))
@@ -57,8 +61,22 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeVnetProperties DeserializeSynapseIntegrationRuntimeVnetProperties(JsonElement element)
+        SynapseIntegrationRuntimeVnetProperties IJsonModel<SynapseIntegrationRuntimeVnetProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeVnetProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeVnetProperties(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeVnetProperties DeserializeSynapseIntegrationRuntimeVnetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,5 +131,30 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeVnetProperties(Optional.ToNullable(vNetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
         }
+
+        BinaryData IModel<SynapseIntegrationRuntimeVnetProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeVnetProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseIntegrationRuntimeVnetProperties IModel<SynapseIntegrationRuntimeVnetProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeVnetProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeVnetProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SynapseIntegrationRuntimeVnetProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

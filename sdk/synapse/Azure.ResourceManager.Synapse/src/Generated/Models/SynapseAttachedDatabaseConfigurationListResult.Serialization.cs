@@ -5,22 +5,74 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class SynapseAttachedDatabaseConfigurationListResult
+    internal partial class SynapseAttachedDatabaseConfigurationListResult : IUtf8JsonSerializable, IJsonModel<SynapseAttachedDatabaseConfigurationListResult>
     {
-        internal static SynapseAttachedDatabaseConfigurationListResult DeserializeSynapseAttachedDatabaseConfigurationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseAttachedDatabaseConfigurationListResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SynapseAttachedDatabaseConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SynapseAttachedDatabaseConfigurationListResult IJsonModel<SynapseAttachedDatabaseConfigurationListResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseAttachedDatabaseConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseAttachedDatabaseConfigurationListResult(document.RootElement, options);
+        }
+
+        internal static SynapseAttachedDatabaseConfigurationListResult DeserializeSynapseAttachedDatabaseConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SynapseAttachedDatabaseConfigurationData>> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,8 +89,38 @@ namespace Azure.ResourceManager.Synapse.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseAttachedDatabaseConfigurationListResult(Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseAttachedDatabaseConfigurationListResult(Optional.ToList(value), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SynapseAttachedDatabaseConfigurationListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseAttachedDatabaseConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseAttachedDatabaseConfigurationListResult IModel<SynapseAttachedDatabaseConfigurationListResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseAttachedDatabaseConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseAttachedDatabaseConfigurationListResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SynapseAttachedDatabaseConfigurationListResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

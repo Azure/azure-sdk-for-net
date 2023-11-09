@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,9 +16,11 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataLakeAnalyticsUsqlActivityConverter))]
-    public partial class DataLakeAnalyticsUsqlActivity : IUtf8JsonSerializable
+    public partial class DataLakeAnalyticsUsqlActivity : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsUsqlActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsUsqlActivity>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DataLakeAnalyticsUsqlActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
@@ -119,8 +123,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DataLakeAnalyticsUsqlActivity DeserializeDataLakeAnalyticsUsqlActivity(JsonElement element)
+        DataLakeAnalyticsUsqlActivity IJsonModel<DataLakeAnalyticsUsqlActivity>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeAnalyticsUsqlActivity(document.RootElement, options);
+        }
+
+        internal static DataLakeAnalyticsUsqlActivity DeserializeDataLakeAnalyticsUsqlActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -308,6 +326,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);
         }
+
+        BinaryData IModel<DataLakeAnalyticsUsqlActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataLakeAnalyticsUsqlActivity IModel<DataLakeAnalyticsUsqlActivity>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsUsqlActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataLakeAnalyticsUsqlActivity(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DataLakeAnalyticsUsqlActivity>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class DataLakeAnalyticsUsqlActivityConverter : JsonConverter<DataLakeAnalyticsUsqlActivity>
         {

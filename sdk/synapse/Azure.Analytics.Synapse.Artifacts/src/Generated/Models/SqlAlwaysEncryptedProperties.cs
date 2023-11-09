@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Sql always encrypted properties. </summary>
     public partial class SqlAlwaysEncryptedProperties
     {
-        /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/>. </summary>
         /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string. </param>
         public SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType)
         {
             AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
         }
 
-        /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/>. </summary>
         /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string. </param>
         /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
@@ -26,12 +32,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, object servicePrincipalId, SecretBase servicePrincipalKey, CredentialReference credential)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, object servicePrincipalId, SecretBase servicePrincipalKey, CredentialReference credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Credential = credential;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlAlwaysEncryptedProperties"/> for deserialization. </summary>
+        internal SqlAlwaysEncryptedProperties()
+        {
         }
 
         /// <summary> Sql always encrypted AKV authentication type. Type: string. </summary>

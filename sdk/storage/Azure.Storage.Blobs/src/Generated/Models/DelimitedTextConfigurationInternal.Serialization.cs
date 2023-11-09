@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class DelimitedTextConfigurationInternal : IXmlSerializable
+    internal partial class DelimitedTextConfigurationInternal : IXmlSerializable, IModel<DelimitedTextConfigurationInternal>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -47,5 +52,71 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
         }
+
+        internal static DelimitedTextConfigurationInternal DeserializeDelimitedTextConfigurationInternal(XElement element, ModelReaderWriterOptions options = null)
+        {
+            string columnSeparator = default;
+            string fieldQuote = default;
+            string recordSeparator = default;
+            string escapeChar = default;
+            bool? headersPresent = default;
+            if (element.Element("ColumnSeparator") is XElement columnSeparatorElement)
+            {
+                columnSeparator = (string)columnSeparatorElement;
+            }
+            if (element.Element("FieldQuote") is XElement fieldQuoteElement)
+            {
+                fieldQuote = (string)fieldQuoteElement;
+            }
+            if (element.Element("RecordSeparator") is XElement recordSeparatorElement)
+            {
+                recordSeparator = (string)recordSeparatorElement;
+            }
+            if (element.Element("EscapeChar") is XElement escapeCharElement)
+            {
+                escapeChar = (string)escapeCharElement;
+            }
+            if (element.Element("HasHeaders") is XElement hasHeadersElement)
+            {
+                headersPresent = (bool?)hasHeadersElement;
+            }
+            return new DelimitedTextConfigurationInternal(columnSeparator, fieldQuote, recordSeparator, escapeChar, headersPresent, default);
+        }
+
+        BinaryData IModel<DelimitedTextConfigurationInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<DelimitedTextConfigurationInternal>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        DelimitedTextConfigurationInternal IModel<DelimitedTextConfigurationInternal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DelimitedTextConfigurationInternal)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeDelimitedTextConfigurationInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<DelimitedTextConfigurationInternal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

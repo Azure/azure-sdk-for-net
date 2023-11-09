@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Response containing full time series model settings which include model name, Time Series ID properties and default type ID. </summary>
     internal partial class ModelSettingsResponse
     {
-        /// <summary> Initializes a new instance of ModelSettingsResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelSettingsResponse"/>. </summary>
         internal ModelSettingsResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelSettingsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelSettingsResponse"/>. </summary>
         /// <param name="modelSettings"> Model settings including model name, Time Series ID properties and default type ID. </param>
-        internal ModelSettingsResponse(TimeSeriesModelSettings modelSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelSettingsResponse(TimeSeriesModelSettings modelSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelSettings = modelSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Model settings including model name, Time Series ID properties and default type ID. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> The FileSystem. </summary>
     internal partial class FileSystem
     {
-        /// <summary> Initializes a new instance of FileSystem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileSystem"/>. </summary>
         internal FileSystem()
         {
         }
 
-        /// <summary> Initializes a new instance of FileSystem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="lastModified"></param>
         /// <param name="eTag"></param>
-        internal FileSystem(string name, string lastModified, string eTag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystem(string name, string lastModified, string eTag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             LastModified = lastModified;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

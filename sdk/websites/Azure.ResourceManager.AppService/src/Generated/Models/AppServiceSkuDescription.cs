@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a SKU for a scalable resource. </summary>
     public partial class AppServiceSkuDescription
     {
-        /// <summary> Initializes a new instance of AppServiceSkuDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuDescription"/>. </summary>
         public AppServiceSkuDescription()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Capabilities = new ChangeTrackingList<AppServiceSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuDescription"/>. </summary>
         /// <param name="name"> Name of the resource SKU. </param>
         /// <param name="tier"> Service tier of the resource SKU. </param>
         /// <param name="size"> Size specifier of the resource SKU. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="skuCapacity"> Min, max, and default scale values of the SKU. </param>
         /// <param name="locations"> Locations of the SKU. </param>
         /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
-        internal AppServiceSkuDescription(string name, string tier, string size, string family, int? capacity, AppServiceSkuCapacity skuCapacity, IList<AzureLocation> locations, IList<AppServiceSkuCapability> capabilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceSkuDescription(string name, string tier, string size, string family, int? capacity, AppServiceSkuCapacity skuCapacity, IList<AzureLocation> locations, IList<AppServiceSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             SkuCapacity = skuCapacity;
             Locations = locations;
             Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the resource SKU. </summary>

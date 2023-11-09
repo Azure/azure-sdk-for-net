@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Data Table which defines columns and raw row values. </summary>
     public partial class DataTableResponseObject
     {
-        /// <summary> Initializes a new instance of DataTableResponseObject. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseObject"/>. </summary>
         public DataTableResponseObject()
         {
             Columns = new ChangeTrackingList<DataTableResponseColumn>();
             Rows = new ChangeTrackingList<IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of DataTableResponseObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseObject"/>. </summary>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="columns"> List of columns with data types. </param>
         /// <param name="rows"> Raw row values. </param>
-        internal DataTableResponseObject(string tableName, IList<DataTableResponseColumn> columns, IList<IList<string>> rows)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTableResponseObject(string tableName, IList<DataTableResponseColumn> columns, IList<IList<string>> rows, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
             Columns = columns;
             Rows = rows;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the table. </summary>

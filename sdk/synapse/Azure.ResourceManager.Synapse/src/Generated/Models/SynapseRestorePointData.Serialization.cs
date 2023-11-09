@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,19 +16,113 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseRestorePointData : IUtf8JsonSerializable
+    public partial class SynapseRestorePointData : IUtf8JsonSerializable, IJsonModel<SynapseRestorePointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseRestorePointData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<SynapseRestorePointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RestorePointType))
+                {
+                    writer.WritePropertyName("restorePointType"u8);
+                    writer.WriteStringValue(RestorePointType.Value.ToSerialString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EarliestRestoreOn))
+                {
+                    writer.WritePropertyName("earliestRestoreDate"u8);
+                    writer.WriteStringValue(EarliestRestoreOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RestorePointCreationOn))
+                {
+                    writer.WritePropertyName("restorePointCreationDate"u8);
+                    writer.WriteStringValue(RestorePointCreationOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(RestorePointLabel))
+                {
+                    writer.WritePropertyName("restorePointLabel"u8);
+                    writer.WriteStringValue(RestorePointLabel);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseRestorePointData DeserializeSynapseRestorePointData(JsonElement element)
+        SynapseRestorePointData IJsonModel<SynapseRestorePointData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseRestorePointData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseRestorePointData(document.RootElement, options);
+        }
+
+        internal static SynapseRestorePointData DeserializeSynapseRestorePointData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +136,8 @@ namespace Azure.ResourceManager.Synapse
             Optional<DateTimeOffset> earliestRestoreDate = default;
             Optional<DateTimeOffset> restorePointCreationDate = default;
             Optional<string> restorePointLabel = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -118,8 +217,38 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<SynapseRestorePointData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseRestorePointData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseRestorePointData IModel<SynapseRestorePointData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseRestorePointData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseRestorePointData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<SynapseRestorePointData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Workloads;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The response from the List provider instances operation. </summary>
     internal partial class ProviderInstanceListResult
     {
-        /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderInstanceListResult"/>. </summary>
         internal ProviderInstanceListResult()
         {
             Value = new ChangeTrackingList<SapProviderInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderInstanceListResult"/>. </summary>
         /// <param name="value"> The list of provider instances. </param>
         /// <param name="nextLink"> The URL to get the next set of provider instances. </param>
-        internal ProviderInstanceListResult(IReadOnlyList<SapProviderInstanceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderInstanceListResult(IReadOnlyList<SapProviderInstanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of provider instances. </summary>

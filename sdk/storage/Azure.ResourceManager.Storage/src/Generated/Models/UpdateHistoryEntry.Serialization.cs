@@ -6,15 +6,113 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class UpdateHistoryEntry
+    public partial class UpdateHistoryEntry : IUtf8JsonSerializable, IJsonModel<UpdateHistoryEntry>
     {
-        internal static UpdateHistoryEntry DeserializeUpdateHistoryEntry(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateHistoryEntry>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<UpdateHistoryEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UpdateType))
+                {
+                    writer.WritePropertyName("update"u8);
+                    writer.WriteStringValue(UpdateType.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
+                {
+                    writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
+                    writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("timestamp"u8);
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ObjectIdentifier))
+                {
+                    writer.WritePropertyName("objectIdentifier"u8);
+                    writer.WriteStringValue(ObjectIdentifier);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Upn))
+                {
+                    writer.WritePropertyName("upn"u8);
+                    writer.WriteStringValue(Upn);
+                }
+            }
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
+            {
+                writer.WritePropertyName("allowProtectedAppendWrites"u8);
+                writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
+            }
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            {
+                writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
+                writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UpdateHistoryEntry IJsonModel<UpdateHistoryEntry>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateHistoryEntry)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateHistoryEntry(document.RootElement, options);
+        }
+
+        internal static UpdateHistoryEntry DeserializeUpdateHistoryEntry(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +125,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> upn = default;
             Optional<bool> allowProtectedAppendWrites = default;
             Optional<bool> allowProtectedAppendWritesAll = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("update"u8))
@@ -93,8 +193,38 @@ namespace Azure.ResourceManager.Storage.Models
                     allowProtectedAppendWritesAll = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpdateHistoryEntry(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpdateHistoryEntry(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<UpdateHistoryEntry>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateHistoryEntry)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UpdateHistoryEntry IModel<UpdateHistoryEntry>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateHistoryEntry)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUpdateHistoryEntry(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<UpdateHistoryEntry>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

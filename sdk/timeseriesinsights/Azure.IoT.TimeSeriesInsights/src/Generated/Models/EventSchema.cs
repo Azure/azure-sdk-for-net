@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Event schema of all events within a given search span. Event schema is a set of property definitions. Properties are identified by both name and type. Different events can have properties with same name, but different type. Event schema may not be contain all persisted properties when there are too many properties. </summary>
     internal partial class EventSchema
     {
-        /// <summary> Initializes a new instance of EventSchema. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventSchema"/>. </summary>
         internal EventSchema()
         {
             Properties = new ChangeTrackingList<TimeSeriesInsightsEventProperty>();
         }
 
-        /// <summary> Initializes a new instance of EventSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSchema"/>. </summary>
         /// <param name="properties"> A set of property definitions. When environment has no data, the returned array is empty. </param>
-        internal EventSchema(IReadOnlyList<TimeSeriesInsightsEventProperty> properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventSchema(IReadOnlyList<TimeSeriesInsightsEventProperty> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A set of property definitions. When environment has no data, the returned array is empty. </summary>

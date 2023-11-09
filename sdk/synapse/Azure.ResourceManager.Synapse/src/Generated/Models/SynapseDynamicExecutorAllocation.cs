@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Dynamic Executor Allocation Properties. </summary>
     public partial class SynapseDynamicExecutorAllocation
     {
-        /// <summary> Initializes a new instance of SynapseDynamicExecutorAllocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDynamicExecutorAllocation"/>. </summary>
         public SynapseDynamicExecutorAllocation()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDynamicExecutorAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDynamicExecutorAllocation"/>. </summary>
         /// <param name="isEnabled"> Indicates whether Dynamic Executor Allocation is enabled or not. </param>
         /// <param name="minExecutors"> The minimum number of executors alloted. </param>
         /// <param name="maxExecutors"> The maximum number of executors alloted. </param>
-        internal SynapseDynamicExecutorAllocation(bool? isEnabled, int? minExecutors, int? maxExecutors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDynamicExecutorAllocation(bool? isEnabled, int? minExecutors, int? maxExecutors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             MinExecutors = minExecutors;
             MaxExecutors = maxExecutors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether Dynamic Executor Allocation is enabled or not. </summary>

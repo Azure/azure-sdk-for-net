@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
     public partial class AmlFileSystemPropertiesMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesMaintenanceWindow. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesMaintenanceWindow"/>. </summary>
         public AmlFileSystemPropertiesMaintenanceWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesMaintenanceWindow"/>. </summary>
         /// <param name="dayOfWeek"> Day of the week on which the maintenance window will occur. </param>
         /// <param name="timeOfDayUTC"> The time of day (in UTC) to start the maintenance window. </param>
-        internal AmlFileSystemPropertiesMaintenanceWindow(MaintenanceDayOfWeekType? dayOfWeek, string timeOfDayUTC)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemPropertiesMaintenanceWindow(MaintenanceDayOfWeekType? dayOfWeek, string timeOfDayUTC, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DayOfWeek = dayOfWeek;
             TimeOfDayUTC = timeOfDayUTC;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Day of the week on which the maintenance window will occur. </summary>

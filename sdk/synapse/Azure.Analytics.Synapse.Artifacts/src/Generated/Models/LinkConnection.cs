@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkConnection. </summary>
     public partial class LinkConnection
     {
-        /// <summary> Initializes a new instance of LinkConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnection"/>. </summary>
         public LinkConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnection"/>. </summary>
         /// <param name="sourceDatabase"> Properties of link connection's source database. </param>
         /// <param name="targetDatabase"> Properties of link connection's target database. </param>
         /// <param name="landingZone"> Properties of link connection's landing zone. </param>
         /// <param name="compute"> Properties of link connection's compute. </param>
-        internal LinkConnection(LinkConnectionSourceDatabase sourceDatabase, LinkConnectionTargetDatabase targetDatabase, LinkConnectionLandingZone landingZone, LinkConnectionCompute compute)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkConnection(LinkConnectionSourceDatabase sourceDatabase, LinkConnectionTargetDatabase targetDatabase, LinkConnectionLandingZone landingZone, LinkConnectionCompute compute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceDatabase = sourceDatabase;
             TargetDatabase = targetDatabase;
             LandingZone = landingZone;
             Compute = compute;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of link connection's source database. </summary>

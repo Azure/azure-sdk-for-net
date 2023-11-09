@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The List SAS credentials operation response. </summary>
     public partial class GetAccountSasResult
     {
-        /// <summary> Initializes a new instance of GetAccountSasResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetAccountSasResult"/>. </summary>
         internal GetAccountSasResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GetAccountSasResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetAccountSasResult"/>. </summary>
         /// <param name="accountSasToken"> List SAS credentials of storage account. </param>
-        internal GetAccountSasResult(string accountSasToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetAccountSasResult(string accountSasToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountSasToken = accountSasToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List SAS credentials of storage account. </summary>

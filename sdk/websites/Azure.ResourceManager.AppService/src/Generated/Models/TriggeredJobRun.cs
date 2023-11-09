@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun
     {
-        /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobRun"/>. </summary>
         public TriggeredJobRun()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobRun"/>. </summary>
         /// <param name="webJobId"> Job ID. </param>
         /// <param name="webJobName"> Job name. </param>
         /// <param name="status"> Job status. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="uri"> Job URL. </param>
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
             Uri = uri;
             JobName = jobName;
             Trigger = trigger;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Job ID. </summary>

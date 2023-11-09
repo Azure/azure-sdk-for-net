@@ -6,21 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class StaticSiteUserProvidedFunctionAppData : IUtf8JsonSerializable
+    public partial class StaticSiteUserProvidedFunctionAppData : IUtf8JsonSerializable, IJsonModel<StaticSiteUserProvidedFunctionAppData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<StaticSiteUserProvidedFunctionAppData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -34,12 +62,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("functionAppRegion"u8);
                 writer.WriteStringValue(FunctionAppRegion);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdOn"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticSiteUserProvidedFunctionAppData DeserializeStaticSiteUserProvidedFunctionAppData(JsonElement element)
+        StaticSiteUserProvidedFunctionAppData IJsonModel<StaticSiteUserProvidedFunctionAppData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement, options);
+        }
+
+        internal static StaticSiteUserProvidedFunctionAppData DeserializeStaticSiteUserProvidedFunctionAppData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +117,8 @@ namespace Azure.ResourceManager.AppService
             Optional<ResourceIdentifier> functionAppResourceId = default;
             Optional<string> functionAppRegion = default;
             Optional<DateTimeOffset> createdOn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -118,8 +185,38 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StaticSiteUserProvidedFunctionAppData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StaticSiteUserProvidedFunctionAppData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<StaticSiteUserProvidedFunctionAppData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StaticSiteUserProvidedFunctionAppData IModel<StaticSiteUserProvidedFunctionAppData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<StaticSiteUserProvidedFunctionAppData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

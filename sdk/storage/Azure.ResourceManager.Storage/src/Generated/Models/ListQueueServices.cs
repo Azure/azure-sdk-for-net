@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The ListQueueServices. </summary>
     internal partial class ListQueueServices
     {
-        /// <summary> Initializes a new instance of ListQueueServices. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListQueueServices"/>. </summary>
         internal ListQueueServices()
         {
             Value = new ChangeTrackingList<QueueServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ListQueueServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueueServices"/>. </summary>
         /// <param name="value"> List of queue services returned. </param>
-        internal ListQueueServices(IReadOnlyList<QueueServiceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListQueueServices(IReadOnlyList<QueueServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of queue services returned. </summary>

@@ -5,13 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial struct BlobBlock
+    public partial struct BlobBlock : IXmlSerializable, IModel<BlobBlock>
     {
-        internal static BlobBlock DeserializeBlobBlock(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "Block");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Size");
+            writer.WriteValue(SizeLong);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static BlobBlock DeserializeBlobBlock(XElement element, ModelReaderWriterOptions options = null)
         {
             string name = default;
             long sizeLong = default;
@@ -23,7 +41,49 @@ namespace Azure.Storage.Blobs.Models
             {
                 sizeLong = (long)sizeElement;
             }
-            return new BlobBlock(name, sizeLong);
+            return new BlobBlock(name, sizeLong, default);
         }
+
+        BinaryData IModel<BlobBlock>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<BlobBlock>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobBlock IModel<BlobBlock>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BlobBlock)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeBlobBlock(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<BlobBlock>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+
+        BinaryData IModel<object>.Write(ModelReaderWriterOptions options) => ((IModel<BlobBlock>)this).Write(options);
+
+        object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options) => ((IModel<BlobBlock>)this).Read(data, options);
+
+        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ((IModel<BlobBlock>)this).GetWireFormat(options);
     }
 }

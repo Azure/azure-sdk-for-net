@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> A domain name that a service is reached at, including details of the current connection status. </summary>
     public partial class OutboundEndpointDependency
     {
-        /// <summary> Initializes a new instance of OutboundEndpointDependency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutboundEndpointDependency"/>. </summary>
         internal OutboundEndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<OutboundEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of OutboundEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
-        internal OutboundEndpointDependency(string domainName, IReadOnlyList<OutboundEndpointDetail> endpointDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutboundEndpointDependency(string domainName, IReadOnlyList<OutboundEndpointDetail> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainName = domainName;
             EndpointDetails = endpointDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The domain name of the dependency. </summary>

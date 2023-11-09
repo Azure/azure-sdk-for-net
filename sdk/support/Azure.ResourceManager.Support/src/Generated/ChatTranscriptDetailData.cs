@@ -19,23 +19,28 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class ChatTranscriptDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of ChatTranscriptDetailData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptDetailData"/>. </summary>
         public ChatTranscriptDetailData()
         {
             Messages = new ChangeTrackingList<ChatTranscriptMessageProperties>();
         }
 
-        /// <summary> Initializes a new instance of ChatTranscriptDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatTranscriptDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="messages"> List of chat transcript communication resources. </param>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the chat began. </param>
-        internal ChatTranscriptDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ChatTranscriptMessageProperties> messages, DateTimeOffset? startOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatTranscriptDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ChatTranscriptMessageProperties> messages, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Messages = messages;
             StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of chat transcript communication resources. </summary>

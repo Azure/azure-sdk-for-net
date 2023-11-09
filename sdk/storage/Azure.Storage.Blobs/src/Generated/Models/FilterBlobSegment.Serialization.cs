@@ -5,14 +5,44 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class FilterBlobSegment
+    internal partial class FilterBlobSegment : IXmlSerializable, IModel<FilterBlobSegment>
     {
-        internal static FilterBlobSegment DeserializeFilterBlobSegment(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartElement("Where");
+            writer.WriteValue(Where);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("Blobs");
+            foreach (var item in Blobs)
+            {
+                writer.WriteObjectValue(item, "Blob");
+            }
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        internal static FilterBlobSegment DeserializeFilterBlobSegment(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string @where = default;
@@ -39,7 +69,43 @@ namespace Azure.Storage.Blobs.Models
                 }
                 blobs = array;
             }
-            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker);
+            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker, default);
         }
+
+        BinaryData IModel<FilterBlobSegment>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<FilterBlobSegment>;
+            bool isValid = options.Format == ModelReaderWriterFormat.Json && implementsJson || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FilterBlobSegment IModel<FilterBlobSegment>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FilterBlobSegment)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeFilterBlobSegment(XElement.Load(data.ToStream()), options);
+        }
+
+        ModelReaderWriterFormat IModel<FilterBlobSegment>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

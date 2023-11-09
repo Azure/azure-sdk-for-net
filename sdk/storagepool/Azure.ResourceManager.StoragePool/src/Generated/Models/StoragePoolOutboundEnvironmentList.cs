@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Collection of Outbound Environment Endpoints. </summary>
     internal partial class StoragePoolOutboundEnvironmentList
     {
-        /// <summary> Initializes a new instance of StoragePoolOutboundEnvironmentList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolOutboundEnvironmentList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StoragePoolOutboundEnvironmentList(IEnumerable<StoragePoolOutboundEnvironment> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.StoragePool.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolOutboundEnvironmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolOutboundEnvironmentList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal StoragePoolOutboundEnvironmentList(IReadOnlyList<StoragePoolOutboundEnvironment> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePoolOutboundEnvironmentList(IReadOnlyList<StoragePoolOutboundEnvironment> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolOutboundEnvironmentList"/> for deserialization. </summary>
+        internal StoragePoolOutboundEnvironmentList()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of sparkconfiguration resources. </summary>
     internal partial class SparkConfigurationListResponse
     {
-        /// <summary> Initializes a new instance of SparkConfigurationListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationListResponse"/>. </summary>
         /// <param name="value"> List of sparkconfigurations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SparkConfigurationListResponse(IEnumerable<SparkConfigurationResource> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SparkConfigurationListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationListResponse"/>. </summary>
         /// <param name="value"> List of sparkconfigurations. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal SparkConfigurationListResponse(IReadOnlyList<SparkConfigurationResource> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkConfigurationListResponse(IReadOnlyList<SparkConfigurationResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationListResponse"/> for deserialization. </summary>
+        internal SparkConfigurationListResponse()
+        {
         }
 
         /// <summary> List of sparkconfigurations. </summary>
