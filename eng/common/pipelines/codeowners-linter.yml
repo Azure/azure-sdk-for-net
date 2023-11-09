@@ -39,7 +39,7 @@ stages:
     steps:
       # Skip sparse checkout for the `azure-sdk-for-<lang>-pr` private mirrored repositories
       # as we require the github service connection to be loaded.
-      - ${{ if and(parameters.SparseCheckout, not(contains(variables['Build.DefinitionName'], '-pr - '))) }}:
+      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
             Paths:
