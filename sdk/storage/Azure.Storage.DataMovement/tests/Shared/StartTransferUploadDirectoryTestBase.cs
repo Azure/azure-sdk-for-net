@@ -161,6 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
         #endregion
 
+        [RecordedTest]
         [TestCase(Constants.KB, 2)]
         [TestCase(12345, 2)]
         public async Task Upload(long objectSize, int waitTimeInSec)
@@ -188,6 +189,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationToken);
         }
 
+        [RecordedTest]
         [TestCase(DataTransferErrorMode.ContinueOnFailure)]
         [TestCase(DataTransferErrorMode.StopOnAnyFailure)]
         public async Task UploadFailIfExists(DataTransferErrorMode errorMode)
@@ -254,6 +256,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
+        [RecordedTest]
         [Test]
         public async Task UploadSkipIfExists()
         {
@@ -312,6 +315,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.That(localFiles, Is.EquivalentTo(destinationObjects));
         }
 
+        [RecordedTest]
         [Test]
         public async Task UploadOverwriteIfExists()
         {
@@ -347,6 +351,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationToken);
         }
 
+        [RecordedTest]
         [TestCase(Constants.KB, Constants.KB/4, 2)]
         [TestCase(10 * Constants.KB, 4 * Constants.KB, 5)]
         [TestCase(Constants.KB, 97, 2)]
@@ -380,6 +385,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationToken);
         }
 
+        [RecordedTest]
         [TestCase(1)]
         [TestCase(5)]
         public async Task UploadEmpty(int folderDepth)
@@ -412,6 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationToken);
         }
 
+        [RecordedTest]
         [TestCase(1, 5)]
         [TestCase(3, 10)]
         public async Task UploadManySubdirectories(int folderDepth, int waitTimeInSec)
@@ -447,6 +454,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationToken);
         }
 
+        [RecordedTest]
         [TestCase(1)]
         [TestCase(5)]
         public async Task UploadSingleFile(int folderDepth)
