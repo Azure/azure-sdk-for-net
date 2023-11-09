@@ -2,6 +2,8 @@
 
 ## 4.6.0-beta.1 (2023-11-09)
 
+### Breaking Changes
+
 - Renamed tags reported on `SecretClient` activities to follow OpenTelemetry attribute naming conventions:
   - `secret` to `az.keyvault.secret.name`
   - `version` to `az.keyvault.secret.version`
