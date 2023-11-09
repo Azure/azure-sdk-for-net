@@ -55,16 +55,13 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus = default,
-            long? length = default,
-            long? initialTransferSize = default,
-            long? transferChunkSize = default)
+            long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
-                  transferChunkSize: transferChunkSize ?? job._maximumTransferChunkSize,
-                  initialTransferSize: initialTransferSize ?? job._initialTransferSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
+                  initialTransferSize: job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
@@ -77,8 +74,43 @@ namespace Azure.Storage.DataMovement
                   singleTransferEventHandler: job.TransferItemCompletedEventHandler,
                   clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken,
-                  jobPartStatus: jobPartStatus,
+                  jobPartStatus: default,
                   length: length)
+        {
+        }
+
+        /// <summary>
+        /// Creating transfer job based on a checkpoint file.
+        /// </summary>
+        private UriToStreamJobPart(
+            UriToStreamTransferJob job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  transferChunkSize: transferChunkSize,
+                  initialTransferSize: initialTransferSize,
+                  errorHandling: job._errorMode,
+                  createMode: createPreference,
+                  checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
+                  cancellationToken: job._cancellationToken,
+                  jobPartStatus: jobPartStatus,
+                  length: default)
         {
         }
 
@@ -131,7 +163,8 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem destinationResource,
             DataTransferStatus jobPartStatus,
             long initialTransferSize,
-            long transferChunkSize)
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
         {
             return new UriToStreamJobPart(
                 job: job,
@@ -140,7 +173,8 @@ namespace Azure.Storage.DataMovement
                 destinationResource: destinationResource,
                 jobPartStatus: jobPartStatus,
                 initialTransferSize: initialTransferSize,
-                transferChunkSize: transferChunkSize);
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
         }
 
         /// <summary>

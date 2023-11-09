@@ -9,8 +9,11 @@ namespace Azure.Storage.DataMovement
     public enum StorageResourceCreationPreference
     {
         /// <summary>
-        /// The default value will be <see cref="FailIfExists"/> when starting a new transfer
-        /// and will be set to the value specified on start when resuming a transfer.
+        /// The default value will be <see cref="FailIfExists"/> when
+        /// starting a new transfer.
+        /// When resuming a transfer, the value will default to the value used when first starting
+        /// the transfer for all resources that were successfully enumerated and the regular default
+        /// for any remaining resources.
         /// </summary>
         Default = 0,
 

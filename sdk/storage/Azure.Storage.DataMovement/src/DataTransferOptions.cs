@@ -95,7 +95,10 @@ namespace Azure.Storage.DataMovement
         /// <para/>
         /// Will default to <see cref="StorageResourceCreationPreference.Default"/>
         /// which will be <see cref="StorageResourceCreationPreference.FailIfExists"/> when
-        /// starting a new transfer and the value used to start a transfer when resuming a transfer.
+        /// starting a new transfer.
+        /// When resuming a transfer, the value will default to the value used when first starting
+        /// the transfer for all resources that were successfully enumerated and the regular default
+        /// for any remaining resources.
         /// </summary>
         public StorageResourceCreationPreference CreationPreference { get; set; }
 
