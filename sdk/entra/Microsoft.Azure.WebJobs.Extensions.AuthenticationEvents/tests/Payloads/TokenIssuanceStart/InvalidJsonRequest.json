@@ -35,7 +35,7 @@
         "preferredLanguage": "en-us",
         "surname": "Smith",
         "userPrincipalName": "bob@contoso.com",
-        "userType": "Member"
+        "userType": "Member",
       }
     }
   }

@@ -2,7 +2,6 @@
   "type": "microsoft.graph.authenticationEvent.tokenIssuanceStart",
   "source": "/tenants/00000000-0000-0000-0000-000000000002/applications/00000000-0000-0000-0000-000000000001",
   "data": {
-    "@odata.type": "microsoft.graph.onTokenIssuanceStartCalloutData",
     "tenantId": "00000000-0000-0000-0000-000000000002",
     "authenticationEventListenerId": "00000000-0000-0000-0000-000000000003",
     "customAuthenticationExtensionId": "00000000-0000-0000-0000-000000000004",
