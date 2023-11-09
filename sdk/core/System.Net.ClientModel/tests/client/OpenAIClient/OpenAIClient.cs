@@ -28,7 +28,7 @@ public class OpenAIClient
         _clientPolicies = new PipelinePolicy[1];
         _clientPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
 
-        MessagePipeline.GetPipeline(options, _clientPolicies);
+        ClientPipeline.GetPipeline(options, _clientPolicies);
 
         _pipelineOptions = options;
     }
@@ -55,28 +55,28 @@ public class OpenAIClient
 
         options ??= new RequestOptions(_pipelineOptions);
 
-        using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
+        using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
-        MessagePipeline pipeline = MessagePipeline.GetPipeline(options, _clientPolicies);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(options, _clientPolicies);
         pipeline.Send(message);
 
         MessageResponse response = message.Response;
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
-            throw new UnsuccessfulRequestException(response);
+            throw new ClientRequestException(response);
         }
 
         return Result.FromResponse(response);
     }
 
-    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
     {
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.PipelineOptions.MessageClassifier = MessageClassifier200;
 
-        MessagePipeline pipeline = MessagePipeline.GetPipeline(options, _clientPolicies);
-        ClientMessage message = pipeline.CreateMessage(options);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(options, _clientPolicies);
+        PipelineMessage message = pipeline.CreateMessage(options);
 
         MessageRequest request = message.Request;
         request.Method = "POST";

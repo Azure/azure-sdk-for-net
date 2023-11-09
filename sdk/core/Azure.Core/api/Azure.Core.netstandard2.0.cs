@@ -216,8 +216,7 @@ namespace Azure
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
-        public void Apply(Azure.Core.HttpMessage message) { }
-        public override void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
+        protected override void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Net.ClientModel.ClientRequestException, System.Runtime.Serialization.ISerializable

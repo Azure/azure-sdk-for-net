@@ -6,12 +6,12 @@ using System.Net.ClientModel.Internal.Core;
 
 namespace System.Net.ClientModel.Core;
 
-public class MessagePipeline
+public class ClientPipeline
 {
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    private MessagePipeline(ReadOnlyMemory<PipelinePolicy> policies)
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies)
     {
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
@@ -22,10 +22,10 @@ public class MessagePipeline
         _policies = policies;
     }
 
-    public static MessagePipeline GetPipeline(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
+    public static ClientPipeline GetPipeline(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
         => GetPipeline(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    public static MessagePipeline GetPipeline(PipelineOptions options,
+    public static ClientPipeline GetPipeline(PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
@@ -34,7 +34,7 @@ public class MessagePipeline
             return options.Pipeline;
         }
 
-        MessagePipeline pipeline = Create(options, perCallPolicies, perTryPolicies);
+        ClientPipeline pipeline = Create(options, perCallPolicies, perTryPolicies);
 
         // Set and freeze the pipeline.
         options.SetPipeline(pipeline);
@@ -42,10 +42,10 @@ public class MessagePipeline
         return pipeline;
     }
 
-    public static MessagePipeline GetPipeline(RequestOptions options, params PipelinePolicy[] perCallPolicies)
+    public static ClientPipeline GetPipeline(RequestOptions options, params PipelinePolicy[] perCallPolicies)
         => GetPipeline(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    public static MessagePipeline GetPipeline(RequestOptions options,
+    public static ClientPipeline GetPipeline(RequestOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
@@ -60,12 +60,12 @@ public class MessagePipeline
     }
 
     // Simplest factory method: construct a pipeline from a list of policies
-    internal static MessagePipeline Create(ReadOnlyMemory<PipelinePolicy> policies)
-        => new MessagePipeline(policies);
+    internal static ClientPipeline Create(ReadOnlyMemory<PipelinePolicy> policies)
+        => new ClientPipeline(policies);
 
     // Builder from options: lets a client-author specify policies without modifying
     // client-user's passed-in options.
-    internal static MessagePipeline Create(
+    internal static ClientPipeline Create(
         PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
@@ -129,38 +129,38 @@ public class MessagePipeline
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new MessagePipeline(pipeline);
+        return new ClientPipeline(pipeline);
     }
 
-    // TODO: note that without a common base type, nothing validates that MessagePipeline
+    // TODO: note that without a common base type, nothing validates that ClientPipeline
     // and Azure.Core.HttpPipeline have the same API shape. This is something a human
     // must keep track of if we wanted to add a common base class later.
-    public ClientMessage CreateMessage(RequestOptions options)
+    public PipelineMessage CreateMessage(RequestOptions options)
     {
-        ClientMessage message = _transport.CreateMessage();
+        PipelineMessage message = _transport.CreateMessage();
         options.Apply(message);
         return message;
     }
 
-    public void Send(ClientMessage message)
+    public void Send(PipelineMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineProcessor enumerator = new ClientPipelineProcessor(message, _policies);
         enumerator.ProcessNext();
     }
 
-    public async ValueTask SendAsync(ClientMessage message)
+    public async ValueTask SendAsync(PipelineMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineProcessor enumerator = new ClientPipelineProcessor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
     }
 
-    private class MessagePipelineExecutor : PipelineEnumerator
+    private class ClientPipelineProcessor : PipelineProcessor
     {
-        private readonly ClientMessage _message;
+        private readonly PipelineMessage _message;
         private ReadOnlyMemory<PipelinePolicy> _policies;
 
-        public MessagePipelineExecutor(
-            ClientMessage message,
+        public ClientPipelineProcessor(
+            PipelineMessage message,
             ReadOnlyMemory<PipelinePolicy> policies)
         {
             _message = message;

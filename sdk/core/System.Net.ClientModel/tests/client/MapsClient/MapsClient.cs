@@ -32,7 +32,7 @@ public class MapsClient
         _clientPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
         // This creates the pipeline, caches it in options, and freezes the options.
-        MessagePipeline.GetPipeline(options, _clientPolicies);
+        ClientPipeline.GetPipeline(options, _clientPolicies);
 
         _pipelineOptions = options;
     }
@@ -55,29 +55,29 @@ public class MapsClient
 
         options ??= new RequestOptions(_pipelineOptions);
 
-        using ClientMessage message = CreateGetLocationRequest(ipAddress, options);
+        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        MessagePipeline pipeline = MessagePipeline.GetPipeline(options, _clientPolicies);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(options, _clientPolicies);
         pipeline.Send(message);
 
         MessageResponse response = message.Response;
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
-            throw new UnsuccessfulRequestException(response);
+            throw new ClientRequestException(response);
         }
 
         return Result.FromResponse(response);
     }
 
-    private ClientMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
+    private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         // TODO: this overrides anything the caller passed, so we need to fix that.
         // We have classifier-chaining logic in Azure.Core we can use if that's what we want.
         options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
-        MessagePipeline pipeline = MessagePipeline.GetPipeline(options, _clientPolicies);
-        ClientMessage message = pipeline.CreateMessage(options);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(options, _clientPolicies);
+        PipelineMessage message = pipeline.CreateMessage(options);
 
         MessageRequest request = message.Request;
         request.Method = "GET";

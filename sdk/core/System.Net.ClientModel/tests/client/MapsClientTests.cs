@@ -42,7 +42,7 @@ public class MapsClientTests
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential, pipelineOptions);
 
         // ^^ In this call, pipeline is created in PO and frozen.
-        MessagePipeline pipeline = MessagePipeline.GetPipeline(pipelineOptions);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(pipelineOptions);
         Assert.IsNotNull(pipeline);
 
         RequestOptions requestOptions = new RequestOptions(pipelineOptions);
@@ -50,7 +50,7 @@ public class MapsClientTests
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
         Result result = client.GetCountryCode(ipAddress.ToString(), requestOptions);
 
-        MessagePipeline requestPipeline = MessagePipeline.GetPipeline(requestOptions);
+        ClientPipeline requestPipeline = ClientPipeline.GetPipeline(requestOptions);
         Assert.IsNotNull(requestPipeline);
 
         // Since nothing changed in the RO pipeline, the pipelines should have reference equality.
@@ -83,7 +83,7 @@ public class MapsClientTests
         Result result = client.GetCountryCode(ipAddress.ToString(), requestOptions);
 
         // ^^ In this call, pipeline is created in RO and frozen.
-        MessagePipeline requestPipeline = MessagePipeline.GetPipeline(requestOptions);
+        ClientPipeline requestPipeline = ClientPipeline.GetPipeline(requestOptions);
         Assert.IsNotNull(requestPipeline);
 
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(result.GetRawResponse());
@@ -94,7 +94,7 @@ public class MapsClientTests
 
     public class CustomPolicy : PipelinePolicy
     {
-        public override void Process(ClientMessage message, PipelineEnumerator pipeline)
+        public override void Process(PipelineMessage message, PipelineProcessor pipeline)
         {
             message.Request.Headers.Add("custom-header", "123");
 
@@ -103,7 +103,7 @@ public class MapsClientTests
             Debug.WriteLine($"Response status code: '{message.Response.Status}'");
         }
 
-        public override async ValueTask ProcessAsync(ClientMessage message, PipelineEnumerator pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
         {
             message.Request.Headers.Add("custom-header", "123");
 

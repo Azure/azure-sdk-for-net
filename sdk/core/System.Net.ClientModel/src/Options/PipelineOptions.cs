@@ -10,7 +10,7 @@ namespace System.Net.ClientModel.Core;
 public class PipelineOptions
 {
     //private readonly object _lock = new();
-    private MessagePipeline? _pipeline;
+    private ClientPipeline? _pipeline;
     private bool _isFrozen;
 
     private bool _modified;
@@ -29,7 +29,7 @@ public class PipelineOptions
     }
 
     public PipelineOptions(ReadOnlyMemory<PipelinePolicy> policies)
-        => SetPipeline(MessagePipeline.Create(policies));
+        => SetPipeline(ClientPipeline.Create(policies));
 
     // Copy Constructor
     internal PipelineOptions(PipelineOptions options)
@@ -52,26 +52,26 @@ public class PipelineOptions
 
     internal bool Modified => _modified;
 
-    internal void SetPipeline(MessagePipeline pipeline)
+    internal void SetPipeline(ClientPipeline pipeline)
     {
         _pipeline = pipeline;
         Freeze();
     }
 
-    internal MessagePipeline Pipeline
+    internal ClientPipeline Pipeline
     {
         get
         {
             if (_pipeline is null || !IsFrozen)
             {
-                throw new InvalidOperationException("MessagePipeline.Create must be called to cache a pipeline instance prior to accessing PipelineOptions.Pipeline");
+                throw new InvalidOperationException("ClientPipeline.Create must be called to cache a pipeline instance prior to accessing PipelineOptions.Pipeline");
             }
 
             return _pipeline;
         }
     }
 
-    //public virtual MessagePipeline GetPipeline()
+    //public virtual ClientPipeline GetPipeline()
     //{
     //    if (_pipeline != null) return _pipeline;
 
@@ -87,7 +87,7 @@ public class PipelineOptions
     //            return _pipeline;
     //        }
 
-    //        MessagePipeline.Create(this);
+    //        ClientPipeline.Create(this);
 
     //        Freeze();
 

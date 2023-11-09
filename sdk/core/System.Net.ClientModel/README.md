@@ -32,14 +32,14 @@ The main shared concepts of `System.Net.ClientModel` include:
 
 ## Examples
 
-### Send a message using the MessagePipeline
+### Send a message using the ClientPipeline
 
 A rudimentary client implementation is as follows:
 
 ```csharp
 KeyCredential credential = new KeyCredential(key);
-MessagePipeline pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(credential, "Authorization", "Bearer"));
-ClientMessage message = pipeline.CreateMessage(options, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
+ClientPipeline pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(credential, "Authorization", "Bearer"));
+PipelineMessage message = pipeline.CreateMessage(options, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
 MessageRequest request = message.Request;
 request.SetMethod("POST");
 var uri = new RequestUri();
