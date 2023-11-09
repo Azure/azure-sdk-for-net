@@ -21,7 +21,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Threshold for wait time for this trigger. </summary>
-        public TimeSpan Threshold { get; set; }
+        public TimeSpan Threshold { get; internal set; }
 
         /// <summary> Threshold for wait time for this trigger. </summary>
         [CodeGenMember("ThresholdSeconds")]

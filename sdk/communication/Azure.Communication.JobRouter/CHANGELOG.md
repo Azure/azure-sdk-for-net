@@ -29,26 +29,6 @@
 - `GetWorkers` returns `AsyncPageable<RouterWorker>` rather than `AsyncPageable<RouterJobWorker>`
 - `UpdateJob(UpdateJobOptions options, CancellationToken cancellationToken)` changed to `UpdateJob(RouterJob job, CancellationToken cancellationToken)`
 - `UpdateWorker(UpdateWorkerOptions options, CancellationToken cancellationToken)` changed to `UpdateWorker(RouterWorker worker, CancellationToken cancellationToken)`
-- `CancelJob(CancelJobOptions options, CancellationToken cancellationToken = default)` changed to `CancelJob(string jobId, CancelJobOptions cancelJobOptions = null, CancellationToken cancellationToken = default)`
-- `CompleteJob(CompleteJobOptions options, CancellationToken cancellationToken = default)` changed to `CompleteJob(string jobId, CompleteJobOptions completeJobOptions = null, CancellationToken cancellationToken = default)`
-- `CloseJob(CloseJobOptions options, CancellationToken cancellationToken = default)` changed to `CloseJob(string jobId, CloseJobOptions closeJobOptions = null, CancellationToken cancellationToken = default)`
-- `DeclineJobOffer(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)` changed to `DeclineJobOffer(string workerId, string offerId, DeclineJobOfferOptions declineJobOfferOptions = null, CancellationToken cancellationToken = default)`
-- `UnassignJob(UnassignJobOptions options, CancellationToken cancellationToken = default)` changed to `UnassignJob(string jobId, string assignmentId, UnassignJobOptions unassignJobOptions = null, CancellationToken cancellationToken = default)`
-
-#### CancelJobOptions
-- Changed constructor from `CancelJobOptions(string jobId)` to `CancelJobOptions()`
-
-#### CompleteJobOptions
-- Changed constructor from `CompleteJobOptions(string jobId, string assignmentId)` to `CompleteJobOptions(string assignmentId)`
-
-#### CloseJobOptions
-- Changed constructor from `CloseJobOptions(string jobId, string assignmentId)` to `CloseJobOptions(string assignmentId)`
-
-#### DeclineJobOfferOptions
-- Changed constructor from `DeclineJobOfferOptions(string workerId, string offerId)` to `DeclineJobOfferOptions()`
-
-#### UnassignJobOptions
-- Changed constructor from `UnassignJobOptions(string jobId, string assignmentId)` to `UnassignJobOptions()`
 
 #### RouterJob && CreateJobOptions && CreateJobWithClassificationOptions
 - Property `Notes` - Changed from `List<RouterJobNote>` to `IList<RouterJobNote>`

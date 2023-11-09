@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -14,14 +13,9 @@ namespace Azure.Communication.JobRouter
     public partial class RouterJobAssignment
     {
         /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
-        internal RouterJobAssignment(string assignmentId, DateTimeOffset assignedAt)
+        internal RouterJobAssignment(DateTimeOffset assignedAt)
         {
-            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
-
-            AssignmentId = assignmentId;
             AssignedAt = assignedAt;
         }
 
