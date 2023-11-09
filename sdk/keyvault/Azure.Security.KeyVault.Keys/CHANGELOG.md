@@ -1,10 +1,11 @@
 # Release History
 
-## 4.6.0-beta.1 (2023-11-08)
+## 4.6.0-beta.1 (2023-11-09)
 
 ### Features Added
 
-- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
+- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM.
+  Use this anywhere an `RSA` or `AsymmetricAlgorithm` is required. ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
 - Added `KeyProperties.HsmPlatform` to get the underlying HSM platform.
 
 ### Breaking Changes
