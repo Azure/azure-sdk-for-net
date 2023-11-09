@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> Description of name availability. </summary>
     public partial class DeviceProvisioningServicesNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
         internal DeviceProvisioningServicesNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> specifies if a name is available or not. </param>
         /// <param name="reason"> specifies the reason a name is unavailable. </param>
         /// <param name="message"> message containing a detailed reason name is unavailable. </param>
-        internal DeviceProvisioningServicesNameAvailabilityResult(bool? isNameAvailable, DeviceProvisioningServicesNameUnavailableReason? reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesNameAvailabilityResult(bool? isNameAvailable, DeviceProvisioningServicesNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> specifies if a name is available or not. </summary>

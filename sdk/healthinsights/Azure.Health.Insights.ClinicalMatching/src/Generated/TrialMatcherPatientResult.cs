@@ -15,7 +15,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The results of the model's work for a single patient. </summary>
     public partial class TrialMatcherPatientResult
     {
-        /// <summary> Initializes a new instance of TrialMatcherPatientResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherPatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="inferences"/> is null. </exception>
@@ -27,17 +30,25 @@ namespace Azure.Health.Insights.ClinicalMatching
             Id = id;
             Inferences = inferences.ToList();
             NeededClinicalInfo = new ChangeTrackingList<ExtendedClinicalCodedElement>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherPatientResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherPatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <param name="neededClinicalInfo"> Clinical information which is needed to provide better trial matching results for the patient. </param>
-        internal TrialMatcherPatientResult(string id, IReadOnlyList<TrialMatcherInference> inferences, IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherPatientResult(string id, IReadOnlyList<TrialMatcherInference> inferences, IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Inferences = inferences;
             NeededClinicalInfo = neededClinicalInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherPatientResult"/> for deserialization. </summary>
+        internal TrialMatcherPatientResult()
+        {
         }
 
         /// <summary> The identifier given for the patient in the request. </summary>

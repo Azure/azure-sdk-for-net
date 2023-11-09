@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     internal partial class UpdateDigitalTwinOptions
     {
-        /// <summary> Initializes a new instance of UpdateDigitalTwinOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDigitalTwinOptions"/>. </summary>
         public UpdateDigitalTwinOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDigitalTwinOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="ifMatch"> Only perform the operation if the entity's etag matches one of the etags provided or * is provided. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateDigitalTwinOptions(string traceParent, string traceState, string ifMatch, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+            IfMatch = ifMatch;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Only perform the operation if the entity's etag matches one of the etags provided or * is provided. </summary>
         public string IfMatch { get; set; }

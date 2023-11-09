@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The EventGridInboundIPRule. </summary>
     public partial class EventGridInboundIPRule
     {
-        /// <summary> Initializes a new instance of EventGridInboundIPRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridInboundIPRule"/>. </summary>
         public EventGridInboundIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridInboundIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridInboundIPRule"/>. </summary>
         /// <param name="ipMask"> IP Address in CIDR notation e.g., 10.0.0.0/8. </param>
         /// <param name="action"> Action to perform based on the match or no match of the IpMask. </param>
-        internal EventGridInboundIPRule(string ipMask, EventGridIPActionType? action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridInboundIPRule(string ipMask, EventGridIPActionType? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPMask = ipMask;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP Address in CIDR notation e.g., 10.0.0.0/8. </summary>

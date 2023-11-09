@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Topic regenerate share access key request. </summary>
     public partial class TopicRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of TopicRegenerateKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public TopicRegenerateKeyContent(string keyName)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.EventGrid.Models
             Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopicRegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicRegenerateKeyContent(string keyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyName = keyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopicRegenerateKeyContent"/> for deserialization. </summary>
+        internal TopicRegenerateKeyContent()
+        {
         }
 
         /// <summary> Key name to regenerate key1 or key2. </summary>

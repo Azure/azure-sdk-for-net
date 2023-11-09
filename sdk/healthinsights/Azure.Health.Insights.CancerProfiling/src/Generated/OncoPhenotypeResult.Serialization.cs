@@ -7,16 +7,101 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
-    public partial class OncoPhenotypeResult
+    public partial class OncoPhenotypeResult : IUtf8JsonSerializable, IJsonModel<OncoPhenotypeResult>
     {
-        internal static OncoPhenotypeResult DeserializeOncoPhenotypeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OncoPhenotypeResult>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<OncoPhenotypeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("createdDateTime"u8);
+                writer.WriteStringValue(CreatedDateTime, "O");
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("expirationDateTime"u8);
+                writer.WriteStringValue(ExpirationDateTime, "O");
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("lastUpdateDateTime"u8);
+                writer.WriteStringValue(LastUpdateDateTime, "O");
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.ToString());
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(Errors))
+                {
+                    writer.WritePropertyName("errors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Errors)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Results))
+                {
+                    writer.WritePropertyName("results"u8);
+                    writer.WriteObjectValue(Results);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OncoPhenotypeResult IJsonModel<OncoPhenotypeResult>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OncoPhenotypeResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOncoPhenotypeResult(document.RootElement, options);
+        }
+
+        internal static OncoPhenotypeResult DeserializeOncoPhenotypeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +113,8 @@ namespace Azure.Health.Insights.CancerProfiling
             JobStatus status = default;
             Optional<IReadOnlyList<ResponseError>> errors = default;
             Optional<OncoPhenotypeResults> results = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -78,16 +165,54 @@ namespace Azure.Health.Insights.CancerProfiling
                     results = OncoPhenotypeResults.DeserializeOncoPhenotypeResults(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OncoPhenotypeResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OncoPhenotypeResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, Optional.ToList(errors), results.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<OncoPhenotypeResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OncoPhenotypeResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OncoPhenotypeResult IModel<OncoPhenotypeResult>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OncoPhenotypeResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOncoPhenotypeResult(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<OncoPhenotypeResult>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static OncoPhenotypeResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOncoPhenotypeResult(document.RootElement);
+            return DeserializeOncoPhenotypeResult(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

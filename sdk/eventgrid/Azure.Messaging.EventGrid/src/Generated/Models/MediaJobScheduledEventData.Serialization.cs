@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,74 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaJobScheduledEventDataConverter))]
-    public partial class MediaJobScheduledEventData
+    public partial class MediaJobScheduledEventData : IUtf8JsonSerializable, IJsonModel<MediaJobScheduledEventData>
     {
-        internal static MediaJobScheduledEventData DeserializeMediaJobScheduledEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobScheduledEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MediaJobScheduledEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(PreviousState))
+                {
+                    writer.WritePropertyName("previousState"u8);
+                    writer.WriteStringValue(PreviousState.Value.ToSerialString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToSerialString());
+                }
+            }
+            if (Optional.IsCollectionDefined(CorrelationData))
+            {
+                writer.WritePropertyName("correlationData"u8);
+                writer.WriteStartObject();
+                foreach (var item in CorrelationData)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaJobScheduledEventData IJsonModel<MediaJobScheduledEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaJobScheduledEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobScheduledEventData(document.RootElement, options);
+        }
+
+        internal static MediaJobScheduledEventData DeserializeMediaJobScheduledEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +91,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<MediaJobState> previousState = default;
             Optional<MediaJobState> state = default;
             Optional<IReadOnlyDictionary<string, string>> correlationData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("previousState"u8))
@@ -59,15 +127,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     correlationData = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaJobScheduledEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), Optional.ToDictionary(correlationData));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaJobScheduledEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), Optional.ToDictionary(correlationData), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MediaJobScheduledEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaJobScheduledEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaJobScheduledEventData IModel<MediaJobScheduledEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaJobScheduledEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaJobScheduledEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MediaJobScheduledEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class MediaJobScheduledEventDataConverter : JsonConverter<MediaJobScheduledEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaJobScheduledEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaJobScheduledEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

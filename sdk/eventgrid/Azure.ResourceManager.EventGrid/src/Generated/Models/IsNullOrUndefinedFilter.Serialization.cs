@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class IsNullOrUndefinedFilter : IUtf8JsonSerializable
+    public partial class IsNullOrUndefinedFilter : IUtf8JsonSerializable, IJsonModel<IsNullOrUndefinedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IsNullOrUndefinedFilter>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<IsNullOrUndefinedFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operatorType"u8);
@@ -22,17 +28,48 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IsNullOrUndefinedFilter DeserializeIsNullOrUndefinedFilter(JsonElement element)
+        IsNullOrUndefinedFilter IJsonModel<IsNullOrUndefinedFilter>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IsNullOrUndefinedFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIsNullOrUndefinedFilter(document.RootElement, options);
+        }
+
+        internal static IsNullOrUndefinedFilter DeserializeIsNullOrUndefinedFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FilterOperatorType operatorType = default;
             Optional<string> key = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatorType"u8))
@@ -45,8 +82,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IsNullOrUndefinedFilter(operatorType, key.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IsNullOrUndefinedFilter(operatorType, key.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<IsNullOrUndefinedFilter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IsNullOrUndefinedFilter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IsNullOrUndefinedFilter IModel<IsNullOrUndefinedFilter>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IsNullOrUndefinedFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIsNullOrUndefinedFilter(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<IsNullOrUndefinedFilter>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

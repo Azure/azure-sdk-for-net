@@ -6,16 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesCertificateProperties : IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesCertificateProperties : IUtf8JsonSerializable, IJsonModel<DeviceProvisioningServicesCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServicesCertificateProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DeviceProvisioningServicesCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Subject))
+                {
+                    writer.WritePropertyName("subject"u8);
+                    writer.WriteStringValue(Subject);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ExpireOn))
+                {
+                    writer.WritePropertyName("expiry"u8);
+                    writer.WriteStringValue(ExpireOn.Value, "R");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(Thumbprint))
+                {
+                    writer.WritePropertyName("thumbprint"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             if (Optional.IsDefined(IsVerified))
             {
                 writer.WritePropertyName("isVerified"u8);
@@ -33,11 +69,56 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
 #endif
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("created"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "R");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(UpdatedOn))
+                {
+                    writer.WritePropertyName("updated"u8);
+                    writer.WriteStringValue(UpdatedOn.Value, "R");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeviceProvisioningServicesCertificateProperties DeserializeDeviceProvisioningServicesCertificateProperties(JsonElement element)
+        DeviceProvisioningServicesCertificateProperties IJsonModel<DeviceProvisioningServicesCertificateProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceProvisioningServicesCertificateProperties(document.RootElement, options);
+        }
+
+        internal static DeviceProvisioningServicesCertificateProperties DeserializeDeviceProvisioningServicesCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +130,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Optional<BinaryData> certificate = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subject"u8))
@@ -110,8 +193,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     updated = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceProvisioningServicesCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeviceProvisioningServicesCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DeviceProvisioningServicesCertificateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DeviceProvisioningServicesCertificateProperties IModel<DeviceProvisioningServicesCertificateProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDeviceProvisioningServicesCertificateProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DeviceProvisioningServicesCertificateProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

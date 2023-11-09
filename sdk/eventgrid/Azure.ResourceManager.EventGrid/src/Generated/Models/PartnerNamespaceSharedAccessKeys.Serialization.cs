@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerNamespaceSharedAccessKeys
+    public partial class PartnerNamespaceSharedAccessKeys : IUtf8JsonSerializable, IJsonModel<PartnerNamespaceSharedAccessKeys>
     {
-        internal static PartnerNamespaceSharedAccessKeys DeserializePartnerNamespaceSharedAccessKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceSharedAccessKeys>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<PartnerNamespaceSharedAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Key1))
+            {
+                writer.WritePropertyName("key1"u8);
+                writer.WriteStringValue(Key1);
+            }
+            if (Optional.IsDefined(Key2))
+            {
+                writer.WritePropertyName("key2"u8);
+                writer.WriteStringValue(Key2);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PartnerNamespaceSharedAccessKeys IJsonModel<PartnerNamespaceSharedAccessKeys>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerNamespaceSharedAccessKeys(document.RootElement, options);
+        }
+
+        internal static PartnerNamespaceSharedAccessKeys DeserializePartnerNamespaceSharedAccessKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> key1 = default;
             Optional<string> key2 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key1"u8))
@@ -32,8 +85,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key2 = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PartnerNamespaceSharedAccessKeys(key1.Value, key2.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PartnerNamespaceSharedAccessKeys(key1.Value, key2.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<PartnerNamespaceSharedAccessKeys>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PartnerNamespaceSharedAccessKeys IModel<PartnerNamespaceSharedAccessKeys>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePartnerNamespaceSharedAccessKeys(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<PartnerNamespaceSharedAccessKeys>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

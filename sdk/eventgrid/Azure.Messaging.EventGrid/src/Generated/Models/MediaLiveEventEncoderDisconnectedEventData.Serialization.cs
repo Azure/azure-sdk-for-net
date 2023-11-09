@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,87 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaLiveEventEncoderDisconnectedEventDataConverter))]
-    public partial class MediaLiveEventEncoderDisconnectedEventData
+    public partial class MediaLiveEventEncoderDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventEncoderDisconnectedEventData>
     {
-        internal static MediaLiveEventEncoderDisconnectedEventData DeserializeMediaLiveEventEncoderDisconnectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventEncoderDisconnectedEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<MediaLiveEventEncoderDisconnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(IngestUrl))
+                {
+                    writer.WritePropertyName("ingestUrl"u8);
+                    writer.WriteStringValue(IngestUrl);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StreamId))
+                {
+                    writer.WritePropertyName("streamId"u8);
+                    writer.WriteStringValue(StreamId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EncoderIp))
+                {
+                    writer.WritePropertyName("encoderIp"u8);
+                    writer.WriteStringValue(EncoderIp);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(EncoderPort))
+                {
+                    writer.WritePropertyName("encoderPort"u8);
+                    writer.WriteStringValue(EncoderPort);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ResultCode))
+                {
+                    writer.WritePropertyName("resultCode"u8);
+                    writer.WriteStringValue(ResultCode);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaLiveEventEncoderDisconnectedEventData IJsonModel<MediaLiveEventEncoderDisconnectedEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventEncoderDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaLiveEventEncoderDisconnectedEventData(document.RootElement, options);
+        }
+
+        internal static MediaLiveEventEncoderDisconnectedEventData DeserializeMediaLiveEventEncoderDisconnectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +106,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> encoderIp = default;
             Optional<string> encoderPort = default;
             Optional<string> resultCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestUrl"u8))
@@ -53,15 +135,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resultCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaLiveEventEncoderDisconnectedEventData(ingestUrl.Value, streamId.Value, encoderIp.Value, encoderPort.Value, resultCode.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaLiveEventEncoderDisconnectedEventData(ingestUrl.Value, streamId.Value, encoderIp.Value, encoderPort.Value, resultCode.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<MediaLiveEventEncoderDisconnectedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventEncoderDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaLiveEventEncoderDisconnectedEventData IModel<MediaLiveEventEncoderDisconnectedEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaLiveEventEncoderDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaLiveEventEncoderDisconnectedEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<MediaLiveEventEncoderDisconnectedEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class MediaLiveEventEncoderDisconnectedEventDataConverter : JsonConverter<MediaLiveEventEncoderDisconnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventEncoderDisconnectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaLiveEventEncoderDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

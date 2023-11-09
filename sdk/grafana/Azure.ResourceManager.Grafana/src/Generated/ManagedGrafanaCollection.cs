@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

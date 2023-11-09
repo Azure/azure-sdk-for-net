@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Result of the allowed environment type list operation. </summary>
     internal partial class AllowedEnvironmentTypeListResult
     {
-        /// <summary> Initializes a new instance of AllowedEnvironmentTypeListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AllowedEnvironmentTypeListResult"/>. </summary>
         internal AllowedEnvironmentTypeListResult()
         {
             Value = new ChangeTrackingList<AllowedEnvironmentTypeData>();
         }
 
-        /// <summary> Initializes a new instance of AllowedEnvironmentTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowedEnvironmentTypeListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
-        internal AllowedEnvironmentTypeListResult(IReadOnlyList<AllowedEnvironmentTypeData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AllowedEnvironmentTypeListResult(IReadOnlyList<AllowedEnvironmentTypeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current page of results. </summary>

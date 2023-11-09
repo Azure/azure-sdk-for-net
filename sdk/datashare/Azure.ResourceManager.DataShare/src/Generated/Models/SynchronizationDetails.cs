@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> Synchronization details at data set level. </summary>
     public partial class SynchronizationDetails
     {
-        /// <summary> Initializes a new instance of SynchronizationDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynchronizationDetails"/>. </summary>
         internal SynchronizationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynchronizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynchronizationDetails"/>. </summary>
         /// <param name="dataSetId"> Id of data set. </param>
         /// <param name="dataSetType"> Type of the data set. </param>
         /// <param name="durationInMilliSeconds"> Duration of data set level copy. </param>
@@ -33,7 +37,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="startOn"> Start time of data set level copy. </param>
         /// <param name="status"> Raw Status. </param>
         /// <param name="vCore"> The vCore units consumed for the data set synchronization. </param>
-        internal SynchronizationDetails(Guid? dataSetId, ShareDataSetType? dataSetType, int? durationInMilliSeconds, DateTimeOffset? endOn, long? filesRead, long? filesWritten, string message, string name, long? rowsCopied, long? rowsRead, long? sizeRead, long? sizeWritten, DateTimeOffset? startOn, string status, long? vCore)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynchronizationDetails(Guid? dataSetId, ShareDataSetType? dataSetType, int? durationInMilliSeconds, DateTimeOffset? endOn, long? filesRead, long? filesWritten, string message, string name, long? rowsCopied, long? rowsRead, long? sizeRead, long? sizeWritten, DateTimeOffset? startOn, string status, long? vCore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSetId = dataSetId;
             DataSetType = dataSetType;
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.DataShare.Models
             StartOn = startOn;
             Status = status;
             VCore = vCore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Id of data set. </summary>

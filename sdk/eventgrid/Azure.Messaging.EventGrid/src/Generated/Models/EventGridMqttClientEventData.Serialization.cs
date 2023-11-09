@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,62 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(EventGridMqttClientEventDataConverter))]
-    public partial class EventGridMqttClientEventData
+    public partial class EventGridMqttClientEventData : IUtf8JsonSerializable, IJsonModel<EventGridMqttClientEventData>
     {
-        internal static EventGridMqttClientEventData DeserializeEventGridMqttClientEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMqttClientEventData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EventGridMqttClientEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ClientAuthenticationName))
+            {
+                writer.WritePropertyName("clientAuthenticationName"u8);
+                writer.WriteStringValue(ClientAuthenticationName);
+            }
+            if (Optional.IsDefined(ClientName))
+            {
+                writer.WritePropertyName("clientName"u8);
+                writer.WriteStringValue(ClientName);
+            }
+            if (Optional.IsDefined(NamespaceName))
+            {
+                writer.WritePropertyName("namespaceName"u8);
+                writer.WriteStringValue(NamespaceName);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EventGridMqttClientEventData IJsonModel<EventGridMqttClientEventData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridMqttClientEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridMqttClientEventData(document.RootElement, options);
+        }
+
+        internal static EventGridMqttClientEventData DeserializeEventGridMqttClientEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +79,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> clientAuthenticationName = default;
             Optional<string> clientName = default;
             Optional<string> namespaceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientAuthenticationName"u8))
@@ -41,15 +98,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     namespaceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridMqttClientEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridMqttClientEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EventGridMqttClientEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridMqttClientEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventGridMqttClientEventData IModel<EventGridMqttClientEventData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventGridMqttClientEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventGridMqttClientEventData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EventGridMqttClientEventData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         internal partial class EventGridMqttClientEventDataConverter : JsonConverter<EventGridMqttClientEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override EventGridMqttClientEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

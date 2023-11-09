@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class BackendPoolsSettings : IUtf8JsonSerializable
+    public partial class BackendPoolsSettings : IUtf8JsonSerializable, IJsonModel<BackendPoolsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendPoolsSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<BackendPoolsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(EnforceCertificateNameCheck))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("sendRecvTimeoutSeconds"u8);
                 writer.WriteNumberValue(SendRecvTimeoutInSeconds.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackendPoolsSettings DeserializeBackendPoolsSettings(JsonElement element)
+        BackendPoolsSettings IJsonModel<BackendPoolsSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackendPoolsSettings(document.RootElement, options);
+        }
+
+        internal static BackendPoolsSettings DeserializeBackendPoolsSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<EnforceCertificateNameCheckEnabledState> enforceCertificateNameCheck = default;
             Optional<int> sendRecvTimeoutSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enforceCertificateNameCheck"u8))
@@ -56,8 +93,38 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     sendRecvTimeoutSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackendPoolsSettings(Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(sendRecvTimeoutSeconds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackendPoolsSettings(Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(sendRecvTimeoutSeconds), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<BackendPoolsSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackendPoolsSettings IModel<BackendPoolsSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackendPoolsSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<BackendPoolsSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Response to the get custom model operation. </summary>
     internal partial class Model
     {
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Model"/>. </summary>
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         internal Model(CustomFormModelInfo modelInfo)
@@ -26,17 +29,24 @@ namespace Azure.AI.FormRecognizer.Models
             ComposedTrainResults = new ChangeTrackingList<TrainResult>();
         }
 
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Initializes a new instance of <see cref="Model"/>. </summary>
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <param name="keys"> Keys extracted by the custom model. </param>
         /// <param name="trainResult"> Training result for custom model. </param>
         /// <param name="composedTrainResults"> Training result for composed model. </param>
-        internal Model(CustomFormModelInfo modelInfo, KeysResult keys, TrainResult trainResult, IReadOnlyList<TrainResult> composedTrainResults)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Model(CustomFormModelInfo modelInfo, KeysResult keys, TrainResult trainResult, IReadOnlyList<TrainResult> composedTrainResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelInfo = modelInfo;
             Keys = keys;
             TrainResult = trainResult;
             ComposedTrainResults = composedTrainResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Model"/> for deserialization. </summary>
+        internal Model()
+        {
         }
 
         /// <summary> Basic custom model information. </summary>

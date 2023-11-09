@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The DynamicRoutingEnrichment. </summary>
     public partial class DynamicRoutingEnrichment
     {
-        /// <summary> Initializes a new instance of DynamicRoutingEnrichment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynamicRoutingEnrichment"/>. </summary>
         public DynamicRoutingEnrichment()
         {
         }
 
-        /// <summary> Initializes a new instance of DynamicRoutingEnrichment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicRoutingEnrichment"/>. </summary>
         /// <param name="key"> Dynamic routing enrichment key. </param>
         /// <param name="value"> Dynamic routing enrichment value. </param>
-        internal DynamicRoutingEnrichment(string key, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynamicRoutingEnrichment(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dynamic routing enrichment key. </summary>

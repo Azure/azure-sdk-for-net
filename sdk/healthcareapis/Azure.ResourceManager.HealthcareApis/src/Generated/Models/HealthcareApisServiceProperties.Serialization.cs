@@ -5,18 +5,31 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceProperties : IUtf8JsonSerializable
+    public partial class HealthcareApisServiceProperties : IUtf8JsonSerializable, IJsonModel<HealthcareApisServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HealthcareApisServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies"u8);
@@ -72,11 +85,40 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("importConfiguration"u8);
                 writer.WriteObjectValue(ImportConfiguration);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element)
+        HealthcareApisServiceProperties IJsonModel<HealthcareApisServiceProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisServiceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisServiceProperties(document.RootElement, options);
+        }
+
+        internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +133,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             Optional<HealthcareApisServiceAcrConfiguration> acrConfiguration = default;
             Optional<HealthcareApisServiceImportConfiguration> importConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -193,8 +237,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     importConfiguration = HealthcareApisServiceImportConfiguration.DeserializeHealthcareApisServiceImportConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), Optional.ToList(accessPolicies), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), Optional.ToList(accessPolicies), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HealthcareApisServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisServiceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthcareApisServiceProperties IModel<HealthcareApisServiceProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthcareApisServiceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisServiceProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HealthcareApisServiceProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

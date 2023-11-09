@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Ingest fragment dropped event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingDataChunkDropped event. </summary>
     public partial class MediaLiveEventIncomingDataChunkDroppedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingDataChunkDroppedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingDataChunkDroppedEventData"/>. </summary>
         internal MediaLiveEventIncomingDataChunkDroppedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingDataChunkDroppedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingDataChunkDroppedEventData"/>. </summary>
         /// <param name="timestamp"> Gets the timestamp of the data chunk dropped. </param>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="bitrate"> Gets the bitrate of the track. </param>
         /// <param name="timescale"> Gets the timescale of the Timestamp. </param>
         /// <param name="resultCode"> Gets the result code for fragment drop operation. </param>
         /// <param name="trackName"> Gets the name of the track for which fragment is dropped. </param>
-        internal MediaLiveEventIncomingDataChunkDroppedEventData(string timestamp, string trackType, long? bitrate, string timescale, string resultCode, string trackName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventIncomingDataChunkDroppedEventData(string timestamp, string trackType, long? bitrate, string timescale, string resultCode, string trackName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             TrackType = trackType;
@@ -30,6 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Timescale = timescale;
             ResultCode = resultCode;
             TrackName = trackName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the timestamp of the data chunk dropped. </summary>

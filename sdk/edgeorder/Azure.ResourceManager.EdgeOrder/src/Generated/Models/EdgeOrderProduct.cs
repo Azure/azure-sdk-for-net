@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> List of Products. </summary>
     public partial class EdgeOrderProduct
     {
-        /// <summary> Initializes a new instance of EdgeOrderProduct. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProduct"/>. </summary>
         internal EdgeOrderProduct()
         {
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Configurations = new ChangeTrackingList<ProductConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProduct. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProduct"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="configurations"> List of configurations for the product. </param>
-        internal EdgeOrderProduct(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductConfiguration> configurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProduct(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductConfiguration> configurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             HierarchyInformation = hierarchyInformation;
             FilterableProperties = filterableProperties;
             Configurations = configurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display Name for the product system. </summary>

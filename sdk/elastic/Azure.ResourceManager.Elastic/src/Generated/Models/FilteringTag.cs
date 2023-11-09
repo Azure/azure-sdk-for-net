@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
     public partial class FilteringTag
     {
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilteringTag"/>. </summary>
         public FilteringTag()
         {
         }
 
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilteringTag"/>. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. </param>
-        internal FilteringTag(string name, string value, TagAction? action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilteringTag(string name, string value, TagAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name (also known as the key) of the tag. </summary>

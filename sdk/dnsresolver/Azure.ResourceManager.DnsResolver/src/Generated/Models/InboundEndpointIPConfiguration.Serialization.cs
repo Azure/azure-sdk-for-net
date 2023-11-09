@@ -5,16 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class InboundEndpointIPConfiguration : IUtf8JsonSerializable
+    public partial class InboundEndpointIPConfiguration : IUtf8JsonSerializable, IJsonModel<InboundEndpointIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundEndpointIPConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<InboundEndpointIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
@@ -29,11 +35,40 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InboundEndpointIPConfiguration DeserializeInboundEndpointIPConfiguration(JsonElement element)
+        InboundEndpointIPConfiguration IJsonModel<InboundEndpointIPConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInboundEndpointIPConfiguration(document.RootElement, options);
+        }
+
+        internal static InboundEndpointIPConfiguration DeserializeInboundEndpointIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +76,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             WritableSubResource subnet = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"u8))
@@ -66,8 +103,38 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     privateIPAllocationMethod = new InboundEndpointIPAllocationMethod(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<InboundEndpointIPConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InboundEndpointIPConfiguration IModel<InboundEndpointIPConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInboundEndpointIPConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<InboundEndpointIPConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

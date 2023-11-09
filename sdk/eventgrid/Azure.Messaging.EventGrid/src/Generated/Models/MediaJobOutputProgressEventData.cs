@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job Output Progress Event Data. Schema of the Data property of an EventGridEvent for a Microsoft.Media.JobOutputProgress event. </summary>
     public partial class MediaJobOutputProgressEventData
     {
-        /// <summary> Initializes a new instance of MediaJobOutputProgressEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputProgressEventData"/>. </summary>
         internal MediaJobOutputProgressEventData()
         {
             JobCorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputProgressEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputProgressEventData"/>. </summary>
         /// <param name="label"> Gets the Job output label. </param>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
-        internal MediaJobOutputProgressEventData(string label, long? progress, IReadOnlyDictionary<string, string> jobCorrelationData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobOutputProgressEventData(string label, long? progress, IReadOnlyDictionary<string, string> jobCorrelationData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Label = label;
             Progress = progress;
             JobCorrelationData = jobCorrelationData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the Job output label. </summary>

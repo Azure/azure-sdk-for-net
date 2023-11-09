@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Parameter supplied to check Namespace name availability operation. </summary>
     public partial class EventHubsNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of EventHubsNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Name to check the namespace name availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EventHubsNameAvailabilityContent(string name)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.EventHubs.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name to check the namespace name availability. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNameAvailabilityContent(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNameAvailabilityContent"/> for deserialization. </summary>
+        internal EventHubsNameAvailabilityContent()
+        {
         }
 
         /// <summary> Name to check the namespace name availability. </summary>

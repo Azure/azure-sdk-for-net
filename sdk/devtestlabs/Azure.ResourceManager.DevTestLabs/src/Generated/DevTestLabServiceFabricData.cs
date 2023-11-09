@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabServiceFabricData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabServiceFabricData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceFabricData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabServiceFabricData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabServiceFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceFabricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,13 +40,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="applicableSchedule"> The applicable schedule for the virtual machine. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabServiceFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string externalServiceFabricId, string environmentId, DevTestLabApplicableSchedule applicableSchedule, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabServiceFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string externalServiceFabricId, string environmentId, DevTestLabApplicableSchedule applicableSchedule, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExternalServiceFabricId = externalServiceFabricId;
             EnvironmentId = environmentId;
             ApplicableSchedule = applicableSchedule;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceFabricData"/> for deserialization. </summary>
+        internal DevTestLabServiceFabricData()
+        {
         }
 
         /// <summary> The backing service fabric resource's id. </summary>

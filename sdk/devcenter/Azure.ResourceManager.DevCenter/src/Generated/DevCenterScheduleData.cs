@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterScheduleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/>. </summary>
         public DevCenterScheduleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +38,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ScheduledType = scheduledType;
             Frequency = frequency;
@@ -41,6 +47,7 @@ namespace Azure.ResourceManager.DevCenter
             TimeZone = timeZone;
             State = state;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Supported type this scheduled task represents. </summary>

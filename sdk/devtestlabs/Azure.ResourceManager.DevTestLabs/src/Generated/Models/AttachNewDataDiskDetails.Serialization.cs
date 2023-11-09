@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class AttachNewDataDiskDetails : IUtf8JsonSerializable
+    public partial class AttachNewDataDiskDetails : IUtf8JsonSerializable, IJsonModel<AttachNewDataDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttachNewDataDiskDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AttachNewDataDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskSizeGiB))
@@ -30,11 +36,40 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AttachNewDataDiskDetails DeserializeAttachNewDataDiskDetails(JsonElement element)
+        AttachNewDataDiskDetails IJsonModel<AttachNewDataDiskDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AttachNewDataDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAttachNewDataDiskDetails(document.RootElement, options);
+        }
+
+        internal static AttachNewDataDiskDetails DeserializeAttachNewDataDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +77,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<int> diskSizeGiB = default;
             Optional<string> diskName = default;
             Optional<DevTestLabStorageType> diskType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSizeGiB"u8))
@@ -67,8 +104,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     diskType = new DevTestLabStorageType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AttachNewDataDiskDetails(Optional.ToNullable(diskSizeGiB), diskName.Value, Optional.ToNullable(diskType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AttachNewDataDiskDetails(Optional.ToNullable(diskSizeGiB), diskName.Value, Optional.ToNullable(diskType), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AttachNewDataDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AttachNewDataDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AttachNewDataDiskDetails IModel<AttachNewDataDiskDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AttachNewDataDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAttachNewDataDiskDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AttachNewDataDiskDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

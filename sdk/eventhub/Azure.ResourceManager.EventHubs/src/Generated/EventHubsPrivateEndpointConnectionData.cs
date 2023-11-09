@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +20,15 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionData"/>. </summary>
         public EventHubsPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +37,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, EventHubsPrivateLinkServiceConnectionState connectionState, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, EventHubsPrivateLinkServiceConnectionState connectionState, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Private Endpoint resource for this Connection. </summary>

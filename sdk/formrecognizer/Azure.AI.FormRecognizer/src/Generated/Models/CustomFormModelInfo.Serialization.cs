@@ -6,15 +6,73 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    public partial class CustomFormModelInfo
+    public partial class CustomFormModelInfo : IUtf8JsonSerializable, IJsonModel<CustomFormModelInfo>
     {
-        internal static CustomFormModelInfo DeserializeCustomFormModelInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomFormModelInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CustomFormModelInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("modelId"u8);
+            writer.WriteStringValue(ModelId);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(TrainingStartedOn, "O");
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(TrainingCompletedOn, "O");
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteObjectValue(Properties);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CustomFormModelInfo IJsonModel<CustomFormModelInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomFormModelInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomFormModelInfo(document.RootElement, options);
+        }
+
+        internal static CustomFormModelInfo DeserializeCustomFormModelInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +83,8 @@ namespace Azure.AI.FormRecognizer.Training
             DateTimeOffset lastUpdatedDateTime = default;
             Optional<string> modelName = default;
             Optional<CustomFormModelProperties> attributes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -61,8 +121,38 @@ namespace Azure.AI.FormRecognizer.Training
                     attributes = CustomFormModelProperties.DeserializeCustomFormModelProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomFormModelInfo(modelId, status, createdDateTime, lastUpdatedDateTime, modelName.Value, attributes.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomFormModelInfo(modelId, status, createdDateTime, lastUpdatedDateTime, modelName.Value, attributes.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CustomFormModelInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomFormModelInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomFormModelInfo IModel<CustomFormModelInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomFormModelInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomFormModelInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CustomFormModelInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

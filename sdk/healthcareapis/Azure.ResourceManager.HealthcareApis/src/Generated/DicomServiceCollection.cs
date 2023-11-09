@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dicomServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dicomServiceRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dicomServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dicomServiceRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

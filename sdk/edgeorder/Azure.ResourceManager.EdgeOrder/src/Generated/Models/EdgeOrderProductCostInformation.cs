@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Cost information for the product system. </summary>
     public partial class EdgeOrderProductCostInformation
     {
-        /// <summary> Initializes a new instance of EdgeOrderProductCostInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductCostInformation"/>. </summary>
         internal EdgeOrderProductCostInformation()
         {
             BillingMeterDetails = new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>();
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductCostInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductCostInformation"/>. </summary>
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
         /// <param name="billingInfoUri"> Default url to display billing information. </param>
-        internal EdgeOrderProductCostInformation(IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails, Uri billingInfoUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProductCostInformation(IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails, Uri billingInfoUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingMeterDetails = billingMeterDetails;
             BillingInfoUri = billingInfoUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Details on the various billing aspects for the product system. </summary>

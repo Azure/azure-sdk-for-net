@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> Available SKUs of tier and units. </summary>
     public partial class DeviceProvisioningServicesSkuDefinition
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSkuDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSkuDefinition"/>. </summary>
         internal DeviceProvisioningServicesSkuDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSkuDefinition"/>. </summary>
         /// <param name="name"> Sku name. </param>
-        internal DeviceProvisioningServicesSkuDefinition(DeviceProvisioningServicesSku? name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesSkuDefinition(DeviceProvisioningServicesSku? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sku name. </summary>

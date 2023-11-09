@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DefenderEasm.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.DefenderEasm
     /// </summary>
     public partial class EasmWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EasmWorkspaceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EasmWorkspaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of EasmWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="dataPlaneEndpoint"> Data plane endpoint. </param>
-        internal EasmWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EasmResourceProvisioningState? provisioningState, string dataPlaneEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EasmWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EasmResourceProvisioningState? provisioningState, string dataPlaneEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataPlaneEndpoint = dataPlaneEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspaceData"/> for deserialization. </summary>
+        internal EasmWorkspaceData()
+        {
         }
 
         /// <summary> Resource provisioning state. </summary>

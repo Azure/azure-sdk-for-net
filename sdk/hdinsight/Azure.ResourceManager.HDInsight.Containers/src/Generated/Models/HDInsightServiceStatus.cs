@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Describes the status of a service of a HDInsight on aks cluster. </summary>
     public partial class HDInsightServiceStatus
     {
-        /// <summary> Initializes a new instance of HDInsightServiceStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightServiceStatus"/>. </summary>
         /// <param name="kind"> Kind of the service. E.g. "Zookeeper". </param>
         /// <param name="ready"> Indicates if the service is ready / healthy. Values can be "true", "false", "unknown" or anything else. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> or <paramref name="ready"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Ready = ready;
         }
 
-        /// <summary> Initializes a new instance of HDInsightServiceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightServiceStatus"/>. </summary>
         /// <param name="kind"> Kind of the service. E.g. "Zookeeper". </param>
         /// <param name="ready"> Indicates if the service is ready / healthy. Values can be "true", "false", "unknown" or anything else. </param>
         /// <param name="message"> A message describing the error if any. </param>
-        internal HDInsightServiceStatus(string kind, string ready, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightServiceStatus(string kind, string ready, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Ready = ready;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightServiceStatus"/> for deserialization. </summary>
+        internal HDInsightServiceStatus()
+        {
         }
 
         /// <summary> Kind of the service. E.g. "Zookeeper". </summary>

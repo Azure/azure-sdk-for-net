@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Grafana;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class GrafanaPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceListResult"/>. </summary>
         internal GrafanaPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<GrafanaPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
-        internal GrafanaPrivateLinkResourceListResult(IReadOnlyList<GrafanaPrivateLinkResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaPrivateLinkResourceListResult(IReadOnlyList<GrafanaPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

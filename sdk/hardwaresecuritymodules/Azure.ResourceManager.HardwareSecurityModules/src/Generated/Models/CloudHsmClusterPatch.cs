@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterPatch
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
         public CloudHsmClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
+        /// <param name="tags"> The Cloud HSM Cluster's tags. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudHsmClusterPatch(IDictionary<string, string> tags, CloudHsmClusterSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Cloud HSM Cluster's tags. </summary>

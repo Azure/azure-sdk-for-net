@@ -6,21 +6,109 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable, IJsonModel<GuestConfigurationVmssVmInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationVmssVmInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GuestConfigurationVmssVmInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VmId))
+                {
+                    writer.WritePropertyName("vmId"u8);
+                    writer.WriteStringValue(VmId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(VmResourceId))
+                {
+                    writer.WritePropertyName("vmResourceId"u8);
+                    writer.WriteStringValue(VmResourceId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ComplianceStatus))
+                {
+                    writer.WritePropertyName("complianceStatus"u8);
+                    writer.WriteStringValue(ComplianceStatus.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LatestReportId))
+                {
+                    if (LatestReportId != null)
+                    {
+                        writer.WritePropertyName("latestReportId"u8);
+                        writer.WriteStringValue(LatestReportId.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNull("latestReportId");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastComplianceCheckedOn))
+                {
+                    if (LastComplianceCheckedOn != null)
+                    {
+                        writer.WritePropertyName("lastComplianceChecked"u8);
+                        writer.WriteStringValue(LastComplianceCheckedOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("lastComplianceChecked");
+                    }
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element)
+        GuestConfigurationVmssVmInfo IJsonModel<GuestConfigurationVmssVmInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
+        }
+
+        internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +118,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<Guid?> latestReportId = default;
             Optional<DateTimeOffset?> lastComplianceChecked = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"u8))
@@ -79,8 +169,38 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     lastComplianceChecked = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GuestConfigurationVmssVmInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GuestConfigurationVmssVmInfo IModel<GuestConfigurationVmssVmInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GuestConfigurationVmssVmInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

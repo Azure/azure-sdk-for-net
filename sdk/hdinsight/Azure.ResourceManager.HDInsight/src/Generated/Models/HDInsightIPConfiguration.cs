@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -15,7 +16,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The ip configurations for the private link service. </summary>
     public partial class HDInsightIPConfiguration
     {
-        /// <summary> Initializes a new instance of HDInsightIPConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightIPConfiguration"/>. </summary>
         /// <param name="name"> The name of private link IP configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightIPConfiguration(string name)
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of HDInsightIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightIPConfiguration"/>. </summary>
         /// <param name="id"> The private link IP configuration id. </param>
         /// <param name="name"> The name of private link IP configuration. </param>
         /// <param name="resourceType"> The type of the private link IP configuration. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateIPAddress"> The IP address. </param>
         /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
         /// <param name="subnet"> The subnet resource id. </param>
-        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -44,6 +49,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightIPConfiguration"/> for deserialization. </summary>
+        internal HDInsightIPConfiguration()
+        {
         }
 
         /// <summary> The private link IP configuration id. </summary>

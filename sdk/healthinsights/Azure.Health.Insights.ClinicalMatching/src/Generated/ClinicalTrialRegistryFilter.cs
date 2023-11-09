@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A filter defining a subset of clinical trials from a given clinical trial registry (e.g. clinicaltrials.gov). </summary>
     public partial class ClinicalTrialRegistryFilter
     {
-        /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialRegistryFilter"/>. </summary>
         public ClinicalTrialRegistryFilter()
         {
             Conditions = new ChangeTrackingList<string>();
@@ -27,9 +31,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             FacilityNames = new ChangeTrackingList<string>();
             FacilityLocations = new ChangeTrackingList<GeographicLocation>();
             FacilityAreas = new ChangeTrackingList<GeographicArea>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialRegistryFilter"/>. </summary>
         /// <param name="conditions">
         /// Trials with any of the given medical conditions will be included in the selection (provided that other limitations are satisfied).
         /// Leaving this list empty will not limit the medical conditions.
@@ -74,7 +79,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// Trials with any of the given facility area boundaries will be included in the selection (provided that other limitations are satisfied).
         /// Leaving this list empty will not limit the trial facility area boundaries.
         /// </param>
-        internal ClinicalTrialRegistryFilter(IList<string> conditions, IList<ClinicalTrialStudyType> studyTypes, IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses, IList<string> sponsors, IList<ClinicalTrialPhase> phases, IList<ClinicalTrialPurpose> purposes, IList<string> ids, IList<ClinicalTrialSource> sources, IList<string> facilityNames, IList<GeographicLocation> facilityLocations, IList<GeographicArea> facilityAreas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialRegistryFilter(IList<string> conditions, IList<ClinicalTrialStudyType> studyTypes, IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses, IList<string> sponsors, IList<ClinicalTrialPhase> phases, IList<ClinicalTrialPurpose> purposes, IList<string> ids, IList<ClinicalTrialSource> sources, IList<string> facilityNames, IList<GeographicLocation> facilityLocations, IList<GeographicArea> facilityAreas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Conditions = conditions;
             StudyTypes = studyTypes;
@@ -87,6 +93,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             FacilityNames = facilityNames;
             FacilityLocations = facilityLocations;
             FacilityAreas = facilityAreas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

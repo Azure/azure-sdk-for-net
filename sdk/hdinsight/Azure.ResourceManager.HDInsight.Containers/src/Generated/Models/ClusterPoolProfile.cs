@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster pool profile. </summary>
     internal partial class ClusterPoolProfile
     {
-        /// <summary> Initializes a new instance of ClusterPoolProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolProfile"/>. </summary>
         /// <param name="clusterPoolVersion"> Cluster pool version is a 2-part version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolVersion"/> is null. </exception>
         public ClusterPoolProfile(string clusterPoolVersion)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Argument.AssertNotNull(clusterPoolVersion, nameof(clusterPoolVersion));
 
             ClusterPoolVersion = clusterPoolVersion;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolProfile"/>. </summary>
+        /// <param name="clusterPoolVersion"> Cluster pool version is a 2-part version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterPoolProfile(string clusterPoolVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClusterPoolVersion = clusterPoolVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPoolProfile"/> for deserialization. </summary>
+        internal ClusterPoolProfile()
+        {
         }
 
         /// <summary> Cluster pool version is a 2-part version. </summary>

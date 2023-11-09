@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Property overrides on a subnet of a virtual network. </summary>
     public partial class DevTestLabSubnetOverride
     {
-        /// <summary> Initializes a new instance of DevTestLabSubnetOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSubnetOverride"/>. </summary>
         public DevTestLabSubnetOverride()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSubnetOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSubnetOverride"/>. </summary>
         /// <param name="resourceId"> The resource ID of the subnet. </param>
         /// <param name="labSubnetName"> The name given to the subnet within the lab. </param>
         /// <param name="useInVmCreationPermission"> Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny). </param>
         /// <param name="usePublicIPAddressPermission"> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </param>
         /// <param name="sharedPublicIPAddressConfiguration"> Properties that virtual machines on this subnet will share. </param>
         /// <param name="virtualNetworkPoolName"> The virtual network pool associated with this subnet. </param>
-        internal DevTestLabSubnetOverride(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? useInVmCreationPermission, DevTestLabUsagePermissionType? usePublicIPAddressPermission, SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, string virtualNetworkPoolName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabSubnetOverride(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? useInVmCreationPermission, DevTestLabUsagePermissionType? usePublicIPAddressPermission, SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, string virtualNetworkPoolName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             LabSubnetName = labSubnetName;
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             UsePublicIPAddressPermission = usePublicIPAddressPermission;
             SharedPublicIPAddressConfiguration = sharedPublicIPAddressConfiguration;
             VirtualNetworkPoolName = virtualNetworkPoolName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource ID of the subnet. </summary>

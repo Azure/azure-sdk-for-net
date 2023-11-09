@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class UpdateTopicSpacesConfigurationInfo : IUtf8JsonSerializable
+    public partial class UpdateTopicSpacesConfigurationInfo : IUtf8JsonSerializable, IJsonModel<UpdateTopicSpacesConfigurationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateTopicSpacesConfigurationInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<UpdateTopicSpacesConfigurationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
@@ -50,7 +56,146 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("routingIdentityInfo"u8);
                 writer.WriteObjectValue(RoutingIdentityInfo);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        UpdateTopicSpacesConfigurationInfo IJsonModel<UpdateTopicSpacesConfigurationInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateTopicSpacesConfigurationInfo(document.RootElement, options);
+        }
+
+        internal static UpdateTopicSpacesConfigurationInfo DeserializeUpdateTopicSpacesConfigurationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<TopicSpacesConfigurationState> state = default;
+            Optional<string> routeTopicResourceId = default;
+            Optional<RoutingEnrichments> routingEnrichments = default;
+            Optional<ClientAuthenticationSettings> clientAuthentication = default;
+            Optional<int> maximumSessionExpiryInHours = default;
+            Optional<int> maximumClientSessionsPerAuthenticationName = default;
+            Optional<RoutingIdentityInfo> routingIdentityInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new TopicSpacesConfigurationState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("routeTopicResourceId"u8))
+                {
+                    routeTopicResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("routingEnrichments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("clientAuthentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("maximumSessionExpiryInHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumSessionExpiryInHours = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maximumClientSessionsPerAuthenticationName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumClientSessionsPerAuthenticationName = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("routingIdentityInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpdateTopicSpacesConfigurationInfo(Optional.ToNullable(state), routeTopicResourceId.Value, routingEnrichments.Value, clientAuthentication.Value, Optional.ToNullable(maximumSessionExpiryInHours), Optional.ToNullable(maximumClientSessionsPerAuthenticationName), routingIdentityInfo.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<UpdateTopicSpacesConfigurationInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UpdateTopicSpacesConfigurationInfo IModel<UpdateTopicSpacesConfigurationInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUpdateTopicSpacesConfigurationInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<UpdateTopicSpacesConfigurationInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

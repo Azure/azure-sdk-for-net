@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Describes the schema of the common properties across all ARN system topic delete events. </summary>
     public partial class ResourceNotificationsResourceDeletedEventData
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceDeletedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedEventData"/>. </summary>
         internal ResourceNotificationsResourceDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
-        internal ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceDetails = resourceDetails;
             OperationalDetails = operationalDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> resourceInfo details for delete event. </summary>

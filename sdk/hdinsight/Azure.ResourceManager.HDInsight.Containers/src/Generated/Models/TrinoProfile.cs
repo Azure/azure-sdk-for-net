@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -12,24 +13,29 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino Cluster profile. </summary>
     public partial class TrinoProfile
     {
-        /// <summary> Initializes a new instance of TrinoProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoProfile"/>. </summary>
         public TrinoProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoProfile"/>. </summary>
         /// <param name="catalogOptions"> Trino cluster catalog options. </param>
         /// <param name="coordinator"> Trino Coordinator. </param>
         /// <param name="userPluginsSpec"> Trino user plugins spec. </param>
         /// <param name="userTelemetrySpec"> User telemetry. </param>
         /// <param name="worker"> Trino worker. </param>
-        internal TrinoProfile(CatalogOptions catalogOptions, TrinoCoordinator coordinator, TrinoUserPluginListResult userPluginsSpec, TrinoUserTelemetry userTelemetrySpec, TrinoWorker worker)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoProfile(CatalogOptions catalogOptions, TrinoCoordinator coordinator, TrinoUserPluginListResult userPluginsSpec, TrinoUserTelemetry userTelemetrySpec, TrinoWorker worker, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CatalogOptions = catalogOptions;
             Coordinator = coordinator;
             UserPluginsSpec = userPluginsSpec;
             UserTelemetrySpec = userTelemetrySpec;
             Worker = worker;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Trino cluster catalog options. </summary>

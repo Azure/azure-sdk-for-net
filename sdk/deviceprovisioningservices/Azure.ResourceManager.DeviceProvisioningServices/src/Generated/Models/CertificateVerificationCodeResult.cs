@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,22 +16,27 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the response of the verification code. </summary>
     public partial class CertificateVerificationCodeResult : ResourceData
     {
-        /// <summary> Initializes a new instance of CertificateVerificationCodeResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeResult"/>. </summary>
         internal CertificateVerificationCodeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateVerificationCodeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Request etag. </param>
         /// <param name="properties"></param>
-        internal CertificateVerificationCodeResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CertificateVerificationCodeProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateVerificationCodeResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CertificateVerificationCodeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Request etag. </summary>

@@ -7,14 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabVmCreationContent : IUtf8JsonSerializable
+    public partial class DevTestLabVmCreationContent : IUtf8JsonSerializable, IJsonModel<DevTestLabVmCreationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmCreationContent>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DevTestLabVmCreationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -176,11 +180,40 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabVmCreationContent DeserializeDevTestLabVmCreationContent(JsonElement element)
+        DevTestLabVmCreationContent IJsonModel<DevTestLabVmCreationContent>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabVmCreationContent(document.RootElement, options);
+        }
+
+        internal static DevTestLabVmCreationContent DeserializeDevTestLabVmCreationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -212,6 +245,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> environmentId = default;
             Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
             Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -437,8 +472,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabVmCreationContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), galleryImageReference.Value, planId.Value, networkInterface.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabVmCreationContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), galleryImageReference.Value, planId.Value, networkInterface.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DevTestLabVmCreationContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DevTestLabVmCreationContent IModel<DevTestLabVmCreationContent>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDevTestLabVmCreationContent(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DevTestLabVmCreationContent>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Exclude variables from managed rule evaluation. </summary>
     public partial class ManagedRuleExclusion
     {
-        /// <summary> Initializes a new instance of ManagedRuleExclusion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleExclusion"/>. </summary>
         /// <param name="matchVariable"> The variable type to be excluded. </param>
         /// <param name="selectorMatchOperator"> Comparison operator to apply to the selector when specifying which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> Selector value for which elements in the collection this exclusion applies to. </param>
@@ -25,6 +29,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleExclusion"/>. </summary>
+        /// <param name="matchVariable"> The variable type to be excluded. </param>
+        /// <param name="selectorMatchOperator"> Comparison operator to apply to the selector when specifying which elements in the collection this exclusion applies to. </param>
+        /// <param name="selector"> Selector value for which elements in the collection this exclusion applies to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleExclusion(ManagedRuleExclusionMatchVariable matchVariable, ManagedRuleExclusionSelectorMatchOperator selectorMatchOperator, string selector, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MatchVariable = matchVariable;
+            SelectorMatchOperator = selectorMatchOperator;
+            Selector = selector;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleExclusion"/> for deserialization. </summary>
+        internal ManagedRuleExclusion()
+        {
         }
 
         /// <summary> The variable type to be excluded. </summary>

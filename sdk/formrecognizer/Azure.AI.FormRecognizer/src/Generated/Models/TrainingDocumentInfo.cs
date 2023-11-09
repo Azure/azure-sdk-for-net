@@ -16,7 +16,10 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary> Report for a custom model training document. </summary>
     public partial class TrainingDocumentInfo
     {
-        /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrainingDocumentInfo"/>. </summary>
         /// <param name="name"> Training document name. </param>
         /// <param name="pageCount"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
@@ -33,17 +36,24 @@ namespace Azure.AI.FormRecognizer.Training
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingDocumentInfo"/>. </summary>
         /// <param name="name"> Training document name. </param>
         /// <param name="pageCount"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
         /// <param name="status"> Status of the training operation. </param>
-        internal TrainingDocumentInfo(string name, int pageCount, IReadOnlyList<FormRecognizerError> errors, TrainingStatus status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrainingDocumentInfo(string name, int pageCount, IReadOnlyList<FormRecognizerError> errors, TrainingStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PageCount = pageCount;
             Errors = errors;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrainingDocumentInfo"/> for deserialization. </summary>
+        internal TrainingDocumentInfo()
+        {
         }
         /// <summary> List of errors. </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }

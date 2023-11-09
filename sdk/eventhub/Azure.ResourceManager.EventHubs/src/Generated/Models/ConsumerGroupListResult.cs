@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The result to the List Consumer Group operation. </summary>
     internal partial class ConsumerGroupListResult
     {
-        /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumerGroupListResult"/>. </summary>
         internal ConsumerGroupListResult()
         {
             Value = new ChangeTrackingList<EventHubsConsumerGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerGroupListResult"/>. </summary>
         /// <param name="value"> Result of the List Consumer Group operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Consumer Group. </param>
-        internal ConsumerGroupListResult(IReadOnlyList<EventHubsConsumerGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumerGroupListResult(IReadOnlyList<EventHubsConsumerGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the List Consumer Group operation. </summary>

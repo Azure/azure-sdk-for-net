@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The details of the authorization for the resource. </summary>
     public partial class ResourceAuthorization
     {
-        /// <summary> Initializes a new instance of ResourceAuthorization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
         internal ResourceAuthorization()
         {
             Evidence = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
         /// <param name="scope"> The scope of the authorization. </param>
         /// <param name="action"> The action being requested. </param>
         /// <param name="evidence"> The evidence for the authorization. </param>
-        internal ResourceAuthorization(string scope, string action, IReadOnlyDictionary<string, string> evidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceAuthorization(string scope, string action, IReadOnlyDictionary<string, string> evidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Scope = scope;
             Action = action;
             Evidence = evidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The scope of the authorization. </summary>

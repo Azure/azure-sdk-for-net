@@ -5,18 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> `GeoJSON` object properties. </summary>
     public partial class AreaProperties
     {
-        /// <summary> Initializes a new instance of AreaProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AreaProperties"/>. </summary>
         /// <param name="subType"> `GeoJSON` object sub-type. </param>
         /// <param name="radius"> The radius of the area's circle, in meters. </param>
         public AreaProperties(GeoJsonPropertiesSubType subType, double radius)
         {
             SubType = subType;
             Radius = radius;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AreaProperties"/>. </summary>
+        /// <param name="subType"> `GeoJSON` object sub-type. </param>
+        /// <param name="radius"> The radius of the area's circle, in meters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AreaProperties(GeoJsonPropertiesSubType subType, double radius, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SubType = subType;
+            Radius = radius;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AreaProperties"/> for deserialization. </summary>
+        internal AreaProperties()
+        {
         }
 
         /// <summary> `GeoJSON` object sub-type. </summary>

@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class EndpointDetail
+    public partial class EndpointDetail : IUtf8JsonSerializable, IJsonModel<EndpointDetail>
     {
-        internal static EndpointDetail DeserializeEndpointDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointDetail>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EndpointDetail IJsonModel<EndpointDetail>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEndpointDetail(document.RootElement, options);
+        }
+
+        internal static EndpointDetail DeserializeEndpointDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +83,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             Optional<int> port = default;
             Optional<string> protocol = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -48,8 +111,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EndpointDetail(ipAddress.Value, Optional.ToNullable(port), protocol.Value, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EndpointDetail(ipAddress.Value, Optional.ToNullable(port), protocol.Value, description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EndpointDetail>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointDetail)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EndpointDetail IModel<EndpointDetail>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEndpointDetail(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EndpointDetail>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FluidRelay.Models;
@@ -13,19 +16,113 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay
 {
-    public partial class FluidRelayContainerData : IUtf8JsonSerializable
+    public partial class FluidRelayContainerData : IUtf8JsonSerializable, IJsonModel<FluidRelayContainerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluidRelayContainerData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FluidRelayContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FrsTenantId))
+                {
+                    writer.WritePropertyName("frsTenantId"u8);
+                    writer.WriteStringValue(FrsTenantId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(FrsContainerId))
+                {
+                    writer.WritePropertyName("frsContainerId"u8);
+                    writer.WriteStringValue(FrsContainerId.Value);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(LastAccessOn))
+                {
+                    writer.WritePropertyName("lastAccessTime"u8);
+                    writer.WriteStringValue(LastAccessOn.Value, "O");
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FluidRelayContainerData DeserializeFluidRelayContainerData(JsonElement element)
+        FluidRelayContainerData IJsonModel<FluidRelayContainerData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FluidRelayContainerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFluidRelayContainerData(document.RootElement, options);
+        }
+
+        internal static FluidRelayContainerData DeserializeFluidRelayContainerData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +136,8 @@ namespace Azure.ResourceManager.FluidRelay
             Optional<FluidRelayProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastAccessTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,8 +221,38 @@ namespace Azure.ResourceManager.FluidRelay
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FluidRelayContainerData(id, name, type, systemData.Value, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState), Optional.ToNullable(creationTime), Optional.ToNullable(lastAccessTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FluidRelayContainerData(id, name, type, systemData.Value, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState), Optional.ToNullable(creationTime), Optional.ToNullable(lastAccessTime), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FluidRelayContainerData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FluidRelayContainerData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FluidRelayContainerData IModel<FluidRelayContainerData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FluidRelayContainerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFluidRelayContainerData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FluidRelayContainerData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

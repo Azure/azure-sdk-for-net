@@ -15,7 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing the location and content of a table cell. </summary>
     public partial class DocumentTableCell
     {
-        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
@@ -33,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
         /// <param name="kindPrivate"> Table cell kind. </param>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
@@ -42,7 +45,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kindPrivate, int rowIndex, int columnIndex, int? rowSpanPrivate, int? columnSpanPrivate, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTableCell(DocumentTableCellKind? kindPrivate, int rowIndex, int columnIndex, int? rowSpanPrivate, int? columnSpanPrivate, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KindPrivate = kindPrivate;
             RowIndex = rowIndex;
@@ -52,6 +56,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Content = content;
             BoundingRegions = boundingRegions;
             Spans = spans;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/> for deserialization. </summary>
+        internal DocumentTableCell()
+        {
         }
         /// <summary> Row index of the cell. </summary>
         public int RowIndex { get; }

@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterConnectivityProfile
+    public partial class ClusterConnectivityProfile : IUtf8JsonSerializable, IJsonModel<ClusterConnectivityProfile>
     {
-        internal static ClusterConnectivityProfile DeserializeClusterConnectivityProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterConnectivityProfile>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ClusterConnectivityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("web"u8);
+                writer.WriteObjectValue(Web);
+            }
+            if (Optional.IsCollectionDefined(Ssh))
+            {
+                writer.WritePropertyName("ssh"u8);
+                writer.WriteStartArray();
+                foreach (var item in Ssh)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ClusterConnectivityProfile IJsonModel<ClusterConnectivityProfile>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterConnectivityProfile(document.RootElement, options);
+        }
+
+        internal static ClusterConnectivityProfile DeserializeClusterConnectivityProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             WebConnectivityEndpoint web = default;
             Optional<IReadOnlyList<SshConnectivityEndpoint>> ssh = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("web"u8))
@@ -42,8 +99,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     ssh = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterConnectivityProfile(web, Optional.ToList(ssh));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterConnectivityProfile(web, Optional.ToList(ssh), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ClusterConnectivityProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterConnectivityProfile IModel<ClusterConnectivityProfile>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterConnectivityProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterConnectivityProfile(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ClusterConnectivityProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

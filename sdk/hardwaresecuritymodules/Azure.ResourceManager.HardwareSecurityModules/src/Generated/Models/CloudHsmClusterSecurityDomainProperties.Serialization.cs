@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class CloudHsmClusterSecurityDomainProperties : IUtf8JsonSerializable
+    public partial class CloudHsmClusterSecurityDomainProperties : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterSecurityDomainProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterSecurityDomainProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CloudHsmClusterSecurityDomainProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(FipsState))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("activationStatus"u8);
                 writer.WriteStringValue(ActivationStatus);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudHsmClusterSecurityDomainProperties DeserializeCloudHsmClusterSecurityDomainProperties(JsonElement element)
+        CloudHsmClusterSecurityDomainProperties IJsonModel<CloudHsmClusterSecurityDomainProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudHsmClusterSecurityDomainProperties(document.RootElement, options);
+        }
+
+        internal static CloudHsmClusterSecurityDomainProperties DeserializeCloudHsmClusterSecurityDomainProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> fipsState = default;
             Optional<string> activationStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fipsState"u8))
@@ -52,8 +89,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     activationStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudHsmClusterSecurityDomainProperties(Optional.ToNullable(fipsState), activationStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudHsmClusterSecurityDomainProperties(Optional.ToNullable(fipsState), activationStatus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<CloudHsmClusterSecurityDomainProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CloudHsmClusterSecurityDomainProperties IModel<CloudHsmClusterSecurityDomainProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCloudHsmClusterSecurityDomainProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CloudHsmClusterSecurityDomainProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

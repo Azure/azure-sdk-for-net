@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventSubscriptionFilter : IUtf8JsonSerializable
+    public partial class EventSubscriptionFilter : IUtf8JsonSerializable, IJsonModel<EventSubscriptionFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventSubscriptionFilter>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EventSubscriptionFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(SubjectBeginsWith))
@@ -56,11 +61,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventSubscriptionFilter DeserializeEventSubscriptionFilter(JsonElement element)
+        EventSubscriptionFilter IJsonModel<EventSubscriptionFilter>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventSubscriptionFilter(document.RootElement, options);
+        }
+
+        internal static EventSubscriptionFilter DeserializeEventSubscriptionFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +105,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<bool> isSubjectCaseSensitive = default;
             Optional<bool> enableAdvancedFilteringOnArrays = default;
             Optional<IList<AdvancedFilter>> advancedFilters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subjectBeginsWith"u8))
@@ -129,8 +165,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     advancedFilters = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventSubscriptionFilter(subjectBeginsWith.Value, subjectEndsWith.Value, Optional.ToList(includedEventTypes), Optional.ToNullable(isSubjectCaseSensitive), Optional.ToNullable(enableAdvancedFilteringOnArrays), Optional.ToList(advancedFilters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventSubscriptionFilter(subjectBeginsWith.Value, subjectEndsWith.Value, Optional.ToList(includedEventTypes), Optional.ToNullable(isSubjectCaseSensitive), Optional.ToNullable(enableAdvancedFilteringOnArrays), Optional.ToList(advancedFilters), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EventSubscriptionFilter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EventSubscriptionFilter IModel<EventSubscriptionFilter>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEventSubscriptionFilter(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EventSubscriptionFilter>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

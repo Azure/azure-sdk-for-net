@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class FlinkProfile : IUtf8JsonSerializable
+    public partial class FlinkProfile : IUtf8JsonSerializable, IJsonModel<FlinkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlinkProfile>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FlinkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
@@ -36,11 +42,40 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FlinkProfile DeserializeFlinkProfile(JsonElement element)
+        FlinkProfile IJsonModel<FlinkProfile>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FlinkProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlinkProfile(document.RootElement, options);
+        }
+
+        internal static FlinkProfile DeserializeFlinkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +86,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<ComputeResourceRequirement> historyServer = default;
             ComputeResourceRequirement taskManager = default;
             Optional<FlinkCatalogOptions> catalogOptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storage"u8))
@@ -95,8 +132,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FlinkProfile(storage, Optional.ToNullable(numReplicas), jobManager, historyServer.Value, taskManager, catalogOptions.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FlinkProfile(storage, Optional.ToNullable(numReplicas), jobManager, historyServer.Value, taskManager, catalogOptions.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FlinkProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FlinkProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FlinkProfile IModel<FlinkProfile>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FlinkProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFlinkProfile(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FlinkProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

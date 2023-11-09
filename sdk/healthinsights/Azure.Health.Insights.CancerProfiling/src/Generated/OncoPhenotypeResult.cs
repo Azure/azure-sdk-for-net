@@ -15,13 +15,17 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The response for the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeResult
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResult"/>. </summary>
         internal OncoPhenotypeResult()
         {
             Errors = new ChangeTrackingList<ResponseError>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResult"/>. </summary>
         /// <param name="jobId"> A processing job identifier. </param>
         /// <param name="createdDateTime"> The date and time when the processing job was created. </param>
         /// <param name="expirationDateTime"> The date and time when the processing job is set to expire. </param>
@@ -29,7 +33,8 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="status"> The status of the processing job. </param>
         /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
         /// <param name="results"> The inference results for the Onco Phenotype request. </param>
-        internal OncoPhenotypeResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, OncoPhenotypeResults results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypeResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, OncoPhenotypeResults results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedDateTime = createdDateTime;
@@ -38,6 +43,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Status = status;
             Errors = errors;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A processing job identifier. </summary>

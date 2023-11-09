@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The cluster monitoring status response. </summary>
     public partial class HDInsightClusterExtensionStatus
     {
-        /// <summary> Initializes a new instance of HDInsightClusterExtensionStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterExtensionStatus"/>. </summary>
         internal HDInsightClusterExtensionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterExtensionStatus"/>. </summary>
         /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
         /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
-        internal HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled, string workspaceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled, string workspaceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsClusterMonitoringEnabled = isClusterMonitoringEnabled;
             WorkspaceId = workspaceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the monitor on the HDInsight cluster. </summary>

@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleConfiguration : IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleConfiguration : IUtf8JsonSerializable, IJsonModel<HDInsightAutoScaleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAutoScaleConfiguration>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HDInsightAutoScaleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Capacity))
@@ -25,17 +31,48 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightAutoScaleConfiguration DeserializeHDInsightAutoScaleConfiguration(JsonElement element)
+        HDInsightAutoScaleConfiguration IJsonModel<HDInsightAutoScaleConfiguration>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightAutoScaleConfiguration(document.RootElement, options);
+        }
+
+        internal static HDInsightAutoScaleConfiguration DeserializeHDInsightAutoScaleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<HDInsightAutoScaleCapacity> capacity = default;
             Optional<HDInsightAutoScaleRecurrence> recurrence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacity"u8))
@@ -56,8 +93,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     recurrence = HDInsightAutoScaleRecurrence.DeserializeHDInsightAutoScaleRecurrence(property.Value);
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightAutoScaleConfiguration(capacity.Value, recurrence.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightAutoScaleConfiguration(capacity.Value, recurrence.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HDInsightAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightAutoScaleConfiguration IModel<HDInsightAutoScaleConfiguration>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightAutoScaleConfiguration(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HDInsightAutoScaleConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

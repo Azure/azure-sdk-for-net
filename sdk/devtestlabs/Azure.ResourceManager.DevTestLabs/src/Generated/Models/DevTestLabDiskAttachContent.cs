@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -12,9 +14,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of the disk to attach. </summary>
     public partial class DevTestLabDiskAttachContent
     {
-        /// <summary> Initializes a new instance of DevTestLabDiskAttachContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskAttachContent"/>. </summary>
         public DevTestLabDiskAttachContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskAttachContent"/>. </summary>
+        /// <param name="leasedByLabVmId"> The resource ID of the Lab virtual machine to which the disk is attached. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabDiskAttachContent(ResourceIdentifier leasedByLabVmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LeasedByLabVmId = leasedByLabVmId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource ID of the Lab virtual machine to which the disk is attached. </summary>

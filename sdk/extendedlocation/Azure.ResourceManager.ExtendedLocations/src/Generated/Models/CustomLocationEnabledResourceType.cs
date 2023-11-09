@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
     /// <summary> EnabledResourceType definition. </summary>
     public partial class CustomLocationEnabledResourceType : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomLocationEnabledResourceType"/>. </summary>
         public CustomLocationEnabledResourceType()
         {
             TypesMetadata = new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>();
         }
 
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationEnabledResourceType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,11 +32,13 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="clusterExtensionId"> Cluster Extension ID. </param>
         /// <param name="extensionType"> Cluster Extension Type. </param>
         /// <param name="typesMetadata"> Metadata of the Resource Type. </param>
-        internal CustomLocationEnabledResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterExtensionId, string extensionType, IList<CustomLocationEnabledResourceTypeMetadata> typesMetadata) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomLocationEnabledResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterExtensionId, string extensionType, IList<CustomLocationEnabledResourceTypeMetadata> typesMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ClusterExtensionId = clusterExtensionId;
             ExtensionType = extensionType;
             TypesMetadata = typesMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Cluster Extension ID. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -13,7 +14,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A description of a clinical trial. </summary>
     public partial class ClinicalTrialDetails
     {
-        /// <summary> Initializes a new instance of ClinicalTrialDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialDetails"/>. </summary>
         /// <param name="id"> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </param>
         /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="metadata"/> is null. </exception>
@@ -24,19 +28,27 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             Id = id;
             Metadata = metadata;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialDetails"/>. </summary>
         /// <param name="id"> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </param>
         /// <param name="eligibilityCriteriaText"> The eligibility criteria of the clinical trial (inclusion and exclusion), given as text. </param>
         /// <param name="demographics"> Demographic criteria for a clinical trial. </param>
         /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
-        internal ClinicalTrialDetails(string id, string eligibilityCriteriaText, ClinicalTrialDemographics demographics, ClinicalTrialMetadata metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialDetails(string id, string eligibilityCriteriaText, ClinicalTrialDemographics demographics, ClinicalTrialMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             EligibilityCriteriaText = eligibilityCriteriaText;
             Demographics = demographics;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialDetails"/> for deserialization. </summary>
+        internal ClinicalTrialDetails()
+        {
         }
 
         /// <summary> A given identifier for the clinical trial. Has to be unique within a list of clinical trials. </summary>

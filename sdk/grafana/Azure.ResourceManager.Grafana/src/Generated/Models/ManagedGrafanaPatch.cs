@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,26 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatch
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatch"/>. </summary>
         public ManagedGrafanaPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatch"/>. </summary>
+        /// <param name="identity"> The managed identity of the grafana resource. </param>
+        /// <param name="tags"> The new tags of the grafana resource. </param>
+        /// <param name="properties"> Properties specific to the managed grafana resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedGrafanaPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedGrafanaPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed identity of the grafana resource. </summary>

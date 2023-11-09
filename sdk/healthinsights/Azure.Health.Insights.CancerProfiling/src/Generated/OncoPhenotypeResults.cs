@@ -15,7 +15,10 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The inference results for the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeResults
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> or <paramref name="modelVersion"/> is null. </exception>
@@ -26,15 +29,23 @@ namespace Azure.Health.Insights.CancerProfiling
 
             Patients = patients.ToList();
             ModelVersion = modelVersion;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
-        internal OncoPhenotypeResults(IReadOnlyList<OncoPhenotypePatientResult> patients, string modelVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypeResults(IReadOnlyList<OncoPhenotypePatientResult> patients, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Patients = patients;
             ModelVersion = modelVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResults"/> for deserialization. </summary>
+        internal OncoPhenotypeResults()
+        {
         }
 
         /// <summary> Results for the patients given in the request. </summary>

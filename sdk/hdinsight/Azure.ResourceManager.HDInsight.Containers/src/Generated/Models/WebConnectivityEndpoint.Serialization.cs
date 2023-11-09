@@ -5,19 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    internal partial class WebConnectivityEndpoint
+    internal partial class WebConnectivityEndpoint : IUtf8JsonSerializable, IJsonModel<WebConnectivityEndpoint>
     {
-        internal static WebConnectivityEndpoint DeserializeWebConnectivityEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebConnectivityEndpoint>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<WebConnectivityEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("fqdn"u8);
+            writer.WriteStringValue(Fqdn);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WebConnectivityEndpoint IJsonModel<WebConnectivityEndpoint>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebConnectivityEndpoint(document.RootElement, options);
+        }
+
+        internal static WebConnectivityEndpoint DeserializeWebConnectivityEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string fqdn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -25,8 +71,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     fqdn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebConnectivityEndpoint(fqdn);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebConnectivityEndpoint(fqdn, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<WebConnectivityEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WebConnectivityEndpoint IModel<WebConnectivityEndpoint>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWebConnectivityEndpoint(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<WebConnectivityEndpoint>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

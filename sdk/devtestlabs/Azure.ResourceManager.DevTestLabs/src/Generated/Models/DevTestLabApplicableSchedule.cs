@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
@@ -15,13 +16,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Schedules applicable to a virtual machine. The schedules may have been defined on a VM or on lab level. </summary>
     public partial class DevTestLabApplicableSchedule : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabApplicableSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabApplicableSchedule(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabApplicableSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,10 +34,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location. </param>
         /// <param name="labVmsShutdown"> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </param>
         /// <param name="labVmsStartup"> The auto-startup schedule, if one has been set at the lab or lab resource level. </param>
-        internal DevTestLabApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabScheduleData labVmsShutdown, DevTestLabScheduleData labVmsStartup) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabScheduleData labVmsShutdown, DevTestLabScheduleData labVmsStartup, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             LabVmsShutdown = labVmsShutdown;
             LabVmsStartup = labVmsStartup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/> for deserialization. </summary>
+        internal DevTestLabApplicableSchedule()
+        {
         }
 
         /// <summary> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Router Communication Error. </summary>
     internal partial class AcsRouterCommunicationError
     {
-        /// <summary> Initializes a new instance of AcsRouterCommunicationError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>
         internal AcsRouterCommunicationError()
         {
             Details = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterCommunicationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>
         /// <param name="code"> Router Communication Error Code. </param>
         /// <param name="message"> Router Communication Error Message. </param>
         /// <param name="target"> Router Communication Error Target. </param>
         /// <param name="innererror"> Router Communication Inner Error. </param>
         /// <param name="details"> List of Router Communication Errors. </param>
-        internal AcsRouterCommunicationError(string code, string message, string target, AcsRouterCommunicationError innererror, IReadOnlyList<AcsRouterCommunicationError> details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterCommunicationError(string code, string message, string target, AcsRouterCommunicationError innererror, IReadOnlyList<AcsRouterCommunicationError> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Innererror = innererror;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Router Communication Error Code. </summary>

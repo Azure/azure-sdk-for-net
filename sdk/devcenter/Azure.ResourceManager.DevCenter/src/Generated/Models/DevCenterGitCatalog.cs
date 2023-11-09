@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Properties for a Git repository catalog. </summary>
     public partial class DevCenterGitCatalog
     {
-        /// <summary> Initializes a new instance of DevCenterGitCatalog. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterGitCatalog"/>. </summary>
         public DevCenterGitCatalog()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterGitCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterGitCatalog"/>. </summary>
         /// <param name="uri"> Git URI. </param>
         /// <param name="branch"> Git branch. </param>
         /// <param name="secretIdentifier"> A reference to the Key Vault secret containing a security token to authenticate to a Git repository. </param>
         /// <param name="path"> The folder where the catalog items can be found inside the repository. </param>
-        internal DevCenterGitCatalog(Uri uri, string branch, string secretIdentifier, string path)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterGitCatalog(Uri uri, string branch, string secretIdentifier, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Branch = branch;
             SecretIdentifier = secretIdentifier;
             Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Git URI. </summary>

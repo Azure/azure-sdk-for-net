@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Topic Space operation. </summary>
     internal partial class TopicSpacesListResult
     {
-        /// <summary> Initializes a new instance of TopicSpacesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesListResult"/>. </summary>
         internal TopicSpacesListResult()
         {
             Value = new ChangeTrackingList<TopicSpaceData>();
         }
 
-        /// <summary> Initializes a new instance of TopicSpacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesListResult"/>. </summary>
         /// <param name="value"> A collection of Topic Space. </param>
         /// <param name="nextLink"> A link for the next page of Topic Space. </param>
-        internal TopicSpacesListResult(IReadOnlyList<TopicSpaceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicSpacesListResult(IReadOnlyList<TopicSpaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A collection of Topic Space. </summary>

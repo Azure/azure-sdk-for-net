@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Response for Volume request. </summary>
     public partial class ElasticSanVolumePatch
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
         public ElasticSanVolumePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <param name="managedBy"> Parent resource information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumePatch(long? sizeGiB, ManagedByInfo managedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SizeGiB = sizeGiB;
+            ManagedBy = managedBy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Volume size. </summary>

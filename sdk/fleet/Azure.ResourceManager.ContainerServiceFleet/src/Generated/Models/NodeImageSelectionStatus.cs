@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The node image upgrade specs for the update run. </summary>
     internal partial class NodeImageSelectionStatus
     {
-        /// <summary> Initializes a new instance of NodeImageSelectionStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelectionStatus"/>. </summary>
         internal NodeImageSelectionStatus()
         {
             SelectedNodeImageVersions = new ChangeTrackingList<NodeImageVersion>();
         }
 
-        /// <summary> Initializes a new instance of NodeImageSelectionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelectionStatus"/>. </summary>
         /// <param name="selectedNodeImageVersions"> The image versions to upgrade the nodes to. </param>
-        internal NodeImageSelectionStatus(IReadOnlyList<NodeImageVersion> selectedNodeImageVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeImageSelectionStatus(IReadOnlyList<NodeImageVersion> selectedNodeImageVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedNodeImageVersions = selectedNodeImageVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The image versions to upgrade the nodes to. </summary>

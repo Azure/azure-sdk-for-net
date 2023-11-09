@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an environment deployment. </summary>
     public partial class DevTestLabEnvironmentDeployment
     {
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentDeployment"/>. </summary>
         public DevTestLabEnvironmentDeployment()
         {
             Parameters = new ChangeTrackingList<DevTestLabArmTemplateParameter>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentDeployment"/>. </summary>
         /// <param name="armTemplateId"> The Azure Resource Manager template's identifier. </param>
         /// <param name="parameters"> The parameters of the Azure Resource Manager template. </param>
-        internal DevTestLabEnvironmentDeployment(ResourceIdentifier armTemplateId, IList<DevTestLabArmTemplateParameter> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabEnvironmentDeployment(ResourceIdentifier armTemplateId, IList<DevTestLabArmTemplateParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArmTemplateId = armTemplateId;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure Resource Manager template's identifier. </summary>

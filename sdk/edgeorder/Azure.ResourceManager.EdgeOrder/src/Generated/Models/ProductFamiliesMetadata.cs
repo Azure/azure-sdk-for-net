@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Product families metadata details. </summary>
     public partial class ProductFamiliesMetadata
     {
-        /// <summary> Initializes a new instance of ProductFamiliesMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/>. </summary>
         internal ProductFamiliesMetadata()
         {
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ResourceProviderDetails = new ChangeTrackingList<ResourceProviderDetails>();
         }
 
-        /// <summary> Initializes a new instance of ProductFamiliesMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
         /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
-        internal ProductFamiliesMetadata(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductFamiliesMetadata(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             FilterableProperties = filterableProperties;
             ProductLines = productLines;
             ResourceProviderDetails = resourceProviderDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display Name for the product system. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a member update operation. </summary>
     public partial class MemberUpdateStatus
     {
-        /// <summary> Initializes a new instance of MemberUpdateStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MemberUpdateStatus"/>. </summary>
         internal MemberUpdateStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MemberUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemberUpdateStatus"/>. </summary>
         /// <param name="status"> The status of the MemberUpdate operation. </param>
         /// <param name="name"> The name of the FleetMember. </param>
         /// <param name="clusterResourceId"> The Azure resource id of the target Kubernetes cluster. </param>
         /// <param name="operationId"> The operation resource id of the latest attempt to perform the operation. </param>
         /// <param name="message"> The status message after processing the member update operation. </param>
-        internal MemberUpdateStatus(ContainerServiceFleetUpdateStatus status, string name, ResourceIdentifier clusterResourceId, string operationId, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MemberUpdateStatus(ContainerServiceFleetUpdateStatus status, string name, ResourceIdentifier clusterResourceId, string operationId, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Name = name;
             ClusterResourceId = clusterResourceId;
             OperationId = operationId;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the MemberUpdate operation. </summary>

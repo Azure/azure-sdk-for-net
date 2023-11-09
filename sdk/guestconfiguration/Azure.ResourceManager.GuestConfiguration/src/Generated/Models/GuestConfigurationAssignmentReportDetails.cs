@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Details of the guest configuration assignment report. </summary>
     public partial class GuestConfigurationAssignmentReportDetails
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportDetails"/>. </summary>
         internal GuestConfigurationAssignmentReportDetails()
         {
             Resources = new ChangeTrackingList<AssignmentReportResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportDetails"/>. </summary>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="startOn"> Start date and time of the guest configuration assignment compliance status check. </param>
         /// <param name="endOn"> End date and time of the guest configuration assignment compliance status check. </param>
         /// <param name="jobId"> GUID of the report. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
-        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComplianceStatus = complianceStatus;
             StartOn = startOn;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             JobId = jobId;
             OperationType = operationType;
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Define a match condition. </summary>
     public partial class RulesEngineMatchCondition
     {
-        /// <summary> Initializes a new instance of RulesEngineMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulesEngineMatchCondition"/>. </summary>
         /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
         /// <param name="rulesEngineOperator"> Describes operator to apply to the match condition. </param>
         /// <param name="rulesEngineMatchValue"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
@@ -30,14 +33,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Transforms = new ChangeTrackingList<RulesEngineMatchTransform>();
         }
 
-        /// <summary> Initializes a new instance of RulesEngineMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineMatchCondition"/>. </summary>
         /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
         /// <param name="selector"> Name of selector in RequestHeader or RequestBody to be matched. </param>
         /// <param name="rulesEngineOperator"> Describes operator to apply to the match condition. </param>
         /// <param name="isNegateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="rulesEngineMatchValue"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable, string selector, RulesEngineOperator rulesEngineOperator, bool? isNegateCondition, IList<string> rulesEngineMatchValue, IList<RulesEngineMatchTransform> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable, string selector, RulesEngineOperator rulesEngineOperator, bool? isNegateCondition, IList<string> rulesEngineMatchValue, IList<RulesEngineMatchTransform> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RulesEngineMatchVariable = rulesEngineMatchVariable;
             Selector = selector;
@@ -45,6 +49,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             IsNegateCondition = isNegateCondition;
             RulesEngineMatchValue = rulesEngineMatchValue;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulesEngineMatchCondition"/> for deserialization. </summary>
+        internal RulesEngineMatchCondition()
+        {
         }
 
         /// <summary> Match Variable. </summary>

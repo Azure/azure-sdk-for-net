@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Custom Context of Incoming Call. </summary>
     public partial class AcsIncomingCallCustomContext
     {
-        /// <summary> Initializes a new instance of AcsIncomingCallCustomContext. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
         internal AcsIncomingCallCustomContext()
         {
             SipHeaders = new ChangeTrackingDictionary<string, string>();
             VoipHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsIncomingCallCustomContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
-        internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SipHeaders = sipHeaders;
             VoipHeaders = voipHeaders;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sip Headers for incoming call. </summary>

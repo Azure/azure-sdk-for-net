@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> List of Core Usages. </summary>
     internal partial class ListUsagesResult
     {
-        /// <summary> Initializes a new instance of ListUsagesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         internal ListUsagesResult()
         {
             Value = new ChangeTrackingList<DevCenterUsage>();
         }
 
-        /// <summary> Initializes a new instance of ListUsagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         /// <param name="value"> The array page of Usages. </param>
         /// <param name="nextLink"> The link to get the next page of Usage result. </param>
-        internal ListUsagesResult(IReadOnlyList<DevCenterUsage> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListUsagesResult(IReadOnlyList<DevCenterUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The array page of Usages. </summary>

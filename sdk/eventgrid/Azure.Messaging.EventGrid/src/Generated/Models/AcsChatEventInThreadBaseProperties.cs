@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all thread-level chat events. </summary>
     public partial class AcsChatEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatEventInThreadBaseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsChatEventInThreadBaseProperties"/>. </summary>
         internal AcsChatEventInThreadBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatEventInThreadBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        internal AcsChatEventInThreadBaseProperties(string transactionId, string threadId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsChatEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TransactionId = transactionId;
             ThreadId = threadId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The transaction id will be used as co-relation vector. </summary>

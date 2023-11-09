@@ -6,15 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The Disk Encryption Cluster request parameters. </summary>
     public partial class HDInsightClusterDiskEncryptionContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterDiskEncryptionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDiskEncryptionContent"/>. </summary>
         public HDInsightClusterDiskEncryptionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDiskEncryptionContent"/>. </summary>
+        /// <param name="vaultUri"> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </param>
+        /// <param name="keyName"> Key name that is used for enabling disk encryption. </param>
+        /// <param name="keyVersion"> Specific key version that is used for enabling disk encryption. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterDiskEncryptionContent(Uri vaultUri, string keyName, string keyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VaultUri = vaultUri;
+            KeyName = keyName;
+            KeyVersion = keyVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </summary>

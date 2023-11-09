@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> An individual health check item. </summary>
     public partial class DevCenterHealthCheck
     {
-        /// <summary> Initializes a new instance of DevCenterHealthCheck. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthCheck"/>. </summary>
         internal DevCenterHealthCheck()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterHealthCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthCheck"/>. </summary>
         /// <param name="status"> The status of the health check item. </param>
         /// <param name="displayName"> The display name of this health check item. </param>
         /// <param name="startOn"> Start time of health check item. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="errorType"> The type of error that occurred during this health check. </param>
         /// <param name="recommendedAction"> The recommended action to fix the corresponding error. </param>
         /// <param name="additionalDetails"> Additional details about the health check or the recommended action. </param>
-        internal DevCenterHealthCheck(DevCenterHealthCheckStatus? status, string displayName, DateTimeOffset? startOn, DateTimeOffset? endOn, string errorType, string recommendedAction, string additionalDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterHealthCheck(DevCenterHealthCheckStatus? status, string displayName, DateTimeOffset? startOn, DateTimeOffset? endOn, string errorType, string recommendedAction, string additionalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             DisplayName = displayName;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             ErrorType = errorType;
             RecommendedAction = recommendedAction;
             AdditionalDetails = additionalDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the health check item. </summary>

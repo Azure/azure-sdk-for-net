@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Represents a configuration parameter. </summary>
     public partial class GuestConfigurationParameter
     {
-        /// <summary> Initializes a new instance of GuestConfigurationParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationParameter"/>. </summary>
         public GuestConfigurationParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationParameter"/>. </summary>
         /// <param name="name"> Name of the configuration parameter. </param>
         /// <param name="value"> Value of the configuration parameter. </param>
-        internal GuestConfigurationParameter(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationParameter(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the configuration parameter. </summary>

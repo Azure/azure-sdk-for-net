@@ -5,18 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEndpointResourceProperties : IUtf8JsonSerializable
+    [ModelReaderProxy(typeof(UnknownDigitalTwinsEndpointResourceProperties))]
+    public partial class DigitalTwinsEndpointResourceProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEndpointResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEndpointResourceProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DigitalTwinsEndpointResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    if (ProvisioningState != null)
+                    {
+                        writer.WritePropertyName("provisioningState"u8);
+                        writer.WriteStringValue(ProvisioningState.Value.ToString());
+                    }
+                    else
+                    {
+                        writer.WriteNull("provisioningState");
+                    }
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    if (CreatedOn != null)
+                    {
+                        writer.WritePropertyName("createdTime"u8);
+                        writer.WriteStringValue(CreatedOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("createdTime");
+                    }
+                }
+            }
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -58,11 +94,40 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("identity");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DigitalTwinsEndpointResourceProperties DeserializeDigitalTwinsEndpointResourceProperties(JsonElement element)
+        DigitalTwinsEndpointResourceProperties IJsonModel<DigitalTwinsEndpointResourceProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsEndpointResourceProperties(document.RootElement, options);
+        }
+
+        internal static DigitalTwinsEndpointResourceProperties DeserializeDigitalTwinsEndpointResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,5 +143,30 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             return UnknownDigitalTwinsEndpointResourceProperties.DeserializeUnknownDigitalTwinsEndpointResourceProperties(element);
         }
+
+        BinaryData IModel<DigitalTwinsEndpointResourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DigitalTwinsEndpointResourceProperties IModel<DigitalTwinsEndpointResourceProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDigitalTwinsEndpointResourceProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DigitalTwinsEndpointResourceProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

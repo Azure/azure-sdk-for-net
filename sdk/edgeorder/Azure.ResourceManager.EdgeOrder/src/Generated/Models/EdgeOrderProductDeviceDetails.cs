@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Device details. </summary>
     public partial class EdgeOrderProductDeviceDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderProductDeviceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductDeviceDetails"/>. </summary>
         internal EdgeOrderProductDeviceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductDeviceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductDeviceDetails"/>. </summary>
         /// <param name="serialNumber"> device serial number. </param>
         /// <param name="managementResourceId"> Management Resource Id. </param>
         /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>
-        internal EdgeOrderProductDeviceDetails(string serialNumber, string managementResourceId, string managementResourceTenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProductDeviceDetails(string serialNumber, string managementResourceId, string managementResourceTenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             ManagementResourceId = managementResourceId;
             ManagementResourceTenantId = managementResourceTenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> device serial number. </summary>

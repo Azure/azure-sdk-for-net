@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Monitor resource update parameters. </summary>
     public partial class ElasticMonitorResourcePatch
     {
-        /// <summary> Initializes a new instance of ElasticMonitorResourcePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourcePatch"/>. </summary>
         public ElasticMonitorResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourcePatch"/>. </summary>
+        /// <param name="tags"> elastic monitor resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticMonitorResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> elastic monitor resource tags. </summary>

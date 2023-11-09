@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The data disks groups for the role. </summary>
     public partial class HDInsightClusterDataDiskGroup
     {
-        /// <summary> Initializes a new instance of HDInsightClusterDataDiskGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDataDiskGroup"/>. </summary>
         public HDInsightClusterDataDiskGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterDataDiskGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDataDiskGroup"/>. </summary>
         /// <param name="disksPerNode"> The number of disks per node. </param>
         /// <param name="storageAccountType"> ReadOnly. The storage account type. Do not set this value. </param>
         /// <param name="diskSizeInGB"> ReadOnly. The DiskSize in GB. Do not set this value. </param>
-        internal HDInsightClusterDataDiskGroup(int? disksPerNode, string storageAccountType, int? diskSizeInGB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterDataDiskGroup(int? disksPerNode, string storageAccountType, int? diskSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisksPerNode = disksPerNode;
             StorageAccountType = storageAccountType;
             DiskSizeInGB = diskSizeInGB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of disks per node. </summary>

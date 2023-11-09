@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
@@ -18,22 +20,27 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateData"/>. </summary>
         public DeviceProvisioningServicesCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> properties of a certificate. </param>
         /// <param name="etag"> The entity tag. </param>
-        internal DeviceProvisioningServicesCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceProvisioningServicesCertificateProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceProvisioningServicesCertificateProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> properties of a certificate. </summary>

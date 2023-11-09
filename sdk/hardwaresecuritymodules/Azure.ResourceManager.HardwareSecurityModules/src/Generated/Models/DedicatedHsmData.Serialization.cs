@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
@@ -13,9 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    public partial class DedicatedHsmData : IUtf8JsonSerializable
+    public partial class DedicatedHsmData : IUtf8JsonSerializable, IJsonModel<DedicatedHsmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsmData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DedicatedHsmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
@@ -46,6 +51,29 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkProfile))
@@ -63,12 +91,57 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WritePropertyName("stampId"u8);
                 writer.WriteStringValue(StampId);
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(StatusMessage))
+                {
+                    writer.WritePropertyName("statusMessage"u8);
+                    writer.WriteStringValue(StatusMessage);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DedicatedHsmData DeserializeDedicatedHsmData(JsonElement element)
+        DedicatedHsmData IJsonModel<DedicatedHsmData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHsmData(document.RootElement, options);
+        }
+
+        internal static DedicatedHsmData DeserializeDedicatedHsmData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +159,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Optional<string> stampId = default;
             Optional<string> statusMessage = default;
             Optional<JsonWebKeyType> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -203,8 +278,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     }
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DedicatedHsmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkProfile.Value, managementNetworkProfile.Value, stampId.Value, statusMessage.Value, Optional.ToNullable(provisioningState), sku.Value, Optional.ToList(zones));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DedicatedHsmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkProfile.Value, managementNetworkProfile.Value, stampId.Value, statusMessage.Value, Optional.ToNullable(provisioningState), sku.Value, Optional.ToList(zones), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DedicatedHsmData IModel<DedicatedHsmData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDedicatedHsmData(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DedicatedHsmData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

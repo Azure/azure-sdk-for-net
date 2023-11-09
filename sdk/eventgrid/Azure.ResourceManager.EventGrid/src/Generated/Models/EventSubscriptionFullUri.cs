@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Full endpoint url of an event subscription. </summary>
     public partial class EventSubscriptionFullUri
     {
-        /// <summary> Initializes a new instance of EventSubscriptionFullUri. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionFullUri"/>. </summary>
         internal EventSubscriptionFullUri()
         {
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionFullUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionFullUri"/>. </summary>
         /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
-        internal EventSubscriptionFullUri(Uri endpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventSubscriptionFullUri(Uri endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoint = endpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL that represents the endpoint of the destination of an event subscription. </summary>

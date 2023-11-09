@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class CopyRequest : IUtf8JsonSerializable
+    internal partial class CopyRequest : IUtf8JsonSerializable, IJsonModel<CopyRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyRequest>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<CopyRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
@@ -21,7 +27,98 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteStringValue(TargetResourceRegion);
             writer.WritePropertyName("copyAuthorization"u8);
             writer.WriteObjectValue(CopyAuthorization);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CopyRequest IJsonModel<CopyRequest>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CopyRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyRequest(document.RootElement, options);
+        }
+
+        internal static CopyRequest DeserializeCopyRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string targetResourceId = default;
+            string targetResourceRegion = default;
+            CopyAuthorizationResult copyAuthorization = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetResourceId"u8))
+                {
+                    targetResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetResourceRegion"u8))
+                {
+                    targetResourceRegion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("copyAuthorization"u8))
+                {
+                    copyAuthorization = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CopyRequest(targetResourceId, targetResourceRegion, copyAuthorization, serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<CopyRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CopyRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CopyRequest IModel<CopyRequest>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CopyRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCopyRequest(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<CopyRequest>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

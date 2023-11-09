@@ -5,17 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class GroupConnectivityInformation : IUtf8JsonSerializable
+    public partial class GroupConnectivityInformation : IUtf8JsonSerializable, IJsonModel<GroupConnectivityInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupConnectivityInformation>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<GroupConnectivityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(GroupId))
+                {
+                    writer.WritePropertyName("groupId"u8);
+                    writer.WriteStringValue(GroupId);
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MemberName))
+                {
+                    writer.WritePropertyName("memberName"u8);
+                    writer.WriteStringValue(MemberName);
+                }
+            }
             if (Optional.IsCollectionDefined(CustomerVisibleFqdns))
             {
                 writer.WritePropertyName("customerVisibleFqdns"u8);
@@ -25,6 +46,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(InternalFqdn))
+                {
+                    writer.WritePropertyName("internalFqdn"u8);
+                    writer.WriteStringValue(InternalFqdn);
+                }
             }
             if (Optional.IsDefined(RedirectMapId))
             {
@@ -36,11 +65,40 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WritePropertyName("privateLinkServiceArmRegion"u8);
                 writer.WriteStringValue(PrivateLinkServiceArmRegion);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GroupConnectivityInformation DeserializeGroupConnectivityInformation(JsonElement element)
+        GroupConnectivityInformation IJsonModel<GroupConnectivityInformation>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGroupConnectivityInformation(document.RootElement, options);
+        }
+
+        internal static GroupConnectivityInformation DeserializeGroupConnectivityInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +109,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             Optional<string> internalFqdn = default;
             Optional<string> redirectMapId = default;
             Optional<string> privateLinkServiceArmRegion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -92,8 +152,38 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     privateLinkServiceArmRegion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GroupConnectivityInformation(groupId.Value, memberName.Value, Optional.ToList(customerVisibleFqdns), internalFqdn.Value, redirectMapId.Value, privateLinkServiceArmRegion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GroupConnectivityInformation(groupId.Value, memberName.Value, Optional.ToList(customerVisibleFqdns), internalFqdn.Value, redirectMapId.Value, privateLinkServiceArmRegion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<GroupConnectivityInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GroupConnectivityInformation IModel<GroupConnectivityInformation>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGroupConnectivityInformation(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<GroupConnectivityInformation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

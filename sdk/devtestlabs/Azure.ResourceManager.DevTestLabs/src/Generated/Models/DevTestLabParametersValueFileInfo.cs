@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A file containing a set of parameter values for an ARM template. </summary>
     public partial class DevTestLabParametersValueFileInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         internal DevTestLabParametersValueFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
-        internal DevTestLabParametersValueFileInfo(string fileName, BinaryData parametersValueInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabParametersValueFileInfo(string fileName, BinaryData parametersValueInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
             ParametersValueInfo = parametersValueInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> File name. </summary>

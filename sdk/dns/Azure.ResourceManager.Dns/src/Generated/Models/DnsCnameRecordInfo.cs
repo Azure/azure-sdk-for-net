@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A CNAME record. </summary>
     internal partial class DnsCnameRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsCnameRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsCnameRecordInfo"/>. </summary>
         public DnsCnameRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsCnameRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsCnameRecordInfo"/>. </summary>
         /// <param name="cname"> The canonical name for this CNAME record. </param>
-        internal DnsCnameRecordInfo(string cname)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsCnameRecordInfo(string cname, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cname = cname;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The canonical name for this CNAME record. </summary>

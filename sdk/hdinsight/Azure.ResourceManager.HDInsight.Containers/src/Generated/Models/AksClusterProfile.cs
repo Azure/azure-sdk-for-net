@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Properties of the cluster pool underlying AKS cluster. </summary>
     public partial class AksClusterProfile
     {
-        /// <summary> Initializes a new instance of AksClusterProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AksClusterProfile"/>. </summary>
         internal AksClusterProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AksClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AksClusterProfile"/>. </summary>
         /// <param name="aksClusterResourceId"> ARM Resource ID of the AKS cluster. </param>
         /// <param name="aksClusterAgentPoolIdentityProfile"> Identity properties of the AKS cluster agentpool MSI. </param>
         /// <param name="aksVersion"> AKS control plane and default node pool version of this ClusterPool. </param>
-        internal AksClusterProfile(ResourceIdentifier aksClusterResourceId, HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile, string aksVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AksClusterProfile(ResourceIdentifier aksClusterResourceId, HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile, string aksVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AksClusterResourceId = aksClusterResourceId;
             AksClusterAgentPoolIdentityProfile = aksClusterAgentPoolIdentityProfile;
             AksVersion = aksVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM Resource ID of the AKS cluster. </summary>

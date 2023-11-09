@@ -5,15 +5,94 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class OperationDetails
+    public partial class OperationDetails : IUtf8JsonSerializable, IJsonModel<OperationDetails>
     {
-        internal static OperationDetails DeserializeOperationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationDetails>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<OperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("operationId"u8);
+            writer.WriteStringValue(OperationId);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (Optional.IsDefined(PercentCompleted))
+            {
+                writer.WritePropertyName("percentCompleted"u8);
+                writer.WriteNumberValue(PercentCompleted.Value);
+            }
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(LastUpdatedOn, "O");
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("resourceLocation"u8);
+            writer.WriteStringValue(ResourceLocation.AbsoluteUri);
+            if (Optional.IsDefined(ServiceVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ServiceVersion);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(JsonError))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonError.WriteTo(writer);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OperationDetails IJsonModel<OperationDetails>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationDetails(document.RootElement, options);
+        }
+
+        internal static OperationDetails DeserializeOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,5 +109,30 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             return UnknownOperationDetails.DeserializeUnknownOperationDetails(element);
         }
+
+        BinaryData IModel<OperationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperationDetails IModel<OperationDetails>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperationDetails(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<OperationDetails>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

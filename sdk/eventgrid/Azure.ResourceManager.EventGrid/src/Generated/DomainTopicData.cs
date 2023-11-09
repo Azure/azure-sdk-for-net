@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class DomainTopicData : ResourceData
     {
-        /// <summary> Initializes a new instance of DomainTopicData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainTopicData"/>. </summary>
         public DomainTopicData()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of the domain topic. </param>
-        internal DomainTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DomainTopicProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DomainTopicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the domain topic. </summary>

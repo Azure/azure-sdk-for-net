@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The properties of the cost summary. </summary>
     internal partial class LabCostSummaryProperties
     {
-        /// <summary> Initializes a new instance of LabCostSummaryProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabCostSummaryProperties"/>. </summary>
         internal LabCostSummaryProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LabCostSummaryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabCostSummaryProperties"/>. </summary>
         /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
-        internal LabCostSummaryProperties(double? estimatedLabCost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabCostSummaryProperties(double? estimatedLabCost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EstimatedLabCost = estimatedLabCost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cost component of the cost item. </summary>

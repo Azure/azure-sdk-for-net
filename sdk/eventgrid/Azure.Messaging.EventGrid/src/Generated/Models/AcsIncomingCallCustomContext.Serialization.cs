@@ -5,22 +5,86 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsIncomingCallCustomContext
+    public partial class AcsIncomingCallCustomContext : IUtf8JsonSerializable, IJsonModel<AcsIncomingCallCustomContext>
     {
-        internal static AcsIncomingCallCustomContext DeserializeAcsIncomingCallCustomContext(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsIncomingCallCustomContext>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AcsIncomingCallCustomContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(SipHeaders))
+            {
+                writer.WritePropertyName("sipHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in SipHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(VoipHeaders))
+            {
+                writer.WritePropertyName("voipHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in VoipHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsIncomingCallCustomContext IJsonModel<AcsIncomingCallCustomContext>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsIncomingCallCustomContext)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsIncomingCallCustomContext(document.RootElement, options);
+        }
+
+        internal static AcsIncomingCallCustomContext DeserializeAcsIncomingCallCustomContext(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyDictionary<string, string>> sipHeaders = default;
             Optional<IReadOnlyDictionary<string, string>> voipHeaders = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sipHeaders"u8))
@@ -51,8 +115,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     voipHeaders = dictionary;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsIncomingCallCustomContext(Optional.ToDictionary(sipHeaders), Optional.ToDictionary(voipHeaders));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsIncomingCallCustomContext(Optional.ToDictionary(sipHeaders), Optional.ToDictionary(voipHeaders), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AcsIncomingCallCustomContext>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsIncomingCallCustomContext)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsIncomingCallCustomContext IModel<AcsIncomingCallCustomContext>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsIncomingCallCustomContext)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsIncomingCallCustomContext(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AcsIncomingCallCustomContext>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

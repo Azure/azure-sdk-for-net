@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The version capability. </summary>
     public partial class HDInsightVersionsCapability
     {
-        /// <summary> Initializes a new instance of HDInsightVersionsCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightVersionsCapability"/>. </summary>
         internal HDInsightVersionsCapability()
         {
             Available = new ChangeTrackingList<HDInsightVersionSpec>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightVersionsCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVersionsCapability"/>. </summary>
         /// <param name="available"> The list of version capabilities. </param>
-        internal HDInsightVersionsCapability(IReadOnlyList<HDInsightVersionSpec> available)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightVersionsCapability(IReadOnlyList<HDInsightVersionSpec> available, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Available = available;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of version capabilities. </summary>

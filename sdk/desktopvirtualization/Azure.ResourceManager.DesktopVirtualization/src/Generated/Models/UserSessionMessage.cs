@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents message sent to a UserSession. </summary>
     public partial class UserSessionMessage
     {
-        /// <summary> Initializes a new instance of UserSessionMessage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserSessionMessage"/>. </summary>
         public UserSessionMessage()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserSessionMessage"/>. </summary>
+        /// <param name="messageTitle"> Title of message. </param>
+        /// <param name="messageBody"> Body of message. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserSessionMessage(string messageTitle, string messageBody, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageTitle = messageTitle;
+            MessageBody = messageBody;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Title of message. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the shared access key. </summary>
     public partial class DeviceProvisioningServicesSharedAccessKey
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSharedAccessKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSharedAccessKey"/>. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="rights"> Rights that this key has. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
@@ -25,17 +29,24 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Rights = rights;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesSharedAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSharedAccessKey"/>. </summary>
         /// <param name="keyName"> Name of the key. </param>
         /// <param name="primaryKey"> Primary SAS key value. </param>
         /// <param name="secondaryKey"> Secondary SAS key value. </param>
         /// <param name="rights"> Rights that this key has. </param>
-        internal DeviceProvisioningServicesSharedAccessKey(string keyName, string primaryKey, string secondaryKey, DeviceProvisioningServicesAccessKeyRight rights)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesSharedAccessKey(string keyName, string primaryKey, string secondaryKey, DeviceProvisioningServicesAccessKeyRight rights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyName = keyName;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             Rights = rights;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSharedAccessKey"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesSharedAccessKey()
+        {
         }
 
         /// <summary> Name of the key. </summary>

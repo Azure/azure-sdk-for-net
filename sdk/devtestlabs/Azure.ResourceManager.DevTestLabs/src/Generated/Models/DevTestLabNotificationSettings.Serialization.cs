@@ -6,14 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabNotificationSettings : IUtf8JsonSerializable
+    public partial class DevTestLabNotificationSettings : IUtf8JsonSerializable, IJsonModel<DevTestLabNotificationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabNotificationSettings>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<DevTestLabNotificationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
@@ -41,11 +46,40 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabNotificationSettings DeserializeDevTestLabNotificationSettings(JsonElement element)
+        DevTestLabNotificationSettings IJsonModel<DevTestLabNotificationSettings>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabNotificationSettings(document.RootElement, options);
+        }
+
+        internal static DevTestLabNotificationSettings DeserializeDevTestLabNotificationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +89,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<Uri> webhookUrl = default;
             Optional<string> emailRecipient = default;
             Optional<string> notificationLocale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -94,8 +130,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     notificationLocale = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabNotificationSettings(Optional.ToNullable(status), Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabNotificationSettings(Optional.ToNullable(status), Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<DevTestLabNotificationSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DevTestLabNotificationSettings IModel<DevTestLabNotificationSettings>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDevTestLabNotificationSettings(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<DevTestLabNotificationSettings>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

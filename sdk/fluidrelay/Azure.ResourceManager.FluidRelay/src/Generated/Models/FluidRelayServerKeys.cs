@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     /// <summary> The set of available keys for this server. </summary>
     public partial class FluidRelayServerKeys
     {
-        /// <summary> Initializes a new instance of FluidRelayServerKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerKeys"/>. </summary>
         internal FluidRelayServerKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of FluidRelayServerKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerKeys"/>. </summary>
         /// <param name="primaryKey"> The primary key for this server. </param>
         /// <param name="secondaryKey"> The secondary key for this server. </param>
-        internal FluidRelayServerKeys(string primaryKey, string secondaryKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FluidRelayServerKeys(string primaryKey, string secondaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary key for this server. </summary>

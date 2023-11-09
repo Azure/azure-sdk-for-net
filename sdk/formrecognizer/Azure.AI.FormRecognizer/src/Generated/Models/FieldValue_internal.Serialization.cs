@@ -7,15 +7,152 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class FieldValue_internal
+    internal partial class FieldValue_internal : IUtf8JsonSerializable, IJsonModel<FieldValue_internal>
     {
-        internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FieldValue_internal>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<FieldValue_internal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToSerialString());
+            if (Optional.IsDefined(ValueString))
+            {
+                writer.WritePropertyName("valueString"u8);
+                writer.WriteStringValue(ValueString);
+            }
+            if (Optional.IsDefined(ValueDate))
+            {
+                writer.WritePropertyName("valueDate"u8);
+                writer.WriteStringValue(ValueDate.Value, "D");
+            }
+            if (Optional.IsDefined(ValueTime))
+            {
+                writer.WritePropertyName("valueTime"u8);
+                writer.WriteStringValue(ValueTime.Value, "T");
+            }
+            if (Optional.IsDefined(ValuePhoneNumber))
+            {
+                writer.WritePropertyName("valuePhoneNumber"u8);
+                writer.WriteStringValue(ValuePhoneNumber);
+            }
+            if (Optional.IsDefined(ValueNumber))
+            {
+                writer.WritePropertyName("valueNumber"u8);
+                writer.WriteNumberValue(ValueNumber.Value);
+            }
+            if (Optional.IsDefined(ValueInteger))
+            {
+                writer.WritePropertyName("valueInteger"u8);
+                writer.WriteNumberValue(ValueInteger.Value);
+            }
+            if (Optional.IsCollectionDefined(ValueArray))
+            {
+                writer.WritePropertyName("valueArray"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValueArray)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ValueObject))
+            {
+                writer.WritePropertyName("valueObject"u8);
+                writer.WriteStartObject();
+                foreach (var item in ValueObject)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ValueSelectionMark))
+            {
+                writer.WritePropertyName("valueSelectionMark"u8);
+                writer.WriteStringValue(ValueSelectionMark.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ValueCountryRegion))
+            {
+                writer.WritePropertyName("valueCountryRegion"u8);
+                writer.WriteStringValue(ValueCountryRegion);
+            }
+            if (Optional.IsDefined(Text))
+            {
+                writer.WritePropertyName("text"u8);
+                writer.WriteStringValue(Text);
+            }
+            if (Optional.IsCollectionDefined(BoundingBox))
+            {
+                writer.WritePropertyName("boundingBox"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundingBox)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Confidence))
+            {
+                writer.WritePropertyName("confidence"u8);
+                writer.WriteNumberValue(Confidence.Value);
+            }
+            if (Optional.IsCollectionDefined(Elements))
+            {
+                writer.WritePropertyName("elements"u8);
+                writer.WriteStartArray();
+                foreach (var item in Elements)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Page))
+            {
+                writer.WritePropertyName("page"u8);
+                writer.WriteNumberValue(Page.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FieldValue_internal IJsonModel<FieldValue_internal>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FieldValue_internal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFieldValue_internal(document.RootElement, options);
+        }
+
+        internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +173,8 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<float> confidence = default;
             Optional<IReadOnlyList<string>> elements = default;
             Optional<int> page = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -182,8 +321,38 @@ namespace Azure.AI.FormRecognizer.Models
                     page = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<FieldValue_internal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FieldValue_internal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FieldValue_internal IModel<FieldValue_internal>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FieldValue_internal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFieldValue_internal(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<FieldValue_internal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

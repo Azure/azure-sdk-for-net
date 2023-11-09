@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class ExtendedClinicalCodedElement
+    public partial class ExtendedClinicalCodedElement : IUtf8JsonSerializable, IJsonModel<ExtendedClinicalCodedElement>
     {
-        internal static ExtendedClinicalCodedElement DeserializeExtendedClinicalCodedElement(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedClinicalCodedElement>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ExtendedClinicalCodedElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("system"u8);
+            writer.WriteStringValue(System);
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(SemanticType))
+            {
+                writer.WritePropertyName("semanticType"u8);
+                writer.WriteStringValue(SemanticType);
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExtendedClinicalCodedElement IJsonModel<ExtendedClinicalCodedElement>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedClinicalCodedElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedClinicalCodedElement(document.RootElement, options);
+        }
+
+        internal static ExtendedClinicalCodedElement DeserializeExtendedClinicalCodedElement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +90,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             Optional<string> value = default;
             Optional<string> semanticType = default;
             Optional<string> category = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("system"u8))
@@ -57,16 +124,54 @@ namespace Azure.Health.Insights.ClinicalMatching
                     category = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedClinicalCodedElement(system, code, name.Value, value.Value, semanticType.Value, category.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtendedClinicalCodedElement(system, code, name.Value, value.Value, semanticType.Value, category.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ExtendedClinicalCodedElement>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedClinicalCodedElement)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExtendedClinicalCodedElement IModel<ExtendedClinicalCodedElement>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtendedClinicalCodedElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExtendedClinicalCodedElement(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ExtendedClinicalCodedElement>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ExtendedClinicalCodedElement FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeExtendedClinicalCodedElement(document.RootElement);
+            return DeserializeExtendedClinicalCodedElement(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

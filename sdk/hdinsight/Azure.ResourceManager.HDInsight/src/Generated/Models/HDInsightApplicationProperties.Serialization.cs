@@ -7,15 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightApplicationProperties : IUtf8JsonSerializable
+    public partial class HDInsightApplicationProperties : IUtf8JsonSerializable, IJsonModel<HDInsightApplicationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightApplicationProperties>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<HDInsightApplicationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeProfile))
@@ -63,10 +67,26 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(ApplicationState))
+                {
+                    writer.WritePropertyName("applicationState"u8);
+                    writer.WriteStringValue(ApplicationState);
+                }
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -78,6 +98,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(MarketplaceIdentifier))
+                {
+                    writer.WritePropertyName("marketplaceIdentifier"u8);
+                    writer.WriteStringValue(MarketplaceIdentifier);
+                }
+            }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
@@ -88,11 +124,40 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightApplicationProperties DeserializeHDInsightApplicationProperties(JsonElement element)
+        HDInsightApplicationProperties IJsonModel<HDInsightApplicationProperties>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightApplicationProperties(document.RootElement, options);
+        }
+
+        internal static HDInsightApplicationProperties DeserializeHDInsightApplicationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +174,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> marketplaceIdentifier = default;
             Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeProfile"u8))
@@ -233,8 +300,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     privateLinkConfigurations = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightApplicationProperties(computeProfile.Value, Optional.ToList(installScriptActions), Optional.ToList(uninstallScriptActions), Optional.ToList(httpsEndpoints), Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Optional.ToList(errors), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, Optional.ToList(privateLinkConfigurations));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightApplicationProperties(computeProfile.Value, Optional.ToList(installScriptActions), Optional.ToList(uninstallScriptActions), Optional.ToList(httpsEndpoints), Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Optional.ToList(errors), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, Optional.ToList(privateLinkConfigurations), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<HDInsightApplicationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightApplicationProperties IModel<HDInsightApplicationProperties>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightApplicationProperties(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<HDInsightApplicationProperties>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }
