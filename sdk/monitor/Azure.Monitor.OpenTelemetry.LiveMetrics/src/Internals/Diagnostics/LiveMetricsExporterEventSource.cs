@@ -65,5 +65,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(2, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(2, errorMessage);
+
+        [NonEvent]
+        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                AccessingEnvironmentVariableFailedWarning(environmentVariable, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(3, Message = "Accessing environment variable - {0} failed with exception: {1}.", Level = EventLevel.Warning)]
+        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(2, environmentVariable, exceptionMessage);
     }
 }
