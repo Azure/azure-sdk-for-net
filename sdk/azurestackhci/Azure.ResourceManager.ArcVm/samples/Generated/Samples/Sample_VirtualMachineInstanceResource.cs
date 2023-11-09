@@ -14,7 +14,6 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.ArcVm;
 using Azure.ResourceManager.ArcVm.Models;
 using Azure.ResourceManager.Resources.Models;
-using ExtendedLocationType = Azure.ResourceManager.ArcVm.Models.ExtendedLocationType;
 
 namespace Azure.ResourceManager.ArcVm.Samples
 {
