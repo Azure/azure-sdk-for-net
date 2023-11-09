@@ -1,3 +1,4 @@
+// cspell:ignore vhdx
 namespace Azure.ResourceManager.ArcVm
 {
     public static partial class ArcVmExtensions
