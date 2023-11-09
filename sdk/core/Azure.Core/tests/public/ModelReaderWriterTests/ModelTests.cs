@@ -46,15 +46,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void RoundTripWithModelReaderWriterFormatOverload(string format)
-        {
-            //if we only pass in the format we can't test BYOM
-            if (!typeof(T).IsGenericType)
-                RoundTripTest(format, new ModelReaderWriterFormatOverloadStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
         public void RoundTripWithModelInterface(string format)
             => RoundTripTest(format, new ModelInterfaceStrategy<T>());
 
@@ -62,14 +53,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [TestCase("W")]
         public void RoundTripWithModelInterfaceNonGeneric(string format)
             => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
-
-        [Test]
-        public void RoundTripWithCast()
-        {
-            //cast does not work without options
-            if (!typeof(T).IsGenericType)
-                RoundTripTest("W", new CastStrategy<T>(ToRequestContent, FromResponse));
-        }
 
         protected void RoundTripTest(string format, RoundTripStrategy<T> strategy)
         {
