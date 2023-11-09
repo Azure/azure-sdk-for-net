@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ResourceTypeAliasPath : IUtf8JsonSerializable, IJsonModel<ResourceTypeAliasPath>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPath>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPath>)this).Write(writer, ModelReaderWriterOptions.Wire);
 
         internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,13 +114,13 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             public Optional<ResourceTypeAliasPathMetadata> Metadata { get; set; }
         }
 
-        ResourceTypeAliasPath IJsonModel<ResourceTypeAliasPath>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeAliasPath IJsonModel<ResourceTypeAliasPath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeAliasPath(doc.RootElement, options);
         }
 
-        ResourceTypeAliasPath IModel<ResourceTypeAliasPath>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ResourceTypeAliasPath IModel<ResourceTypeAliasPath>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAliasPath(doc.RootElement, options);
@@ -133,6 +133,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ResourceTypeAliasPath>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ResourceTypeAliasPath>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

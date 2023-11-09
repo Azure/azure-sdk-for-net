@@ -9,10 +9,10 @@ namespace System.Net.ClientModel.Tests.Client
     internal static class ModelSerializerHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ValidateFormat<T>(IModel<T> model, ModelReaderWriterFormat format)
+        public static void ValidateFormat<T>(IModel<T> model, string format)
         {
             bool implementsJson = model is IJsonModel<T>;
-            bool isValid = (format == ModelReaderWriterFormat.Json && implementsJson) || format == ModelReaderWriterFormat.Wire;
+            bool isValid = (format == "J" && implementsJson) || format == "W";
             if (!isValid)
             {
                 throw new FormatException($"The model {model.GetType().Name} does not support '{format}' format.");
@@ -20,6 +20,6 @@ namespace System.Net.ClientModel.Tests.Client
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ValidateFormat(IModel<object> model, ModelReaderWriterFormat format) => ValidateFormat<object>(model, format);
+        public static void ValidateFormat(IModel<object> model, string format) => ValidateFormat<object>(model, format);
     }
 }

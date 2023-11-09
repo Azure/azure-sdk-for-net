@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,13 +137,13 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<ResourceTypeAliasPathMetadata> DefaultMetadata { get; set; }
         }
 
-        ResourceTypeAlias IJsonModel<ResourceTypeAlias>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeAlias IJsonModel<ResourceTypeAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeAlias(doc.RootElement, options);
         }
 
-        ResourceTypeAlias IModel<ResourceTypeAlias>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ResourceTypeAlias IModel<ResourceTypeAlias>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAlias(doc.RootElement, options);
@@ -156,6 +156,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ResourceTypeAlias>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ResourceTypeAlias>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

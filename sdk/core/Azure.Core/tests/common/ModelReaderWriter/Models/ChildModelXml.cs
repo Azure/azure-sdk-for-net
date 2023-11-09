@@ -38,7 +38,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions, nameHint);
+            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -46,7 +46,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStartElement("ChildValue");
             writer.WriteValue(ChildValue);
             writer.WriteEndElement();
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WriteStartElement("ChildReadOnlyProperty");
                 writer.WriteValue(ChildReadOnlyProperty);
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string value = default;
             string readonlyProperty = default;
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string childValue = default;
             string childReadOnlyProperty = default;
@@ -96,11 +96,11 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new ChildModelXml(childValue, childReadOnlyProperty);
         }
 
-        ChildModelXml IModel<ChildModelXml>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ChildModelXml IModel<ChildModelXml>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 using var doc = JsonDocument.Parse(data);
                 return DeserializeChildModelXml(doc.RootElement, options);
@@ -115,13 +115,13 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 return ModelReaderWriter.Write(this, options);
             }
             else
             {
-                options ??= ModelReaderWriterOptions.DefaultWireOptions;
+                options ??= ModelReaderWriterOptions.Wire;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("childValue"u8);
             writer.WriteStringValue(ChildValue);
-            if (options.Format == ModelReaderWriterFormat.Json)
+            if (options.Format == "J")
             {
                 writer.WritePropertyName("childReadOnlyProperty"u8);
                 writer.WriteStringValue(ChildReadOnlyProperty);
@@ -157,7 +157,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Serialize(writer, options);
         }
 
-        ChildModelXml IJsonModel<ChildModelXml>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChildModelXml IJsonModel<ChildModelXml>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -166,8 +166,8 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+            Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        ModelReaderWriterFormat IModel<ChildModelXml>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
+        string IModel<ChildModelXml>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

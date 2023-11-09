@@ -51,21 +51,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         }
     }
 
-    public class ModelReaderWriterFormatOverloadStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
-    {
-        public override bool IsExplicitJsonWrite => false;
-        public override bool IsExplicitJsonRead => false;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Write(model, options.Format);
-        }
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options.Format);
-        }
-    }
-
     public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
@@ -94,7 +79,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<T>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -110,7 +95,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<object>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -126,7 +111,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IJsonModel<T>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IJsonModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -142,7 +127,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IJsonModel<object>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IJsonModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -159,7 +144,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
-            return ((IJsonModel<T>)model).Read(ref reader, options);
+            return ((IJsonModel<T>)model).Create(ref reader, options);
         }
     }
 
@@ -176,7 +161,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
-            return ((IJsonModel<object>)model).Read(ref reader, options);
+            return ((IJsonModel<object>)model).Create(ref reader, options);
         }
     }
 

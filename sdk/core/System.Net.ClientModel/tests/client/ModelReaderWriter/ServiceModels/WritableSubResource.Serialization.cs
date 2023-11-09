@@ -42,7 +42,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             string id = default;
             foreach (var property in element.EnumerateObject())
@@ -65,7 +65,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public string Id { get; set; }
         }
 
-        WritableSubResource IJsonModel<WritableSubResource>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WritableSubResource IJsonModel<WritableSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeWritableSubResource(doc.RootElement, options);
@@ -83,7 +83,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        WritableSubResource IModel<WritableSubResource>.Read(BinaryData data, ModelReaderWriterOptions options)
+        WritableSubResource IModel<WritableSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeWritableSubResource(doc.RootElement, options);
@@ -98,7 +98,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.Wire);
             }
         }
 
@@ -109,6 +109,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
