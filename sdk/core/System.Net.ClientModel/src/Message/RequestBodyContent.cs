@@ -82,7 +82,7 @@ namespace System.Net.ClientModel.Core
             {
                 get
                 {
-                    if (_model is IJsonModel<object> && _options.Format == "W")
+                    if (_model is IJsonModel<object> && _options.Format == "J")
                     {
                         throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
                     }

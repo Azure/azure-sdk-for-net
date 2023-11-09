@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(modelXml, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelXml(Response response)

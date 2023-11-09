@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create((IModel<XmlModelForCombinedInterface>)xmlModelForCombinedInterface, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(xmlModelForCombinedInterface, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator XmlModelForCombinedInterface(Response response)

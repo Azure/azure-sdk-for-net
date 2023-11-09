@@ -25,13 +25,13 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
         public void CanCalculateLength()
         {
             //use IModelSerializable
-            var content = RequestContent.Create((IModel<ModelX>)_modelX);
+            var content = RequestContent.Create(_modelX);
             AssertContentType(content, "ModelMessageBody");
             content.TryComputeLength(out long lengthNonJson);
             Assert.Greater(lengthNonJson, 0);
 
             //use IModelJsonSerializable
-            var jsonContent = RequestContent.Create((IJsonModel<ModelX>)_modelX);
+            var jsonContent = RequestContent.Create(_modelX);
             AssertContentType(jsonContent, "ModelMessageBody");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
