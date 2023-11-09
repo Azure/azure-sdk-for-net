@@ -36,13 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             }
             else
             {
-                using (SessionRecording.DisableRecording())
-                {
-                    var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-                    var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                    _resourceGroupIdentifier = rgLro.Value.Data.Id;
-                    _accessKey = await GetStorageAccountAccessKey(rgLro.Value, storageAccountName);
-                }
+                var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+                var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                _resourceGroupIdentifier = rgLro.Value.Data.Id;
+                _accessKey = await GetStorageAccountAccessKey(rgLro.Value, storageAccountName);
             }
             await StopSessionRecordingAsync();
         }
@@ -61,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     await foreach (var storageAccount in _resourceGroup.GetStorageAccounts().GetAllAsync())
                     {
                         await storageAccount.DeleteAsync(WaitUntil.Completed);
+                    }
+
+                    await foreach (var dataFactory in _resourceGroup.GetDataFactories().GetAllAsync())
+                    {
+                        await dataFactory.DeleteAsync(WaitUntil.Completed);
                     }
                 }
             }
@@ -2288,8 +2290,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonMwsLinkedService("mws,amazonservices.com", "A2EUQ1WTGCTBG2", "ACGMZIK6QTD9T", "128393242334")
             {
-                MwsAuthToken = new DataFactorySecretString("amzn.mws.94acb321-6915-09bf-b628-7e94337f01b7"),
-                SecretKey = new DataFactorySecretString("7LHODzgokrgITY17EGz2u7cBAm57QX3sopQErLpU"),
+                MwsAuthToken = new DataFactorySecretString("fakeMwsAuthToken"),
+                SecretKey = new DataFactorySecretString("fakeSecretKey"),
                 UseEncryptedEndpoints = true,
                 UseHostVerification = true,
                 UsePeerVerification = true,
@@ -3593,7 +3595,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("HuF3pmB3tylfer63MAbxTAGeVFyteGa+YIHFKPc2IguJqXwUOtvFUwMOeeX/ARhsUlt3xhS7b6XmNfGx2HVk5A==")
+                ConnectionString = DataFactoryElement<string>.FromSecretString("DefaultEndpointsProtocol=https;AccountName=testaccount;EndpointSuffix=core.windows.net;")
             });
             var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             Assert.NotNull(result.Value.Id);

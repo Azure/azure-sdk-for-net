@@ -436,7 +436,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Timeout(1000*60*2)]
         public async Task Trigger_RerunTumblingWindowTrigger()
         {
             string triggerName = Recording.GenerateAssetName("trigger-");

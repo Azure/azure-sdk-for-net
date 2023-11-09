@@ -1087,8 +1087,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AmazonMwsLinkedService("mws,amazonservices.com", "A2EUQ1WTGCTBG2", "ACGMZIK6QTD9T", "128393242334")
             {
-                MwsAuthToken = new DataFactorySecretString("amzn.mws.94acb321-6915-09bf-b628-7e94337f01b7"),
-                SecretKey = new DataFactorySecretString("7LHODzgokrgITY17EGz2u7cBAm57QX3sopQErLpU"),
+                MwsAuthToken = new DataFactorySecretString("fakeMwsAuthToken"),
+                SecretKey = new DataFactorySecretString("fakeSecretKey"),
                 UseEncryptedEndpoints = true,
                 UseHostVerification = true,
                 UsePeerVerification = true,
