@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppPlatform
     public partial class AppPlatformBuildResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBuildResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
+        /// <param name="buildName"> The buildName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}";
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBuildResultResources and their operations over a AppPlatformBuildResultResource. </returns>
         public virtual AppPlatformBuildResultCollection GetAppPlatformBuildResults()
         {
-            return GetCachedClient(Client => new AppPlatformBuildResultCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBuildResultCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +113,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildResultName"> The name of the build result resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBuildResultResource>> GetAppPlatformBuildResultAsync(string buildResultName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +136,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildResultName"> The name of the build result resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBuildResultResource> GetAppPlatformBuildResult(string buildResultName, CancellationToken cancellationToken = default)
         {

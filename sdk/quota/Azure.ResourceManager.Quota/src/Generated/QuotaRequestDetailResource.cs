@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Quota
     public partial class QuotaRequestDetailResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="QuotaRequestDetailResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="id"> The id. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string id)
         {
             var resourceId = $"{scope}/providers/Microsoft.Quota/quotaRequests/{id}";

@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecureScoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecureScoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="secureScoreName"> The secureScoreName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string secureScoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}";

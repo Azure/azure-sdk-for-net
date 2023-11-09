@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Results);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Results.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Results))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

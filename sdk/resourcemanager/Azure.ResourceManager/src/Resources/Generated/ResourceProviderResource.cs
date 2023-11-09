@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ResourceProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceProviderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceProviderNamespace"> The resourceProviderNamespace. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of FeatureResources and their operations over a FeatureResource. </returns>
         public virtual FeatureCollection GetFeatures()
         {
-            return GetCachedClient(Client => new FeatureCollection(Client, Id));
+            return GetCachedClient(client => new FeatureCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +116,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FeatureResource>> GetFeatureAsync(string featureName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +139,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FeatureResource> GetFeature(string featureName, CancellationToken cancellationToken = default)
         {

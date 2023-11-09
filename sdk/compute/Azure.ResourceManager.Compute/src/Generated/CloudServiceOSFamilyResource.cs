@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudServiceOSFamilyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSFamilyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="osFamilyName"> The osFamilyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string osFamilyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}";

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkManagerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkManagerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}";
@@ -107,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ConnectivityConfigurationResources and their operations over a ConnectivityConfigurationResource. </returns>
         public virtual ConnectivityConfigurationCollection GetConnectivityConfigurations()
         {
-            return GetCachedClient(Client => new ConnectivityConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new ConnectivityConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -125,8 +128,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConnectivityConfigurationResource>> GetConnectivityConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -148,8 +151,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConnectivityConfigurationResource> GetConnectivityConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -160,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkGroupResources and their operations over a NetworkGroupResource. </returns>
         public virtual NetworkGroupCollection GetNetworkGroups()
         {
-            return GetCachedClient(Client => new NetworkGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetworkGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -178,8 +181,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="networkGroupName"> The name of the network group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkGroupResource>> GetNetworkGroupAsync(string networkGroupName, CancellationToken cancellationToken = default)
         {
@@ -201,8 +204,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="networkGroupName"> The name of the network group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkGroupResource> GetNetworkGroup(string networkGroupName, CancellationToken cancellationToken = default)
         {
@@ -213,7 +216,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ScopeConnectionResources and their operations over a ScopeConnectionResource. </returns>
         public virtual ScopeConnectionCollection GetScopeConnections()
         {
-            return GetCachedClient(Client => new ScopeConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ScopeConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -231,8 +234,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScopeConnectionResource>> GetScopeConnectionAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
@@ -254,8 +257,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScopeConnectionResource> GetScopeConnection(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
@@ -266,7 +269,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SecurityAdminConfigurationResources and their operations over a SecurityAdminConfigurationResource. </returns>
         public virtual SecurityAdminConfigurationCollection GetSecurityAdminConfigurations()
         {
-            return GetCachedClient(Client => new SecurityAdminConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new SecurityAdminConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -284,8 +287,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityAdminConfigurationResource>> GetSecurityAdminConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -307,8 +310,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityAdminConfigurationResource> GetSecurityAdminConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {

@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecuritySettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecuritySettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="settingName"> The settingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, SecuritySettingName settingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}";

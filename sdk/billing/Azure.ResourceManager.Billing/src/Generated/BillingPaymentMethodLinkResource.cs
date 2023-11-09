@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Billing
     public partial class BillingPaymentMethodLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodLinkResource"/> instance. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="billingProfileName"> The billingProfileName. </param>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string paymentMethodName)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}";

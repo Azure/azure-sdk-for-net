@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -198,6 +199,9 @@ namespace Azure.Core.TestFramework
             using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
             try
             {
+                // activities may be suppressed if they are called in scope of other activities create by other SDK methods.
+                // Let's unsuppress the so we are able to check all the attributes and properties regardless of the test setup.
+                Activity.Current?.SetCustomProperty("az.sdk.scope", null);
                 (result, skipChecks) = await action();
             }
             catch (Exception ex)

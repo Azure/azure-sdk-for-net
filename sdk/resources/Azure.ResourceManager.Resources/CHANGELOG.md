@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0-beta.1 (2023-08-14)
+
+### Features Added
+
+- Make `ResourcesArmClientMockingExtension`, `ResourcesManagementGroupMockingExtension`, `ResourcesResourceGroupMockingExtension`, `ResourcesSubscriptionMockingExtension` and `ResourcesTenantMockingExtension` public for mocking the extension methods.
 
 ## 1.6.0 (2023-05-31)
 
