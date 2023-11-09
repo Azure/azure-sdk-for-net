@@ -26,7 +26,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
 
         internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +100,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
             public OptionalProperty<DateTimeOffset> LastModifiedOn { get; set; }
         }
 
-        SystemData IJsonModel<SystemData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SystemData IJsonModel<SystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeSystemData(doc.RootElement, options);
@@ -153,7 +153,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
             reader.Skip();
         }
 
-        SystemData IModel<SystemData>.Read(BinaryData data, ModelReaderWriterOptions options)
+        SystemData IModel<SystemData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeSystemData(doc.RootElement, options);
@@ -168,7 +168,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.Wire);
             }
         }
 
@@ -179,6 +179,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

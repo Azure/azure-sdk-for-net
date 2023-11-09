@@ -16,7 +16,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+            options ??= ModelReaderWriterOptions.Wire;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,13 +82,13 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public OptionalProperty<IReadOnlyList<string>> Zones { get; set; }
         }
 
-        ZoneMapping IJsonModel<ZoneMapping>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ZoneMapping IJsonModel<ZoneMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeZoneMapping(doc.RootElement, options);
         }
 
-        ZoneMapping IModel<ZoneMapping>.Read(BinaryData data, ModelReaderWriterOptions options)
+        ZoneMapping IModel<ZoneMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeZoneMapping(doc.RootElement, options);
@@ -101,6 +101,6 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        ModelReaderWriterFormat IModel<ZoneMapping>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+        string IModel<ZoneMapping>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
