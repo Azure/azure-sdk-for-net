@@ -11,22 +11,23 @@ namespace Maps;
 
 public class MapsClient
 {
-    private const string LatestServiceVersion = "1.0";
-
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
+    private readonly string _serviceVersion;
+
     private readonly PipelineOptions _pipelineOptions;
     private readonly PipelinePolicy[] _clientPolicies;
 
-    public MapsClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
+    public MapsClient(Uri endpoint, KeyCredential credential, MapsClientOptions options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
 
+        options ??= new MapsClientOptions();
+
         _endpoint = endpoint;
         _credential = credential;
-
-        options ??= new PipelineOptions();
+        _serviceVersion = options.Version;
 
         _clientPolicies = new PipelinePolicy[1];
         _clientPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
@@ -91,7 +92,7 @@ public class MapsClient
 
         StringBuilder query = new();
         query.Append("api-version=");
-        query.Append(Uri.EscapeDataString(options.PipelineOptions.ServiceVersion ?? LatestServiceVersion));
+        query.Append(Uri.EscapeDataString(_serviceVersion));
         query.Append("&ip=");
         query.Append(Uri.EscapeDataString(ipAddress));
         uriBuilder.Query = query.ToString();

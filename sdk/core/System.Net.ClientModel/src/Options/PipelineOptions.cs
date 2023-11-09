@@ -20,9 +20,7 @@ public class PipelineOptions
     private PipelinePolicy? _retryPolicy;
     private PipelineTransport? _transport;
 
-    private string? _serviceVersion;
     private TimeSpan? _networkTimeout;
-    private MessageClassifier? _messageClassifier;
 
     public PipelineOptions()
     {
@@ -38,9 +36,7 @@ public class PipelineOptions
         _perTryPolicies = options.PerTryPolicies;
         _retryPolicy = options.RetryPolicy;
         _transport = options.Transport;
-        _serviceVersion = options.ServiceVersion;
         _networkTimeout = options.NetworkTimeout;
-        _messageClassifier = options.MessageClassifier;
 
         // Cache the pipeline for possible reuse, but don't freeze it yet.
         _pipeline = options.Pipeline;
@@ -147,17 +143,6 @@ public class PipelineOptions
         }
     }
 
-    public string? ServiceVersion
-    {
-        get => _serviceVersion;
-        set
-        {
-            AssertNotFrozen();
-            _serviceVersion = value;
-            _modified = true;
-        }
-    }
-
     public TimeSpan? NetworkTimeout
     {
         get => _networkTimeout;
@@ -165,17 +150,6 @@ public class PipelineOptions
         {
             AssertNotFrozen();
             _networkTimeout = value;
-            _modified = true;
-        }
-    }
-
-    public virtual MessageClassifier? MessageClassifier
-    {
-        get => _messageClassifier;
-        set
-        {
-            AssertNotFrozen();
-            _messageClassifier = value;
             _modified = true;
         }
     }

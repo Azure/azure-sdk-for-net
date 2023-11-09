@@ -12,10 +12,11 @@ public class OpenAIClient
 {
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
+
     private readonly PipelineOptions _pipelineOptions;
     private readonly PipelinePolicy[] _clientPolicies;
 
-    public OpenAIClient(Uri endpoint, KeyCredential credential, PipelineOptions options = default)
+    public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
@@ -23,7 +24,7 @@ public class OpenAIClient
         _endpoint = endpoint;
         _credential = credential;
 
-        options ??= new PipelineOptions();
+        options ??= new OpenAIClientOptions();
 
         _clientPolicies = new PipelinePolicy[1];
         _clientPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
@@ -73,7 +74,7 @@ public class OpenAIClient
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, RequestBodyContent content, RequestOptions options)
     {
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
-        options.PipelineOptions.MessageClassifier = MessageClassifier200;
+        options.MessageClassifier = MessageClassifier200;
 
         ClientPipeline pipeline = ClientPipeline.GetPipeline(options, _clientPolicies);
         PipelineMessage message = pipeline.CreateMessage(options);

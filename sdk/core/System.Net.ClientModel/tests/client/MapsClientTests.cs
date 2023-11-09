@@ -36,16 +36,19 @@ public class MapsClientTests
 
         KeyCredential credential = new KeyCredential(key);
 
-        PipelineOptions pipelineOptions = new PipelineOptions();
-        pipelineOptions.PerCallPolicies = new PipelinePolicy[1];
-        pipelineOptions.PerCallPolicies[0] = new CustomPolicy();
-        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential, pipelineOptions);
+        MapsClientOptions options = new MapsClientOptions();
+        options.PerCallPolicies = new PipelinePolicy[1];
+        options.PerCallPolicies[0] = new CustomPolicy();
+
+        // TODO: Suboptimal that MapsClientOptions isn't obviously a PipelineOptions?
+
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential, options);
 
         // ^^ In this call, pipeline is created in PO and frozen.
-        ClientPipeline pipeline = ClientPipeline.GetPipeline(pipelineOptions);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(options);
         Assert.IsNotNull(pipeline);
 
-        RequestOptions requestOptions = new RequestOptions(pipelineOptions);
+        RequestOptions requestOptions = new RequestOptions(options);
 
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
         Result result = client.GetCountryCode(ipAddress.ToString(), requestOptions);

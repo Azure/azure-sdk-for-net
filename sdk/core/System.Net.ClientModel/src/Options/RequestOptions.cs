@@ -13,16 +13,15 @@ namespace System.Net.ClientModel;
 /// </summary>
 public class RequestOptions
 {
-    public RequestOptions()
+    private readonly PipelineOptions _pipelineOptions;
+
+    public RequestOptions() : this(new PipelineOptions())
     {
-        PipelineOptions = new PipelineOptions();
-        ErrorBehavior = ErrorBehavior.Default;
-        CancellationToken = CancellationToken.None;
     }
 
     public RequestOptions(PipelineOptions pipelineOptions)
     {
-        PipelineOptions = new(pipelineOptions);
+        _pipelineOptions = pipelineOptions;
         ErrorBehavior = ErrorBehavior.Default;
         CancellationToken = CancellationToken.None;
     }
@@ -31,35 +30,16 @@ public class RequestOptions
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
-        message.MessageClassifier = GetMessageClassifier();
+        message.MessageClassifier = MessageClassifier ?? MessageClassifier.Default;
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why
         // and when we use what, etc., then simplify it back to that per reasons.
-        if (PipelineOptions.NetworkTimeout.HasValue)
+        if (_pipelineOptions.NetworkTimeout.HasValue)
         {
-            ResponseBufferingPolicy.SetNetworkTimeout(message, PipelineOptions.NetworkTimeout.Value);
+            ResponseBufferingPolicy.SetNetworkTimeout(message, _pipelineOptions.NetworkTimeout.Value);
         }
     }
-
-    // Hard-codes precedence rules for MessageClassifier
-    private MessageClassifier GetMessageClassifier()
-    {
-        // TODO: We have a bug in this logic currently because classifiers are not chaining
-        if (MessageClassifier is not null)
-        {
-            return MessageClassifier;
-        }
-
-        if (PipelineOptions.MessageClassifier is not null)
-        {
-            return PipelineOptions.MessageClassifier;
-        }
-
-        return MessageClassifier.Default;
-    }
-
-    public PipelineOptions PipelineOptions { get; }
 
     public virtual ErrorBehavior ErrorBehavior { get; set; }
 
@@ -69,15 +49,17 @@ public class RequestOptions
     // modifying client-user-passed options values?
     public virtual MessageClassifier? MessageClassifier { get; set; }
 
+    internal PipelineOptions PipelineOptions { get => _pipelineOptions; }
+
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
         switch (position)
         {
             case PipelinePosition.PerCall:
-                PipelineOptions.PerCallPolicies = AddPolicy(policy, PipelineOptions.PerCallPolicies);
+                _pipelineOptions.PerCallPolicies = AddPolicy(policy, _pipelineOptions.PerCallPolicies);
                 break;
             case PipelinePosition.PerTry:
-                PipelineOptions.PerTryPolicies = AddPolicy(policy, PipelineOptions.PerTryPolicies);
+                _pipelineOptions.PerTryPolicies = AddPolicy(policy, _pipelineOptions.PerTryPolicies);
                 break;
             default:
                 throw new ArgumentException($"Unexpected value for position: '{position}'.");

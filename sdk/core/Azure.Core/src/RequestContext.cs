@@ -77,20 +77,6 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        protected override void Apply(PipelineMessage message)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unexpected message type: '{message.GetType()}'.");
-            }
-
-            Apply(httpMessage);
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
         internal void Apply(HttpMessage message)
         {
             message.CancellationToken = CancellationToken;
@@ -98,10 +84,7 @@ namespace Azure
             // TODO: Note, we don't set response classifier here, but need to rethink this
             // story e2e.
 
-            if (PipelineOptions.NetworkTimeout.HasValue)
-            {
-                ResponseBufferingPolicy.SetNetworkTimeout(message, PipelineOptions.NetworkTimeout.Value);
-            }
+            base.Apply(message);
         }
 
         /// <summary>

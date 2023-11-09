@@ -43,7 +43,6 @@ namespace System.Net.ClientModel
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.PipelineOptions PipelineOptions { get { throw null; } }
         public void AddPolicy(System.Net.ClientModel.Core.PipelinePolicy policy, System.Net.ClientModel.Core.PipelinePosition position) { }
         protected internal virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
     }
@@ -168,12 +167,10 @@ namespace System.Net.ClientModel.Core
     {
         public PipelineOptions() { }
         public PipelineOptions(System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
-        public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
-        public string? ServiceVersion { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelineTransport? Transport { get { throw null; } set { } }
     }
     public abstract partial class PipelinePolicy
