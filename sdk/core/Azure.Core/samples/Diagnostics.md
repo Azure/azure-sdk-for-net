@@ -164,20 +164,26 @@ If your are using Azure SDK libraries in ASP.NET Core application consider using
 
 ## ActivitySource support
 
-Azure SDKs released after October 2021 include experimental support for ActivitySource, which is a simplified way to create and listen to activities added in .NET 5.
+Azure SDKs support for `ActivitySource`, which is a simplified way to create and listen to activities which is compatible with OpenTelemetry.
 Azure SDKs produce the following kinds of Activities:
 
 - *HTTP calls*: every HTTP call originating from Azure SDKs
 - *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
 - *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
-Because `ActivitySource` support is experimental, the shape of Activities may change in the future without notice.  This includes:
+Prior to November 2023, OpenTelemetry support was experimental for all Azure SDKs (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details). 
+Most of Azure SDKs released after December 2023 have OpenTelemetry support enabled by default, however tracing support remains experimental for messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`). 
 
+More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md).
+
+### Enabling experimental tracing features
+
+Certain tracing features remain experimental and still need to be enabled explicitly. Check out [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md) to see which conventions are considered experimental.
+
+The shape of experimental Activities may change in the future without notice. This includes:
 - the kinds of operations that are tracked
 - relationships between telemetry spans
 - attributes attached to telemetry spans
-
-More detailed distributed tracing convention can be found at https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml .
 
 ActivitySource support can be enabled through either of these three steps:
 
@@ -196,11 +202,11 @@ AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
   </ItemGroup>
 ```
 
-You'll need `System.Diagnostics.DiagnosticSource` package with version `5.0` or later consume Azure SDK Activities.
+You'll need `System.Diagnostics.DiagnosticSource` package with version `6.0` or later consume Azure SDK Activities.
 
 ```xml
  <ItemGroup>
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.1" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
   </ItemGroup>
 ```
 
