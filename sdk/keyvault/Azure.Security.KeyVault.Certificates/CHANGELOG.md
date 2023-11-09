@@ -1,6 +1,6 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
+## 4.6.0-beta.1 (2023-11-09)
 
 ### Features Added
 
@@ -10,8 +10,8 @@
 ### Breaking Changes
 
 - Renamed tags reported on `CertificateClient` activities to following OpenTelemetry attribute naming conventions:
-  - `certificate` to `az.keyvault.certificate.name` 
-  - `version` to `az.keyvault.certificate.version` 
+  - `certificate` to `az.keyvault.certificate.name`
+  - `version` to `az.keyvault.certificate.version`
   - `issuer` to `az.keyvault.certificate.issuer.name`
 
 ### Bugs Fixed
