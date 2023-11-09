@@ -23,15 +23,15 @@ namespace Azure.Communication
 
                 if (Cloud == CommunicationCloudEnvironment.Dod)
                 {
-                    _rawId = $"{TeamsAppDodCloud}{TeamsAppId}";
+                    _rawId = $"{TeamsAppDodCloud}{AppId}";
                 }
                 else if (Cloud == CommunicationCloudEnvironment.Gcch)
                 {
-                    _rawId = $"{TeamsAppGcchCloud}{TeamsAppId}";
+                    _rawId = $"{TeamsAppGcchCloud}{AppId}";
                 }
                 else
                 {
-                    _rawId = $"{TeamsAppPublicCloud}{TeamsAppId}";
+                    _rawId = $"{TeamsAppPublicCloud}{AppId}";
                 }
 
                 return _rawId;
@@ -39,7 +39,7 @@ namespace Azure.Communication
         }
 
         /// <summary>The id of the Microsoft Teams Application.</summary>
-        public string TeamsAppId { get; }
+        public string AppId { get; }
 
         /// <summary> The cloud that the application belongs to. </summary>
         public CommunicationCloudEnvironment Cloud { get; }
@@ -47,23 +47,23 @@ namespace Azure.Communication
         /// <summary>
         /// Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifier"/>.
         /// </summary>
-        /// <param name="teamsAppId">The unique ID of the Microsoft Teams Application.</param>
+        /// <param name="appId">The unique ID of the Microsoft Teams Application.</param>
         /// <param name="cloud">The cloud that the Microsoft Teams Application belongs to. A null value translates to the Public cloud.</param>
         /// <exception cref="System.ArgumentNullException">
-        /// Thrown when the <paramref name="teamsAppId"/> is null.
+        /// Thrown when the <paramref name="appId"/> is null.
         /// </exception>
         /// <exception cref="System.ArgumentException">
-        /// Thrown when the <paramref name="teamsAppId"/> is empty.
+        /// Thrown when the <paramref name="appId"/> is empty.
         /// </exception>
-        public MicrosoftTeamsAppIdentifier(string teamsAppId, CommunicationCloudEnvironment? cloud = null)
+        public MicrosoftTeamsAppIdentifier(string appId, CommunicationCloudEnvironment? cloud = null)
         {
-            Argument.AssertNotNullOrEmpty(teamsAppId, nameof(teamsAppId));
-            TeamsAppId = teamsAppId;
+            Argument.AssertNotNullOrEmpty(appId, nameof(appId));
+            AppId = appId;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
         }
 
         /// <inheritdoc />
-        public override string ToString() => TeamsAppId;
+        public override string ToString() => AppId;
 
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
