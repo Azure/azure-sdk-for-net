@@ -9,11 +9,22 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using System;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
-    public class DatastoreTests
+    public class DatastoreTests : ConnectedVMwareTestBase
     {
+        public DatastoreTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        private async Task<VMwareDatastoreCollection> GetVMwareDatastoreCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetVMwareDatastores();
+        }
+
         // CreateDatastore
         [TestCase]
         [RecordedTest]

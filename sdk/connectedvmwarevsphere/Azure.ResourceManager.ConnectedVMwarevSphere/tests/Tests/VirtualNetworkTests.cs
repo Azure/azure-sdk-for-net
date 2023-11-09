@@ -9,11 +9,16 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using System;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
-    public class VirtualNetworkTests
+    public class VirtualNetworkTests : ConnectedVMwareTestBase
     {
+        public VirtualNetworkTests(bool isAsync) : base(isAsync)
+        {
+        }
+
         // CreateVirtualNetwork
         [TestCase]
         [RecordedTest]
