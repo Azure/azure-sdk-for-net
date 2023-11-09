@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains custom Dns resolution configuration from customer. </summary>
     public partial class CustomDnsConfigProperties
     {
-        /// <summary> Initializes a new instance of CustomDnsConfigProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomDnsConfigProperties"/>. </summary>
         public CustomDnsConfigProperties()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CustomDnsConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDnsConfigProperties"/>. </summary>
         /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
         /// <param name="ipAddresses"> A list of private ip addresses of the private endpoint. </param>
-        internal CustomDnsConfigProperties(string fqdn, IList<string> ipAddresses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomDnsConfigProperties(string fqdn, IList<string> ipAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             IPAddresses = ipAddresses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>

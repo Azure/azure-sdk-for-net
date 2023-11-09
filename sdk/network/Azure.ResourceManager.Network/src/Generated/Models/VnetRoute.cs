@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>
     public partial class VnetRoute
     {
-        /// <summary> Initializes a new instance of VnetRoute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VnetRoute"/>. </summary>
         public VnetRoute()
         {
             StaticRoutes = new ChangeTrackingList<StaticRoute>();
             BgpConnections = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VnetRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetRoute"/>. </summary>
         /// <param name="staticRoutesConfig"> Configuration for static routes on this HubVnetConnection. </param>
         /// <param name="staticRoutes"> List of all Static Routes. </param>
         /// <param name="bgpConnections"> The list of references to HubBgpConnection objects. </param>
-        internal VnetRoute(StaticRoutesConfig staticRoutesConfig, IList<StaticRoute> staticRoutes, IReadOnlyList<WritableSubResource> bgpConnections)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VnetRoute(StaticRoutesConfig staticRoutesConfig, IList<StaticRoute> staticRoutes, IReadOnlyList<WritableSubResource> bgpConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StaticRoutesConfig = staticRoutesConfig;
             StaticRoutes = staticRoutes;
             BgpConnections = bgpConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Configuration for static routes on this HubVnetConnection. </summary>

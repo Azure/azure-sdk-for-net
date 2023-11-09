@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Storage Account configurations. </summary>
     public partial class StorageAccountConfiguration
     {
-        /// <summary> Initializes a new instance of StorageAccountConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountConfiguration"/>. </summary>
         public StorageAccountConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountConfiguration"/>. </summary>
         /// <param name="id"> Resource ID of storage account. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="accountName"> Storage account name. </param>
-        internal StorageAccountConfiguration(ResourceIdentifier id, string subscriptionId, string accountName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountConfiguration(ResourceIdentifier id, string subscriptionId, string accountName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SubscriptionId = subscriptionId;
             AccountName = accountName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of storage account. </summary>

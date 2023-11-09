@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterUpdateVersionParameters represents the body of the request to update cluster version. </summary>
     public partial class ClusterUpdateVersionContent
     {
-        /// <summary> Initializes a new instance of ClusterUpdateVersionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterUpdateVersionContent"/>. </summary>
         /// <param name="targetClusterVersion"> The version to be applied to the cluster during update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetClusterVersion"/> is null. </exception>
         public ClusterUpdateVersionContent(string targetClusterVersion)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(targetClusterVersion, nameof(targetClusterVersion));
 
             TargetClusterVersion = targetClusterVersion;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterUpdateVersionContent"/>. </summary>
+        /// <param name="targetClusterVersion"> The version to be applied to the cluster during update. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterUpdateVersionContent(string targetClusterVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetClusterVersion = targetClusterVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterUpdateVersionContent"/> for deserialization. </summary>
+        internal ClusterUpdateVersionContent()
+        {
         }
 
         /// <summary> The version to be applied to the cluster during update. </summary>

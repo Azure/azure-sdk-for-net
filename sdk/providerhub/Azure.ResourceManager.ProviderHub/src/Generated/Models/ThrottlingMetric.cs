@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ThrottlingMetric. </summary>
     public partial class ThrottlingMetric
     {
-        /// <summary> Initializes a new instance of ThrottlingMetric. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/>. </summary>
         /// <param name="metricType"></param>
         /// <param name="limit"></param>
         public ThrottlingMetric(ThrottlingMetricType metricType, long limit)
@@ -21,15 +25,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Limit = limit;
         }
 
-        /// <summary> Initializes a new instance of ThrottlingMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/>. </summary>
         /// <param name="metricType"></param>
         /// <param name="limit"></param>
         /// <param name="interval"></param>
-        internal ThrottlingMetric(ThrottlingMetricType metricType, long limit, TimeSpan? interval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThrottlingMetric(ThrottlingMetricType metricType, long limit, TimeSpan? interval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricType = metricType;
             Limit = limit;
             Interval = interval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/> for deserialization. </summary>
+        internal ThrottlingMetric()
+        {
         }
 
         /// <summary> Gets or sets the metric type. </summary>

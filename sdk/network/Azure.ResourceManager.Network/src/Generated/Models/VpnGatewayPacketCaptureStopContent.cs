@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Stop packet capture parameters. </summary>
     public partial class VpnGatewayPacketCaptureStopContent
     {
-        /// <summary> Initializes a new instance of VpnGatewayPacketCaptureStopContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayPacketCaptureStopContent"/>. </summary>
         public VpnGatewayPacketCaptureStopContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayPacketCaptureStopContent"/>. </summary>
+        /// <param name="sasUri"> SAS url for packet capture on vpn gateway. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnGatewayPacketCaptureStopContent(Uri sasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SasUri = sasUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SAS url for packet capture on vpn gateway. </summary>

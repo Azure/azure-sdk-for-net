@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AadConfiguration represents the Azure Active Directory Integration properties. </summary>
     internal partial class NetworkCloudAadConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkCloudAadConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAadConfiguration"/>. </summary>
         /// <param name="adminGroupObjectIds"> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminGroupObjectIds"/> is null. </exception>
         public NetworkCloudAadConfiguration(IEnumerable<string> adminGroupObjectIds)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AdminGroupObjectIds = adminGroupObjectIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudAadConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAadConfiguration"/>. </summary>
         /// <param name="adminGroupObjectIds"> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </param>
-        internal NetworkCloudAadConfiguration(IList<string> adminGroupObjectIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudAadConfiguration(IList<string> adminGroupObjectIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminGroupObjectIds = adminGroupObjectIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAadConfiguration"/> for deserialization. </summary>
+        internal NetworkCloudAadConfiguration()
+        {
         }
 
         /// <summary> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </summary>

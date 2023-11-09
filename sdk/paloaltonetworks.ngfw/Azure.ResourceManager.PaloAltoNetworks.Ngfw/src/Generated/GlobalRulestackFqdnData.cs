@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class GlobalRulestackFqdnData : ResourceData
     {
-        /// <summary> Initializes a new instance of GlobalRulestackFqdnData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/>. </summary>
         /// <param name="fqdnList"> fqdn list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
         public GlobalRulestackFqdnData(IEnumerable<string> fqdnList)
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             FqdnList = fqdnList.ToList();
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackFqdnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,13 +44,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal GlobalRulestackFqdnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> fqdnList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalRulestackFqdnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> fqdnList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             FqdnList = fqdnList;
             ETag = etag;
             AuditComment = auditComment;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/> for deserialization. </summary>
+        internal GlobalRulestackFqdnData()
+        {
         }
 
         /// <summary> fqdn object description. </summary>

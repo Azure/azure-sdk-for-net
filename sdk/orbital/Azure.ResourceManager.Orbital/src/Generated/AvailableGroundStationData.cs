@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Orbital
     /// </summary>
     public partial class AvailableGroundStationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailableGroundStationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableGroundStationData"/>. </summary>
         internal AvailableGroundStationData()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableGroundStationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableGroundStationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +39,8 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="latitudeDegrees"> Latitude of the ground station in decimal degrees. </param>
         /// <param name="altitudeMeters"> Altitude of the ground station. </param>
         /// <param name="releaseMode"> Release Status of a ground station. </param>
-        internal AvailableGroundStationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string city, string providerName, float? longitudeDegrees, float? latitudeDegrees, float? altitudeMeters, GroundStationReleaseMode? releaseMode) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableGroundStationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string city, string providerName, float? longitudeDegrees, float? latitudeDegrees, float? altitudeMeters, GroundStationReleaseMode? releaseMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             City = city;
@@ -43,6 +49,7 @@ namespace Azure.ResourceManager.Orbital
             LatitudeDegrees = latitudeDegrees;
             AltitudeMeters = altitudeMeters;
             ReleaseMode = releaseMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure region. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of VirtualHubRouteTableV2s and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVirtualHubRouteTableV2SResult
     {
-        /// <summary> Initializes a new instance of ListVirtualHubRouteTableV2SResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubRouteTableV2SResult"/>. </summary>
         internal ListVirtualHubRouteTableV2SResult()
         {
             Value = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
         }
 
-        /// <summary> Initializes a new instance of ListVirtualHubRouteTableV2SResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubRouteTableV2SResult"/>. </summary>
         /// <param name="value"> List of VirtualHubRouteTableV2s. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListVirtualHubRouteTableV2SResult(IReadOnlyList<VirtualHubRouteTableV2Data> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListVirtualHubRouteTableV2SResult(IReadOnlyList<VirtualHubRouteTableV2Data> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of VirtualHubRouteTableV2s. </summary>

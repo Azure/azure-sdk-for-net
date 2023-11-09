@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IPv6 Circuit Connection properties for global reach. </summary>
     public partial class IPv6CircuitConnectionConfig
     {
-        /// <summary> Initializes a new instance of IPv6CircuitConnectionConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPv6CircuitConnectionConfig"/>. </summary>
         public IPv6CircuitConnectionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of IPv6CircuitConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6CircuitConnectionConfig"/>. </summary>
         /// <param name="addressPrefix"> /125 IP address space to carve out customer addresses for global reach. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
-        internal IPv6CircuitConnectionConfig(string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPv6CircuitConnectionConfig(string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressPrefix = addressPrefix;
             CircuitConnectionStatus = circuitConnectionStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> /125 IP address space to carve out customer addresses for global reach. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,7 +14,10 @@ namespace Azure.AI.OpenAI
     /// <summary> Represents the request data used to generate images. </summary>
     public partial class ImageGenerationOptions
     {
-        /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/>. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
         public ImageGenerationOptions(string prompt)
@@ -21,9 +25,10 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(prompt, nameof(prompt));
 
             Prompt = prompt;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/>. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
         /// <param name="imageCount"> The number of images to generate (defaults to 1). </param>
         /// <param name="size"> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 (defaults to 1024x1024). </param>
@@ -32,13 +37,15 @@ namespace Azure.AI.OpenAI
         ///   Azure OpenAI only supports URL response items.
         /// </param>
         /// <param name="user"> A unique identifier representing your end-user, which can help to monitor and detect abuse. </param>
-        internal ImageGenerationOptions(string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, string user)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageGenerationOptions(string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, string user, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Prompt = prompt;
             ImageCount = imageCount;
             Size = size;
             ResponseFormat = responseFormat;
             User = user;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The number of images to generate (defaults to 1). </summary>
         public int? ImageCount { get; set; }

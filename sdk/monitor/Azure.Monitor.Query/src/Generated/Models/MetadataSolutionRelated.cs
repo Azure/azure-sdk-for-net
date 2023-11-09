@@ -15,7 +15,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the Log Analytics solution. </summary>
     internal partial class MetadataSolutionRelated
     {
-        /// <summary> Initializes a new instance of MetadataSolutionRelated. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSolutionRelated"/>. </summary>
         /// <param name="tables"> The tables related to the Log Analytics solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
         internal MetadataSolutionRelated(IEnumerable<string> tables)
@@ -27,6 +30,28 @@ namespace Azure.Monitor.Query.Models
             Categories = new ChangeTrackingList<string>();
             Queries = new ChangeTrackingList<string>();
             Workspaces = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSolutionRelated"/>. </summary>
+        /// <param name="tables"> The tables related to the Log Analytics solution. </param>
+        /// <param name="functions"> The functions related to the Log Analytics solution. </param>
+        /// <param name="categories"> The categories related to the Log Analytics solution. </param>
+        /// <param name="queries"> The saved queries related to the Log Analytics solution. </param>
+        /// <param name="workspaces"> The Workspaces referenced in the metadata request that are related to the Log Analytics solution. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataSolutionRelated(IReadOnlyList<string> tables, IReadOnlyList<string> functions, IReadOnlyList<string> categories, IReadOnlyList<string> queries, IReadOnlyList<string> workspaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tables = tables;
+            Functions = functions;
+            Categories = categories;
+            Queries = queries;
+            Workspaces = workspaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSolutionRelated"/> for deserialization. </summary>
+        internal MetadataSolutionRelated()
+        {
         }
 
         /// <summary> The tables related to the Log Analytics solution. </summary>

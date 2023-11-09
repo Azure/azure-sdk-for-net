@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,9 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The request for a QueryInboundNatRulePortMapping API. Either IpConfiguration or IpAddress should be set. </summary>
     public partial class QueryInboundNatRulePortMappingContent
     {
-        /// <summary> Initializes a new instance of QueryInboundNatRulePortMappingContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryInboundNatRulePortMappingContent"/>. </summary>
         public QueryInboundNatRulePortMappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryInboundNatRulePortMappingContent"/>. </summary>
+        /// <param name="ipConfiguration"> NetworkInterfaceIPConfiguration set in load balancer backend address. </param>
+        /// <param name="ipAddress"> IP address set in load balancer backend address. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryInboundNatRulePortMappingContent(WritableSubResource ipConfiguration, string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IPConfiguration = ipConfiguration;
+            IPAddress = ipAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> NetworkInterfaceIPConfiguration set in load balancer backend address. </summary>

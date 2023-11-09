@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class MySqlPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateLinkResourceProperties"/>. </summary>
         internal MySqlPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        internal MySqlPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private link resource group id. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The Routing Preference unbilled prefix. </summary>
     public partial class RoutingPreferenceUnbilledPrefix
     {
-        /// <summary> Initializes a new instance of RoutingPreferenceUnbilledPrefix. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingPreferenceUnbilledPrefix"/>. </summary>
         internal RoutingPreferenceUnbilledPrefix()
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingPreferenceUnbilledPrefix. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingPreferenceUnbilledPrefix"/>. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="azureRegion"> The Azure region. </param>
         /// <param name="peerAsn"> The peer ASN. </param>
-        internal RoutingPreferenceUnbilledPrefix(string prefix, AzureLocation? azureRegion, int? peerAsn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingPreferenceUnbilledPrefix(string prefix, AzureLocation? azureRegion, int? peerAsn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Prefix = prefix;
             AzureRegion = azureRegion;
             PeerAsn = peerAsn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The prefix. </summary>

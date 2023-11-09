@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An array of private link service id that can be linked to a private end point with auto approved. </summary>
     internal partial class AutoApprovedPrivateLinkServicesResult
     {
-        /// <summary> Initializes a new instance of AutoApprovedPrivateLinkServicesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkServicesResult"/>. </summary>
         internal AutoApprovedPrivateLinkServicesResult()
         {
             Value = new ChangeTrackingList<AutoApprovedPrivateLinkService>();
         }
 
-        /// <summary> Initializes a new instance of AutoApprovedPrivateLinkServicesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkServicesResult"/>. </summary>
         /// <param name="value"> An array of auto approved private link service. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AutoApprovedPrivateLinkServicesResult(IReadOnlyList<AutoApprovedPrivateLinkService> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoApprovedPrivateLinkServicesResult(IReadOnlyList<AutoApprovedPrivateLinkService> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of auto approved private link service. </summary>

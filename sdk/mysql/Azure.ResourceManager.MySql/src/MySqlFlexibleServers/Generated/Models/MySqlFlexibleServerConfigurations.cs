@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A list of server configurations. </summary>
     public partial class MySqlFlexibleServerConfigurations
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurations. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurations"/>. </summary>
         internal MySqlFlexibleServerConfigurations()
         {
             Values = new ChangeTrackingList<MySqlFlexibleServerConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurations"/>. </summary>
         /// <param name="values"> The list of server configurations. </param>
-        internal MySqlFlexibleServerConfigurations(IReadOnlyList<MySqlFlexibleServerConfigurationData> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerConfigurations(IReadOnlyList<MySqlFlexibleServerConfigurationData> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of server configurations. </summary>

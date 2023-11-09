@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The parameters specifying the resource whose effective routes are being requested. </summary>
     public partial class EffectiveRoutesContent
     {
-        /// <summary> Initializes a new instance of EffectiveRoutesContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveRoutesContent"/>. </summary>
         public EffectiveRoutesContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveRoutesContent"/>. </summary>
+        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
+        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveRoutesContent(ResourceIdentifier resourceId, string virtualWanResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceId = resourceId;
+            VirtualWanResourceType = virtualWanResourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource whose effective routes are being requested. </summary>

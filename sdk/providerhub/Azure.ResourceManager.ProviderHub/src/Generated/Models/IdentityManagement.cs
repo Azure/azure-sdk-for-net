@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The IdentityManagement. </summary>
     internal partial class IdentityManagement
     {
-        /// <summary> Initializes a new instance of IdentityManagement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityManagement"/>. </summary>
         internal IdentityManagement()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityManagement"/>. </summary>
         /// <param name="managementType"></param>
-        internal IdentityManagement(IdentityManagementType? managementType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdentityManagement(IdentityManagementType? managementType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagementType = managementType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the management type. </summary>

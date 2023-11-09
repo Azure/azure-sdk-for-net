@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The storage location for a packet capture session. </summary>
     public partial class PacketCaptureStorageLocation
     {
-        /// <summary> Initializes a new instance of PacketCaptureStorageLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureStorageLocation"/>. </summary>
         public PacketCaptureStorageLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureStorageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureStorageLocation"/>. </summary>
         /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </param>
         /// <param name="storagePath"> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </param>
         /// <param name="filePath"> A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>
-        internal PacketCaptureStorageLocation(ResourceIdentifier storageId, string storagePath, string filePath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCaptureStorageLocation(ResourceIdentifier storageId, string storagePath, string filePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageId = storageId;
             StoragePath = storagePath;
             FilePath = filePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </summary>

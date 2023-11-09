@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> RackSkuList represents a list of rack SKUs. </summary>
     internal partial class RackSkuList
     {
-        /// <summary> Initializes a new instance of RackSkuList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RackSkuList"/>. </summary>
         internal RackSkuList()
         {
             Value = new ChangeTrackingList<NetworkCloudRackSkuData>();
         }
 
-        /// <summary> Initializes a new instance of RackSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RackSkuList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of Rack SKUs. </param>
-        internal RackSkuList(string nextLink, IReadOnlyList<NetworkCloudRackSkuData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RackSkuList(string nextLink, IReadOnlyList<NetworkCloudRackSkuData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of operations. </summary>

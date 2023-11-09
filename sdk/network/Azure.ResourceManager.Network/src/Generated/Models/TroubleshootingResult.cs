@@ -14,23 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Troubleshooting information gained from specified resource. </summary>
     public partial class TroubleshootingResult
     {
-        /// <summary> Initializes a new instance of TroubleshootingResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingResult"/>. </summary>
         internal TroubleshootingResult()
         {
             Results = new ChangeTrackingList<TroubleshootingDetails>();
         }
 
-        /// <summary> Initializes a new instance of TroubleshootingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingResult"/>. </summary>
         /// <param name="startOn"> The start time of the troubleshooting. </param>
         /// <param name="endOn"> The end time of the troubleshooting. </param>
         /// <param name="code"> The result code of the troubleshooting. </param>
         /// <param name="results"> Information from troubleshooting. </param>
-        internal TroubleshootingResult(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, IReadOnlyList<TroubleshootingDetails> results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshootingResult(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, IReadOnlyList<TroubleshootingDetails> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
             Code = code;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The start time of the troubleshooting. </summary>

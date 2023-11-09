@@ -5,16 +5,84 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EvaluatedNetworkSecurityGroup
+    public partial class EvaluatedNetworkSecurityGroup : IUtf8JsonSerializable, IJsonModel<EvaluatedNetworkSecurityGroup>
     {
-        internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluatedNetworkSecurityGroup>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<EvaluatedNetworkSecurityGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkSecurityGroupId))
+            {
+                writer.WritePropertyName("networkSecurityGroupId"u8);
+                writer.WriteStringValue(NetworkSecurityGroupId);
+            }
+            if (Optional.IsDefined(AppliedTo))
+            {
+                writer.WritePropertyName("appliedTo"u8);
+                writer.WriteStringValue(AppliedTo);
+            }
+            if (Optional.IsDefined(MatchedRule))
+            {
+                writer.WritePropertyName("matchedRule"u8);
+                writer.WriteObjectValue(MatchedRule);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsCollectionDefined(RulesEvaluationResult))
+                {
+                    writer.WritePropertyName("rulesEvaluationResult"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in RulesEvaluationResult)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EvaluatedNetworkSecurityGroup IJsonModel<EvaluatedNetworkSecurityGroup>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEvaluatedNetworkSecurityGroup(document.RootElement, options);
+        }
+
+        internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +91,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> appliedTo = default;
             Optional<MatchedRule> matchedRule = default;
             Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroupId"u8))
@@ -62,8 +132,38 @@ namespace Azure.ResourceManager.Network.Models
                     rulesEvaluationResult = array;
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.Value, appliedTo.Value, matchedRule.Value, Optional.ToList(rulesEvaluationResult));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.Value, appliedTo.Value, matchedRule.Value, Optional.ToList(rulesEvaluationResult), serializedAdditionalRawData);
         }
+
+        BinaryData IModel<EvaluatedNetworkSecurityGroup>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EvaluatedNetworkSecurityGroup IModel<EvaluatedNetworkSecurityGroup>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEvaluatedNetworkSecurityGroup(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<EvaluatedNetworkSecurityGroup>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderEndpoint. </summary>
     public partial class ResourceProviderEndpoint
     {
-        /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderEndpoint"/>. </summary>
         internal ResourceProviderEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderEndpoint"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="endpointUri"></param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="requiredFeatures"></param>
         /// <param name="featuresRule"></param>
         /// <param name="timeout"></param>
-        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, TimeSpan? timeout)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = requiredFeatures;
             FeaturesRule = featuresRule;
             Timeout = timeout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the is enabled. </summary>

@@ -5,16 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ContentFilterResults
+    public partial class ContentFilterResults : IUtf8JsonSerializable, IJsonModel<ContentFilterResults>
     {
-        internal static ContentFilterResults DeserializeContentFilterResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentFilterResults>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<ContentFilterResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sexual))
+            {
+                writer.WritePropertyName("sexual"u8);
+                writer.WriteObjectValue(Sexual);
+            }
+            if (Optional.IsDefined(Violence))
+            {
+                writer.WritePropertyName("violence"u8);
+                writer.WriteObjectValue(Violence);
+            }
+            if (Optional.IsDefined(Hate))
+            {
+                writer.WritePropertyName("hate"u8);
+                writer.WriteObjectValue(Hate);
+            }
+            if (Optional.IsDefined(SelfHarm))
+            {
+                writer.WritePropertyName("self_harm"u8);
+                writer.WriteObjectValue(SelfHarm);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContentFilterResults IJsonModel<ContentFilterResults>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentFilterResults)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentFilterResults(document.RootElement, options);
+        }
+
+        internal static ContentFilterResults DeserializeContentFilterResults(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +90,8 @@ namespace Azure.AI.OpenAI
             Optional<ContentFilterResult> hate = default;
             Optional<ContentFilterResult> selfHarm = default;
             Optional<ResponseError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -71,16 +139,54 @@ namespace Azure.AI.OpenAI
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value, error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<ContentFilterResults>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentFilterResults)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContentFilterResults IModel<ContentFilterResults>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentFilterResults)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContentFilterResults(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<ContentFilterResults>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ContentFilterResults FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeContentFilterResults(document.RootElement);
+            return DeserializeContentFilterResults(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

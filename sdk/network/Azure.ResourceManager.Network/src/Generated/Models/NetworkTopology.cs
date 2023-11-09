@@ -14,23 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Topology of the specified resource group. </summary>
     public partial class NetworkTopology
     {
-        /// <summary> Initializes a new instance of NetworkTopology. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTopology"/>. </summary>
         internal NetworkTopology()
         {
             Resources = new ChangeTrackingList<TopologyResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of NetworkTopology. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTopology"/>. </summary>
         /// <param name="id"> GUID representing the operation id. </param>
         /// <param name="createdOn"> The datetime when the topology was initially created for the resource group. </param>
         /// <param name="lastModified"> The datetime when the topology was last modified. </param>
         /// <param name="resources"> A list of topology resources. </param>
-        internal NetworkTopology(string id, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyList<TopologyResourceInfo> resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkTopology(string id, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyList<TopologyResourceInfo> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             CreatedOn = createdOn;
             LastModified = lastModified;
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> GUID representing the operation id. </summary>

@@ -5,14 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class AppSeenInfo
+    public partial class AppSeenInfo : IUtf8JsonSerializable, IJsonModel<AppSeenInfo>
     {
-        internal static AppSeenInfo DeserializeAppSeenInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppSeenInfo>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<AppSeenInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            writer.WritePropertyName("title"u8);
+            writer.WriteStringValue(Title);
+            writer.WritePropertyName("category"u8);
+            writer.WriteStringValue(Category);
+            writer.WritePropertyName("subCategory"u8);
+            writer.WriteStringValue(SubCategory);
+            writer.WritePropertyName("risk"u8);
+            writer.WriteStringValue(Risk);
+            writer.WritePropertyName("tag"u8);
+            writer.WriteStringValue(Tag);
+            writer.WritePropertyName("technology"u8);
+            writer.WriteStringValue(Technology);
+            writer.WritePropertyName("standardPorts"u8);
+            writer.WriteStringValue(StandardPorts);
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppSeenInfo IJsonModel<AppSeenInfo>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppSeenInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppSeenInfo(document.RootElement, options);
+        }
+
+        internal static AppSeenInfo DeserializeAppSeenInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +80,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             string tag = default;
             string technology = default;
             string standardPorts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -61,8 +119,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     standardPorts = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppSeenInfo(title, category, subCategory, risk, tag, technology, standardPorts);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppSeenInfo(title, category, subCategory, risk, tag, technology, standardPorts, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<AppSeenInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppSeenInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppSeenInfo IModel<AppSeenInfo>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppSeenInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppSeenInfo(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<AppSeenInfo>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

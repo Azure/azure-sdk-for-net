@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The effective RouteMap route configured on the connection resource. </summary>
     public partial class EffectiveRouteMapRoute
     {
-        /// <summary> Initializes a new instance of EffectiveRouteMapRoute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveRouteMapRoute"/>. </summary>
         internal EffectiveRouteMapRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of EffectiveRouteMapRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveRouteMapRoute"/>. </summary>
         /// <param name="prefix"> The address prefix of the route. </param>
         /// <param name="bgpCommunities"> BGP communities of the route. </param>
         /// <param name="asPath"> The ASPath of this route. </param>
-        internal EffectiveRouteMapRoute(string prefix, string bgpCommunities, string asPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveRouteMapRoute(string prefix, string bgpCommunities, string asPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Prefix = prefix;
             BgpCommunities = bgpCommunities;
             AsPath = asPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The address prefix of the route. </summary>

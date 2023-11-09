@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Namespace/NotificationHub Connection String. </summary>
     public partial class NotificationHubResourceKeys
     {
-        /// <summary> Initializes a new instance of NotificationHubResourceKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubResourceKeys"/>. </summary>
         internal NotificationHubResourceKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubResourceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubResourceKeys"/>. </summary>
         /// <param name="primaryConnectionString"> PrimaryConnectionString of the AuthorizationRule. </param>
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the created AuthorizationRule. </param>
         /// <param name="primaryKey"> PrimaryKey of the created AuthorizationRule. </param>
         /// <param name="secondaryKey"> SecondaryKey of the created AuthorizationRule. </param>
         /// <param name="keyName"> KeyName of the created AuthorizationRule. </param>
-        internal NotificationHubResourceKeys(string primaryConnectionString, string secondaryConnectionString, string primaryKey, string secondaryKey, string keyName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubResourceKeys(string primaryConnectionString, string secondaryConnectionString, string primaryKey, string secondaryKey, string keyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             KeyName = keyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> PrimaryConnectionString of the AuthorizationRule. </summary>

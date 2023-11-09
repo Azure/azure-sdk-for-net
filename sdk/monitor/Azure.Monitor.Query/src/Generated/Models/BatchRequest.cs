@@ -15,7 +15,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> An array of requests. </summary>
     internal partial class BatchRequest
     {
-        /// <summary> Initializes a new instance of BatchRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
         /// <param name="requests"> An single request in a batch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public BatchRequest(IEnumerable<BatchQueryRequest> requests)
@@ -23,6 +26,20 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(requests, nameof(requests));
 
             Requests = requests.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <param name="requests"> An single request in a batch. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchRequest(IList<BatchQueryRequest> requests, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Requests = requests;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/> for deserialization. </summary>
+        internal BatchRequest()
+        {
         }
 
         /// <summary> An single request in a batch. </summary>

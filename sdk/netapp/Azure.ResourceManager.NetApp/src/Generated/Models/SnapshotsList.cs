@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Snapshots. </summary>
     internal partial class SnapshotsList
     {
-        /// <summary> Initializes a new instance of SnapshotsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
         internal SnapshotsList()
         {
             Value = new ChangeTrackingList<NetAppVolumeSnapshotData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
         /// <param name="value"> A list of Snapshots. </param>
-        internal SnapshotsList(IReadOnlyList<NetAppVolumeSnapshotData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotsList(IReadOnlyList<NetAppVolumeSnapshotData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of Snapshots. </summary>

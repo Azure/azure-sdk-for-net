@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> NetworkInterface represents properties of the network interface. </summary>
     public partial class NetworkCloudNetworkInterface
     {
-        /// <summary> Initializes a new instance of NetworkCloudNetworkInterface. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudNetworkInterface"/>. </summary>
         internal NetworkCloudNetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudNetworkInterface"/>. </summary>
         /// <param name="address"> The partial address of Peripheral Component Interconnect (PCI). </param>
         /// <param name="deviceConnectionType"> The connection type of the device. </param>
         /// <param name="model"> The model name of the device. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="portCount"> The number of ports on the device. </param>
         /// <param name="portSpeed"> The maximum amount of data in GB that the line card transmits through a port at any given second. </param>
         /// <param name="vendor"> The vendor name of the device. </param>
-        internal NetworkCloudNetworkInterface(string address, DeviceConnectionType? deviceConnectionType, string model, long? physicalSlot, long? portCount, long? portSpeed, string vendor)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudNetworkInterface(string address, DeviceConnectionType? deviceConnectionType, string model, long? physicalSlot, long? portCount, long? portSpeed, string vendor, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             DeviceConnectionType = deviceConnectionType;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             PortCount = portCount;
             PortSpeed = portSpeed;
             Vendor = vendor;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The partial address of Peripheral Component Interconnect (PCI). </summary>

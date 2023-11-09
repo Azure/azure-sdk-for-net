@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for packet core control plane version API service call. </summary>
     internal partial class PacketCoreControlPlaneVersionListResult
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneVersionListResult"/>. </summary>
         internal PacketCoreControlPlaneVersionListResult()
         {
             Value = new ChangeTrackingList<PacketCoreControlPlaneVersionData>();
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneVersionListResult"/>. </summary>
         /// <param name="value"> A list of supported packet core control plane versions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PacketCoreControlPlaneVersionListResult(IReadOnlyList<PacketCoreControlPlaneVersionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCoreControlPlaneVersionListResult(IReadOnlyList<PacketCoreControlPlaneVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of supported packet core control plane versions. </summary>

@@ -15,12 +15,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineKeySetPatchParameters represents the body of the request to patch the bare metal machine key set. </summary>
     public partial class NetworkCloudBareMetalMachineKeySetPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineKeySetPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetPatch"/>. </summary>
         public NetworkCloudBareMetalMachineKeySetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             JumpHostsAllowed = new ChangeTrackingList<IPAddress>();
             UserList = new ChangeTrackingList<KeySetUser>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
+        /// <param name="jumpHostsAllowed"> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </param>
+        /// <param name="userList"> The unique list of permitted users. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudBareMetalMachineKeySetPatch(IDictionary<string, string> tags, DateTimeOffset? expireOn, IList<IPAddress> jumpHostsAllowed, IList<KeySetUser> userList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            ExpireOn = expireOn;
+            JumpHostsAllowed = jumpHostsAllowed;
+            UserList = userList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

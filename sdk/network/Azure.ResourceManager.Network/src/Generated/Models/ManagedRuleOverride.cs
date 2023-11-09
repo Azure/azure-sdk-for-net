@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines a managed rule group override setting. </summary>
     public partial class ManagedRuleOverride
     {
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverride(string ruleId)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             RuleId = ruleId;
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="state"> The state of the managed rule. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? state, RuleMatchActionType? action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? state, RuleMatchActionType? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             State = state;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/> for deserialization. </summary>
+        internal ManagedRuleOverride()
+        {
         }
 
         /// <summary> Identifier for the managed rule. </summary>

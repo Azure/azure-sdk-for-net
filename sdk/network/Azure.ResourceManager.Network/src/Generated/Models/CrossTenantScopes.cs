@@ -14,22 +14,27 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Cross tenant scopes. </summary>
     public partial class CrossTenantScopes
     {
-        /// <summary> Initializes a new instance of CrossTenantScopes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CrossTenantScopes"/>. </summary>
         internal CrossTenantScopes()
         {
             ManagementGroups = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CrossTenantScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossTenantScopes"/>. </summary>
         /// <param name="tenantId"> Tenant ID. </param>
         /// <param name="managementGroups"> List of management groups. </param>
         /// <param name="subscriptions"> List of subscriptions. </param>
-        internal CrossTenantScopes(Guid? tenantId, IReadOnlyList<string> managementGroups, IReadOnlyList<string> subscriptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CrossTenantScopes(Guid? tenantId, IReadOnlyList<string> managementGroups, IReadOnlyList<string> subscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             ManagementGroups = managementGroups;
             Subscriptions = subscriptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tenant ID. </summary>

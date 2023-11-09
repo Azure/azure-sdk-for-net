@@ -5,14 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumePatch : IUtf8JsonSerializable
+    public partial class NetAppVolumePatch : IUtf8JsonSerializable, IJsonModel<NetAppVolumePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumePatch>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NetAppVolumePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
@@ -28,6 +35,29 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == ModelReaderWriterFormat.Json)
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceLevel))
@@ -120,7 +150,293 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        NetAppVolumePatch IJsonModel<NetAppVolumePatch>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumePatch(document.RootElement, options);
+        }
+
+        internal static NetAppVolumePatch DeserializeNetAppVolumePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<NetAppFileServiceLevel> serviceLevel = default;
+            Optional<long> usageThreshold = default;
+            Optional<VolumePatchPropertiesExportPolicy> exportPolicy = default;
+            Optional<float> throughputMibps = default;
+            Optional<NetAppVolumePatchDataProtection> dataProtection = default;
+            Optional<bool> isDefaultQuotaEnabled = default;
+            Optional<long> defaultUserQuotaInKiBs = default;
+            Optional<long> defaultGroupQuotaInKiBs = default;
+            Optional<string> unixPermissions = default;
+            Optional<bool> coolAccess = default;
+            Optional<int> coolnessPeriod = default;
+            Optional<CoolAccessRetrievalPolicy> coolAccessRetrievalPolicy = default;
+            Optional<bool> snapshotDirectoryVisible = default;
+            Optional<SmbAccessBasedEnumeration?> smbAccessBasedEnumeration = default;
+            Optional<SmbNonBrowsable> smbNonBrowsable = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("serviceLevel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceLevel = new NetAppFileServiceLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("usageThreshold"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usageThreshold = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("exportPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportPolicy = VolumePatchPropertiesExportPolicy.DeserializeVolumePatchPropertiesExportPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("throughputMibps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            throughputMibps = property0.Value.GetSingle();
+                            continue;
+                        }
+                        if (property0.NameEquals("dataProtection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataProtection = NetAppVolumePatchDataProtection.DeserializeNetAppVolumePatchDataProtection(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("isDefaultQuotaEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isDefaultQuotaEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultUserQuotaInKiBs"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultUserQuotaInKiBs = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultGroupQuotaInKiBs"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultGroupQuotaInKiBs = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("unixPermissions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                unixPermissions = null;
+                                continue;
+                            }
+                            unixPermissions = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("coolAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            coolAccess = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("coolnessPeriod"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            coolnessPeriod = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("coolAccessRetrievalPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            coolAccessRetrievalPolicy = new CoolAccessRetrievalPolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("snapshotDirectoryVisible"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            snapshotDirectoryVisible = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("smbAccessBasedEnumeration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                smbAccessBasedEnumeration = null;
+                                continue;
+                            }
+                            smbAccessBasedEnumeration = new SmbAccessBasedEnumeration(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("smbNonBrowsable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            smbNonBrowsable = new SmbNonBrowsable(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetAppVolumePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(serviceLevel), Optional.ToNullable(usageThreshold), exportPolicy.Value, Optional.ToNullable(throughputMibps), dataProtection.Value, Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), unixPermissions.Value, Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), serializedAdditionalRawData);
+        }
+
+        BinaryData IModel<NetAppVolumePatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetAppVolumePatch IModel<NetAppVolumePatch>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetAppVolumePatch(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NetAppVolumePatch>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

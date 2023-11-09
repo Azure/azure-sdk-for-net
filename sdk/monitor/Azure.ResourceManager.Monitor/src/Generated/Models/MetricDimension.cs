@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies a metric dimension. </summary>
     public partial class MetricDimension
     {
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only 'Include' and 'Exclude' are supported. </param>
         /// <param name="values"> list of dimension values. </param>
@@ -31,15 +34,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only 'Include' and 'Exclude' are supported. </param>
         /// <param name="values"> list of dimension values. </param>
-        internal MetricDimension(string name, string @operator, IList<string> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDimension(string name, string @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Operator = @operator;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimension"/> for deserialization. </summary>
+        internal MetricDimension()
+        {
         }
 
         /// <summary> Name of the dimension. </summary>

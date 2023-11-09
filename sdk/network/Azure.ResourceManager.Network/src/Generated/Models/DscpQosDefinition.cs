@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Quality of Service defines the traffic configuration between endpoints. Mandatory to have one marking. </summary>
     public partial class DscpQosDefinition
     {
-        /// <summary> Initializes a new instance of DscpQosDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscpQosDefinition"/>. </summary>
         public DscpQosDefinition()
         {
             Markings = new ChangeTrackingList<int>();
@@ -23,14 +27,15 @@ namespace Azure.ResourceManager.Network.Models
             DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
         }
 
-        /// <summary> Initializes a new instance of DscpQosDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscpQosDefinition"/>. </summary>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
         /// <param name="sourceIPRanges"> Source IP ranges. </param>
         /// <param name="destinationIPRanges"> Destination IP ranges. </param>
         /// <param name="sourcePortRanges"> Sources port ranges. </param>
         /// <param name="destinationPortRanges"> Destination port ranges. </param>
         /// <param name="protocol"> RNM supported protocol types. </param>
-        internal DscpQosDefinition(IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscpQosDefinition(IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Markings = markings;
             SourceIPRanges = sourceIPRanges;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             SourcePortRanges = sourcePortRanges;
             DestinationPortRanges = destinationPortRanges;
             Protocol = protocol;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of markings to be used in the configuration. </summary>

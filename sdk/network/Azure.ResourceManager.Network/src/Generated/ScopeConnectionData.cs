@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,12 +20,15 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ScopeConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScopeConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopeConnectionData"/>. </summary>
         public ScopeConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopeConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +38,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionState"> Connection State. </param>
         /// <param name="description"> A description of the scope connection. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ScopeConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier resourceId, ScopeConnectionState? connectionState, string description, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier resourceId, ScopeConnectionState? connectionState, string description, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             ResourceId = resourceId;
             ConnectionState = connectionState;
             Description = description;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tenant ID. </summary>

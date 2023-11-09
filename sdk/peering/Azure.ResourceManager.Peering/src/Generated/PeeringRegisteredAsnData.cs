@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringRegisteredAsnData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredAsnData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnData"/>. </summary>
         public PeeringRegisteredAsnData()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredAsnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +35,13 @@ namespace Azure.ResourceManager.Peering
         /// <param name="asn"> The customer's ASN from which traffic originates. </param>
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringRegisteredAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? asn, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringRegisteredAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? asn, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Asn = asn;
             PeeringServicePrefixKey = peeringServicePrefixKey;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The customer's ASN from which traffic originates. </summary>

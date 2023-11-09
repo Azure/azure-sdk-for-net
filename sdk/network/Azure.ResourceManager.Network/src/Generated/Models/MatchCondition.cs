@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Define match conditions. </summary>
     public partial class MatchCondition
     {
-        /// <summary> Initializes a new instance of MatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MatchCondition"/>. </summary>
         /// <param name="matchVariables"> List of match variables. </param>
         /// <param name="operator"> The operator to be matched. </param>
         /// <param name="matchValues"> Match value. </param>
@@ -31,19 +34,26 @@ namespace Azure.ResourceManager.Network.Models
             Transforms = new ChangeTrackingList<WebApplicationFirewallTransform>();
         }
 
-        /// <summary> Initializes a new instance of MatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchCondition"/>. </summary>
         /// <param name="matchVariables"> List of match variables. </param>
         /// <param name="operator"> The operator to be matched. </param>
         /// <param name="negationConditon"> Whether this is negate condition or not. </param>
         /// <param name="matchValues"> Match value. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal MatchCondition(IList<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, bool? negationConditon, IList<string> matchValues, IList<WebApplicationFirewallTransform> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MatchCondition(IList<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, bool? negationConditon, IList<string> matchValues, IList<WebApplicationFirewallTransform> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MatchVariables = matchVariables;
             Operator = @operator;
             NegationConditon = negationConditon;
             MatchValues = matchValues;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MatchCondition"/> for deserialization. </summary>
+        internal MatchCondition()
+        {
         }
 
         /// <summary> List of match variables. </summary>

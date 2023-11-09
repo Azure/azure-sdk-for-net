@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Result of Query Performance Insight data reset. </summary>
     public partial class MySqlQueryPerformanceInsightResetDataResult
     {
-        /// <summary> Initializes a new instance of MySqlQueryPerformanceInsightResetDataResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
         internal MySqlQueryPerformanceInsightResetDataResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryPerformanceInsightResetDataResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
         /// <param name="status"> Indicates result of the operation. </param>
         /// <param name="message"> operation message. </param>
-        internal MySqlQueryPerformanceInsightResetDataResult(MySqlQueryPerformanceInsightResetDataResultState? status, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlQueryPerformanceInsightResetDataResult(MySqlQueryPerformanceInsightResetDataResultState? status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates result of the operation. </summary>

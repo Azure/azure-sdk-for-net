@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServersCapabilityResource(Client, MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(e)), _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics, Pipeline, "MySqlFlexibleServersCapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlFlexibleServersCapabilityResource(Client, MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(e)), _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics, Pipeline, "MySqlFlexibleServersCapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServersCapabilityResource(Client, MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(e)), _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics, Pipeline, "MySqlFlexibleServersCapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlFlexibleServersCapabilityResource(Client, MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(e)), _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics, Pipeline, "MySqlFlexibleServersCapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

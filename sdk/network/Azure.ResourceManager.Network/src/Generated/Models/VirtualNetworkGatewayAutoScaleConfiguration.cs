@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Virtual Network Gateway Autoscale Configuration details. </summary>
     internal partial class VirtualNetworkGatewayAutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayAutoScaleConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleConfiguration"/>. </summary>
         public VirtualNetworkGatewayAutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleConfiguration"/>. </summary>
         /// <param name="bounds"> The bounds of the autoscale configuration. </param>
-        internal VirtualNetworkGatewayAutoScaleConfiguration(VirtualNetworkGatewayAutoScaleBounds bounds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkGatewayAutoScaleConfiguration(VirtualNetworkGatewayAutoScaleBounds bounds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bounds = bounds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The bounds of the autoscale configuration. </summary>

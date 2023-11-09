@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a Log Analytics Workspace. </summary>
     public partial class PeeringLogAnalyticsWorkspaceProperties
     {
-        /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
         public PeeringLogAnalyticsWorkspaceProperties()
         {
             ConnectedAgents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
         /// <param name="workspaceId"> The Workspace ID. </param>
         /// <param name="key"> The Workspace Key. </param>
         /// <param name="connectedAgents"> The list of connected agents. </param>
-        internal PeeringLogAnalyticsWorkspaceProperties(string workspaceId, string key, IReadOnlyList<string> connectedAgents)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringLogAnalyticsWorkspaceProperties(string workspaceId, string key, IReadOnlyList<string> connectedAgents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkspaceId = workspaceId;
             Key = key;
             ConnectedAgents = connectedAgents;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Workspace ID. </summary>

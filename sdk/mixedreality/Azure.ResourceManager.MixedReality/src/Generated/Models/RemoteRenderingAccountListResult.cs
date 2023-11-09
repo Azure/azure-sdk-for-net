@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MixedReality;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MixedReality.Models
     /// <summary> Result of the request to get resource collection. It contains a list of resources and a URL link to get the next set of results. </summary>
     internal partial class RemoteRenderingAccountListResult
     {
-        /// <summary> Initializes a new instance of RemoteRenderingAccountListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingAccountListResult"/>. </summary>
         internal RemoteRenderingAccountListResult()
         {
             Value = new ChangeTrackingList<RemoteRenderingAccountData>();
         }
 
-        /// <summary> Initializes a new instance of RemoteRenderingAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingAccountListResult"/>. </summary>
         /// <param name="value"> List of resources supported by the Resource Provider. </param>
         /// <param name="nextLink"> URL to get the next set of resource list results if there are any. </param>
-        internal RemoteRenderingAccountListResult(IReadOnlyList<RemoteRenderingAccountData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteRenderingAccountListResult(IReadOnlyList<RemoteRenderingAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of resources supported by the Resource Provider. </summary>

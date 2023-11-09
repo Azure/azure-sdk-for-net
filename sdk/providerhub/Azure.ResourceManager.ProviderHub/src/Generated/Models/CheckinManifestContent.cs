@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CheckinManifestContent. </summary>
     public partial class CheckinManifestContent
     {
-        /// <summary> Initializes a new instance of CheckinManifestContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestContent"/>. </summary>
         /// <param name="environment"> The environment supplied to the checkin manifest operation. </param>
         /// <param name="baselineArmManifestLocation"> The baseline ARM manifest location supplied to the checkin manifest operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environment"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             Environment = environment;
             BaselineArmManifestLocation = baselineArmManifestLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestContent"/>. </summary>
+        /// <param name="environment"> The environment supplied to the checkin manifest operation. </param>
+        /// <param name="baselineArmManifestLocation"> The baseline ARM manifest location supplied to the checkin manifest operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckinManifestContent(string environment, AzureLocation baselineArmManifestLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Environment = environment;
+            BaselineArmManifestLocation = baselineArmManifestLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestContent"/> for deserialization. </summary>
+        internal CheckinManifestContent()
+        {
         }
 
         /// <summary> The environment supplied to the checkin manifest operation. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> GatewayCustomBgpIpAddressIpConfiguration for a virtual network gateway connection. </summary>
     public partial class GatewayCustomBgpIPAddressIPConfiguration
     {
-        /// <summary> Initializes a new instance of GatewayCustomBgpIPAddressIPConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
         /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
         /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationId"/> or <paramref name="customBgpIPAddress"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Network.Models
 
             IPConfigurationId = ipConfigurationId;
             CustomBgpIPAddress = customBgpIPAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
+        /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
+        /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IPConfigurationId = ipConfigurationId;
+            CustomBgpIPAddress = customBgpIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/> for deserialization. </summary>
+        internal GatewayCustomBgpIPAddressIPConfiguration()
+        {
         }
 
         /// <summary> The IpconfigurationId of ipconfiguration which belongs to gateway. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppSubvolumeInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoData"/>. </summary>
         public NetAppSubvolumeInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,12 +35,14 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="size"> Truncate subvolume to the provided size in bytes. </param>
         /// <param name="parentPath"> parent path to the subvolume. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal NetAppSubvolumeInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, long? size, string parentPath, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppSubvolumeInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, long? size, string parentPath, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             Size = size;
             ParentPath = parentPath;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Path to the subvolume. </summary>

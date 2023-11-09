@@ -5,28 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataCollectionRuleEventHubDataSource. </summary>
     public partial class DataCollectionRuleEventHubDataSource
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
         public DataCollectionRuleEventHubDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <param name="consumerGroup"> Event Hub consumer group name. </param>
         /// <param name="stream"> The stream to collect from EventHub. </param>
-        internal DataCollectionRuleEventHubDataSource(string name, string consumerGroup, string stream)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleEventHubDataSource(string name, string consumerGroup, string stream, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ConsumerGroup = consumerGroup;
             Stream = stream;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list all nat rules to a virtual wan vpn gateway. It contains a list of Nat rules and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVpnGatewayNatRulesResult
     {
-        /// <summary> Initializes a new instance of ListVpnGatewayNatRulesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListVpnGatewayNatRulesResult"/>. </summary>
         internal ListVpnGatewayNatRulesResult()
         {
             Value = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ListVpnGatewayNatRulesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnGatewayNatRulesResult"/>. </summary>
         /// <param name="value"> List of Nat Rules. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListVpnGatewayNatRulesResult(IReadOnlyList<VpnGatewayNatRuleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListVpnGatewayNatRulesResult(IReadOnlyList<VpnGatewayNatRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Nat Rules. </summary>

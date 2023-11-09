@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rewrite rule of an application gateway. </summary>
     public partial class ApplicationGatewayRewriteRule
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRule"/>. </summary>
         public ApplicationGatewayRewriteRule()
         {
             Conditions = new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRule"/>. </summary>
         /// <param name="name"> Name of the rewrite rule that is unique within an Application Gateway. </param>
         /// <param name="ruleSequence"> Rule Sequence of the rewrite rule that determines the order of execution of a particular rule in a RewriteRuleSet. </param>
         /// <param name="conditions"> Conditions based on which the action set execution will be evaluated. </param>
         /// <param name="actionSet"> Set of actions to be done as part of the rewrite Rule. </param>
-        internal ApplicationGatewayRewriteRule(string name, int? ruleSequence, IList<ApplicationGatewayRewriteRuleCondition> conditions, ApplicationGatewayRewriteRuleActionSet actionSet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayRewriteRule(string name, int? ruleSequence, IList<ApplicationGatewayRewriteRuleCondition> conditions, ApplicationGatewayRewriteRuleActionSet actionSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             RuleSequence = ruleSequence;
             Conditions = conditions;
             ActionSet = actionSet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the rewrite rule that is unique within an Application Gateway. </summary>

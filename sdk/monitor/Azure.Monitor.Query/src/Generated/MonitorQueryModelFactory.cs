@@ -15,41 +15,35 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Model factory for models. </summary>
     public static partial class MonitorQueryModelFactory
     {
-        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
         public static LogsTableColumn LogsTableColumn(string name = null, LogsColumnType type = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return new LogsTableColumn(name, type);
+            return new LogsTableColumn(name, type, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of MetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
         /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
         public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
-            return new MetricAvailability(granularity, retention);
+            return new MetricAvailability(granularity, retention, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of MetricResultsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricResultsResponse"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
         /// <returns> A new <see cref="Models.MetricResultsResponse"/> instance for mocking. </returns>
         public static MetricResultsResponse MetricResultsResponse(IEnumerable<MetricResultsResponseValuesItem> values = null)
         {
             values ??= new List<MetricResultsResponseValuesItem>();
 
-            return new MetricResultsResponse(values?.ToList());
+            return new MetricResultsResponse(values?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricResultsResponseValuesItem"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
@@ -62,10 +56,10 @@ namespace Azure.Monitor.Query.Models
         {
             value ??= new List<QueryBatchMetric>();
 
-            return new MetricResultsResponseValuesItem(startTime, endTime, interval, @namespace, resourceRegion, resourceId, value?.ToList());
+            return new MetricResultsResponseValuesItem(startTime, endTime, interval, @namespace, resourceRegion, resourceId, value?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryBatchMetric"/>. </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Description of this metric. </param>
@@ -79,19 +73,19 @@ namespace Azure.Monitor.Query.Models
         {
             timeseries ??= new List<QueryBatchTimeSeriesElement>();
 
-            return new QueryBatchMetric(id, name, displayDescription, type, unit, timeseries?.ToList(), errorCode, errorMessage);
+            return new QueryBatchMetric(id, name, displayDescription, type, unit, timeseries?.ToList(), errorCode, errorMessage, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of QueryBatchLocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryBatchLocalizableString"/>. </summary>
         /// <param name="value"> The invariant value. </param>
         /// <param name="localizedValue"> The display name. </param>
         /// <returns> A new <see cref="Models.QueryBatchLocalizableString"/> instance for mocking. </returns>
         public static QueryBatchLocalizableString QueryBatchLocalizableString(string value = null, string localizedValue = null)
         {
-            return new QueryBatchLocalizableString(value, localizedValue);
+            return new QueryBatchLocalizableString(value, localizedValue, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of QueryBatchTimeSeriesElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryBatchTimeSeriesElement"/>. </summary>
         /// <param name="metadatavalues"> The metadata values returned if filter was specified in the call. </param>
         /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
         /// <returns> A new <see cref="Models.QueryBatchTimeSeriesElement"/> instance for mocking. </returns>
@@ -100,19 +94,19 @@ namespace Azure.Monitor.Query.Models
             metadatavalues ??= new List<QueryBatchMetadataValue>();
             data ??= new List<QueryBatchMetricValue>();
 
-            return new QueryBatchTimeSeriesElement(metadatavalues?.ToList(), data?.ToList());
+            return new QueryBatchTimeSeriesElement(metadatavalues?.ToList(), data?.ToList(), new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetadataValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryBatchMetadataValue"/>. </summary>
         /// <param name="name"> The name of the metadata. </param>
         /// <param name="value"> The value of the metadata. </param>
         /// <returns> A new <see cref="Models.QueryBatchMetadataValue"/> instance for mocking. </returns>
         public static QueryBatchMetadataValue QueryBatchMetadataValue(QueryBatchLocalizableString name = null, string value = null)
         {
-            return new QueryBatchMetadataValue(name, value);
+            return new QueryBatchMetadataValue(name, value, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryBatchMetricValue"/>. </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> The average value in the time range. </param>
         /// <param name="minimum"> The least value in the time range. </param>
@@ -122,7 +116,7 @@ namespace Azure.Monitor.Query.Models
         /// <returns> A new <see cref="Models.QueryBatchMetricValue"/> instance for mocking. </returns>
         public static QueryBatchMetricValue QueryBatchMetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
         {
-            return new QueryBatchMetricValue(timeStamp, average, minimum, maximum, total, count);
+            return new QueryBatchMetricValue(timeStamp, average, minimum, maximum, total, count, new Dictionary<string, BinaryData>());
         }
     }
 }

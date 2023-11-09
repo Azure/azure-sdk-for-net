@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of the endpoint used for ingesting logs. </summary>
     internal partial class LogsIngestionEndpointSpec
     {
-        /// <summary> Initializes a new instance of LogsIngestionEndpointSpec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogsIngestionEndpointSpec"/>. </summary>
         public LogsIngestionEndpointSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of LogsIngestionEndpointSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsIngestionEndpointSpec"/>. </summary>
         /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
-        internal LogsIngestionEndpointSpec(string endpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogsIngestionEndpointSpec(string endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoint = endpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The endpoint. This property is READ-ONLY. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVpnSiteLinkConnectionsResult
     {
-        /// <summary> Initializes a new instance of ListVpnSiteLinkConnectionsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListVpnSiteLinkConnectionsResult"/>. </summary>
         internal ListVpnSiteLinkConnectionsResult()
         {
             Value = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ListVpnSiteLinkConnectionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnSiteLinkConnectionsResult"/>. </summary>
         /// <param name="value"> List of VpnSiteLinkConnections. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListVpnSiteLinkConnectionsResult(IReadOnlyList<VpnSiteLinkConnectionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListVpnSiteLinkConnectionsResult(IReadOnlyList<VpnSiteLinkConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of VpnSiteLinkConnections. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -20,12 +21,15 @@ namespace Azure.ResourceManager.Orbital
     /// </summary>
     public partial class OrbitalContactData : ResourceData
     {
-        /// <summary> Initializes a new instance of OrbitalContactData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactData"/>. </summary>
         public OrbitalContactData()
         {
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="endElevationDegrees"> Spacecraft elevation above the horizon at contact end. </param>
         /// <param name="antennaConfiguration"> The configuration associated with the allocated antenna. </param>
         /// <param name="contactProfile"> The reference to the contact profile resource. </param>
-        internal OrbitalContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, OrbitalProvisioningState? provisioningState, OrbitalContactStatus? status, DateTimeOffset? reservationStartOn, DateTimeOffset? reservationEndOn, DateTimeOffset? rxStartOn, DateTimeOffset? rxEndOn, DateTimeOffset? txStartOn, DateTimeOffset? txEndOn, string errorMessage, float? maximumElevationDegrees, float? startAzimuthDegrees, float? endAzimuthDegrees, string groundStationName, float? startElevationDegrees, float? endElevationDegrees, OrbitalContactAntennaConfiguration antennaConfiguration, WritableSubResource contactProfile) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, OrbitalProvisioningState? provisioningState, OrbitalContactStatus? status, DateTimeOffset? reservationStartOn, DateTimeOffset? reservationEndOn, DateTimeOffset? rxStartOn, DateTimeOffset? rxEndOn, DateTimeOffset? txStartOn, DateTimeOffset? txEndOn, string errorMessage, float? maximumElevationDegrees, float? startAzimuthDegrees, float? endAzimuthDegrees, string groundStationName, float? startElevationDegrees, float? endElevationDegrees, OrbitalContactAntennaConfiguration antennaConfiguration, WritableSubResource contactProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -68,6 +73,7 @@ namespace Azure.ResourceManager.Orbital
             EndElevationDegrees = endElevationDegrees;
             AntennaConfiguration = antennaConfiguration;
             ContactProfile = contactProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

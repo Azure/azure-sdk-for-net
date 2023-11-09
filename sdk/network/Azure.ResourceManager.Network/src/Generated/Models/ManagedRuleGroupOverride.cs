@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines a managed rule group override setting. </summary>
     public partial class ManagedRuleGroupOverride
     {
-        /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverride"/>. </summary>
         /// <param name="ruleGroupName"> The managed rule group to override. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ManagedRuleGroupOverride(string ruleGroupName)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.Network.Models
             Rules = new ChangeTrackingList<ManagedRuleOverride>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverride"/>. </summary>
         /// <param name="ruleGroupName"> The managed rule group to override. </param>
         /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
-        internal ManagedRuleGroupOverride(string ruleGroupName, IList<ManagedRuleOverride> rules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleGroupOverride(string ruleGroupName, IList<ManagedRuleOverride> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleGroupName = ruleGroupName;
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverride"/> for deserialization. </summary>
+        internal ManagedRuleGroupOverride()
+        {
         }
 
         /// <summary> The managed rule group to override. </summary>

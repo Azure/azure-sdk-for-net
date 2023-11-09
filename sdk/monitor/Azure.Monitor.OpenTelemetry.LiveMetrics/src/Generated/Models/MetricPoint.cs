@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> Metric data point. </summary>
     internal partial class MetricPoint
     {
-        /// <summary> Initializes a new instance of MetricPoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricPoint"/>. </summary>
         public MetricPoint()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricPoint"/>. </summary>
+        /// <param name="name"> Metric name. </param>
+        /// <param name="value"> Metric value. </param>
+        /// <param name="weight"> Metric weight. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricPoint(string name, float? value, int? weight, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            Weight = weight;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metric name. </summary>

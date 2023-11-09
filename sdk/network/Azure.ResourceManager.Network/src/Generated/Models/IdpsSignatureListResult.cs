@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Query result. </summary>
     public partial class IdpsSignatureListResult
     {
-        /// <summary> Initializes a new instance of IdpsSignatureListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdpsSignatureListResult"/>. </summary>
         internal IdpsSignatureListResult()
         {
             Signatures = new ChangeTrackingList<IdpsSignatureResult>();
         }
 
-        /// <summary> Initializes a new instance of IdpsSignatureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsSignatureListResult"/>. </summary>
         /// <param name="matchingRecordsCount"> Number of total records matching the query. </param>
         /// <param name="signatures"> Array containing the results of the query. </param>
-        internal IdpsSignatureListResult(long? matchingRecordsCount, IReadOnlyList<IdpsSignatureResult> signatures)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdpsSignatureListResult(long? matchingRecordsCount, IReadOnlyList<IdpsSignatureResult> signatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MatchingRecordsCount = matchingRecordsCount;
             Signatures = signatures;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of total records matching the query. </summary>

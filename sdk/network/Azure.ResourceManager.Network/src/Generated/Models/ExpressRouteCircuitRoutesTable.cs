@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The routes table associated with the ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitRoutesTable
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitRoutesTable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitRoutesTable"/>. </summary>
         internal ExpressRouteCircuitRoutesTable()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitRoutesTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitRoutesTable"/>. </summary>
         /// <param name="network"> IP address of a network entity. </param>
         /// <param name="nextHop"> NextHop address. </param>
         /// <param name="locPrf"> Local preference value as set with the set local-preference route-map configuration command. </param>
         /// <param name="weight"> Route Weight. </param>
         /// <param name="path"> Autonomous system paths to the destination network. </param>
-        internal ExpressRouteCircuitRoutesTable(string network, string nextHop, string locPrf, int? weight, string path)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitRoutesTable(string network, string nextHop, string locPrf, int? weight, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Network = network;
             NextHop = nextHop;
             LocPrf = locPrf;
             Weight = weight;
             Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP address of a network entity. </summary>

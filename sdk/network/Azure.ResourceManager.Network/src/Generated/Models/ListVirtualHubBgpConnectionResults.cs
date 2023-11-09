@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHubBgpConnections list. </summary>
     internal partial class ListVirtualHubBgpConnectionResults
     {
-        /// <summary> Initializes a new instance of ListVirtualHubBgpConnectionResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubBgpConnectionResults"/>. </summary>
         internal ListVirtualHubBgpConnectionResults()
         {
             Value = new ChangeTrackingList<BgpConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ListVirtualHubBgpConnectionResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubBgpConnectionResults"/>. </summary>
         /// <param name="value"> The list of VirtualHubBgpConnections. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal ListVirtualHubBgpConnectionResults(IReadOnlyList<BgpConnectionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListVirtualHubBgpConnectionResults(IReadOnlyList<BgpConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of VirtualHubBgpConnections. </summary>

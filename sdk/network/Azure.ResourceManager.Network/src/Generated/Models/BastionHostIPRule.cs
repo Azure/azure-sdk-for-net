@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The BastionHostIPRule. </summary>
     public partial class BastionHostIPRule
     {
-        /// <summary> Initializes a new instance of BastionHostIPRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPRule"/>. </summary>
         public BastionHostIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of BastionHostIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPRule"/>. </summary>
         /// <param name="addressPrefix"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
-        internal BastionHostIPRule(string addressPrefix)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BastionHostIPRule(string addressPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressPrefix = addressPrefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </summary>

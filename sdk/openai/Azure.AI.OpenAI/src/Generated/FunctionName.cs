@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,7 +17,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     internal partial class FunctionName
     {
-        /// <summary> Initializes a new instance of FunctionName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionName"/>. </summary>
         /// <param name="name"> The name of the function to call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FunctionName(string name)
@@ -24,6 +28,21 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FunctionName"/>. </summary>
+        /// <param name="name"> The name of the function to call. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionName(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FunctionName"/> for deserialization. </summary>
+        internal FunctionName()
+        {
         }
 
         /// <summary> The name of the function to call. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Data Product Version. </summary>
     public partial class DataProductVersion
     {
-        /// <summary> Initializes a new instance of DataProductVersion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProductVersion"/>. </summary>
         /// <param name="version"> Version of data product. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public DataProductVersion(string version)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Argument.AssertNotNull(version, nameof(version));
 
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductVersion"/>. </summary>
+        /// <param name="version"> Version of data product. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductVersion(string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductVersion"/> for deserialization. </summary>
+        internal DataProductVersion()
+        {
         }
 
         /// <summary> Version of data product. </summary>

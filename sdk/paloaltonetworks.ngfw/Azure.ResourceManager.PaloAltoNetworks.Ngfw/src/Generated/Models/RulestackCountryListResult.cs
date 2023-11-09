@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Countries Response Object. </summary>
     internal partial class RulestackCountryListResult
     {
-        /// <summary> Initializes a new instance of RulestackCountryListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/>. </summary>
         /// <param name="value"> List of countries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackCountryListResult(IEnumerable<RulestackCountry> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RulestackCountryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/>. </summary>
         /// <param name="value"> List of countries. </param>
         /// <param name="nextLink"> next link. </param>
-        internal RulestackCountryListResult(IReadOnlyList<RulestackCountry> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackCountryListResult(IReadOnlyList<RulestackCountry> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/> for deserialization. </summary>
+        internal RulestackCountryListResult()
+        {
         }
 
         /// <summary> List of countries. </summary>

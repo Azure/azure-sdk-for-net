@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ApplicationGatewayAvailableSslOptions API service call. </summary>
     internal partial class ApplicationGatewayAvailableSslPredefinedPolicies
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslPredefinedPolicies"/>. </summary>
         internal ApplicationGatewayAvailableSslPredefinedPolicies()
         {
             Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslPredefinedPolicies"/>. </summary>
         /// <param name="value"> List of available Ssl predefined policy. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal ApplicationGatewayAvailableSslPredefinedPolicies(IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayAvailableSslPredefinedPolicies(IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of available Ssl predefined policy. </summary>

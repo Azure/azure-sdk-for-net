@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Query results. </summary>
     internal partial class PolicyTrackedResourcesQueryResults
     {
-        /// <summary> Initializes a new instance of PolicyTrackedResourcesQueryResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyTrackedResourcesQueryResults"/>. </summary>
         internal PolicyTrackedResourcesQueryResults()
         {
             Value = new ChangeTrackingList<PolicyTrackedResourceRecord>();
         }
 
-        /// <summary> Initializes a new instance of PolicyTrackedResourcesQueryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTrackedResourcesQueryResults"/>. </summary>
         /// <param name="value"> Query results. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PolicyTrackedResourcesQueryResults(IReadOnlyList<PolicyTrackedResourceRecord> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyTrackedResourcesQueryResults(IReadOnlyList<PolicyTrackedResourceRecord> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Query results. </summary>

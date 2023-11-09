@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The shared keys for a workspace. </summary>
     public partial class OperationalInsightsWorkspaceSharedKeys
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSharedKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSharedKeys"/>. </summary>
         internal OperationalInsightsWorkspaceSharedKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSharedKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSharedKeys"/>. </summary>
         /// <param name="primarySharedKey"> The primary shared key of a workspace. </param>
         /// <param name="secondarySharedKey"> The secondary shared key of a workspace. </param>
-        internal OperationalInsightsWorkspaceSharedKeys(string primarySharedKey, string secondarySharedKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsWorkspaceSharedKeys(string primarySharedKey, string secondarySharedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimarySharedKey = primarySharedKey;
             SecondarySharedKey = secondarySharedKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary shared key of a workspace. </summary>

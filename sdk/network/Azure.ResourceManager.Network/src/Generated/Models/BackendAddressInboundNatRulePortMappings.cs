@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The response for a QueryInboundNatRulePortMapping API. </summary>
     public partial class BackendAddressInboundNatRulePortMappings
     {
-        /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendAddressInboundNatRulePortMappings"/>. </summary>
         internal BackendAddressInboundNatRulePortMappings()
         {
             InboundNatRulePortMappings = new ChangeTrackingList<InboundNatRulePortMapping>();
         }
 
-        /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressInboundNatRulePortMappings"/>. </summary>
         /// <param name="inboundNatRulePortMappings"> Collection of inbound NAT rule port mappings. </param>
-        internal BackendAddressInboundNatRulePortMappings(IReadOnlyList<InboundNatRulePortMapping> inboundNatRulePortMappings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendAddressInboundNatRulePortMappings(IReadOnlyList<InboundNatRulePortMapping> inboundNatRulePortMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InboundNatRulePortMappings = inboundNatRulePortMappings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of inbound NAT rule port mappings. </summary>

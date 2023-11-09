@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CustomRolloutProperties. </summary>
     public partial class CustomRolloutProperties
     {
-        /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/>. </summary>
         /// <param name="specification"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
         public CustomRolloutProperties(CustomRolloutSpecification specification)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Specification = specification;
         }
 
-        /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="specification"></param>
         /// <param name="status"></param>
-        internal CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutSpecification specification, CustomRolloutStatus status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutSpecification specification, CustomRolloutStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Specification = specification;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/> for deserialization. </summary>
+        internal CustomRolloutProperties()
+        {
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

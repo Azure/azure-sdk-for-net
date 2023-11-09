@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlServerAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlServerAdministratorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerAdministratorData"/>. </summary>
         public MySqlServerAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +36,14 @@ namespace Azure.ResourceManager.MySql
         /// <param name="loginAccountName"> The server administrator login account name. </param>
         /// <param name="secureId"> The server administrator Sid (Secure ID). </param>
         /// <param name="tenantId"> The server Active Directory Administrator tenant id. </param>
-        internal MySqlServerAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlAdministratorType? administratorType, string loginAccountName, Guid? secureId, Guid? tenantId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlAdministratorType? administratorType, string loginAccountName, Guid? secureId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             LoginAccountName = loginAccountName;
             SecureId = secureId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of administrator. </summary>

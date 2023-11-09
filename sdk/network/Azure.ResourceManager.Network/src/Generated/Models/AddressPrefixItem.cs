@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Address prefix item. </summary>
     public partial class AddressPrefixItem
     {
-        /// <summary> Initializes a new instance of AddressPrefixItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AddressPrefixItem"/>. </summary>
         public AddressPrefixItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AddressPrefixItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressPrefixItem"/>. </summary>
         /// <param name="addressPrefix"> Address prefix. </param>
         /// <param name="addressPrefixType"> Address prefix type. </param>
-        internal AddressPrefixItem(string addressPrefix, AddressPrefixType? addressPrefixType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddressPrefixItem(string addressPrefix, AddressPrefixType? addressPrefixType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressPrefix = addressPrefix;
             AddressPrefixType = addressPrefixType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Address prefix. </summary>

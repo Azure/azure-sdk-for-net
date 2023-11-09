@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TypedErrorInfo. </summary>
     public partial class TypedErrorInfo
     {
-        /// <summary> Initializes a new instance of TypedErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
         /// <param name="typedErrorInfoType"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="typedErrorInfoType"/> is null. </exception>
         public TypedErrorInfo(string typedErrorInfoType)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TypedErrorInfoType = typedErrorInfoType;
         }
 
-        /// <summary> Initializes a new instance of TypedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
         /// <param name="typedErrorInfoType"></param>
         /// <param name="info"> Any object. </param>
-        internal TypedErrorInfo(string typedErrorInfoType, BinaryData info)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TypedErrorInfo(string typedErrorInfoType, BinaryData info, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TypedErrorInfoType = typedErrorInfoType;
             Info = info;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/> for deserialization. </summary>
+        internal TypedErrorInfo()
+        {
         }
 
         /// <summary> Gets or sets the typed error info type. </summary>

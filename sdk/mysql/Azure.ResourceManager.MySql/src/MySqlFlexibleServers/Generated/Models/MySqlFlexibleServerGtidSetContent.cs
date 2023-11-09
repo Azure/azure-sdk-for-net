@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Server Gtid set parameters. </summary>
     public partial class MySqlFlexibleServerGtidSetContent
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerGtidSetContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerGtidSetContent"/>. </summary>
         public MySqlFlexibleServerGtidSetContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerGtidSetContent"/>. </summary>
+        /// <param name="gtidSet"> The Gtid set of server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerGtidSetContent(string gtidSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            GtidSet = gtidSet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Gtid set of server. </summary>

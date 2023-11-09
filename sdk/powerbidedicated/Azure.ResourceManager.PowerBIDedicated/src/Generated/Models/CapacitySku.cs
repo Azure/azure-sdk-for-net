@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Represents the SKU name and Azure pricing tier for PowerBI Dedicated capacity resource. </summary>
     public partial class CapacitySku
     {
-        /// <summary> Initializes a new instance of CapacitySku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapacitySku"/>. </summary>
         /// <param name="name"> Name of the SKU level. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CapacitySku(string name)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of CapacitySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacitySku"/>. </summary>
         /// <param name="name"> Name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
         /// <param name="capacity"> The capacity of the SKU. </param>
-        internal CapacitySku(string name, CapacitySkuTier? tier, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapacitySku(string name, CapacitySkuTier? tier, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CapacitySku"/> for deserialization. </summary>
+        internal CapacitySku()
+        {
         }
 
         /// <summary> Name of the SKU level. </summary>

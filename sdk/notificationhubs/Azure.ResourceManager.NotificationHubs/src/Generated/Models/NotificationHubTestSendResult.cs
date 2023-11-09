@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub Resource. </summary>
     public partial class NotificationHubTestSendResult : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubTestSendResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubTestSendResult(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubTestSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +35,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="failure"> send failure. </param>
         /// <param name="results"> actual failure description. </param>
         /// <param name="sku"> The sku of the created namespace. </param>
-        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? success, int? failure, BinaryData results, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? success, int? failure, BinaryData results, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Success = success;
             Failure = failure;
             Results = results;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/> for deserialization. </summary>
+        internal NotificationHubTestSendResult()
+        {
         }
 
         /// <summary> successful send. </summary>

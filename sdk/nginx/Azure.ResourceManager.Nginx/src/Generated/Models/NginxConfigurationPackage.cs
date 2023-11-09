@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxConfigurationPackage. </summary>
     internal partial class NginxConfigurationPackage
     {
-        /// <summary> Initializes a new instance of NginxConfigurationPackage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationPackage"/>. </summary>
         public NginxConfigurationPackage()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationPackage"/>. </summary>
         /// <param name="data"></param>
-        internal NginxConfigurationPackage(string data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxConfigurationPackage(string data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the data. </summary>

@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NotificationActionDetail
+    public partial class NotificationActionDetail : IUtf8JsonSerializable, IJsonModel<NotificationActionDetail>
     {
-        internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationActionDetail>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        void IJsonModel<NotificationActionDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MechanismType))
+            {
+                writer.WritePropertyName("MechanismType"u8);
+                writer.WriteStringValue(MechanismType);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("Name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("Status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(SubState))
+            {
+                writer.WritePropertyName("SubState"u8);
+                writer.WriteStringValue(SubState);
+            }
+            if (Optional.IsDefined(SendOn))
+            {
+                writer.WritePropertyName("SendTime"u8);
+                writer.WriteStringValue(SendOn.Value, "O");
+            }
+            if (Optional.IsDefined(Detail))
+            {
+                writer.WritePropertyName("Detail"u8);
+                writer.WriteStringValue(Detail);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == ModelReaderWriterFormat.Json)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NotificationActionDetail IJsonModel<NotificationActionDetail>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationActionDetail(document.RootElement, options);
+        }
+
+        internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +95,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> subState = default;
             Optional<DateTimeOffset> sendTime = default;
             Optional<string> detail = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("MechanismType"u8))
@@ -61,8 +133,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     detail = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelReaderWriterFormat.Json)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IModel<NotificationActionDetail>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NotificationActionDetail IModel<NotificationActionDetail>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == ModelReaderWriterFormat.Json || options.Format == ModelReaderWriterFormat.Wire;
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNotificationActionDetail(document.RootElement, options);
+        }
+
+        ModelReaderWriterFormat IModel<NotificationActionDetail>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Results of network security group evaluation. </summary>
     public partial class EvaluatedNetworkSecurityGroup
     {
-        /// <summary> Initializes a new instance of EvaluatedNetworkSecurityGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EvaluatedNetworkSecurityGroup"/>. </summary>
         internal EvaluatedNetworkSecurityGroup()
         {
             RulesEvaluationResult = new ChangeTrackingList<NetworkSecurityRulesEvaluationResult>();
         }
 
-        /// <summary> Initializes a new instance of EvaluatedNetworkSecurityGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluatedNetworkSecurityGroup"/>. </summary>
         /// <param name="networkSecurityGroupId"> Network security group ID. </param>
         /// <param name="appliedTo"> Resource ID of nic or subnet to which network security group is applied. </param>
         /// <param name="matchedRule"> Matched network security rule. </param>
         /// <param name="rulesEvaluationResult"> List of network security rules evaluation results. </param>
-        internal EvaluatedNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId, string appliedTo, MatchedRule matchedRule, IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EvaluatedNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId, string appliedTo, MatchedRule matchedRule, IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkSecurityGroupId = networkSecurityGroupId;
             AppliedTo = appliedTo;
             MatchedRule = matchedRule;
             RulesEvaluationResult = rulesEvaluationResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Network security group ID. </summary>

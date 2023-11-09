@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The response for a migrateToIpBased API. </summary>
     public partial class MigrateLoadBalancerToIPBasedResult
     {
-        /// <summary> Initializes a new instance of MigrateLoadBalancerToIPBasedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateLoadBalancerToIPBasedResult"/>. </summary>
         internal MigrateLoadBalancerToIPBasedResult()
         {
             MigratedPools = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateLoadBalancerToIPBasedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateLoadBalancerToIPBasedResult"/>. </summary>
         /// <param name="migratedPools"> A list of pools migrated from Nic based to IP based pool. </param>
-        internal MigrateLoadBalancerToIPBasedResult(IReadOnlyList<string> migratedPools)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateLoadBalancerToIPBasedResult(IReadOnlyList<string> migratedPools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MigratedPools = migratedPools;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of pools migrated from Nic based to IP based pool. </summary>
