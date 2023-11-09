@@ -123,7 +123,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new ModelXmlCrossLibrary(key, value, readonlyProperty, childModelXml);
         }
 
-        BinaryData IModel<ModelXmlCrossLibrary>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ModelXmlCrossLibrary>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -185,7 +185,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new ModelXmlCrossLibrary(key, value, readOnlyProperty, childModelXml);
         }
 
-        ModelXmlCrossLibrary IModel<ModelXmlCrossLibrary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ModelXmlCrossLibrary IPersistableModel<ModelXmlCrossLibrary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -221,6 +221,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        string IModel<ModelXmlCrossLibrary>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ModelXmlCrossLibrary>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

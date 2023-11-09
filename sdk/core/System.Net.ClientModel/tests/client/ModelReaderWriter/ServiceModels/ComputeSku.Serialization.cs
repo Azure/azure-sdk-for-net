@@ -110,19 +110,19 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             reader.Skip();
         }
 
-        ComputeSku IModel<ComputeSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeSku IPersistableModel<ComputeSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeComputeSku(doc.RootElement, options);
         }
 
-        BinaryData IModel<ComputeSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeSku>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

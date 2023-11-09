@@ -100,19 +100,19 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        ResourceTypeAliasPathMetadata IModel<ResourceTypeAliasPathMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ResourceTypeAliasPathMetadata IPersistableModel<ResourceTypeAliasPathMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);
         }
 
-        BinaryData IModel<ResourceTypeAliasPathMetadata>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResourceTypeAliasPathMetadata>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ResourceTypeAliasPathMetadata>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceTypeAliasPathMetadata>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

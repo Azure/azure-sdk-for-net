@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         }
     }
 
-    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         }
     }
 
-    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -67,7 +67,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         }
     }
 
-    public class ModelInterfaceStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelInterfaceStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -79,23 +79,23 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IPersistableModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
-    public class ModelInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ((IModel<object>)model).Write(options);
+            return ((IPersistableModel<object>)model).Write(options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IPersistableModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -165,7 +165,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         }
     }
 
-    public class CastStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class CastStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         private Func<T, RequestContent> _toRequestContent;
         private Func<Response, T> _fromResponse;

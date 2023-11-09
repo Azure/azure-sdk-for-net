@@ -109,14 +109,14 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         private class SubType : BaseWithNoUnknown, IJsonModel<SubType>
         {
-            string IModel<SubType>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+            string IPersistableModel<SubType>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
             SubType IJsonModel<SubType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
 
-            SubType IModel<SubType>.Create(BinaryData data, ModelReaderWriterOptions options)
+            SubType IPersistableModel<SubType>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
@@ -126,7 +126,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
                 return;
             }
 
-            BinaryData IModel<SubType>.Write(ModelReaderWriterOptions options)
+            BinaryData IPersistableModel<SubType>.Write(ModelReaderWriterOptions options)
             {
                 return new BinaryData(Array.Empty<byte>());
             }
@@ -134,14 +134,14 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         private abstract class BaseWithNoUnknown : IJsonModel<BaseWithNoUnknown>
         {
-            string IModel<BaseWithNoUnknown>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+            string IPersistableModel<BaseWithNoUnknown>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
             BaseWithNoUnknown IJsonModel<BaseWithNoUnknown>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
 
-            BaseWithNoUnknown IModel<BaseWithNoUnknown>.Create(BinaryData data, ModelReaderWriterOptions options)
+            BaseWithNoUnknown IPersistableModel<BaseWithNoUnknown>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 return new SubType();
             }
@@ -151,7 +151,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
                 return;
             }
 
-            BinaryData IModel<BaseWithNoUnknown>.Write(ModelReaderWriterOptions options)
+            BinaryData IPersistableModel<BaseWithNoUnknown>.Write(ModelReaderWriterOptions options)
             {
                 return new BinaryData(Array.Empty<byte>());
             }
@@ -161,14 +161,14 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         {
             public ModelWithNoDefaultCtor(int x) { }
 
-            string IModel<ModelWithNoDefaultCtor>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+            string IPersistableModel<ModelWithNoDefaultCtor>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
             ModelWithNoDefaultCtor IJsonModel<ModelWithNoDefaultCtor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 return new ModelWithNoDefaultCtor(1);
             }
 
-            ModelWithNoDefaultCtor IModel<ModelWithNoDefaultCtor>.Create(BinaryData data, ModelReaderWriterOptions options)
+            ModelWithNoDefaultCtor IPersistableModel<ModelWithNoDefaultCtor>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 return new ModelWithNoDefaultCtor(1);
             }
@@ -178,7 +178,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
                 return;
             }
 
-            BinaryData IModel<ModelWithNoDefaultCtor>.Write(ModelReaderWriterOptions options)
+            BinaryData IPersistableModel<ModelWithNoDefaultCtor>.Write(ModelReaderWriterOptions options)
             {
                 return new BinaryData(Array.Empty<byte>());
             }

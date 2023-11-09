@@ -153,19 +153,19 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
             reader.Skip();
         }
 
-        InstanceViewStatus IModel<InstanceViewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InstanceViewStatus IPersistableModel<InstanceViewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeInstanceViewStatus(doc.RootElement, options);
         }
 
-        BinaryData IModel<InstanceViewStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InstanceViewStatus>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

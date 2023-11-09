@@ -92,19 +92,19 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return DeserializeZoneMapping(doc.RootElement, options);
         }
 
-        ZoneMapping IModel<ZoneMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ZoneMapping IPersistableModel<ZoneMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeZoneMapping(doc.RootElement, options);
         }
 
-        BinaryData IModel<ZoneMapping>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ZoneMapping>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ZoneMapping>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ZoneMapping>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

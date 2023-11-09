@@ -99,19 +99,19 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        ProviderExtendedLocation IModel<ProviderExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProviderExtendedLocation IPersistableModel<ProviderExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        BinaryData IModel<ProviderExtendedLocation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderExtendedLocation>.Write(ModelReaderWriterOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
