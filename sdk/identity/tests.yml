@@ -18,5 +18,3 @@ extends:
           - $(sub-config-identity-test-resources)
       China:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        MatrixFilters:
-          - ArmTemplateParameters=^(?!.*enableHsm.*true)
