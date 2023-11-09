@@ -77,5 +77,32 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(3, Message = "Accessing environment variable - {0} failed with exception: {1}.", Level = EventLevel.Warning)]
         public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(2, environmentVariable, exceptionMessage);
+
+        [NonEvent]
+        public void SdkVersionCreateFailed(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                SdkVersionCreateFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(4, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
+        public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(4, exceptionMessage);
+
+        [Event(5, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
+        public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(5, typeName, value);
+
+        [NonEvent]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                ErrorInitializingPartOfSdkVersion(typeName, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(6, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(6, typeName, exceptionMessage);
     }
 }
