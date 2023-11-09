@@ -58,11 +58,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write(model, options.Format);
+            return ModelReaderWriter.Write(model, options);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options.Format);
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 

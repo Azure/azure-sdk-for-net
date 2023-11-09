@@ -123,7 +123,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                     continue;
                 }
 
-                if (options.Format == ModelReaderWriterFormat.Json)
+                if (options.Format == "J")
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         {
             //cast does not work without options
             if (!typeof(T).IsGenericType)
-                RoundTripTest(ModelReaderWriterFormat.Wire, new CastStrategy<T>(ToRequestContent, FromResponse));
+                RoundTripTest("W", new CastStrategy<T>(ToRequestContent, FromResponse));
         }
 
         protected void RoundTripTest(string format, RoundTripStrategy<T> strategy)
