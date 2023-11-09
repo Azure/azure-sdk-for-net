@@ -36,6 +36,8 @@ public class RequestOptions
         message.CancellationToken = CancellationToken;
 
         // Don't overwrite the classifier on the message if it's already set.
+        // This is needed for Azure.Core so a ClientModel MessageClassifier
+        // doesn't overwrite an Azure.Core ResponseClassifier.
         if (!message.HasMessageClassifier)
         {
             message.MessageClassifier = MessageClassifier;
