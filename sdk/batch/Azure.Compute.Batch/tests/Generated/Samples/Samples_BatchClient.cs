@@ -346,73 +346,73 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreatePool_ShortVersion()
+        public void Example_Create_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 vmSize = "<vmSize>",
             });
-            Response response = client.CreatePool(content);
+            Response response = client.Create(content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreatePool_ShortVersion_Async()
+        public async Task Example_Create_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 vmSize = "<vmSize>",
             });
-            Response response = await client.CreatePoolAsync(content);
+            Response response = await client.CreateAsync(content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreatePool_ShortVersion_Convenience()
+        public void Example_Create_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             BatchPoolCreateOptions body = new BatchPoolCreateOptions("<id>", "<vmSize>");
-            Response response = client.CreatePool(body);
+            Response response = client.Create(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreatePool_ShortVersion_Convenience_Async()
+        public async Task Example_Create_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             BatchPoolCreateOptions body = new BatchPoolCreateOptions("<id>", "<vmSize>");
-            Response response = await client.CreatePoolAsync(body);
+            Response response = await client.CreateAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreatePool_AllParameters()
+        public void Example_Create_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -698,20 +698,20 @@ mountOptions = "<mountOptions>",
             },
                 targetNodeCommunicationMode = "default",
             });
-            Response response = client.CreatePool(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Response response = client.Create(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreatePool_AllParameters_Async()
+        public async Task Example_Create_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -997,14 +997,14 @@ mountOptions = "<mountOptions>",
             },
                 targetNodeCommunicationMode = "default",
             });
-            Response response = await client.CreatePoolAsync(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Response response = await client.CreateAsync(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreatePool_AllParameters_Convenience()
+        public void Example_Create_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1195,12 +1195,12 @@ MountOptions = "<mountOptions>",
 }},
                 TargetNodeCommunicationMode = NodeCommunicationMode.Default,
             };
-            Response response = client.CreatePool(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Response response = client.Create(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreatePool_AllParameters_Convenience_Async()
+        public async Task Example_Create_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1391,57 +1391,483 @@ MountOptions = "<mountOptions>",
 }},
                 TargetNodeCommunicationMode = NodeCommunicationMode.Default,
             };
-            Response response = await client.CreatePoolAsync(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Response response = await client.CreateAsync(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeletePool_ShortVersion()
+        public void Example_GetPools_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.DeletePool("<poolId>");
+            Response response = client.GetPools(null, null, null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = await client.GetPoolsAsync(null, null, null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetPools_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchPoolListResult> response = client.GetPools();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchPoolListResult> response = await client.GetPoolsAsync();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetPools_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("eTag").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModified").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("creationTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationState").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationStateTransitionTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeTimeout").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentDedicatedNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentLowPriorityNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetDedicatedNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetLowPriorityNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableAutoScale").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleFormula").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleEvaluationInterval").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("results").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableInterNodeCommunication").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationLicenses")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSlotsPerNode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetNodeCommunicationMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentNodeCommunicationMode").ToString());
+            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = await client.GetPoolsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("eTag").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModified").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("creationTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationState").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationStateTransitionTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeTimeout").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentDedicatedNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentLowPriorityNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetDedicatedNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetLowPriorityNodes").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableAutoScale").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleFormula").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleEvaluationInterval").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("results").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableInterNodeCommunication").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationLicenses")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSlotsPerNode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetNodeCommunicationMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentNodeCommunicationMode").ToString());
+            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetPools_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchPoolListResult> response = client.GetPools(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchPoolListResult> response = await client.GetPoolsAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Delete_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = client.Delete("<poolId>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeletePool_ShortVersion_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.DeletePoolAsync("<poolId>");
+            Response response = await client.DeleteAsync("<poolId>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeletePool_AllParameters()
+        public void Example_Delete_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.DeletePool("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = client.Delete("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeletePool_AllParameters_Async()
+        public async Task Example_Delete_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.DeletePoolAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = await client.DeleteAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
             Console.WriteLine(response.Status);
         }
@@ -1924,41 +2350,41 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdatePool_ShortVersion()
+        public void Example_Update_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpdatePool("<poolId>", content);
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.Update("<poolId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdatePool_ShortVersion_Async()
+        public async Task Example_Update_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdatePoolAsync("<poolId>", content);
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateAsync("<poolId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdatePool_AllParameters()
+        public void Example_Update_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startTask = new
                 {
@@ -2043,20 +2469,20 @@ value = "<value>",
             },
                 targetNodeCommunicationMode = "default",
             });
-            Response response = client.UpdatePool("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = client.Update("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdatePool_AllParameters_Async()
+        public async Task Example_Update_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startTask = new
                 {
@@ -2141,7 +2567,7 @@ value = "<value>",
             },
                 targetNodeCommunicationMode = "default",
             });
-            Response response = await client.UpdatePoolAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = await client.UpdateAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
             Console.WriteLine(response.Status);
         }
@@ -2206,7 +2632,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.EnablePoolAutoScale("<poolId>", content);
 
             Console.WriteLine(response.Status);
@@ -2220,7 +2646,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.EnablePoolAutoScaleAsync("<poolId>", content);
 
             Console.WriteLine(response.Status);
@@ -2258,7 +2684,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 autoScaleFormula = "<autoScaleFormula>",
                 autoScaleEvaluationInterval = "PT1H23M45S",
@@ -2276,7 +2702,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 autoScaleFormula = "<autoScaleFormula>",
                 autoScaleEvaluationInterval = "PT1H23M45S",
@@ -2326,7 +2752,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 autoScaleFormula = "<autoScaleFormula>",
             });
@@ -2344,7 +2770,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 autoScaleFormula = "<autoScaleFormula>",
             });
@@ -2386,7 +2812,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 autoScaleFormula = "<autoScaleFormula>",
             });
@@ -2409,7 +2835,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 autoScaleFormula = "<autoScaleFormula>",
             });
@@ -2450,99 +2876,99 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ResizePool_ShortVersion()
+        public void Example_Resize_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.ResizePool("<poolId>", content);
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.Resize("<poolId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ResizePool_ShortVersion_Async()
+        public async Task Example_Resize_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.ResizePoolAsync("<poolId>", content);
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.ResizeAsync("<poolId>", content);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ResizePool_ShortVersion_Convenience()
+        public void Example_Resize_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             BatchPoolResizeOptions body = new BatchPoolResizeOptions();
-            Response response = client.ResizePool("<poolId>", body);
+            Response response = client.Resize("<poolId>", body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ResizePool_ShortVersion_Convenience_Async()
+        public async Task Example_Resize_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             BatchPoolResizeOptions body = new BatchPoolResizeOptions();
-            Response response = await client.ResizePoolAsync("<poolId>", body);
+            Response response = await client.ResizeAsync("<poolId>", body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ResizePool_AllParameters()
+        public void Example_Resize_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 targetDedicatedNodes = 1234,
                 targetLowPriorityNodes = 1234,
                 resizeTimeout = "PT1H23M45S",
                 nodeDeallocationOption = "requeue",
             });
-            Response response = client.ResizePool("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = client.Resize("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ResizePool_AllParameters_Async()
+        public async Task Example_Resize_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 targetDedicatedNodes = 1234,
                 targetLowPriorityNodes = 1234,
                 resizeTimeout = "PT1H23M45S",
                 nodeDeallocationOption = "requeue",
             });
-            Response response = await client.ResizePoolAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = await client.ResizeAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ResizePool_AllParameters_Convenience()
+        public void Example_Resize_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2555,12 +2981,12 @@ value = "<value>",
                 ResizeTimeout = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 NodeDeallocationOption = BatchNodeDeallocationOption.Requeue,
             };
-            Response response = client.ResizePool("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = client.Resize("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ResizePool_AllParameters_Convenience_Async()
+        public async Task Example_Resize_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2573,7 +2999,7 @@ value = "<value>",
                 ResizeTimeout = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 NodeDeallocationOption = BatchNodeDeallocationOption.Requeue,
             };
-            Response response = await client.ResizePoolAsync("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response response = await client.ResizeAsync("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
         }
 
         [Test]
@@ -2636,7 +3062,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 certificateReferences = new object[]
             {
@@ -2675,7 +3101,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 certificateReferences = new object[]
             {
@@ -2756,7 +3182,7 @@ new MetadataItem("<name>", "<value>")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startTask = new
                 {
@@ -2854,7 +3280,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startTask = new
                 {
@@ -3102,7 +3528,7 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeList = new object[]
             {
@@ -3122,7 +3548,7 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeList = new object[]
             {
@@ -3166,7 +3592,7 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeList = new object[]
             {
@@ -3188,7 +3614,7 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeList = new object[]
             {
@@ -4184,7 +4610,7 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
@@ -4198,7 +4624,7 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
@@ -4212,7 +4638,7 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 priority = 1234,
                 allowTaskPreemption = true,
@@ -4536,7 +4962,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 priority = 1234,
                 allowTaskPreemption = true,
@@ -4860,7 +5286,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 poolInfo = new object(),
             });
@@ -4877,7 +5303,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 poolInfo = new object(),
             });
@@ -4918,7 +5344,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 priority = 1234,
                 allowTaskPreemption = true,
@@ -5242,7 +5668,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 priority = 1234,
                 allowTaskPreemption = true,
@@ -6000,7 +6426,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 disableTasks = "requeue",
             });
@@ -6017,7 +6443,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 disableTasks = "requeue",
             });
@@ -6058,7 +6484,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 disableTasks = "requeue",
             });
@@ -6075,7 +6501,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 disableTasks = "requeue",
             });
@@ -6168,7 +6594,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.TerminateJob("<jobId>", content);
 
             Console.WriteLine(response.Status);
@@ -6182,7 +6608,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.TerminateJobAsync("<jobId>", content);
 
             Console.WriteLine(response.Status);
@@ -6218,7 +6644,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 terminateReason = "<terminateReason>",
             });
@@ -6235,7 +6661,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 terminateReason = "<terminateReason>",
             });
@@ -6282,7 +6708,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 poolInfo = new object(),
@@ -6300,7 +6726,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 poolInfo = new object(),
@@ -6342,7 +6768,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -6771,7 +7197,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -10006,7 +10432,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateJobSchedule("<jobScheduleId>", content);
 
             Console.WriteLine(response.Status);
@@ -10020,7 +10446,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateJobScheduleAsync("<jobScheduleId>", content);
 
             Console.WriteLine(response.Status);
@@ -10034,7 +10460,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 schedule = new
                 {
@@ -10476,7 +10902,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 schedule = new
                 {
@@ -10918,7 +11344,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 schedule = new object(),
                 jobSpecification = new
@@ -10939,7 +11365,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 schedule = new object(),
                 jobSpecification = new
@@ -10984,7 +11410,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 schedule = new
                 {
@@ -11426,7 +11852,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 schedule = new
                 {
@@ -12598,7 +13024,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 schedule = new object(),
@@ -12620,7 +13046,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 schedule = new object(),
@@ -12666,7 +13092,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -13110,7 +13536,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -14746,7 +15172,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 commandLine = "<commandLine>",
@@ -14764,7 +15190,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 commandLine = "<commandLine>",
@@ -14806,7 +15232,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -14973,7 +15399,7 @@ version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 id = "<id>",
                 displayName = "<displayName>",
@@ -15652,7 +16078,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 value = new object[]
             {
@@ -15677,7 +16103,7 @@ commandLine = "<commandLine>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 value = new object[]
             {
@@ -15732,7 +16158,7 @@ new BatchTaskCreateOptions("<id>", "<commandLine>")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 value = new object[]
             {
@@ -15915,7 +16341,7 @@ access = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 value = new object[]
             {
@@ -16666,7 +17092,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ReplaceTask("<jobId>", "<taskId>", content);
 
             Console.WriteLine(response.Status);
@@ -16680,7 +17106,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReplaceTaskAsync("<jobId>", "<taskId>", content);
 
             Console.WriteLine(response.Status);
@@ -16718,7 +17144,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 constraints = new
                 {
@@ -16740,7 +17166,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 constraints = new
                 {
@@ -17370,7 +17796,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
             });
@@ -17387,7 +17813,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
             });
@@ -17428,7 +17854,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 isAdmin = true,
@@ -17449,7 +17875,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 isAdmin = true,
@@ -17558,7 +17984,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content);
 
             Console.WriteLine(response.Status);
@@ -17572,7 +17998,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content);
 
             Console.WriteLine(response.Status);
@@ -17610,7 +18036,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 password = "<password>",
                 expiryTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -17629,7 +18055,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 password = "<password>",
                 expiryTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -17972,7 +18398,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.RebootNode("<poolId>", "<nodeId>", content);
 
             Console.WriteLine(response.Status);
@@ -17986,7 +18412,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.RebootNodeAsync("<poolId>", "<nodeId>", content);
 
             Console.WriteLine(response.Status);
@@ -18022,7 +18448,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeRebootOption = "requeue",
             });
@@ -18039,7 +18465,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeRebootOption = "requeue",
             });
@@ -18086,7 +18512,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.ReimageNode("<poolId>", "<nodeId>", content);
 
             Console.WriteLine(response.Status);
@@ -18100,7 +18526,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", content);
 
             Console.WriteLine(response.Status);
@@ -18136,7 +18562,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeReimageOption = "requeue",
             });
@@ -18153,7 +18579,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeReimageOption = "requeue",
             });
@@ -18200,7 +18626,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.DisableNodeScheduling("<poolId>", "<nodeId>", content);
 
             Console.WriteLine(response.Status);
@@ -18214,7 +18640,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.DisableNodeSchedulingAsync("<poolId>", "<nodeId>", content);
 
             Console.WriteLine(response.Status);
@@ -18250,7 +18676,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeDisableSchedulingOption = "requeue",
             });
@@ -18267,7 +18693,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 nodeDisableSchedulingOption = "requeue",
             });
@@ -18570,7 +18996,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
                 startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -18590,7 +19016,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
                 startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -18634,7 +19060,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
                 startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -18659,7 +19085,7 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 containerUrl = "<containerUrl>",
                 startTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -18712,6 +19138,298 @@ Access = {AccessScope.Job},
                 },
             };
             Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("<poolId>", "<nodeId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = client.GetNodes("<poolId>", null, null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = await client.GetNodesAsync("<poolId>", null, null, null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchNodeListResult> response = client.GetNodes("<poolId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchNodeListResult> response = await client.GetNodesAsync("<poolId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = client.GetNodes("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("schedulingState").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastBootTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("ipAddress").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("affinityId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksRun").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTasksCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTaskSlotsCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksSucceeded").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDedicated").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response response = await client.GetNodesAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("schedulingState").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastBootTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("ipAddress").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("affinityId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksRun").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTasksCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTaskSlotsCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksSucceeded").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDedicated").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchNodeListResult> response = client.GetNodes("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            Response<BatchNodeListResult> response = await client.GetNodesAsync("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" });
         }
 
         [Test]
@@ -19314,744 +20032,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response<NodeFileListResult> response = await client.GetNodeFilesAsync("<poolId>", "<nodeId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", recursive: true);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetPools(null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetPoolsAsync(null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BatchPool item in client.GetPools())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BatchPool item in client.GetPoolsAsync())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("url").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("lastModified").ToString());
-                Console.WriteLine(result.GetProperty("creationTime").ToString());
-                Console.WriteLine(result.GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
-                Console.WriteLine(result.GetProperty("allocationState").ToString());
-                Console.WriteLine(result.GetProperty("allocationStateTransitionTime").ToString());
-                Console.WriteLine(result.GetProperty("vmSize").ToString());
-                Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-                Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
-                Console.WriteLine(result.GetProperty("resizeTimeout").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("currentDedicatedNodes").ToString());
-                Console.WriteLine(result.GetProperty("currentLowPriorityNodes").ToString());
-                Console.WriteLine(result.GetProperty("targetDedicatedNodes").ToString());
-                Console.WriteLine(result.GetProperty("targetLowPriorityNodes").ToString());
-                Console.WriteLine(result.GetProperty("enableAutoScale").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleFormula").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleEvaluationInterval").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("results").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("enableInterNodeCommunication").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("commandLine").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-                Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
-                Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("applicationLicenses")[0].ToString());
-                Console.WriteLine(result.GetProperty("taskSlotsPerNode").ToString());
-                Console.WriteLine(result.GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
-                Console.WriteLine(result.GetProperty("metadata")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("metadata")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("url").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("type").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
-                Console.WriteLine(result.GetProperty("targetNodeCommunicationMode").ToString());
-                Console.WriteLine(result.GetProperty("currentNodeCommunicationMode").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetPoolsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("url").ToString());
-                Console.WriteLine(result.GetProperty("eTag").ToString());
-                Console.WriteLine(result.GetProperty("lastModified").ToString());
-                Console.WriteLine(result.GetProperty("creationTime").ToString());
-                Console.WriteLine(result.GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
-                Console.WriteLine(result.GetProperty("allocationState").ToString());
-                Console.WriteLine(result.GetProperty("allocationStateTransitionTime").ToString());
-                Console.WriteLine(result.GetProperty("vmSize").ToString());
-                Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-                Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
-                Console.WriteLine(result.GetProperty("resizeTimeout").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("currentDedicatedNodes").ToString());
-                Console.WriteLine(result.GetProperty("currentLowPriorityNodes").ToString());
-                Console.WriteLine(result.GetProperty("targetDedicatedNodes").ToString());
-                Console.WriteLine(result.GetProperty("targetLowPriorityNodes").ToString());
-                Console.WriteLine(result.GetProperty("enableAutoScale").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleFormula").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleEvaluationInterval").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("results").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("enableInterNodeCommunication").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
-                Console.WriteLine(result.GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("commandLine").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-                Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
-                Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("applicationLicenses")[0].ToString());
-                Console.WriteLine(result.GetProperty("taskSlotsPerNode").ToString());
-                Console.WriteLine(result.GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
-                Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
-                Console.WriteLine(result.GetProperty("metadata")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("metadata")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("url").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
-                Console.WriteLine(result.GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
-                Console.WriteLine(result.GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("type").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
-                Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
-                Console.WriteLine(result.GetProperty("targetNodeCommunicationMode").ToString());
-                Console.WriteLine(result.GetProperty("currentNodeCommunicationMode").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BatchPool item in client.GetPools(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BatchPool item in client.GetPoolsAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetNodes("<poolId>", null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetNodesAsync("<poolId>", null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BatchNode item in client.GetNodes("<poolId>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BatchNode item in client.GetNodesAsync("<poolId>"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetNodes("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("url").ToString());
-                Console.WriteLine(result.GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("schedulingState").ToString());
-                Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
-                Console.WriteLine(result.GetProperty("lastBootTime").ToString());
-                Console.WriteLine(result.GetProperty("allocationTime").ToString());
-                Console.WriteLine(result.GetProperty("ipAddress").ToString());
-                Console.WriteLine(result.GetProperty("affinityId").ToString());
-                Console.WriteLine(result.GetProperty("vmSize").ToString());
-                Console.WriteLine(result.GetProperty("totalTasksRun").ToString());
-                Console.WriteLine(result.GetProperty("runningTasksCount").ToString());
-                Console.WriteLine(result.GetProperty("runningTaskSlotsCount").ToString());
-                Console.WriteLine(result.GetProperty("totalTasksSucceeded").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("commandLine").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("isDedicated").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
-                Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetNodesAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("url").ToString());
-                Console.WriteLine(result.GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("schedulingState").ToString());
-                Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
-                Console.WriteLine(result.GetProperty("lastBootTime").ToString());
-                Console.WriteLine(result.GetProperty("allocationTime").ToString());
-                Console.WriteLine(result.GetProperty("ipAddress").ToString());
-                Console.WriteLine(result.GetProperty("affinityId").ToString());
-                Console.WriteLine(result.GetProperty("vmSize").ToString());
-                Console.WriteLine(result.GetProperty("totalTasksRun").ToString());
-                Console.WriteLine(result.GetProperty("runningTasksCount").ToString());
-                Console.WriteLine(result.GetProperty("runningTaskSlotsCount").ToString());
-                Console.WriteLine(result.GetProperty("totalTasksSucceeded").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
-                Console.WriteLine(result.GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("commandLine").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-                Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
-                Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-                Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
-                Console.WriteLine(result.GetProperty("isDedicated").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
-                Console.WriteLine(result.GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
-                Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-                Console.WriteLine(result.GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            foreach (BatchNode item in client.GetNodes("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            await foreach (BatchNode item in client.GetNodesAsync("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }))
-            {
-            }
         }
     }
 }

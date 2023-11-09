@@ -22,7 +22,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("thumbprintAlgorithm"u8);
             writer.WriteStringValue(ThumbprintAlgorithm);
             writer.WritePropertyName("data"u8);
-            writer.WriteStringValue(Data);
+            writer.WriteBase64StringValue(Data.ToArray(), "D");
             if (Optional.IsDefined(CertificateFormat))
             {
                 writer.WritePropertyName("certificateFormat"u8);
@@ -49,9 +49,9 @@ namespace Azure.Compute.Batch
             Optional<DateTimeOffset> stateTransitionTime = default;
             Optional<CertificateState> previousState = default;
             Optional<DateTimeOffset> previousStateTransitionTime = default;
-            Optional<string> publicData = default;
+            Optional<BinaryData> publicData = default;
             Optional<DeleteCertificateError> deleteCertificateError = default;
-            string data = default;
+            BinaryData data = default;
             Optional<CertificateFormat> certificateFormat = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("publicData"u8))
                 {
-                    publicData = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicData = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("deleteCertificateError"u8))
@@ -123,7 +127,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    data = property.Value.GetString();
+                    data = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("certificateFormat"u8))

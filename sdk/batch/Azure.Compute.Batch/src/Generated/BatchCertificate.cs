@@ -21,7 +21,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint. This must be sha1. </param>
         /// <param name="data"> The base64-encoded contents of the Certificate. The maximum size is 10KB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/>, <paramref name="thumbprintAlgorithm"/> or <paramref name="data"/> is null. </exception>
-        public BatchCertificate(string thumbprint, string thumbprintAlgorithm, string data)
+        public BatchCertificate(string thumbprint, string thumbprintAlgorithm, BinaryData data)
         {
             Argument.AssertNotNull(thumbprint, nameof(thumbprint));
             Argument.AssertNotNull(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
@@ -45,7 +45,7 @@ namespace Azure.Compute.Batch
         /// <param name="data"> The base64-encoded contents of the Certificate. The maximum size is 10KB. </param>
         /// <param name="certificateFormat"> The format of the Certificate data. </param>
         /// <param name="password"> The password to access the Certificate's private key. This must be omitted if the Certificate format is cer. </param>
-        internal BatchCertificate(string thumbprint, string thumbprintAlgorithm, string url, CertificateState? state, DateTimeOffset? stateTransitionTime, CertificateState? previousState, DateTimeOffset? previousStateTransitionTime, string publicData, DeleteCertificateError deleteCertificateError, string data, CertificateFormat? certificateFormat, string password)
+        internal BatchCertificate(string thumbprint, string thumbprintAlgorithm, string url, CertificateState? state, DateTimeOffset? stateTransitionTime, CertificateState? previousState, DateTimeOffset? previousStateTransitionTime, BinaryData publicData, DeleteCertificateError deleteCertificateError, BinaryData data, CertificateFormat? certificateFormat, string password)
         {
             Thumbprint = thumbprint;
             ThumbprintAlgorithm = thumbprintAlgorithm;
@@ -75,12 +75,42 @@ namespace Azure.Compute.Batch
         public CertificateState? PreviousState { get; }
         /// <summary> The time at which the Certificate entered its previous state. This property is not set if the Certificate is in its initial Active state. </summary>
         public DateTimeOffset? PreviousStateTransitionTime { get; }
-        /// <summary> The public part of the Certificate as a base-64 encoded .cer file. </summary>
-        public string PublicData { get; }
+        /// <summary>
+        /// The public part of the Certificate as a base-64 encoded .cer file.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData PublicData { get; }
         /// <summary> The error that occurred on the last attempt to delete this Certificate. This property is set only if the Certificate is in the DeleteFailed state. </summary>
         public DeleteCertificateError DeleteCertificateError { get; }
-        /// <summary> The base64-encoded contents of the Certificate. The maximum size is 10KB. </summary>
-        public string Data { get; set; }
+        /// <summary>
+        /// The base64-encoded contents of the Certificate. The maximum size is 10KB.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Data { get; set; }
         /// <summary> The format of the Certificate data. </summary>
         public CertificateFormat? CertificateFormat { get; set; }
         /// <summary> The password to access the Certificate's private key. This must be omitted if the Certificate format is cer. </summary>

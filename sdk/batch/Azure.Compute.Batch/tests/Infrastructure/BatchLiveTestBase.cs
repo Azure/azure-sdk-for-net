@@ -19,10 +19,12 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
     {
         public BatchLiveTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
+            UseDefaultGuidFormatForClientRequestId = true;
         }
 
         public BatchLiveTestBase(bool isAsync) : base(isAsync)
         {
+            UseDefaultGuidFormatForClientRequestId = true;
         }
 
         /// <summary>

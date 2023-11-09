@@ -28,7 +28,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             var jobId = "HelloWorldJob-" + TestUtilities.GetMyName() + "-" + TestUtilities.GetTimeStamp();
 
             var client = CreateBatchClient();
-
+            
             PaasWindowsPoolFixture paasWindowsPoolFixture = new PaasWindowsPoolFixture(client);
             BatchPool pool  = await paasWindowsPoolFixture.CreatePoolAsync();
         }

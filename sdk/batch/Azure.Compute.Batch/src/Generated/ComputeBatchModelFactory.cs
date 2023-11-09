@@ -83,6 +83,17 @@ namespace Azure.Compute.Batch
             return new ImageReference(publisher, offer, sku, version, virtualMachineImageId, exactVersion);
         }
 
+        /// <summary> Initializes a new instance of BatchPoolListResult. </summary>
+        /// <param name="value"> The list of Pools. </param>
+        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
+        /// <returns> A new <see cref="Batch.BatchPoolListResult"/> instance for mocking. </returns>
+        public static BatchPoolListResult BatchPoolListResult(IEnumerable<BatchPool> value = null, string odataNextLink = null)
+        {
+            value ??= new List<BatchPool>();
+
+            return new BatchPoolListResult(value?.ToList(), odataNextLink);
+        }
+
         /// <summary> Initializes a new instance of BatchPool. </summary>
         /// <param name="id"> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
@@ -467,7 +478,7 @@ namespace Azure.Compute.Batch
         /// <param name="certificateFormat"> The format of the Certificate data. </param>
         /// <param name="password"> The password to access the Certificate's private key. This must be omitted if the Certificate format is cer. </param>
         /// <returns> A new <see cref="Batch.BatchCertificate"/> instance for mocking. </returns>
-        public static BatchCertificate BatchCertificate(string thumbprint = null, string thumbprintAlgorithm = null, string url = null, CertificateState? state = null, DateTimeOffset? stateTransitionTime = null, CertificateState? previousState = null, DateTimeOffset? previousStateTransitionTime = null, string publicData = null, DeleteCertificateError deleteCertificateError = null, string data = null, CertificateFormat? certificateFormat = null, string password = null)
+        public static BatchCertificate BatchCertificate(string thumbprint = null, string thumbprintAlgorithm = null, string url = null, CertificateState? state = null, DateTimeOffset? stateTransitionTime = null, CertificateState? previousState = null, DateTimeOffset? previousStateTransitionTime = null, BinaryData publicData = null, DeleteCertificateError deleteCertificateError = null, BinaryData data = null, CertificateFormat? certificateFormat = null, string password = null)
         {
             return new BatchCertificate(thumbprint, thumbprintAlgorithm, url, state, stateTransitionTime, previousState, previousStateTransitionTime, publicData, deleteCertificateError, data, certificateFormat, password);
         }
@@ -838,6 +849,17 @@ namespace Azure.Compute.Batch
             }
 
             return new UploadBatchServiceLogsResult(virtualDirectoryName, numberOfFilesUploaded);
+        }
+
+        /// <summary> Initializes a new instance of BatchNodeListResult. </summary>
+        /// <param name="value"> The list of Compute Nodes. </param>
+        /// <param name="odataNextLink"> The URL to get the next set of results. </param>
+        /// <returns> A new <see cref="Batch.BatchNodeListResult"/> instance for mocking. </returns>
+        public static BatchNodeListResult BatchNodeListResult(IEnumerable<BatchNode> value = null, string odataNextLink = null)
+        {
+            value ??= new List<BatchNode>();
+
+            return new BatchNodeListResult(value?.ToList(), odataNextLink);
         }
 
         /// <summary> Initializes a new instance of NodeVMExtension. </summary>
