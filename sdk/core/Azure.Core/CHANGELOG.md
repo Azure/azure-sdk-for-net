@@ -2,12 +2,17 @@
 
 ## 1.36.0 (2023-11-10)
 
+### Features Added
+
+- Added `RequiresUnreferencedCode` attribute to `RequestContent.Create(object)` overloads that use reflection to serialize the input object.  This provides support for native AOT compilation when Azure.Core is used for diagnostics.
+- Use System.Text.Json source generation to deserialize the error response in `RequestFailedException` on `net6.0` and above targets.
+
 ### Breaking Changes
 
 - Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
 - Suppress client activity creation by Azure clients if it happens in scope of another activity created by an Azure client.
-- Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot). Now we append provided activity name as is to the client namespace name.
-  Previously, provided activity name was omitted and `ActivitySource` name matched provided client namespace.
+- Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot).  We now append provided activity name as is to the client namespace name. Previously, the provided activity name was omitted and the `ActivitySource` name matched the provided client namespace.
+- Added nullable annotation to `ResourceIdentifier.TryParse` parameter `input`.
 
 ## 1.35.0 (2023-09-07)
 
