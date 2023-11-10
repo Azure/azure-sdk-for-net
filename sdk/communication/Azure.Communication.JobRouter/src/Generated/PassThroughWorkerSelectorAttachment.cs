@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// Attaches a worker selector where the value is passed through from the job label
-    /// with the same key
-    /// </summary>
+    /// <summary> Attaches a worker selector where the value is passed through from the job label with the same key. </summary>
     public partial class PassThroughWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>

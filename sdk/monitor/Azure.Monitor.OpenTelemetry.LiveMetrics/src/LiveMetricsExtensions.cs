@@ -63,7 +63,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                     exporterOptions = sp.GetRequiredService<IOptionsMonitor<LiveMetricsExporterOptions>>().Get(finalOptionsName);
                 }
 
-                return new LiveMetricsExtractionProcessor(new LiveMetricsExporter(exporterOptions));
+                DoubleBuffer doubleBuffer = new();
+
+                return new LiveMetricsExtractionProcessor(doubleBuffer, new LiveMetricsExporter(doubleBuffer, exporterOptions));
             });
         }
     }

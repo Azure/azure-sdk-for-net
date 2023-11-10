@@ -7,7 +7,6 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
@@ -21,17 +20,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        public JobRouterClient(string connectionString)
-            : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                new JobRouterClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public JobRouterClient(string connectionString, JobRouterClientOptions options)
+        public JobRouterClient(string connectionString, JobRouterClientOptions options = default)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new JobRouterClientOptions())
@@ -39,7 +29,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
         /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterClient(Uri endpoint, AzureKeyCredential credential, JobRouterClientOptions options = default)
@@ -51,8 +41,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
+        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterClient(Uri endpoint, TokenCredential credential, JobRouterClientOptions options = default)
             : this(
@@ -515,20 +505,10 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(ReclassifyJob)}");
-            scope.Start();
-            try
-            {
-                return await ReclassifyJobAsync(jobId: jobId,
-                        options: new Dictionary<string, string>(),
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (await ReclassifyJobAsync(jobId: jobId,
+                options: new ReclassifyJobOptions(),
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false)).GetRawResponse();
         }
 
         /// <summary> Reclassify a job. </summary>
@@ -540,20 +520,158 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(ReclassifyJob)}");
-            scope.Start();
-            try
-            {
-                return ReclassifyJob(
-                    jobId: jobId,
-                    options: new Dictionary<string, string>(),
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return (ReclassifyJob(
+                jobId: jobId,
+                options: new ReclassifyJobOptions(),
+                cancellationToken: cancellationToken)).GetRawResponse();
+        }
+
+        /// <summary> Closes a completed job. </summary>
+        /// <param name="options"> Options for closing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> CloseJobAsync(CloseJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return (await CloseJobAsync(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+        }
+
+        /// <summary> Closes a completed job. </summary>
+        /// <param name="options"> Options for closing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response CloseJob(CloseJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return CloseJob(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
+        }
+
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="options"> Options for cancelling job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> CancelJobAsync(CancelJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return (await CancelJobAsync(
+                jobId: options.JobId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+        }
+
+        /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
+        /// <param name="options"> Options for cancelling job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response CancelJob(CancelJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return CancelJob(
+                jobId: options.JobId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
+        }
+
+        /// <summary> Completes an assigned job. </summary>
+        /// <param name="options"> Options for completing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> CompleteJobAsync(CompleteJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return (await CompleteJobAsync(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+        }
+
+        /// <summary> Completes an assigned job. </summary>
+        /// <param name="options"> Options for completing job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response CompleteJob(CompleteJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return CompleteJob(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
+        }
+
+        /// <summary> Declines an offer to work on a job. </summary>
+        /// <param name="options"> Options for declining offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response> DeclineJobOfferAsync(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return (await DeclineJobOfferAsync(
+                workerId: options.WorkerId,
+                offerId: options.OfferId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+        }
+
+        /// <summary> Declines an offer to work on a job. </summary>
+        /// <param name="options"> Options for declining offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response DeclineJobOffer(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return DeclineJobOffer(
+                workerId: options.WorkerId,
+                offerId: options.OfferId,
+                options: options,
+                cancellationToken: cancellationToken).GetRawResponse();
+        }
+
+        /// <summary> Un-assign a job. </summary>
+        /// <param name="options"> Options for un-assigning a job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return (await UnassignJobAsync(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false));
+        }
+
+        /// <summary> Un-assign a job. </summary>
+        /// <param name="options"> Options for un-assigning a job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<UnassignJobResult> UnassignJob(UnassignJobOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return UnassignJob(
+                jobId: options.JobId,
+                assignmentId: options.AssignmentId,
+                options: options,
+                cancellationToken: cancellationToken);
         }
 
         #endregion Job
