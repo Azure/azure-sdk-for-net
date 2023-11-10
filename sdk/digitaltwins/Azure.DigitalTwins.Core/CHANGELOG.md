@@ -2,7 +2,17 @@
 
 ## 1.5.0-beta.1 (Unreleased)
 
-### New Features
+### Breaking changes
+
+- Renamed tags reported on `DigitalTwinsClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `digitalTwinId` to `az.digitaltwins.twin.id`
+  - `componentName` to `az.digitaltwins.component.name`
+  - `relationshipName` to `az.digitaltwins.relationship.name`
+  - `modelId` to `az.digitaltwins.model.id`
+  - `jobId` to `az.digitaltwins.job.id`
+  - `query` to `az.digitaltwins.query`
+  - `eventRouteId` to `az.digitaltwins.event_route.id`
+  - `messageId` to `az.digitaltwins.message.id`
 
 ## 1.5.0 (2023-09-07)
 

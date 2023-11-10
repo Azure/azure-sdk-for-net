@@ -87,7 +87,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class CreateExceptionPolicyOptions
     {
-        public CreateExceptionPolicyOptions(string exceptionPolicyId, System.Collections.Generic.IList<Azure.Communication.JobRouter.ExceptionRule> exceptionRules) { }
+        public CreateExceptionPolicyOptions(string exceptionPolicyId, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.ExceptionRule> exceptionRules) { }
         public string ExceptionPolicyId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.ExceptionRule> ExceptionRules { get { throw null; } }
         public string Name { get { throw null; } set { } }
@@ -225,8 +225,7 @@ namespace Azure.Communication.JobRouter
     public partial class JobRouterAdministrationClient
     {
         protected JobRouterAdministrationClient() { }
-        public JobRouterAdministrationClient(string connectionString) { }
-        public JobRouterAdministrationClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options) { }
+        public JobRouterAdministrationClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -295,8 +294,7 @@ namespace Azure.Communication.JobRouter
     public partial class JobRouterClient
     {
         protected JobRouterClient() { }
-        public JobRouterClient(string connectionString) { }
-        public JobRouterClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options) { }
+        public JobRouterClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -358,6 +356,17 @@ namespace Azure.Communication.JobRouter
         public virtual Azure.Response UpdateWorker(string workerId, Azure.Core.RequestContent content, Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.RouterWorker>> UpdateWorkerAsync(Azure.Communication.JobRouter.RouterWorker worker, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateWorkerAsync(string workerId, Azure.Core.RequestContent content, Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+    }
+    public static partial class JobRouterClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterAdministrationClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterAdministrationClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterAdministrationClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.Core.TokenCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterAdministrationClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.Core.TokenCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.JobRouter.JobRouterClient, Azure.Communication.JobRouter.JobRouterClientOptions> AddJobRouterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
     public partial class JobRouterClientOptions : Azure.Core.ClientOptions
     {

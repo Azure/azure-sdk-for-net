@@ -7,9 +7,6 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Security.Cryptography;
 
 namespace Azure.Communication.JobRouter
 {
@@ -23,17 +20,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        public JobRouterClient(string connectionString)
-            : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                new JobRouterClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public JobRouterClient(string connectionString, JobRouterClientOptions options)
+        public JobRouterClient(string connectionString, JobRouterClientOptions options = default)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new JobRouterClientOptions())
@@ -41,7 +29,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
         /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterClient(Uri endpoint, AzureKeyCredential credential, JobRouterClientOptions options = default)
@@ -53,8 +41,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
+        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterClient(Uri endpoint, TokenCredential credential, JobRouterClientOptions options = default)
             : this(

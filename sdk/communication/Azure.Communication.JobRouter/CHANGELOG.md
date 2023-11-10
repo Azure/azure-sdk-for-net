@@ -4,37 +4,33 @@
 
 ### Features Added
 
-#### RouterAdministrationClient
-- Added `RequestContext` to all methods which can override default behaviors of the client pipeline on a per-call basis.
-- Added `RequestConditions` to all `Update` methods which can specify HTTP options for conditional requests based on modification time.
-
-#### RouterClient
-- Added `RequestContext` to all methods which can override default behaviors of the client pipeline on a per-call basis.
+#### RouterAdministrationClient && RouterClient
+- Added `RequestContext` to methods which can override default behaviors of the client pipeline on a per-call basis.
 - Added `RequestConditions` to all `Update` methods which can specify HTTP options for conditional requests based on modification time.
 
 ### Breaking Changes
 
 #### RouterAdministrationClient
-- `GetQueues` returns `AsyncPageable<RouterQueue>` rather than `Pageable<RouterQueueItem>`
-- `GetDistributionPolicies` returns `AsyncPageable<DistributionPolicy>` rather than `Pageable<DistributionPolicyItem>`
-- `GetClassificationPolicies` returns `AsyncPageable<ClassificationPolicy>` rather than `Pageable<ClassificationPolicyItem>`
-- `GetExceptionPolicies` returns `AsyncPageable<ExceptionPolicy>` rather than `Pageable<ExceptionPolicyItem>`
+- `GetQueues` returns `Pageable<RouterQueue>` rather than `Pageable<RouterQueueItem>`
+- `GetDistributionPolicies` returns `Pageable<DistributionPolicy>` rather than `Pageable<DistributionPolicyItem>`
+- `GetClassificationPolicies` returns `Pageable<ClassificationPolicy>` rather than `Pageable<ClassificationPolicyItem>`
+- `GetExceptionPolicies` returns `Pageable<ExceptionPolicy>` rather than `Pageable<ExceptionPolicyItem>`
 - `UpdateQueue(UpdateQueueOptions options, CancellationToken cancellationToken)` changed to `UpdateQueue(RouterQueue queue, CancellationToken cancellationToken)`
 - `UpdateDistributionPolicy(UpdateDistributionPolicyOptions options, CancellationToken cancellationToken)` changed to `UpdateDistributionPolicy(DistributionPolicy distributionPolicy, CancellationToken cancellationToken)`
 - `UpdateClassificationPolicy(UpdateClassificationPolicyOptions options, CancellationToken cancellationToken)` changed to `UpdateClassificationPolicy(ClassificationPolicy classificationPolicy, CancellationToken cancellationToken)`
 - `UpdateExceptionPolicy(UpdateExceptionPolicyOptions options, CancellationToken cancellationToken)` changed to `UpdateExceptionPolicy(ExceptionPolicy exceptionPolicy, CancellationToken cancellationToken)`
 
 #### RouterClient
-- `GetJobs` returns `AsyncPageable<RouterJob>` rather than `AsyncPageable<RouterJobItem>`
-- `GetWorkers` returns `AsyncPageable<RouterWorker>` rather than `AsyncPageable<RouterJobWorker>`
+- `GetJobs` returns `Pageable<RouterJob>` rather than `Pageable<RouterJobItem>`
+- `GetWorkers` returns `Pageable<RouterWorker>` rather than `Pageable<RouterJobWorker>`
 - `UpdateJob(UpdateJobOptions options, CancellationToken cancellationToken)` changed to `UpdateJob(RouterJob job, CancellationToken cancellationToken)`
 - `UpdateWorker(UpdateWorkerOptions options, CancellationToken cancellationToken)` changed to `UpdateWorker(RouterWorker worker, CancellationToken cancellationToken)`
 
 #### RouterJob && CreateJobOptions && CreateJobWithClassificationOptions
 - Property `Notes` - Changed from `List<RouterJobNote>` to `IList<RouterJobNote>`
 - Property `RequestedWorkerSelectors` - Changed from `List<RouterWorkerSelector>`to `IList<RouterWorkerSelector>`
-- Property `Labels` - Changed from `Dictionary<string, LabelValue>` to `IDictionary<string, LabelValue>`
-- Property `Tags` - Changed from `Dictionary<string, LabelValue>` to `IDictionary<string, LabelValue>`
+- Property `Labels` - Changed from `Dictionary<string, LabelValue>` to `IDictionary<string, RouterValue>`
+- Property `Tags` - Changed from `Dictionary<string, LabelValue>` to `IDictionary<string, RouterValue>`
 
 ##### RouterJobNote
 - Changed constructor from `RouterJobNote()` to `RouterJobNote(string message)`
@@ -51,8 +47,12 @@
 - Property `List<QueueSelectorAttachment> QueueSelectors` changed to `IList<QueueSelectorAttachment> QueueSelectorAttachments`
 - Property `List<WorkerSelectorAttachment> WorkerSelectors` changed to `IList<WorkerSelectorAttachment> WorkerSelectorAttachments`
 
-#### ExceptionPolicy && CreateExceptionPolicyOptions
+#### ExceptionPolicy
 - Property `ExceptionRules` - Changed from `Dictionary<string, ExceptionRule>` -> `IList<ExceptionRule>`
+
+#### CreateExceptionPolicyOptions
+- Property `ExceptionRules` - Changed from `Dictionary<string, ExceptionRule>` -> `IList<ExceptionRule>`
+- Changed constructor from `CreateExceptionPolicyOptions(string exceptionPolicyId, IDictionary<string, ExceptionRule> exceptionRules)` to `CreateExceptionPolicyOptions(string exceptionPolicyId, IEnumerable<ExceptionRule> exceptionRules)`
 
 ##### ExceptionRule
 - `Actions` - Changed `Dictionary<string, ExceptionAction>` -> `IList<ExceptionAction>`
@@ -106,12 +106,12 @@
 ### Other Changes
 
 #### ClassificationPolicy
-- Add `ETag`
+- Added `ETag`
 - Added constructor `ClassificationPolicy(string classificationPolicyId)`
 - Added setters to `FallbackQueueId`, `Name`, and `PrioritizationRule`
 
 #### DistributionPolicy
-- Add `ETag`
+- Added `ETag`
 - Added constructor `DistributionPolicy(string distributionPolicyId)`
 - Added setters to `Mode` and `Name`
 
