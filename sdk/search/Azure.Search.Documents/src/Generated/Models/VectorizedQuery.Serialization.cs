@@ -58,10 +58,6 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("vector"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     int index = 0;
                     float[] array = new float[property.Value.GetArrayLength()];
                     foreach (var item in property.Value.EnumerateArray())
