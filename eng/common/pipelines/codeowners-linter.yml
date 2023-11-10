@@ -37,6 +37,14 @@ stages:
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
     steps:
+      # Skip sparse checkout for the `azure-sdk-for-<lang>-pr` private mirrored repositories
+      # as we require the github service connection to be loaded.
+      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+            Paths:
+              - '/*'
+
       - task: DotNetCoreCLI@2
         displayName: 'Install CodeownersLinter'
         inputs:
