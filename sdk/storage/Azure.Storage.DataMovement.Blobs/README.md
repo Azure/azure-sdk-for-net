@@ -4,7 +4,7 @@
 
 ## Project Status: Beta
 
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](./KnownIssues) for detailed information.
+This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
 
 ---
 

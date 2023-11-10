@@ -14,4 +14,4 @@ This limitation also exists for share files and directories.
 
 ## Transfer Sizes
 
-The Azure Storage REST service has various limitations as to the size of request body it will accept, depending on the operation being performed. While the DataMovement library attempts to clamp transfer chunk sizes down to accepted levels, it is not always accurate. Please refer to the [REST documentation](https://learn.microsoft.com/en-us/rest/api/storageservices/) for information on transfer size limitations.
+The Azure Storage REST service has various limitations as to the size of request body it will accept, depending on the operation being performed. While the DataMovement library attempts to clamp transfer chunk sizes down to accepted levels, it is not always accurate. Please refer to the [REST documentation](https://learn.microsoft.com/rest/api/storageservices/) for information on transfer size limitations.
