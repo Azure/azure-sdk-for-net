@@ -37,6 +37,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'privateLinkResourceId': 'arm-id'
 
 acronym-mapping:
   CPU: Cpu

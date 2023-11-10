@@ -153,6 +153,10 @@ namespace Azure.ResourceManager.Grafana
                         }
                         if (property0.NameEquals("privateLinkResourceId"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
