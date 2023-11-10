@@ -2,6 +2,12 @@
 
 > Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
+## Project Status: Beta
+
+This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](./KnownIssues) for detailed information.
+
+---
+
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
 includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
@@ -14,10 +20,6 @@ The Azure.Storage.DataMovement.Files.Shares library provides infrastructure shar
 Azure Storage client libraries.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
-
-## Known Issues
-
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](../Azure.Storage.DataMovement/KnownIssues) for detailed information.
 
 ## Getting started
 
