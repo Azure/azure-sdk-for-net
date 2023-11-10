@@ -9,10 +9,10 @@ using System;
 using Azure.Communication.JobRouter;
 using Azure.Core.Extensions;
 
-namespace Microsoft.Extensions.Azure
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Extension methods to add <see cref="JobRouterAdministrationClient"/>, <see cref="JobRouterClient"/> to client builder. </summary>
-    public static partial class CommunicationJobRouterClientBuilderExtensions
+    internal static partial class CommunicationJobRouterClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

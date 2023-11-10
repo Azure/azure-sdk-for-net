@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class EventGridDomainData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EventGridDomainData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EventGridDomainData(Azure.Core.AzureLocation location) { }
         public bool? AutoCreateTopicWithFirstSubscription { get { throw null; } set { } }
         public bool? AutoDeleteTopicWithLastSubscription { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class EventGridNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EventGridNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EventGridNamespaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class EventGridTopicData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EventGridTopicData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EventGridTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo EventTypeInfo { get { throw null; } set { } }
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerConfigurationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerConfigurationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerAuthorization PartnerAuthorization { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerDestinationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerDestinationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerDestinationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState? ActivationState { get { throw null; } set { } }
         public System.Uri EndpointBaseUri { get { throw null; } set { } }
         public string EndpointServiceContext { get { throw null; } set { } }
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerNamespaceData(Azure.Core.AzureLocation location) { }
         public System.Uri Endpoint { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerRegistrationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerRegistrationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerRegistrationData(Azure.Core.AzureLocation location) { }
         public System.Guid? PartnerRegistrationImmutableId { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -1174,7 +1174,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerTopicData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerTopicData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState? ActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo EventTypeInfo { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOnIfNotActivated { get { throw null; } set { } }
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class SystemTopicData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SystemTopicData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SystemTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Guid? MetricResourceId { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState? ProvisioningState { get { throw null; } }
@@ -1478,6 +1478,125 @@ namespace Azure.ResourceManager.EventGrid
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string verifiedPartnerName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.VerifiedPartnerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.VerifiedPartnerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.EventGrid.Mocking
+{
+    public partial class MockableEventGridArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableEventGridArmClient() { }
+        public virtual Azure.ResourceManager.EventGrid.CaCertificateResource GetCaCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.DomainEventSubscriptionResource GetDomainEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.DomainTopicResource GetDomainTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridDomainPrivateLinkResource GetEventGridDomainPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridDomainResource GetEventGridDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridNamespaceClientGroupResource GetEventGridNamespaceClientGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridNamespaceClientResource GetEventGridNamespaceClientResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridNamespacePermissionBindingResource GetEventGridNamespacePermissionBindingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridNamespaceResource GetEventGridNamespaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridPartnerNamespacePrivateEndpointConnectionResource GetEventGridPartnerNamespacePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridTopicPrivateLinkResource GetEventGridTopicPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridTopicResource GetEventGridTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventSubscriptionResource> GetEventSubscription(Azure.Core.ResourceIdentifier scope, string eventSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventSubscriptionResource>> GetEventSubscriptionAsync(Azure.Core.ResourceIdentifier scope, string eventSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventSubscriptionResource GetEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventSubscriptionCollection GetEventSubscriptions(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic> GetEventTypes(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.Models.EventTypeUnderTopic> GetEventTypesAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.ExtensionTopicResource GetExtensionTopic(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.ExtensionTopicResource GetExtensionTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.NamespaceTopicEventSubscriptionResource GetNamespaceTopicEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.NamespaceTopicResource GetNamespaceTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerConfigurationResource GetPartnerConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerDestinationResource GetPartnerDestinationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerNamespaceChannelResource GetPartnerNamespaceChannelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerNamespacePrivateLinkResource GetPartnerNamespacePrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerNamespaceResource GetPartnerNamespaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerRegistrationResource GetPartnerRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerTopicEventSubscriptionResource GetPartnerTopicEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerTopicResource GetPartnerTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.SystemTopicEventSubscriptionResource GetSystemTopicEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.SystemTopicResource GetSystemTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.TopicEventSubscriptionResource GetTopicEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.TopicSpaceResource GetTopicSpaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.TopicTypeResource GetTopicTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.VerifiedPartnerResource GetVerifiedPartnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableEventGridResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableEventGridResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomain(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainResource>> GetEventGridDomainAsync(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridDomainCollection GetEventGridDomains() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceResource> GetEventGridNamespace(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridNamespaceResource>> GetEventGridNamespaceAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridNamespaceCollection GetEventGridNamespaces() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicResource> GetEventGridTopic(string topicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridTopicResource>> GetEventGridTopicAsync(string topicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.EventGridTopicCollection GetEventGridTopics() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicType(string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicTypeAsync(string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerConfigurationResource GetPartnerConfiguration() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerDestinationResource> GetPartnerDestination(string partnerDestinationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerDestinationResource>> GetPartnerDestinationAsync(string partnerDestinationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerDestinationCollection GetPartnerDestinations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespaceResource> GetPartnerNamespace(string partnerNamespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerNamespaceResource>> GetPartnerNamespaceAsync(string partnerNamespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerNamespaceCollection GetPartnerNamespaces() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerRegistrationResource> GetPartnerRegistration(string partnerRegistrationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerRegistrationResource>> GetPartnerRegistrationAsync(string partnerRegistrationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerRegistrationCollection GetPartnerRegistrations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.PartnerTopicResource> GetPartnerTopic(string partnerTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.PartnerTopicResource>> GetPartnerTopicAsync(string partnerTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.PartnerTopicCollection GetPartnerTopics() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsData(Azure.Core.AzureLocation location, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataAsync(Azure.Core.AzureLocation location, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicType(Azure.Core.AzureLocation location, string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicTypeAsync(Azure.Core.AzureLocation location, string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.SystemTopicResource> GetSystemTopic(string systemTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.SystemTopicResource>> GetSystemTopicAsync(string systemTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.SystemTopicCollection GetSystemTopics() { throw null; }
+    }
+    public partial class MockableEventGridSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableEventGridSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomains(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomainsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridNamespaceResource> GetEventGridNamespaces(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridNamespaceResource> GetEventGridNamespacesAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridTopicResource> GetEventGridTopics(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridTopicResource> GetEventGridTopicsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicType(string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicTypeAsync(string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerConfigurationResource> GetPartnerConfigurations(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerConfigurationResource> GetPartnerConfigurationsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerDestinationResource> GetPartnerDestinations(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerDestinationResource> GetPartnerDestinationsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerNamespaceResource> GetPartnerNamespaces(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerNamespaceResource> GetPartnerNamespacesAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerRegistrationResource> GetPartnerRegistrations(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerRegistrationResource> GetPartnerRegistrationsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.PartnerTopicResource> GetPartnerTopics(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.PartnerTopicResource> GetPartnerTopicsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsData(Azure.Core.AzureLocation location, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataAsync(Azure.Core.AzureLocation location, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicType(Azure.Core.AzureLocation location, string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicTypeAsync(Azure.Core.AzureLocation location, string topicTypeName, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.SystemTopicResource> GetSystemTopics(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.SystemTopicResource> GetSystemTopicsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableEventGridTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableEventGridTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.TopicTypeResource> GetTopicType(string topicTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.TopicTypeResource>> GetTopicTypeAsync(string topicTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.TopicTypeCollection GetTopicTypes() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventGrid.VerifiedPartnerResource> GetVerifiedPartner(string verifiedPartnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.VerifiedPartnerResource>> GetVerifiedPartnerAsync(string verifiedPartnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventGrid.VerifiedPartnerCollection GetVerifiedPartners() { throw null; }
     }
 }
 namespace Azure.ResourceManager.EventGrid.Models

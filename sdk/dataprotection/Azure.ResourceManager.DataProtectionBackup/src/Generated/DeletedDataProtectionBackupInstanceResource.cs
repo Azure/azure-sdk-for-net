@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
     public partial class DeletedDataProtectionBackupInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedDataProtectionBackupInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupInstanceName"> The backupInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/deletedBackupInstances/{backupInstanceName}";

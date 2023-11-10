@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             RouterRule condition = default;
-            IReadOnlyList<RouterWorkerSelector> workerSelectors = default;
+            IList<RouterWorkerSelector> workerSelectors = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {

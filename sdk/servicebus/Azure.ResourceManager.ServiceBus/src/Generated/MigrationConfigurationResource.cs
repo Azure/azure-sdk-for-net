@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class MigrationConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MigrationConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="configName"> The configName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, MigrationConfigurationName configName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}";

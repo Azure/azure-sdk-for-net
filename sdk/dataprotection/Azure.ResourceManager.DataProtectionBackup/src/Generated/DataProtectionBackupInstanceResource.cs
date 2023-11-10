@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
     public partial class DataProtectionBackupInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataProtectionBackupInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupInstanceName"> The backupInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}";
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DataProtectionBackupRecoveryPointResources and their operations over a DataProtectionBackupRecoveryPointResource. </returns>
         public virtual DataProtectionBackupRecoveryPointCollection GetDataProtectionBackupRecoveryPoints()
         {
-            return GetCachedClient(Client => new DataProtectionBackupRecoveryPointCollection(Client, Id));
+            return GetCachedClient(client => new DataProtectionBackupRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +118,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="recoveryPointId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataProtectionBackupRecoveryPointResource>> GetDataProtectionBackupRecoveryPointAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
@@ -137,8 +141,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="recoveryPointId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataProtectionBackupRecoveryPointResource> GetDataProtectionBackupRecoveryPoint(string recoveryPointId, CancellationToken cancellationToken = default)
         {

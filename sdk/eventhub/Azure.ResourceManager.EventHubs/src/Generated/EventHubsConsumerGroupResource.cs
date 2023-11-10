@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.EventHubs
     public partial class EventHubsConsumerGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsConsumerGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="eventHubName"> The eventHubName. </param>
+        /// <param name="consumerGroupName"> The consumerGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}";

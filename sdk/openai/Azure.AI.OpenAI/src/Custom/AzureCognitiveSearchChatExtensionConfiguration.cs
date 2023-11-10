@@ -40,6 +40,21 @@ namespace Azure.AI.OpenAI
         }
         /// <summary> The name of the index to use as available in the referenced Azure Cognitive Search resource. </summary>
         public string IndexName { get; set; }
+        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
+        public AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
+        /// <summary> The configured top number of documents to feature for the configured query. </summary>
+        public int? DocumentCount { get; set; }
+        /// <summary> The query type to use with Azure Cognitive Search. </summary>
+        public AzureCognitiveSearchQueryType? QueryType { get; set; }
+        /// <summary> Whether queries should be restricted to use of indexed data. </summary>
+        public bool? ShouldRestrictResultScope { get; set; }
+        /// <summary> The additional semantic configuration for the query. </summary>
+        public string SemanticConfiguration { get; set; }
+        /// <summary> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </summary>
+        public Uri EmbeddingEndpoint { get; set; }
+
+        /// <summary> The API key to use with the specified Azure Cognitive Search endpoint. </summary>
+        private string SearchKey { get; set; }
         /// <summary> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </summary>
         [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeEmbeddingKeyValue))]
         public AzureKeyCredential EmbeddingKey { get; set; }
@@ -63,18 +78,15 @@ namespace Azure.AI.OpenAI
         /// default value for Azure Cognitive Search.
         /// </param>
         /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
-        /// <param name="searchKey"> The API key to use with the specified Azure Cognitive Search endpoint. </param>
         /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/>, <paramref name="searchKey"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, AzureKeyCredential searchKey, string indexName)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/>, or <paramref name="indexName"/> is null. </exception>
+        public AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string indexName)
         {
             Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
-            Argument.AssertNotNull(searchKey, nameof(searchKey));
             Argument.AssertNotNull(indexName, nameof(indexName));
 
             Type = type;
             SearchEndpoint = searchEndpoint;
-            SearchKey = searchKey;
             IndexName = indexName;
         }
     }

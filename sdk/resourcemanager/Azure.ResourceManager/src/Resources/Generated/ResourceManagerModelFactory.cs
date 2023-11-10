@@ -467,6 +467,24 @@ namespace Azure.ResourceManager.Models
             return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList());
         }
 
+        /// <summary> Initializes a new instance of LocationMetadata. </summary>
+        /// <param name="regionType"> The type of the region. </param>
+        /// <param name="regionCategory"> The category of the region. </param>
+        /// <param name="geography"> The geography of the location. </param>
+        /// <param name="geographyGroup"> The geography group of the location. </param>
+        /// <param name="longitude"> The longitude of the location. </param>
+        /// <param name="latitude"> The latitude of the location. </param>
+        /// <param name="physicalLocation"> The physical location of the Azure location. </param>
+        /// <param name="pairedRegions"> The regions paired to this region. </param>
+        /// <param name="homeLocation"> The home location of an edge zone. </param>
+        /// <returns> A new <see cref="Resources.Models.LocationMetadata"/> instance for mocking. </returns>
+        public static LocationMetadata LocationMetadata(RegionType? regionType = null, RegionCategory? regionCategory = null, string geography = null, string geographyGroup = null, double? longitude = null, double? latitude = null, string physicalLocation = null, IEnumerable<PairedRegion> pairedRegions = null, string homeLocation = null)
+        {
+            pairedRegions ??= new List<PairedRegion>();
+
+            return new LocationMetadata(regionType, regionCategory, geography, geographyGroup, longitude, latitude, physicalLocation, pairedRegions?.ToList(), homeLocation);
+        }
+
         /// <summary> Initializes a new instance of PairedRegion. </summary>
         /// <param name="name"> The name of the paired region. </param>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>

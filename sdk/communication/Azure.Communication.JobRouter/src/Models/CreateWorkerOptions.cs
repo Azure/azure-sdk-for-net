@@ -16,15 +16,15 @@ namespace Azure.Communication.JobRouter
         /// Public constructor.
         /// </summary>
         /// <param name="workerId"> Id of the job. </param>
-        /// <param name="totalCapacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
+        /// <param name="capacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
-        public CreateWorkerOptions(string workerId, int totalCapacity)
+        public CreateWorkerOptions(string workerId, int capacity)
         {
             Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
-            Argument.AssertNotNull(totalCapacity, nameof(totalCapacity));
+            Argument.AssertNotNull(capacity, nameof(capacity));
 
             WorkerId = workerId;
-            TotalCapacity = totalCapacity;
+            Capacity = capacity;
         }
 
         /// <summary>
@@ -35,26 +35,26 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The total capacity score this worker has to manage multiple concurrent jobs.
         /// </summary>
-        public int TotalCapacity { get; }
+        public int Capacity { get; }
 
         /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
         public bool AvailableForOffers { get; set; }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary>
-        /// A set of non-identifying attributes attached to this worker.
+        /// A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
-        public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
+        public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
 
         /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, RouterQueueAssignment> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment>();
+        public IList<string> Queues { get; } = new List<string>();
 
         /// <summary>
         /// The content to send as the request conditions of the request.

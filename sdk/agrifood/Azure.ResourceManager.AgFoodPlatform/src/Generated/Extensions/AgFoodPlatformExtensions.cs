@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AgFoodPlatform.Mocking;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,154 +20,118 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// <summary> A class to add extension methods to Azure.ResourceManager.AgFoodPlatform. </summary>
     public static partial class AgFoodPlatformExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableAgFoodPlatformArmClient GetMockableAgFoodPlatformArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableAgFoodPlatformArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableAgFoodPlatformResourceGroupResource GetMockableAgFoodPlatformResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableAgFoodPlatformResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableAgFoodPlatformSubscriptionResource GetMockableAgFoodPlatformSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableAgFoodPlatformSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableAgFoodPlatformTenantResource GetMockableAgFoodPlatformTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableAgFoodPlatformTenantResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region ExtensionResource
         /// <summary>
         /// Gets an object representing an <see cref="ExtensionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformArmClient.GetExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExtensionResource" /> object. </returns>
         public static ExtensionResource GetExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExtensionResource.ValidateResourceId(id);
-                return new ExtensionResource(client, id);
-            }
-            );
+            return GetMockableAgFoodPlatformArmClient(client).GetExtensionResource(id);
         }
-        #endregion
 
-        #region FarmBeatsExtensionResource
         /// <summary>
         /// Gets an object representing a <see cref="FarmBeatsExtensionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FarmBeatsExtensionResource.CreateResourceIdentifier" /> to create a <see cref="FarmBeatsExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformArmClient.GetFarmBeatsExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FarmBeatsExtensionResource" /> object. </returns>
         public static FarmBeatsExtensionResource GetFarmBeatsExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FarmBeatsExtensionResource.ValidateResourceId(id);
-                return new FarmBeatsExtensionResource(client, id);
-            }
-            );
+            return GetMockableAgFoodPlatformArmClient(client).GetFarmBeatsExtensionResource(id);
         }
-        #endregion
 
-        #region FarmBeatResource
         /// <summary>
         /// Gets an object representing a <see cref="FarmBeatResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FarmBeatResource.CreateResourceIdentifier" /> to create a <see cref="FarmBeatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformArmClient.GetFarmBeatResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FarmBeatResource" /> object. </returns>
         public static FarmBeatResource GetFarmBeatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FarmBeatResource.ValidateResourceId(id);
-                return new FarmBeatResource(client, id);
-            }
-            );
+            return GetMockableAgFoodPlatformArmClient(client).GetFarmBeatResource(id);
         }
-        #endregion
 
-        #region AgFoodPlatformPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AgFoodPlatformPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformArmClient.GetAgFoodPlatformPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> object. </returns>
         public static AgFoodPlatformPrivateEndpointConnectionResource GetAgFoodPlatformPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AgFoodPlatformPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new AgFoodPlatformPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetMockableAgFoodPlatformArmClient(client).GetAgFoodPlatformPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region AgFoodPlatformPrivateLinkResource
         /// <summary>
         /// Gets an object representing an <see cref="AgFoodPlatformPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AgFoodPlatformPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AgFoodPlatformPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformArmClient.GetAgFoodPlatformPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AgFoodPlatformPrivateLinkResource" /> object. </returns>
         public static AgFoodPlatformPrivateLinkResource GetAgFoodPlatformPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AgFoodPlatformPrivateLinkResource.ValidateResourceId(id);
-                return new AgFoodPlatformPrivateLinkResource(client, id);
-            }
-            );
+            return GetMockableAgFoodPlatformArmClient(client).GetAgFoodPlatformPrivateLinkResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of FarmBeatResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of FarmBeatResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformResourceGroupResource.GetFarmBeats()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of FarmBeatResources and their operations over a FarmBeatResource. </returns>
         public static FarmBeatCollection GetFarmBeats(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFarmBeats();
+            return GetMockableAgFoodPlatformResourceGroupResource(resourceGroupResource).GetFarmBeats();
         }
 
         /// <summary>
@@ -181,16 +146,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformResourceGroupResource.GetFarmBeatAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FarmBeatResource>> GetFarmBeatAsync(this ResourceGroupResource resourceGroupResource, string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFarmBeats().GetAsync(farmBeatsResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAgFoodPlatformResourceGroupResource(resourceGroupResource).GetFarmBeatAsync(farmBeatsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -205,16 +174,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformResourceGroupResource.GetFarmBeat(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<FarmBeatResource> GetFarmBeat(this ResourceGroupResource resourceGroupResource, string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFarmBeats().Get(farmBeatsResourceName, cancellationToken);
+            return GetMockableAgFoodPlatformResourceGroupResource(resourceGroupResource).GetFarmBeat(farmBeatsResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -229,6 +202,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>FarmBeatsModels_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformSubscriptionResource.GetFarmBeats(int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="maxPageSize">
@@ -240,7 +217,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An async collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(this SubscriptionResource subscriptionResource, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFarmBeatsAsync(maxPageSize, skipToken, cancellationToken);
+            return GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).GetFarmBeatsAsync(maxPageSize, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -255,6 +232,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>FarmBeatsModels_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformSubscriptionResource.GetFarmBeats(int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="maxPageSize">
@@ -266,7 +247,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> A collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FarmBeatResource> GetFarmBeats(this SubscriptionResource subscriptionResource, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFarmBeats(maxPageSize, skipToken, cancellationToken);
+            return GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).GetFarmBeats(maxPageSize, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -281,6 +262,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformSubscriptionResource.CheckNameAvailabilityLocation(CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> NameAvailabilityRequest object. </param>
@@ -288,9 +273,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -305,6 +288,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformSubscriptionResource.CheckNameAvailabilityLocation(CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> NameAvailabilityRequest object. </param>
@@ -312,17 +299,21 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
+            return GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FarmBeatsExtensionResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of FarmBeatsExtensionResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformTenantResource.GetFarmBeatsExtensions()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of FarmBeatsExtensionResources and their operations over a FarmBeatsExtensionResource. </returns>
         public static FarmBeatsExtensionCollection GetFarmBeatsExtensions(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetFarmBeatsExtensions();
+            return GetMockableAgFoodPlatformTenantResource(tenantResource).GetFarmBeatsExtensions();
         }
 
         /// <summary>
@@ -337,16 +328,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>FarmBeatsExtensions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformTenantResource.GetFarmBeatsExtensionAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FarmBeatsExtensionResource>> GetFarmBeatsExtensionAsync(this TenantResource tenantResource, string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetFarmBeatsExtensions().GetAsync(farmBeatsExtensionId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAgFoodPlatformTenantResource(tenantResource).GetFarmBeatsExtensionAsync(farmBeatsExtensionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,16 +356,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <description>FarmBeatsExtensions_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAgFoodPlatformTenantResource.GetFarmBeatsExtension(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="farmBeatsExtensionId"> farmBeatsExtensionId to be queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<FarmBeatsExtensionResource> GetFarmBeatsExtension(this TenantResource tenantResource, string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetFarmBeatsExtensions().Get(farmBeatsExtensionId, cancellationToken);
+            return GetMockableAgFoodPlatformTenantResource(tenantResource).GetFarmBeatsExtension(farmBeatsExtensionId, cancellationToken);
         }
     }
 }

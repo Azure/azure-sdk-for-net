@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CosmosDBSqlStoredProcedureResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBSqlStoredProcedureResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="containerName"> The containerName. </param>
+        /// <param name="storedProcedureName"> The storedProcedureName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/storedProcedures/{storedProcedureName}";

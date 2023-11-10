@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FilePattern);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FilePattern.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(FilePattern))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(NestingSeparator))
@@ -48,7 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(JsonPathDefinition);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(JsonPathDefinition.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(JsonPathDefinition))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("type"u8);
@@ -69,7 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

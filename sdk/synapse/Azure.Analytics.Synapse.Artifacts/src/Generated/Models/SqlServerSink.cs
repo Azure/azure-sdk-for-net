@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +15,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlServerSink. </summary>
         public SqlServerSink()
         {
-            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlServerSink";
         }
 
@@ -34,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="storedProcedureParameters"> SQL stored procedure parameters. </param>
         /// <param name="storedProcedureTableTypeParameterName"> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </param>
         /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </param>
-        internal SqlServerSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object sqlWriterStoredProcedureName, object sqlWriterTableType, object preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, object storedProcedureTableTypeParameterName, object tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        internal SqlServerSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object sqlWriterStoredProcedureName, object sqlWriterTableType, object preCopyScript, object storedProcedureParameters, object storedProcedureTableTypeParameterName, object tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;
@@ -52,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
         public object PreCopyScript { get; set; }
         /// <summary> SQL stored procedure parameters. </summary>
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
+        public object StoredProcedureParameters { get; set; }
         /// <summary> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureTableTypeParameterName { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.FrontDoor
     public partial class FrontendEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontendEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="frontDoorName"> The frontDoorName. </param>
+        /// <param name="frontendEndpointName"> The frontendEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/frontendEndpoints/{frontendEndpointName}";

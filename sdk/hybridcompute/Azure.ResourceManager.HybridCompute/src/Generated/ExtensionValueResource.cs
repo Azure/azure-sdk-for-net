@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.HybridCompute
     public partial class ExtensionValueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExtensionValueResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="publisher"> The publisher. </param>
+        /// <param name="extensionType"> The extensionType. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}";

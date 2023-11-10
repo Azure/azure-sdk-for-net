@@ -580,6 +580,10 @@
 # ServiceLabel: %Monitor - Exporter %Service Attention
 /sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
+# PRLabel: %Monitor - LiveMetrics
+# ServiceLabel: %Monitor - LiveMetrics %Service Attention
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+
 # ServiceLabel: %MySQL %Service Attention
 /sdk/mysql/Microsoft.Azure.Management.MySQL/                       @ajlam @ambhatna @kummanish
 

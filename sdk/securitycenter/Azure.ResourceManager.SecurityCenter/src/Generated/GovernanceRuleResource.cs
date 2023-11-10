@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class GovernanceRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GovernanceRuleResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="ruleId"> The ruleId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string ruleId)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/governanceRules/{ruleId}";

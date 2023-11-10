@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService
     public partial class HostingEnvironmentDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}";

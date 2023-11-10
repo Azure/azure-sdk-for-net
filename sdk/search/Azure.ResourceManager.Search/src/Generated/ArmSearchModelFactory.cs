@@ -56,16 +56,17 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure Cognitive Search service. </param>
+        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure Cognitive Search SKUs in certain locations. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure Cognitive Search service. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
-        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
+        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
         {
             tags ??= new Dictionary<string, string>();
             ipRules ??= new List<SearchServiceIPRule>();
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
-            return new SearchServiceData(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList()) : null, encryptionWithCmk, isLocalAuthDisabled, authOptions, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList());
+            return new SearchServiceData(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList()) : null, encryptionWithCmk, isLocalAuthDisabled, authOptions, privateEndpointConnections?.ToList(), semanticSearch, sharedPrivateLinkResources?.ToList());
         }
 
         /// <summary> Initializes a new instance of SearchEncryptionWithCmk. </summary>
@@ -122,16 +123,17 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure Cognitive Search service. </param>
+        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure Cognitive Search SKUs in certain locations. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure Cognitive Search service. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
         {
             tags ??= new Dictionary<string, string>();
             ipRules ??= new List<SearchServiceIPRule>();
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
-            return new SearchServicePatch(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList()) : null, encryptionWithCmk, isLocalAuthDisabled, authOptions, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList());
+            return new SearchServicePatch(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList()) : null, encryptionWithCmk, isLocalAuthDisabled, authOptions, privateEndpointConnections?.ToList(), semanticSearch, sharedPrivateLinkResources?.ToList());
         }
 
         /// <summary> Initializes a new instance of SearchPrivateLinkResource. </summary>
@@ -188,6 +190,27 @@ namespace Azure.ResourceManager.Search.Models
         public static SearchServiceNameAvailabilityResult SearchServiceNameAvailabilityResult(bool? isNameAvailable = null, SearchServiceNameUnavailableReason? reason = null, string message = null)
         {
             return new SearchServiceNameAvailabilityResult(isNameAvailable, reason, message);
+        }
+
+        /// <summary> Initializes a new instance of QuotaUsageResult. </summary>
+        /// <param name="id"> The resource id of the quota usage sku endpoint for Microsoft.Search provider. </param>
+        /// <param name="unit"> The unit of measurement for the search sku. </param>
+        /// <param name="currentValue"> The currently used up value for the particular search sku. </param>
+        /// <param name="limit"> The quota limit for the particular search sku. </param>
+        /// <param name="name"> The name of the sku supported by Azure Cognitive Search. </param>
+        /// <returns> A new <see cref="Models.QuotaUsageResult"/> instance for mocking. </returns>
+        public static QuotaUsageResult QuotaUsageResult(ResourceIdentifier id = null, string unit = null, int? currentValue = null, int? limit = null, QuotaUsageResultName name = null)
+        {
+            return new QuotaUsageResult(id, unit, currentValue, limit, name);
+        }
+
+        /// <summary> Initializes a new instance of QuotaUsageResultName. </summary>
+        /// <param name="value"> The sku name supported by Azure Cognitive Search. </param>
+        /// <param name="localizedValue"> The localized string value for the sku supported by Azure Cognitive Search. </param>
+        /// <returns> A new <see cref="Models.QuotaUsageResultName"/> instance for mocking. </returns>
+        public static QuotaUsageResultName QuotaUsageResultName(string value = null, string localizedValue = null)
+        {
+            return new QuotaUsageResultName(value, localizedValue);
         }
     }
 }
