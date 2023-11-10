@@ -16,8 +16,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-#mgmt-debug:
+rename-mapping:
+  ExtendedLocation: ArcVmExtendedLocation
+  ExtendedLocationTypes: ArcVmExtendedLocationTypes
+# mgmt-debug:
 #  show-serialized-names: true
 
  

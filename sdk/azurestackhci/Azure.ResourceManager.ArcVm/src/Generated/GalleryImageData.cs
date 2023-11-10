@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="version"> Specifies information about the gallery image version that you want to create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the gallery image. </param>
         /// <param name="status"> The observed state of gallery images. </param>
-        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier containerId, string imagePath, OperatingSystemType? osType, CloudInitDataSource? cloudInitDataSource, HyperVGeneration? hyperVGeneration, GalleryImageIdentifier identifier, GalleryImageVersion version, ProvisioningStateEnum? provisioningState, GalleryImageStatus status) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArcVmExtendedLocation extendedLocation, ResourceIdentifier containerId, string imagePath, OperatingSystemType? osType, CloudInitDataSource? cloudInitDataSource, HyperVGeneration? hyperVGeneration, GalleryImageIdentifier identifier, GalleryImageVersion version, ProvisioningStateEnum? provisioningState, GalleryImageStatus status) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             ContainerId = containerId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ArcVm
         }
 
         /// <summary> The extendedLocation of the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public ArcVmExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Storage ContainerID of the storage container to be used for gallery image. </summary>
         public ResourceIdentifier ContainerId { get; set; }
         /// <summary> location of the image the gallery image should be created from. </summary>

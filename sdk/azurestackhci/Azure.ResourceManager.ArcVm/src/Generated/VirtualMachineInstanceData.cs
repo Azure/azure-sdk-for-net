@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="guestAgentInstallStatus"> Guest agent install status. </param>
         /// <param name="vmId"> Unique identifier for the vm resource. </param>
         /// <param name="resourceUid"> Unique identifier defined by ARC to identify the guest of the VM. </param>
-        internal VirtualMachineInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.ExtendedLocation extendedLocation, ManagedServiceIdentity identity, VirtualMachineInstancePropertiesHardwareProfile hardwareProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, VirtualMachineInstancePropertiesOSProfile osProfile, VirtualMachineInstancePropertiesSecurityProfile securityProfile, VirtualMachineInstancePropertiesStorageProfile storageProfile, HttpProxyConfiguration httpProxyConfig, ProvisioningStateEnum? provisioningState, VirtualMachineInstanceView instanceView, VirtualMachineInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid) : base(id, name, resourceType, systemData)
+        internal VirtualMachineInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArcVmExtendedLocation extendedLocation, ManagedServiceIdentity identity, VirtualMachineInstancePropertiesHardwareProfile hardwareProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, VirtualMachineInstancePropertiesOSProfile osProfile, VirtualMachineInstancePropertiesSecurityProfile securityProfile, VirtualMachineInstancePropertiesStorageProfile storageProfile, HttpProxyConfiguration httpProxyConfig, ProvisioningStateEnum? provisioningState, VirtualMachineInstanceView instanceView, VirtualMachineInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid) : base(id, name, resourceType, systemData)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ArcVm
         }
 
         /// <summary> The extendedLocation of the resource. </summary>
-        public Models.ExtendedLocation ExtendedLocation { get; set; }
+        public ArcVmExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>

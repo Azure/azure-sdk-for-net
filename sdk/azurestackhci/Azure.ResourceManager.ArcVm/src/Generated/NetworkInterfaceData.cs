@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="dnsSettings"> DNS Settings for the interface. </param>
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
-        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IList<IPConfiguration> ipConfigurations, string macAddress, InterfaceDnsSettings dnsSettings, ProvisioningStateEnum? provisioningState, NetworkInterfaceStatus status) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArcVmExtendedLocation extendedLocation, IList<IPConfiguration> ipConfigurations, string macAddress, InterfaceDnsSettings dnsSettings, ProvisioningStateEnum? provisioningState, NetworkInterfaceStatus status) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             IPConfigurations = ipConfigurations;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ArcVm
         }
 
         /// <summary> The extendedLocation of the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public ArcVmExtendedLocation ExtendedLocation { get; set; }
         /// <summary> IPConfigurations - A list of IPConfigurations of the network interface. </summary>
         public IList<IPConfiguration> IPConfigurations { get; }
         /// <summary> MacAddress - The MAC address of the network interface. </summary>

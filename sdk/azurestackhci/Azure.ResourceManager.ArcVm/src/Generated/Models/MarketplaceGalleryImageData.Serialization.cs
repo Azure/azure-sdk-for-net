@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ArcVm
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ArcVmExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcVm
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="provisioningState"> Provisioning state of the logical network. </param>
         /// <param name="vmSwitchName"> name of the network switch to be used for VMs. </param>
         /// <param name="status"> The observed state of logical networks. </param>
-        internal LogicalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, LogicalNetworkPropertiesDhcpOptions dhcpOptions, IList<Subnet> subnets, ProvisioningStateEnum? provisioningState, string vmSwitchName, LogicalNetworkStatus status) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArcVmExtendedLocation extendedLocation, LogicalNetworkPropertiesDhcpOptions dhcpOptions, IList<Subnet> subnets, ProvisioningStateEnum? provisioningState, string vmSwitchName, LogicalNetworkStatus status) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             DhcpOptions = dhcpOptions;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ArcVm
         }
 
         /// <summary> The extendedLocation of the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public ArcVmExtendedLocation ExtendedLocation { get; set; }
         /// <summary> DhcpOptions contains an array of DNS servers available to VMs deployed in the logical network. Standard DHCP option for a subnet overrides logical network DHCP options. </summary>
         internal LogicalNetworkPropertiesDhcpOptions DhcpOptions { get; set; }
         /// <summary> The list of DNS servers IP addresses. </summary>

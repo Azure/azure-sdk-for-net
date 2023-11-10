@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ArcVm
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ArcVmExtendedLocation> extendedLocation = default;
             Optional<ManagedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ArcVm
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

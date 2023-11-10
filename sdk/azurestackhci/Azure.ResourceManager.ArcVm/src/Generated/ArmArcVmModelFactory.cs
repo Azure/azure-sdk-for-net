@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <param name="provisioningState"> Provisioning state of the gallery image. </param>
         /// <param name="status"> The observed state of gallery images. </param>
         /// <returns> A new <see cref="ArcVm.GalleryImageData"/> instance for mocking. </returns>
-        public static GalleryImageData GalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ResourceIdentifier containerId = null, string imagePath = null, OperatingSystemType? osType = null, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, ProvisioningStateEnum? provisioningState = null, GalleryImageStatus status = null)
+        public static GalleryImageData GalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArcVmExtendedLocation extendedLocation = null, ResourceIdentifier containerId = null, string imagePath = null, OperatingSystemType? osType = null, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, ProvisioningStateEnum? provisioningState = null, GalleryImageStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <param name="vmSwitchName"> name of the network switch to be used for VMs. </param>
         /// <param name="status"> The observed state of logical networks. </param>
         /// <returns> A new <see cref="ArcVm.LogicalNetworkData"/> instance for mocking. </returns>
-        public static LogicalNetworkData LogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, IEnumerable<string> dhcpOptionsDnsServers = null, IEnumerable<Subnet> subnets = null, ProvisioningStateEnum? provisioningState = null, string vmSwitchName = null, LogicalNetworkStatus status = null)
+        public static LogicalNetworkData LogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArcVmExtendedLocation extendedLocation = null, IEnumerable<string> dhcpOptionsDnsServers = null, IEnumerable<Subnet> subnets = null, ProvisioningStateEnum? provisioningState = null, string vmSwitchName = null, LogicalNetworkStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
             dhcpOptionsDnsServers ??= new List<string>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <param name="provisioningState"> Provisioning state of the marketplace gallery image. </param>
         /// <param name="status"> The observed state of marketplace gallery images. </param>
         /// <returns> A new <see cref="ArcVm.MarketplaceGalleryImageData"/> instance for mocking. </returns>
-        public static MarketplaceGalleryImageData MarketplaceGalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ResourceIdentifier containerId = null, OperatingSystemType? osType = null, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, ProvisioningStateEnum? provisioningState = null, MarketplaceGalleryImageStatus status = null)
+        public static MarketplaceGalleryImageData MarketplaceGalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArcVmExtendedLocation extendedLocation = null, ResourceIdentifier containerId = null, OperatingSystemType? osType = null, CloudInitDataSource? cloudInitDataSource = null, HyperVGeneration? hyperVGeneration = null, GalleryImageIdentifier identifier = null, GalleryImageVersion version = null, ProvisioningStateEnum? provisioningState = null, MarketplaceGalleryImageStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <returns> A new <see cref="ArcVm.NetworkInterfaceData"/> instance for mocking. </returns>
-        public static NetworkInterfaceData NetworkInterfaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, IEnumerable<IPConfiguration> ipConfigurations = null, string macAddress = null, IEnumerable<string> dnsServers = null, ProvisioningStateEnum? provisioningState = null, NetworkInterfaceStatus status = null)
+        public static NetworkInterfaceData NetworkInterfaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArcVmExtendedLocation extendedLocation = null, IEnumerable<IPConfiguration> ipConfigurations = null, string macAddress = null, IEnumerable<string> dnsServers = null, ProvisioningStateEnum? provisioningState = null, NetworkInterfaceStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
             ipConfigurations ??= new List<IPConfiguration>();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <param name="provisioningState"> Provisioning state of the storage container. </param>
         /// <param name="status"> The observed state of storage containers. </param>
         /// <returns> A new <see cref="ArcVm.StorageContainerData"/> instance for mocking. </returns>
-        public static StorageContainerData StorageContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string path = null, ProvisioningStateEnum? provisioningState = null, StorageContainerStatus status = null)
+        public static StorageContainerData StorageContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArcVmExtendedLocation extendedLocation = null, string path = null, ProvisioningStateEnum? provisioningState = null, StorageContainerStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for VHD. </param>
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <returns> A new <see cref="ArcVm.VirtualHardDiskData"/> instance for mocking. </returns>
-        public static VirtualHardDiskData VirtualHardDiskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, int? blockSizeBytes = null, long? diskSizeGB = null, bool? @dynamic = null, int? logicalSectorBytes = null, int? physicalSectorBytes = null, HyperVGeneration? hyperVGeneration = null, DiskFileFormat? diskFileFormat = null, ProvisioningStateEnum? provisioningState = null, ResourceIdentifier containerId = null, VirtualHardDiskStatus status = null)
+        public static VirtualHardDiskData VirtualHardDiskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArcVmExtendedLocation extendedLocation = null, int? blockSizeBytes = null, long? diskSizeGB = null, bool? @dynamic = null, int? logicalSectorBytes = null, int? physicalSectorBytes = null, HyperVGeneration? hyperVGeneration = null, DiskFileFormat? diskFileFormat = null, ProvisioningStateEnum? provisioningState = null, ResourceIdentifier containerId = null, VirtualHardDiskStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <param name="vmId"> Unique identifier for the vm resource. </param>
         /// <param name="resourceUid"> Unique identifier defined by ARC to identify the guest of the VM. </param>
         /// <returns> A new <see cref="ArcVm.VirtualMachineInstanceData"/> instance for mocking. </returns>
-        public static VirtualMachineInstanceData VirtualMachineInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, VirtualMachineInstancePropertiesHardwareProfile hardwareProfile = null, IEnumerable<WritableSubResource> networkInterfaces = null, VirtualMachineInstancePropertiesOSProfile osProfile = null, VirtualMachineInstancePropertiesSecurityProfile securityProfile = null, VirtualMachineInstancePropertiesStorageProfile storageProfile = null, HttpProxyConfiguration httpProxyConfig = null, ProvisioningStateEnum? provisioningState = null, VirtualMachineConfigAgentInstanceView instanceViewVmAgent = null, VirtualMachineInstanceStatus status = null, GuestAgentInstallStatus guestAgentInstallStatus = null, string vmId = null, string resourceUid = null)
+        public static VirtualMachineInstanceData VirtualMachineInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArcVmExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, VirtualMachineInstancePropertiesHardwareProfile hardwareProfile = null, IEnumerable<WritableSubResource> networkInterfaces = null, VirtualMachineInstancePropertiesOSProfile osProfile = null, VirtualMachineInstancePropertiesSecurityProfile securityProfile = null, VirtualMachineInstancePropertiesStorageProfile storageProfile = null, HttpProxyConfiguration httpProxyConfig = null, ProvisioningStateEnum? provisioningState = null, VirtualMachineConfigAgentInstanceView instanceViewVmAgent = null, VirtualMachineInstanceStatus status = null, GuestAgentInstallStatus guestAgentInstallStatus = null, string vmId = null, string resourceUid = null)
         {
             networkInterfaces ??= new List<WritableSubResource>();
 

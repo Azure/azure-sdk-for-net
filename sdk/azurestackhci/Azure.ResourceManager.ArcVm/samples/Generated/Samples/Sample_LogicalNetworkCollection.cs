@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.ArcVm.Samples
             string logicalNetworkName = "test-lnet";
             LogicalNetworkData data = new LogicalNetworkData(new AzureLocation("West US2"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
             };
             ArmOperation<LogicalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, logicalNetworkName, data);

@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.ArcVm.Models
 {
     /// <summary> The complex type of the extended location. </summary>
-    public partial class ExtendedLocation
+    public partial class ArcVmExtendedLocation
     {
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
-        public ExtendedLocation()
+        /// <summary> Initializes a new instance of ArcVmExtendedLocation. </summary>
+        public ArcVmExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of ArcVmExtendedLocation. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
-        internal ExtendedLocation(string name, ExtendedLocationType? extendedLocationType)
+        internal ArcVmExtendedLocation(string name, ArcVmExtendedLocationType? extendedLocationType)
         {
             Name = name;
             ExtendedLocationType = extendedLocationType;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.ArcVm.Models
         /// <summary> The name of the extended location. </summary>
         public string Name { get; set; }
         /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType? ExtendedLocationType { get; set; }
+        public ArcVmExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }

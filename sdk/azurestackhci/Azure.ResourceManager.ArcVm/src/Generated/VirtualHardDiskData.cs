@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="provisioningState"> Provisioning state of the virtual hard disk. </param>
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for VHD. </param>
         /// <param name="status"> The observed state of virtual hard disks. </param>
-        internal VirtualHardDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, int? blockSizeBytes, long? diskSizeGB, bool? @dynamic, int? logicalSectorBytes, int? physicalSectorBytes, HyperVGeneration? hyperVGeneration, DiskFileFormat? diskFileFormat, ProvisioningStateEnum? provisioningState, ResourceIdentifier containerId, VirtualHardDiskStatus status) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualHardDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArcVmExtendedLocation extendedLocation, int? blockSizeBytes, long? diskSizeGB, bool? @dynamic, int? logicalSectorBytes, int? physicalSectorBytes, HyperVGeneration? hyperVGeneration, DiskFileFormat? diskFileFormat, ProvisioningStateEnum? provisioningState, ResourceIdentifier containerId, VirtualHardDiskStatus status) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             BlockSizeBytes = blockSizeBytes;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ArcVm
         }
 
         /// <summary> The extendedLocation of the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public ArcVmExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Gets or sets the block size bytes. </summary>
         public int? BlockSizeBytes { get; set; }
         /// <summary> Size of the disk in GB. </summary>

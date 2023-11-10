@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcVm
         /// <param name="path"> Path of the storage container on the disk. </param>
         /// <param name="provisioningState"> Provisioning state of the storage container. </param>
         /// <param name="status"> The observed state of storage containers. </param>
-        internal StorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string path, ProvisioningStateEnum? provisioningState, StorageContainerStatus status) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArcVmExtendedLocation extendedLocation, string path, ProvisioningStateEnum? provisioningState, StorageContainerStatus status) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Path = path;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ArcVm
         }
 
         /// <summary> The extendedLocation of the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public ArcVmExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Path of the storage container on the disk. </summary>
         public string Path { get; set; }
         /// <summary> Provisioning state of the storage container. </summary>

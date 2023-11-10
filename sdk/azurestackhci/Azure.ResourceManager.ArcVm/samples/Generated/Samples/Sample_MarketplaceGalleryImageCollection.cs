@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.ArcVm.Samples
             string marketplaceGalleryImageName = "test-marketplace-gallery-image";
             MarketplaceGalleryImageData data = new MarketplaceGalleryImageData(new AzureLocation("West US2"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
                 ContainerId = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.AzureStackHCI/storageContainers/test-storage-container"),
                 OSType = OperatingSystemType.Windows,

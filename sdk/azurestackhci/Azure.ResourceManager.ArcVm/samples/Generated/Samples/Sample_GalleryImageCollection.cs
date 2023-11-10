@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.ArcVm.Samples
             string galleryImageName = "test-gallery-image";
             GalleryImageData data = new GalleryImageData(new AzureLocation("West US2"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
                 ContainerId = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.AzureStackHCI/storageContainers/test-storage-container"),
                 ImagePath = "C:\\test.vhdx",

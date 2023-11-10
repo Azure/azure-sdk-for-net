@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.ArcVm.Samples
             string networkInterfaceName = "test-nic";
             NetworkInterfaceData data = new NetworkInterfaceData(new AzureLocation("West US2"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
                 IPConfigurations =
 {

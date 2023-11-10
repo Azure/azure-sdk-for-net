@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.ArcVm.Samples
             // invoke the operation
             VirtualMachineInstanceData data = new VirtualMachineInstanceData()
             {
-                ExtendedLocation = new Models.ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
                 HardwareProfile = new VirtualMachineInstancePropertiesHardwareProfile()
                 {
@@ -135,10 +135,10 @@ Id = new ResourceIdentifier("test-nic"),
             // invoke the operation
             VirtualMachineInstanceData data = new VirtualMachineInstanceData()
             {
-                ExtendedLocation = new Models.ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
                 HardwareProfile = new VirtualMachineInstancePropertiesHardwareProfile()
                 {
@@ -200,10 +200,10 @@ Id = new ResourceIdentifier("test-nic"),
             // invoke the operation
             VirtualMachineInstanceData data = new VirtualMachineInstanceData()
             {
-                ExtendedLocation = new Models.ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
                 HardwareProfile = new VirtualMachineInstancePropertiesHardwareProfile()
                 {
@@ -262,10 +262,10 @@ Id = new ResourceIdentifier("test-nic"),
             // invoke the operation
             VirtualMachineInstanceData data = new VirtualMachineInstanceData()
             {
-                ExtendedLocation = new Models.ExtendedLocation()
+                ExtendedLocation = new ArcVmExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = ArcVmExtendedLocationType.CustomLocation,
                 },
                 HardwareProfile = new VirtualMachineInstancePropertiesHardwareProfile()
                 {

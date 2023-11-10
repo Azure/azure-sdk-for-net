@@ -12,8 +12,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using ExtendedLocation = Azure.ResourceManager.ArcVm.Models.ExtendedLocation;
-using ExtendedLocationType = Azure.ResourceManager.ArcVm.Models.ExtendedLocationType;
+using ExtendedLocation = Azure.ResourceManager.ArcVm.Models.ArcVmExtendedLocation;
+using ExtendedLocationType = Azure.ResourceManager.ArcVm.Models.ArcVmExtendedLocationType;
 
 namespace Azure.ResourceManager.ArcVm.Tests
 {

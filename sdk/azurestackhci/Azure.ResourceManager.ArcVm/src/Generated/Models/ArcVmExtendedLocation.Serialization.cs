@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcVm.Models
 {
-    public partial class ExtendedLocation : IUtf8JsonSerializable
+    public partial class ArcVmExtendedLocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ArcVm.Models
             writer.WriteEndObject();
         }
 
-        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element)
+        internal static ArcVmExtendedLocation DeserializeArcVmExtendedLocation(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
-            Optional<ExtendedLocationType> type = default;
+            Optional<ArcVmExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ArcVm.Models
                     {
                         continue;
                     }
-                    type = new ExtendedLocationType(property.Value.GetString());
+                    type = new ArcVmExtendedLocationType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ExtendedLocation(name.Value, Optional.ToNullable(type));
+            return new ArcVmExtendedLocation(name.Value, Optional.ToNullable(type));
         }
     }
 }
