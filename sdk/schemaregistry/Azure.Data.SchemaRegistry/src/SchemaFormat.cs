@@ -18,7 +18,7 @@ namespace Azure.Data.SchemaRegistry
         private const string ProtobufValue = "Protobuf";
 
         private const string AvroContentType = "Avro";
-        private const string JsonContentType = "json";
+        private const string JsonContentType = "Json";
         private const string ProtobufContentType = "vnd.ms.protobuf";
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
