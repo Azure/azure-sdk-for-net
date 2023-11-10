@@ -327,49 +327,6 @@ namespace Azure.ResourceManager.Network.Models
             return new FrontendIPConfigurationData(id, name, resourceType, etag, zones?.ToList(), inboundNatRules?.ToList(), inboundNatPools?.ToList(), outboundRules?.ToList(), loadBalancingRules?.ToList(), privateIPAddress, privateIPAllocationMethod, privateIPAddressVersion, subnet, publicIPAddress, publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, gatewayLoadBalancerId != null ? ResourceManagerModelFactory.WritableSubResource(gatewayLoadBalancerId) : null, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SubnetData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="addressPrefix"> The address prefix for the subnet. </param>
-        /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
-        /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
-        /// <param name="routeTable"> The reference to the RouteTable resource. </param>
-        /// <param name="natGatewayId"> Nat gateway associated with this subnet. </param>
-        /// <param name="serviceEndpoints"> An array of service endpoints. </param>
-        /// <param name="serviceEndpointPolicies"> An array of service endpoint policies. </param>
-        /// <param name="privateEndpoints"> An array of references to private endpoints. </param>
-        /// <param name="ipConfigurations"> An array of references to the network interface IP configurations using subnet. </param>
-        /// <param name="ipConfigurationProfiles"> Array of IP configuration profiles which reference this subnet. </param>
-        /// <param name="ipAllocations"> Array of IpAllocation which reference this subnet. </param>
-        /// <param name="resourceNavigationLinks"> An array of references to the external resources using subnet. </param>
-        /// <param name="serviceAssociationLinks"> An array of references to services injecting into this subnet. </param>
-        /// <param name="delegations"> An array of references to the delegations on the subnet. </param>
-        /// <param name="purpose"> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </param>
-        /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
-        /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
-        /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
-        /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
-        /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. This property can only be set at the time of subnet creation and cannot be updated for an existing subnet. </param>
-        /// <returns> A new <see cref="Network.SubnetData"/> instance for mocking. </returns>
-        public static SubnetData SubnetData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string addressPrefix = null, IEnumerable<string> addressPrefixes = null, NetworkSecurityGroupData networkSecurityGroup = null, RouteTableData routeTable = null, ResourceIdentifier natGatewayId = null, IEnumerable<ServiceEndpointProperties> serviceEndpoints = null, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies = null, IEnumerable<PrivateEndpointData> privateEndpoints = null, IEnumerable<NetworkIPConfiguration> ipConfigurations = null, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles = null, IEnumerable<WritableSubResource> ipAllocations = null, IEnumerable<ResourceNavigationLink> resourceNavigationLinks = null, IEnumerable<ServiceAssociationLink> serviceAssociationLinks = null, IEnumerable<ServiceDelegation> delegations = null, string purpose = null, NetworkProvisioningState? provisioningState = null, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy = null, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy = null, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = null, bool? defaultOutboundAccess = null)
-        {
-            addressPrefixes ??= new List<string>();
-            serviceEndpoints ??= new List<ServiceEndpointProperties>();
-            serviceEndpointPolicies ??= new List<ServiceEndpointPolicyData>();
-            privateEndpoints ??= new List<PrivateEndpointData>();
-            ipConfigurations ??= new List<NetworkIPConfiguration>();
-            ipConfigurationProfiles ??= new List<NetworkIPConfigurationProfile>();
-            ipAllocations ??= new List<WritableSubResource>();
-            resourceNavigationLinks ??= new List<ResourceNavigationLink>();
-            serviceAssociationLinks ??= new List<ServiceAssociationLink>();
-            delegations ??= new List<ServiceDelegation>();
-            applicationGatewayIPConfigurations ??= new List<ApplicationGatewayIPConfiguration>();
-
-            return new SubnetData(id, name, resourceType, etag, addressPrefix, addressPrefixes?.ToList(), networkSecurityGroup, routeTable, natGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(natGatewayId) : null, serviceEndpoints?.ToList(), serviceEndpointPolicies?.ToList(), privateEndpoints?.ToList(), ipConfigurations?.ToList(), ipConfigurationProfiles?.ToList(), ipAllocations?.ToList(), resourceNavigationLinks?.ToList(), serviceAssociationLinks?.ToList(), delegations?.ToList(), purpose, provisioningState, privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations?.ToList(), defaultOutboundAccess);
-        }
-
         /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -900,36 +857,6 @@ namespace Azure.ResourceManager.Network.Models
             actions ??= new List<string>();
 
             return new ServiceDelegation(id, name, resourceType, etag, serviceName, actions?.ToList(), provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="location"> The location of the backend address pool. </param>
-        /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
-        /// <param name="loadBalancerBackendAddresses"> An array of backend addresses. </param>
-        /// <param name="backendIPConfigurations"> An array of references to IP addresses defined in network interfaces. </param>
-        /// <param name="loadBalancingRules"> An array of references to load balancing rules that use this backend address pool. </param>
-        /// <param name="outboundRuleId"> A reference to an outbound rule that uses this backend address pool. </param>
-        /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
-        /// <param name="inboundNatRules"> An array of references to inbound NAT rules that use this backend address pool. </param>
-        /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
-        /// <param name="virtualNetworkId"> A reference to a virtual network. </param>
-        /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
-        /// <returns> A new <see cref="Network.BackendAddressPoolData"/> instance for mocking. </returns>
-        public static BackendAddressPoolData BackendAddressPoolData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, AzureLocation? location = null, IEnumerable<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = null, IEnumerable<LoadBalancerBackendAddress> loadBalancerBackendAddresses = null, IEnumerable<NetworkInterfaceIPConfigurationData> backendIPConfigurations = null, IEnumerable<WritableSubResource> loadBalancingRules = null, ResourceIdentifier outboundRuleId = null, IEnumerable<WritableSubResource> outboundRules = null, IEnumerable<WritableSubResource> inboundNatRules = null, NetworkProvisioningState? provisioningState = null, int? drainPeriodInSeconds = null, ResourceIdentifier virtualNetworkId = null, BackendAddressSyncMode? syncMode = null)
-        {
-            tunnelInterfaces ??= new List<GatewayLoadBalancerTunnelInterface>();
-            loadBalancerBackendAddresses ??= new List<LoadBalancerBackendAddress>();
-            backendIPConfigurations ??= new List<NetworkInterfaceIPConfigurationData>();
-            loadBalancingRules ??= new List<WritableSubResource>();
-            outboundRules ??= new List<WritableSubResource>();
-            inboundNatRules ??= new List<WritableSubResource>();
-
-            return new BackendAddressPoolData(id, name, resourceType, etag, location, tunnelInterfaces?.ToList(), loadBalancerBackendAddresses?.ToList(), backendIPConfigurations?.ToList(), loadBalancingRules?.ToList(), outboundRuleId != null ? ResourceManagerModelFactory.WritableSubResource(outboundRuleId) : null, outboundRules?.ToList(), inboundNatRules?.ToList(), provisioningState, drainPeriodInSeconds, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, syncMode);
         }
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
@@ -1628,36 +1555,6 @@ namespace Azure.ResourceManager.Network.Models
             return new AzureWebCategoryData(id, name, resourceType, systemData, etag, group);
         }
 
-        /// <summary> Initializes a new instance of BastionHostData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="skuName"> The sku of this Bastion Host. </param>
-        /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
-        /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
-        /// <param name="virtualNetworkId"> Reference to an existing virtual network required for Developer Bastion Host only. </param>
-        /// <param name="networkAclsIPRules"></param>
-        /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
-        /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
-        /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
-        /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
-        /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
-        /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
-        /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
-        /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
-        /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
-        public static BastionHostData BastionHostData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, BastionHostSkuName? skuName = null, IEnumerable<BastionHostIPConfiguration> ipConfigurations = null, string dnsName = null, ResourceIdentifier virtualNetworkId = null, IEnumerable<BastionHostIPRule> networkAclsIPRules = null, NetworkProvisioningState? provisioningState = null, int? scaleUnits = null, bool? disableCopyPaste = null, bool? enableFileCopy = null, bool? enableIPConnect = null, bool? enableShareableLink = null, bool? enableTunneling = null, bool? enableKerberos = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            ipConfigurations ??= new List<BastionHostIPConfiguration>();
-            networkAclsIPRules ??= new List<BastionHostIPRule>();
-
-            return new BastionHostData(id, name, resourceType, location, tags, etag, skuName != null ? new NetworkSku(skuName) : null, ipConfigurations?.ToList(), dnsName, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, networkAclsIPRules != null ? new BastionHostPropertiesFormatNetworkAcls(networkAclsIPRules?.ToList()) : null, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
-        }
-
         /// <summary> Initializes a new instance of BastionHostIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -2237,62 +2134,6 @@ namespace Azure.ResourceManager.Network.Models
             tags ??= new Dictionary<string, string>();
 
             return new ExpressRouteProviderPortData(id, name, resourceType, systemData, tags, location, etag, portPairDescriptor, primaryAzurePort, secondaryAzurePort, peeringLocation, overprovisionFactor, portBandwidthInMbps, usedBandwidthInMbps, remainingBandwidthInMbps);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The identity of the firewall policy. </param>
-        /// <param name="size"> A read-only string that represents the size of the FirewallPolicyPropertiesFormat in MB. (ex 0.5MB). </param>
-        /// <param name="ruleCollectionGroups"> List of references to FirewallPolicyRuleCollectionGroups. </param>
-        /// <param name="provisioningState"> The provisioning state of the firewall policy resource. </param>
-        /// <param name="basePolicyId"> The parent firewall policy from which rules are inherited. </param>
-        /// <param name="firewalls"> List of references to Azure Firewalls that this Firewall Policy is associated with. </param>
-        /// <param name="childPolicies"> List of references to Child Firewall Policies. </param>
-        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
-        /// <param name="threatIntelWhitelist"> ThreatIntel Whitelist for Firewall Policy. </param>
-        /// <param name="insights"> Insights on Firewall Policy. </param>
-        /// <param name="snat"> The private IP addresses/IP ranges to which traffic will not be SNAT. </param>
-        /// <param name="allowSqlRedirect"> SQL Settings definition. </param>
-        /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
-        /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
-        /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
-        /// <param name="transportSecurityCertificateAuthority"> TLS Configuration definition. </param>
-        /// <param name="skuTier"> The Firewall Policy SKU. </param>
-        /// <returns> A new <see cref="Network.FirewallPolicyData"/> instance for mocking. </returns>
-        public static FirewallPolicyData FirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, ManagedServiceIdentity identity = null, string size = null, IEnumerable<WritableSubResource> ruleCollectionGroups = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier basePolicyId = null, IEnumerable<WritableSubResource> firewalls = null, IEnumerable<WritableSubResource> childPolicies = null, AzureFirewallThreatIntelMode? threatIntelMode = null, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = null, FirewallPolicyInsights insights = null, FirewallPolicySnat snat = null, bool? allowSqlRedirect = null, DnsSettings dnsSettings = null, FirewallPolicyExplicitProxy explicitProxy = null, FirewallPolicyIntrusionDetection intrusionDetection = null, FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority = null, FirewallPolicySkuTier? skuTier = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            ruleCollectionGroups ??= new List<WritableSubResource>();
-            firewalls ??= new List<WritableSubResource>();
-            childPolicies ??= new List<WritableSubResource>();
-
-            return new FirewallPolicyData(id, name, resourceType, location, tags, etag, identity, size, ruleCollectionGroups?.ToList(), provisioningState, basePolicyId != null ? ResourceManagerModelFactory.WritableSubResource(basePolicyId) : null, firewalls?.ToList(), childPolicies?.ToList(), threatIntelMode, threatIntelWhitelist, insights, snat, allowSqlRedirect != null ? new FirewallPolicySQL(allowSqlRedirect) : null, dnsSettings, explicitProxy, intrusionDetection, transportSecurityCertificateAuthority != null ? new FirewallPolicyTransportSecurity(transportSecurityCertificateAuthority) : null, skuTier != null ? new FirewallPolicySku(skuTier) : null);
-        }
-
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="size"> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </param>
-        /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
-        /// <param name="ruleCollections">
-        /// Group of Firewall Policy rule collections.
-        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
-        /// </param>
-        /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupData"/> instance for mocking. </returns>
-        public static FirewallPolicyRuleCollectionGroupData FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string size = null, int? priority = null, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections = null, NetworkProvisioningState? provisioningState = null)
-        {
-            ruleCollections ??= new List<FirewallPolicyRuleCollectionInfo>();
-
-            return new FirewallPolicyRuleCollectionGroupData(id, name, resourceType, etag, size, priority, ruleCollections?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of IdpsSignatureListResult. </summary>
@@ -3970,51 +3811,6 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkUsageName VirtualNetworkUsageName(string localizedValue = null, string value = null)
         {
             return new VirtualNetworkUsageName(localizedValue, value);
-        }
-
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="autoScaleBounds"> Autoscale configuration for virutal network gateway. </param>
-        /// <param name="ipConfigurations"> IP configurations for virtual network gateway. </param>
-        /// <param name="gatewayType"> The type of this virtual network gateway. </param>
-        /// <param name="vpnType"> The type of this virtual network gateway. </param>
-        /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
-        /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
-        /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
-        /// <param name="active"> ActiveActive flag. </param>
-        /// <param name="disableIPSecReplayProtection"> disableIPSecReplayProtection flag. </param>
-        /// <param name="gatewayDefaultSiteId"> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </param>
-        /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
-        /// <param name="vpnClientConfiguration"> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </param>
-        /// <param name="virtualNetworkGatewayPolicyGroups"> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </param>
-        /// <param name="bgpSettings"> Virtual network gateway's BGP speaker settings. </param>
-        /// <param name="customRoutesAddressPrefixes"> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network gateway resource. </param>
-        /// <param name="enableDnsForwarding"> Whether dns forwarding is enabled or not. </param>
-        /// <param name="inboundDnsForwardingEndpoint"> The IP address allocated by the gateway to which dns requests can be sent. </param>
-        /// <param name="vNetExtendedLocationResourceId"> Customer vnet resource id. VirtualNetworkGateway of type local gateway is associated with the customer vnet. </param>
-        /// <param name="natRules"> NatRules for virtual network gateway. </param>
-        /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
-        /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
-        /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
-        /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
-        /// <returns> A new <see cref="Network.VirtualNetworkGatewayData"/> instance for mocking. </returns>
-        public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, VirtualNetworkGatewayAutoScaleBounds autoScaleBounds = null, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations = null, VirtualNetworkGatewayType? gatewayType = null, VpnType? vpnType = null, VpnGatewayGeneration? vpnGatewayGeneration = null, bool? enableBgp = null, bool? enablePrivateIPAddress = null, bool? active = null, bool? disableIPSecReplayProtection = null, ResourceIdentifier gatewayDefaultSiteId = null, VirtualNetworkGatewaySku sku = null, VpnClientConfiguration vpnClientConfiguration = null, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = null, BgpSettings bgpSettings = null, IEnumerable<string> customRoutesAddressPrefixes = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, bool? enableDnsForwarding = null, string inboundDnsForwardingEndpoint = null, ResourceIdentifier vNetExtendedLocationResourceId = null, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules = null, bool? enableBgpRouteTranslationForNat = null, bool? allowVirtualWanTraffic = null, bool? allowRemoteVnetTraffic = null, ExpressRouteGatewayAdminState? adminState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            ipConfigurations ??= new List<VirtualNetworkGatewayIPConfiguration>();
-            virtualNetworkGatewayPolicyGroups ??= new List<VirtualNetworkGatewayPolicyGroup>();
-            customRoutesAddressPrefixes ??= new List<string>();
-            natRules ??= new List<VirtualNetworkGatewayNatRuleData>();
-
-            return new VirtualNetworkGatewayData(id, name, resourceType, location, tags, extendedLocation, etag, autoScaleBounds != null ? new VirtualNetworkGatewayAutoScaleConfiguration(autoScaleBounds) : null, ipConfigurations?.ToList(), gatewayType, vpnType, vpnGatewayGeneration, enableBgp, enablePrivateIPAddress, active, disableIPSecReplayProtection, gatewayDefaultSiteId != null ? ResourceManagerModelFactory.WritableSubResource(gatewayDefaultSiteId) : null, sku, vpnClientConfiguration, virtualNetworkGatewayPolicyGroups?.ToList(), bgpSettings, customRoutesAddressPrefixes != null ? new AddressSpace(customRoutesAddressPrefixes?.ToList()) : null, resourceGuid, provisioningState, enableDnsForwarding, inboundDnsForwardingEndpoint, vNetExtendedLocationResourceId, natRules?.ToList(), enableBgpRouteTranslationForNat, allowVirtualWanTraffic, allowRemoteVnetTraffic, adminState);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
