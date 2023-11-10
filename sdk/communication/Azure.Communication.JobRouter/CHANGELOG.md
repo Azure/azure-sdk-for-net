@@ -47,8 +47,12 @@
 - Property `List<QueueSelectorAttachment> QueueSelectors` changed to `IList<QueueSelectorAttachment> QueueSelectorAttachments`
 - Property `List<WorkerSelectorAttachment> WorkerSelectors` changed to `IList<WorkerSelectorAttachment> WorkerSelectorAttachments`
 
-#### ExceptionPolicy && CreateExceptionPolicyOptions
+#### ExceptionPolicy
 - Property `ExceptionRules` - Changed from `Dictionary<string, ExceptionRule>` -> `IList<ExceptionRule>`
+
+#### CreateExceptionPolicyOptions
+- Property `ExceptionRules` - Changed from `Dictionary<string, ExceptionRule>` -> `IList<ExceptionRule>`
+- Changed constructor from `CreateExceptionPolicyOptions(string exceptionPolicyId, IDictionary<string, ExceptionRule> exceptionRules)` to `CreateExceptionPolicyOptions(string exceptionPolicyId, IEnumerable<ExceptionRule> exceptionRules)`
 
 ##### ExceptionRule
 - `Actions` - Changed `Dictionary<string, ExceptionAction>` -> `IList<ExceptionAction>`
