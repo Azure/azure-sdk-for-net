@@ -10,6 +10,7 @@
 - Suppress client activity creation by Azure clients if it happens in scope of another activity created by an Azure client.
 - Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot). Now we append provided activity name as is to the client namespace name.
   Previously, provided activity name was omitted and `ActivitySource` name matched provided client namespace.
+- Distributed tracing with `ActivitySource` for HTTP and REST-based client libraries is declared stable. [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) is no longer required for most of the newly released libraries. Tracing for messaging libraries remains experimental.
 
 ### Bugs Fixed
 
