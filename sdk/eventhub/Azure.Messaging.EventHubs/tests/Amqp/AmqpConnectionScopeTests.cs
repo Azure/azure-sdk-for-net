@@ -67,6 +67,19 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCase("sb://mine.hubs.com")]
+        [TestCase("amqp://test.service.gov")]
+        public void ConstructorValidatesTheServiceEndpointForNonTlsTransport(string serviceEndpoint)
+        {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
+            Assert.That(() => new AmqpConnectionScope(new Uri(serviceEndpoint), new Uri("https://some.place.com"), "hub", credential.Object, EventHubsTransportType.AmqpTcpNonTls, null, TimeSpan.FromSeconds(60)), Throws.ArgumentException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
         public void ConstructorValidatesTheConnectionEndpoint()
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
@@ -174,15 +187,17 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConnectionsAreConfiguredCorrectly()
+        [TestCase(EventHubsTransportType.AmqpTcp, "amqp://test.service.gov")]
+        [TestCase(EventHubsTransportType.AmqpTcpNonTls, "sb://somenamespace.servicebus.localhost.net")]
+        public async Task ConnectionsAreConfiguredCorrectly(EventHubsTransportType transportType,string svcEndpoint)
         {
             RemoteCertificateValidationCallback certCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => true;
 
-            var serviceEndpoint = new Uri("amqp://test.service.gov");
+            var serviceEndpoint = new Uri(svcEndpoint);
             var connectionEndpoint = new Uri("amqp://test.other.ext");
             var eventHub = "myHub";
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
-            var transport = EventHubsTransportType.AmqpTcp;
+            var transport = transportType;
             var identifier = "customIdentIFIER";
             var sendBuffer = 100;
             var receiveBufer = 200;

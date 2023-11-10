@@ -46,6 +46,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The string formatting mask to apply to the service endpoint to publish events for a given partition.</summary>
         private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
 
+        /// <summary> URI suffix for EventsHubs running on localhost </summary>
+        private const string LocalServiceHostUriSuffix = ".servicebus.localhost.net";
+
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
 
@@ -242,6 +245,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNegative(idleTimeout, nameof(idleTimeout));
             ValidateTransport(transport);
+            ValidateNonSecureTransport(transport,serviceEndpoint.Host);
 
             ServiceEndpoint = serviceEndpoint;
             ConnectionEndpoint = connectionEndpoint;
@@ -1365,7 +1369,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
         private static void ValidateNonSecureTransport(EventHubsTransportType transport,string hostName)
         {
-            if ((transport == EventHubsTransportType.AmqpTcpNonTls) && !hostName.ToLower().EndsWith("servicebus.localhost.net"))
+            if ((transport == EventHubsTransportType.AmqpTcpNonTls) && !hostName.ToLower().EndsWith(LocalServiceHostUriSuffix))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnsureTransportOnlyAllowedOnLocalhost, transport, hostName), nameof(transport));
             }
