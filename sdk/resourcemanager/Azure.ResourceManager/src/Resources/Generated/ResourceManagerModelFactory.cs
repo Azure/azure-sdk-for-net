@@ -450,23 +450,6 @@ namespace Azure.ResourceManager.Models
             return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LocationExpanded. </summary>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="name"> The location name. </param>
-        /// <param name="locationType"> The location type. </param>
-        /// <param name="displayName"> The display name of the location. </param>
-        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
-        /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
-        /// <returns> A new <see cref="Resources.Models.LocationExpanded"/> instance for mocking. </returns>
-        public static LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, LocationType? locationType = null, string displayName = null, string regionalDisplayName = null, LocationMetadata metadata = null, IEnumerable<AvailabilityZoneMappings> availabilityZoneMappings = null)
-        {
-            availabilityZoneMappings ??= new List<AvailabilityZoneMappings>();
-
-            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList());
-        }
-
         /// <summary> Initializes a new instance of LocationMetadata. </summary>
         /// <param name="regionType"> The type of the region. </param>
         /// <param name="regionCategory"> The category of the region. </param>

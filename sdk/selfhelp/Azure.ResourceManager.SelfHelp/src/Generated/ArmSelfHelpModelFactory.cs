@@ -74,20 +74,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpError(code, errorType, message, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutions"> List of metadata. </param>
-        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
-        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
-        {
-            solutions ??= new List<SolutionMetadataProperties>();
-
-            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutions?.ToList());
-        }
-
         /// <summary> Initializes a new instance of SolutionMetadataProperties. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="solutionType"> Solution Type. </param>

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary> Gets a collection of SqlTimeZoneResources in the SubscriptionResource. </summary>
-        /// <param name="locationName"> The String to use. </param>
+        /// <param name="locationName"> The AzureLocation to use. </param>
         /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
         public virtual SqlTimeZoneCollection GetSqlTimeZones(AzureLocation locationName)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> The String to use. </param>
+        /// <param name="locationName"> The AzureLocation to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> The String to use. </param>
+        /// <param name="locationName"> The AzureLocation to use. </param>
         /// <param name="timeZoneId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZoneId"/> is null. </exception>
