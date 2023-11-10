@@ -903,7 +903,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar toUnsecure transport {0} is not allowed for the host {1} , is only supported on localhost..
+        ///   Looks up a localized string similar to Unsecure transport {0} is not allowed for the host {1} , is only supported on localhost..
         /// </summary>
         internal static string UnsureTransportOnlyAllowedOnLocalhost
         {
