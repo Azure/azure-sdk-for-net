@@ -1,8 +1,6 @@
 # Release History
 
-## 1.36.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.36.0 (2023-11-10)
 
 ### Breaking Changes
 
@@ -10,10 +8,6 @@
 - Suppress client activity creation by Azure clients if it happens in scope of another activity created by an Azure client.
 - Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot). Now we append provided activity name as is to the client namespace name.
   Previously, provided activity name was omitted and `ActivitySource` name matched provided client namespace.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.35.0 (2023-09-07)
 
