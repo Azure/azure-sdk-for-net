@@ -35,7 +35,7 @@ directive:
   transform: >
     $.produces = [
         "application/json; serialization=Avro",
-        "application/json; serialization=Json",
+        "application/json; serialization=json",
         "application/octet-stream"
     ]
 ```

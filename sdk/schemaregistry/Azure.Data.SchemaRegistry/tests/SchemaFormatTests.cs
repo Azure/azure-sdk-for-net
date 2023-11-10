@@ -66,7 +66,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyJsonFromContentType()
         {
-            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=Json");
+            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=json");
             Assert.AreEqual(SchemaFormat.Json, fromContentType);
         }
 
