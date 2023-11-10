@@ -172,7 +172,7 @@ Azure SDKs produce the following kinds of Activities:
 - *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
 Prior to November 2023, OpenTelemetry support was experimental for all Azure SDKs (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details). 
-Most of Azure SDKs released after December 2023 have OpenTelemetry support enabled by default, however tracing support remains experimental for messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`). 
+Most of Azure SDKs released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental. 
 
 More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md).
 
@@ -201,6 +201,8 @@ AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
     <RuntimeHostConfigurationOption Include="Azure.Experimental.EnableActivitySource" Value="true" />
   </ItemGroup>
 ```
+
+## Consume activities with `ActivityListener`
 
 You'll need `System.Diagnostics.DiagnosticSource` package with version `6.0` or later consume Azure SDK Activities.
 
@@ -239,11 +241,11 @@ If your application already uses ApplicationInsights, automatic collection of Az
 
 To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 
-### OpenTelemetry with Azure Monitor, Zipkin and others
+### OpenTelemetry with Azure Monitor and other observability vendors
 
-OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#activitysource-support) section before proceeding to OpenTelemetry configuration.
+OpenTelemetry relies on `ActivitySource`` to collect distributed traces. Follow steps in [ActivitySource support](#activitysource-support) section before proceeding to OpenTelemetry configuration.
 
-Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
+Follow the [OpenTelemetry configuration guide](https://opentelemetry.io/docs/instrumentation/net/getting-started/#instrumentation) to configure collecting distributed traces collection using the OpenTelemetry library.
 
 ### Sample
 
