@@ -63,7 +63,7 @@ public class PipelineMessage : IDisposable
             return _messageClassifer;
         }
 
-        set => _messageClassifer = value;
+        protected internal set => _messageClassifer = value;
     }
 
     #endregion
