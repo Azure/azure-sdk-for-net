@@ -520,20 +520,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 var amqpSettings = CreateAmpqSettings(AmqpVersion);
                 var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier, ConnectionIdleTimeoutMilliseconds);
-
-                TransportSettings transportSettings = null;
-                switch (transportType)
+                var transportSettings = transportType switch
                 {
-                    case EventHubsTransportType.AmqpTcp:
-                        transportSettings = CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback);
-                        break;
-                    case EventHubsTransportType.AmqpWebSockets:
-                        transportSettings = CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes);
-                        break;
-                    case EventHubsTransportType.AmqpTcpNonTls:
-                        transportSettings = CreateTransportSettingsforTcpNonTls(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes);
-                        break;
-                }
+                    EventHubsTransportType.AmqpTcp => CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback),
+                    EventHubsTransportType.AmqpWebSockets => CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes),
+                    EventHubsTransportType.AmqpTcpNonTls => CreateTransportSettingsforTcpNonTls(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes),
+                    _ => throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transportType), nameof(transportType))
+                };
 
                 // Create and open the connection, respecting the timeout constraint
                 // that was received.
