@@ -92,11 +92,13 @@ namespace Azure.Core.Pipeline
         private ActivitySource? GetActivitySource(string ns, string name)
 #endif
         {
+            bool enabled = _isStable;
 #if NETCOREAPP2_1
-            if (!_isStable && !ActivityExtensions.SupportsActivitySource())
+            enabled |= ActivityExtensions.SupportsActivitySource();
 #else
-            if (!_isStable && !ActivityExtensions.SupportsActivitySource)
+            enabled |= ActivityExtensions.SupportsActivitySource;
 #endif
+            if (!enabled)
             {
                 return null;
             }
