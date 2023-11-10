@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
         }
 
-        [Test, Pairwise, Timeout(30000)]
+        [Test, Pairwise]
         public async Task LargeSingleFile(
             [Values(TransferDirection.Copy, TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection,
             [Values(DataTransferOrder.Sequential, DataTransferOrder.Unordered)] DataTransferOrder transferOrder)
@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised events = new(options);
             DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(60));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);
@@ -121,11 +121,12 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised events = new(options);
             DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(events.FailedEvents, Is.Not.Empty);
+            Assert.That(events.FailedEvents[0], Is.Not.Null);
             Assert.That(events.FailedEvents[0].Exception.Message, Does.Contain("Intentionally failing"));
         }
     }

@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -95,15 +94,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // This mirrors the way the real resources work. Local resources give back a stream of the full length
             // of the file whereas remote resources will give back stream of exactly the requested length.
-            Stream result;
-            if (_uri.IsFile)
-            {
-                result = new RepeatingStream((int)(102400 % Length.Value), Length.Value, revealsLength: true);
-            }
-            else
-            {
-                result = new RepeatingStream((int)(102400 % length.Value), length.Value, revealsLength: true);
-            }
+            Stream result = new EmptyStream(_uri.IsFile ? Length.Value : length.Value);
             return Task.FromResult(new StorageResourceReadStreamResult(result));
         }
 
