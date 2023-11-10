@@ -42,13 +42,13 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="message"></param>
         private static void addHeader(HttpMessage message)
         {
+            message.Request.Headers.Add("x-ms-useragent", "acs-test");
+
             var useragent = Environment.GetEnvironmentVariable("AZURE_USERAGENT_OVERRIDE");
             if (useragent != null)
             {
                 message.Request.Headers.Add("x-ms-useragent", useragent);
             }
-
-            message.Request.Headers.Add("x-ms-useragent", "acs-test");
         }
     }
 }
