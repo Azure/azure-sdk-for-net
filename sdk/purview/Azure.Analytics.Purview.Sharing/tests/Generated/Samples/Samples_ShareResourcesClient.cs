@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Purview.Sharing;
 using Azure.Core;
 using Azure.Identity;
