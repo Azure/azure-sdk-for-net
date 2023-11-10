@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity)
         {
             Target = targetPhoneNumberIdentity;
-            CustomContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), null);
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), null);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifier Transferee { get; set; }
 
         /// <summary>
-        /// The Custom Context which contains SIP and voip headers
+        /// The Custom Calling Context which contains SIP and voip headers
         /// </summary>
-        public CustomCallingContext CustomContext { get; }
+        public CustomCallingContext CustomCallingContext { get; }
 
         /// <summary>
         /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.

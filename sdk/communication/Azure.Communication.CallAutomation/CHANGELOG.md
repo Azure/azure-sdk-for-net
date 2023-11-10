@@ -6,7 +6,7 @@
 - Mid-Call actions support overriding callback uri 
 - Cancel adding Participant invitation 
 - Support transfer a participant in a group call to another participant
-- Add Custom Context payload to Transfer and AddParticipant API
+- Add Custom Calling Context payload to Transfer and AddParticipant API
 
 ### Breaking Changes
 

@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
         public string SourceDisplayName { get; set; }
 
         /// <summary>
-        /// The Custom Context which contains SIP and voip headers
+        /// The Custom Calling Context which contains SIP and voip headers
         /// </summary>
         public CustomCallingContext CustomCallingContext { get; }
     }

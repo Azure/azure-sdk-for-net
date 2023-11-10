@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// CustomContext details.
+    /// CustomCallingContext details.
     /// </summary>
     public class CustomCallingContext
     {
@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         public IDictionary<string, string> SipHeaders { get; }
 
         /// <summary>
-        /// Creates a new CustomContext.
+        /// Creates a new CustomCallingContext.
         /// </summary>
         internal CustomCallingContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
         {
@@ -27,9 +27,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Add a custom context sip UUI header. The Key always remains 'User-To-User'
+        /// Add a custom calling context sip UUI header. The Key always remains 'User-To-User'
         /// </summary>
-        /// <param name="value">custom context sip UUI header's value.</param>
+        /// <param name="value">custom calling context sip UUI header's value.</param>
         public void AddSipUui(string value)
         {
             if (SipHeaders == null)
@@ -40,10 +40,10 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Add a custom context sip X header. The provided key is appended to such as 'X-MS-Custom-{key}'
+        /// Add a custom calling context sip X header. The provided key is appended to such as 'X-MS-Custom-{key}'
         /// </summary>
-        /// <param name="key">custom context sip X header's key.</param>
-        /// <param name="value">custom context sip X header's value.</param>
+        /// <param name="key">custom calling context sip X header's key.</param>
+        /// <param name="value">custom calling context sip X header's value.</param>
         public void AddSipX(string key, string value)
         {
             if (SipHeaders == null)
@@ -54,10 +54,10 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Add a custom context voip header.
+        /// Add a custom calling context voip header.
         /// </summary>
-        /// <param name="key">custom context voip header's key.</param>
-        /// <param name="value">custom context voip header's value.</param>
+        /// <param name="key">custom calling context voip header's key.</param>
+        /// <param name="value">custom calling context voip header's value.</param>
         public void AddVoip(string key, string value)
         {
             if (VoipHeaders == null)
