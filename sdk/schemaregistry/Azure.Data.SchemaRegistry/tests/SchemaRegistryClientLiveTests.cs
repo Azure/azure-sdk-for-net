@@ -84,8 +84,8 @@ namespace Azure.Data.SchemaRegistry.Tests
         private const string Json_SchemaContent_V2 = "{\r\n  \"$id\": \"2\",\r\n  \"$schema\": \"Json\",\r\n  \"title\": \"Person_V2\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"firstName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's first name.\"\r\n    },\r\n    \"lastName\": {\r\n      \"type\": \"string\",\r\n      \"description\": \"The person's last name.\"\r\n    },\r\n    \"age\": {\r\n      \"description\": \"Age in years which must be equal to or greater than zero.\",\r\n      \"type\": \"integer\",\r\n      \"minimum\": 0\r\n    }\r\n  }\r\n}";
         private const string Custom_SchemaContent = "Hello";
         private const string Custom_SchemaContent_V2 = "Hello_V2";
-        //private const string Protobuf_SchemaContent = "syntax = \"proto3\";\n\nMessage Person {\n  string name = 1;\n  float age = 2;\n  string customer_id = 3;\n}\n";
-        //private const string Protobuf_SchemaContent_V2 = "syntax = \"proto3\";\n\nMessage Person {\n  string name = 1;\n  float age = 2;\n  string favorite_color = 3;\n}\n";
+        private const string Protobuf_SchemaContent = "syntax = \"proto3\";\n\npackage person.example;\n\nmessage Person {\n    string name = 1;\n    int64 favorite_number = 2;\n    string favorite_color = 3;\n}\n";
+        private const string Protobuf_SchemaContent_V2 = "syntax = \"proto3\";\n\npackage person.example;\n\nmessage PersonV2 {\n    string name = 1;\n    int64 least_favorite_number = 2;\n    string favorite_color = 3;\n}\n";
 
         private const string Avro = "Avro";
         private const string Json = "Json";
@@ -96,6 +96,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
+        // Until Protobuf is publicly available
         //[TestCase(Protobuf)]
         public async Task CanRegisterSchema(string formatName)
         {
@@ -338,12 +339,12 @@ namespace Azure.Data.SchemaRegistry.Tests
                         return Custom_SchemaContent;
                     }
                     return Custom_SchemaContent_V2;
-                //case Protobuf:
-                //    if (version == 1)
-                //    {
-                //        return Protobuf_SchemaContent;
-                //    }
-                //    return Protobuf_SchemaContent;
+                case Protobuf:
+                    if (version == 1)
+                    {
+                        return Protobuf_SchemaContent;
+                    }
+                    return Protobuf_SchemaContent_V2;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }

@@ -309,6 +309,7 @@
         "schemaType": "custom"
       }
     },
+    // Until Protobuf is publicly available
     //{
     //  "type": "Microsoft.EventHub/namespaces/schemagroups",
     //  "apiVersion": "[variables('apiVersion')]",

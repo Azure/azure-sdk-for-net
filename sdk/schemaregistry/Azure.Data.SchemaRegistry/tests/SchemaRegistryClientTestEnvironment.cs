@@ -7,6 +7,7 @@ namespace Azure.Data.SchemaRegistry.Tests
 {
     public class SchemaRegistryClientTestEnvironment : TestEnvironment
     {
+        public string SchemaRegistryTempProtobufEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT");
         public string SchemaRegistryEndpointAvro => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_AVRO");
         public string SchemaRegistryEndpointJson => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_JSON");
         public string SchemaRegistryEndpointCustom => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_CUSTOM");
