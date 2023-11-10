@@ -68,10 +68,10 @@ namespace System.Net.ClientModel.Core
     {
         internal ClientPipeline() { }
         public System.Net.ClientModel.Core.PipelineMessage CreateMessage(System.Net.ClientModel.RequestOptions options) { throw null; }
-        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(System.Net.ClientModel.RequestOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(System.Net.ClientModel.RequestOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(object client, System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(object client, System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(object client, System.Net.ClientModel.RequestOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(object client, System.Net.ClientModel.RequestOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
         public void Send(System.Net.ClientModel.Core.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
@@ -166,7 +166,7 @@ namespace System.Net.ClientModel.Core
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
-        public PipelineOptions(System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
+        public PipelineOptions(object client, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }

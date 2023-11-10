@@ -33,7 +33,7 @@ public class MapsClient
         _clientPolicies[0] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
 
         // This creates the pipeline, caches it in options, and freezes the options.
-        ClientPipeline.GetPipeline(options, _clientPolicies);
+        ClientPipeline.GetPipeline(this, options, _clientPolicies);
 
         _pipelineOptions = options;
     }
@@ -58,7 +58,7 @@ public class MapsClient
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        ClientPipeline pipeline = ClientPipeline.GetPipeline(options, _clientPolicies);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(this, options, _clientPolicies);
         pipeline.Send(message);
 
         MessageResponse response = message.Response;
@@ -77,7 +77,7 @@ public class MapsClient
         // We have classifier-chaining logic in Azure.Core we can use if that's what we want.
         options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
-        ClientPipeline pipeline = ClientPipeline.GetPipeline(options, _clientPolicies);
+        ClientPipeline pipeline = ClientPipeline.GetPipeline(this, options, _clientPolicies);
         PipelineMessage message = pipeline.CreateMessage(options);
 
         MessageRequest request = message.Request;

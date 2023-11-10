@@ -11,8 +11,12 @@ public class ClientPipeline
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies)
+    private readonly Type _clientType;
+
+    private ClientPipeline(Type clientType, ReadOnlyMemory<PipelinePolicy> policies)
     {
+        if (clientType is null) throw new ArgumentNullException(nameof(clientType));
+
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
             throw new ArgumentException("Last policy in the array must be of type 'PipelineTransport'.", nameof(policies));
@@ -20,21 +24,31 @@ public class ClientPipeline
 
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
+
+        _clientType = clientType;
     }
 
-    public static ClientPipeline GetPipeline(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
-        => GetPipeline(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
+    public static ClientPipeline GetPipeline(object client, PipelineOptions options, params PipelinePolicy[] perCallPolicies)
+        => GetPipeline(client, options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    public static ClientPipeline GetPipeline(PipelineOptions options,
+    public static ClientPipeline GetPipeline(object client,
+        PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
+        if (client is null) throw new ArgumentNullException(nameof(client));
+        if (options is null) throw new ArgumentNullException(nameof(options));
+
+        Type clientType = client.GetType();
+
         if (options.IsFrozen)
         {
+            AssertValidClient(options.Pipeline._clientType, clientType);
+
             return options.Pipeline;
         }
 
-        ClientPipeline pipeline = Create(options, perCallPolicies, perTryPolicies);
+        ClientPipeline pipeline = Create(client.GetType(), options, perCallPolicies, perTryPolicies);
 
         // Set and freeze the pipeline.
         options.SetPipeline(pipeline);
@@ -42,13 +56,17 @@ public class ClientPipeline
         return pipeline;
     }
 
-    public static ClientPipeline GetPipeline(RequestOptions options, params PipelinePolicy[] perCallPolicies)
-        => GetPipeline(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
+    public static ClientPipeline GetPipeline(object client, RequestOptions options, params PipelinePolicy[] perCallPolicies)
+        => GetPipeline(client, options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    public static ClientPipeline GetPipeline(RequestOptions options,
+    public static ClientPipeline GetPipeline(object client,
+        RequestOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
+        if (client is null) throw new ArgumentNullException(nameof(client));
+        if (options is null) throw new ArgumentNullException(nameof(options));
+
         // If PipelineOptions haven't been modified, we don't need to create a new pipeline.
         if (!options.PipelineOptions.Modified)
         {
@@ -56,20 +74,24 @@ public class ClientPipeline
             return options.PipelineOptions.Pipeline;
         }
 
-        return GetPipeline(options.PipelineOptions, perCallPolicies, perTryPolicies);
+        return GetPipeline(client, options.PipelineOptions, perCallPolicies, perTryPolicies);
     }
 
     // Simplest factory method: construct a pipeline from a list of policies
-    internal static ClientPipeline Create(ReadOnlyMemory<PipelinePolicy> policies)
-        => new ClientPipeline(policies);
+    internal static ClientPipeline Create(Type clientType, ReadOnlyMemory<PipelinePolicy> policies)
+        => new ClientPipeline(clientType, policies);
 
     // Builder from options: lets a client-author specify policies without modifying
     // client-user's passed-in options.
     internal static ClientPipeline Create(
+        Type clientType,
         PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
+        if (clientType is null) throw new ArgumentNullException(nameof(clientType));
+        if (options is null) throw new ArgumentNullException(nameof(options));
+
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
         if (options.PerTryPolicies != null)
@@ -125,11 +147,10 @@ public class ClientPipeline
         else
         {
             // Add default transport.
-            // TODO: Note this adds an HTTP dependency we should be aware of.
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new ClientPipeline(pipeline);
+        return new ClientPipeline(clientType, pipeline);
     }
 
     // TODO: note that without a common base type, nothing validates that ClientPipeline
@@ -152,6 +173,14 @@ public class ClientPipeline
     {
         PipelineProcessor enumerator = new ClientPipelineProcessor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
+    }
+
+    private static void AssertValidClient(Type cachedClient, Type callingClient)
+    {
+        if (cachedClient != callingClient)
+        {
+            throw new NotSupportedException($"Cannot use pipeline created by client of type '{cachedClient}' in client of type '{callingClient}'.");
+        }
     }
 
     private class ClientPipelineProcessor : PipelineProcessor

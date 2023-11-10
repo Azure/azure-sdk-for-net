@@ -26,8 +26,13 @@ public class PipelineOptions
     {
     }
 
-    public PipelineOptions(ReadOnlyMemory<PipelinePolicy> policies)
-        => SetPipeline(ClientPipeline.Create(policies));
+    public PipelineOptions(object client, ReadOnlyMemory<PipelinePolicy> policies)
+    {
+        if (client is null) throw new ArgumentNullException(nameof(client));
+
+        ClientPipeline pipeline = ClientPipeline.Create(client.GetType(), policies);
+        SetPipeline(pipeline);
+    }
 
     // Copy Constructor
     internal PipelineOptions(PipelineOptions options)
