@@ -181,6 +181,7 @@ namespace Azure.Messaging.EventHubs
     {
         AmqpTcp = 0,
         AmqpWebSockets = 1,
+        AmqpTcpNonTls = 2,
     }
     public partial class PartitionProperties
     {
