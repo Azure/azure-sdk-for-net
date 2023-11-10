@@ -24,7 +24,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public static async Task<DisposableDocumentModel> BuildAsync(DocumentModelAdministrationClient client, BuildDocumentModelRequest buildRequest)
         {
-            Operation<DocumentModelDetails> operation = await client.BuildDocumentAsync(WaitUntil.Completed, buildRequest);
+            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
 
             return new DisposableDocumentModel(client, operation);
         }

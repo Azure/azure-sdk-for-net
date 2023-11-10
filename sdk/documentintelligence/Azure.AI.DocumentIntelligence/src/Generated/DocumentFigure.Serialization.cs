@@ -22,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<object>> elements = default;
+            Optional<IReadOnlyList<string>> elements = default;
             Optional<DocumentCaption> caption = default;
             Optional<IReadOnlyList<DocumentFootnote>> footnotes = default;
             foreach (var property in element.EnumerateObject())
@@ -57,17 +57,10 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetString());
                     }
                     elements = array;
                     continue;

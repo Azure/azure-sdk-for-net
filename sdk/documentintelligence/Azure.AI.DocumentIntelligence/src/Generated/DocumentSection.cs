@@ -23,13 +23,13 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNull(spans, nameof(spans));
 
             Spans = spans.ToList();
-            Elements = new ChangeTrackingList<object>();
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DocumentSection. </summary>
         /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the section. </param>
-        internal DocumentSection(IReadOnlyList<DocumentSpan> spans, IReadOnlyList<object> elements)
+        internal DocumentSection(IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements)
         {
             Spans = spans;
             Elements = elements;
@@ -38,6 +38,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Location of the section in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
         /// <summary> Child elements of the section. </summary>
-        public IReadOnlyList<object> Elements { get; }
+        public IReadOnlyList<string> Elements { get; }
     }
 }

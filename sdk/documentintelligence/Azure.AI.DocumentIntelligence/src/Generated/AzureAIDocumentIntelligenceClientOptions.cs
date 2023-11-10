@@ -18,12 +18,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022-08-31". </summary>
-            V2022_08_31 = 1,
-            /// <summary> Service version "2023-07-31". </summary>
-            V2023_07_31 = 2,
             /// <summary> Service version "2023-10-31-preview". </summary>
-            V2023_10_31_Preview = 3,
+            V2023_10_31_Preview = 1,
         }
 
         internal string Version { get; }
@@ -33,8 +29,6 @@ namespace Azure.AI.DocumentIntelligence
         {
             Version = version switch
             {
-                ServiceVersion.V2022_08_31 => "2022-08-31",
-                ServiceVersion.V2023_07_31 => "2023-07-31",
                 ServiceVersion.V2023_10_31_Preview => "2023-10-31-preview",
                 _ => throw new NotSupportedException()
             };

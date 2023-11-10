@@ -194,7 +194,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = client.GetModel("<modelId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
@@ -210,7 +209,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = await client.GetModelAsync("<modelId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
@@ -248,6 +246,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = client.GetModel("<modelId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -262,12 +266,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -281,6 +279,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = await client.GetModelAsync("<modelId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -295,12 +299,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -845,7 +843,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            foreach (DocumentModelSummary item in client.GetModels())
+            foreach (DocumentModelDetails item in client.GetModels())
             {
             }
         }
@@ -858,7 +856,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            await foreach (DocumentModelSummary item in client.GetModelsAsync())
+            await foreach (DocumentModelDetails item in client.GetModelsAsync())
             {
             }
         }
@@ -880,6 +878,20 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("buildMode").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
             }
         }
 
@@ -900,6 +912,20 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("buildMode").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+                Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+                Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
             }
         }
 
@@ -911,7 +937,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            foreach (DocumentModelSummary item in client.GetModels())
+            foreach (DocumentModelDetails item in client.GetModels())
             {
             }
         }
@@ -924,7 +950,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            await foreach (DocumentModelSummary item in client.GetModelsAsync())
+            await foreach (DocumentModelDetails item in client.GetModelsAsync())
             {
             }
         }
@@ -977,7 +1003,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            foreach (OperationSummary item in client.GetOperations())
+            foreach (OperationDetails item in client.GetOperations())
             {
             }
         }
@@ -990,7 +1016,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            await foreach (OperationSummary item in client.GetOperationsAsync())
+            await foreach (OperationDetails item in client.GetOperationsAsync())
             {
             }
         }
@@ -1015,6 +1041,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
             }
         }
 
@@ -1038,6 +1069,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
             }
         }
 
@@ -1049,7 +1085,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            foreach (OperationSummary item in client.GetOperations())
+            foreach (OperationDetails item in client.GetOperations())
             {
             }
         }
@@ -1062,7 +1098,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-            await foreach (OperationSummary item in client.GetOperationsAsync())
+            await foreach (OperationDetails item in client.GetOperationsAsync())
             {
             }
         }
@@ -1205,7 +1241,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BuildDocument_ShortVersion()
+        public void Example_BuildDocumentModel_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1216,18 +1252,17 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 modelId = "<modelId>",
                 buildMode = "template",
             });
-            Operation<BinaryData> operation = client.BuildDocument(WaitUntil.Completed, content);
+            Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BuildDocument_ShortVersion_Async()
+        public async Task Example_BuildDocumentModel_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1238,44 +1273,43 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 modelId = "<modelId>",
                 buildMode = "template",
             });
-            Operation<BinaryData> operation = await client.BuildDocumentAsync(WaitUntil.Completed, content);
+            Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BuildDocument_ShortVersion_Convenience()
+        public void Example_BuildDocumentModel_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
             BuildDocumentModelRequest buildRequest = new BuildDocumentModelRequest("<modelId>", DocumentBuildMode.Template);
-            Operation<DocumentModelDetails> operation = client.BuildDocument(WaitUntil.Completed, buildRequest);
+            Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
             DocumentModelDetails responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BuildDocument_ShortVersion_Convenience_Async()
+        public async Task Example_BuildDocumentModel_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
             BuildDocumentModelRequest buildRequest = new BuildDocumentModelRequest("<modelId>", DocumentBuildMode.Template);
-            Operation<DocumentModelDetails> operation = await client.BuildDocumentAsync(WaitUntil.Completed, buildRequest);
+            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
             DocumentModelDetails responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BuildDocument_AllParameters()
+        public void Example_BuildDocumentModel_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1301,10 +1335,16 @@ namespace Azure.AI.DocumentIntelligence.Samples
                     key = "<tags>",
                 },
             });
-            Operation<BinaryData> operation = client.BuildDocument(WaitUntil.Completed, content);
+            Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1319,17 +1359,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BuildDocument_AllParameters_Async()
+        public async Task Example_BuildDocumentModel_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1355,10 +1389,16 @@ namespace Azure.AI.DocumentIntelligence.Samples
                     key = "<tags>",
                 },
             });
-            Operation<BinaryData> operation = await client.BuildDocumentAsync(WaitUntil.Completed, content);
+            Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1373,17 +1413,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BuildDocument_AllParameters_Convenience()
+        public void Example_BuildDocumentModel_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1402,13 +1436,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
 ["key"] = "<tags>"
 },
             };
-            Operation<DocumentModelDetails> operation = client.BuildDocument(WaitUntil.Completed, buildRequest);
+            Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
             DocumentModelDetails responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_BuildDocument_AllParameters_Convenience_Async()
+        public async Task Example_BuildDocumentModel_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1427,7 +1461,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 ["key"] = "<tags>"
 },
             };
-            Operation<DocumentModelDetails> operation = await client.BuildDocumentAsync(WaitUntil.Completed, buildRequest);
+            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
             DocumentModelDetails responseData = operation.Value;
         }
 
@@ -1454,7 +1488,6 @@ modelId = "<modelId>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
@@ -1482,7 +1515,6 @@ modelId = "<modelId>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
@@ -1547,6 +1579,12 @@ modelId = "<modelId>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1561,12 +1599,6 @@ modelId = "<modelId>",
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -1597,6 +1629,12 @@ modelId = "<modelId>",
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1611,12 +1649,6 @@ modelId = "<modelId>",
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -1686,7 +1718,6 @@ new ComponentDocumentModelDetails("<modelId>")
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
@@ -1712,7 +1743,6 @@ new ComponentDocumentModelDetails("<modelId>")
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
@@ -1764,6 +1794,12 @@ new ComponentDocumentModelDetails("<modelId>")
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1778,12 +1814,6 @@ new ComponentDocumentModelDetails("<modelId>")
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -1807,6 +1837,12 @@ new ComponentDocumentModelDetails("<modelId>")
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("buildMode").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1821,12 +1857,6 @@ new ComponentDocumentModelDetails("<modelId>")
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("apiVersion").ToString());
-            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
         }
 
         [Test]

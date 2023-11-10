@@ -24,7 +24,7 @@ namespace Azure.AI.DocumentIntelligence
 
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
-            Elements = new ChangeTrackingList<object>();
+            Elements = new ChangeTrackingList<string>();
             Footnotes = new ChangeTrackingList<DocumentFootnote>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
         /// <param name="caption"> Caption associated with the figure. </param>
         /// <param name="footnotes"> List of footnotes associated with the figure. </param>
-        internal DocumentFigure(IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<object> elements, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes)
+        internal DocumentFigure(IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, DocumentCaption caption, IReadOnlyList<DocumentFootnote> footnotes)
         {
             BoundingRegions = boundingRegions;
             Spans = spans;
@@ -48,7 +48,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Location of the figure in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
         /// <summary> Child elements of the figure, excluding any caption or footnotes. </summary>
-        public IReadOnlyList<object> Elements { get; }
+        public IReadOnlyList<string> Elements { get; }
         /// <summary> Caption associated with the figure. </summary>
         public DocumentCaption Caption { get; }
         /// <summary> List of footnotes associated with the figure. </summary>

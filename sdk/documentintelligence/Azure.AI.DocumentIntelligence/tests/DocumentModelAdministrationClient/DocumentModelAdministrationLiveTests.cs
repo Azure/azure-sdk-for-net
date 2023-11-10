@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         [RecordedTest]
         [TestCaseSource(nameof(s_buildDocumentModelTestCases))]
-        public async Task BuildDocumentWithAzureBlobContentSource(DocumentBuildMode buildMode)
+        public async Task BuildDocumentModelWithAzureBlobContentSource(DocumentBuildMode buildMode)
         {
             if (buildMode == DocumentBuildMode.Neural && Recording.Mode == RecordedTestMode.Live)
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildDocumentAsync(WaitUntil.Started, request);
+                operation = await client.BuildDocumentModelAsync(WaitUntil.Started, request);
 
                 await (buildMode == DocumentBuildMode.Neural
                     ? operation.WaitForCompletionAsync(TimeSpan.FromMinutes(1), CancellationToken.None)
@@ -127,7 +127,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public void BuildDocumentCanParseError()
+        public void BuildDocumentModelCanParseError()
         {
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
@@ -141,7 +141,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 AzureBlobSource = source
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentAsync(WaitUntil.Started, request));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, request));
 
             Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
@@ -342,9 +342,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { disposableModel0.ModelId, disposableModel0.Value },
                 { disposableModel1.ModelId, disposableModel1.Value }
             };
-            var idMapping = new Dictionary<string, DocumentModelSummary>();
+            var idMapping = new Dictionary<string, DocumentModelDetails>();
 
-            await foreach (DocumentModelSummary model in client.GetModelsAsync())
+            await foreach (DocumentModelDetails model in client.GetModelsAsync())
             {
                 if (expectedIdMapping.ContainsKey(model.ModelId))
                 {
@@ -364,7 +364,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(idMapping, Contains.Key(id));
 
                 DocumentModelDetails expected = expectedIdMapping[id];
-                DocumentModelSummary model = idMapping[id];
+                DocumentModelDetails model = idMapping[id];
 
                 Assert.That(model.ModelId, Is.EqualTo(expected.ModelId));
                 Assert.That(model.Description, Is.EqualTo(expected.Description));
@@ -372,6 +372,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(model.CreatedDateTime, Is.EqualTo(expected.CreatedDateTime));
                 Assert.That(model.ExpirationDateTime, Is.EqualTo(expected.ExpirationDateTime));
                 Assert.That(model.Tags, Is.EquivalentTo(expected.Tags));
+
+                Assert.That(model.AzureBlobSource, Is.Null);
+                Assert.That(model.AzureBlobFileListSource, Is.Null);
+                Assert.That(model.DocTypes, Is.Empty);
             }
         }
 

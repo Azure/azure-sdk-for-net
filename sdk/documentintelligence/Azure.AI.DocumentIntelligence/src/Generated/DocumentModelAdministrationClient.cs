@@ -21,6 +21,8 @@ namespace Azure.AI.DocumentIntelligence
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -47,6 +49,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of DocumentModelAdministrationClient. </summary>
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentModelAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelAdministrationClient. </summary>
+        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DocumentModelAdministrationClient(Uri endpoint, AzureKeyCredential credential, AzureAIDocumentIntelligenceClientOptions options)
@@ -58,6 +68,24 @@ namespace Azure.AI.DocumentIntelligence
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelAdministrationClient. </summary>
+        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentModelAdministrationClient(Uri endpoint, TokenCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureAIDocumentIntelligenceClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -729,23 +757,23 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> List all document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetModelsAsync(CancellationToken)']/*" />
-        public virtual AsyncPageable<DocumentModelSummary> GetModelsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DocumentModelSummary.DeserializeDocumentModelSummary, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DocumentModelDetails.DeserializeDocumentModelDetails, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetModels", "value", "nextLink", context);
         }
 
         /// <summary> List all document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetModels(CancellationToken)']/*" />
-        public virtual Pageable<DocumentModelSummary> GetModels(CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DocumentModelSummary.DeserializeDocumentModelSummary, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DocumentModelDetails.DeserializeDocumentModelDetails, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetModels", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -803,23 +831,23 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Lists all operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetOperationsAsync(CancellationToken)']/*" />
-        public virtual AsyncPageable<OperationSummary> GetOperationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationSummary.DeserializeOperationSummary, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetOperations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationDetails.DeserializeOperationDetails, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary> Lists all operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetOperations(CancellationToken)']/*" />
-        public virtual Pageable<OperationSummary> GetOperations(CancellationToken cancellationToken = default)
+        public virtual Pageable<OperationDetails> GetOperations(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationSummary.DeserializeOperationSummary, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetOperations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationDetails.DeserializeOperationDetails, ClientDiagnostics, _pipeline, "DocumentModelAdministrationClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -953,15 +981,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)']/*" />
-        public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentAsync(WaitUntil waitUntil, BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentModelAsync(WaitUntil waitUntil, BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
-            Operation<BinaryData> response = await BuildDocumentAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocument");
+            Operation<BinaryData> response = await BuildDocumentModelAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel");
         }
 
         /// <summary> Builds a custom document analysis model. </summary>
@@ -969,15 +997,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocument(WaitUntil,BuildDocumentModelRequest,CancellationToken)']/*" />
-        public virtual Operation<DocumentModelDetails> BuildDocument(WaitUntil waitUntil, BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelRequest,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> BuildDocumentModel(WaitUntil waitUntil, BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
-            Operation<BinaryData> response = BuildDocument(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocument");
+            Operation<BinaryData> response = BuildDocumentModel(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel");
         }
 
         /// <summary>
@@ -990,7 +1018,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildDocumentAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1001,17 +1029,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentAsync(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> BuildDocumentAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> BuildDocumentModelAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildDocument");
+            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildDocumentModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBuildDocumentRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocument", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateBuildDocumentModelRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1030,7 +1058,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildDocument(WaitUntil,BuildDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildDocumentModel(WaitUntil,BuildDocumentModelRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1041,17 +1069,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocument(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual Operation<BinaryData> BuildDocument(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> BuildDocumentModel(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildDocument");
+            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildDocumentModel");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBuildDocumentRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocument", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = CreateBuildDocumentModelRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1408,7 +1436,7 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        internal HttpMessage CreateBuildDocumentRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateBuildDocumentModelRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;

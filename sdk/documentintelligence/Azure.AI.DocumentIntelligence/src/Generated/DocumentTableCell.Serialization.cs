@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
             string content = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<object>> elements = default;
+            Optional<IReadOnlyList<string>> elements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -103,17 +103,10 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetObject());
-                        }
+                        array.Add(item.GetString());
                     }
                     elements = array;
                     continue;

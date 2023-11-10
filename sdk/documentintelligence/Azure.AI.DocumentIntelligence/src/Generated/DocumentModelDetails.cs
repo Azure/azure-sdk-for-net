@@ -12,17 +12,19 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Document model info. </summary>
-    public partial class DocumentModelDetails : DocumentModelSummary
+    public partial class DocumentModelDetails
     {
         /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="buildMode"> Custom document model build mode. </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the document model was created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        internal DocumentModelDetails(string modelId, DocumentBuildMode buildMode) : base(modelId)
+        internal DocumentModelDetails(string modelId, DateTimeOffset createdDateTime)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 
-            BuildMode = buildMode;
+            ModelId = modelId;
+            CreatedDateTime = createdDateTime;
+            Tags = new ChangeTrackingDictionary<string, string>();
             DocTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
         }
 
@@ -43,16 +45,34 @@ namespace Azure.AI.DocumentIntelligence
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
         /// <param name="docTypes"> Supported document types. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes) : base(modelId, description, createdDateTime, expirationDateTime, apiVersion, tags)
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes)
         {
+            ModelId = modelId;
+            Description = description;
+            CreatedDateTime = createdDateTime;
+            ExpirationDateTime = expirationDateTime;
+            ApiVersion = apiVersion;
+            Tags = tags;
             BuildMode = buildMode;
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
             DocTypes = docTypes;
         }
 
+        /// <summary> Unique document model name. </summary>
+        public string ModelId { get; }
+        /// <summary> Document model description. </summary>
+        public string Description { get; }
+        /// <summary> Date and time (UTC) when the document model was created. </summary>
+        public DateTimeOffset CreatedDateTime { get; }
+        /// <summary> Date and time (UTC) when the document model will expire. </summary>
+        public DateTimeOffset? ExpirationDateTime { get; }
+        /// <summary> API version used to create this document model. </summary>
+        public string ApiVersion { get; }
+        /// <summary> List of key-value tag attributes associated with the document model. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Custom document model build mode. </summary>
-        public DocumentBuildMode BuildMode { get; }
+        public DocumentBuildMode? BuildMode { get; }
         /// <summary>
         /// Azure Blob Storage location containing the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.

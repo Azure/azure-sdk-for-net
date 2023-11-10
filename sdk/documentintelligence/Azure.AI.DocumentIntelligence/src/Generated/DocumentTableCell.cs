@@ -31,7 +31,7 @@ namespace Azure.AI.DocumentIntelligence
             Content = content;
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
-            Elements = new ChangeTrackingList<object>();
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>
@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<object> elements)
+        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements)
         {
             Kind = kind;
             RowIndex = rowIndex;
@@ -74,6 +74,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Location of the table cell in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
         /// <summary> Child elements of the table cell. </summary>
-        public IReadOnlyList<object> Elements { get; }
+        public IReadOnlyList<string> Elements { get; }
     }
 }

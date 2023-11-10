@@ -26,7 +26,6 @@ namespace Azure.AI.DocumentIntelligence
                     case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element);
                     case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element);
                     case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element);
-                    case "chatBuild": return ChatIndexBuildOperationDetails.DeserializeChatIndexBuildOperationDetails(element);
                 }
             }
             return UnknownOperationDetails.DeserializeUnknownOperationDetails(element);
