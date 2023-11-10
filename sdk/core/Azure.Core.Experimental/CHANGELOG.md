@@ -1,14 +1,11 @@
 # Release History
 
-## 0.1.0-preview.31 (Unreleased)
-
-### Features Added
+## 0.1.0-preview.31 (2023-11-10)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `Variant.As<T>` now allows returning `null` for reference types with no value.
+- If a `Variant` is assigned a value that is a `Variant`, the left-hand `Variant` operand will now store the value that the right-hand `Variant` operand represents instead of storing the value as the `Variant` itself.
 
 ## 0.1.0-preview.30 (2023-09-07)
 
