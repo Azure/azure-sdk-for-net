@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(condition, nameof(condition));
             Argument.AssertNotNull(workerSelectors, nameof(workerSelectors));
 
-            Kind = "conditional";
+            Kind = WorkerSelectorAttachmentKind.Conditional;
             Condition = condition;
             WorkerSelectors = workerSelectors.ToList();
         }
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
-        internal ConditionalWorkerSelectorAttachment(string kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
+        internal ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
         {
             Condition = condition;
             WorkerSelectors = workerSelectors;

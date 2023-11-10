@@ -10,13 +10,13 @@ namespace Azure.Communication.JobRouter
     public abstract partial class QueueSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> The type discriminator describing a sub-type of QueueSelectorAttachment. </summary>
-        public string Kind { get; protected set; }
+        public QueueSelectorAttachmentKind Kind { get; protected set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

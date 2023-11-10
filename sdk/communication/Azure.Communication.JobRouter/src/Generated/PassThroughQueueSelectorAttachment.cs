@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        internal PassThroughQueueSelectorAttachment(string kind, string key, LabelOperator labelOperator) : base(kind)
+        internal PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind kind, string key, LabelOperator labelOperator) : base(kind)
         {
             Key = key;
             LabelOperator = labelOperator;

@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.ExpressionRouterRule"/> instance for mocking. </returns>
         public static ExpressionRouterRule ExpressionRouterRule(string language = null, string expression = null)
         {
-            return new ExpressionRouterRule("expression-rule", language, expression);
+            return new ExpressionRouterRule(RouterRuleKind.Expression, language, expression);
         }
 
         /// <summary> Initializes a new instance of FunctionRouterRule. </summary>
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.FunctionRouterRule"/> instance for mocking. </returns>
         public static FunctionRouterRule FunctionRouterRule(Uri functionUri = null, FunctionRouterRuleCredential credential = null)
         {
-            return new FunctionRouterRule("azure-function-rule", functionUri, credential);
+            return new FunctionRouterRule(RouterRuleKind.Function, functionUri, credential);
         }
 
         /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.WebhookRouterRule"/> instance for mocking. </returns>
         public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = null, OAuth2WebhookClientCredential clientCredential = null, Uri webhookUri = null)
         {
-            return new WebhookRouterRule("webhook-rule", authorizationServerUri, clientCredential, webhookUri);
+            return new WebhookRouterRule(RouterRuleKind.Webhook, authorizationServerUri, clientCredential, webhookUri);
         }
 
         /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
         {
             queueSelectors ??= new List<RouterQueueSelector>();
 
-            return new ConditionalQueueSelectorAttachment("conditional", condition, queueSelectors?.ToList());
+            return new ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind.Conditional, condition, queueSelectors?.ToList());
         }
 
         /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
@@ -59,7 +59,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.PassThroughQueueSelectorAttachment"/> instance for mocking. </returns>
         public static PassThroughQueueSelectorAttachment PassThroughQueueSelectorAttachment(string key = null, LabelOperator labelOperator = default)
         {
-            return new PassThroughQueueSelectorAttachment("pass-through", key, labelOperator);
+            return new PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind.PassThrough, key, labelOperator);
         }
 
         /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/> instance for mocking. </returns>
         public static RuleEngineQueueSelectorAttachment RuleEngineQueueSelectorAttachment(RouterRule rule = null)
         {
-            return new RuleEngineQueueSelectorAttachment("rule-engine", rule);
+            return new RuleEngineQueueSelectorAttachment(QueueSelectorAttachmentKind.RuleEngine, rule);
         }
 
         /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.StaticQueueSelectorAttachment"/> instance for mocking. </returns>
         public static StaticQueueSelectorAttachment StaticQueueSelectorAttachment(RouterQueueSelector queueSelector = null)
         {
-            return new StaticQueueSelectorAttachment("static", queueSelector);
+            return new StaticQueueSelectorAttachment(QueueSelectorAttachmentKind.Static, queueSelector);
         }
 
         /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter
         {
             allocations ??= new List<QueueWeightedAllocation>();
 
-            return new WeightedAllocationQueueSelectorAttachment("weighted-allocation-queue-selector", allocations?.ToList());
+            return new WeightedAllocationQueueSelectorAttachment(QueueSelectorAttachmentKind.WeightedAllocation, allocations?.ToList());
         }
 
         /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
@@ -107,7 +107,7 @@ namespace Azure.Communication.JobRouter
         {
             workerSelectors ??= new List<RouterWorkerSelector>();
 
-            return new ConditionalWorkerSelectorAttachment("conditional", condition, workerSelectors?.ToList());
+            return new ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind.Conditional, condition, workerSelectors?.ToList());
         }
 
         /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
@@ -115,7 +115,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/> instance for mocking. </returns>
         public static RuleEngineWorkerSelectorAttachment RuleEngineWorkerSelectorAttachment(RouterRule rule = null)
         {
-            return new RuleEngineWorkerSelectorAttachment("rule-engine", rule);
+            return new RuleEngineWorkerSelectorAttachment(WorkerSelectorAttachmentKind.RuleEngine, rule);
         }
 
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
@@ -123,7 +123,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.StaticWorkerSelectorAttachment"/> instance for mocking. </returns>
         public static StaticWorkerSelectorAttachment StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector = null)
         {
-            return new StaticWorkerSelectorAttachment("static", workerSelector);
+            return new StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind.Static, workerSelector);
         }
 
         /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
@@ -133,7 +133,7 @@ namespace Azure.Communication.JobRouter
         {
             allocations ??= new List<WorkerWeightedAllocation>();
 
-            return new WeightedAllocationWorkerSelectorAttachment("weighted-allocation-worker-selector", allocations?.ToList());
+            return new WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind.WeightedAllocation, allocations?.ToList());
         }
 
         /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
@@ -164,14 +164,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.QueueLengthExceptionTrigger"/> instance for mocking. </returns>
         public static QueueLengthExceptionTrigger QueueLengthExceptionTrigger(int threshold = default)
         {
-            return new QueueLengthExceptionTrigger("queue-length", threshold);
+            return new QueueLengthExceptionTrigger(ExceptionTriggerKind.QueueLength, threshold);
         }
 
         /// <summary> Initializes a new instance of ExceptionAction. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionAction"/> instance for mocking. </returns>
-        public static ExceptionAction ExceptionAction(string id = null, string kind = null)
+        public static ExceptionAction ExceptionAction(string id = null, string kind = "Unknown")
         {
             return new UnknownExceptionAction(id, kind);
         }
@@ -183,7 +183,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.CancelExceptionAction"/> instance for mocking. </returns>
         public static CancelExceptionAction CancelExceptionAction(string id = null, string note = null, string dispositionCode = null)
         {
-            return new CancelExceptionAction(id, "cancel", note, dispositionCode);
+            return new CancelExceptionAction(id, ExceptionActionKind.Cancel, note, dispositionCode);
         }
 
         /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
@@ -196,7 +196,7 @@ namespace Azure.Communication.JobRouter
         {
             workerSelectors ??= new List<RouterWorkerSelector>();
 
-            return new ManualReclassifyExceptionAction(id, "manual-reclassify", queueId, priority, workerSelectors?.ToList());
+            return new ManualReclassifyExceptionAction(id, ExceptionActionKind.ManualReclassify, queueId, priority, workerSelectors?.ToList());
         }
 
         /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
@@ -225,7 +225,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
         public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
         {
-            return new ScheduleAndSuspendMode("schedule-and-suspend", scheduleAt);
+            return new ScheduleAndSuspendMode(JobMatchingModeKind.ScheduleAndSuspend, scheduleAt);
         }
 
         /// <summary> Initializes a new instance of UnassignJobResult. </summary>
