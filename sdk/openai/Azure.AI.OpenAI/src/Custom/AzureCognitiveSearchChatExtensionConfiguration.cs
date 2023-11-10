@@ -53,8 +53,6 @@ namespace Azure.AI.OpenAI
         /// <summary> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </summary>
         public Uri EmbeddingEndpoint { get; set; }
 
-        /// <summary> The API key to use with the specified Azure Cognitive Search endpoint. </summary>
-        private string SearchKey { get; set; }
         /// <summary> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </summary>
         [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeEmbeddingKeyValue))]
         public AzureKeyCredential EmbeddingKey { get; set; }
