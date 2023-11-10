@@ -20,7 +20,7 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(SearchEndpoint.AbsoluteUri);
             writer.WritePropertyName("key"u8);
-            SerializeSearchKeyValue(writer);
+            writer.WriteStringValue(SearchKey);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             if (Optional.IsDefined(FieldMappingOptions))
@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(EmbeddingKey))
             {
                 writer.WritePropertyName("embeddingKey"u8);
-                SerializeEmbeddingKeyValue(writer);
+                writer.WriteStringValue(EmbeddingKey);
             }
             writer.WriteEndObject();
         }

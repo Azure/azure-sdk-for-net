@@ -29,15 +29,6 @@ namespace Azure.AI.OpenAI
 
         /// <summary> The absolute endpoint path for the Azure Cognitive Search resource to use. </summary>
         public Uri SearchEndpoint { get; set; }
-        /// <summary> The API key to use with the specified Azure Cognitive Search endpoint. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeSearchKeyValue))]
-        public AzureKeyCredential SearchKey { get; set; }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SerializeSearchKeyValue(Utf8JsonWriter writer)
-        {
-            writer.WriteStringValue(SearchKey.Key);
-        }
         /// <summary> The name of the index to use as available in the referenced Azure Cognitive Search resource. </summary>
         public string IndexName { get; set; }
         /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
@@ -53,16 +44,11 @@ namespace Azure.AI.OpenAI
         /// <summary> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </summary>
         public Uri EmbeddingEndpoint { get; set; }
 
+        /// <summary> The API key to use with the specified Azure Cognitive Search endpoint. </summary>
+        private string SearchKey { get; set; }
         /// <summary> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeEmbeddingKeyValue))]
-        public AzureKeyCredential EmbeddingKey { get; set; }
+        private string EmbeddingKey { get; set; }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SerializeEmbeddingKeyValue(Utf8JsonWriter writer)
-        {
-            // this is the logic we would like to have for the value serialization
-            writer.WriteStringValue(EmbeddingKey.Key);
-        }
         /// <summary>
         /// Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration.
         /// </summary>
@@ -86,6 +72,24 @@ namespace Azure.AI.OpenAI
             Type = type;
             SearchEndpoint = searchEndpoint;
             IndexName = indexName;
+        }
+
+        /// <summary>
+        /// Sets the API key to use with the specified Azure Cognitive Search endpoint.
+        /// </summary>
+        /// <param name="searchKey"> The API key. </param>
+        public void SetSearchKey(string searchKey)
+        {
+            SearchKey = searchKey;
+        }
+
+        /// <summary>
+        /// Sets the API key to use with the provided embeddings endpoint when using embeddings.
+        /// </summary>
+        /// <param name="embeddingKey"> The API key. </param>
+        public void SetEmbeddingKey(string embeddingKey)
+        {
+            EmbeddingKey = embeddingKey;
         }
     }
 }

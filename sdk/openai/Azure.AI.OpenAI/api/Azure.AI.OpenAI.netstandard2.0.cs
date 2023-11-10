@@ -144,19 +144,19 @@ namespace Azure.AI.OpenAI
     public partial class AzureCognitiveSearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
     {
         public AzureCognitiveSearchChatExtensionConfiguration() { }
-        public AzureCognitiveSearchChatExtensionConfiguration(Azure.AI.OpenAI.AzureChatExtensionType type, System.Uri searchEndpoint, Azure.AzureKeyCredential searchKey, string indexName) { }
         public AzureCognitiveSearchChatExtensionConfiguration(Azure.AI.OpenAI.AzureChatExtensionType type, System.Uri searchEndpoint, string indexName) { }
+        public AzureCognitiveSearchChatExtensionConfiguration(Azure.AI.OpenAI.AzureChatExtensionType type, System.Uri searchEndpoint, string searchKey, string indexName) { }
         public int? DocumentCount { get { throw null; } set { } }
         public System.Uri EmbeddingEndpoint { get { throw null; } set { } }
-        public Azure.AzureKeyCredential EmbeddingKey { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
         public string IndexName { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCognitiveSearchQueryType? QueryType { get { throw null; } set { } }
         public System.Uri SearchEndpoint { get { throw null; } set { } }
-        public Azure.AzureKeyCredential SearchKey { get { throw null; } set { } }
         public string SemanticConfiguration { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public override Azure.AI.OpenAI.AzureChatExtensionType Type { get { throw null; } set { } }
+        public void SetEmbeddingKey(string embeddingKey) { }
+        public void SetSearchKey(string searchKey) { }
     }
     public partial class AzureCognitiveSearchIndexFieldMappingOptions
     {
