@@ -53,10 +53,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus = default,
-            long? length = default,
-            long? initialTransferSize = default,
-            long? transferChunkSize = default)
+            long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
@@ -75,20 +72,44 @@ namespace Azure.Storage.DataMovement
                   singleTransferEventHandler: job.TransferItemCompletedEventHandler,
                   clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken,
-                  jobPartStatus: jobPartStatus,
+                  jobPartStatus: default,
                   length: length)
         {
-            // If transfer sizes null at the job level (from options bag) then
-            // override the default with the provided values if present.
-            // Else, they were set correctly by the base constructor.
-            if (!job._maximumTransferChunkSize.HasValue && transferChunkSize.HasValue)
-            {
-                _transferChunkSize = transferChunkSize.Value;
-            }
-            if (!job._initialTransferSize.HasValue && initialTransferSize.HasValue)
-            {
-                _initialTransferSize = initialTransferSize.Value;
-            }
+        }
+
+        /// <summary>
+        /// Creating transfer job based on a checkpoint file.
+        /// </summary>
+        private StreamToUriJobPart(
+            StreamToUriTransferJob job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  transferChunkSize: transferChunkSize,
+                  initialTransferSize: initialTransferSize,
+                  errorHandling: job._errorMode,
+                  createMode: createPreference,
+                  checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
+                  cancellationToken: job._cancellationToken,
+                  jobPartStatus: jobPartStatus,
+                  length: default)
+        {
         }
 
         public async ValueTask DisposeAsync()
@@ -140,7 +161,8 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem destinationResource,
             DataTransferStatus jobPartStatus,
             long initialTransferSize,
-            long transferChunkSize)
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
         {
             return new StreamToUriJobPart(
                 job: job,
@@ -149,7 +171,8 @@ namespace Azure.Storage.DataMovement
                 destinationResource: destinationResource,
                 jobPartStatus: jobPartStatus,
                 initialTransferSize: initialTransferSize,
-                transferChunkSize: transferChunkSize);
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
         }
 
         /// <summary>
