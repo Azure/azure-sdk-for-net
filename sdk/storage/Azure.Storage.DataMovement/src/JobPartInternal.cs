@@ -168,7 +168,6 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
-            _createMode = createMode;
             _failureType = JobPartFailureType.None;
             _checkpointer = checkpointer;
             _progressTracker = progressTracker;
@@ -189,6 +188,9 @@ namespace Azure.Storage.DataMovement
             _transferChunkSize = Math.Min(
                 transferChunkSize ?? DataMovementConstants.DefaultChunkSize,
                 _destinationResource.MaxSupportedChunkSize);
+            // Set the default create mode
+            _createMode = createMode == StorageResourceCreationPreference.Default ?
+                StorageResourceCreationPreference.FailIfExists : createMode;
 
             Length = length;
             _chunkTasks = new List<Task<bool>>();

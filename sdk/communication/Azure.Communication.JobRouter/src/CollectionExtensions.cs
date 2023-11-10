@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.JobRouter
 {
-    internal static class Extensions
+    internal static class CollectionExtensions
     {
         public static IDictionary<TK, TV?> Append<TK, TV>(this IDictionary<TK, TV?> first, IDictionary<TK, TV?> second)
         {
