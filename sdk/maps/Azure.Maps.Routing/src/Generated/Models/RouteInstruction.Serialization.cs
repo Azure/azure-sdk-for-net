@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -148,7 +149,7 @@ namespace Azure.Maps.Routing.Models
                     {
                         roundaboutExitNumber = property.Value.GetString();
                     }
-                    catch (System.Exception)
+                    catch (System.InvalidOperationException)
                     {
                         roundaboutExitNumber = property.Value.GetInt32().ToString();
                     }
