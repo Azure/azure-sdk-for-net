@@ -148,6 +148,7 @@ namespace Azure.AI.OpenAI
         public int? DocumentCount { get { throw null; } set { } }
         public System.Uri EmbeddingEndpoint { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
         public string IndexName { get { throw null; } set { } }
         public Azure.AI.OpenAI.AzureCognitiveSearchQueryType? QueryType { get { throw null; } set { } }
         public System.Uri SearchEndpoint { get { throw null; } set { } }
