@@ -85,4 +85,4 @@ var message = serviceContract.ReceiveMessages();
 
 ## Key concepts
 
-CoreWCF is a port of the service side of Windows Communication Foundation (WCF) to .NET Core. The goal of this project is to enable existing WCF services to be able to use Azure Queue Storage to communiate with clients.
+CoreWCF is a port of the service side of Windows Communication Foundation (WCF) to .NET Core. The goal of this project is to enable existing WCF services to be able to use Azure Queue Storage to communicate with clients.

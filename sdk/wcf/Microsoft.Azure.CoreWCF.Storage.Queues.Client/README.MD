@@ -1,6 +1,6 @@
 # WCF Azure Queue Storage client library
 
-WCF Azure Queue Storage client is the client side library that will help existing WCF services to be able to use Azure Queue Storage to communicate with clients instead of using MSMQ.
+WCF Azure Queue Storage client is the client side library that will help WCF clients to be able to use Azure Queue Storage instead of using MSMQ.
 
 ## Getting started
 
@@ -89,6 +89,6 @@ Var endpointUrl = <Url_of_Queue>;
 
 ## Key concepts
 
-CoreWCF is a port of the service side of Windows Communication Foundation (WCF) to .NET Core. The goal of this project is to enable existing WCF services to be able to use Azure Queue Storage to communiate with clients.
+The goal of this project is to enable WCF clients to be able to use Azure Queue Storage.
 
 
