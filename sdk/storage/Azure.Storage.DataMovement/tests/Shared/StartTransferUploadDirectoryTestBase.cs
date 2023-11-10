@@ -99,7 +99,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 foreach (string directoryName in pathSegments.Take(pathSegments.Length - 1))
                 {
-                    currRelPath = string.Join(Path.DirectorySeparatorChar.ToString(), currRelPath, directoryName).Trim('/');
+                    currRelPath = string.Join(Path.DirectorySeparatorChar.ToString(), currRelPath, directoryName).Trim(Path.DirectorySeparatorChar);
                     string currAbsPath = Path.Combine(directoryPath, currRelPath);
                     if (!Directory.Exists(currAbsPath))
                     {
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                 }
 
-                currRelPath = string.Join(Path.DirectorySeparatorChar.ToString(), currRelPath, pathSegments.Last()).Trim('/');
+                currRelPath = string.Join(Path.DirectorySeparatorChar.ToString(), currRelPath, pathSegments.Last()).Trim(Path.DirectorySeparatorChar);
                 if (size < 0)
                 {
                     Directory.CreateDirectory(Path.Combine(directoryPath, currRelPath));
