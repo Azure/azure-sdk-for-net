@@ -17,17 +17,18 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
 
-            // Custom code note: everything *except* type goes into 'parameters'
+            // CUSTOM CODE NOTE: Everything *except* 'type' goes into 'parameters'
             writer.WriteStartObject("parameters"u8);
 
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(SearchEndpoint.AbsoluteUri);
-            writer.WriteString("key"u8, SearchKey);
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(SearchKey);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             if (Optional.IsDefined(FieldMappingOptions))
             {
-                writer.WritePropertyName("fieldMappings"u8);
+                writer.WritePropertyName("fieldsMapping"u8);
                 writer.WriteObjectValue(FieldMappingOptions);
             }
             if (Optional.IsDefined(DocumentCount))
@@ -57,11 +58,25 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(EmbeddingKey))
             {
-                writer.WriteString("embeddingKey"u8, EmbeddingKey);
+                writer.WritePropertyName("embeddingKey"u8);
+                writer.WriteStringValue(EmbeddingKey);
             }
-            // CUSTOM CODE NOTE: end of induced 'parameters' first, then the parent object
+
+            // CUSTOM CODE NOTE: End of induced 'parameters' first, then the parent object
             writer.WriteEndObject();
+
             writer.WriteEndObject();
+        }
+
+        // CUSTOM CODE NOTE: This hides the AzureChatExtensionConfiguration.ToRequestContent method
+        //                      with the "override" keyword.
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

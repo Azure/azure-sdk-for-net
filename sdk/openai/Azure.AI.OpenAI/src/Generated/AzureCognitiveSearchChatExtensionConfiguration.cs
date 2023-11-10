@@ -24,27 +24,6 @@ namespace Azure.AI.OpenAI
         /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
         /// <param name="searchKey"> The API admin key to use with the specified Azure Cognitive Search endpoint. </param>
         /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/>, <paramref name="searchKey"/> or <paramref name="indexName"/> is null. </exception>
-        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string searchKey, string indexName)
-        {
-            Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
-            Argument.AssertNotNull(searchKey, nameof(searchKey));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-
-            Type = type;
-            SearchEndpoint = searchEndpoint;
-            SearchKey = searchKey;
-            IndexName = indexName;
-        }
-
-        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
-        /// <param name="type">
-        /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
-        /// default value for Azure Cognitive Search.
-        /// </param>
-        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
-        /// <param name="searchKey"> The API admin key to use with the specified Azure Cognitive Search endpoint. </param>
-        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
         /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
         /// <param name="queryType"> The query type to use with Azure Cognitive Search. </param>
