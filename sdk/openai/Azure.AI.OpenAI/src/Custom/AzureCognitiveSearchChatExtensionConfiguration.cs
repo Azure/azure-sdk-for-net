@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Whether queries should be restricted to use of indexed data. </summary>
         public bool? ShouldRestrictResultScope { get; set; }
         /// <summary> The OData filter to use for the configured query.</summary>
-        public string? Filter { get; set; }
+        public string Filter { get; set; }
         /// <summary> The additional semantic configuration for the query. </summary>
         public string SemanticConfiguration { get; set; }
         /// <summary> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </summary>
