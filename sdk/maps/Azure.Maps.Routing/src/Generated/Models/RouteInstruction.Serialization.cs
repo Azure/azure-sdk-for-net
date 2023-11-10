@@ -144,7 +144,14 @@ namespace Azure.Maps.Routing.Models
                 }
                 if (property.NameEquals("roundaboutExitNumber"u8))
                 {
-                    roundaboutExitNumber = property.Value.GetString();
+                    try
+                    {
+                        roundaboutExitNumber = property.Value.GetString();
+                    }
+                    catch (System.Exception)
+                    {
+                        roundaboutExitNumber = property.Value.GetInt32().ToString();
+                    }
                     continue;
                 }
                 if (property.NameEquals("possibleCombineWithNext"u8))
