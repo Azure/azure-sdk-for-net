@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Grafana
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<GrafanaProvisioningState> provisioningState = default;
-            Optional<string> privateLinkResourceId = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> privateLinkResourceRegion = default;
             Optional<IList<string>> groupIds = default;
             Optional<string> requestMessage = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Grafana
                         }
                         if (property0.NameEquals("privateLinkResourceId"u8))
                         {
-                            privateLinkResourceId = property0.Value.GetString();
+                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkResourceRegion"u8))

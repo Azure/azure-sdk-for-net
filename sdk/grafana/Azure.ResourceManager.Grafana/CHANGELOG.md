@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (2023-11-09)
+## 1.1.0-beta.2 (2023-11-15)
 
 ### Features Added
 - Configure grafana enterprise
@@ -9,10 +9,6 @@
 - Configure grafana major version
 - Specify SKU (pricing plan)
 - Support for private endpoint and managed private endpoint
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 - Upgraded API version to 2023-09-01

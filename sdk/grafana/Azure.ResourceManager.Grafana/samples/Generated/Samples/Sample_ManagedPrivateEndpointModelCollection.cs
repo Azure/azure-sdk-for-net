@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Grafana.Samples
             string managedPrivateEndpointName = "myMPEName";
             ManagedPrivateEndpointModelData data = new ManagedPrivateEndpointModelData(new AzureLocation("West US"))
             {
-                PrivateLinkResourceId = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-000000000000/resourceGroups/xx-rg/providers/Microsoft.Kusto/Clusters/sampleKustoResource",
+                PrivateLinkResourceId = new ResourceIdentifier("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-000000000000/resourceGroups/xx-rg/providers/Microsoft.Kusto/Clusters/sampleKustoResource"),
                 PrivateLinkResourceRegion = "West US",
                 GroupIds =
 {

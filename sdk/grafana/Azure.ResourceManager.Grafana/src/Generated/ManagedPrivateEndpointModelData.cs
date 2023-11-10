@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="connectionState"> The state of managed private endpoint connection. </param>
         /// <param name="privateLinkServiceUri"> The URL of the data store behind the private link service. It would be the URL in the Grafana data source configuration page without the protocol and port. </param>
         /// <param name="privateLinkServicePrivateIP"> The private IP of private endpoint after approval. This property is empty before connection is approved. </param>
-        internal ManagedPrivateEndpointModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GrafanaProvisioningState? provisioningState, string privateLinkResourceId, string privateLinkResourceRegion, IList<string> groupIds, string requestMessage, ManagedPrivateEndpointConnectionState connectionState, Uri privateLinkServiceUri, string privateLinkServicePrivateIP) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedPrivateEndpointModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GrafanaProvisioningState? provisioningState, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, IList<string> groupIds, string requestMessage, ManagedPrivateEndpointConnectionState connectionState, Uri privateLinkServiceUri, string privateLinkServicePrivateIP) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateLinkResourceId = privateLinkResourceId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Grafana
         /// <summary> Provisioning state of the resource. </summary>
         public GrafanaProvisioningState? ProvisioningState { get; }
         /// <summary> The ARM resource ID of the resource for which the managed private endpoint is pointing to. </summary>
-        public string PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The region of the resource to which the managed private endpoint is pointing to. </summary>
         public string PrivateLinkResourceRegion { get; set; }
         /// <summary> The group Ids of the managed private endpoint. </summary>
