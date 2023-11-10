@@ -24,11 +24,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
         public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> A set of non-identifying attributes attached to this job. </summary>
+        /// <summary> A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean. </summary>
         public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>

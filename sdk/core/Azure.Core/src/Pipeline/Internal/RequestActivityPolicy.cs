@@ -78,10 +78,7 @@ namespace Azure.Core.Pipeline
                 scope.AddIntegerAttribute("server.port", message.Request.Uri.Port);
             }
 
-            if (_resourceProviderNamespace != null)
-            {
-                scope.AddAttribute("az.namespace", _resourceProviderNamespace);
-            }
+            scope.AddAttribute("az.namespace", _resourceProviderNamespace);
 
             if (!isActivitySourceEnabled && message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {

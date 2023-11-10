@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary>
-    /// A rule providing static rules that always return the same result, regardless of
-    /// input.
-    /// </summary>
+    /// <summary> A rule providing static rules that always return the same result, regardless of input. </summary>
     public partial class StaticRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of StaticRouterRule. </summary>
@@ -23,7 +20,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of StaticRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
-        /// <param name="value"> The static value this rule always returns. </param>
+        /// <param name="value"> The static value this rule always returns. Values must be primitive values - number, string, boolean. </param>
         internal StaticRouterRule(string kind, BinaryData value) : base(kind)
         {
             _value = value;
