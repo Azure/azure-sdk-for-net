@@ -93,37 +93,6 @@ namespace Azure.AI.Translation.Text
             return new CommonScriptModel(code, name, nativeName, dir);
         }
 
-        /// <summary> Initializes a new instance of TransliterableScript. </summary>
-        /// <param name="code"> Code identifying the script. </param>
-        /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
-        /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="toScripts"> List of scripts available to convert text to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="dir"/> is null. </exception>
-        /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
-        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, string dir = null, IEnumerable<CommonScriptModel> toScripts = null)
-        {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (nativeName == null)
-            {
-                throw new ArgumentNullException(nameof(nativeName));
-            }
-            if (dir == null)
-            {
-                throw new ArgumentNullException(nameof(dir));
-            }
-            toScripts ??= new List<CommonScriptModel>();
-
-            return new TransliterableScript(code, name, nativeName, dir, toScripts?.ToList());
-        }
-
         /// <summary> Initializes a new instance of SourceDictionaryLanguage. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
@@ -465,6 +434,37 @@ namespace Azure.AI.Translation.Text
             }
 
             return new DictionaryExample(sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix);
+        }
+
+        /// <summary> Initializes a new instance of TransliterableScript. </summary>
+        /// <param name="code"> Code identifying the script. </param>
+        /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
+        /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="toScripts"> List of scripts available to convert text to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="dir"/> is null. </exception>
+        /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
+        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, string dir = null, IEnumerable<CommonScriptModel> toScripts = null)
+        {
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (nativeName == null)
+            {
+                throw new ArgumentNullException(nameof(nativeName));
+            }
+            if (dir == null)
+            {
+                throw new ArgumentNullException(nameof(dir));
+            }
+            toScripts ??= new List<CommonScriptModel>();
+
+            return new TransliterableScript(code, name, nativeName, dir, toScripts?.ToList());
         }
     }
 }
