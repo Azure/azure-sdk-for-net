@@ -40,6 +40,11 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("queryType"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteStringValue(Filter);
+            }
             if (Optional.IsDefined(ShouldRestrictResultScope))
             {
                 writer.WritePropertyName("inScope"u8);
