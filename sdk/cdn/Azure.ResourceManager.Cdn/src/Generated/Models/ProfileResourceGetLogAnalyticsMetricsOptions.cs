@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ProfileResourceGetLogAnalyticsMetricsOptions
     {
         /// <summary> Initializes a new instance of ProfileResourceGetLogAnalyticsMetricsOptions. </summary>
-        /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="metrics"> The IEnumerable{LogMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
         /// <param name="granularity"> The LogMetricsGranularity to use. </param>
-        /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
-        /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
+        /// <param name="customDomains"> The IEnumerable{string} to use. </param>
+        /// <param name="protocols"> The IEnumerable{string} to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         public ProfileResourceGetLogAnalyticsMetricsOptions(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols)
         {
@@ -40,23 +40,23 @@ namespace Azure.ResourceManager.Cdn.Models
             CountryOrRegions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The ArrayOfLogMetric to use. </summary>
+        /// <summary> The IEnumerable{LogMetric} to use. </summary>
         public IList<LogMetric> Metrics { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The DateTimeOffset to use. </summary>
         public DateTimeOffset DateTimeBegin { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The DateTimeOffset to use. </summary>
         public DateTimeOffset DateTimeEnd { get; }
         /// <summary> The LogMetricsGranularity to use. </summary>
         public LogMetricsGranularity Granularity { get; }
-        /// <summary> The ArrayOfGet11ItemsItem to use. </summary>
+        /// <summary> The IEnumerable{string} to use. </summary>
         public IList<string> CustomDomains { get; }
-        /// <summary> The ArrayOfGet12ItemsItem to use. </summary>
+        /// <summary> The IEnumerable{string} to use. </summary>
         public IList<string> Protocols { get; }
-        /// <summary> The ArrayOfLogMetricsGroupBy to use. </summary>
+        /// <summary> The IEnumerable{LogMetricsGroupBy} to use. </summary>
         public IList<LogMetricsGroupBy> GroupBy { get; }
-        /// <summary> The ArrayOfGet9ItemsItem to use. </summary>
+        /// <summary> The IEnumerable{string} to use. </summary>
         public IList<string> Continents { get; }
-        /// <summary> The ArrayOfGet10ItemsItem to use. </summary>
+        /// <summary> The IEnumerable{string} to use. </summary>
         public IList<string> CountryOrRegions { get; }
     }
 }

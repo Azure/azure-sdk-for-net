@@ -105,9 +105,11 @@ namespace Azure.Communication.AlphaIds
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var model = new AlphaIdConfiguration(enabled);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("enabled"u8);
+            content.JsonWriter.WriteBooleanValue(enabled);
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
