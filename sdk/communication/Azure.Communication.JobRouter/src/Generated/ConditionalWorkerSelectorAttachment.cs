@@ -16,7 +16,11 @@ namespace Azure.Communication.JobRouter
     public partial class ConditionalWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
-        /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
+        /// <param name="condition">
+        /// The condition that must be true for the worker selectors to be attached
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
+        /// </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="workerSelectors"/> is null. </exception>
         internal ConditionalWorkerSelectorAttachment(RouterRule condition, IEnumerable<RouterWorkerSelector> workerSelectors)
@@ -31,7 +35,11 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
-        /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
+        /// <param name="condition">
+        /// The condition that must be true for the worker selectors to be attached
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
+        /// </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
         internal ConditionalWorkerSelectorAttachment(string kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
         {
