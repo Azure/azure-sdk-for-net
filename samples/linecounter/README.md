@@ -38,16 +38,9 @@ To run the sample set the following configuration properties using manage user s
     "endpoint": "...",
     "credential": {
       "key": "..."
-  }
-}
-```
-
-To light up App Insights, add the InstrumentationKey key and value to the ApplicationInsights node in appsettings.json
-
-``` json
-{
-  "ApplicationInsights": {
-    "InstrumentationKey": "..."
+  },
+  "AzureMonitor": {
+    "connectionString": "..."
   }
 }
 ```
