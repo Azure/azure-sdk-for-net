@@ -42,9 +42,9 @@ namespace System.Net.ClientModel
         public RequestOptions(System.Net.ClientModel.Core.PipelineOptions pipelineOptions) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public void AddPolicy(System.Net.ClientModel.Core.PipelinePolicy policy, System.Net.ClientModel.Core.PipelinePosition position) { }
-        protected internal virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
+        public virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.MessageClassifier? messageClassifier = null) { }
     }
     public abstract partial class Result
     {
@@ -67,7 +67,7 @@ namespace System.Net.ClientModel.Core
     public partial class ClientPipeline
     {
         internal ClientPipeline() { }
-        public System.Net.ClientModel.Core.PipelineMessage CreateMessage(System.Net.ClientModel.RequestOptions options) { throw null; }
+        public System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
         public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(object client, System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }
         public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(object client, System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
         public static System.Net.ClientModel.Core.ClientPipeline GetPipeline(object client, System.Net.ClientModel.RequestOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perCallPolicies) { throw null; }

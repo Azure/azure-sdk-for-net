@@ -156,12 +156,7 @@ public class ClientPipeline
     // TODO: note that without a common base type, nothing validates that ClientPipeline
     // and Azure.Core.HttpPipeline have the same API shape. This is something a human
     // must keep track of if we wanted to add a common base class later.
-    public PipelineMessage CreateMessage(RequestOptions options)
-    {
-        PipelineMessage message = _transport.CreateMessage();
-        options.Apply(message);
-        return message;
-    }
+    public PipelineMessage CreateMessage() => _transport.CreateMessage();
 
     public void Send(PipelineMessage message)
     {

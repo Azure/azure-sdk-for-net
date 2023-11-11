@@ -35,6 +35,7 @@ public class MapsClient
         // This creates the pipeline, caches it in options, and freezes the options.
         ClientPipeline.GetPipeline(this, options, _clientPolicies);
 
+        // Store a copy of pipeline options in order to use the pipeline in service methods.
         _pipelineOptions = options;
     }
 
@@ -73,12 +74,9 @@ public class MapsClient
 
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
-        // TODO: this overrides anything the caller passed, so we need to fix that.
-        // We have classifier-chaining logic in Azure.Core we can use if that's what we want.
-        options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
-
         ClientPipeline pipeline = ClientPipeline.GetPipeline(this, options, _clientPolicies);
-        PipelineMessage message = pipeline.CreateMessage(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        options.Apply(message, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
 
         MessageRequest request = message.Request;
         request.Method = "GET";

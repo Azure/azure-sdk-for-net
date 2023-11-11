@@ -27,12 +27,12 @@ public class RequestOptions
         _pipelineOptions = pipelineOptions;
         ErrorBehavior = ErrorBehavior.Default;
         CancellationToken = CancellationToken.None;
-        MessageClassifier = MessageClassifier.Default;
     }
 
-    protected internal virtual void Apply(PipelineMessage message)
+    // Wire up options on message
+    public virtual void Apply(PipelineMessage message, MessageClassifier? messageClassifier = default)
     {
-        // Wire up options on message
+        // TODO: is it possible that we could accidentally override a user-passed CT by doing this here?
         message.CancellationToken = CancellationToken;
 
         // Don't overwrite the classifier on the message if it's already set.
@@ -40,7 +40,9 @@ public class RequestOptions
         // doesn't overwrite an Azure.Core ResponseClassifier.
         if (!message.HasMessageClassifier)
         {
-            message.MessageClassifier = MessageClassifier;
+			// TODO: Is there a nicer way to encode precedence rules here?
+            // TODO: Do we want to use Azure.Core's classifier-chaining logic?
+            message.MessageClassifier = MessageClassifier ?? messageClassifier ?? MessageClassifier.Default;
         }
 
         // TODO: note that this is a lot of *ways* to set values on the
@@ -58,7 +60,7 @@ public class RequestOptions
 
     // TODO: Should RequestOptions be freezable too, to prevent client-authors from
     // modifying client-user-passed options values?
-    public virtual MessageClassifier MessageClassifier { get; set; }
+    public virtual MessageClassifier? MessageClassifier { get; set; }
 
     internal PipelineOptions PipelineOptions => _pipelineOptions;
 
