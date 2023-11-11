@@ -1,6 +1,6 @@
 # Release History
 
-## 12.18.1 (2023-11-13)
+## 12.17.1 (2023-11-13)
 - Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## 12.17.0 (2023-11-06)
