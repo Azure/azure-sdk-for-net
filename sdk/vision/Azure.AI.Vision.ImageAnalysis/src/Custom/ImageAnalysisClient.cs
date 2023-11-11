@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual Task<Response<ImageAnalysisResult>> AnalyzeAsync(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromStreamAsync(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
+            => AnalyzeFromBufferAsync(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual Response<ImageAnalysisResult> Analyze(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromStream(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
+            => AnalyzeFromBuffer(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>

@@ -81,14 +81,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromStreamAsync(IEnumerable<VisualFeatures> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromBufferAsync(IEnumerable<VisualFeatures> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromObject(imageContent);
-            Response response = await AnalyzeFromStreamAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
+            Response response = await AnalyzeFromBufferAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
@@ -105,14 +105,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromStream(IEnumerable<VisualFeatures> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromBuffer(IEnumerable<VisualFeatures> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromObject(imageContent);
-            Response response = AnalyzeFromStream(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+            Response response = AnalyzeFromBuffer(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromStreamAsync(IEnumerable{VisualFeatures},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromBufferAsync(IEnumerable{VisualFeatures},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -145,16 +145,16 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromStreamAsync(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual async Task<Response> AnalyzeFromBufferAsync(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromStream");
+            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromBuffer");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromStreamRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = CreateAnalyzeFromBufferRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -174,7 +174,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromStream(IEnumerable{VisualFeatures},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromBuffer(IEnumerable{VisualFeatures},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -193,16 +193,16 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromStream(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual Response AnalyzeFromBuffer(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromStream");
+            using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromBuffer");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeFromStreamRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
+                using HttpMessage message = CreateAnalyzeFromBufferRequest(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -356,7 +356,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
         }
 
-        internal HttpMessage CreateAnalyzeFromStreamRequest(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromBufferRequest(IEnumerable<VisualFeatures> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

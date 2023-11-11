@@ -13,7 +13,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Vision.ImageAnalysis.Tests
 {
-    public class ImageAnalysisTestEnvironment: TestEnvironment
+    public class ImageAnalysisTestEnvironment : TestEnvironment
     {
         private static class Constants
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         public string Endpoint => GetRecordedVariable(Constants.EndpointVariable);
         public string CogServicesVisionKey => GetOptionalVariable(Constants.CogServicesVisionKeyVariable);
 
-        public string TestImageInputPath => GetOptionalVariable(Constants.ImageInputPathVariable);
-        public Uri TestImageInputUrl => new Uri(GetOptionalVariable(Constants.ImageInputUrlVariable));
+        public string TestImageInputPath => GetOptionalVariable(Constants.ImageInputPathVariable) ?? "image-analysis-sample.jpg";
+        public Uri TestImageInputUrl => new Uri(GetOptionalVariable(Constants.ImageInputUrlVariable) ?? "https://aka.ms/azai/vision/image-analysis-sample.jpg");
     }
 }

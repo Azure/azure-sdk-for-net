@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
@@ -25,5 +25,11 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="image-analysis-sample.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
