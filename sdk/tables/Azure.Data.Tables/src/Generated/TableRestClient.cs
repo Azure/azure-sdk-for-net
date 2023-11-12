@@ -122,97 +122,6 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateCreateRequest(TableProperties tableProperties, ResponseFormat? responsePreference, QueryOptions queryOptions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/Tables", false);
-            if (queryOptions?.Format != null)
-            {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("DataServiceVersion", "3.0");
-            if (responsePreference != null)
-            {
-                request.Headers.Add("Prefer", responsePreference.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
-            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tableProperties);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Creates a new table under the given account. </summary>
-        /// <param name="tableProperties"> The Table properties. </param>
-        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TableResponse, TableCreateHeaders>> CreateAsync(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (tableProperties == null)
-            {
-                throw new ArgumentNullException(nameof(tableProperties));
-            }
-
-            using var message = CreateCreateRequest(tableProperties, responsePreference, queryOptions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new TableCreateHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        TableResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                case 204:
-                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates a new table under the given account. </summary>
-        /// <param name="tableProperties"> The Table properties. </param>
-        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
-        public ResponseWithHeaders<TableResponse, TableCreateHeaders> Create(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (tableProperties == null)
-            {
-                throw new ArgumentNullException(nameof(tableProperties));
-            }
-
-            using var message = CreateCreateRequest(tableProperties, responsePreference, queryOptions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new TableCreateHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        TableResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TableResponse.DeserializeTableResponse(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                case 204:
-                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateCreateRequest(RequestContent content, string format, string responsePreference, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201204);
@@ -238,6 +147,72 @@ namespace Azure.Data.Tables
             return message;
         }
 
+        /// <summary> Creates a new table under the given account. </summary>
+        /// <param name="tableProperties"> The Table properties. </param>
+        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
+        public async Task<ResponseWithHeaders<TableResponse, TableCreateHeaders>> CreateAsync(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (tableProperties == null)
+            {
+                throw new ArgumentNullException(nameof(tableProperties));
+            }
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            using RequestContent content = tableProperties.ToRequestContent();
+            Response response = await CreateAsync(content, queryOptions?.Format?.ToString(), responsePreference?.ToString(), context).ConfigureAwait(false);
+            var headers = new TableCreateHeaders(response);
+            switch (response.Status)
+            {
+                case 201:
+                    {
+                        TableResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = TableResponse.DeserializeTableResponse(document.RootElement);
+                        return ResponseWithHeaders.FromValue(value, headers, response);
+                    }
+                case 204:
+                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
+        /// <summary> Creates a new table under the given account. </summary>
+        /// <param name="tableProperties"> The Table properties. </param>
+        /// <param name="responsePreference"> Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content. </param>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableProperties"/> is null. </exception>
+        public ResponseWithHeaders<TableResponse, TableCreateHeaders> Create(TableProperties tableProperties, ResponseFormat? responsePreference = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (tableProperties == null)
+            {
+                throw new ArgumentNullException(nameof(tableProperties));
+            }
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            using RequestContent content = tableProperties.ToRequestContent();
+            Response response = Create(content, queryOptions?.Format?.ToString(), responsePreference?.ToString(), context);
+            var headers = new TableCreateHeaders(response);
+            switch (response.Status)
+            {
+                case 201:
+                    {
+                        TableResponse value = default;
+                        using var document = JsonDocument.Parse(response.ContentStream);
+                        value = TableResponse.DeserializeTableResponse(document.RootElement);
+                        return ResponseWithHeaders.FromValue(value, headers, response);
+                    }
+                case 204:
+                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
         /// <summary>
         /// [Protocol Method] Creates a new table under the given account.
         /// <list type="bullet">
@@ -259,7 +234,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Table.Create");
+            using var scope = ClientDiagnostics.CreateScope("TableClient.Create");
             scope.Start();
             try
             {
@@ -294,7 +269,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Table.Create");
+            using var scope = ClientDiagnostics.CreateScope("TableClient.Create");
             scope.Start();
             try
             {
@@ -308,9 +283,9 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string table)
+        internal HttpMessage CreateDeleteRequest(string table, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -335,15 +310,15 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateDeleteRequest(table);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new TableDeleteHeaders(message.Response);
-            switch (message.Response.Status)
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = await DeleteAsync(table, context).ConfigureAwait(false);
+            var headers = new TableDeleteHeaders(response);
+            switch (response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, response);
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw new RequestFailedException(response);
             }
         }
 
@@ -358,32 +333,16 @@ namespace Azure.Data.Tables
                 throw new ArgumentNullException(nameof(table));
             }
 
-            using var message = CreateDeleteRequest(table);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new TableDeleteHeaders(message.Response);
-            switch (message.Response.Status)
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = Delete(table, context);
+            var headers = new TableDeleteHeaders(response);
+            switch (response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, response);
                 default:
-                    throw new RequestFailedException(message.Response);
+                    throw new RequestFailedException(response);
             }
-        }
-
-        internal HttpMessage CreateDeleteRequest(string table, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/Tables('", false);
-            uri.AppendPath(table, true);
-            uri.AppendPath("')", false);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary>
@@ -402,11 +361,11 @@ namespace Azure.Data.Tables
         /// <exception cref="ArgumentException"> <paramref name="table"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string table, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string table, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(table, nameof(table));
 
-            using var scope = ClientDiagnostics.CreateScope("Table.Delete");
+            using var scope = ClientDiagnostics.CreateScope("TableClient.Delete");
             scope.Start();
             try
             {
@@ -436,11 +395,11 @@ namespace Azure.Data.Tables
         /// <exception cref="ArgumentException"> <paramref name="table"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(string table, RequestContext context = null)
+        public virtual Response Delete(string table, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(table, nameof(table));
 
-            using var scope = ClientDiagnostics.CreateScope("Table.Delete");
+            using var scope = ClientDiagnostics.CreateScope("TableClient.Delete");
             scope.Start();
             try
             {
@@ -563,147 +522,6 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(string table, string partitionKey, string rowKey, int? timeout, QueryOptions queryOptions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(table, true);
-            uri.AppendPath("(PartitionKey='", false);
-            uri.AppendPath(partitionKey, true);
-            uri.AppendPath("',RowKey='", false);
-            uri.AppendPath(rowKey, true);
-            uri.AppendPath("')", false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (queryOptions?.Format != null)
-            {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
-            }
-            if (queryOptions?.Select != null)
-            {
-                uri.AppendQuery("$select", queryOptions.Select, true);
-            }
-            if (queryOptions?.Filter != null)
-            {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
-            return message;
-        }
-
-        /// <summary> Queries a single entity in a table. </summary>
-        /// <param name="table"> The name of the table. </param>
-        /// <param name="partitionKey"> The partition key of the entity. </param>
-        /// <param name="rowKey"> The row key of the entity. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders>> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
-            if (partitionKey == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKey));
-            }
-            if (rowKey == null)
-            {
-                throw new ArgumentNullException(nameof(rowKey));
-            }
-
-            using var message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, queryOptions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new TableQueryEntityWithPartitionAndRowKeyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyDictionary<string, object> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                        foreach (var property in document.RootElement.EnumerateObject())
-                        {
-                            if (property.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                dictionary.Add(property.Name, null);
-                            }
-                            else
-                            {
-                                dictionary.Add(property.Name, property.Value.GetObject());
-                            }
-                        }
-                        value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries a single entity in a table. </summary>
-        /// <param name="table"> The name of the table. </param>
-        /// <param name="partitionKey"> The partition key of the entity. </param>
-        /// <param name="rowKey"> The row key of the entity. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders> QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
-            if (partitionKey == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKey));
-            }
-            if (rowKey == null)
-            {
-                throw new ArgumentNullException(nameof(rowKey));
-            }
-
-            using var message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, queryOptions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new TableQueryEntityWithPartitionAndRowKeyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyDictionary<string, object> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                        foreach (var property in document.RootElement.EnumerateObject())
-                        {
-                            if (property.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                dictionary.Add(property.Name, null);
-                            }
-                            else
-                            {
-                                dictionary.Add(property.Name, property.Value.GetObject());
-                            }
-                        }
-                        value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(string table, string partitionKey, string rowKey, int? timeout, string format, string select, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -739,6 +557,110 @@ namespace Azure.Data.Tables
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
+        }
+
+        /// <summary> Queries a single entity in a table. </summary>
+        /// <param name="table"> The name of the table. </param>
+        /// <param name="partitionKey"> The partition key of the entity. </param>
+        /// <param name="rowKey"> The row key of the entity. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
+        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders>> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+            if (partitionKey == null)
+            {
+                throw new ArgumentNullException(nameof(partitionKey));
+            }
+            if (rowKey == null)
+            {
+                throw new ArgumentNullException(nameof(rowKey));
+            }
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = await QueryEntityWithPartitionAndRowKeyAsync(table, partitionKey, rowKey, timeout, queryOptions?.Format?.ToString(), queryOptions?.Select, queryOptions?.Filter, context).ConfigureAwait(false);
+            var headers = new TableQueryEntityWithPartitionAndRowKeyHeaders(response);
+            switch (response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
+                        }
+                        value = dictionary;
+                        return ResponseWithHeaders.FromValue(value, headers, response);
+                    }
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
+        /// <summary> Queries a single entity in a table. </summary>
+        /// <param name="table"> The name of the table. </param>
+        /// <param name="partitionKey"> The partition key of the entity. </param>
+        /// <param name="rowKey"> The row key of the entity. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
+        public ResponseWithHeaders<IReadOnlyDictionary<string, object>, TableQueryEntityWithPartitionAndRowKeyHeaders> QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+            if (partitionKey == null)
+            {
+                throw new ArgumentNullException(nameof(partitionKey));
+            }
+            if (rowKey == null)
+            {
+                throw new ArgumentNullException(nameof(rowKey));
+            }
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = QueryEntityWithPartitionAndRowKey(table, partitionKey, rowKey, timeout, queryOptions?.Format?.ToString(), queryOptions?.Select, queryOptions?.Filter, context);
+            var headers = new TableQueryEntityWithPartitionAndRowKeyHeaders(response);
+            switch (response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyDictionary<string, object> value = default;
+                        using var document = JsonDocument.Parse(response.ContentStream);
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, property.Value.GetObject());
+                            }
+                        }
+                        value = dictionary;
+                        return ResponseWithHeaders.FromValue(value, headers, response);
+                    }
+                default:
+                    throw new RequestFailedException(response);
+            }
         }
 
         internal HttpMessage CreateUpdateEntityRequest(string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
