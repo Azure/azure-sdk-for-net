@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,22 +54,39 @@ namespace Azure.Communication.Rooms
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            CreateRoomRequest createRoomRequest = new CreateRoomRequest()
+            if (participants == null || !participants.Any())
             {
-                ValidFrom = validFrom,
-                ValidUntil = validUntil,
-                PstnDialOutEnabled = pstnDialOutEnabled
-            };
-            if (participants != null)
-            {
-                foreach (var value in participants)
-                {
-                    createRoomRequest.Participants.Add(value);
-                }
+                participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
             }
-            var model = createRoomRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(validFrom))
+            {
+                content.JsonWriter.WritePropertyName("validFrom"u8);
+                content.JsonWriter.WriteStringValue(validFrom.Value, "O");
+            }
+            if (Optional.IsDefined(validUntil))
+            {
+                content.JsonWriter.WritePropertyName("validUntil"u8);
+                content.JsonWriter.WriteStringValue(validUntil.Value, "O");
+            }
+            if (Optional.IsDefined(pstnDialOutEnabled))
+            {
+                content.JsonWriter.WritePropertyName("pstnDialOutEnabled"u8);
+                content.JsonWriter.WriteBooleanValue(pstnDialOutEnabled.Value);
+            }
+            if (Optional.IsCollectionDefined(participants))
+            {
+                content.JsonWriter.WritePropertyName("participants"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in participants)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteObjectValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -257,14 +275,24 @@ namespace Azure.Communication.Rooms
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var model = new UpdateRoomRequest()
-            {
-                ValidFrom = validFrom,
-                ValidUntil = validUntil,
-                PstnDialOutEnabled = pstnDialOutEnabled
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(validFrom))
+            {
+                content.JsonWriter.WritePropertyName("validFrom"u8);
+                content.JsonWriter.WriteStringValue(validFrom.Value, "O");
+            }
+            if (Optional.IsDefined(validUntil))
+            {
+                content.JsonWriter.WritePropertyName("validUntil"u8);
+                content.JsonWriter.WriteStringValue(validUntil.Value, "O");
+            }
+            if (Optional.IsDefined(pstnDialOutEnabled))
+            {
+                content.JsonWriter.WritePropertyName("pstnDialOutEnabled"u8);
+                content.JsonWriter.WriteBooleanValue(pstnDialOutEnabled.Value);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
