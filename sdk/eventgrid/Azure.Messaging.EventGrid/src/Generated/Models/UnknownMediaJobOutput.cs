@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Messaging.EventGrid.SystemEvents;
-
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The UnknownMediaJobOutput. </summary>
     internal partial class UnknownMediaJobOutput : MediaJobOutput

@@ -36,7 +36,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 ]]></code></example>
     </member>
     <member name="GetEnvironment(string,string,string,RequestContext)">
@@ -74,7 +74,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 ]]></code></example>
     </member>
     <member name="GetCatalogAsync(string,string,RequestContext)">
@@ -243,7 +243,7 @@ await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>"
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 }
 ]]></code></example>
     </member>
@@ -283,7 +283,7 @@ foreach (BinaryData item in client.GetAllEnvironments("<projectName>", 1234, nul
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 }
 ]]></code></example>
     </member>
@@ -323,7 +323,7 @@ await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 }
 ]]></code></example>
     </member>
@@ -363,7 +363,7 @@ foreach (BinaryData item in client.GetEnvironments("<projectName>", "<userId>", 
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 }
 ]]></code></example>
     </member>
@@ -701,7 +701,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 ]]></code></example>
     </member>
     <member name="CreateOrUpdateEnvironment(WaitUntil,string,string,string,RequestContent,RequestContext)">
@@ -754,7 +754,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].ToString());
 ]]></code></example>
     </member>
     <member name="DeleteEnvironmentAsync(WaitUntil,string,string,string,RequestContext)">
