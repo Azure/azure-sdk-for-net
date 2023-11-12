@@ -260,8 +260,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
-        /// <param name="action"> The ClassificationAction to use. Allowed values: "Keep" | "Delete". </param>
+        /// <param name="classificationRuleVersion"> The int to use. </param>
+        /// <param name="action"> The String to use. Allowed values: "Keep" | "Delete". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -295,8 +295,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
-        /// <param name="action"> The ClassificationAction to use. Allowed values: "Keep" | "Delete". </param>
+        /// <param name="classificationRuleVersion"> The int to use. </param>
+        /// <param name="action"> The String to use. Allowed values: "Keep" | "Delete". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
