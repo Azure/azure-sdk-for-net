@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.PowerBIDedicated</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.PowerBIDedicated.</Description>
     <PackageTags>azure;management;arm;resource manager;powerbidedicated</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

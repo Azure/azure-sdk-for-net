@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Mocking;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -19,366 +20,305 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class to add extension methods to Azure.ResourceManager.Storage. </summary>
     public static partial class StorageExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableStorageArmClient GetMockableStorageArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableStorageArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableStorageResourceGroupResource GetMockableStorageResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableStorageResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableStorageSubscriptionResource GetMockableStorageSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableStorageSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region StorageAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetStorageAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageAccountResource" /> object. </returns>
         public static StorageAccountResource GetStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageAccountResource.ValidateResourceId(id);
-                return new StorageAccountResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetStorageAccountResource(id);
         }
-        #endregion
 
-        #region DeletedAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="DeletedAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetDeletedAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedAccountResource" /> object. </returns>
         public static DeletedAccountResource GetDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeletedAccountResource.ValidateResourceId(id);
-                return new DeletedAccountResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetDeletedAccountResource(id);
         }
-        #endregion
 
-        #region StorageAccountManagementPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageAccountManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageAccountManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetStorageAccountManagementPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource" /> object. </returns>
         public static StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageAccountManagementPolicyResource.ValidateResourceId(id);
-                return new StorageAccountManagementPolicyResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetStorageAccountManagementPolicyResource(id);
         }
-        #endregion
 
-        #region BlobInventoryPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="BlobInventoryPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BlobInventoryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BlobInventoryPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetBlobInventoryPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
         public static BlobInventoryPolicyResource GetBlobInventoryPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BlobInventoryPolicyResource.ValidateResourceId(id);
-                return new BlobInventoryPolicyResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetBlobInventoryPolicyResource(id);
         }
-        #endregion
 
-        #region StoragePrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="StoragePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StoragePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StoragePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetStoragePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StoragePrivateEndpointConnectionResource" /> object. </returns>
         public static StoragePrivateEndpointConnectionResource GetStoragePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StoragePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new StoragePrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetStoragePrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region ObjectReplicationPolicyResource
         /// <summary>
         /// Gets an object representing an <see cref="ObjectReplicationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ObjectReplicationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ObjectReplicationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetObjectReplicationPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ObjectReplicationPolicyResource" /> object. </returns>
         public static ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ObjectReplicationPolicyResource.ValidateResourceId(id);
-                return new ObjectReplicationPolicyResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetObjectReplicationPolicyResource(id);
         }
-        #endregion
 
-        #region StorageAccountLocalUserResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageAccountLocalUserResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageAccountLocalUserResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountLocalUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetStorageAccountLocalUserResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageAccountLocalUserResource" /> object. </returns>
         public static StorageAccountLocalUserResource GetStorageAccountLocalUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageAccountLocalUserResource.ValidateResourceId(id);
-                return new StorageAccountLocalUserResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetStorageAccountLocalUserResource(id);
         }
-        #endregion
 
-        #region EncryptionScopeResource
         /// <summary>
         /// Gets an object representing an <see cref="EncryptionScopeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EncryptionScopeResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetEncryptionScopeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EncryptionScopeResource" /> object. </returns>
         public static EncryptionScopeResource GetEncryptionScopeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                EncryptionScopeResource.ValidateResourceId(id);
-                return new EncryptionScopeResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetEncryptionScopeResource(id);
         }
-        #endregion
 
-        #region BlobServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="BlobServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BlobServiceResource.CreateResourceIdentifier" /> to create a <see cref="BlobServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetBlobServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobServiceResource" /> object. </returns>
         public static BlobServiceResource GetBlobServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BlobServiceResource.ValidateResourceId(id);
-                return new BlobServiceResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetBlobServiceResource(id);
         }
-        #endregion
 
-        #region BlobContainerResource
         /// <summary>
         /// Gets an object representing a <see cref="BlobContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BlobContainerResource.CreateResourceIdentifier" /> to create a <see cref="BlobContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetBlobContainerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobContainerResource" /> object. </returns>
         public static BlobContainerResource GetBlobContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BlobContainerResource.ValidateResourceId(id);
-                return new BlobContainerResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetBlobContainerResource(id);
         }
-        #endregion
 
-        #region ImmutabilityPolicyResource
         /// <summary>
         /// Gets an object representing an <see cref="ImmutabilityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ImmutabilityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ImmutabilityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetImmutabilityPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
         public static ImmutabilityPolicyResource GetImmutabilityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ImmutabilityPolicyResource.ValidateResourceId(id);
-                return new ImmutabilityPolicyResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetImmutabilityPolicyResource(id);
         }
-        #endregion
 
-        #region FileServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="FileServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FileServiceResource.CreateResourceIdentifier" /> to create a <see cref="FileServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetFileServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FileServiceResource" /> object. </returns>
         public static FileServiceResource GetFileServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FileServiceResource.ValidateResourceId(id);
-                return new FileServiceResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetFileServiceResource(id);
         }
-        #endregion
 
-        #region FileShareResource
         /// <summary>
         /// Gets an object representing a <see cref="FileShareResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FileShareResource.CreateResourceIdentifier" /> to create a <see cref="FileShareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetFileShareResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FileShareResource" /> object. </returns>
         public static FileShareResource GetFileShareResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FileShareResource.ValidateResourceId(id);
-                return new FileShareResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetFileShareResource(id);
         }
-        #endregion
 
-        #region QueueServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="QueueServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="QueueServiceResource.CreateResourceIdentifier" /> to create a <see cref="QueueServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetQueueServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="QueueServiceResource" /> object. </returns>
         public static QueueServiceResource GetQueueServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                QueueServiceResource.ValidateResourceId(id);
-                return new QueueServiceResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetQueueServiceResource(id);
         }
-        #endregion
 
-        #region StorageQueueResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageQueueResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageQueueResource.CreateResourceIdentifier" /> to create a <see cref="StorageQueueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetStorageQueueResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageQueueResource" /> object. </returns>
         public static StorageQueueResource GetStorageQueueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageQueueResource.ValidateResourceId(id);
-                return new StorageQueueResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetStorageQueueResource(id);
         }
-        #endregion
 
-        #region TableServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="TableServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TableServiceResource.CreateResourceIdentifier" /> to create a <see cref="TableServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetTableServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TableServiceResource" /> object. </returns>
         public static TableServiceResource GetTableServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TableServiceResource.ValidateResourceId(id);
-                return new TableServiceResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetTableServiceResource(id);
         }
-        #endregion
 
-        #region TableResource
         /// <summary>
         /// Gets an object representing a <see cref="TableResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TableResource.CreateResourceIdentifier" /> to create a <see cref="TableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageArmClient.GetTableResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TableResource" /> object. </returns>
         public static TableResource GetTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TableResource.ValidateResourceId(id);
-                return new TableResource(client, id);
-            }
-            );
+            return GetMockableStorageArmClient(client).GetTableResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of StorageAccountResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of StorageAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageResourceGroupResource.GetStorageAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
         public static StorageAccountCollection GetStorageAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageAccounts();
+            return GetMockableStorageResourceGroupResource(resourceGroupResource).GetStorageAccounts();
         }
 
         /// <summary>
@@ -393,17 +333,21 @@ namespace Azure.ResourceManager.Storage
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageResourceGroupResource.GetStorageAccountAsync(string,StorageAccountExpand?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StorageAccountResource>> GetStorageAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageAccounts().GetAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStorageResourceGroupResource(resourceGroupResource).GetStorageAccountAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -418,25 +362,35 @@ namespace Azure.ResourceManager.Storage
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageResourceGroupResource.GetStorageAccount(string,StorageAccountExpand?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<StorageAccountResource> GetStorageAccount(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageAccounts().Get(accountName, expand, cancellationToken);
+            return GetMockableStorageResourceGroupResource(resourceGroupResource).GetStorageAccount(accountName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeletedAccountResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of DeletedAccountResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetDeletedAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedAccountResources and their operations over a DeletedAccountResource. </returns>
         public static DeletedAccountCollection GetDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccounts();
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts();
         }
 
         /// <summary>
@@ -451,17 +405,21 @@ namespace Azure.ResourceManager.Storage
         /// <description>DeletedAccounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetDeletedAccountAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DeletedAccountResource>> GetDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetDeletedAccounts().GetAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -476,17 +434,21 @@ namespace Azure.ResourceManager.Storage
         /// <description>DeletedAccounts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetDeletedAccount(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the deleted storage account. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DeletedAccountResource> GetDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetDeletedAccounts().Get(location, deletedAccountName, cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccount(location, deletedAccountName, cancellationToken);
         }
 
         /// <summary>
@@ -501,13 +463,17 @@ namespace Azure.ResourceManager.Storage
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -522,13 +488,17 @@ namespace Azure.ResourceManager.Storage
         /// <description>Skus_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
@@ -543,6 +513,10 @@ namespace Azure.ResourceManager.Storage
         /// <description>StorageAccounts_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -550,9 +524,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStorageSubscriptionResource(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -567,6 +539,10 @@ namespace Azure.ResourceManager.Storage
         /// <description>StorageAccounts_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -574,9 +550,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -591,13 +565,17 @@ namespace Azure.ResourceManager.Storage
         /// <description>StorageAccounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetStorageAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageAccountResource> GetStorageAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -612,13 +590,17 @@ namespace Azure.ResourceManager.Storage
         /// <description>StorageAccounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetStorageAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageAccountResource> GetStorageAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAccounts(cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetStorageAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -633,13 +615,17 @@ namespace Azure.ResourceManager.Storage
         /// <description>DeletedAccounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetDeletedAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -654,13 +640,17 @@ namespace Azure.ResourceManager.Storage
         /// <description>DeletedAccounts_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetDeletedAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -675,6 +665,10 @@ namespace Azure.ResourceManager.Storage
         /// <description>Usages_ListByLocation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
@@ -682,7 +676,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -697,6 +691,10 @@ namespace Azure.ResourceManager.Storage
         /// <description>Usages_ListByLocation</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageSubscriptionResource.GetUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the Azure Storage resource. </param>
@@ -704,7 +702,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }
     }
 }

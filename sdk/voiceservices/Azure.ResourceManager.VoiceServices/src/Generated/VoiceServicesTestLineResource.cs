@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.VoiceServices
     public partial class VoiceServicesTestLineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VoiceServicesTestLineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="communicationsGatewayName"> The communicationsGatewayName. </param>
+        /// <param name="testLineName"> The testLineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}";

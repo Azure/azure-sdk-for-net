@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PublicCertData);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PublicCertData.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(PublicCertData))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

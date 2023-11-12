@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class MonitoringMetricConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MonitoringMetricConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        /// <param name="roleName"> The roleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string roleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default";

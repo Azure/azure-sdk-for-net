@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSiteConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web";
@@ -97,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteConfigSnapshotResources and their operations over a SiteConfigSnapshotResource. </returns>
         public virtual SiteConfigSnapshotCollection GetSiteConfigSnapshots()
         {
-            return GetCachedClient(Client => new SiteConfigSnapshotCollection(Client, Id));
+            return GetCachedClient(client => new SiteConfigSnapshotCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +118,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteConfigSnapshotResource>> GetSiteConfigSnapshotAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteConfigSnapshotResource> GetSiteConfigSnapshot(string snapshotId, CancellationToken cancellationToken = default)
         {

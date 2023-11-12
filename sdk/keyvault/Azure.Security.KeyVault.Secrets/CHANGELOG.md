@@ -1,16 +1,20 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
-
-### Features Added
+## 4.6.0-beta.1 (2023-11-09)
 
 ### Breaking Changes
+
+- Renamed tags reported on `SecretClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `secret` to `az.keyvault.secret.name`
+  - `version` to `az.keyvault.secret.version`
 
 ### Bugs Fixed
 
 - When a Key Vault is moved to another tenant, the client is reauthenticated.
 
 ### Other Changes
+
+- The default service version is now "7.5-preview.1".
 
 ## 4.5.0 (2023-03-14)
 

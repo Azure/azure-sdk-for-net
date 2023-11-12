@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSiteSlotPublicCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotPublicCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="publicCertificateName"> The publicCertificateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}";

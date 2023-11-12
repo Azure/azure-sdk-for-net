@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     public partial class SnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SnapshotResource"/> instance. </summary>
+        /// <param name="reportName"> The reportName. </param>
+        /// <param name="snapshotName"> The snapshotName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string reportName, string snapshotName)
         {
             var resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}";

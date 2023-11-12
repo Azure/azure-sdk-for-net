@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseTransparentDataEncryptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseTransparentDataEncryptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="transparentDataEncryptionName"> The transparentDataEncryptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/transparentDataEncryption/{transparentDataEncryptionName}";

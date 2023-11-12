@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.AppService
     public partial class AppServicePlanHybridConnectionNamespaceRelayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="relayName"> The relayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}";

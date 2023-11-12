@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Qumulo
     }
     public partial class QumuloFileSystemResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public QumuloFileSystemResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails, Azure.ResourceManager.Qumulo.Models.StorageSku storageSku, Azure.ResourceManager.Qumulo.Models.QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) : base (default(Azure.Core.AzureLocation)) { }
+        public QumuloFileSystemResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails, Azure.ResourceManager.Qumulo.Models.StorageSku storageSku, Azure.ResourceManager.Qumulo.Models.QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) { }
         public string AdminPassword { get { throw null; } set { } }
         public string AvailabilityZone { get { throw null; } set { } }
         public System.Uri ClusterLoginUri { get { throw null; } set { } }
@@ -60,6 +60,27 @@ namespace Azure.ResourceManager.Qumulo
         public Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Qumulo.Models.StorageSku StorageSku { get { throw null; } set { } }
         public string UserDetailsEmail { get { throw null; } set { } }
+    }
+}
+namespace Azure.ResourceManager.Qumulo.Mocking
+{
+    public partial class MockableQumuloArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableQumuloArmClient() { }
+        public virtual Azure.ResourceManager.Qumulo.QumuloFileSystemResource GetQumuloFileSystemResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableQumuloResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableQumuloResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResource(string fileSystemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Qumulo.QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(string fileSystemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Qumulo.QumuloFileSystemResourceCollection GetQumuloFileSystemResources() { throw null; }
+    }
+    public partial class MockableQumuloSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableQumuloSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Qumulo.Models

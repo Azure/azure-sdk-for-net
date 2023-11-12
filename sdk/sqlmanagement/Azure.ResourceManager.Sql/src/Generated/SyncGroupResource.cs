@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Sql
     public partial class SyncGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SyncGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="syncGroupName"> The syncGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string syncGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}";
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SyncMemberResources and their operations over a SyncMemberResource. </returns>
         public virtual SyncMemberCollection GetSyncMembers()
         {
-            return GetCachedClient(Client => new SyncMemberCollection(Client, Id));
+            return GetCachedClient(client => new SyncMemberCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +115,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SyncMemberResource>> GetSyncMemberAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +138,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="syncMemberName"> The name of the sync member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SyncMemberResource> GetSyncMember(string syncMemberName, CancellationToken cancellationToken = default)
         {

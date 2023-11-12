@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp
     public partial class NetAppAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetAppAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}";
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of CapacityPoolResources and their operations over a CapacityPoolResource. </returns>
         public virtual CapacityPoolCollection GetCapacityPools()
         {
-            return GetCachedClient(Client => new CapacityPoolCollection(Client, Id));
+            return GetCachedClient(client => new CapacityPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +120,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CapacityPoolResource>> GetCapacityPoolAsync(string poolName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +143,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CapacityPoolResource> GetCapacityPool(string poolName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of SnapshotPolicyResources and their operations over a SnapshotPolicyResource. </returns>
         public virtual SnapshotPolicyCollection GetSnapshotPolicies()
         {
-            return GetCachedClient(Client => new SnapshotPolicyCollection(Client, Id));
+            return GetCachedClient(client => new SnapshotPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -170,8 +173,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SnapshotPolicyResource>> GetSnapshotPolicyAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
@@ -193,72 +196,19 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SnapshotPolicyResource> GetSnapshotPolicy(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSnapshotPolicies().Get(snapshotPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetAppAccountBackupResources in the NetAppAccount. </summary>
-        /// <returns> An object representing collection of NetAppAccountBackupResources and their operations over a NetAppAccountBackupResource. </returns>
-        public virtual NetAppAccountBackupCollection GetNetAppAccountBackups()
-        {
-            return GetCachedClient(Client => new NetAppAccountBackupCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified backup for a Netapp Account
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountBackups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetAppAccountBackupResource>> GetNetAppAccountBackupAsync(string backupName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetAppAccountBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified backup for a Netapp Account
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccountBackups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetAppAccountBackupResource> GetNetAppAccountBackup(string backupName, CancellationToken cancellationToken = default)
-        {
-            return GetNetAppAccountBackups().Get(backupName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of NetAppBackupPolicyResources in the NetAppAccount. </summary>
         /// <returns> An object representing collection of NetAppBackupPolicyResources and their operations over a NetAppBackupPolicyResource. </returns>
         public virtual NetAppBackupPolicyCollection GetNetAppBackupPolicies()
         {
-            return GetCachedClient(Client => new NetAppBackupPolicyCollection(Client, Id));
+            return GetCachedClient(client => new NetAppBackupPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -276,8 +226,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppBackupPolicyResource>> GetNetAppBackupPolicyAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
@@ -299,8 +249,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppBackupPolicyResource> GetNetAppBackupPolicy(string backupPolicyName, CancellationToken cancellationToken = default)
         {
@@ -311,7 +261,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppVolumeGroupResources and their operations over a NetAppVolumeGroupResource. </returns>
         public virtual NetAppVolumeGroupCollection GetNetAppVolumeGroups()
         {
-            return GetCachedClient(Client => new NetAppVolumeGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetAppVolumeGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -329,8 +279,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppVolumeGroupResource>> GetNetAppVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
@@ -352,8 +302,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppVolumeGroupResource> GetNetAppVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
         {

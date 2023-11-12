@@ -29,11 +29,26 @@ namespace Azure.ResourceManager.Kusto.Models
             DataManagementPublicIPId = dataManagementPublicIPId;
         }
 
+        /// <summary> Initializes a new instance of KustoClusterVirtualNetworkConfiguration. </summary>
+        /// <param name="subnetId"> The subnet resource id. </param>
+        /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
+        /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
+        /// <param name="state"> When enabled, the cluster is deployed into the configured subnet, when disabled it will be removed from the subnet. </param>
+        internal KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId, KustoClusterVnetState? state)
+        {
+            SubnetId = subnetId;
+            EnginePublicIPId = enginePublicIPId;
+            DataManagementPublicIPId = dataManagementPublicIPId;
+            State = state;
+        }
+
         /// <summary> The subnet resource id. </summary>
         public string SubnetId { get; set; }
         /// <summary> Engine service's public IP address resource id. </summary>
         public string EnginePublicIPId { get; set; }
         /// <summary> Data management's service public IP address resource id. </summary>
         public string DataManagementPublicIPId { get; set; }
+        /// <summary> When enabled, the cluster is deployed into the configured subnet, when disabled it will be removed from the subnet. </summary>
+        public KustoClusterVnetState? State { get; set; }
     }
 }

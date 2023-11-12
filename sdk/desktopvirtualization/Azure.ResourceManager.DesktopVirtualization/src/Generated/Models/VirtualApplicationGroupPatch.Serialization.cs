@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
+            if (Optional.IsDefined(ShowInFeed))
+            {
+                writer.WritePropertyName("showInFeed"u8);
+                writer.WriteBooleanValue(ShowInFeed.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -57,6 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
+            Optional<bool> showInFeed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -116,11 +122,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("showInFeed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            showInFeed = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualApplicationGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), description.Value, friendlyName.Value);
+            return new VirtualApplicationGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), description.Value, friendlyName.Value, Optional.ToNullable(showInFeed));
         }
     }
 }

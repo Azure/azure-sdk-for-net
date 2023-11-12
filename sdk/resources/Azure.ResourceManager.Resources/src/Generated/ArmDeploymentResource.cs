@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ArmDeploymentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArmDeploymentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";

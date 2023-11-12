@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    ///  Enables authentication to Azure Active Directory using a user's username and password. If the user has MFA enabled this
+    ///  Enables authentication to Microsoft Entra ID using a user's username and password. If the user has MFA enabled this
     ///  credential will fail to get a token throwing an <see cref="AuthenticationFailedException"/>. Also, this credential requires a high degree of
     ///  trust and is not recommended outside of prototyping when more secure credentials can be used.
     /// </summary>
@@ -38,24 +38,24 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Microsoft Entra ID with a simple username
         /// and password.
         /// </summary>
         /// <param name="username">The user account's username, also known as UPN.</param>
         /// <param name="password">The user account's password.</param>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
             : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Microsoft Entra ID with a simple username
         /// and password.
         /// </summary>
         /// <param name="username">The user account's user name, UPN.</param>
         /// <param name="password">The user account's password.</param>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, TokenCredentialOptions options)
@@ -63,12 +63,12 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Azure Active Directory with a simple username
+        /// Creates an instance of the <see cref="UsernamePasswordCredential"/> with the details needed to authenticate against Microsoft Entra ID with a simple username
         /// and password.
         /// </summary>
         /// <param name="username">The user account's user name, UPN.</param>
         /// <param name="password">The user account's password.</param>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         /// <param name="options">The client options for the newly created UsernamePasswordCredential</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId, UsernamePasswordCredentialOptions options)

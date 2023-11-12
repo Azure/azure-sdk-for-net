@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecuritySubAssessmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecuritySubAssessmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="assessmentName"> The assessmentName. </param>
+        /// <param name="subAssessmentName"> The subAssessmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string assessmentName, string subAssessmentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}";

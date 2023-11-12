@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Chaos
     public partial class ExperimentStatusResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExperimentStatusResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="experimentName"> The experimentName. </param>
+        /// <param name="statusId"> The statusId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string experimentName, string statusId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/statuses/{statusId}";
