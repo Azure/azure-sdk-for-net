@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
             {
-                TableName = BinaryData.FromString("\"MyEncryptedTableName\"")
+                TableName = "MyEncryptedTableName"
             });
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             Assert.NotNull(result.Value.Id);
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlDWTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
             {
-                TableName = BinaryData.FromString("\"MyEncryptedTableName\"")
+                TableName = "MyEncryptedTableName"
             });
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             Assert.NotNull(result.Value.Id);
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 Description = "Example of Oracle with parameter, description, and expression",
                 Parameters = { { "StartTime", new EntityParameterSpecification(EntityParameterType.String) { DefaultValue = BinaryData.FromString("\"2017-01-31T00:00:00Z\"") } } },
-                TableName = BinaryData.FromString("\"@parameters('StartTime')\"")
+                TableName = DataFactoryElement<string>.FromExpression("\"@parameters('StartTime')\"")
             });
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             Assert.NotNull(result.Value.Id);
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new GreenplumLinkedService()
             {
-                ConnectionString = BinaryData.FromString("\"SecureString\"")
+                ConnectionString = "SecureString"
             });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
@@ -1733,7 +1733,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateServiceNowLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new ServiceNowLinkedService(BinaryData.FromString("\"http://instance.service-now.com\""), ServiceNowAuthenticationType.Basic)
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new ServiceNowLinkedService("http://instance.service-now.com", ServiceNowAuthenticationType.Basic)
             {
                 Username = "admin",
                 Password = new DataFactorySecretString("some secret")
@@ -2292,7 +2292,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 RowDelimiter = "\\t",
                 EncodingName = "UTF-8",
                 CompressionCodec = "bzip2",
-                CompressionLevel = BinaryData.FromString("\"farest\""),
+                CompressionLevel = "farest",
                 QuoteChar = "",
                 EscapeChar = "",
                 FirstRowAsHeader = false,

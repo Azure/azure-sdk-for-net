@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             DataFactoryLinkedServiceData lkGoogleBigQuery = new DataFactoryLinkedServiceData(new GoogleBigQueryLinkedService("fakeProjectId", "UserAuthentication")
             {
-                RequestGoogleDriveScope = "false",
+                RequestGoogleDriveScope = false,
                 ClientId = "fakeClientId",
                 ClientSecret = new DataFactorySecretString("fakeClientSecret")
             });
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             DataFactoryLinkedServiceData lkGreenplum = new DataFactoryLinkedServiceData(new GreenplumLinkedService()
             {
-                ConnectionString = BinaryData.FromString("\"host=10.10.10.10;port=1234;db=TestDB;uid=fakeUsername;password=fakePassword\"")
+                ConnectionString = "host=10.10.10.10;port=1234;db=TestDB;uid=fakeUsername;password=fakePasswordZ"
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkGreenplum);
 
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultServiceNowDatasets(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkQuickBooks = new DataFactoryLinkedServiceData(new ServiceNowLinkedService(BinaryData.FromString("\"http://instance.service-now.com\""), "Basic")
+            DataFactoryLinkedServiceData lkQuickBooks = new DataFactoryLinkedServiceData(new ServiceNowLinkedService("http://instance.service-now.com", "Basic")
             {
                 Username = "admin",
                 Password = new DataFactorySecretString("fakePassword")
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultDynamicsAXDatasets(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkZoho = new DataFactoryLinkedServiceData(new DynamicsAXLinkedService(BinaryData.FromString("\"https://testorganization.ax.dynamics.com/data\""), "fakeServicePrincipalId", new DataFactorySecretString("fakeServicePrincipalKey"), "fakeTenantId", "fakeAddResourceId"));
+            DataFactoryLinkedServiceData lkZoho = new DataFactoryLinkedServiceData(new DynamicsAXLinkedService("https://testorganization.ax.dynamics.com/data", "fakeServicePrincipalId", new DataFactorySecretString("fakeServicePrincipalKey"), "fakeTenantId", "fakeAddResourceId"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkZoho);
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new DynamicsAXResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeTestPath"));
@@ -1265,7 +1265,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             DataFactoryLinkedServiceData lkTeradata = new DataFactoryLinkedServiceData(new TeradataLinkedService()
             {
-                ConnectionString = BinaryData.FromString("\"dbcname=testserver;uid=fakekey;password=fakePassword\"")
+                ConnectionString = "dbcname=testserver;uid=fakekey;password=fakePassword"
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkTeradata);
 
@@ -2861,7 +2861,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             PolyBaseSettings = new PolybaseSettings()
                             {
                                 RejectType = "percentage",
-                                RejectValue = BinaryData.FromString("20.42341"),
+                                RejectValue = 20,
                                 RejectSampleValue = 80,
                                 UseTypeDefault = true
                             }
@@ -3139,7 +3139,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         {
                             WriteBatchSize = 1000000,
                             WriteBatchTimeout = "01:00:00",
-                            CopyBehavior = BinaryData.FromString("\"FlattenHierarchy\"")
+                            CopyBehavior = "FlattenHierarchy"
                         },
                         Inputs =
                         {
@@ -3246,7 +3246,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         {
                             WriteBatchSize = 1000000,
                             WriteBatchTimeout = "01:00:00",
-                            CopyBehavior = BinaryData.FromString("\"FlattenHierarchy\"")
+                            CopyBehavior = "FlattenHierarchy"
                         },
                         Inputs =
                         {
@@ -6058,7 +6058,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new AvroWriteSettings()
                             {
@@ -6122,7 +6122,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new AvroWriteSettings()
                             {
@@ -6186,7 +6186,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             }
                         },
                         Inputs =
@@ -6258,7 +6258,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6344,7 +6344,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6434,7 +6434,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6541,7 +6541,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6616,7 +6616,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6691,7 +6691,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6767,7 +6767,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior ="PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6840,7 +6840,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6914,7 +6914,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -6989,7 +6989,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -7115,11 +7115,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new JsonWriteSettings()
                             {
-                                FilePattern = BinaryData.FromString("\"arrayOfObjects\"")
+                                FilePattern = "arrayOfObjects"
                             }
                         },
                         Inputs =
@@ -7226,11 +7226,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new JsonWriteSettings()
                             {
-                                FilePattern = BinaryData.FromString("\"arrayOfObjects\"")
+                                FilePattern = "arrayOfObjects"
                             }
                         },
                         Inputs =
@@ -7344,7 +7344,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\""),
+                                CopyBehavior = "PreserveHierarchy",
                                 ExpiryDateTime = "2018-12-01T05:00:00Z"
                             }
                         },
@@ -7372,7 +7372,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureBlobStorageWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\""),
+                                CopyBehavior = "PreserveHierarchy",
                                 BlockSizeInMB = 8
                             }
                         },
@@ -7400,7 +7400,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureBlobFSWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\""),
+                                CopyBehavior = "PreserveHierarchy",
                                 BlockSizeInMB = 8
                             }
                         },
@@ -7429,7 +7429,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureBlobStorageWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\""),
+                                CopyBehavior = "PreserveHierarchy",
                                 BlockSizeInMB = 8
                             }
                         },
@@ -7464,7 +7464,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new SftpWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\""),
+                                CopyBehavior = "PreserveHierarchy",
                                 OperationTimeout = "01:00:00",
                                 UseTempFileRename = false
                             }
@@ -7514,14 +7514,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         Source = new TeradataSource()
                         {
-                            PartitionOption = BinaryData.FromString("\"pipeline().parameters.parallelOption\"")
+                            PartitionOption = DataFactoryElement<string>.FromExpression("\"pipeline().parameters.parallelOption\"")
                         },
                         Sink = new BinarySink()
                         {
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             }
                         },
                         Inputs =
@@ -8011,7 +8011,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         Source = new OracleSource()
                         {
-                            PartitionOption = BinaryData.FromString("\"DynamicRange\"")
+                            PartitionOption = "DynamicRange"
                         },
                         Sink = new DataFactoryBlobSink()
                         {
@@ -8068,7 +8068,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         Source = new NetezzaSource()
                         {
-                            PartitionOption = BinaryData.FromString("\"pipeline().parameters.parallelOption\"")
+                            PartitionOption = DataFactoryElement<string>.FromExpression("\"pipeline().parameters.parallelOption\"")
                         },
                         Sink = new DataFactoryBlobSink()
                         {
@@ -8797,7 +8797,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new StoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -8880,7 +8880,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -8963,7 +8963,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -9043,7 +9043,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -9215,7 +9215,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         Source = new SapHanaSource()
                         {
                             Query = "",
-                            PartitionOption = BinaryData.FromObjectAsJson<DataFactoryElement<string>>(DataFactoryElement<string>.FromExpression("pipeline().parameters.parallelOption")),
+                            PartitionOption = DataFactoryElement<string>.FromExpression("pipeline().parameters.parallelOption"),
                             PartitionSettings = new SapHanaPartitionSettings()
                             {
                                 PartitionColumnName = "INTEGERTYPE"
@@ -9226,7 +9226,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new AzureDataLakeStoreWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\"")
+                                CopyBehavior = "PreserveHierarchy"
                             },
                             FormatSettings = new DelimitedTextWriteSettings(".csv")
                             {
@@ -9293,7 +9293,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             StoreSettings = new SftpWriteSettings()
                             {
                                 MaxConcurrentConnections = 3,
-                                CopyBehavior = BinaryData.FromString("\"PreserveHierarchy\""),
+                                CopyBehavior = "PreserveHierarchy",
                                 OperationTimeout = "01:00:00",
                                 UseTempFileRename = true
                             }
