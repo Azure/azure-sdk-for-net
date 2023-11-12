@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<DistributionMode>))]
     public abstract partial class DistributionMode : IUtf8JsonSerializable
     {
         /// <summary> The type discriminator describing a sub-type of DistributionMode. </summary>

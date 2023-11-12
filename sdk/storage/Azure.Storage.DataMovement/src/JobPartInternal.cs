@@ -168,7 +168,6 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
-            _createMode = createMode;
             _failureType = JobPartFailureType.None;
             _checkpointer = checkpointer;
             _progressTracker = progressTracker;
@@ -189,6 +188,9 @@ namespace Azure.Storage.DataMovement
             _transferChunkSize = Math.Min(
                 transferChunkSize ?? DataMovementConstants.DefaultChunkSize,
                 _destinationResource.MaxSupportedChunkSize);
+            // Set the default create mode
+            _createMode = createMode == StorageResourceCreationPreference.Default ?
+                StorageResourceCreationPreference.FailIfExists : createMode;
 
             Length = length;
             _chunkTasks = new List<Task<bool>>();
@@ -381,7 +383,6 @@ namespace Azure.Storage.DataMovement
                 SetFailureType(ex.Message);
                 if (TransferFailedEventHandler != null)
                 {
-                    // TODO: change to RaiseAsync
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _dataTransfer.Id,
@@ -413,9 +414,30 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
-            // Trigger job cancellation if the failed handler is enabled
-            await TriggerCancellationAsync().ConfigureAwait(false);
-            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+
+            try
+            {
+                // Trigger job cancellation if the failed handler is enabled
+                await TriggerCancellationAsync().ConfigureAwait(false);
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            }
+            catch (Exception cancellationException)
+            {
+                // If an exception is thrown while trying to clean up,
+                // raise the failed event and prevent the transfer from hanging
+                await TransferFailedEventHandler.RaiseAsync(
+                    new TransferItemFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        cancellationException,
+                        false,
+                        _cancellationToken),
+                    nameof(JobPartInternal),
+                    nameof(TransferFailedEventHandler),
+                    ClientDiagnostics)
+                    .ConfigureAwait(false);
+            }
         }
 
         /// <summary>

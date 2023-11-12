@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
         public string ExceptionPolicyId { get; set; }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
         public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
